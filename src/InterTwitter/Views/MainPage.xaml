@@ -20,6 +20,7 @@
             </Label.FormattedText>
         </Label>
         <ImageButton Source="ic_home_blue.png"/>
+        <ImageButton Source="ic_add_blue.png"/>
     </StackLayout>
 
 </ContentPage>
