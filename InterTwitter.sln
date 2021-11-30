@@ -7,7 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterTwitter.Android", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterTwitter.iOS", "src\InterTwitter.iOS\InterTwitter.iOS.csproj", "{90B7D8F6-27A6-43F7-9990-3D6CFA670435}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterTwitter", "src\InterTwitter\InterTwitter.csproj", "{EAA396E5-1372-46BC-8E5B-702A7A5DC15B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InterTwitter", "src\InterTwitter\InterTwitter.csproj", "{EAA396E5-1372-46BC-8E5B-702A7A5DC15B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{53E42B17-6C50-4074-BE97-23289F4F62DD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{37218ACB-1EEA-40AE-AA6E-CAE2BAB2F38E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9B874FBC-0DBB-44F7-86AE-A79363C694D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -76,6 +82,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E465D503-29EA-474F-8A38-42A6EA107F48} = {37218ACB-1EEA-40AE-AA6E-CAE2BAB2F38E}
+		{90B7D8F6-27A6-43F7-9990-3D6CFA670435} = {37218ACB-1EEA-40AE-AA6E-CAE2BAB2F38E}
+		{EAA396E5-1372-46BC-8E5B-702A7A5DC15B} = {37218ACB-1EEA-40AE-AA6E-CAE2BAB2F38E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D92C73D5-B5CB-41E0-9A2F-0204DF6AD068}
