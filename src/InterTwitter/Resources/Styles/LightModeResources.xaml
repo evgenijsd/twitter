@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="InterTwitter.Resources.Styles.LightModeResources">
+    <!-- IMAGES -->
+    <ImageSource x:Key="ic_add_blue">ic_add_blue</ImageSource>
+    <ImageSource x:Key="ic_add_photo_white">ic_add_photo_white</ImageSource>
+    <ImageSource x:Key="ic_bookmark_white">ic_bookmark_white</ImageSource>
+    <ImageSource x:Key="ic_bookmark_blue">ic_bookmark_blue</ImageSource>
+    <ImageSource x:Key="ic_bookmark_gray">ic_bookmark_gray</ImageSource>
+    <!--<ImageSource x:Key="ic_cansell"-->
+    
+    
+</ResourceDictionary>
