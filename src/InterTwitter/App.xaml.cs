@@ -1,4 +1,5 @@
-﻿using InterTwitter.Views;
+﻿using InterTwitter.ViewModels;
+using InterTwitter.Views;
 using Prism.Ioc;
 using Prism.Unity;
 using System;
@@ -20,13 +21,14 @@ namespace InterTwitter
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage>();
+            containerRegistry.RegisterForNavigation<CreateTweetPage, CreateTweetPageViewModel>();
         }
 
         protected override async void OnInitialized()
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainPage)}");
+            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(CreateTweetPage)}");
         }
 
         protected override void OnStart()
