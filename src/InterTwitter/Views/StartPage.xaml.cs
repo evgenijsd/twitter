@@ -8,9 +8,9 @@ using Xamarin.Forms;
 
 namespace InterTwitter.Views
 {
-    public partial class MainPage : ContentPage
+    public partial class StartPage : BaseContentPage
     {
-        public MainPage()
+        public StartPage()
         {
             InitializeComponent();
         }

@@ -1,4 +1,8 @@
-﻿using InterTwitter.Views;
+﻿using InterTwitter.Services.Autorization;
+using InterTwitter.Services.Registration;
+using InterTwitter.ViewModels;
+using InterTwitter.Views;
+using Prism;
 using Prism.Ioc;
 using Prism.Unity;
 using System;
@@ -9,7 +13,8 @@ namespace InterTwitter
 {
     public partial class App : PrismApplication
     {
-        public App()
+        public App(IPlatformInitializer initializer = null)
+            : base(initializer)
         {
         }
 
@@ -17,16 +22,19 @@ namespace InterTwitter
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterInstance<IAutorizationService>(Container.Resolve<AutorizationService>());
+            containerRegistry.RegisterInstance<IRegistrationService>(Container.Resolve<RegistrationService>());
+
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<MainPage>();
+            containerRegistry.RegisterForNavigation<StartPage, StartPageViewModel>();
         }
 
         protected override async void OnInitialized()
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainPage)}");
+            await NavigationService.NavigateAsync($"/{nameof(StartPage)}");
         }
 
         protected override void OnStart()
