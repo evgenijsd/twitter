@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterTwitter.Android", "InterTwitter\InterTwitter.Android\InterTwitter.Android.csproj", "{E465D503-29EA-474F-8A38-42A6EA107F48}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterTwitter.Android", "src\InterTwitter.Android\InterTwitter.Android.csproj", "{E465D503-29EA-474F-8A38-42A6EA107F48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterTwitter.iOS", "InterTwitter\InterTwitter.iOS\InterTwitter.iOS.csproj", "{90B7D8F6-27A6-43F7-9990-3D6CFA670435}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterTwitter.iOS", "src\InterTwitter.iOS\InterTwitter.iOS.csproj", "{90B7D8F6-27A6-43F7-9990-3D6CFA670435}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterTwitter", "InterTwitter\InterTwitter\InterTwitter.csproj", "{EAA396E5-1372-46BC-8E5B-702A7A5DC15B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterTwitter", "src\InterTwitter\InterTwitter.csproj", "{EAA396E5-1372-46BC-8E5B-702A7A5DC15B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
