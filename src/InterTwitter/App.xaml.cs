@@ -1,16 +1,32 @@
-﻿using System;
+﻿using InterTwitter.Views;
+using Prism.Ioc;
+using Prism.Unity;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace InterTwitter
 {
-    public partial class App : Application
+    public partial class App : PrismApplication
     {
         public App()
         {
+        }
+
+        #region -- Ovverides --
+
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            // Navigation
+            containerRegistry.RegisterForNavigation<NavigationPage>();
+            containerRegistry.RegisterForNavigation<MainPage>();
+        }
+
+        protected override async void OnInitialized()
+        {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainPage)}");
         }
 
         protected override void OnStart()
@@ -24,5 +40,8 @@ namespace InterTwitter
         protected override void OnResume()
         {
         }
+
+        #endregion
+
     }
 }

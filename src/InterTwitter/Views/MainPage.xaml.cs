@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace InterTwitter
+namespace InterTwitter.Views
 {
     public partial class MainPage : ContentPage
     {
