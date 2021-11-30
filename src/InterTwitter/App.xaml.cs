@@ -13,7 +13,7 @@ namespace InterTwitter
         {
         }
 
-        #region -- Ovverides --
+        #region -- Overrides --
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
