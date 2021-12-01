@@ -3,6 +3,6 @@
     public enum ELangType
     {
         English,
-        Russian
+        Russian,
     }
 }

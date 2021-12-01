@@ -30,14 +30,5 @@
                      Margin="0,11,0,11"
                      HorizontalOptions="End"
                      BackgroundColor="Transparent"/>
-        <ImageButton Source="{Binding ImageSource, Source={x:Reference customEntry}}"
-                     Command="{Binding ButtonCommand, Source={x:Reference customEntry}}"
-                     IsVisible="{Binding IsButtonVisible, Source={x:Reference customEntry}}"
-                     HeightRequest="24"
-                     WidthRequest="24"
-                     Aspect="Fill"
-                     Margin="0,11,0,11"
-                     HorizontalOptions="End"
-                     BackgroundColor="Transparent"/>
     </StackLayout>
 </Frame>

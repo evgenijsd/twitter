@@ -9,7 +9,8 @@ namespace InterTwitter.Droid.Renderers
 {
     public class CustomNoBorderEntryRenderer : EntryRenderer
     {
-        public CustomNoBorderEntryRenderer(Context context) : base(context)
+        public CustomNoBorderEntryRenderer(Context context) 
+            : base(context)
         {
         }
 
