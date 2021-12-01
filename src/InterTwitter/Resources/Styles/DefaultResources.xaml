@@ -5,10 +5,10 @@
     
     <!-- TEXT SIZE -->
     <x:Double x:Key="tsize_i1">24</x:Double> <!-- 22px -->    
-    <x:Double x:Key="tsize_i2">21</x:Double> <!-- 18px ok-->
-    <x:Double x:Key="tsize_i3">19</x:Double> <!-- 16px ok-->
-    <x:Double x:Key="tsize_i4">16</x:Double> <!-- 14px ok-->
-    <x:Double x:Key="tsize_i5">14</x:Double> <!-- 12px ok-->
+    <x:Double x:Key="tsize_i2">21</x:Double> <!-- 18px -->
+    <x:Double x:Key="tsize_i3">19</x:Double> <!-- 16px -->
+    <x:Double x:Key="tsize_i4">16</x:Double> <!-- 14px -->
+    <x:Double x:Key="tsize_i5">14</x:Double> <!-- 12px -->
     <x:Double x:Key="tsize_i6">12</x:Double> <!-- 10px -->
 
     <!-- CONTENT STYLES -->
