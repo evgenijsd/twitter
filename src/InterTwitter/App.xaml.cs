@@ -22,8 +22,8 @@ namespace InterTwitter
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterInstance<IAutorizationService>(Container.Resolve<AutorizationService>());
             containerRegistry.RegisterInstance<IRegistrationService>(Container.Resolve<RegistrationService>());
+            containerRegistry.RegisterInstance<IAutorizationService>(Container.Resolve<AutorizationService>());
 
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();

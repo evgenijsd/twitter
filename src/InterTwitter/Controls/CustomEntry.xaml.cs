@@ -11,7 +11,7 @@ using Xamarin.Forms.Xaml;
 namespace InterTwitter.Controls
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CustomEntry : Frame
+    public partial class CustomEntry : Grid
     {
         public CustomEntry()
         {

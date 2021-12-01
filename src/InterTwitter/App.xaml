@@ -17,7 +17,7 @@
         <Color x:Key="TransparentColor">Transparent</Color>
 
         <!-- Light colors -->
-        <Color x:Key="LightPrimaryColor">#495CDD</Color>
+        <Color x:Key="LightPrimaryColor">#2356C5</Color>
         <Color x:Key="LightPageBackgroundColor">White</Color>
         <Color x:Key="LightDisabledColor">#C7CDF5</Color>
         <Color x:Key="LightFocusedColor">#273BC6</Color>
@@ -29,7 +29,7 @@
         <Color x:Key="LightTextPrimaryColor">#1E242B</Color>
         <Color x:Key="LightTextSecondaryColor">DarkGray</Color>
         <Color x:Key="LightPlaceholderColor">#858E9E</Color>
-        <Color x:Key="LightLineColor">#D7DDE8</Color>
+        <Color x:Key="LightLineColor">#DEDFE1</Color>
 
         <!-- Dark colors -->
         <Color x:Key="DarkPrimaryColor">#7485FB</Color>
@@ -93,7 +93,7 @@
             <Setter Property="BackgroundColor" 
                     Value="{AppThemeBinding Light={StaticResource LightPrimaryColor}, Dark={StaticResource DarkPrimaryColor}}"/>
             <Setter Property="TextColor" Value="{StaticResource TextColor}" />
-            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="FontSize" Value="18"/>
             <Setter Property="FontAttributes" Value="Bold"/>
         </Style>
 
@@ -104,7 +104,7 @@
             <Setter Property="BorderWidth" Value="1"/>
             <Setter Property="BorderColor" 
                     Value="{AppThemeBinding Light={StaticResource LightPrimaryColor}, Dark={StaticResource DarkPrimaryColor}}"/>
-            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="FontSize" Value="18"/>
             <Setter Property="FontAttributes" Value="Bold"/>
         </Style>
         <Style x:Key="gButton" TargetType="ImageButton">
