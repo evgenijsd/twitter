@@ -32,26 +32,27 @@
                 <Behaviors:EventToCommandBehavior Command="{Binding TextChangedCommand, Source={x:Reference customEntry}}" EventName="TextChanged"/>
             </control:CustomNoBorderEntry.Behaviors>
         </control:CustomNoBorderEntry>
-        <ImageButton Grid.Column="2" Grid.Row="0" Margin="0,0,10,0"
+        <ImageButton Grid.Column="1" Grid.Row="0" Margin="0,0,10,0"
                      Source="{Binding ImageSource, Source={x:Reference customEntry}}"
-                     Command="{Binding ButtonCommand, Source={x:Reference customEntry}}"
-                     IsVisible="{Binding IsButtonVisible, Source={x:Reference customEntry}}"
+                     Command="{Binding ButtonEyeCommand, Source={x:Reference customEntry}}"
+                     IsVisible="{Binding IsButtonEyeVisible, Source={x:Reference customEntry}}"
                      HeightRequest="30"
                      WidthRequest="30"
                      Aspect="AspectFit"
                  VerticalOptions="Center"
                  HorizontalOptions="Center"
                      BackgroundColor="Transparent"/>
-    <ImageButton Grid.Column="1" Grid.Row="0" Margin="0,0,10,0"
-                 BackgroundColor="Black"
-                 BorderColor="Blue"
-                 Source="ic_eye_gray.png"
+    <ImageButton Grid.Column="2" Grid.Row="0" Margin="0,0,10,0"
+                 BackgroundColor="Transparent"
+                 Source="{Binding ClearImageSource, Source={x:Reference customEntry}}"
+                 Command="{Binding ButtonClearCommand, Source={x:Reference customEntry}}"
+                 IsVisible="{Binding IsButtonClearVisible, Source={x:Reference customEntry}}"
                  Aspect="AspectFit"
                  VerticalOptions="Center"
-                 HorizontalOptions="Center"
+                 HorizontalOptions="Center"  
                  HeightRequest="30"
                  WidthRequest="30"/>
         
 </Grid>
-    <BoxView Grid.Row="1"  Color="{StaticResource LightPrimaryColor}" Margin="0,0,10,0"/>
+    <BoxView Grid.Row="1"  Color="{StaticResource LightLineColor}" Margin="0,0,10,0"/>
 </Grid>

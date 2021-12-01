@@ -19,9 +19,9 @@ namespace InterTwitter.Services.Registration
         {
             _users = new List<User>
             {
-                new User { Id = 0, Name = "Gabriela Flores", Email = "aaa@aaa.aaa", Password = "1234567A", UserPhoto = "pic_profile_big" },
-                new User { Id = 0, Name = "Yuki Sato", Email = "bbb@bbb.bbb", Password = "1234567A", UserPhoto = "pic_profile_big" },
-                new User { Id = 0, Name = "John Dou", Email = "bbb@bbb.bbb", Password = "1234567A", UserPhoto = "pic_profile_big" },
+                new User { Id = 1, Name = "Gabriela Flores", Email = "aaa@aaa.aaa", Password = "1234567A", UserPhoto = "pic_profile_big" },
+                new User { Id = 2, Name = "Yuki Sato", Email = "bbb@bbb.bbb", Password = "1234567A", UserPhoto = "pic_profile_big" },
+                new User { Id = 3, Name = "John Dou", Email = "bbb@bbb.bbb", Password = "1234567A", UserPhoto = "pic_profile_big" },
             };
         }
 

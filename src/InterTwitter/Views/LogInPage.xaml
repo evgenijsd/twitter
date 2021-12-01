@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                      xmlns:view="clr-namespace:InterTwitter.Views"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:view="clr-namespace:InterTwitter.Views"
                       xmlns:controls="clr-namespace:InterTwitter.Controls"
                       xmlns:res="clr-namespace:InterTwitter.Helpers;assembly=InterTwitter"
-                      x:Class="InterTwitter.Views.StartPage">
+             x:Class="InterTwitter.Views.LogInPage">
     <view:BaseContentPage.Content>
         <Grid RowSpacing="0">
             <Grid.RowDefinitions>
@@ -15,18 +15,18 @@
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-                <Grid Grid.Row="0" ColumnSpacing="0">
+            <Grid Grid.Row="0" ColumnSpacing="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="40"/>
                 </Grid.ColumnDefinitions>
-                    <Image Source="pic_owl_blue_small.png" Grid.Column="1" HorizontalOptions="CenterAndExpand" VerticalOptions="Start" Aspect="AspectFill" Margin="0,16,0,0" HeightRequest="73" WidthRequest="50"/>
-                    <Label Text="{res:Translate GetYourAccount}"  Grid.Column="1" FontSize="24" FontAttributes="Bold" TextColor="{StaticResource LightPrimaryColor}" Margin="0,100,0,0" HorizontalOptions="CenterAndExpand" />
-                 </Grid>
+                <Image Source="pic_owl_blue_small.png" Grid.Column="1" HorizontalOptions="CenterAndExpand" VerticalOptions="Start" Aspect="AspectFill" Margin="0,16,0,0" HeightRequest="73" WidthRequest="50"/>
+                <Label Text="{res:Translate GetYourAccount}"  Grid.Column="1" FontSize="24" FontAttributes="Bold" TextColor="{StaticResource LightPrimaryColor}" Margin="0,100,0,0" HorizontalOptions="CenterAndExpand" />
+            </Grid>
             <Label Grid.Row="1" 
                    Margin="24,0,0,0"
-                   Text="{res:Translate Name}"
+                   Text="{res:Translate Email}"
                    FontSize="16"
                    Style="{StaticResource baseMapLabel}"/>
             <controls:CustomEntry Grid.Row="1"
@@ -34,36 +34,36 @@
                                       Text="{Binding Email}"
                                   ClearImageSource="ic_clear_gray.png"
                                   IsVisible="true"
-                                      Placeholder="{res:Translate Name}"/>
-            <Label Grid.Row="1" Text="{res:Translate PleaseName}" 
+                                      Placeholder="{res:Translate Email}"/>
+            <Label Grid.Row="1" Text="{res:Translate WrongEmail}" 
                        FontSize="15"
                        Margin="20,65,0,0" 
                        Style="{StaticResource errorLabel}"
-                       IsVisible="{Binding IsWrongName}"/>
-            
-                <Label Grid.Row="2" Text="{res:Translate Email}" 
+                       IsVisible="{Binding IsWrongEmail}"/>
+
+            <Label Grid.Row="2" Text="{res:Translate Password}" 
                            FontSize="16"
                            Margin="24,0,0,0"
                            Style="{StaticResource baseMapLabel}" />
-                <controls:CustomEntry Grid.Row="2" Text="{Binding Email}" Margin="20,18,20,0" 
+            <controls:CustomEntry Grid.Row="2" Text="{Binding Password}" Margin="20,18,20,0" EyeOnImageSource="ic_eye_blue.png" EyeOffImageSource="ic_eye_gray.png"
                                       ClearImageSource="ic_clear_gray.png"
-                                         Placeholder="{res:Translate Email}" />
+                                         IsPassword="True" Placeholder="{res:Translate Password}" />
             <Label Grid.Row="2" 
-                       Text="{res:Translate WrongEmail}"
+                       Text="{res:Translate PasswordIncorrect}"
                        FontSize="15" 
                        Style="{StaticResource errorLabel}"
                        Margin="20,65,0,0"     
-                       IsVisible="{Binding IsWrongEmail}" />
+                       IsVisible="{Binding IsIncorrectPassword}" />
 
             <StackLayout Grid.Row="3" HorizontalOptions="Center" Margin="0,20,0,0">
-                <Button Text="{res:Translate SignUp}" WidthRequest="218" CornerRadius="25" HeightRequest="50"
-                            Command="{Binding CreateCommand}"
+                <Button Text="{res:Translate LogIn}" WidthRequest="218" CornerRadius="25" HeightRequest="50"
+                            Command="{Binding TwitterCommand}" 
                             Style="{StaticResource baseButton}"/>
             </StackLayout>
 
             <StackLayout Grid.Row="4" HorizontalOptions="Center" Margin="0,0,0,0" >
-                <Button Command="{Binding LogInCommand}" WidthRequest="218"
-                                 Text="{res:Translate LogIn}" BorderColor="Transparent"
+                <Button Command="{Binding StartCommand}" WidthRequest="218" CornerRadius="25" HeightRequest="50"
+                                 Text="{res:Translate SignUp}" BorderColor="Transparent"
                                  Style="{StaticResource inverseButtonStyle}"/>
             </StackLayout>
         </Grid>

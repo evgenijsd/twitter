@@ -28,6 +28,9 @@ namespace InterTwitter
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<StartPage, StartPageViewModel>();
+            containerRegistry.RegisterForNavigation<CreatePage, CreatePageViewModel>();
+            containerRegistry.RegisterForNavigation<LogInPage, LogInPageViewModel>();
+            containerRegistry.RegisterForNavigation<PasswordPage, PasswordPageViewModel>();
         }
 
         protected override async void OnInitialized()

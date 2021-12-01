@@ -186,26 +186,25 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
-    <Folder Include="Renderers\" />
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\ic_ clear_filled_blue.png" />
+    <BundleResource Include="Resources\ic_clear_filled_blue.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\ic_ clear_filled_blue%402x.png" />
+    <BundleResource Include="Resources\ic_clear_filled_blue%402x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\ic_ clear_filled_blue%403x.png" />
+    <BundleResource Include="Resources\ic_clear_filled_blue%403x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\ic_ clear_gray.png" />
+    <BundleResource Include="Resources\ic_clear_gray.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\ic_ clear_gray%402x.png" />
+    <BundleResource Include="Resources\ic_clear_gray%402x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\ic_ clear_gray%403x.png" />
+    <BundleResource Include="Resources\ic_clear_gray%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\ic_add_blue.png" />

@@ -39,10 +39,10 @@ namespace InterTwitter.Controls
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
 
-        public string MaxLength
+        public string Text
         {
-            get => (string)GetValue(MaxLengthProperty);
-            set => SetValue(MaxLengthProperty, value);
+            get => (string)GetValue(TextProperty);
+            set => SetValue(TextProperty, value);
         }
 
         public static readonly BindableProperty MaxLengthProperty = BindableProperty.Create(
@@ -52,10 +52,10 @@ namespace InterTwitter.Controls
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
 
-        public string Text
+        public string MaxLength
         {
-            get => (string)GetValue(TextProperty);
-            set => SetValue(TextProperty, value);
+            get => (string)GetValue(MaxLengthProperty);
+            set => SetValue(MaxLengthProperty, value);
         }
 
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(
@@ -136,17 +136,30 @@ namespace InterTwitter.Controls
             set => SetValue(IsPasswordHideProperty, value);
         }
 
-        public static readonly BindableProperty IsButtonVisibleProperty = BindableProperty.Create(
-            propertyName: nameof(IsButtonVisible),
+        public static readonly BindableProperty IsButtonEyeVisibleProperty = BindableProperty.Create(
+            propertyName: nameof(IsButtonEyeVisible),
             returnType: typeof(bool),
             declaringType: typeof(CustomEntry),
             defaultValue: false,
             defaultBindingMode: BindingMode.TwoWay);
 
-        public bool IsButtonVisible
+        public bool IsButtonEyeVisible
         {
-            get => (bool)GetValue(IsButtonVisibleProperty);
-            set => SetValue(IsButtonVisibleProperty, value);
+            get => (bool)GetValue(IsButtonEyeVisibleProperty);
+            set => SetValue(IsButtonEyeVisibleProperty, value);
+        }
+
+        public static readonly BindableProperty IsButtonClearVisibleProperty = BindableProperty.Create(
+            propertyName: nameof(IsButtonClearVisible),
+            returnType: typeof(bool),
+            declaringType: typeof(CustomEntry),
+            defaultValue: false,
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public bool IsButtonClearVisible
+        {
+            get => (bool)GetValue(IsButtonClearVisibleProperty);
+            set => SetValue(IsButtonClearVisibleProperty, value);
         }
 
         public static readonly BindableProperty ClearImageSourceProperty = BindableProperty.Create(
@@ -201,8 +214,11 @@ namespace InterTwitter.Controls
             set => SetValue(ImageSourceProperty, value);
         }
 
-        private ICommand _buttonCommand;
-        public ICommand ButtonCommand => _buttonCommand ??= SingleExecutionCommand.FromFunc(OnButtonCommandAsync);
+        private ICommand _buttonEyeCommand;
+        public ICommand ButtonEyeCommand => _buttonEyeCommand ??= SingleExecutionCommand.FromFunc(OnButtonEyeCommandAsync);
+
+        private ICommand _buttonClearCommand;
+        public ICommand ButtonClearCommand => _buttonClearCommand ??= SingleExecutionCommand.FromFunc(OnButtonClearCommandAsync);
 
         private ICommand _focusedCommand;
         public ICommand FocusedCommand => _focusedCommand ??= SingleExecutionCommand.FromFunc(OnFocusedCommandAsync);
@@ -241,16 +257,21 @@ namespace InterTwitter.Controls
 
                         if (string.IsNullOrEmpty(Text))
                         {
-                            IsButtonVisible = false;
+                            IsButtonEyeVisible = false;
                         }
                         else
                         {
-                            IsButtonVisible = true;
+                            IsButtonEyeVisible = true;
                         }
+                    }
+
+                    if (string.IsNullOrEmpty(Text))
+                    {
+                        IsButtonClearVisible = false;
                     }
                     else
                     {
-                        ImageSource = ClearImageSource;
+                        IsButtonClearVisible = true;
                     }
 
                     break;
@@ -261,7 +282,7 @@ namespace InterTwitter.Controls
 
         #region -- Private methods --
 
-        private Task OnButtonCommandAsync()
+        private Task OnButtonEyeCommandAsync()
         {
             if (IsPassword)
             {
@@ -276,10 +297,6 @@ namespace InterTwitter.Controls
                     ImageSource = EyeOnImageSource;
                 }
             }
-            else
-            {
-                Text = string.Empty;
-            }
 
             return Task.CompletedTask;
         }
@@ -288,7 +305,7 @@ namespace InterTwitter.Controls
         {
             if (!IsPassword)
             {
-                IsButtonVisible = true;
+                IsButtonEyeVisible = true;
             }
 
             return Task.CompletedTask;
@@ -298,8 +315,15 @@ namespace InterTwitter.Controls
         {
             if (!IsPassword)
             {
-                IsButtonVisible = false;
+                IsButtonEyeVisible = false;
             }
+
+            return Task.CompletedTask;
+        }
+
+        private Task OnButtonClearCommandAsync()
+        {
+            Text = string.Empty;
 
             return Task.CompletedTask;
         }
