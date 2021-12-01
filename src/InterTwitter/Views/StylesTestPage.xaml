@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InterTwitter.Views.StylesTestPage">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="Center"
+                     HorizontalOptions="Center">
+
+            <!--OK-->
+            <Label Text="Header 1 Medium 22рх" Style="{DynamicResource Key=Content_i1}"/>
+            <Label Text="Header 2 Medium 18рх" Style="{DynamicResource Key=Content_i2}"/>
+            <Label Text="Subtitle 1 Bold 16px" Style="{DynamicResource Key=Content_i3}"/>
+            <Label Text="Body 1 Regular 16px" Style="{DynamicResource Key=Content_i4}"/>
+            <Label Text="Subtitle 2 Bold 14px" Style="{DynamicResource Key=Content_i5}"/>
+            <Label Text="Body 2 Regular 14px" Style="{DynamicResource Key=Content_i6}"/>
+            <Label Text="Caption Regular 12px" Style="{DynamicResource Key=Content_i7}"/>
+            <Label Text="Caption Regular 10px" Style="{DynamicResource Key=Content_i8}"/>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

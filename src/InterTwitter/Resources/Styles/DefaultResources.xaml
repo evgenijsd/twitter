@@ -3,7 +3,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     x:Class="InterTwitter.Resources.Styles.DefaultResources">
 
-    <!-- TEXT -->
+    
+    <!--создать базовые контенты для 3 шрифтов, и дальше их использовать-->
+    
+    <!-- TEXT SIZE -->
     <x:Double x:Key="tsize_i1">22</x:Double>
     <x:Double x:Key="tsize_i2">18</x:Double>
     <x:Double x:Key="tsize_i3">16</x:Double>
@@ -11,30 +14,66 @@
     <x:Double x:Key="tsize_i5">12</x:Double>
     <x:Double x:Key="tsize_i6">10</x:Double>
 
-    <!-- CONTENT STYLES --> 
+    <!-- CONTENT STYLES -->
     <Style x:Key="BaseContent_i1" TargetType="Label">
-        <Setter Property="FontFamily" Value="Ubuntu-Bold"/> 
+        <Setter Property="FontFamily" Value="Ubuntu-Medium"/>
+        <Setter Property="TextColor" Value="Black"/>
     </Style>
     <Style x:Key="BaseContent_i2" TargetType="Label">
-        <Setter Property="FontFamily" Value="Ubuntu-BoldItalic"/>
-    </Style>
-    <Style x:Key="BaseContent_i3" TargetType="Label">
-        <Setter Property="FontFamily" Value="Ubuntu-Italic"/>
-    </Style>
-    <Style x:Key="BaseContent_i4" TargetType="Label">
-        <Setter Property="FontFamily" Value="Ubuntu-Light"/>
-    </Style>
-    <Style x:Key="BaseContent_i5" TargetType="Label">
-        <Setter Property="FontFamily" Value="Ubuntu-LightItalic"/>
-    </Style>
-    <Style x:Key="BaseContent_i6" TargetType="Label">
-        <Setter Property="FontFamily" Value="Ubuntu-Medium"/>
-    </Style>
-    <Style x:Key="BaseContent_i7" TargetType="Label">
-        <Setter Property="FontFamily" Value="Ubuntu-MediumItalic"/>
-    </Style>
-    <Style x:Key="BaseContent_i8" TargetType="Label">
+        <Setter Property="TextColor" Value="Black"/>
         <Setter Property="FontFamily" Value="Ubuntu-Regular"/>
     </Style>
+    <Style x:Key="BaseContent_i3" TargetType="Label">
+        <Setter Property="FontFamily" Value="Ubuntu-Bold"/>
+        <Setter Property="TextColor" Value="Black"/>
+
+    </Style>
+
+    <Style x:Key="Content_i1" TargetType="Label" BasedOn="{StaticResource BaseContent_i1}"> <!-- Header 1 Medium 22px -->
+        <Setter Property="FontSize" Value="{DynamicResource tsize_i1}"/>
+    </Style>
+    <Style x:Key="Content_i2" TargetType="Label" BasedOn="{StaticResource BaseContent_i1}"> <!-- Header 2 Medium 18px -->
+        <Setter Property="FontSize" Value="{DynamicResource tsize_i2}"/>
+    </Style>
+    <Style x:Key="Content_i3" TargetType="Label" BasedOn="{StaticResource BaseContent_i3}"> <!-- Subtitle 1 Bold 16px -->
+        <Setter Property="FontSize" Value="{DynamicResource tsize_i3}"/>
+    </Style>
+    <Style x:Key="Content_i4" TargetType="Label" BasedOn="{StaticResource BaseContent_i3}"> <!-- Subtitle 2 Bold 14px -->
+        <Setter Property="FontSize" Value="{DynamicResource tsize_i4}"/>
+    </Style>
+    <Style x:Key="Content_i5" TargetType="Label" BasedOn="{StaticResource BaseContent_i2}"> <!-- Body 1 Regular 16px -->
+        <Setter Property="FontSize" Value="{DynamicResource tsize_i3}"/>
+    </Style>
+    <Style x:Key="Content_i6" TargetType="Label" BasedOn="{StaticResource BaseContent_i2}"> <!-- Body 2 Regular 14px -->
+        <Setter Property="FontSize" Value="{DynamicResource tsize_i4}"/>
+    </Style>
+    <Style x:Key="Content_i7" TargetType="Label" BasedOn="{StaticResource BaseContent_i2}"> <!-- Caption 1 Regular 12px -->
+        <Setter Property="FontSize" Value="{DynamicResource tsize_i5}"/>
+    </Style>
+    <Style x:Key="Content_i8" TargetType="Label" BasedOn="{StaticResource BaseContent_i2}"> <!-- Caption 2 Regular 10px -->
+        <Setter Property="FontSize" Value="{DynamicResource tsize_i6}"/>
+    </Style>
+    
+    <!-- LABEL STYLES -->
+    <!--<Style x:Key="tstyle_i1" TargetType="Label" BasedOn="{StaticResource Content_i2}">
+        <Setter Property="TextColor" Value="{DynamicResource appcolor_i1}"/>
+    </Style>
+    <Style x:Key="tstyle_i2" TargetType="Label" BasedOn="{StaticResource Content_i2}">
+        <Setter Property="TextColor" Value="{DynamicResource appcolor_i1}"/>
+    </Style>
+    
+    --><!-- BUTTON STYLES --><!--
+    <Style x:Key="sbase_button" TargetType="Button"> --><!-- Button Medium 14px --><!--
+        <Setter Property="FontFamily" Value="Ubuntu-Medium"/>
+        <Setter Property="FontSize" Value="{DynamicResource tsize_i4}"/>
+    </Style>
+    <Style x:Key="sbutton_i1" TargetType="Label" BasedOn="{StaticResource sbase_button}"> --><!-- Primary  --><!--
+        <Setter Property="TextColor" Value="{DynamicResource appcolor_i1}"/>
+    </Style>
+    <Style x:Key="sbutton_i2" TargetType="Label" BasedOn="{StaticResource sbase_button}"> --><!-- System white --><!--
+        <Setter Property="TextColor" Value="{DynamicResource appcolor_i2}"/>
+    </Style>-->
+    
+    <!-- ENTRY STYLES -->
     
 </ResourceDictionary>

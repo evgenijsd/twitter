@@ -20,13 +20,14 @@ namespace InterTwitter
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage>();
+            containerRegistry.RegisterForNavigation<StylesTestPage>();
         }
 
         protected override async void OnInitialized()
         {
             InitializeComponent();
-
-            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainPage)}");
+            await NavigationService.NavigateAsync(nameof(StylesTestPage));
+            //await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainPage)}");
         }
 
         protected override void OnStart()
