@@ -2,6 +2,16 @@
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     x:Class="InterTwitter.Resources.Styles.LightModeResources">
+    
+    <!--APP COLORS-->
+    <Color x:Key="appcolor_i1">#2356C5</Color>     <!-- Primary -->
+    <Color x:Key="appcolor_i2">#FCFDFE</Color>     <!-- System white -->
+    <Color x:Key="appcolor_i3">#02060E</Color>     <!-- System black -->
+    <Color x:Key="appcolor_i4">#66696E</Color>     <!-- Dark grey -->
+    <Color x:Key="appcolor_i5">#9D9FA3</Color>     <!-- Grey -->
+    <Color x:Key="appcolor_i6">#DEDFE1</Color>     <!-- Light gray -->
+    <Color x:Key="appcolor_i7">#F44336</Color>     <!-- Error -->
+
     <!-- IMAGES -->
     <ImageSource x:Key="ic_add_blue">ic_add_blue</ImageSource>
     <ImageSource x:Key="ic_add_photo_white">ic_add_photo_white</ImageSource>

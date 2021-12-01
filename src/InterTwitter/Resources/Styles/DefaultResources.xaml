@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="InterTwitter.Resources.Styles.DefaultResources">
+
+    <!-- TEXT -->
+    <x:Double x:Key="tsize_i1">22</x:Double>
+    <x:Double x:Key="tsize_i2">18</x:Double>
+    <x:Double x:Key="tsize_i3">16</x:Double>
+    <x:Double x:Key="tsize_i4">14</x:Double>
+    <x:Double x:Key="tsize_i5">12</x:Double>
+    <x:Double x:Key="tsize_i6">10</x:Double>
+
+    <!-- CONTENT STYLES --> 
+    <Style x:Key="BaseContent_i1" TargetType="Label">
+        <Setter Property="FontFamily" Value="Ubuntu-Bold"/> 
+    </Style>
+    <Style x:Key="BaseContent_i2" TargetType="Label">
+        <Setter Property="FontFamily" Value="Ubuntu-BoldItalic"/>
+    </Style>
+    <Style x:Key="BaseContent_i3" TargetType="Label">
+        <Setter Property="FontFamily" Value="Ubuntu-Italic"/>
+    </Style>
+    <Style x:Key="BaseContent_i4" TargetType="Label">
+        <Setter Property="FontFamily" Value="Ubuntu-Light"/>
+    </Style>
+    <Style x:Key="BaseContent_i5" TargetType="Label">
+        <Setter Property="FontFamily" Value="Ubuntu-LightItalic"/>
+    </Style>
+    <Style x:Key="BaseContent_i6" TargetType="Label">
+        <Setter Property="FontFamily" Value="Ubuntu-Medium"/>
+    </Style>
+    <Style x:Key="BaseContent_i7" TargetType="Label">
+        <Setter Property="FontFamily" Value="Ubuntu-MediumItalic"/>
+    </Style>
+    <Style x:Key="BaseContent_i8" TargetType="Label">
+        <Setter Property="FontFamily" Value="Ubuntu-Regular"/>
+    </Style>
+    
+</ResourceDictionary>
