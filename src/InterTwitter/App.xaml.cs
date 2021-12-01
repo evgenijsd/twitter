@@ -28,7 +28,7 @@ namespace InterTwitter
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(CreateTweetPage)}");
+            await NavigationService.NavigateAsync($"/{nameof(CreateTweetPage)}");
         }
 
         protected override void OnStart()

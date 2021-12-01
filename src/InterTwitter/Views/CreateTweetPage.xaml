@@ -3,12 +3,29 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                       xmlns:controls="clr-namespace:InterTwitter.Controls"
                       xmlns:view="clr-namespace:InterTwitter.Views"
-                      x:Class="InterTwitter.Views.CreateTweetPage">
+                      x:Class="InterTwitter.Views.CreateTweetPage"
+                      Padding="0">
 
     <view:BaseContentPage.Content>
 
-        <StackLayout>
-            <controls:CircleProgressBar HeightRequest="100"/>
+        <StackLayout Padding="0"
+                     Margin="0"
+                     Spacing="0">
+            
+            <controls:CircleProgressBar HeightRequest="300"
+                                        Text=":D"
+                                        TextColor="Red"
+                                        FontFamily="Arial"
+                                        Value="25"
+                                        Minimum="0"
+                                        Maximum="100"
+                                        LineWidth="50"
+                                        ProgressLineColor="Blue"
+                                        BackgroundLineColor="Silver"
+                                        BackgroundProgressColor="White"
+                                        BackgroundColor="Green"
+                                        Padding="0"
+                                        Margin="0"/>
 
         </StackLayout>
         
