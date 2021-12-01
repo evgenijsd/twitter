@@ -4,7 +4,8 @@
              x:Class="InterTwitter.Views.StylesTestPage">
     <ContentPage.Content>
         <StackLayout VerticalOptions="Center"
-                     HorizontalOptions="Center">
+                     HorizontalOptions="Start"
+                     BackgroundColor="LightGreen">
 
             <!-- OK -->
             <Label Text="Header 1 Medium 22рх" Style="{DynamicResource Key=Content_i1}"/>
@@ -15,7 +16,26 @@
             <Label Text="Body 2 Regular 14px" Style="{DynamicResource Key=Content_i6}"/>
             <Label Text="Caption Regular 12px" Style="{DynamicResource Key=Content_i7}"/>
             <Label Text="Caption Regular 10px" Style="{DynamicResource Key=Content_i8}"/>
+
+            <Label />
+
+            <Label Text="Header 2/ 18px/ Primary" Style="{DynamicResource Key=tstyle_i1}"/>
+            <Label Text="Caption 1/ 12px/ Primary" Style="{DynamicResource Key=tstyle_i2}"/>
+            <Label Text="Caption 1/ 12px/ Error" Style="{DynamicResource Key=tstyle_i3}"/>
+            <Label Text="Header 2/ 18px/ System/Black" Style="{DynamicResource Key=tstyle_i4}"/>
+            <Label Text="Body 1/ 16px/ System/Black" Style="{DynamicResource Key=tstyle_i5}"/>
+            <Label Text="Subtitle 2/ 14px/ System/Black" Style="{DynamicResource Key=tstyle_i6}"/>
+            <Label Text="Body 2/ 14px/ System/Black" Style="{DynamicResource Key=tstyle_i7}"/>
+            <Label Text="Body 2/ 14px/ Dark Gray" Style="{DynamicResource Key=tstyle_i8}"/>
+            <Label Text="Caption 1/ 12px/ Dark Gray" Style="{DynamicResource Key=tstyle_i9}"/>
+            <Label Text="Caption 1/ 12px/ System/White" Style="{DynamicResource Key=tstyle_i10}"/>
+            <Label Text="Caption 1/ 12px/ Primary" Style="{DynamicResource Key=tstyle_i11}"/>
+            <Label Text="Caption 1/ 12px/ System/White" Style="{DynamicResource Key=tstyle_i12}"/>
+            <Label Text="Body 2/ 14px/  System/Black" Style="{DynamicResource Key=tstyle_i13}"/>
+            <Label Text="Subtitle 1/ 16px/ System/Black" Style="{DynamicResource Key=tstyle_i14}"/>
+            <Label Text="tstyle_i15" Style="{DynamicResource Key=tstyle_i15}"/>
             
         </StackLayout>
+        
     </ContentPage.Content>
 </ContentPage>
