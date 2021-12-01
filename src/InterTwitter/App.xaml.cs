@@ -9,6 +9,8 @@ namespace InterTwitter
 {
     public partial class App : PrismApplication
     {
+        public static T Resolve<T>() => Current.Container.Resolve<T>();
+
         public App()
         {
         }
