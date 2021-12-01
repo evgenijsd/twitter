@@ -89,7 +89,6 @@
   <ItemGroup>
     <Folder Include="Controls\" />
     <Folder Include="Renderers\" />
-    <Folder Include="Resources\drawable\" />
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +96,21 @@
       <Project>{04EA432F-7BFF-49E3-B8F4-F29ABBA99259}</Project>
       <Name>InterTwitter</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\pic_profile_small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_add_blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\logo3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\man.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\woman2.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

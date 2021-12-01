@@ -9,7 +9,7 @@
                          HorizontalOptions="StartAndExpand"
                          WidthRequest="24"
                          HeightRequest="24"
-                         Margin="12, 0, 0, 0"
+                         Margin="21, 0, 0, 0"
                          BackgroundColor="Transparent"
                          Command="{Binding RightUserButtonCommand, Source={x:Reference customToolbar}}"/>
 
@@ -17,13 +17,14 @@
                    TextColor="{Binding TitleColor, Source={x:Reference customToolbar}}"
                    HorizontalOptions="Center"
                    FontSize="21"
+                   Margin="0, 17, 0, 0"
                    FontAttributes="Bold"/>
             
             <ImageButton Source="{Binding LeftImageAddButton, Source={x:Reference customToolbar}}"
                          HorizontalOptions="EndAndExpand"
                          WidthRequest="24"
                          HeightRequest="24"
-                         Margin="12, 0, 0, 0"
+                         Margin="0, 0, 21, 0"
                          BackgroundColor="Transparent"
                          Command="{Binding LeftImageAddButton, Source={x:Reference customToolbar}}"/>
         </StackLayout>

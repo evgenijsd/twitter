@@ -2,15 +2,70 @@
 <view:BaseContentPage xmlns:view="clr-namespace:InterTwitter.Views" 
                       xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-                      xmlns:controls="clr-namespace:InterTwitter.Controls"
+                      xmlns:controls="clr-namespace:InterTwitter.Controls" 
+                      xmlns:helpers="clr-namespace:InterTwitter.Helpers"
                       x:Class="InterTwitter.Views.HomePage">
-    <view:BaseContentPage.Content>
-        <StackLayout>
+    
+    <view:BaseContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="VideoTemplate">
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="{Binding UserAvatar}" WidthRequest="50" HeightRequest="50" HorizontalOptions="Start" />
+                    <Label Text="{Binding Text}" TextColor="Black"/>
+                    
+                </StackLayout>
+            </DataTemplate>
+            
+            <DataTemplate x:Key="ImageTemplate">
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="{Binding UserAvatar}" WidthRequest="50" HeightRequest="50" HorizontalOptions="Start" />
+                    <Label Text="{Binding Text}" TextColor="Black"/>
 
-            <controls:CustomToolbar Title="Home"
-                                    RightUserImageButton="pic_profile_small">
-                
-            </controls:CustomToolbar>
-        </StackLayout>
+                </StackLayout>
+            </DataTemplate>
+            
+            <DataTemplate x:Key="GifTemplate">
+                <Label Text="{Binding Text}" TextColor="Aqua"/>
+            </DataTemplate>
+            
+            <DataTemplate x:Key="TextTemplate">
+                <Label Text="{Binding Text}" TextColor="Green"/>
+            </DataTemplate>
+            
+            <helpers:TweetDataTemplateSelector 
+                x:Key="tweetSelector"
+                VideoTemplate="{StaticResource VideoTemplate}"  
+                ImageTemplate="{StaticResource ImageTemplate}" 
+                GifTemplate="{StaticResource GifTemplate}" 
+                TextTemplate="{StaticResource TextTemplate}" />
+
+        </ResourceDictionary>
+    </view:BaseContentPage.Resources>
+    <view:BaseContentPage.Content>
+        
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <Grid HorizontalOptions="Fill"
+                  RowDefinitions="0.125*, 0.875*"
+                  VerticalOptions="Fill">
+                <controls:CustomToolbar Title="Home"
+                                        Grid.Row="0"
+                                        RightUserImageButton="pic_profile_small.png"
+                                        LeftImageAddButton="ic_add_blue">
+                </controls:CustomToolbar>
+
+                <Grid Grid.Row="1">
+
+                    <StackLayout Orientation="Vertical">
+
+                        <CollectionView ItemsSource="{Binding Tweets}"
+                                        ItemTemplate="{StaticResource tweetSelector}"/>
+                    </StackLayout>
+                </Grid>
+            </Grid>
+        </Grid>
     </view:BaseContentPage.Content>
 </view:BaseContentPage>
