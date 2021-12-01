@@ -6,7 +6,7 @@
         <StackLayout VerticalOptions="Center"
                      HorizontalOptions="Center">
 
-            <!--OK-->
+            <!-- OK -->
             <Label Text="Header 1 Medium 22рх" Style="{DynamicResource Key=Content_i1}"/>
             <Label Text="Header 2 Medium 18рх" Style="{DynamicResource Key=Content_i2}"/>
             <Label Text="Subtitle 1 Bold 16px" Style="{DynamicResource Key=Content_i3}"/>
