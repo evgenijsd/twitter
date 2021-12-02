@@ -32,6 +32,28 @@
     <DefineConstants>TRACE;STAGE;NETSTANDARD;NETSTANDARD2_0;</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Resources\Fonts\Ubuntu-Bold.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-BoldItalic.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-Italic.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-Light.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-LightItalic.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-Medium.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-MediumItalic.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-Bold.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-BoldItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-Italic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-Light.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-LightItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-Medium.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-MediumItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Prism.Unity.Forms" Version="8.1.97" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
@@ -49,8 +71,22 @@
     <Folder Include="Extensions\" />
     <Folder Include="Helpers\" />
     <Folder Include="Enums\" />
-    <Folder Include="Resources\Fonts\" />
     <Folder Include="Services\" />
     <Folder Include="ViewModels\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\Styles\LightModeResources.xaml.cs">
+      <DependentUpon>LightModeResources.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Styles\DefaultResources.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Styles\LightModeResources.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
