@@ -57,11 +57,20 @@
     <ImageSource x:Key="ic_video_blue">ic_video_blue</ImageSource>
     <ImageSource x:Key="ic_video_square_blue">ic_video_square_blue</ImageSource>
     <ImageSource x:Key="ic_video_square_gray">ic_video_square_gray</ImageSource>
+    <ImageSource x:Key="ic_save">ic_save</ImageSource>
+    <ImageSource x:Key="ic_media">ic_media</ImageSource>
+    <ImageSource x:Key="ic_flip_the_camera">ic_flip_the_camera</ImageSource>
+    <ImageSource x:Key="ic_delete">ic_delete</ImageSource>
+    <ImageSource x:Key="ic_close_white">ic_close_white</ImageSource>
+    <ImageSource x:Key="ic_close_round">ic_close_round</ImageSource>
+    <ImageSource x:Key="ic_camera">ic_camera</ImageSource>
+    <ImageSource x:Key="ic_add_blue_small">ic_add_blue_small</ImageSource>
     <ImageSource x:Key="pic_gif">pic_gif</ImageSource>
     <ImageSource x:Key="pic_owl_blue_big">pic_owl_blue_big</ImageSource>
     <ImageSource x:Key="pic_owl_blue_small">pic_owl_blue_small</ImageSource>
     <ImageSource x:Key="pic_owl_white">pic_owl_white</ImageSource>
     <ImageSource x:Key="pic_profile_big">pic_profile_big</ImageSource>
     <ImageSource x:Key="pic_profile_small">pic_profile_small</ImageSource>
+    <ImageSource x:Key="pic_empty_state_2">pic_empty_state_2</ImageSource>
 
 </ResourceDictionary>
