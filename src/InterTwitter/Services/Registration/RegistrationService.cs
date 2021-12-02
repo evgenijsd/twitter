@@ -12,6 +12,7 @@ namespace InterTwitter.Services.Registration
     public class RegistrationService : IRegistrationService
     {
         private const int MAX_LENGTH_EMAIL = 64;
+        private const int MIN_LENGTH_NAME = 2;
         private const int MIN_PASSWORD_LENGTH = 6;
         private List<User> _users;
 
@@ -49,6 +50,24 @@ namespace InterTwitter.Services.Registration
             catch (Exception ex)
             {
                 result.SetError($"Exception: {nameof(CheckTheCorrectEmailAsync)}", "Wrong result", ex);
+            }
+
+            return result;
+        }
+
+        public ECheckEnter CheckCorrectName(string name)
+        {
+            const string validName = @"^[a-zA-Z]+$";
+            ECheckEnter result = ECheckEnter.ChecksArePassed;
+
+            if (!Regex.IsMatch(name, validName))
+            {
+                result = ECheckEnter.NameNotValid;
+            }
+
+            if (name.Length < MIN_LENGTH_NAME)
+            {
+                result = ECheckEnter.NameLengthNotValid;
             }
 
             return result;

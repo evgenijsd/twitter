@@ -21,20 +21,29 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="40"/>
                 </Grid.ColumnDefinitions>
-                    <Image Source="pic_owl_blue_small.png" Grid.Column="1" HorizontalOptions="CenterAndExpand" VerticalOptions="Start" Aspect="AspectFill" Margin="0,16,0,0" HeightRequest="73" WidthRequest="50"/>
-                    <Label Text="{res:Translate GetYourAccount}"  Grid.Column="1" FontSize="24" FontAttributes="Bold" TextColor="{StaticResource LightPrimaryColor}" Margin="0,100,0,0" HorizontalOptions="CenterAndExpand" />
+                    <Image Source="pic_owl_blue_small.png" Grid.Column="1" 
+                           HorizontalOptions="CenterAndExpand" 
+                           VerticalOptions="Start" Aspect="AspectFill" 
+                           Margin="0,16,0,0" 
+                           HeightRequest="73" WidthRequest="50"/>
+                    <Label Text="{res:Translate GetYourAccount}"  Grid.Column="1" 
+                           FontSize="24" FontAttributes="Bold" 
+                           TextColor="{StaticResource LightPrimaryColor}" 
+                           Margin="0,100,0,0" 
+                           HorizontalOptions="CenterAndExpand" />
                  </Grid>
             <Label Grid.Row="1" 
                    Margin="24,0,0,0"
                    Text="{res:Translate Name}"
                    FontSize="16"
-                   Style="{StaticResource baseMapLabel}"/>
+                   Style="{StaticResource baseMapLabel}"
+                   IsVisible="{Binding Name}"/>
             <controls:CustomEntry Grid.Row="1"
                                   Margin="20,18,20,0"
-                                      Text="{Binding Email}"
+                                  Text="{Binding Name}"
                                   ClearImageSource="ic_clear_gray.png"
                                   IsVisible="true"
-                                      Placeholder="{res:Translate Name}"/>
+                                  Placeholder="{res:Translate Name}"/>
             <Label Grid.Row="1" Text="{res:Translate PleaseName}" 
                        FontSize="15"
                        Margin="20,65,0,0" 

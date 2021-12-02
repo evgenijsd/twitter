@@ -1,9 +1,11 @@
-﻿using InterTwitter.Services.Registration;
+﻿using InterTwitter.Enums;
+using InterTwitter.Services.Registration;
 using InterTwitter.Views;
 using MapNotePad.Helpers;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -21,6 +23,33 @@ namespace InterTwitter.ViewModels
         }
 
         #region -- Public properties --
+        private string _name = string.Empty;
+        public string Name
+        {
+            get => _name;
+            set => SetProperty(ref _name, value);
+        }
+
+        private bool _isWrongName = false;
+        public bool IsWrongName
+        {
+            get => _isWrongName;
+            set => SetProperty(ref _isWrongName, value);
+        }
+
+        private bool _isWrongEmail = false;
+        public bool IsWrongEmail
+        {
+            get => _isWrongEmail;
+            set => SetProperty(ref _isWrongEmail, value);
+        }
+
+        private string _email = string.Empty;
+        public string Email
+        {
+            get => _email;
+            set => SetProperty(ref _email, value);
+        }
 
         private ICommand _LogInCommand;
         public ICommand LogInCommand => _LogInCommand ??= SingleExecutionCommand.FromFunc(OnLogInCommandAsync);
@@ -29,6 +58,28 @@ namespace InterTwitter.ViewModels
         #endregion
 
         #region -- Overrides --
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+
+            if (args.PropertyName == nameof(Name))
+            {
+                IsWrongName = _registrationService.CheckCorrectName(Name) != ECheckEnter.ChecksArePassed;
+                if (string.IsNullOrEmpty(Name))
+                {
+                    IsWrongName = false;
+                }
+            }
+
+            if (args.PropertyName == nameof(Email))
+            {
+                IsWrongEmail = _registrationService.CheckCorrectEmail(Email) != ECheckEnter.ChecksArePassed;
+                if (string.IsNullOrEmpty(Email))
+                {
+                    IsWrongEmail = false;
+                }
+            }
+        }
         #endregion
 
         #region -- Private helpers --

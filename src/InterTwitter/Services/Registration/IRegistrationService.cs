@@ -14,6 +14,7 @@ namespace InterTwitter.Services.Registration
         Task<AOResult<int>> CheckTheCorrectEmailAsync(string name, string email);
         ECheckEnter CheckTheCorrectPassword(string password, string confirmPassword);
         ECheckEnter CheckCorrectEmail(string email);
+        ECheckEnter CheckCorrectName(string name);
         List<User> GetUsers();
     }
 }

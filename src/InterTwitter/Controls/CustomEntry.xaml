@@ -17,7 +17,8 @@
            <ColumnDefinition Width="auto"/>
        </Grid.ColumnDefinitions>
 
-        <control:CustomNoBorderEntry Grid.Column="0" Grid.Row="0" VerticalOptions="Center"
+        <control:CustomNoBorderEntry Grid.Column="0" Grid.Row="0" x:Name="CustomEntryLocal"
+                                     VerticalOptions="Center"
             Text="{Binding Text, Source={x:Reference customEntry}}"
                                    TextColor="{Binding TextColor, Source={x:Reference customEntry}}"
                                    FontFamily="{Binding FontFamily, Source={x:Reference customEntry}}"
@@ -29,7 +30,6 @@
             <control:CustomNoBorderEntry.Behaviors>
                 <Behaviors:EventToCommandBehavior Command="{Binding FocusedCommand, Source={x:Reference customEntry}}" EventName="Focused"/>
                 <Behaviors:EventToCommandBehavior Command="{Binding UnFocusedCommand, Source={x:Reference customEntry}}" EventName="Unfocused"/>
-                <Behaviors:EventToCommandBehavior Command="{Binding TextChangedCommand, Source={x:Reference customEntry}}" EventName="TextChanged"/>
             </control:CustomNoBorderEntry.Behaviors>
         </control:CustomNoBorderEntry>
         <ImageButton Grid.Column="1" Grid.Row="0" Margin="0,0,10,0"

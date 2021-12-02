@@ -19,19 +19,6 @@ namespace InterTwitter.Controls
         }
 
         #region -- Public properties --
-        public static readonly BindableProperty TextChangedCommandProperty = BindableProperty.Create(
-            propertyName: nameof(TextChangedCommand),
-            returnType: typeof(ICommand),
-            declaringType: typeof(CustomEntry),
-            defaultValue: null,
-            defaultBindingMode: BindingMode.TwoWay);
-
-        public ICommand TextChangedCommand
-        {
-            get => (ICommand)GetValue(TextChangedCommandProperty);
-            set => SetValue(TextChangedCommandProperty, value);
-        }
-
         public static readonly BindableProperty TextProperty = BindableProperty.Create(
             propertyName: nameof(Text),
             returnType: typeof(string),
@@ -134,6 +121,19 @@ namespace InterTwitter.Controls
         {
             get => (bool)GetValue(IsPasswordHideProperty);
             set => SetValue(IsPasswordHideProperty, value);
+        }
+
+        public static readonly BindableProperty IsFocusedVisibleProperty = BindableProperty.Create(
+            propertyName: nameof(IsFocusedVisible),
+            returnType: typeof(bool),
+            declaringType: typeof(CustomEntry),
+            defaultValue: false,
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public bool IsFocusedVisible
+        {
+            get => (bool)GetValue(IsFocusedVisibleProperty);
+            set => SetValue(IsFocusedVisibleProperty, value);
         }
 
         public static readonly BindableProperty IsButtonEyeVisibleProperty = BindableProperty.Create(
@@ -308,6 +308,9 @@ namespace InterTwitter.Controls
                 IsButtonEyeVisible = true;
             }
 
+            IsFocusedVisible = true;
+            CustomEntryLocal.Placeholder = string.Empty;
+
             return Task.CompletedTask;
         }
 
@@ -317,6 +320,9 @@ namespace InterTwitter.Controls
             {
                 IsButtonEyeVisible = false;
             }
+
+            IsFocusedVisible = false;
+            CustomEntryLocal.Placeholder = Placeholder;
 
             return Task.CompletedTask;
         }
