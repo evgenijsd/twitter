@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InterTwitter.Controls.SearchBar">
+    
+    <ContentView.Content>
+
+        <StackLayout Orientation="Horizontal"
+                         Margin="12, 11, 12, 13">
+
+            <Image WidthRequest="24"
+                       HeightRequest="24"
+                       HorizontalOptions="Start"
+                   
+                       Source="{DynamicResource pic_profile_small}"/>
+
+            <Frame HorizontalOptions="EndAndExpand"
+                       CornerRadius="20"
+                       BackgroundColor="{DynamicResource appcolor_i6}">
+
+                <Entry FontSize="{DynamicResource tsize_i6}"
+
+                           Placeholder="Search"
+                           PlaceholderColor="{DynamicResource appcolor_i4}"/>
+
+            </Frame>
+
+        </StackLayout>
+
+    </ContentView.Content>
+
+</ContentView>

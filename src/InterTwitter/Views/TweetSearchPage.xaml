@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseContentPage  xmlns="http://xamarin.com/schemas/2014/forms"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                        xmlns:statecontainer="clr-namespace:InterTwitter.Controls.StateContainer"
+                        xmlns:views="clr-namespace:InterTwitter.Views"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+                        
+                        x:Class="InterTwitter.Views.TweetSearchPage">
+
+    <views:BaseContentPage.Content>
+
+        <StackLayout>
+
+            <Label Text="{xct:Translate Hello}"/>
+
+        </StackLayout>
+
+    </views:BaseContentPage.Content>
+
+</views:BaseContentPage>

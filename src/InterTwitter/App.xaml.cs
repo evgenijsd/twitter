@@ -1,7 +1,9 @@
-﻿using InterTwitter.Views;
+﻿using InterTwitter.Resources.Strings;
+using InterTwitter.Views;
 using Prism.Ioc;
 using Prism.Unity;
 using System;
+using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,6 +11,8 @@ namespace InterTwitter
 {
     public partial class App : PrismApplication
     {
+        public static T Resolve<T>() => Current.Container.Resolve<T>();
+
         public App()
         {
         }
@@ -20,12 +24,17 @@ namespace InterTwitter
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage>();
+            containerRegistry.RegisterForNavigation<TweetSearchPage>();
         }
 
         protected override async void OnInitialized()
         {
             InitializeComponent();
-            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainPage)}");
+
+            LocalizationResourceManager.Current.Init(Strings.ResourceManager);
+
+            await NavigationService.NavigateAsync(nameof(TweetSearchPage));
+            //await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainPage)}");
         }
 
         protected override void OnStart()
