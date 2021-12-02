@@ -98,13 +98,18 @@
         <Setter Property="TextColor" Value="AntiqueWhite"/>
     </Style>
 
-
-    <Style x:Key="SeparatorStyle" TargetType="BoxView" >
+    <!-- BOXVIEW SEPARATORS STYLES -->
+    <Style x:Key="SeparatorStyle" TargetType="BoxView" > <!-- Light Gray --> 
         <Setter Property="HorizontalOptions" Value="Start"/>
         <Setter Property="VerticalOptions"   Value="Center"/>
         <Setter Property="HeightRequest"     Value="1"/>
         <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
-        <Setter Property="Color" Value="{DynamicResource Key=appcolor_i6}"></Setter>
+        <Setter Property="Color" Value="{DynamicResource appcolor_i6}"></Setter>
     </Style>
+
+    <!-- PAGE STYLES -->
+    <!--<Style TargetType="views:BaseContentPage">
+        <Setter Property="BackgroundColor" Value="{x:DynamicResource appcolor_i2}"/>
+    </Style>-->
 
 </ResourceDictionary>

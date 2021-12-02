@@ -120,4 +120,16 @@
   <data name="Hello" xml:space="preserve">
     <value>Hello</value>
   </data>
+  <data name="NoResultsFor" xml:space="preserve">
+    <value>No results for</value>
+  </data>
+  <data name="PopularTheme" xml:space="preserve">
+    <value>Popular theme</value>
+  </data>
+  <data name="Posts" xml:space="preserve">
+    <value>Posts</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
 </root>

@@ -2,7 +2,7 @@
 {
     public enum ETweetSearchResult
     {
-        TweetsFound,
         NoTweetsFound,
+        TweetsFound,
     }
 }

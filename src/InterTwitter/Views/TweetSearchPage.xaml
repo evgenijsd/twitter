@@ -1,35 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <views:BaseContentPage  xmlns="http://xamarin.com/schemas/2014/forms"
                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                        xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
                         xmlns:stateContainer="clr-namespace:InterTwitter.Controls.StateContainer"
-                        xmlns:views="clr-namespace:InterTwitter.Views" xmlns:viewmodels="clr-namespace:InterTwitter.ViewModels" x:DataType="viewmodels:TweetSearchPageViewModel"
+                        xmlns:viewmodels="clr-namespace:InterTwitter.ViewModels"
+                        xmlns:views="clr-namespace:InterTwitter.Views"
+                        x:DataType="viewmodels:TweetSearchPageViewModel"
                         x:Class="InterTwitter.Views.TweetSearchPage">
 
     <views:BaseContentPage.Content>
 
         <StackLayout Spacing="0">
 
-            <Grid RowDefinitions="48"
-                  ColumnDefinitions="0.2*, *"
-                  Padding="12, 9, 12, 11">
+            <Grid RowDefinitions="40"
+                  ColumnDefinitions="0.12*, *"
+                  Padding="12, 9, 12, 6">
 
-                <!-- AVATAR/BACK ICON -->
+                <!-- PROFILE/BACK ICON -->
                 <stateContainer:StateContainer Grid.Column="0"
+                                               Padding="3"
                                                State="{Binding TweetSearchState}">
 
                     <stateContainer:StateContainer.Conditions>
 
                         <stateContainer:StateCondition State="NotActive">
 
-                            <Image Grid.Column="0"
-                                   Source="{DynamicResource pic_profile_small}"/>
+                            <ImageButton Grid.Row="1" 
+                                         CornerRadius="50"
+                                         Source="{Binding ProfileIcon}"
+                                         Command="{Binding ProfileIconTapCommand}"/>
 
                         </stateContainer:StateCondition>
 
                         <stateContainer:StateCondition State="Active">
 
-                            <Image Grid.Column="0"
-                                   Source="{DynamicResource ic_left_gray}"/>
+                            <Image Source="{DynamicResource ic_left_gray}">
+
+                                <Image.GestureRecognizers>
+
+                                    <TapGestureRecognizer Command="{Binding StopSearchTapCommand}"/>
+
+                                </Image.GestureRecognizers>
+                                
+                            </Image>
 
                         </stateContainer:StateCondition>
 
@@ -46,35 +59,141 @@
 
                     <Entry BackgroundColor="Transparent"
                            Margin="0"
-                           FontSize="{DynamicResource tsize_i6}"
-                           FontFamily="Ubuntu-Bold"
-                           Placeholder="Search"
-                           PlaceholderColor="{DynamicResource appcolor_i4}"/>
+                           FontSize="{DynamicResource tsize_i5}"
+                           FontFamily="Ubuntu-Medium"
+                           Text="{Binding SearchQuery}"
+                           Placeholder="{xct:Translate Search}"
+                           PlaceholderColor="{DynamicResource appcolor_i4}"
+                           ReturnCommand="{Binding StartSearchTapCommand}"/>
 
                 </Frame>
 
             </Grid>
 
-            <Button Text="Active"
-                    Command="{Binding StartSearchCommand}"/>
+            <BoxView Grid.Row="1" 
+                     Style="{DynamicResource SeparatorStyle}"/>
 
-            <Button Text="Active"
-                    Command="{Binding StopSearchCommand}"/>
+            <stateContainer:StateContainer Grid.Column="0"
+                                           Padding="3"
+                                           State="{Binding TweetSearchState}">
 
-            <BoxView Grid.Row="1" Style="{DynamicResource SeparatorStyle}"/>
+                <stateContainer:StateContainer.Conditions>
 
-            <!-- NOT RESULTS STATE -->
-            <StackLayout VerticalOptions="CenterAndExpand"
-                         Spacing="23">
+                    <!-- SEARCH NO ACTIVE -->
+                    <stateContainer:StateCondition State="NotActive">
 
-                <Image HeightRequest="84"
-                       Source="{DynamicResource pic_owl_blue_big}"/>
+                        <StackLayout Spacing="5"
+                                     Margin="14, 20">
 
-                <Label HorizontalOptions="Center"
-                       Style="{DynamicResource tstyle_i5}"
-                       Text="No results for"/>
+                            <Label Text="{xct:Translate PopularTheme}"
+                                   Style="{DynamicResource tstyle_i4}"/>
 
-            </StackLayout>
+                            <BoxView Style="{DynamicResource SeparatorStyle}"/>
+
+                            <ListView ItemsSource="{Binding ThemeModels}"
+                                      SeparatorColor="{DynamicResource appcolor_i6}">
+
+                                <ListView.ItemTemplate>
+
+                                    <DataTemplate>
+
+                                        <ViewCell>
+
+                                            <ViewCell.View>
+
+                                                <StackLayout Orientation="Horizontal">
+
+                                                    <StackLayout>
+
+                                                        <Label Style="{DynamicResource tstyle_i6}"
+                                                               Text="{Binding Title}"/>
+
+                                                        <Label Style="{DynamicResource tstyle_i15}">
+
+                                                            <Label.FormattedText>
+
+                                                                <FormattedString>
+
+                                                                    <Span Text="{xct:Translate Posts}"></Span>
+
+                                                                    <Span Text="{Binding TweetsCount, StringFormat=': {0}'}"/>
+                                                                    
+                                                                </FormattedString>
+                                                                
+                                                            </Label.FormattedText>
+                                                            
+                                                        </Label>
+
+                                                    </StackLayout>
+
+                                                    <Image HorizontalOptions="EndAndExpand" 
+                                                           Source="ic_right_gray"/>
+
+                                                </StackLayout>
+                                                
+                                            </ViewCell.View>
+                                            
+                                        </ViewCell>
+                                        
+                                    </DataTemplate>
+                                    
+                                </ListView.ItemTemplate>
+                                
+                            </ListView>
+                            
+                        </StackLayout>
+
+                    </stateContainer:StateCondition>
+
+                    <!-- SEARCH ACTIVE -->
+                    <stateContainer:StateCondition State="Active">
+
+                        <stateContainer:StateContainer State="{Binding TweetSearchResult}">
+
+                            <stateContainer:StateContainer.Conditions>
+
+                                <!-- TWEETS FOUND -->
+                                <stateContainer:StateCondition State="TweetsFound">
+                                
+                                    <Label Text="Some tweets"/>
+
+                                </stateContainer:StateCondition>
+
+                                <!-- NOT TWEETS FOUND -->
+                                <stateContainer:StateCondition State="NoTweetsFound">
+
+                                    <StackLayout VerticalOptions="EndAndExpand"
+                                                 Spacing="23">
+
+                                        <Image HeightRequest="84"
+                                               Source="{DynamicResource pic_owl_blue_big}"/>
+
+                                        <StackLayout>
+
+                                            <Label HorizontalOptions="Center"
+                                                   Style="{DynamicResource tstyle_i5}"
+                                                   Text="{xct:Translate NoResultsFor}"></Label>
+
+
+                                            <Label HorizontalOptions="Center"
+                                                   Style="{DynamicResource tstyle_i5}"
+                                                   Text="{Binding SearchQuery, StringFormat='&quot;{0}&quot;'}"/>
+                                            
+                                        </StackLayout>
+
+                                    </StackLayout>
+
+                                </stateContainer:StateCondition>
+                                
+                            </stateContainer:StateContainer.Conditions>
+                            
+                        </stateContainer:StateContainer>
+                        
+                    </stateContainer:StateCondition>
+
+                </stateContainer:StateContainer.Conditions>
+
+            </stateContainer:StateContainer>
 
         </StackLayout>
 

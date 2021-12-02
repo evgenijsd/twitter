@@ -16,6 +16,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Fonts\Ubuntu-Bold.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-BoldItalic.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-Italic.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-Light.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-LightItalic.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-Medium.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-MediumItalic.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-Bold.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-BoldItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-Italic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-Light.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-LightItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-Medium.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-MediumItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Prism.Unity.Forms" Version="8.1.97" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
@@ -29,18 +51,11 @@
   <ItemGroup>
     <Folder Include="Behaviors\" />
     <Folder Include="Converters\" />
-    <Folder Include="Models\" />
     <Folder Include="Extensions\" />
-    <Folder Include="Resources\Fonts\" />
     <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Resources\Strings\Strings.ru.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Strings.ru.resx</DependentUpon>
-    </Compile>
     <Compile Update="Resources\Strings\Strings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -49,10 +64,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Resources\Strings\Strings.ru.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.ru.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Strings\Strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>

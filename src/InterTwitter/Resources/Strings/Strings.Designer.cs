@@ -68,5 +68,41 @@ namespace InterTwitter.Resources.Strings {
                 return ResourceManager.GetString("Hello", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No results for.
+        /// </summary>
+        internal static string NoResultsFor {
+            get {
+                return ResourceManager.GetString("NoResultsFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Popular theme.
+        /// </summary>
+        internal static string PopularTheme {
+            get {
+                return ResourceManager.GetString("PopularTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Posts.
+        /// </summary>
+        internal static string Posts {
+            get {
+                return ResourceManager.GetString("Posts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        internal static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
     }
 }

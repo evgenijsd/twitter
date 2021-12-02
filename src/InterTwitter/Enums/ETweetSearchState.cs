@@ -2,7 +2,7 @@
 {
     public enum ETweetSearchState
     {
-        Active,
         NotActive,
+        Active,
     }
 }
