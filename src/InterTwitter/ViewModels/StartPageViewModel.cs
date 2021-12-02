@@ -81,6 +81,20 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _isWrongEmail, value);
         }
 
+        private bool _isVisibleButton = false;
+        public bool IsVisibleButton
+        {
+            get => _isVisibleButton;
+            set => SetProperty(ref _isVisibleButton, value);
+        }
+
+        private bool _isUnVisibleButton = false;
+        public bool IsUnVisibleButton
+        {
+            get => _isUnVisibleButton;
+            set => SetProperty(ref _isUnVisibleButton, value);
+        }
+
         private string _email = string.Empty;
         public string Email
         {
@@ -115,6 +129,11 @@ namespace InterTwitter.ViewModels
                 {
                     IsWrongEmail = false;
                 }
+            }
+
+            if (args.PropertyName == nameof(IsVisibleButton))
+            {
+                IsUnVisibleButton = !IsVisibleButton;
             }
         }
 

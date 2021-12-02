@@ -39,8 +39,8 @@
                      HeightRequest="30"
                      WidthRequest="30"
                      Aspect="AspectFit"
-                 VerticalOptions="Center"
-                 HorizontalOptions="Center"
+                     VerticalOptions="Center"
+                     HorizontalOptions="Center"
                      BackgroundColor="Transparent"/>
     <ImageButton Grid.Column="2" Grid.Row="0" Margin="0,0,10,0"
                  BackgroundColor="Transparent"

@@ -3,6 +3,8 @@
                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                         xmlns:prism="clr-namespace:Prism.Unity;assembly=Prism.Unity.Forms"
                         xmlns:controls="clr-namespace:InterTwitter.Controls"
+                        xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+                        android:Application.WindowSoftInputModeAdjust="Resize"
                         x:Class="InterTwitter.App">
     <prism:PrismApplication.Resources>
 

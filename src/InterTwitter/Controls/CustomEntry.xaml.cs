@@ -136,6 +136,19 @@ namespace InterTwitter.Controls
             set => SetValue(IsFocusedVisibleProperty, value);
         }
 
+        public static readonly BindableProperty IsFocusedButtonProperty = BindableProperty.Create(
+            propertyName: nameof(IsFocusedButton),
+            returnType: typeof(bool),
+            declaringType: typeof(CustomEntry),
+            defaultValue: false,
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public bool IsFocusedButton
+        {
+            get => (bool)GetValue(IsFocusedButtonProperty);
+            set => SetValue(IsFocusedButtonProperty, value);
+        }
+
         public static readonly BindableProperty IsButtonEyeVisibleProperty = BindableProperty.Create(
             propertyName: nameof(IsButtonEyeVisible),
             returnType: typeof(bool),
@@ -309,6 +322,7 @@ namespace InterTwitter.Controls
             }
 
             IsFocusedVisible = true;
+            IsFocusedButton = true;
             CustomEntryLocal.Placeholder = string.Empty;
 
             return Task.CompletedTask;
@@ -326,6 +340,7 @@ namespace InterTwitter.Controls
                 IsFocusedVisible = false;
             }
 
+            IsFocusedButton = false;
             CustomEntryLocal.Placeholder = Placeholder;
 
             return Task.CompletedTask;

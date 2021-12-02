@@ -11,27 +11,26 @@
                 <RowDefinition Height="170"/>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="100"/>
-                <RowDefinition Height="90"/>
-                <RowDefinition Height="100"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-                <Grid Grid.Row="0" ColumnSpacing="0">
+            <Grid Grid.Row="0" ColumnSpacing="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="40"/>
                 </Grid.ColumnDefinitions>
-                    <Image Source="pic_owl_blue_small.png" Grid.Column="1" 
+                <Image Source="pic_owl_blue_small.png" Grid.Column="1" 
                            HorizontalOptions="CenterAndExpand" 
                            VerticalOptions="Start" Aspect="AspectFill" 
                            Margin="0,16,0,0" 
                            HeightRequest="73" WidthRequest="50"/>
-                    <Label Text="{res:Translate GetYourAccount}"  Grid.Column="1" 
+                <Label Text="{res:Translate GetYourAccount}"  Grid.Column="1" 
                            FontSize="24" FontAttributes="Bold" 
                            TextColor="{StaticResource LightPrimaryColor}" 
                            Margin="0,100,0,0" 
                            HorizontalOptions="CenterAndExpand" />
-                 </Grid>
+            </Grid>
             <Label Grid.Row="1" 
                    Margin="24,0,0,0"
                    Text="{res:Translate Name}"
@@ -44,22 +43,25 @@
                                   ClearImageSource="ic_clear_gray.png"
                                   IsVisible="true"
                                   IsFocusedVisible="{Binding IsVisibleName}"
+                                  IsFocusedButton="{Binding IsVisibleButton}"
                                   Placeholder="{res:Translate Name}"/>
             <Label Grid.Row="1" Text="{res:Translate PleaseName}" 
                        FontSize="15"
                        Margin="20,65,0,0" 
                        Style="{StaticResource errorLabel}"
                        IsVisible="{Binding IsWrongName}"/>
-            
-                <Label Grid.Row="2" Text="{res:Translate Email}" 
+
+            <Label Grid.Row="2" Text="{res:Translate Email}" 
                            FontSize="16"
                            Margin="24,0,0,0"
                        IsVisible="{Binding IsVisibleEmail}"
                            Style="{StaticResource baseMapLabel}" />
-                <controls:CustomEntry Grid.Row="2" Text="{Binding Email}" Margin="20,18,20,0" 
-                                      ClearImageSource="ic_clear_gray.png"
-                                      IsFocusedVisible="{Binding IsVisibleEmail}"
-                                         Placeholder="{res:Translate Email}" />
+            <controls:CustomEntry Grid.Row="2" Text="{Binding Email}" 
+                                  Margin="20,18,20,0"
+                                  ClearImageSource="ic_clear_gray.png"
+                                  IsFocusedVisible="{Binding IsVisibleEmail}"
+                                  IsFocusedButton="{Binding IsVisibleButton}"
+                                  Placeholder="{res:Translate Email}" />
             <Label Grid.Row="2" 
                        Text="{res:Translate WrongEmail}"
                        FontSize="15" 
@@ -68,15 +70,31 @@
                        IsVisible="{Binding IsWrongEmail}" />
 
             <StackLayout Grid.Row="3" HorizontalOptions="Center" Margin="0,20,0,0">
-                <Button Text="{res:Translate SignUp}" WidthRequest="218" CornerRadius="25" HeightRequest="50"
-                            Command="{Binding CreateCommand}"
-                            Style="{StaticResource baseButton}"/>
+                <Button Text="{res:Translate SignUp}" 
+                        WidthRequest="218" CornerRadius="25" HeightRequest="50"
+                        Command="{Binding CreateCommand}"
+                        Style="{StaticResource baseButton}" 
+                        IsVisible="{Binding IsUnVisibleButton}"/>
             </StackLayout>
 
             <StackLayout Grid.Row="4" HorizontalOptions="Center" Margin="0,0,0,0" >
-                <Button Command="{Binding LogInCommand}" WidthRequest="218"
-                                 Text="{res:Translate LogIn}" BorderColor="Transparent"
-                                 Style="{StaticResource inverseButtonStyle}"/>
+                <Button Command="{Binding LogInCommand}" 
+                        WidthRequest="218"
+                        Text="{res:Translate LogIn}" 
+                        BorderColor="Transparent"
+                        Style="{StaticResource inverseButtonStyle}" 
+                        IsVisible="{Binding IsUnVisibleButton}" />
+                
+                <Button VerticalOptions="EndAndExpand"
+                        HorizontalOptions="Fill"
+                        WidthRequest="400"
+                        BackgroundColor="CornflowerBlue"
+                        HeightRequest="60"
+                        TextColor="White"
+                        CornerRadius="0"
+                        Grid.Row="5"
+                        IsVisible="{Binding IsVisibleButton}"
+                        Text="Login"/>
             </StackLayout>
         </Grid>
     </view:BaseContentPage.Content>
