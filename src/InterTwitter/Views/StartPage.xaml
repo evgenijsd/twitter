@@ -77,24 +77,24 @@
                         IsVisible="{Binding IsUnVisibleButton}"/>
             </StackLayout>
 
-            <StackLayout Grid.Row="4" HorizontalOptions="Center" Margin="0,0,0,0" >
+            <StackLayout Grid.Row="4" HorizontalOptions="Center" Margin="0,20,0,0" >
                 <Button Command="{Binding LogInCommand}" 
                         WidthRequest="218"
                         Text="{res:Translate LogIn}" 
                         BorderColor="Transparent"
                         Style="{StaticResource inverseButtonStyle}" 
                         IsVisible="{Binding IsUnVisibleButton}" />
-                
-                <Button VerticalOptions="EndAndExpand"
+
+                <Button Text="{res:Translate SignUp}" 
+                        Command="{Binding CreateCommand}"
+                        VerticalOptions="EndAndExpand"
                         HorizontalOptions="Fill"
-                        WidthRequest="400"
-                        BackgroundColor="CornflowerBlue"
-                        HeightRequest="60"
-                        TextColor="White"
+                        WidthRequest="3000"
+                        HeightRequest="50"
                         CornerRadius="0"
-                        Grid.Row="5"
-                        IsVisible="{Binding IsVisibleButton}"
-                        Text="Login"/>
+                        Grid.Row="4"
+                        Style="{StaticResource baseButton}" 
+                        IsVisible="{Binding IsVisibleButton}"/>
             </StackLayout>
         </Grid>
     </view:BaseContentPage.Content>

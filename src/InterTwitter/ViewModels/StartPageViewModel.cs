@@ -88,7 +88,7 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _isVisibleButton, value);
         }
 
-        private bool _isUnVisibleButton = false;
+        private bool _isUnVisibleButton = true;
         public bool IsUnVisibleButton
         {
             get => _isUnVisibleButton;
