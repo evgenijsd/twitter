@@ -10,11 +10,11 @@ namespace InterTwitter.Services.Registration
 {
     public interface IRegistrationService
     {
-        Task<int> UserAddAsync(User user);
-        Task<AOResult<int>> CheckTheCorrectEmailAsync(string name, string email);
+        Task<AOResult<int>> UserAddAsync(UserModel user);
+        Task<AOResult<ECheckEnter>> CheckTheCorrectEmailAsync(string email);
         ECheckEnter CheckTheCorrectPassword(string password, string confirmPassword);
         ECheckEnter CheckCorrectEmail(string email);
         ECheckEnter CheckCorrectName(string name);
-        List<User> GetUsers();
+        List<UserModel> GetUsers();
     }
 }

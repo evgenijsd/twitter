@@ -37,12 +37,13 @@
                    Text="{res:Translate Name}"
                    FontSize="16"
                    Style="{StaticResource baseMapLabel}"
-                   IsVisible="{Binding Name}"/>
+                   IsVisible="{Binding IsVisibleName}"/>
             <controls:CustomEntry Grid.Row="1"
                                   Margin="20,18,20,0"
                                   Text="{Binding Name}"
                                   ClearImageSource="ic_clear_gray.png"
                                   IsVisible="true"
+                                  IsFocusedVisible="{Binding IsVisibleName}"
                                   Placeholder="{res:Translate Name}"/>
             <Label Grid.Row="1" Text="{res:Translate PleaseName}" 
                        FontSize="15"
@@ -53,9 +54,11 @@
                 <Label Grid.Row="2" Text="{res:Translate Email}" 
                            FontSize="16"
                            Margin="24,0,0,0"
+                       IsVisible="{Binding IsVisibleEmail}"
                            Style="{StaticResource baseMapLabel}" />
                 <controls:CustomEntry Grid.Row="2" Text="{Binding Email}" Margin="20,18,20,0" 
                                       ClearImageSource="ic_clear_gray.png"
+                                      IsFocusedVisible="{Binding IsVisibleEmail}"
                                          Placeholder="{res:Translate Email}" />
             <Label Grid.Row="2" 
                        Text="{res:Translate WrongEmail}"

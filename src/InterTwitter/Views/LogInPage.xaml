@@ -28,12 +28,13 @@
                    Margin="24,0,0,0"
                    Text="{res:Translate Email}"
                    FontSize="16"
+                   IsVisible="{Binding IsVisibleEmail}"
                    Style="{StaticResource baseMapLabel}"/>
             <controls:CustomEntry Grid.Row="1"
                                   Margin="20,18,20,0"
                                       Text="{Binding Email}"
+                                  IsFocusedVisible="{Binding IsVisibleEmail}"
                                   ClearImageSource="ic_clear_gray.png"
-                                  IsVisible="true"
                                       Placeholder="{res:Translate Email}"/>
             <Label Grid.Row="1" Text="{res:Translate WrongEmail}" 
                        FontSize="15"
@@ -44,16 +45,18 @@
             <Label Grid.Row="2" Text="{res:Translate Password}" 
                            FontSize="16"
                            Margin="24,0,0,0"
+                   IsVisible="{Binding IsVisiblePassword}"
                            Style="{StaticResource baseMapLabel}" />
             <controls:CustomEntry Grid.Row="2" Text="{Binding Password}" Margin="20,18,20,0" EyeOnImageSource="ic_eye_blue.png" EyeOffImageSource="ic_eye_gray.png"
                                       ClearImageSource="ic_clear_gray.png"
+                                  IsFocusedVisible="{Binding IsVisiblePassword}"
                                          IsPassword="True" Placeholder="{res:Translate Password}" />
             <Label Grid.Row="2" 
                        Text="{res:Translate PasswordIncorrect}"
                        FontSize="15" 
                        Style="{StaticResource errorLabel}"
                        Margin="20,65,0,0"     
-                       IsVisible="{Binding IsIncorrectPassword}" />
+                       IsVisible="{Binding IsWrongPassword}" />
 
             <StackLayout Grid.Row="3" HorizontalOptions="Center" Margin="0,20,0,0">
                 <Button Text="{res:Translate LogIn}" WidthRequest="218" CornerRadius="25" HeightRequest="50"

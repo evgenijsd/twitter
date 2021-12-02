@@ -14,38 +14,41 @@ namespace InterTwitter.Services.Registration
         private const int MAX_LENGTH_EMAIL = 64;
         private const int MIN_LENGTH_NAME = 2;
         private const int MIN_PASSWORD_LENGTH = 6;
-        private List<User> _users;
+        private List<UserModel> _users;
 
         public RegistrationService()
         {
-            _users = new List<User>
+            _users = new List<UserModel>
             {
-                new User { Id = 1, Name = "Gabriela Flores", Email = "aaa@aaa.aaa", Password = "1234567A", UserPhoto = "pic_profile_big" },
-                new User { Id = 2, Name = "Yuki Sato", Email = "bbb@bbb.bbb", Password = "1234567A", UserPhoto = "pic_profile_big" },
-                new User { Id = 3, Name = "John Dou", Email = "bbb@bbb.bbb", Password = "1234567A", UserPhoto = "pic_profile_big" },
+                new UserModel { Id = 1, Name = "Gabriela", Email = "aaa@aaa.aaa", Password = "1234567A", UserPhoto = "pic_profile_big" },
+                new UserModel { Id = 2, Name = "Yuki", Email = "bbb@bbb.bbb", Password = "1234567A", UserPhoto = "pic_profile_big" },
+                new UserModel { Id = 3, Name = "John", Email = "ccc@ccc.ccc", Password = "1234567A", UserPhoto = "pic_profile_big" },
             };
         }
 
         #region -- Public helpers --
-        public List<User> GetUsers()
+        public List<UserModel> GetUsers()
         {
             return _users;
         }
 
-        public async Task<AOResult<int>> CheckTheCorrectEmailAsync(string name, string email)
+        public async Task<AOResult<ECheckEnter>> CheckTheCorrectEmailAsync(string email)
         {
-            var result = new AOResult<int>();
+            var result = new AOResult<ECheckEnter>();
             try
             {
-                var user = _users.FirstOrDefault(x => x.Email == email);
+                var user = _users.FirstOrDefault(x => x.Email.ToLower() == email.ToLower());
                 ECheckEnter check = ECheckEnter.ChecksArePassed;
-                check = CheckCorrectEmail(email);
                 if (user != null)
                 {
                     check = ECheckEnter.LoginExist;
                 }
+                else
+                {
+                    result.SetFailure();
+                }
 
-                result.SetSuccess((int)check);
+                result.SetSuccess(check);
             }
             catch (Exception ex)
             {
@@ -78,16 +81,15 @@ namespace InterTwitter.Services.Registration
             const string validEmail = @"\A[^@]+@([^@\.]+\.)+[^@\.]+\z";
             ECheckEnter result = ECheckEnter.ChecksArePassed;
 
+            int s = email.IndexOf('@');
+            if (s > MAX_LENGTH_EMAIL || (email.Length - s) > MAX_LENGTH_EMAIL)
+            {
+                result = ECheckEnter.EmailLengthNotValid;
+            }
+
             if (!Regex.IsMatch(email, validEmail))
             {
                 result = ECheckEnter.EmailNotValid;
-            }
-
-            int s = email.IndexOf('@');
-            if (s > MAX_LENGTH_EMAIL || (email.Length - s) > MAX_LENGTH_EMAIL
-                || email.Length - 1 == s || s == 0)
-            {
-                result = ECheckEnter.EmailLengthNotValid;
             }
 
             if (s == -1)
@@ -121,17 +123,26 @@ namespace InterTwitter.Services.Registration
             return check;
         }
 
-        public async Task<int> UserAddAsync(User user)
+        public async Task<AOResult<int>> UserAddAsync(UserModel user)
         {
-            int result = 0;
+            var result = new AOResult<int>();
             try
             {
-                user.Id = _users.Count();
+                user.Id = _users.Count() + 1;
                 _users.Add(user);
-                result = _users.Last().Id;
+                int id = _users.Last().Id;
+                if (id > 0)
+                {
+                    result.SetSuccess(id);
+                }
+                else
+                {
+                    result.SetFailure();
+                }
             }
-            catch
+            catch (Exception ex)
             {
+                result.SetError($"Exception: {nameof(UserAddAsync)}", "Wrong result", ex);
             }
 
             return result;

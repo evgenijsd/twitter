@@ -4,7 +4,7 @@ using System.Text;
 
 namespace InterTwitter.Models
 {
-    public class User : IEntity
+    public class UserModel : IEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

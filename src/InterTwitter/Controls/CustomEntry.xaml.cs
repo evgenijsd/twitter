@@ -321,7 +321,11 @@ namespace InterTwitter.Controls
                 IsButtonEyeVisible = false;
             }
 
-            IsFocusedVisible = false;
+            if (string.IsNullOrEmpty(Text))
+            {
+                IsFocusedVisible = false;
+            }
+
             CustomEntryLocal.Placeholder = Placeholder;
 
             return Task.CompletedTask;

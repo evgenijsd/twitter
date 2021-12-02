@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using InterTwitter.Helpers.ProcessHelpers;
+using InterTwitter.Models;
 
 namespace InterTwitter.Services.Autorization
 {
@@ -10,6 +11,6 @@ namespace InterTwitter.Services.Autorization
     {
         int UserId { get; set; }
 
-        Task<AOResult<int>> CheckUserAsync(string login, string password);
+        Task<AOResult<UserModel>> CheckUserAsync(string login, string password);
     }
 }

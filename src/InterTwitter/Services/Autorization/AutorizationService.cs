@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using InterTwitter.Helpers.ProcessHelpers;
+using InterTwitter.Models;
 using InterTwitter.Services.Registration;
 using Xamarin.Essentials;
 
@@ -26,16 +27,16 @@ namespace InterTwitter.Services.Autorization
         }
         #endregion
         #region -- Public helpers --
-        public async Task<AOResult<int>> CheckUserAsync(string email, string password)
+        public async Task<AOResult<UserModel>> CheckUserAsync(string email, string password)
         {
-            var result = new AOResult<int>();
+            var result = new AOResult<UserModel>();
 
             try
             {
-                var user = _registrationService.GetUsers().FirstOrDefault(x => x.Email == email);
-                if (user != null && user.Email == email && user.Password == password)
+                var user = _registrationService.GetUsers().FirstOrDefault(x => x.Email.ToLower() == email.ToLower());
+                if (user != null && user.Email.ToLower() == email.ToLower() && user.Password == password)
                 {
-                    result.SetSuccess(user.Id);
+                    result.SetSuccess(user);
                 }
                 else
                 {
