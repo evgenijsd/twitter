@@ -1,17 +1,80 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <views:BaseContentPage  xmlns="http://xamarin.com/schemas/2014/forms"
                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                        xmlns:statecontainer="clr-namespace:InterTwitter.Controls.StateContainer"
-                        xmlns:views="clr-namespace:InterTwitter.Views"
-             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-                        
+                        xmlns:stateContainer="clr-namespace:InterTwitter.Controls.StateContainer"
+                        xmlns:views="clr-namespace:InterTwitter.Views" xmlns:viewmodels="clr-namespace:InterTwitter.ViewModels" x:DataType="viewmodels:TweetSearchPageViewModel"
                         x:Class="InterTwitter.Views.TweetSearchPage">
 
     <views:BaseContentPage.Content>
 
-        <StackLayout>
+        <StackLayout Spacing="0">
 
-            <Label Text="{xct:Translate Hello}"/>
+            <Grid RowDefinitions="48"
+                  ColumnDefinitions="0.2*, *"
+                  Padding="12, 9, 12, 11">
+
+                <!-- AVATAR/BACK ICON -->
+                <stateContainer:StateContainer Grid.Column="0"
+                                               State="{Binding TweetSearchState}">
+
+                    <stateContainer:StateContainer.Conditions>
+
+                        <stateContainer:StateCondition State="NotActive">
+
+                            <Image Grid.Column="0"
+                                   Source="{DynamicResource pic_profile_small}"/>
+
+                        </stateContainer:StateCondition>
+
+                        <stateContainer:StateCondition State="Active">
+
+                            <Image Grid.Column="0"
+                                   Source="{DynamicResource ic_left_gray}"/>
+
+                        </stateContainer:StateCondition>
+
+                    </stateContainer:StateContainer.Conditions>
+
+                </stateContainer:StateContainer>
+
+                <!-- SEARCH LINE -->
+                <Frame Grid.Column="1"
+                       Padding="12, 2"
+                       HasShadow="False"
+                       CornerRadius="25"
+                       BackgroundColor="{DynamicResource appcolor_i6}">
+
+                    <Entry BackgroundColor="Transparent"
+                           Margin="0"
+                           FontSize="{DynamicResource tsize_i6}"
+                           FontFamily="Ubuntu-Bold"
+                           Placeholder="Search"
+                           PlaceholderColor="{DynamicResource appcolor_i4}"/>
+
+                </Frame>
+
+            </Grid>
+
+            <Button Text="Active"
+                    Command="{Binding StartSearchCommand}"/>
+
+            <Button Text="Active"
+                    Command="{Binding StopSearchCommand}"/>
+
+            <BoxView Grid.Row="1" Style="{DynamicResource SeparatorStyle}"/>
+
+            <!-- NOT RESULTS STATE -->
+            <StackLayout VerticalOptions="CenterAndExpand"
+                         Spacing="23">
+
+                <Image HeightRequest="84"
+                       Source="{DynamicResource pic_owl_blue_big}"/>
+
+                <Label HorizontalOptions="Center"
+                       Style="{DynamicResource tstyle_i5}"
+                       Text="No results for"/>
+
+            </StackLayout>
 
         </StackLayout>
 

@@ -13,11 +13,11 @@ namespace InterTwitter.ViewModels
 
         #region --- Public properties ---
 
-        private ETweetSearchState _tweetSearchPageState;
-        public ETweetSearchState TweetSearchPageState
+        private ETweetSearchState _tweetSearchState;
+        public ETweetSearchState TweetSearchState
         {
-            get => _tweetSearchPageState;
-            set => SetProperty(ref _tweetSearchPageState, value);
+            get => _tweetSearchState;
+            set => SetProperty(ref _tweetSearchState, value);
         }
 
         private ETweetSearchResult _tweetSearchResult;
@@ -39,13 +39,13 @@ namespace InterTwitter.ViewModels
 
         private Task StartSearchCommandTapAsync()
         {
-            TweetSearchPageState = ETweetSearchState.Active;
+            TweetSearchState = ETweetSearchState.Active;
             return Task.CompletedTask;
         }
 
         private Task StopSearchCommandTapAsync()
         {
-            TweetSearchPageState = ETweetSearchState.NotActive;
+            TweetSearchState = ETweetSearchState.NotActive;
             return Task.CompletedTask;
         }
 

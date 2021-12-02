@@ -1,4 +1,5 @@
 ﻿using InterTwitter.Resources.Strings;
+using InterTwitter.ViewModels;
 using InterTwitter.Views;
 using Prism.Ioc;
 using Prism.Unity;
@@ -24,7 +25,7 @@ namespace InterTwitter
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage>();
-            containerRegistry.RegisterForNavigation<TweetSearchPage>();
+            containerRegistry.RegisterForNavigation<TweetSearchPage, TweetSearchPageViewModel>();
         }
 
         protected override async void OnInitialized()

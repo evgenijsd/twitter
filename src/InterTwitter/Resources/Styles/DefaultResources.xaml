@@ -94,4 +94,17 @@
         <Setter Property="TextColor" Value="{DynamicResource appcolor_i4}"/>
     </Style>
 
+    <Style x:Key="fhd" TargetType="Label">
+        <Setter Property="TextColor" Value="AntiqueWhite"/>
+    </Style>
+
+
+    <Style x:Key="SeparatorStyle" TargetType="BoxView" >
+        <Setter Property="HorizontalOptions" Value="Start"/>
+        <Setter Property="VerticalOptions"   Value="Center"/>
+        <Setter Property="HeightRequest"     Value="1"/>
+        <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+        <Setter Property="Color" Value="{DynamicResource Key=appcolor_i6}"></Setter>
+    </Style>
+
 </ResourceDictionary>
