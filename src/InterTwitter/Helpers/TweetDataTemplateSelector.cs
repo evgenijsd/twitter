@@ -11,35 +11,36 @@ namespace InterTwitter.Helpers
     {
         #region -- Public properties
 
-        public DataTemplate VideoTemplate { get; set; }
+        public DataTemplate VideoTweetDataTemplate { get; set; }
 
-        public DataTemplate GifTemplate { get; set; }
+        public DataTemplate GifTweetDataTemplate { get; set; }
 
-        public DataTemplate ImageTemplate { get; set; }
+        public DataTemplate ImageTweetDataTemplate { get; set; }
 
-        public DataTemplate TextTemplate { get; set; }
+        public DataTemplate TextTweetDataTemplate { get; set; }
 
         #endregion
 
         #region -- Overrides --
+
         protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
         {
             var tweet = item as BaseTweetViewModel;
 
             if (tweet?.Media == TweetType.VideoTweet.ToString())
             {
-                return VideoTemplate;
+                return VideoTweetDataTemplate;
             }
             else if (tweet?.Media == TweetType.ImageTweet.ToString())
             {
-                return ImageTemplate;
+                return ImageTweetDataTemplate;
             }
             else if (tweet?.Media == TweetType.GifTweet.ToString())
             {
-                return GifTemplate;
+                return GifTweetDataTemplate;
             }
 
-            return TextTemplate;
+            return TextTweetDataTemplate;
         }
 
         #endregion

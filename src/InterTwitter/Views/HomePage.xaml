@@ -3,43 +3,11 @@
                       xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
                       xmlns:controls="clr-namespace:InterTwitter.Controls" 
-                      xmlns:helpers="clr-namespace:InterTwitter.Helpers"
+                      xmlns:helpers="clr-namespace:InterTwitter.Helpers" 
+                      xmlns:resources="clr-namespace:InterTwitter.Resources"
                       x:Class="InterTwitter.Views.HomePage">
-    
     <view:BaseContentPage.Resources>
-        <ResourceDictionary>
-            <DataTemplate x:Key="VideoTemplate">
-                <StackLayout Orientation="Horizontal">
-                    <Image Source="{Binding UserAvatar}" WidthRequest="50" HeightRequest="50" HorizontalOptions="Start" />
-                    <Label Text="{Binding Text}" TextColor="Black"/>
-                    
-                </StackLayout>
-            </DataTemplate>
-            
-            <DataTemplate x:Key="ImageTemplate">
-                <StackLayout Orientation="Horizontal">
-                    <Image Source="{Binding UserAvatar}" WidthRequest="50" HeightRequest="50" HorizontalOptions="Start" />
-                    <Label Text="{Binding Text}" TextColor="Black"/>
-
-                </StackLayout>
-            </DataTemplate>
-            
-            <DataTemplate x:Key="GifTemplate">
-                <Label Text="{Binding Text}" TextColor="Aqua"/>
-            </DataTemplate>
-            
-            <DataTemplate x:Key="TextTemplate">
-                <Label Text="{Binding Text}" TextColor="Green"/>
-            </DataTemplate>
-            
-            <helpers:TweetDataTemplateSelector 
-                x:Key="tweetSelector"
-                VideoTemplate="{StaticResource VideoTemplate}"  
-                ImageTemplate="{StaticResource ImageTemplate}" 
-                GifTemplate="{StaticResource GifTemplate}" 
-                TextTemplate="{StaticResource TextTemplate}" />
-
-        </ResourceDictionary>
+        <resources:TweetDataTemplates/>
     </view:BaseContentPage.Resources>
     <view:BaseContentPage.Content>
         
@@ -61,8 +29,7 @@
 
                     <StackLayout Orientation="Vertical">
 
-                        <CollectionView ItemsSource="{Binding Tweets}"
-                                        ItemTemplate="{StaticResource tweetSelector}"/>
+                       
                     </StackLayout>
                 </Grid>
             </Grid>

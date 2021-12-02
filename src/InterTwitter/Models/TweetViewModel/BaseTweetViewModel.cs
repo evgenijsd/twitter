@@ -32,8 +32,15 @@ namespace InterTwitter.Models.TweetViewModel
         private string _userName;
         public string UserName
         {
-            get => UserName;
+            get => _userName;
             set => SetProperty(ref _userName, value);
+        }
+
+        private List<string> _images;
+        public List<string> Images
+        {
+            get => _images;
+            set => SetProperty(ref _images, value);
         }
 
         private string _userAvatar;

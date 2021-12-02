@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DataTemplate xmlns="http://xamarin.com/schemas/2014/forms"
+              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              x:Class="InterTwitter.Views.DataTemplates.ImageTweetDataTemplate"
+              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
+              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations">
+
+    <StackLayout Orientation="Horizontal" Padding="12, 0, 12, 0">
+
+        <StackLayout Orientation="Vertical">
+            <Label Text="{Binding UserName}" TextColor="Black" FontAttributes="Bold" />
+
+            <Label Text="{Binding Text}" TextColor="Red" MaxLines="5" LineBreakMode="TailTruncation"/>
+
+            <ListView x:Name="images" HasUnevenRows="True" ItemsSource="{Binding Images}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ImageCell ImageSource="{Binding .}" Height="120"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+        </StackLayout>
+    </StackLayout>
+</DataTemplate>
