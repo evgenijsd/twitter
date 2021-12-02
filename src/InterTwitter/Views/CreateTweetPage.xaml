@@ -3,29 +3,45 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                       xmlns:controls="clr-namespace:InterTwitter.Controls"
                       xmlns:view="clr-namespace:InterTwitter.Views"
-                      x:Class="InterTwitter.Views.CreateTweetPage"
-                      Padding="0">
+                      x:Class="InterTwitter.Views.CreateTweetPage">
 
     <view:BaseContentPage.Content>
 
-        <StackLayout Padding="0"
-                     Margin="0"
-                     Spacing="0">
-            
-            <controls:CircleProgressBar HeightRequest="300"
-                                        Text=":D"
-                                        TextColor="Red"
+        <StackLayout>
+
+            <controls:CircleProgressBar HeightRequest="24"
+                                        Text="{Binding CircleProgressBarText}"
+                                        TextColor="{Binding CircleProgressBarTextColor}"
+                                        FontScale="{Binding CircleProgressBarFontScale}"
                                         FontFamily="Arial"
-                                        Value="25"
+                                        FontAttributes="{Binding CircleProgressBarFontAttributes}"
+                                        Value="{Binding CircleProgressBarValue}"
                                         Minimum="0"
-                                        Maximum="100"
-                                        LineWidth="50"
-                                        ProgressLineColor="Blue"
-                                        BackgroundLineColor="Silver"
+                                        Maximum="30"
+                                        LineWidth="17"
+                                        ProgressLineColor="{Binding CircleProgressBarProgressLineColor}"
+                                        BackgroundLineColor="Gray"
                                         BackgroundProgressColor="White"
-                                        BackgroundColor="Green"
-                                        Padding="0"
-                                        Margin="0"/>
+                                        BackgroundColor="Transparent"
+                                        Padding="20"/>
+
+            <controls:CircleProgressBar HeightRequest="100"
+                                        Text="{Binding CircleProgressBarText}"
+                                        TextColor="{Binding CircleProgressBarTextColor}"
+                                        FontScale="{Binding CircleProgressBarFontScale}"
+                                        FontFamily="Arial"
+                                        FontAttributes="{Binding CircleProgressBarFontAttributes}"
+                                        Value="{Binding CircleProgressBarValue}"
+                                        Minimum="0"
+                                        Maximum="30"
+                                        LineWidth="17"
+                                        ProgressLineColor="{Binding CircleProgressBarProgressLineColor}"
+                                        BackgroundLineColor="Gray"
+                                        BackgroundProgressColor="White"
+                                        BackgroundColor="Transparent"
+                                        Padding="20"/>
+
+            <Button Text="Refresh" Command="{Binding OnRefresh}"/>
 
         </StackLayout>
         

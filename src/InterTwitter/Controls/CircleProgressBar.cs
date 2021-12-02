@@ -2,6 +2,7 @@
 using SkiaSharp.Views.Forms;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Xamarin.Forms;
 
@@ -83,6 +84,19 @@ namespace InterTwitter.Controls
             set => SetValue(TextColorProperty, value);
         }
 
+        public static readonly BindableProperty FontScaleProperty = BindableProperty.Create(
+            propertyName: nameof(FontScale),
+            returnType: typeof(float),
+            declaringType: typeof(CircleProgressBar),
+            defaultValue: 1f,
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public float FontScale
+        {
+            get => (float)GetValue(FontScaleProperty);
+            set => SetValue(FontScaleProperty, value);
+        }
+
         public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(
             propertyName: nameof(FontFamily),
             returnType: typeof(string),
@@ -94,6 +108,19 @@ namespace InterTwitter.Controls
         {
             get => (string)GetValue(FontFamilyProperty);
             set => SetValue(FontFamilyProperty, value);
+        }
+
+        public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(
+            propertyName: nameof(FontAttributes),
+            returnType: typeof(SKTypefaceStyle),
+            declaringType: typeof(CircleProgressBar),
+            defaultValue: SKTypefaceStyle.Normal,
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public SKTypefaceStyle FontAttributes
+        {
+            get => (SKTypefaceStyle)GetValue(FontAttributesProperty);
+            set => SetValue(FontAttributesProperty, value);
         }
 
         public static readonly BindableProperty LineWidthProperty = BindableProperty.Create(
@@ -150,6 +177,33 @@ namespace InterTwitter.Controls
 
         #endregion
 
+        #region -- Overrides --
+
+        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            base.OnPropertyChanged(propertyName);
+
+            switch (propertyName)
+            {
+                case nameof(Value):
+                case nameof(Minimum):
+                case nameof(Maximum):
+                case nameof(Text):
+                case nameof(TextColor):
+                case nameof(FontScale):
+                case nameof(FontFamily):
+                case nameof(FontAttributes):
+                case nameof(LineWidth):
+                case nameof(ProgressLineColor):
+                case nameof(BackgroundLineColor):
+                case nameof(BackgroundProgressColor):
+                    _canvasView.InvalidateSurface();
+                    break;
+            }
+        }
+
+        #endregion
+
         #region -- Private methods --
 
         private void OnCanvasViewPaintSurface(object sender, SKPaintSurfaceEventArgs args)
@@ -162,9 +216,12 @@ namespace InterTwitter.Controls
 
             SKPoint center = new SKPoint(info.Width / 2, info.Height / 2);
 
-            var lineWidthPercent = LineWidth * info.Height / 200;
+            var minRadius = Math.Min(info.Width, info.Height);
+
+            var lineWidthPercent = LineWidth * minRadius / 200;
             var radiusWithLine = center.Y - (lineWidthPercent / 2);
             var innerRadius = radiusWithLine - (lineWidthPercent / 2);
+            var maxWidthText = (float)Math.Sqrt(2 * innerRadius * innerRadius);
 
             SKPaint paint = new SKPaint
             {
@@ -175,13 +232,27 @@ namespace InterTwitter.Controls
 
             canvas.DrawCircle(center.X, center.Y, radiusWithLine, paint);
 
+            paint.Style = SKPaintStyle.Fill;
+            paint.Color = BackgroundProgressColor.ToSKColor();
+            canvas.DrawCircle(center.X, center.Y, innerRadius, paint);
+
             using (SKPath path = new SKPath())
             {
-                var range = Maximum - Minimum;
-                var progress = Value - Minimum;
-                var limit = (360 * progress / range) - 90;
+                if (Value < Minimum)
+                {
+                    Value = Minimum;
+                }
 
-                for (float angle = -90; angle < limit; angle += 0.5f)
+                if (Value > Maximum)
+                {
+                    Value = Maximum;
+                }
+
+                float range = Maximum - Minimum;
+                float progress = Value - Minimum;
+                float limit = 0.1f + (360 * progress / range) - 90;
+
+                for (float angle = -90; angle < limit; angle += 0.05f)
                 {
                     double radians = Math.PI * angle / 180;
                     float x = center.X + (radiusWithLine * (float)Math.Cos(radians));
@@ -204,42 +275,31 @@ namespace InterTwitter.Controls
                     Style = SKPaintStyle.Stroke,
                     Color = ProgressLineColor.ToSKColor(),
                     StrokeWidth = lineWidthPercent,
+                    StrokeCap = SKStrokeCap.Round,
                 };
 
                 canvas.DrawPath(path, paint2);
             }
 
-            paint.Style = SKPaintStyle.Fill;
-            paint.Color = BackgroundProgressColor.ToSKColor();
-            canvas.DrawCircle(center.X, center.Y, innerRadius, paint);
-
-            SKPaint textPaint = new SKPaint
+            if (!string.IsNullOrEmpty(Text))
             {
-                Color = TextColor.ToSKColor(),
-            };
-
-            var maxWidthText = (float)Math.Sqrt(2 * innerRadius * innerRadius);
-
-            var bounds = new SKRect()
-            {
-                Size = new SKSize()
+                SKFont textFont = new SKFont
                 {
-                    Height = maxWidthText,
-                    Width = maxWidthText,
-                },
-            };
+                    Typeface = SKTypeface.FromFamilyName(FontFamily, FontAttributes),
+                    Size = maxWidthText * FontScale,
+                };
 
-            var textWidth = textPaint.MeasureText(Text, ref bounds);
+                SKPaint textPaint = new SKPaint
+                {
+                    Color = TextColor.ToSKColor(),
+                };
+                textPaint.TextSize = maxWidthText * FontScale;
 
-            var textHeigth = maxWidthText * bounds.Size.Width / bounds.Size.Width;
+                var textBounds = default(SKRect);
+                textPaint.MeasureText(Text, ref textBounds);
 
-            SKFont textFont = new SKFont
-            {
-                Typeface = SKTypeface.FromFamilyName(FontFamily),
-                Size = maxWidthText * textPaint.TextSize / textWidth,
-            };
-
-            canvas.DrawText(Text, center.X, center.Y, textFont, textPaint);
+                canvas.DrawText(Text, center.X - textBounds.MidX, center.Y - textBounds.MidY, textFont, textPaint);
+            }
         }
 
         #endregion
