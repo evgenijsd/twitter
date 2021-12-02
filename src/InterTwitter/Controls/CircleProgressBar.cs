@@ -236,64 +236,81 @@ namespace InterTwitter.Controls
             paint.Color = BackgroundProgressColor.ToSKColor();
             canvas.DrawCircle(center.X, center.Y, innerRadius, paint);
 
-            using (SKPath path = new SKPath())
+            if (Value < Minimum)
             {
-                if (Value < Minimum)
-                {
-                    Value = Minimum;
-                }
+                Value = Minimum;
+            }
 
-                if (Value > Maximum)
-                {
-                    Value = Maximum;
-                }
+            if (Value > Maximum)
+            {
+                Value = Maximum;
+            }
 
-                float range = Maximum - Minimum;
-                float progress = Value - Minimum;
-                float limit = 0.1f + (360 * progress / range) - 90;
-
-                for (float angle = -90; angle < limit; angle += 0.05f)
-                {
-                    double radians = Math.PI * angle / 180;
-                    float x = center.X + (radiusWithLine * (float)Math.Cos(radians));
-                    float y = center.Y + (radiusWithLine * (float)Math.Sin(radians));
-
-                    SKPoint point = new SKPoint(x, y);
-
-                    if (angle == -90)
-                    {
-                        path.MoveTo(point);
-                    }
-                    else
-                    {
-                        path.LineTo(point);
-                    }
-                }
-
+            if (Value == Maximum)
+            {
                 SKPaint paint2 = new SKPaint
                 {
                     Style = SKPaintStyle.Stroke,
                     Color = ProgressLineColor.ToSKColor(),
                     StrokeWidth = lineWidthPercent,
-                    StrokeCap = SKStrokeCap.Round,
                 };
 
-                canvas.DrawPath(path, paint2);
+                canvas.DrawCircle(center.X, center.Y, radiusWithLine, paint2);
+            }
+            else
+            {
+                using (SKPath path = new SKPath())
+                {
+                    float range = Maximum - Minimum;
+                    float progress = Value - Minimum;
+                    float limit = 0.1f + (360 * progress / range) - 90;
+
+                    for (float angle = -90; angle < limit; angle += 0.05f)
+                    {
+                        double radians = Math.PI * angle / 180;
+                        float x = center.X + (radiusWithLine * (float)Math.Cos(radians));
+                        float y = center.Y + (radiusWithLine * (float)Math.Sin(radians));
+
+                        SKPoint point = new SKPoint(x, y);
+
+                        if (angle == -90)
+                        {
+                            path.MoveTo(point);
+                        }
+                        else
+                        {
+                            path.LineTo(point);
+                        }
+                    }
+
+                    paint.Style = SKPaintStyle.Stroke;
+                    paint.Color = ProgressLineColor.ToSKColor();
+                    paint.StrokeWidth = lineWidthPercent;
+                    paint.StrokeCap = SKStrokeCap.Round;
+
+                    canvas.DrawPath(path, paint);
+                }
             }
 
             if (!string.IsNullOrEmpty(Text))
             {
+                var textWidth = maxWidthText * FontScale;
+                if (textWidth > maxWidthText)
+                {
+                    textWidth = maxWidthText;
+                }
+
                 SKFont textFont = new SKFont
                 {
                     Typeface = SKTypeface.FromFamilyName(FontFamily, FontAttributes),
-                    Size = maxWidthText * FontScale,
+                    Size = textWidth,
                 };
 
                 SKPaint textPaint = new SKPaint
                 {
                     Color = TextColor.ToSKColor(),
                 };
-                textPaint.TextSize = maxWidthText * FontScale;
+                textPaint.TextSize = textWidth;
 
                 var textBounds = default(SKRect);
                 textPaint.MeasureText(Text, ref textBounds);
