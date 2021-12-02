@@ -44,7 +44,6 @@
 
   <ItemGroup>
     <Folder Include="Behaviors\" />
-    <Folder Include="Controls\" />
     <Folder Include="Converters\" />
     <Folder Include="Extensions\" />
     <Folder Include="Resources\Fonts\" />

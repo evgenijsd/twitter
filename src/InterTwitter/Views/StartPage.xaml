@@ -6,7 +6,7 @@
                       xmlns:res="clr-namespace:InterTwitter.Helpers;assembly=InterTwitter"
                       x:Class="InterTwitter.Views.StartPage">
     <view:BaseContentPage.Content>
-        <Grid RowSpacing="0">
+        <controls:CustomGrid RowSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="170"/>
                 <RowDefinition Height="100"/>
@@ -96,6 +96,6 @@
                         Style="{StaticResource baseButton}" 
                         IsVisible="{Binding IsVisibleButton}"/>
             </StackLayout>
-        </Grid>
+        </controls:CustomGrid>
     </view:BaseContentPage.Content>
 </view:BaseContentPage>
