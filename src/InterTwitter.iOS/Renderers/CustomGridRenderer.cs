@@ -1,9 +1,12 @@
 ﻿using CoreGraphics;
 using Foundation;
+using InterTwitter.Controls;
+using InterTwitter.iOS.Renderers;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
+[assembly: ExportRenderer(typeof(CustomGrid), typeof(CustomGridRenderer))]
 namespace InterTwitter.iOS.Renderers
 {
     class CustomGridRenderer : ViewRenderer
