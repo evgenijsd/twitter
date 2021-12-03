@@ -36,8 +36,12 @@ namespace InterTwitter
         protected override async void OnInitialized()
         {
             InitializeComponent();
+<<<<<<< HEAD
 
             await NavigationService.NavigateAsync($"/{nameof(StartPage)}");
+=======
+            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainPage)}");
+>>>>>>> 1223893a6974b67e7bc6b40385cdd6ec885eb7b8
         }
 
         protected override void OnStart()
