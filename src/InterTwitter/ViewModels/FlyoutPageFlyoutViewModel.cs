@@ -103,45 +103,27 @@ namespace InterTwitter.ViewModels.Flyout
         {
             if (MenuItems != null)
             {
+                string[] selectedItemImageSource = new string[8];
+                selectedItemImageSource[0] = "ic_home_blue";
+                selectedItemImageSource[1] = "ic_search_blue";
+                selectedItemImageSource[2] = "ic_notifications_blue";
+                selectedItemImageSource[3] = "ic_bookmarks_blue";
+                selectedItemImageSource[4] = "ic_home_gray";
+                selectedItemImageSource[5] = "ic_search_gray";
+                selectedItemImageSource[6] = "ic_notifications_gray";
+                selectedItemImageSource[7] = "ic_bookmarks_gray";
+
                 foreach (var item in MenuItems)
                 {
                     if (item.TargetType == selectedTabType)
                     {
                         item.TextColor = (Color)App.Current.Resources["appcolor_i1"];
-                        switch (item.TargetType.Name)
-                        {
-                            case nameof(HomePage):
-                                item.ImageSource = "ic_home_blue";
-                                break;
-                            case nameof(SearchPage):
-                                item.ImageSource = "ic_search_blue";
-                                break;
-                            case nameof(NotificationsPage):
-                                item.ImageSource = "ic_notifications_blue";
-                                break;
-                            case nameof(BookmarksPage):
-                                item.ImageSource = "ic_bookmarks_blue";
-                                break;
-                        }
+                        item.ImageSource = selectedItemImageSource[item.Id];
                     }
                     else
                     {
                         item.TextColor = (Color)App.Current.Resources["appcolor_i3"];
-                        switch (item.TargetType.Name)
-                        {
-                            case nameof(HomePage):
-                                item.ImageSource = "ic_home_gray";
-                                break;
-                            case nameof(SearchPage):
-                                item.ImageSource = "ic_search_gray";
-                                break;
-                            case nameof(NotificationsPage):
-                                item.ImageSource = "ic_notifications_gray";
-                                break;
-                            case nameof(BookmarksPage):
-                                item.ImageSource = "ic_bookmarks_gray";
-                                break;
-                        }
+                        item.ImageSource = selectedItemImageSource[item.Id + 4];
                     }
                 }
             }

@@ -1,8 +1,6 @@
 ﻿using InterTwitter.Views;
+using MapNotepad.Helpers;
 using Prism.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -17,7 +15,7 @@ namespace InterTwitter.ViewModels
             IconPath = "ic_search_gray.png";
         }
         #region --- Public Properties ---
-        public ICommand GotoFlyoutCommand => new Command(() => OnGotoFlyoutCommand());
+        public ICommand GotoFlyoutCommand => SingleExecutionCommand.FromFunc(OnGotoFlyoutCommandAsync);
 
         #endregion
 
@@ -34,7 +32,7 @@ namespace InterTwitter.ViewModels
         #endregion
 
         #region --- Private Helpers ---
-        private async Task OnGotoFlyoutCommand()
+        private async Task OnGotoFlyoutCommandAsync()
         {
             await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}");
             MessagingCenter.Send(this, "OpenSidebar", true);

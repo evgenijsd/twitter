@@ -1,4 +1,5 @@
 ﻿using InterTwitter.Views;
+using MapNotepad.Helpers;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace InterTwitter.ViewModels
             IconPath = "ic_bookmarks_gray";
         }
         #region --- Public Properties ---
-        public ICommand GotoFlyoutCommand => new Command(() => OnGotoFlyoutCommand());
+        public ICommand GotoFlyoutCommand => SingleExecutionCommand.FromFunc(OnGotoFlyoutCommandAsync);
 
         #endregion
 
@@ -34,7 +35,7 @@ namespace InterTwitter.ViewModels
         #endregion
 
         #region --- Private Helpers ---
-        private async Task OnGotoFlyoutCommand()
+        private async Task OnGotoFlyoutCommandAsync()
         {
             await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}");
             MessagingCenter.Send(this, "OpenSidebar", true);

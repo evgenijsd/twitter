@@ -50,7 +50,11 @@
                                 HeightRequest="35"
                                 Source="{Binding ImageSource}"
                                 WidthRequest="35" />
-                            <Label Text="{Binding Title}" TextColor="{Binding TextColor}" />
+                            <Label
+                                Style="{DynamicResource BaseContent_i2}"
+                                Text="{Binding Title}"
+                                TextColor="{Binding TextColor}"
+                                VerticalOptions="Center" />
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>
@@ -69,8 +73,16 @@
                 Orientation="Horizontal"
                 Spacing="20"
                 VerticalOptions="Start">
-                <Image Source="ic_setting.png" />
-                <Label Text="Change profile" />
+                <Image
+                    HeightRequest="35"
+                    Source="ic_setting_gray.png"
+                    WidthRequest="35" />
+                <Label
+                    FontSize="{DynamicResource tsize_i5}"
+                    Style="{DynamicResource BaseContent_i2}"
+                    Text="Change profile"
+                    TextColor="{DynamicResource appcolor_i3}"
+                    VerticalOptions="Center" />
 
             </StackLayout>
 
