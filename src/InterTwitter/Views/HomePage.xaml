@@ -10,31 +10,28 @@
         <resources:TweetDataTemplates/>
     </view:BaseContentPage.Resources>
     <view:BaseContentPage.Content>
-        
-        <Grid >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            
-            <Grid HorizontalOptions="Fill"
-                  RowDefinitions="0.125*, 0.875*"
+
+        <Grid HorizontalOptions="Fill"
                   VerticalOptions="Fill">
-                <controls:CustomToolbar Title="Home"
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <controls:CustomToolbar Title="Home"
                                         Grid.Row="0"
                                         RightUserImageButton="pic_profile_small"
                                         LeftImageAddButton="ic_add_blue">
-                </controls:CustomToolbar>
+            </controls:CustomToolbar>
 
-                <Grid Grid.Row="1">
 
-                    <StackLayout Orientation="Vertical">
-                        <CollectionView ItemsSource="{Binding Tweets}" ItemTemplate="{StaticResource templateSelector}">
-                            
-                        </CollectionView>
-                       
-                    </StackLayout>
-                </Grid>
-            </Grid>
+            <CollectionView Grid.Row="1" 
+                            ItemsSource="{Binding Tweets}" 
+                            ItemTemplate="{StaticResource templateSelector}">
+                
+            </CollectionView>
+
         </Grid>
+
     </view:BaseContentPage.Content>
 </view:BaseContentPage>

@@ -1,50 +1,85 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <DataTemplate xmlns="http://xamarin.com/schemas/2014/forms"
               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-              x:Class="InterTwitter.Views.DataTemplates.ImageTweetDataTemplate"
-              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
-              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations">
-    <Grid Padding="15, 15, 15, 0"
-          RowSpacing="15"
-          ColumnSpacing="15">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="1"/>
-        </Grid.RowDefinitions>
+              xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+              x:Class="InterTwitter.Views.DataTemplates.ImageTweetDataTemplate">
+
+    <StackLayout Spacing="0">
+        <StackLayout Padding="15, 15, 15, 0"
+                 Orientation="Horizontal"
+                 Spacing="0">
+
+            <ffimageloading:CachedImage
+            VerticalOptions="Start"
+            Source="man"
+            HeightRequest="50"
+            Margin="0, 0, 15, 0">
+
+                <ffimageloading:CachedImage.Transformations>
+                    <fftransformations:CircleTransformation/>
+                </ffimageloading:CachedImage.Transformations>
+
+            </ffimageloading:CachedImage>
+
+            <StackLayout 
+                     VerticalOptions="Start">
+
+                <Label Text="{Binding UserName}" 
+                   TextColor="Black" 
+                   FontAttributes="Bold"/>
+
+                <Label VerticalOptions="Start"
+                   MaxLines="5" 
+                   LineBreakMode="TailTruncation"
+                   Text="{Binding Text}"/>
+
+                <flv:FlowListView FlowColumnCount="{Binding CountColumn}"
+                              RowHeight="{Binding RowHeight}"
+                              HasUnevenRows="False"
+                              HorizontalScrollBarVisibility="Never"
+                              VerticalScrollBarVisibility="Never"
+                              SeparatorVisibility="None"
+                              FlowColumnExpand="First"
+                              VerticalOptions="Start"
+                              FlowItemsSource="{Binding ImagesPaths}">
+
+                    <flv:FlowListView.FlowColumnTemplate>
+                        <DataTemplate>
+                            <Frame Margin="2"
+                               Padding="0"
+                               HasShadow="False"
+                               CornerRadius="5"
+                               IsClippedToBounds="True">
+
+                                <ffimageloading:CachedImage Aspect="AspectFit"
+                                                        Source="{Binding .}"/>
+
+                            </Frame>
+                        </DataTemplate>
+                    </flv:FlowListView.FlowColumnTemplate>
+
+                </flv:FlowListView>
+
+                <StackLayout 
+                      Orientation="Horizontal"
+                      HeightRequest="20">
+
+                    <Label Text="Time"/>
+                    <Label Text="Like"/>
+                    <Label Text="BookMark"/>
+
+                </StackLayout>
+
+            </StackLayout>
+        </StackLayout>
         
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.15*"/>
-            <ColumnDefinition Width="0.85*"/>
-        </Grid.ColumnDefinitions>
-
-        <Image Grid.Row="0" Grid.Column="0" 
-               VerticalOptions="Start"
-               Source="man"/>
+        <BoxView HeightRequest="2"
+                 BackgroundColor="Silver"/>
         
-        <Label Grid.Row="0" Grid.Column="1"
-               Text="{Binding UserName}" 
-               TextColor="Black" 
-               FontAttributes="Bold"/>
-
-        <Label Grid.Row="1" Grid.Column="1" 
-               VerticalOptions="Start"
-               MaxLines="5" 
-               LineBreakMode="TailTruncation"
-               Text="{Binding Text}"
-               TextColor="Red"/>
-
-        <ListView x:Name="images" Grid.Row="2" Grid.Column="1" 
-                  HasUnevenRows="True" 
-                  ItemsSource="{Binding ImagesPaths}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ImageCell ImageSource="{Binding .}" Height="120"/>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </Grid>
+    </StackLayout>
+    
     <!--<StackLayout Orientation="Horizontal" Padding="12, 0, 12, 0">
 
         <StackLayout Orientation="Vertical">

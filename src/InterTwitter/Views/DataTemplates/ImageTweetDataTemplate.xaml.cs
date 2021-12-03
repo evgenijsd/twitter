@@ -9,7 +9,6 @@ using Xamarin.Forms.Xaml;
 
 namespace InterTwitter.Views.DataTemplates
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ImageTweetDataTemplate : DataTemplate
     {
         public ImageTweetDataTemplate()

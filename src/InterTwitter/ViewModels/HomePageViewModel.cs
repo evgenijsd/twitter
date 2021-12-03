@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
 {
@@ -47,13 +48,94 @@ namespace InterTwitter.ViewModels
         {
             var observTweetCollection = new ObservableCollection<BaseTweetViewModel>();
 
+            var listPhotos = new List<string> { "image2", "image3", "image1", };
+            var rowHeight = listPhotos.Count < 3 ? 186 : 80; //error there pixel
+            rowHeight = listPhotos.Count == 3 | listPhotos.Count == 4 ? 89 : rowHeight; //error there pixel
+
+            var countColumn = listPhotos.Count <= 4 ? 2 : 3;
+            countColumn = listPhotos.Count == 1 ? 1 : countColumn;
+
             observTweetCollection.Add(new ImagesTweetViewModel()
             {
                 UserName = "Mike",
                 UserAvatar = "man",
                 Text = "In continuation of my video about DataTemplates, we will now look at the DataTemplateSelector. With the DataTemplateSelector you can apply different DataTemplateSelector. With the DataTemplateSelector templates based on logic that you implement yourself! ",
                 TweetType = TweetType.ImagesTweet,
-                ImagesPaths = new List<string> { "image1", "image2", "image3", "image4", "image5" },
+                ImagesPaths = listPhotos,
+                RowHeight = rowHeight,
+                CountColumn = countColumn,
+            });
+
+            listPhotos = new List<string> { "image1", };
+            rowHeight = listPhotos.Count < 3 ? 186 : 80; //error there pixel
+            rowHeight = listPhotos.Count == 3 | listPhotos.Count == 4 ? 89 : rowHeight; //error there pixel
+
+            countColumn = listPhotos.Count <= 4 ? 2 : 3;
+            countColumn = listPhotos.Count == 1 ? 1 : countColumn;
+
+            observTweetCollection.Add(new ImagesTweetViewModel()
+            {
+                UserName = "Mike",
+                UserAvatar = "man",
+                Text = "In continuation of my video about DataTemplates, we will now look at the DataTemplateSelector. With the DataTemplateSelector you can apply different DataTemplateSelector. With the DataTemplateSelector templates based on logic that you implement yourself! ",
+                TweetType = TweetType.ImagesTweet,
+                ImagesPaths = listPhotos,
+                RowHeight = rowHeight,
+                CountColumn = countColumn,
+            });
+
+            listPhotos = new List<string> { "image2", "image3", "image4", "image1", };
+            rowHeight = listPhotos.Count < 3 ? 186 : 80; //error there pixel
+            rowHeight = listPhotos.Count == 3 | listPhotos.Count == 4 ? 89 : rowHeight; //error there pixel
+
+            countColumn = listPhotos.Count <= 4 ? 2 : 3;
+            countColumn = listPhotos.Count == 1 ? 1 : countColumn;
+
+            observTweetCollection.Add(new ImagesTweetViewModel()
+            {
+                UserName = "Mike",
+                UserAvatar = "man",
+                Text = "In continuation of my video about DataTemplates, we will now look at the DataTemplateSelector. With the DataTemplateSelector you can apply different DataTemplateSelector. With the DataTemplateSelector templates based on logic that you implement yourself! ",
+                TweetType = TweetType.ImagesTweet,
+                ImagesPaths = listPhotos,
+                RowHeight = rowHeight,
+                CountColumn = countColumn,
+            });
+
+            listPhotos = new List<string> { "image2", "image3", "image4", "image5", "image1", };
+            rowHeight = listPhotos.Count < 3 ? 186 : 80; //error there pixel
+            rowHeight = listPhotos.Count == 3 | listPhotos.Count == 4 ? 89 : rowHeight; //error there pixel
+
+            countColumn = listPhotos.Count <= 4 ? 2 : 3;
+            countColumn = listPhotos.Count == 1 ? 1 : countColumn;
+
+            observTweetCollection.Add(new ImagesTweetViewModel()
+            {
+                UserName = "Mike",
+                UserAvatar = "man",
+                Text = "In continuation of my video about DataTemplates, we will now look at the DataTemplateSelector. With the DataTemplateSelector you can apply different DataTemplateSelector. With the DataTemplateSelector templates based on logic that you implement yourself! ",
+                TweetType = TweetType.ImagesTweet,
+                ImagesPaths = listPhotos,
+                RowHeight = rowHeight,
+                CountColumn = countColumn,
+            });
+
+            listPhotos = new List<string> { "image2", "image3", "image4", "image5", "image6", "image1", };
+            rowHeight = listPhotos.Count < 3 ? 186 : 80; //error there pixel
+            rowHeight = listPhotos.Count == 3 | listPhotos.Count == 4 ? 89 : rowHeight; //error there pixel
+
+            countColumn = listPhotos.Count <= 4 ? 2 : 3;
+            countColumn = listPhotos.Count == 1 ? 1 : countColumn;
+
+            observTweetCollection.Add(new ImagesTweetViewModel()
+            {
+                UserName = "Mike",
+                UserAvatar = "man",
+                Text = "In continuation of my video about DataTemplates, we will now look at the DataTemplateSelector. With the DataTemplateSelector you can apply different DataTemplateSelector. With the DataTemplateSelector templates based on logic that you implement yourself! ",
+                TweetType = TweetType.ImagesTweet,
+                ImagesPaths = listPhotos,
+                RowHeight = rowHeight,
+                CountColumn = countColumn,
             });
 
             observTweetCollection.Add(new BaseTweetViewModel()

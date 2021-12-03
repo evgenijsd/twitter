@@ -1,4 +1,5 @@
-﻿using InterTwitter.ViewModels;
+﻿using DLToolkit.Forms.Controls;
+using InterTwitter.ViewModels;
 using InterTwitter.Views;
 using Prism.Ioc;
 using Prism.Unity;
@@ -29,7 +30,7 @@ namespace InterTwitter
         protected override async void OnInitialized()
         {
             InitializeComponent();
-
+            FlowListView.Init();
             await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(HomePage)}");
         }
 
