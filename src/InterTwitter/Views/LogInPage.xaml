@@ -6,14 +6,13 @@
                       xmlns:res="clr-namespace:InterTwitter.Helpers;assembly=InterTwitter"
              x:Class="InterTwitter.Views.LogInPage">
     <view:BaseContentPage.Content>
-        <Grid RowSpacing="0">
+        <controls:CustomGrid RowSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="170"/>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="100"/>
-                <RowDefinition Height="90"/>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" ColumnSpacing="0">
                 <Grid.ColumnDefinitions>
@@ -41,6 +40,7 @@
                                   Text="{Binding Email}"
                                   IsFocusedVisible="{Binding IsVisibleEmail}"
                                   ClearImageSource="ic_clear_gray.png"
+                                  IsFocusedButton="{Binding IsVisibleButton}"
                                   Placeholder="{res:Translate Email}"/>
             <Label Grid.Row="1" Text="{res:Translate WrongEmail}" 
                        FontSize="15"
@@ -58,6 +58,7 @@
                                   EyeOnImageSource="ic_eye_blue.png" EyeOffImageSource="ic_eye_gray.png"
                                   ClearImageSource="ic_clear_gray.png"
                                   IsFocusedVisible="{Binding IsVisiblePassword}"
+                                  IsFocusedButton="{Binding IsVisibleButton}"
                                   IsPassword="True" 
                                   Placeholder="{res:Translate Password}" />
             <Label Grid.Row="2" 
@@ -67,19 +68,31 @@
                        Margin="20,65,0,0"     
                        IsVisible="{Binding IsWrongPassword}" />
 
-            <StackLayout Grid.Row="3" HorizontalOptions="Center" Margin="0,20,0,0">
+            <StackLayout Grid.Row="3" HorizontalOptions="Center" Margin="0,20,0,0" IsVisible="{Binding IsUnVisibleButton}">
                 <Button Text="{res:Translate LogIn}" 
                         WidthRequest="218" CornerRadius="25" HeightRequest="50"
                         Command="{Binding TwitterCommand}" 
                         Style="{StaticResource baseButton}"/>
-            </StackLayout>
-
-            <StackLayout Grid.Row="4" HorizontalOptions="Center" Margin="0,0,0,0" >
                 <Button Command="{Binding StartCommand}" 
                         WidthRequest="218" CornerRadius="25" HeightRequest="50"
+                        Margin="0,20,0,0" 
                         Text="{res:Translate SignUp}" BorderColor="Transparent"
                         Style="{StaticResource inverseButtonStyle}"/>
             </StackLayout>
-        </Grid>
+
+            <StackLayout Grid.Row="4"
+                         VerticalOptions="EndAndExpand" HeightRequest="50"
+                         BackgroundColor="{StaticResource LightPrimaryColor}"
+                         IsVisible="{Binding IsVisibleButton}">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TwitterCommand}"/>
+                </StackLayout.GestureRecognizers>
+                <Label Text="{res:Translate LogIn}"
+                       VerticalOptions="CenterAndExpand"
+                       TextColor="{StaticResource TextColor}"
+                       FontAttributes="Bold" FontSize="18"
+                       HorizontalOptions="Center" />
+            </StackLayout>
+        </controls:CustomGrid>
     </view:BaseContentPage.Content>
 </view:BaseContentPage>

@@ -6,14 +6,13 @@
                       xmlns:res="clr-namespace:InterTwitter.Helpers;assembly=InterTwitter"
              x:Class="InterTwitter.Views.CreatePage">
     <view:BaseContentPage.Content>
-        <Grid RowSpacing="0">
+        <controls:CustomGrid RowSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="170"/>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="100"/>
-                <RowDefinition Height="90"/>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" ColumnSpacing="0">
                 <Grid.ColumnDefinitions>
@@ -49,6 +48,7 @@
                                   ClearImageSource="ic_clear_gray.png"
                                   IsVisible="true"
                                   IsFocusedVisible="{Binding IsVisibleName}"
+                                  IsFocusedButton="{Binding IsVisibleButton}"
                                   Placeholder="{res:Translate Name}"/>
             <Label Grid.Row="1" Text="{res:Translate PleaseName}" 
                        FontSize="15"
@@ -65,6 +65,7 @@
                                   Margin="20,18,20,0"
                                   ClearImageSource="ic_clear_gray.png"
                                   IsFocusedVisible="{Binding IsVisibleEmail}"
+                                  IsFocusedButton="{Binding IsVisibleButton}"
                                   Placeholder="{res:Translate Email}" />
             <Label Grid.Row="2" 
                        Text="{res:Translate WrongEmail}"
@@ -77,9 +78,23 @@
                 <Button Text="{res:Translate Next}" 
                         WidthRequest="218" CornerRadius="25" HeightRequest="50"
                         Command="{Binding PasswordCommand}"
+                        IsVisible="{Binding IsUnVisibleButton}"
                         Style="{StaticResource baseButton}"/>
             </StackLayout>
 
-        </Grid>
+            <StackLayout Grid.Row="4"
+                         VerticalOptions="EndAndExpand" HeightRequest="50"
+                         BackgroundColor="{StaticResource LightPrimaryColor}"
+                         IsVisible="{Binding IsVisibleButton}">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding PasswordCommand}"/>
+                </StackLayout.GestureRecognizers>
+                <Label Text="{res:Translate Next}"
+                       VerticalOptions="CenterAndExpand"
+                       TextColor="{StaticResource TextColor}"
+                       FontAttributes="Bold" FontSize="18"
+                       HorizontalOptions="Center" />
+            </StackLayout>
+        </controls:CustomGrid>
     </view:BaseContentPage.Content>
 </view:BaseContentPage>

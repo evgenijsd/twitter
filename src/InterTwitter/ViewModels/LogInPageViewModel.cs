@@ -84,6 +84,20 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _isWrongPassword, value);
         }
 
+        private bool _isVisibleButton = false;
+        public bool IsVisibleButton
+        {
+            get => _isVisibleButton;
+            set => SetProperty(ref _isVisibleButton, value);
+        }
+
+        private bool _isUnVisibleButton = true;
+        public bool IsUnVisibleButton
+        {
+            get => _isUnVisibleButton;
+            set => SetProperty(ref _isUnVisibleButton, value);
+        }
+
         private ICommand _StartCommand;
         public ICommand StartCommand => _StartCommand ??= SingleExecutionCommand.FromFunc(OnStartCommandAsync);
         private ICommand _TwitterCommand;
@@ -111,6 +125,11 @@ namespace InterTwitter.ViewModels
                 {
                     IsWrongPassword = false;
                 }
+            }
+
+            if (args.PropertyName == nameof(IsVisibleButton))
+            {
+                IsUnVisibleButton = !IsVisibleButton;
             }
         }
 

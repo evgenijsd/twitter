@@ -41,7 +41,6 @@
                                   Margin="20,18,20,0"
                                   Text="{Binding Name}"
                                   ClearImageSource="ic_clear_gray.png"
-                                  IsVisible="true"
                                   IsFocusedVisible="{Binding IsVisibleName}"
                                   IsFocusedButton="{Binding IsVisibleButton}"
                                   Placeholder="{res:Translate Name}"/>

@@ -349,6 +349,7 @@ namespace InterTwitter.Controls
         private Task OnButtonClearCommandAsync()
         {
             Text = string.Empty;
+            IsFocusedVisible = false;
 
             return Task.CompletedTask;
         }
