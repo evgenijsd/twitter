@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="InterTwitter.Resources.Styles.LightModeResources">
+    
+    <!--APP COLORS-->
+    <Color x:Key="appcolor_i1">#2356C5</Color>     <!-- Primary -->
+    <Color x:Key="appcolor_i2">#FCFDFE</Color>     <!-- System white -->
+    <Color x:Key="appcolor_i3">#02060E</Color>     <!-- System black -->
+    <Color x:Key="appcolor_i4">#66696E</Color>     <!-- Dark Gray -->
+    <Color x:Key="appcolor_i5">#9D9FA3</Color>     <!-- Gray -->
+    <Color x:Key="appcolor_i6">#DEDFE1</Color>     <!-- Light Gray -->
+    <Color x:Key="appcolor_i7">#F44336</Color>     <!-- Error -->
+
+    <!-- IMAGES -->
+    <ImageSource x:Key="ic_add_blue">ic_add_blue</ImageSource>
+    <ImageSource x:Key="ic_add_photo_white">ic_add_photo_white</ImageSource>
+    <ImageSource x:Key="ic_bookmarks_blue">ic_bookmarks_blue</ImageSource>
+    <ImageSource x:Key="ic_bookmarks_gray">ic_bookmarks_gray</ImageSource>
+    <ImageSource x:Key="ic_bookmarks_white">ic_bookmarks_white</ImageSource>
+    <ImageSource x:Key="ic_cancel_gray">ic_cancel_gray</ImageSource>
+    <ImageSource x:Key="ic_check_blue">ic_check_blue</ImageSource>
+    <ImageSource x:Key="ic_check_gray">ic_check_gray</ImageSource>
+    <ImageSource x:Key="ic_clear_filled_blue">ic_clear_filled_blue</ImageSource>
+    <ImageSource x:Key="ic_clear_gray">ic_clear_gray</ImageSource>
+    <ImageSource x:Key="ic_down_gray">ic_down_gray</ImageSource>
+    <ImageSource x:Key="ic_eye_blue">ic_eye_blue</ImageSource>
+    <ImageSource x:Key="ic_eye_gray">ic_eye_gray</ImageSource>
+    <ImageSource x:Key="ic_gif_blue">ic_gif_blue</ImageSource>
+    <ImageSource x:Key="ic_gif_gray">ic_gif_gray</ImageSource>
+    <ImageSource x:Key="ic_hidden_menu_blue">ic_hidden_menu_blue</ImageSource>
+    <ImageSource x:Key="ic_hidden_menu_gray">ic_hidden_menu_gray</ImageSource>
+    <ImageSource x:Key="ic_hidden_menu_white_small">ic_hidden_menu_white_small</ImageSource>
+    <ImageSource x:Key="ic_home_blue">ic_home_blue</ImageSource>
+    <ImageSource x:Key="ic_home_gray">ic_home_gray</ImageSource>
+    <ImageSource x:Key="ic_left_blue">ic_left_blue</ImageSource>
+    <ImageSource x:Key="ic_left_gray">ic_left_gray</ImageSource>
+    <ImageSource x:Key="ic_left_white">ic_left_white</ImageSource>
+    <ImageSource x:Key="ic_left_white_small">ic_left_white_small</ImageSource>
+    <ImageSource x:Key="ic_like_blue">ic_like_blue</ImageSource>
+    <ImageSource x:Key="ic_like_gray">ic_like_gray</ImageSource>
+    <ImageSource x:Key="ic_like_white">ic_like_white</ImageSource>
+    <ImageSource x:Key="ic_logout_blue">ic_logout_blue</ImageSource>
+    <ImageSource x:Key="ic_logout_gray">ic_logout_gray</ImageSource>
+    <ImageSource x:Key="ic_media_blue">ic_media_blue</ImageSource>
+    <ImageSource x:Key="ic_media_gray">ic_media_gray</ImageSource>
+    <ImageSource x:Key="ic_messages_blue">ic_messages_blue</ImageSource>
+    <ImageSource x:Key="ic_messages_gray">ic_messages_gray</ImageSource>
+    <ImageSource x:Key="ic_notifications_blue">ic_notifications_blue</ImageSource>
+    <ImageSource x:Key="ic_notifications_gray">ic_notifications_gray</ImageSource>
+    <ImageSource x:Key="ic_play_white">ic_play_white</ImageSource>
+    <ImageSource x:Key="ic_plus_white">ic_plus_white</ImageSource>
+    <ImageSource x:Key="ic_right_gray">ic_right_gray</ImageSource>
+    <ImageSource x:Key="ic_search_blue">ic_search_blue</ImageSource>
+    <ImageSource x:Key="ic_search_gray">ic_search_gray</ImageSource>
+    <ImageSource x:Key="ic_setting_gray">ic_setting_gray</ImageSource>
+    <ImageSource x:Key="ic_video_blue">ic_video_blue</ImageSource>
+    <ImageSource x:Key="ic_video_square_blue">ic_video_square_blue</ImageSource>
+    <ImageSource x:Key="ic_video_square_gray">ic_video_square_gray</ImageSource>
+    <ImageSource x:Key="ic_save">ic_save</ImageSource>
+    <ImageSource x:Key="ic_media">ic_media</ImageSource>
+    <ImageSource x:Key="ic_flip_the_camera">ic_flip_the_camera</ImageSource>
+    <ImageSource x:Key="ic_delete">ic_delete</ImageSource>
+    <ImageSource x:Key="ic_close_white">ic_close_white</ImageSource>
+    <ImageSource x:Key="ic_close_round">ic_close_round</ImageSource>
+    <ImageSource x:Key="ic_camera">ic_camera</ImageSource>
+    <ImageSource x:Key="ic_add_blue_small">ic_add_blue_small</ImageSource>
+    <ImageSource x:Key="pic_gif">pic_gif</ImageSource>
+    <ImageSource x:Key="pic_owl_blue_big">pic_owl_blue_big</ImageSource>
+    <ImageSource x:Key="pic_owl_blue_small">pic_owl_blue_small</ImageSource>
+    <ImageSource x:Key="pic_owl_white">pic_owl_white</ImageSource>
+    <ImageSource x:Key="pic_profile_big">pic_profile_big</ImageSource>
+    <ImageSource x:Key="pic_profile_small">pic_profile_small</ImageSource>
+    <ImageSource x:Key="pic_empty_state_2">pic_empty_state_2</ImageSource>
+
+</ResourceDictionary>
