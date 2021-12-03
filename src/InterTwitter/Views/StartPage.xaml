@@ -86,7 +86,7 @@
                 <StackLayout.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding CreateCommand}"/>
                 </StackLayout.GestureRecognizers>
-                <Label Text="{res:Translate SignUp}" VerticalOptions="CenterAndExpand"  TextColor="{StaticResource TextColor}" FontAttributes="Bold" HorizontalOptions="Center" />
+                <Label Text="{res:Translate SignUp}" VerticalOptions="CenterAndExpand"  TextColor="{StaticResource TextColor}" FontAttributes="Bold" FontSize="18" HorizontalOptions="Center" />
             </StackLayout>
 
 
