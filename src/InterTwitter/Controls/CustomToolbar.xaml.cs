@@ -19,12 +19,12 @@ namespace InterTwitter.Controls
 
         #region -- Public properties --
 
-        #endregion
         public static readonly BindableProperty RightUserImageButtonProperty = BindableProperty.Create(
             propertyName: nameof(RightUserImageButton),
             returnType: typeof(string),
             declaringType: typeof(CustomToolbar),
             defaultBindingMode: BindingMode.TwoWay);
+
         public string RightUserImageButton
         {
             get => (string)GetValue(RightUserImageButtonProperty);
@@ -36,6 +36,7 @@ namespace InterTwitter.Controls
           returnType: typeof(ICommand),
           declaringType: typeof(CustomToolbar),
           defaultBindingMode: BindingMode.TwoWay);
+
         public ICommand RightUserButtonCommand
         {
             get => (ICommand)GetValue(RightUserButtonCommandProperty);
@@ -44,13 +45,26 @@ namespace InterTwitter.Controls
 
         public static readonly BindableProperty LeftImageAddButtonProperty = BindableProperty.Create(
            propertyName: nameof(LeftImageAddButton),
-           returnType: typeof(ICommand),
+           returnType: typeof(string),
            declaringType: typeof(CustomToolbar),
            defaultBindingMode: BindingMode.TwoWay);
-        public ICommand LeftImageAddButton
+
+        public string LeftImageAddButton
         {
-            get => (ICommand)GetValue(LeftImageAddButtonProperty);
+            get => (string)GetValue(LeftImageAddButtonProperty);
             set => SetValue(LeftImageAddButtonProperty, value);
+        }
+
+        public static readonly BindableProperty LeftAddButtonCommandProperty = BindableProperty.Create(
+            propertyName: nameof(LeftAddButtonCommand),
+            returnType: typeof(ICommand),
+            declaringType: typeof(CustomToolbar),
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public ICommand LeftAddButtonCommand
+        {
+            get => (ICommand)GetValue(LeftAddButtonCommandProperty);
+            set => SetValue(LeftAddButtonCommandProperty, value);
         }
 
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(
@@ -58,6 +72,7 @@ namespace InterTwitter.Controls
            returnType: typeof(string),
            declaringType: typeof(CustomToolbar),
            defaultBindingMode: BindingMode.TwoWay);
+
         public string Title
         {
             get => (string)GetValue(TitleProperty);
@@ -69,10 +84,14 @@ namespace InterTwitter.Controls
         returnType: typeof(Color),
         declaringType: typeof(CustomToolbar),
         defaultBindingMode: BindingMode.TwoWay);
+
         public Color TitleColor
         {
             get => (Color)GetValue(TitleColorProperty);
             set => SetValue(TitleColorProperty, value);
         }
+
+        #endregion
+
     }
 }

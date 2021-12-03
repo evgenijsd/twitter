@@ -25,22 +25,41 @@ namespace InterTwitter.Helpers
 
         protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
         {
+            DataTemplate dataTemplate = null;
+
             var tweet = item as BaseTweetViewModel;
+            switch (tweet.TweetType)
+            {
+                case TweetType.ImagesTweet:
+                     dataTemplate = ImageTweetDataTemplate;
+                    break;
+                case TweetType.VideoTweet:
+                    dataTemplate = VideoTweetDataTemplate;
+                    break;
+                case TweetType.GifTweet:
+                    dataTemplate = GifTweetDataTemplate;
+                    break;
+                default:
+                    dataTemplate = TextTweetDataTemplate;
+                    break;
+            }
 
-            if (tweet?.Media == TweetType.VideoTweet.ToString())
-            {
-                return VideoTweetDataTemplate;
-            }
-            else if (tweet?.Media == TweetType.ImageTweet.ToString())
-            {
-                return ImageTweetDataTemplate;
-            }
-            else if (tweet?.Media == TweetType.GifTweet.ToString())
-            {
-                return GifTweetDataTemplate;
-            }
+            return dataTemplate;
 
-            return TextTweetDataTemplate;
+            //if (tweet.Media.CompareTo(TweetType.VideoTweet) == 0)
+            //{
+            //    return VideoTweetDataTemplate;
+            //}
+            //else if (tweet.Media == TweetType.ImageTweet.ToString())
+            //{
+            //    return ImageTweetDataTemplate;
+            //}
+            //else if (tweet?.Media == TweetType.GifTweet.ToString())
+            //{
+            //    return GifTweetDataTemplate;
+            //}
+
+            //return TextTweetDataTemplate;
         }
 
         #endregion

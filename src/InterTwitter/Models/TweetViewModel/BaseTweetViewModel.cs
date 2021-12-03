@@ -8,6 +8,8 @@ namespace InterTwitter.Models.TweetViewModel
 {
     public class BaseTweetViewModel : BindableBase
     {
+        #region -- Public properties --
+
         private int _id;
         public int Id
         {
@@ -34,13 +36,6 @@ namespace InterTwitter.Models.TweetViewModel
         {
             get => _userName;
             set => SetProperty(ref _userName, value);
-        }
-
-        private List<string> _images;
-        public List<string> Images
-        {
-            get => _images;
-            set => SetProperty(ref _images, value);
         }
 
         private string _userAvatar;
@@ -78,11 +73,11 @@ namespace InterTwitter.Models.TweetViewModel
             set => SetProperty(ref _IsTweetMarked, value);
         }
 
-        private string _media;
-        public string Media
+        private Enum _tweetType;
+        public Enum TweetType
         {
-            get => _media;
-            set => SetProperty(ref _media, value);
+            get => _tweetType;
+            set => SetProperty(ref _tweetType, value);
         }
 
         private ICommand _likeTweetCommand;
@@ -105,5 +100,7 @@ namespace InterTwitter.Models.TweetViewModel
             get => _CreationTime;
             set => SetProperty(ref _CreationTime, value);
         }
+        #endregion
+
     }
 }

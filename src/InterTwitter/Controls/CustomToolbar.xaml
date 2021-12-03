@@ -26,7 +26,7 @@
                          HeightRequest="24"
                          Margin="0, 0, 21, 0"
                          BackgroundColor="Transparent"
-                         Command="{Binding LeftImageAddButton, Source={x:Reference customToolbar}}"/>
+                         Command="{Binding LeftAddButtonCommand, Source={x:Reference customToolbar}}"/>
         </StackLayout>
     </ContentView.Content>
 </ContentView>

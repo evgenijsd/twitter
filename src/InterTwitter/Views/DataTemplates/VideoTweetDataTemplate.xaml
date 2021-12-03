@@ -10,14 +10,14 @@
 
             <Label Text="{Binding Text}" TextColor="Red" MaxLines="5" LineBreakMode="TailTruncation"/>
 
-            <ListView x:Name="images" HasUnevenRows="True" ItemsSource="{Binding Images}">
+            <!--<ListView x:Name="images" HasUnevenRows="True" ItemsSource="{Binding Images}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ImageCell ImageSource="{Binding .}" Height="120"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
 
-            </ListView>
+            </ListView>-->
         </StackLayout>
     </StackLayout>
 </DataTemplate>

@@ -10,6 +10,6 @@ namespace InterTwitter.Enums
 
         GifTweet,
 
-        ImageTweet,
+        ImagesTweet,
     }
 }

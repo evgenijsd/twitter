@@ -11,7 +11,7 @@
     <dataTemplates:GifTweetDataTemplate x:Key="gifTweetTemplate"/>
     <dataTemplates:TextTweetDataTemplate x:Key="textTweetTemplate"/>
 
-    <dataTemplatesSelector:TweetDataTemplateSelector x:Key="tweetSelector"
+    <dataTemplatesSelector:TweetDataTemplateSelector x:Key="templateSelector"
                                                      ImageTweetDataTemplate="{StaticResource imageTweetTemplate}"
                                                      VideoTweetDataTemplate="{StaticResource videoTweetTemplate}"
                                                      GifTweetDataTemplate="{StaticResource gifTweetTemplate}"

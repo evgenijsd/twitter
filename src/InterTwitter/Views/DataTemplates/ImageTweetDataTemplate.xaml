@@ -4,8 +4,48 @@
               x:Class="InterTwitter.Views.DataTemplates.ImageTweetDataTemplate"
               xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
               xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations">
+    <Grid Padding="15, 15, 15, 0"
+          RowSpacing="15"
+          ColumnSpacing="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="1"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.15*"/>
+            <ColumnDefinition Width="0.85*"/>
+        </Grid.ColumnDefinitions>
 
-    <StackLayout Orientation="Horizontal" Padding="12, 0, 12, 0">
+        <Image Grid.Row="0" Grid.Column="0" 
+               VerticalOptions="Start"
+               Source="man"/>
+        
+        <Label Grid.Row="0" Grid.Column="1"
+               Text="{Binding UserName}" 
+               TextColor="Black" 
+               FontAttributes="Bold"/>
+
+        <Label Grid.Row="1" Grid.Column="1" 
+               VerticalOptions="Start"
+               MaxLines="5" 
+               LineBreakMode="TailTruncation"
+               Text="{Binding Text}"
+               TextColor="Red"/>
+
+        <ListView x:Name="images" Grid.Row="2" Grid.Column="1" 
+                  HasUnevenRows="True" 
+                  ItemsSource="{Binding ImagesPaths}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ImageCell ImageSource="{Binding .}" Height="120"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+    <!--<StackLayout Orientation="Horizontal" Padding="12, 0, 12, 0">
 
         <StackLayout Orientation="Vertical">
             <Label Text="{Binding UserName}" TextColor="Black" FontAttributes="Bold" />
@@ -21,5 +61,5 @@
 
             </ListView>
         </StackLayout>
-    </StackLayout>
+    </StackLayout>-->
 </DataTemplate>
