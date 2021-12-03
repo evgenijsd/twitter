@@ -21,8 +21,7 @@
                   VerticalOptions="Fill">
                 <controls:CustomToolbar Title="Home"
                                         Grid.Row="0"
-                                        RightUserImageButton="pic_profile_small.png"
-                                        LeftImageAddButton="ic_add_blue">
+                                        RightUserImageButton="pic_profile_small.png">
                 </controls:CustomToolbar>
 
                 <Grid Grid.Row="1">

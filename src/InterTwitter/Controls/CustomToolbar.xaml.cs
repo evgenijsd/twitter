@@ -44,12 +44,12 @@ namespace InterTwitter.Controls
 
         public static readonly BindableProperty LeftImageAddButtonProperty = BindableProperty.Create(
            propertyName: nameof(LeftImageAddButton),
-           returnType: typeof(string),
+           returnType: typeof(ICommand),
            declaringType: typeof(CustomToolbar),
            defaultBindingMode: BindingMode.TwoWay);
-        public string LeftImageAddButton
+        public ICommand LeftImageAddButton
         {
-            get => (string)GetValue(LeftImageAddButtonProperty);
+            get => (ICommand)GetValue(LeftImageAddButtonProperty);
             set => SetValue(LeftImageAddButtonProperty, value);
         }
 

@@ -84,12 +84,12 @@ namespace InterTwitter.ViewModels
 
         private Task OnMarkCommandAsync(BaseTweetViewModel tweet)
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
 
         private Task OnLikeCommandAsync(BaseTweetViewModel tweet)
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
 
         #endregion
