@@ -43,7 +43,7 @@ namespace InterTwitter.iOS.Renderers
             CGSize keyboardSize = result.RectangleFValue.Size;
             if (Element != null)
             {
-                Element.Margin = new Thickness(0, 0, 0, keyboardSize.Height-35); //push the entry up to keyboard height when keyboard is activated
+                Element.Margin = new Thickness(0, 0, 0, keyboardSize.Height - 35);
 
             }
         }
@@ -52,7 +52,7 @@ namespace InterTwitter.iOS.Renderers
         {
             if (Element != null)
             {
-                Element.Margin = new Thickness(0); //set the margins to zero when keyboard is dismissed
+                Element.Margin = new Thickness(0);
             }
 
         }
