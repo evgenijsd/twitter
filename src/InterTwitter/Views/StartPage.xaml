@@ -23,12 +23,12 @@
                 <Image Source="pic_owl_blue_small.png" Grid.Column="1" 
                            HorizontalOptions="CenterAndExpand" 
                            VerticalOptions="Start" Aspect="AspectFill" 
-                           Margin="0,16,0,0" 
-                           HeightRequest="73" WidthRequest="50"/>
+                           Margin="0,25,0,0" 
+                           HeightRequest="45" WidthRequest="50"/>
                 <Label Text="{res:Translate GetYourAccount}"  Grid.Column="1" 
                            FontSize="24" FontAttributes="Bold" 
                            TextColor="{StaticResource LightPrimaryColor}" 
-                           Margin="0,100,0,0" 
+                           Margin="0,85,0,0" 
                            HorizontalOptions="CenterAndExpand" />
             </Grid>
             <Label Grid.Row="1" 

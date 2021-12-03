@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pic_owl_white.png" translatesAutoresizingMaskIntoConstraints="NO" id="Hvi-24-DRD">
-                                <rect key="frame" x="170" y="411" width="74" height="74"/>
+                                <rect key="frame" x="170" y="411" width="100" height="100"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.13725490200000001" green="0.33725490200000002" blue="0.7725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -36,6 +36,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="pic_owl_white.png" width="74" height="74"/>
+        <image name="pic_owl_white.png" width="100" height="100"/>
     </resources>
 </document>

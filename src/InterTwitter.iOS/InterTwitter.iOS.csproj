@@ -119,7 +119,6 @@
     <Compile Include="Renderers\CustomNoBorderEntryRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
@@ -192,6 +191,8 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\ic_clear_filled_blue.png" />
+    <BundleResource Include="Resources\LaunchScreen.my" />
+    <BundleResource Include="pic_owl_white.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\ic_clear_filled_blue%402x.png" />
