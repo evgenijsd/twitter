@@ -191,9 +191,6 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="pic_owl_white.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\ic_add_blue.png" />
   </ItemGroup>
   <ItemGroup>
