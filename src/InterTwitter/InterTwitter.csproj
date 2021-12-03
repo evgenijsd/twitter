@@ -68,7 +68,6 @@
     <Folder Include="Behaviors\" />
     <Folder Include="Converters\" />
     <Folder Include="Extensions\" />
-<<<<<<< HEAD
     <Folder Include="Resources\Fonts\" />
     <Folder Include="Helpers\ProcessHelpers\" />
   </ItemGroup>
@@ -101,12 +100,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Helpers\ProcessHelpers\" />
-=======
     <Folder Include="Helpers\" />
     <Folder Include="Enums\" />
     <Folder Include="Services\" />
     <Folder Include="ViewModels\" />
->>>>>>> 1223893a6974b67e7bc6b40385cdd6ec885eb7b8
   </ItemGroup>
 
   <ItemGroup>
