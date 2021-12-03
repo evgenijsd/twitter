@@ -20,74 +20,91 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="40"/>
                 </Grid.ColumnDefinitions>
-                <Image Source="pic_owl_blue_small.png" Grid.Column="1" 
+                <Image Source="{DynamicResource pic_owl_blue_small}" Grid.Column="1" 
                            HorizontalOptions="CenterAndExpand" 
                            VerticalOptions="Start" Aspect="AspectFill" 
                            Margin="0,25,0,0" 
                            HeightRequest="45" WidthRequest="50"/>
                 <Label Text="{res:Translate GetYourAccount}"  Grid.Column="1" 
-                           FontSize="24" FontAttributes="Bold" 
-                           TextColor="{StaticResource LightPrimaryColor}" 
+
                            Margin="0,85,0,0" 
-                           HorizontalOptions="CenterAndExpand" />
+                           HorizontalOptions="CenterAndExpand"
+                       Style="{DynamicResource tstyle_i1}"/>
             </Grid>
             <Label Grid.Row="1" 
                    Margin="24,0,0,0"
                    Text="{res:Translate Name}"
-                   FontSize="16"
-                   Style="{StaticResource baseMapLabel}"
+                   Style="{DynamicResource tstyle_i2}"
+                   FontSize="{DynamicResource tsize_i4}"
                    IsVisible="{Binding IsVisibleName}"/>
             <controls:CustomEntry Grid.Row="1"
                                   Margin="20,18,20,0"
                                   Text="{Binding Name}"
-                                  ClearImageSource="ic_clear_gray.png"
                                   IsFocusedVisible="{Binding IsVisibleName}"
                                   IsFocusedButton="{Binding IsVisibleButton}"
-                                  Placeholder="{res:Translate Name}"/>
+                                  Placeholder="{res:Translate Name}"
+                                  ClearImageSource="{DynamicResource ic_clear_gray}"
+                                  FontFamily="Ubuntu-Regular"
+                                  PlaceholderColor="{DynamicResource appcolor_i4}"
+                                  TextColor="{DynamicResource appcolor_i3}"
+                                  />
             <Label Grid.Row="1" Text="{res:Translate PleaseName}" 
-                       FontSize="15"
-                       Margin="20,65,0,0" 
-                       Style="{StaticResource errorLabel}"
-                       IsVisible="{Binding IsWrongName}"/>
+                       Margin="20,65,0,0"
+                   Style="{DynamicResource tstyle_i3}"
+                   IsVisible="{Binding IsWrongName}"/>
 
             <Label Grid.Row="2" Text="{res:Translate Email}" 
                            FontSize="16"
                            Margin="24,0,0,0"
-                       IsVisible="{Binding IsVisibleEmail}"
-                           Style="{StaticResource baseMapLabel}" />
+                   Style="{DynamicResource tstyle_i2}"
+                   IsVisible="{Binding IsVisibleEmail}" />
             <controls:CustomEntry Grid.Row="2" Text="{Binding Email}" 
                                   Margin="20,18,20,0"
-                                  ClearImageSource="ic_clear_gray.png"
+                                  ClearImageSource="{DynamicResource ic_clear_gray}"
+                                  FontFamily="Ubuntu-Regular"
+                                  PlaceholderColor="{DynamicResource appcolor_i4}"
+                                  TextColor="{DynamicResource appcolor_i3}"
                                   IsFocusedVisible="{Binding IsVisibleEmail}"
                                   IsFocusedButton="{Binding IsVisibleButton}"
                                   Placeholder="{res:Translate Email}" />
             <Label Grid.Row="2" 
                        Text="{res:Translate WrongEmail}"
-                       FontSize="15" 
-                       Style="{StaticResource errorLabel}"
-                       Margin="20,65,0,0"     
-                       IsVisible="{Binding IsWrongEmail}" />
+                       Margin="20,65,0,0"
+                   Style="{DynamicResource tstyle_i3}"
+                   IsVisible="{Binding IsWrongEmail}" />
 
             <StackLayout Grid.Row="3" HorizontalOptions="Center" Margin="0,20,0,0" IsVisible="{Binding IsUnVisibleButton}">
                 <Button Text="{res:Translate SignUp}" 
                         WidthRequest="218" CornerRadius="25" HeightRequest="50"
-                        Command="{Binding CreateCommand}"
-                        Style="{StaticResource baseButton}"/>
+                        BackgroundColor="{DynamicResource appcolor_i1}"
+                       FontAttributes="Bold" FontSize="{DynamicResource tsize_i3}"
+                       FontFamily="Ubuntu-Regular"
+                       TextColor="{DynamicResource appcolor_i2}"
+                        Command="{Binding CreateCommand}"/>
                 <Button Command="{Binding LogInCommand}" 
                         WidthRequest="218"
                         Margin="0,20,0,0" 
-                        Text="{res:Translate LogIn}" 
-                        BorderColor="Transparent"
-                        Style="{StaticResource inverseButtonStyle}"/>
+                        Text="{res:Translate LogIn}"
+                       FontAttributes="Bold" FontSize="{DynamicResource tsize_i3}"
+                       FontFamily="Ubuntu-Regular"
+                       TextColor="{DynamicResource appcolor_i1}"
+                        BorderColor="Transparent"/>
             </StackLayout>
 
-            <StackLayout Grid.Row="4" VerticalOptions="EndAndExpand" HeightRequest="50" BackgroundColor="{StaticResource LightPrimaryColor}" IsVisible="{Binding IsVisibleButton}">
+            <StackLayout Grid.Row="4" VerticalOptions="EndAndExpand"
+                         BackgroundColor="{DynamicResource appcolor_i1}"
+                         HeightRequest="50"
+                         IsVisible="{Binding IsVisibleButton}">
                 <StackLayout.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding CreateCommand}"/>
                 </StackLayout.GestureRecognizers>
-                <Label Text="{res:Translate SignUp}" VerticalOptions="CenterAndExpand"  TextColor="{StaticResource TextColor}" FontAttributes="Bold" FontSize="18" HorizontalOptions="Center" />
+                <Label Text="{res:Translate SignUp}"
+                       VerticalOptions="CenterAndExpand"
+                       FontAttributes="Bold" FontSize="{DynamicResource tsize_i3}"
+                       FontFamily="Ubuntu-Regular"
+                       TextColor="{DynamicResource appcolor_i2}"
+                       HorizontalOptions="Center" />
             </StackLayout>
-
 
         </controls:CustomGrid>
     </view:BaseContentPage.Content>

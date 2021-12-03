@@ -22,7 +22,7 @@
             Text="{Binding Text, Source={x:Reference customEntry}}"
                                    TextColor="{Binding TextColor, Source={x:Reference customEntry}}"
                                    FontFamily="{Binding FontFamily, Source={x:Reference customEntry}}"
-                                   FontSize="21"
+                                   FontSize="{DynamicResource tsize_i2}"
                                    Placeholder="{Binding Placeholder, Source={x:Reference customEntry}}" 
                                    PlaceholderColor="{Binding PlaceholderColor, Source={x:Reference customEntry}}" 
                                    BackgroundColor="{Binding BackgroundColor, Source={x:Reference customEntry}}"
@@ -54,5 +54,5 @@
                  WidthRequest="30"/>
         
 </Grid>
-    <BoxView Grid.Row="1"  Color="{StaticResource LightLineColor}" Margin="0,0,10,0"/>
+    <BoxView Grid.Row="1"  Color="{DynamicResource appcolor_i6}" Margin="0,0,10,0"/>
 </Grid>

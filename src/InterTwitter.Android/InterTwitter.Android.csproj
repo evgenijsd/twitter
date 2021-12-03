@@ -135,7 +135,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <AndroidResource Include="Resources\values\string.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -146,7 +145,6 @@
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </AndroidResource>
-=======
     <AndroidResource Include="Resources\drawable-hdpi\ic_add_blue.png" />
   </ItemGroup>
   <ItemGroup>
@@ -1030,7 +1028,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxxhdpi\pic_empty_state_2.png" />
->>>>>>> 1223893a6974b67e7bc6b40385cdd6ec885eb7b8
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
