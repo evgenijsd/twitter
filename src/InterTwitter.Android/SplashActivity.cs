@@ -32,7 +32,7 @@ namespace InterTwitter.Droid
 
         async void SimulateStartup()
         {
-            await Task.Delay(2000); 
+            await Task.Delay(300); 
             StartActivity(new Intent(Application.Context, typeof(MainActivity)));
         }
     }

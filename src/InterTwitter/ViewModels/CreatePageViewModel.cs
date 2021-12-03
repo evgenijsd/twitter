@@ -160,22 +160,22 @@ namespace InterTwitter.ViewModels
             switch (check)
                 {
                     case ECheckEnter.LoginExist:
-                        await _dialogs.DisplayAlertAsync("Alert", "This login is already taken", "Ok");
+                        await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertLoginTaken, Resources.Resource.Ok);
                         break;
                     case ECheckEnter.EmailANotVaid:
-                        await _dialogs.DisplayAlertAsync("Alert", "In Email there is no symbol @", "Ok");
+                        await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertEmailNoA, Resources.Resource.Ok);
                         break;
                     case ECheckEnter.EmailNotValid:
-                        await _dialogs.DisplayAlertAsync("Alert", "Email does not match the format", "Ok");
+                        await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertEmailInvalid, Resources.Resource.Ok);
                         break;
                     case ECheckEnter.EmailLengthNotValid:
-                        await _dialogs.DisplayAlertAsync("Alert", "In email name and domain no more than 64 characters", "Ok");
+                        await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertEmailLength, Resources.Resource.Ok);
                         break;
                     case ECheckEnter.NameLengthNotValid:
-                        await _dialogs.DisplayAlertAsync("Alert", "The name cannot be shorter 2 character", "Ok");
+                        await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertNameLength, Resources.Resource.Ok);
                         break;
                     case ECheckEnter.NameNotValid:
-                        await _dialogs.DisplayAlertAsync("Alert", "Name includes only letters", "Ok");
+                        await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertNameLetter, Resources.Resource.Ok);
                         break;
 
                     default:

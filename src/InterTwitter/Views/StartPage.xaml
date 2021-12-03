@@ -20,6 +20,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="40"/>
                 </Grid.ColumnDefinitions>
+                
                 <Image Source="{DynamicResource pic_owl_blue_small}" Grid.Column="1" 
                            HorizontalOptions="CenterAndExpand" 
                            VerticalOptions="Start" Aspect="AspectFill" 
@@ -31,6 +32,7 @@
                        HorizontalOptions="CenterAndExpand"
                        Style="{DynamicResource tstyle_i1}"/>
             </Grid>
+            
             <Label Grid.Row="1" 
                    Margin="24,0,0,0"
                    Text="{res:Translate Name}"
@@ -46,11 +48,11 @@
                                   ClearImageSource="{DynamicResource ic_clear_gray}"
                                   FontFamily="Ubuntu-Regular"
                                   PlaceholderColor="{DynamicResource appcolor_i4}"
-                                  TextColor="{DynamicResource appcolor_i3}"
-                                  />
+                                  TextColor="{DynamicResource appcolor_i3}"/>
             <Label Grid.Row="1" Text="{res:Translate PleaseName}" 
-                       Margin="20,65,0,0"
+                   Margin="20,65,0,0"
                    Style="{DynamicResource tstyle_i3}"
+                   FontSize="{DynamicResource tsize_i4}"
                    IsVisible="{Binding IsWrongName}"/>
 
             <Label Grid.Row="2" Text="{res:Translate Email}" 
@@ -68,26 +70,27 @@
                                   IsFocusedButton="{Binding IsVisibleButton}"
                                   Placeholder="{res:Translate Email}" />
             <Label Grid.Row="2" 
-                       Text="{res:Translate WrongEmail}"
-                       Margin="20,65,0,0"
+                   Text="{res:Translate WrongEmail}"
+                   Margin="20,65,0,0"
                    Style="{DynamicResource tstyle_i3}"
+                   FontSize="{DynamicResource tsize_i4}"
                    IsVisible="{Binding IsWrongEmail}" />
 
             <StackLayout Grid.Row="3" HorizontalOptions="Center" Margin="0,20,0,0" IsVisible="{Binding IsUnVisibleButton}">
                 <Button Text="{res:Translate SignUp}" 
                         WidthRequest="218" CornerRadius="25" HeightRequest="50"
                         BackgroundColor="{DynamicResource appcolor_i1}"
-                       FontAttributes="Bold" FontSize="{DynamicResource tsize_i3}"
-                       FontFamily="Ubuntu-Regular"
-                       TextColor="{DynamicResource appcolor_i2}"
+                        FontAttributes="Bold" FontSize="{DynamicResource tsize_i3}"
+                        TextColor="{DynamicResource appcolor_i2}"
                         Command="{Binding CreateCommand}"/>
                 <Button Command="{Binding LogInCommand}" 
                         WidthRequest="218"
                         Margin="0,20,0,0" 
                         Text="{res:Translate LogIn}"
-                       FontAttributes="Bold" FontSize="{DynamicResource tsize_i3}"
-                       FontFamily="Ubuntu-Regular"
-                       TextColor="{DynamicResource appcolor_i1}"
+                        FontAttributes="Bold" FontSize="{DynamicResource tsize_i3}"
+                        FontFamily="Ubuntu-Regular"
+                        TextColor="{DynamicResource appcolor_i1}"
+                        BackgroundColor="Transparent"
                         BorderColor="Transparent"/>
             </StackLayout>
 

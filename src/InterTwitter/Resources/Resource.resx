@@ -117,6 +117,45 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Alert" xml:space="preserve">
+    <value>Alert</value>
+  </data>
+  <data name="AlertDataIncorrect" xml:space="preserve">
+    <value>The data is incorrect field!</value>
+  </data>
+  <data name="AlertEmailInvalid" xml:space="preserve">
+    <value>Email does not match the format</value>
+  </data>
+  <data name="AlertEmailLength" xml:space="preserve">
+    <value>In email name and domain no more than 64 characters</value>
+  </data>
+  <data name="AlertEmailNoA" xml:space="preserve">
+    <value>In Email there is no symbol @</value>
+  </data>
+  <data name="AlertInvalidLogin" xml:space="preserve">
+    <value>Invalid login or password!</value>
+  </data>
+  <data name="AlertLoginNotExist" xml:space="preserve">
+    <value>This login does not exist</value>
+  </data>
+  <data name="AlertLoginTaken" xml:space="preserve">
+    <value>This login is already taken</value>
+  </data>
+  <data name="AlertNameLength" xml:space="preserve">
+    <value>The name cannot be shorter 2 character</value>
+  </data>
+  <data name="AlertNameLetter" xml:space="preserve">
+    <value>Name includes only letters</value>
+  </data>
+  <data name="AlertPasswordLength" xml:space="preserve">
+    <value>Password less than 6 characters</value>
+  </data>
+  <data name="AlertPasswordLetterDigit" xml:space="preserve">
+    <value>The password must contain a big letter and digit</value>
+  </data>
+  <data name="AlertPasswordNotEqual" xml:space="preserve">
+    <value>Password and confirm password do not coincide</value>
+  </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Confirm Password</value>
   </data>
@@ -140,6 +179,9 @@
   </data>
   <data name="Next" xml:space="preserve">
     <value>Next</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>

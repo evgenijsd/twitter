@@ -167,7 +167,7 @@ namespace InterTwitter.ViewModels
             var emailCheck = await _registrationService.CheckTheCorrectEmailAsync(Email);
             if (emailCheck.Result != ECheckEnter.LoginExist && !string.IsNullOrEmpty(Email))
             {
-                await _dialogs.DisplayAlertAsync("Alert", "This login does not exist", "Ok");
+                await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertLoginNotExist, Resources.Resource.Ok);
             }
 
             User.Email = Email;
@@ -181,13 +181,13 @@ namespace InterTwitter.ViewModels
             var emailCheck = await _registrationService.CheckTheCorrectEmailAsync(Email);
             if (emailCheck.Result == ECheckEnter.LoginExist)
             {
-                await _dialogs.DisplayAlertAsync("Alert", "This login is already taken", "Ok");
+                await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertLoginTaken, Resources.Resource.Ok);
             }
             else
             {
                 if (IsWrongEmail || IsWrongName)
                 {
-                    await _dialogs.DisplayAlertAsync("Alert", "The data is incorrect field!", "Ok");
+                    await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertDataIncorrect, Resources.Resource.Ok);
                 }
 
                 User.Email = Email;

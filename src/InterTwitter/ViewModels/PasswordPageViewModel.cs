@@ -151,13 +151,13 @@ namespace InterTwitter.ViewModels
             switch (check)
             {
                 case ECheckEnter.PasswordBigLetterAndDigit:
-                    await _dialogs.DisplayAlertAsync("Alert", "The password must contain a big letter and digit", "Ok");
+                    await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertPasswordLetterDigit, Resources.Resource.Ok);
                     break;
                 case ECheckEnter.PasswordLengthNotValid:
-                    await _dialogs.DisplayAlertAsync("Alert", "Password less than 6 characters", "Ok");
+                    await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertPasswordLength, Resources.Resource.Ok);
                     break;
                 case ECheckEnter.PasswordsNotEqual:
-                    await _dialogs.DisplayAlertAsync("Alert", "Password and confirm password do not coincide", "Ok");
+                    await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertPasswordNotEqual, Resources.Resource.Ok);
                     break;
 
                 default:

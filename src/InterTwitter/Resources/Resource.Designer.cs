@@ -61,6 +61,123 @@ namespace InterTwitter.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Alert.
+        /// </summary>
+        internal static string Alert {
+            get {
+                return ResourceManager.GetString("Alert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на The data is incorrect field!.
+        /// </summary>
+        internal static string AlertDataIncorrect {
+            get {
+                return ResourceManager.GetString("AlertDataIncorrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Email does not match the format.
+        /// </summary>
+        internal static string AlertEmailInvalid {
+            get {
+                return ResourceManager.GetString("AlertEmailInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на In email name and domain no more than 64 characters.
+        /// </summary>
+        internal static string AlertEmailLength {
+            get {
+                return ResourceManager.GetString("AlertEmailLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на In Email there is no symbol @.
+        /// </summary>
+        internal static string AlertEmailNoA {
+            get {
+                return ResourceManager.GetString("AlertEmailNoA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Invalid login or password!.
+        /// </summary>
+        internal static string AlertInvalidLogin {
+            get {
+                return ResourceManager.GetString("AlertInvalidLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на This login does not exist.
+        /// </summary>
+        internal static string AlertLoginNotExist {
+            get {
+                return ResourceManager.GetString("AlertLoginNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на This login is already taken.
+        /// </summary>
+        internal static string AlertLoginTaken {
+            get {
+                return ResourceManager.GetString("AlertLoginTaken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на The name cannot be shorter 2 character.
+        /// </summary>
+        internal static string AlertNameLength {
+            get {
+                return ResourceManager.GetString("AlertNameLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Name includes only letters.
+        /// </summary>
+        internal static string AlertNameLetter {
+            get {
+                return ResourceManager.GetString("AlertNameLetter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Password less than 6 characters.
+        /// </summary>
+        internal static string AlertPasswordLength {
+            get {
+                return ResourceManager.GetString("AlertPasswordLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на The password must contain a big letter and digit.
+        /// </summary>
+        internal static string AlertPasswordLetterDigit {
+            get {
+                return ResourceManager.GetString("AlertPasswordLetterDigit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Password and confirm password do not coincide.
+        /// </summary>
+        internal static string AlertPasswordNotEqual {
+            get {
+                return ResourceManager.GetString("AlertPasswordNotEqual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Confirm Password.
         /// </summary>
         internal static string ConfirmPassword {
@@ -129,6 +246,15 @@ namespace InterTwitter.Resources {
         internal static string Next {
             get {
                 return ResourceManager.GetString("Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Ok.
+        /// </summary>
+        internal static string Ok {
+            get {
+                return ResourceManager.GetString("Ok", resourceCulture);
             }
         }
         

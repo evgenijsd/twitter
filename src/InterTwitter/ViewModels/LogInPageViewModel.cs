@@ -164,7 +164,7 @@ namespace InterTwitter.ViewModels
             }
             else
             {
-                await _dialogs.DisplayAlertAsync("Alert", "Invalid login or password!", "Ok");
+                await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertInvalidLogin, Resources.Resource.Ok);
                 Password = string.Empty;
             }
         }
