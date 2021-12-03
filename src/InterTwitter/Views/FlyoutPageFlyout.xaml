@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage
+    x:Class="InterTwitter.Views.FlyoutPageFlyout"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:InterTwitter.Views"
+    xmlns:prism="http://prismlibrary.com"
+    Title="Flyout"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    IconImageSource="ic_home_gray.png">
+
+    <Grid RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="240" />
+            <RowDefinition Height="2" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Padding="5,10" VerticalOptions="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <StackLayout Grid.Column="1" VerticalOptions="Center">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    Text="{Binding ProfileName}" />
+                <Label Text="{Binding ProfileMail}" TextColor="Gray" />
+            </StackLayout>
+        </Grid>
+
+        <ListView
+            Grid.Row="1"
+            BackgroundColor="White"
+            HasUnevenRows="true"
+            ItemsSource="{Binding MenuItems}"
+            SelectedItem="{Binding SelectedItem}"
+            SeparatorVisibility="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout
+                            Padding="20,12"
+                            Orientation="Horizontal"
+                            Spacing="20">
+                            <Image
+                                HeightRequest="35"
+                                Source="{Binding ImageSource}"
+                                WidthRequest="35" />
+                            <Label Text="{Binding Title}" TextColor="{Binding TextColor}" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <BoxView Grid.Row="2" BackgroundColor="LightGray" />
+
+        <Grid Grid.Row="3" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <StackLayout
+                Orientation="Horizontal"
+                Spacing="20"
+                VerticalOptions="Start">
+                <Image Source="ic_setting.png" />
+                <Label Text="Change profile" />
+
+            </StackLayout>
+
+            <StackLayout
+                Grid.Row="1"
+                Orientation="Horizontal"
+                Spacing="20"
+                VerticalOptions="End">
+                <Image
+                    HeightRequest="35"
+                    Source="ic_logout_blue.png"
+                    WidthRequest="35" />
+                <Label Text="Logout" TextColor="#2356C5" />
+
+            </StackLayout>
+        </Grid>
+
+    </Grid>
+</local:BaseContentPage>
