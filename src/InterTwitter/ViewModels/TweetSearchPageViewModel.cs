@@ -40,8 +40,8 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _themeModels, value);
         }
 
-        private ETweetSearchState _tweetSearchState;
-        public ETweetSearchState TweetSearchState
+        private ESearchState _tweetSearchState;
+        public ESearchState TweetSearchState
         {
             get => _tweetSearchState;
             set => SetProperty(ref _tweetSearchState, value);
@@ -124,13 +124,13 @@ namespace InterTwitter.ViewModels
 
         private Task StartSearchCommandTapAsync()
         {
-            TweetSearchState = ETweetSearchState.Active;
+            TweetSearchState = ESearchState.Active;
             return Task.CompletedTask;
         }
 
         private Task StopSearchCommandTapAsync()
         {
-            TweetSearchState = ETweetSearchState.NotActive;
+            TweetSearchState = ESearchState.NotActive;
             return Task.CompletedTask;
         }
 

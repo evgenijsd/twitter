@@ -2,6 +2,7 @@
 <views:BaseContentPage  xmlns="http://xamarin.com/schemas/2014/forms"
                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                         xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+                        xmlns:controls="clr-namespace:InterTwitter.Controls"
                         xmlns:stateContainer="clr-namespace:InterTwitter.Controls.StateContainer"
                         xmlns:viewmodels="clr-namespace:InterTwitter.ViewModels"
                         xmlns:views="clr-namespace:InterTwitter.Views"
@@ -13,70 +14,11 @@
         <StackLayout Spacing="0">
 
              <!-- SEARCH BAR -->
-            <StackLayout>
 
-                <Grid RowDefinitions="40"
-                      ColumnDefinitions="0.12*, *"
-                      Padding="12, 9, 12, 6">
-
-                    <!-- PROFILE/BACK ICON -->
-                    <stateContainer:StateContainer Grid.Column="0"
-                                                   Padding="3"
-                                                   State="{Binding TweetSearchState}">
-
-                        <stateContainer:StateContainer.Conditions>
-
-                            <stateContainer:StateCondition State="NotActive">
-
-                                <ImageButton Grid.Row="1" 
-                                             CornerRadius="50"
-                                             Source="{Binding ProfileIcon}"
-                                             Command="{Binding ProfileIconTapCommand}"/>
-
-                            </stateContainer:StateCondition>
-
-                            <stateContainer:StateCondition State="Active">
-
-                                <Image Source="{DynamicResource ic_left_gray}">
-
-                                    <Image.GestureRecognizers>
-
-                                        <TapGestureRecognizer Command="{Binding StopSearchTapCommand}"/>
-
-                                    </Image.GestureRecognizers>
-
-                                </Image>
-
-                            </stateContainer:StateCondition>
-
-                        </stateContainer:StateContainer.Conditions>
-
-                    </stateContainer:StateContainer>
-
-                    <!-- SEARCH LINE -->
-                    <Frame Grid.Column="1"
-                           Padding="12, 0"
-                           HasShadow="False"
-                           CornerRadius="25"
-                           BackgroundColor="{DynamicResource appcolor_i6}">
-
-                        <Entry Margin="0"
-                               BackgroundColor="Transparent"
-                               FontSize="{DynamicResource tsize_i5}"
-                               FontFamily="Ubuntu-Medium"
-                               Text="{Binding SearchQuery}"
-                               Placeholder="{xct:Translate Search}"
-                               PlaceholderColor="{DynamicResource appcolor_i4}"
-                               ReturnCommand="{Binding StartSearchTapCommand}"/>
-
-                    </Frame>
-
-                </Grid>
-
-                <BoxView Grid.Row="1" 
-                         Style="{DynamicResource SeparatorStyle}"/>
-
-            </StackLayout>
+            <controls:SearchBar SearchState="{Binding TweetSearchState}"
+                                AvatarIconSource="{Binding ProfileIcon}"
+                                BackIconTapCommand="{Binding StopSearchTapCommand}"
+                                ReturnCommand="{Binding StartSearchTapCommand}"/>
 
             <!-- CONTENT --> 
             <StackLayout VerticalOptions="CenterAndExpand">
@@ -211,6 +153,7 @@
 
             <Frame HeightRequest="56"
                    Padding="0"
+                   HasShadow="False"
                    BackgroundColor="White"/>
 
         </StackLayout>
