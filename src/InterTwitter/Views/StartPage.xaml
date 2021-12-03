@@ -12,7 +12,7 @@
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" ColumnSpacing="0">
                 <Grid.ColumnDefinitions>
@@ -69,33 +69,27 @@
                        Margin="20,65,0,0"     
                        IsVisible="{Binding IsWrongEmail}" />
 
-            <StackLayout Grid.Row="3" HorizontalOptions="Center" Margin="0,20,0,0">
+            <StackLayout Grid.Row="3" HorizontalOptions="Center" Margin="0,20,0,0" IsVisible="{Binding IsUnVisibleButton}">
                 <Button Text="{res:Translate SignUp}" 
                         WidthRequest="218" CornerRadius="25" HeightRequest="50"
                         Command="{Binding CreateCommand}"
-                        Style="{StaticResource baseButton}" 
-                        IsVisible="{Binding IsUnVisibleButton}"/>
-            </StackLayout>
-
-            <StackLayout Grid.Row="4" HorizontalOptions="Center" Margin="0,20,0,0" >
+                        Style="{StaticResource baseButton}"/>
                 <Button Command="{Binding LogInCommand}" 
                         WidthRequest="218"
+                        Margin="0,20,0,0" 
                         Text="{res:Translate LogIn}" 
                         BorderColor="Transparent"
-                        Style="{StaticResource inverseButtonStyle}" 
-                        IsVisible="{Binding IsUnVisibleButton}" />
-
-                <Button Text="{res:Translate SignUp}" 
-                        Command="{Binding CreateCommand}"
-                        VerticalOptions="EndAndExpand"
-                        HorizontalOptions="Fill"
-                        WidthRequest="3000"
-                        HeightRequest="50"
-                        CornerRadius="0"
-                        Grid.Row="4"
-                        Style="{StaticResource baseButton}" 
-                        IsVisible="{Binding IsVisibleButton}"/>
+                        Style="{StaticResource inverseButtonStyle}"/>
             </StackLayout>
+
+            <StackLayout Grid.Row="4" VerticalOptions="EndAndExpand" HeightRequest="50" BackgroundColor="Aquamarine" IsVisible="{Binding IsVisibleButton}">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CreateCommand}"/>
+                </StackLayout.GestureRecognizers>
+                <Label Text="{res:Translate SignUp}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" />
+            </StackLayout>
+
+
         </controls:CustomGrid>
     </view:BaseContentPage.Content>
 </view:BaseContentPage>

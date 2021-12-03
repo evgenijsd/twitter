@@ -150,16 +150,12 @@ namespace InterTwitter.ViewModels
         public override async void Initialize(INavigationParameters parameters)
         {
             await Task.Delay(TimeSpan.FromSeconds(0.1));
-            User = _registrationService.GetUsers().FirstOrDefault(x => x.Id == UserId);
-            if (User != null)
+            var user = _registrationService.GetUsers().FirstOrDefault(x => x.Id == UserId);
+            if (user != null)
             {
-                await _dialogs.DisplayAlertAsync("Alert", $"TwitterCommand id - {User.Id}", "Ok");
+                await _dialogs.DisplayAlertAsync("Alert", $"TwitterCommand id - {user.Id}", "Ok");
                 //var p = new NavigationParameters { { "User", User } };
                 //await _navigationService.NavigateAsync($"/{nameof(TwitterPage)}", p);
-            }
-            else
-            {
-                User = new ();
             }
         }
         #endregion
