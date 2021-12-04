@@ -16,6 +16,14 @@ namespace InterTwitter.ViewModels
     {
         #region -- Public properties --
 
+        private bool _IsTweetLiked;
+
+        public bool IsTweetLiked
+        {
+            get => _IsTweetLiked;
+            set => SetProperty(ref _IsTweetLiked, value);
+        }
+
         private List<BaseTweetViewModel> tweetList = new List<BaseTweetViewModel>();
 
         private ObservableCollection<BaseTweetViewModel> _tweets;
@@ -25,12 +33,6 @@ namespace InterTwitter.ViewModels
             get => _tweets;
             set => SetProperty(ref _tweets, value);
         }
-
-        private ICommand _likeButtonCommand;
-        public ICommand LikeButtonCommand => _likeButtonCommand ?? (_likeButtonCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnLikeCommandAsync));
-
-        private ICommand _markTweetButtonCommand;
-        public ICommand MarkTweetButtonCommand => _markTweetButtonCommand ?? (_markTweetButtonCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnMarkCommandAsync));
 
         #endregion
 
@@ -64,6 +66,8 @@ namespace InterTwitter.ViewModels
                 ImagesPaths = listPhotos,
                 RowHeight = rowHeight,
                 CountColumn = countColumn,
+                IsTweekLiked = false,
+                CreationTime = DateTime.Now,
             });
 
             listPhotos = new List<string> { "image1", };
@@ -82,6 +86,8 @@ namespace InterTwitter.ViewModels
                 ImagesPaths = listPhotos,
                 RowHeight = rowHeight,
                 CountColumn = countColumn,
+                IsTweekLiked = false,
+                CreationTime = DateTime.Now,
             });
 
             listPhotos = new List<string> { "image2", "image3", "image4", "image1", };
@@ -100,6 +106,8 @@ namespace InterTwitter.ViewModels
                 ImagesPaths = listPhotos,
                 RowHeight = rowHeight,
                 CountColumn = countColumn,
+                IsTweekLiked = false,
+                CreationTime = DateTime.Now,
             });
 
             listPhotos = new List<string> { "image2", "image3", "image4", "image5", "image1", };
@@ -118,6 +126,8 @@ namespace InterTwitter.ViewModels
                 ImagesPaths = listPhotos,
                 RowHeight = rowHeight,
                 CountColumn = countColumn,
+                IsTweekLiked = false,
+                CreationTime = DateTime.Now,
             });
 
             listPhotos = new List<string> { "image2", "image3", "image4", "image5", "image6", "image1", };
@@ -136,6 +146,8 @@ namespace InterTwitter.ViewModels
                 ImagesPaths = listPhotos,
                 RowHeight = rowHeight,
                 CountColumn = countColumn,
+                IsTweekLiked = false,
+                CreationTime = DateTime.Now,
             });
 
             observTweetCollection.Add(new BaseTweetViewModel()
@@ -143,6 +155,8 @@ namespace InterTwitter.ViewModels
                 UserName = "Kate",
                 UserAvatar = "woman2",
                 Text = "In continuation of my video about DataTemplates, we will now look at the DataTemplateSelector. With the DataTemplateSelector you can apply different templates based on logic that you implement yourself! ",
+                IsTweekLiked = false,
+                CreationTime = DateTime.Now,
             });
 
             //observTweetCollection.Add(new BaseTweetViewModel()
@@ -160,16 +174,6 @@ namespace InterTwitter.ViewModels
             //});
             Tweets = observTweetCollection;
 
-            return Task.CompletedTask;
-        }
-
-        private Task OnMarkCommandAsync(BaseTweetViewModel tweet)
-        {
-            return Task.CompletedTask;
-        }
-
-        private Task OnLikeCommandAsync(BaseTweetViewModel tweet)
-        {
             return Task.CompletedTask;
         }
 

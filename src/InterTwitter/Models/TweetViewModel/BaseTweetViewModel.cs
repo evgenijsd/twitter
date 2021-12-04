@@ -1,7 +1,9 @@
-﻿using Prism.Mvvm;
+﻿using InterTwitter.Helpers;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace InterTwitter.Models.TweetViewModel
@@ -17,11 +19,11 @@ namespace InterTwitter.Models.TweetViewModel
             set => SetProperty(ref _id, value);
         }
 
-        private int _likes;
-        public int Likes
+        private int _likesNumber = 123;
+        public int LikesNumber
         {
-            get => _likes;
-            set => SetProperty(ref _likes, value);
+            get => _likesNumber;
+            set => SetProperty(ref _likesNumber, value);
         }
 
         private int _userId;
@@ -66,11 +68,11 @@ namespace InterTwitter.Models.TweetViewModel
             set => SetProperty(ref _IsTweetLiked, value);
         }
 
-        private bool _IsTweetMarked;
-        public bool IsTweetMarked
+        private bool _isBookmarked;
+        public bool IsBookmarked
         {
-            get => _IsTweetMarked;
-            set => SetProperty(ref _IsTweetMarked, value);
+            get => _isBookmarked;
+            set => SetProperty(ref _isBookmarked, value, nameof(IsBookmarked));
         }
 
         private Enum _tweetType;
@@ -81,18 +83,10 @@ namespace InterTwitter.Models.TweetViewModel
         }
 
         private ICommand _likeTweetCommand;
-        public ICommand LikeTweetCommand
-        {
-            get => _likeTweetCommand;
-            set => SetProperty(ref _likeTweetCommand, value);
-        }
+        public ICommand LikeTweetCommand => _likeTweetCommand ?? (_likeTweetCommand = SingleExecutionCommand.FromFunc<ImagesTweetViewModel>(OnLikeCommandAsync));
 
         private ICommand _markTweetCommand;
-        public ICommand MarkTweetCommand
-        {
-            get => _markTweetCommand;
-            set => SetProperty(ref _markTweetCommand, value);
-        }
+        public ICommand MarkTweetCommand => _markTweetCommand ?? (_markTweetCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnMarkCommandAsync));
 
         private DateTime _CreationTime;
         public DateTime CreationTime
@@ -100,6 +94,22 @@ namespace InterTwitter.Models.TweetViewModel
             get => _CreationTime;
             set => SetProperty(ref _CreationTime, value);
         }
+        #endregion
+
+        #region -- Private helpers --
+
+        private Task OnLikeCommandAsync(ImagesTweetViewModel tweet)
+        {
+            IsTweekLiked = !IsTweekLiked;
+            return Task.CompletedTask;
+        }
+
+        private Task OnMarkCommandAsync(BaseTweetViewModel tweet)
+        {
+            IsBookmarked = !IsBookmarked;
+            return Task.CompletedTask;
+        }
+
         #endregion
 
     }
