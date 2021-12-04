@@ -6,13 +6,12 @@
     xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
     xmlns:controls="clr-namespace:InterTwitter.Controls"
     xmlns:local="clr-namespace:InterTwitter.Views"
+    xmlns:prism="http://prismlibrary.com"
     Title="Detail"
     android:TabbedPage.IsSwipePagingEnabled="False"
     android:TabbedPage.ToolbarPlacement="Bottom"
-    SelectedTabType="{Binding SelectedTabType}" 
-    xmlns:prism="http://prismlibrary.com"
     prism:ViewModelLocator.AutowireViewModel="True"
-    >
+    SelectedTabType="{Binding SelectedTabType}">
 
     <TabbedPage.Children>
         <local:HomePage />
@@ -20,4 +19,5 @@
         <local:NotificationsPage />
         <local:BookmarksPage />
     </TabbedPage.Children>
+
 </controls:CustomTabbedPage>

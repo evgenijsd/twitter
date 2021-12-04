@@ -1,4 +1,5 @@
-﻿using Prism.Navigation;
+﻿using InterTwitter.Views;
+using Prism.Navigation;
 using System;
 using System.ComponentModel;
 using Xamarin.Forms;
@@ -10,7 +11,6 @@ namespace InterTwitter.ViewModels.Flyout
         public FlyoutPageDetailViewModel(INavigationService navigationService)
                                                      : base(navigationService)
         {
-            Subscribe();
         }
 
         #region -- Public properties --
@@ -39,15 +39,6 @@ namespace InterTwitter.ViewModels.Flyout
         #endregion
 
         #region --- Private Helpers ---
-        private void Subscribe()
-        {
-            MessagingCenter.Subscribe<FlyoutPageFlyoutViewModel, Type>(this, "ItemSelected", OnItemSelected);
-        }
-
-        private void OnItemSelected(object sender, Type selectedItemType)
-        {
-            NavigationService.NavigateAsync($"FlyoutPageDetail?selectedTab={selectedItemType.Name}");
-        }
         #endregion
     }
 }

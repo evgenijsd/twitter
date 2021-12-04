@@ -14,12 +14,15 @@ namespace InterTwitter.ViewModels
         {
             IconPath = "ic_search_gray.png";
         }
+
         #region --- Public Properties ---
-        public ICommand GotoFlyoutCommand => SingleExecutionCommand.FromFunc(OnGotoFlyoutCommandAsync);
+
+        public ICommand GotoFlyoutCommand => SingleExecutionCommand.FromFunc(OnGotoFlyoutCommand);
 
         #endregion
 
         #region --- Overrides ---
+
         public override void OnAppearing()
         {
             IconPath = "ic_search_blue.png";
@@ -29,15 +32,18 @@ namespace InterTwitter.ViewModels
         {
             IconPath = "ic_search_gray.png";
         }
+
         #endregion
 
         #region --- Private Helpers ---
-        private async Task OnGotoFlyoutCommandAsync()
+
+        private Task OnGotoFlyoutCommand()
         {
-            await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}");
             MessagingCenter.Send(this, "OpenSidebar", true);
             MessagingCenter.Send(this, "TabChange", typeof(SearchPage));
+            return Task.FromResult(true);
         }
+
         #endregion
     }
 }

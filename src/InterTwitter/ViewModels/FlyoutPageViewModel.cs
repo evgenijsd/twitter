@@ -1,7 +1,5 @@
-﻿using Prism.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using InterTwitter.ViewModels.Flyout;
+using Prism.Navigation;
 using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
@@ -29,16 +27,13 @@ namespace InterTwitter.ViewModels
 
         private void Subscribe()
         {
-            MessagingCenter.Subscribe<HomePageViewModel, bool>(this, "OpenSidebar", OpenSidebar);
-            MessagingCenter.Subscribe<SearchPageViewModel, bool>(this, "OpenSidebar", OpenSidebar);
-            MessagingCenter.Subscribe<BookmarksPageViewModel, bool>(this, "OpenSidebar", OpenSidebar);
-            MessagingCenter.Subscribe<NotificationPageViewModel, bool>(this, "OpenSidebar", OpenSidebar);
+            MessagingCenter.Subscribe<HomePageViewModel, bool>(this, "OpenSidebar", (sender, arg) => IsPresented = arg);
+            MessagingCenter.Subscribe<SearchPageViewModel, bool>(this, "OpenSidebar", (sender, arg) => IsPresented = arg);
+            MessagingCenter.Subscribe<BookmarksPageViewModel, bool>(this, "OpenSidebar", (sender, arg) => IsPresented = arg);
+            MessagingCenter.Subscribe<NotificationPageViewModel, bool>(this, "OpenSidebar", (sender, arg) => IsPresented = arg);
+            MessagingCenter.Subscribe<FlyoutPageFlyoutViewModel, bool>(this, "OpenSidebar", (sender, arg) => IsPresented = arg);
         }
 
-        private void OpenSidebar(object sender, bool arg)
-        {
-            IsPresented = arg;
-        }
         #endregion
     }
 }

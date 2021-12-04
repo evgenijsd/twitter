@@ -8,17 +8,22 @@
     Title="Notifications"
     prism:ViewModelLocator.AutowireViewModel="True"
     IconImageSource="{Binding IconPath}">
+
     <ContentPage.Content>
+
         <StackLayout>
+
             <Button
                 Command="{Binding GotoFlyoutCommand}"
                 Text="goto flyout"
                 VerticalOptions="Start" />
             <Label
                 HorizontalOptions="CenterAndExpand"
-                Text="Welcome to Xamarin.Forms!"
+                Text="Welcome to Notifications!"
                 VerticalOptions="CenterAndExpand" />
-           
+
         </StackLayout>
+
     </ContentPage.Content>
+
 </local:BaseContentPage>

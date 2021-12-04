@@ -7,12 +7,14 @@
     xmlns:prism="http://prismlibrary.com"
     prism:ViewModelLocator.AutowireViewModel="True"
     IsGestureEnabled="False"
-    IsPresented="{Binding IsPresented}">
+    IsPresented="{Binding IsPresented, Mode=TwoWay}">
 
     <FlyoutPage.Flyout>
         <local:FlyoutPageFlyout />
     </FlyoutPage.Flyout>
+
     <FlyoutPage.Detail>
         <local:FlyoutPageDetail />
     </FlyoutPage.Detail>
+
 </FlyoutPage>

@@ -1,8 +1,12 @@
 ﻿using InterTwitter.Views;
+using MapNotepad.Helpers;
 using Prism.Navigation;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels.Flyout
@@ -19,6 +23,7 @@ namespace InterTwitter.ViewModels.Flyout
                         Id = 0, Title = "Home",
                         TargetType = typeof(HomePage),
                         ImageSource = "ic_home_gray",
+                        TapCommand = new Command(OnItemTapCommand),
                     },
 
                     new MenuItemViewModel
@@ -27,6 +32,7 @@ namespace InterTwitter.ViewModels.Flyout
                         Title = "Search",
                         TargetType = typeof(SearchPage),
                         ImageSource = "ic_search_gray",
+                        TapCommand = new Command(OnItemTapCommand),
                     },
                     new MenuItemViewModel
                     {
@@ -34,6 +40,7 @@ namespace InterTwitter.ViewModels.Flyout
                         Title = "Notification",
                         TargetType = typeof(NotificationsPage),
                         ImageSource = "ic_notifications_gray",
+                        TapCommand = new Command(OnItemTapCommand),
                     },
                     new MenuItemViewModel
                     {
@@ -41,24 +48,19 @@ namespace InterTwitter.ViewModels.Flyout
                         Title = "Bookmarks",
                         TargetType = typeof(BookmarksPage),
                         ImageSource = "ic_bookmarks_gray",
+                        TapCommand = new Command(OnItemTapCommand),
                     },
                 });
             Subscribe();
         }
 
         #region --- Public Properties ---
+
         private ObservableCollection<MenuItemViewModel> _menuItems;
         public ObservableCollection<MenuItemViewModel> MenuItems
         {
             get => _menuItems;
             set => SetProperty(ref _menuItems, value);
-        }
-
-        private MenuItemViewModel _selectedItem;
-        public MenuItemViewModel SelectedItem
-        {
-            get => _selectedItem;
-            set => SetProperty(ref _selectedItem, value);
         }
 
         private string _profileName;
@@ -75,22 +77,21 @@ namespace InterTwitter.ViewModels.Flyout
             set => SetProperty(ref _profileEmail, value);
         }
 
+        public ICommand LogoutTapCommand => SingleExecutionCommand.FromFunc(OnLogoutTapCommand);
+        public ICommand ChangeProfileTapCommand => SingleExecutionCommand.FromFunc(OnChangeProfileTapCommand);
+
         #endregion
 
         #region --- Overrides ---
+
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
-            if (args.PropertyName == nameof(SelectedItem) && SelectedItem != null)
-            {
-                var type = SelectedItem.TargetType;
-                SelectedItem = null;
-                MessagingCenter.Send(this, "ItemSelected", type);
-            }
         }
         #endregion
 
         #region --- Private Helpers ---
+
         private void Subscribe()
         {
             MessagingCenter.Subscribe<SearchPageViewModel, Type>(this, "TabChange", ChangeVisualState);
@@ -104,10 +105,12 @@ namespace InterTwitter.ViewModels.Flyout
             if (MenuItems != null)
             {
                 string[] selectedItemImageSource = new string[8];
+
                 selectedItemImageSource[0] = "ic_home_blue";
                 selectedItemImageSource[1] = "ic_search_blue";
                 selectedItemImageSource[2] = "ic_notifications_blue";
                 selectedItemImageSource[3] = "ic_bookmarks_blue";
+
                 selectedItemImageSource[4] = "ic_home_gray";
                 selectedItemImageSource[5] = "ic_search_gray";
                 selectedItemImageSource[6] = "ic_notifications_gray";
@@ -117,17 +120,35 @@ namespace InterTwitter.ViewModels.Flyout
                 {
                     if (item.TargetType == selectedTabType)
                     {
-                        item.TextColor = (Color)App.Current.Resources["appcolor_i1"];
+                        item.TextColor = (Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i1"];
                         item.ImageSource = selectedItemImageSource[item.Id];
                     }
                     else
                     {
-                        item.TextColor = (Color)App.Current.Resources["appcolor_i3"];
+                        item.TextColor = (Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i3"];
                         item.ImageSource = selectedItemImageSource[item.Id + 4];
                     }
                 }
             }
         }
+
+        private void OnItemTapCommand(object param)
+        {
+            var nenuItem = param as MenuItemViewModel;
+            MessagingCenter.Send(this, "OpenSidebar", false);
+            MessagingCenter.Send(this, "TabSelected", nenuItem.Id);
+        }
+
+        private Task OnLogoutTapCommand()
+        {
+            return Task.FromResult(true);
+        }
+
+        private Task OnChangeProfileTapCommand()
+        {
+            return Task.FromResult(true);
+        }
+
         #endregion
     }
 }

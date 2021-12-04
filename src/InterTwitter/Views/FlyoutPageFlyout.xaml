@@ -7,7 +7,7 @@
     xmlns:prism="http://prismlibrary.com"
     Title="Flyout"
     prism:ViewModelLocator.AutowireViewModel="True"
-    IconImageSource="ic_home_gray.png">
+    BackgroundColor="{DynamicResource appcolor_i2}">
 
     <Grid RowSpacing="0">
         <Grid.RowDefinitions>
@@ -28,17 +28,16 @@
                     FontAttributes="Bold"
                     FontSize="20"
                     Text="{Binding ProfileName}" />
-                <Label Text="{Binding ProfileMail}" TextColor="Gray" />
+                <Label Text="{Binding ProfileMail}" TextColor="{DynamicResource appcolor_i5}" />
             </StackLayout>
         </Grid>
 
         <ListView
             Grid.Row="1"
-            BackgroundColor="White"
             HasUnevenRows="true"
             ItemsSource="{Binding MenuItems}"
-            SelectedItem="{Binding SelectedItem}"
             SeparatorVisibility="None">
+
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -55,13 +54,18 @@
                                 Text="{Binding Title}"
                                 TextColor="{Binding TextColor}"
                                 VerticalOptions="Center" />
+
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding TapCommand}" CommandParameter="{Binding .}" />
+                            </StackLayout.GestureRecognizers>
+
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <BoxView Grid.Row="2" BackgroundColor="LightGray" />
+        <BoxView Grid.Row="2" BackgroundColor="{DynamicResource appcolor_i6}" />
 
         <Grid Grid.Row="3" Margin="20">
             <Grid.RowDefinitions>
@@ -75,14 +79,19 @@
                 VerticalOptions="Start">
                 <Image
                     HeightRequest="35"
-                    Source="ic_setting_gray.png"
+                    Source="{DynamicResource ic_setting_gray}"
                     WidthRequest="35" />
                 <Label
+                    x:Name="settingsLabel"
                     FontSize="{DynamicResource tsize_i5}"
                     Style="{DynamicResource BaseContent_i2}"
                     Text="Change profile"
                     TextColor="{DynamicResource appcolor_i3}"
                     VerticalOptions="Center" />
+
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChangeProfileTapCommand}" Tapped="OnSettingsTapped" />
+                </StackLayout.GestureRecognizers>
 
             </StackLayout>
 
@@ -93,12 +102,23 @@
                 VerticalOptions="End">
                 <Image
                     HeightRequest="35"
-                    Source="ic_logout_blue.png"
+                    Source="{DynamicResource ic_logout_blue}"
                     WidthRequest="35" />
-                <Label Text="Logout" TextColor="#2356C5" />
+                <Label
+                    FontSize="{DynamicResource tsize_i5}"
+                    Style="{DynamicResource BaseContent_i2}"
+                    Text="Logout"
+                    TextColor="{DynamicResource appcolor_i1}"
+                    VerticalOptions="Center" />
+
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding LogoutTapCommand}" />
+                </StackLayout.GestureRecognizers>
 
             </StackLayout>
+
         </Grid>
 
     </Grid>
+
 </local:BaseContentPage>

@@ -1,7 +1,4 @@
 ﻿using InterTwitter.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
@@ -15,6 +12,7 @@ namespace InterTwitter.Views
             On<iOS>().SetUseSafeArea(true);
         }
         #region ---Overrides---
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -32,6 +30,7 @@ namespace InterTwitter.Views
                 actionsHandler.OnDisappearing();
             }
         }
+
         #endregion
     }
 }

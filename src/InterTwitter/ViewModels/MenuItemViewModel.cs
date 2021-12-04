@@ -1,8 +1,7 @@
 ﻿using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
+using System.Windows.Input;
 
 namespace InterTwitter.ViewModels
 {
@@ -12,6 +11,7 @@ namespace InterTwitter.ViewModels
         {
             TargetType = typeof(MenuItemViewModel);
         }
+        #region --- Public Properties ---
 
         private int _id;
         public int Id
@@ -47,5 +47,14 @@ namespace InterTwitter.ViewModels
             get => _textColor;
             set => SetProperty(ref _textColor, value);
         }
+
+        private ICommand _tapCommand;
+        public ICommand TapCommand
+        {
+            get => _tapCommand;
+            set => SetProperty(ref _tapCommand, value);
+        }
+
+        #endregion
     }
 }
