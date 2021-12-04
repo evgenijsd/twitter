@@ -20,9 +20,9 @@ namespace InterTwitter.Services.Registration
         {
             _users = new List<UserModel>
             {
-                new UserModel { Id = 1, Name = "Gabriela", Email = "aaa@aaa.aaa", Password = "1234567A", UserPhoto = "pic_profile_big" },
-                new UserModel { Id = 2, Name = "Yuki", Email = "bbb@bbb.bbb", Password = "1234567A", UserPhoto = "pic_profile_big" },
-                new UserModel { Id = 3, Name = "John", Email = "ccc@ccc.ccc", Password = "1234567A", UserPhoto = "pic_profile_big" },
+                new UserModel { Id = 1, Name = "Gabriela", Email = "aaa@aaa.aaa", Password = "1234567A", UserPhoto = "pic_profile_big", BackgroundPhoto = "pic_profile_big" },
+                new UserModel { Id = 2, Name = "Yuki", Email = "bbb@bbb.bbb", Password = "1234567A", UserPhoto = "pic_profile_big", BackgroundPhoto = "pic_profile_big" },
+                new UserModel { Id = 3, Name = "John", Email = "ccc@ccc.ccc", Password = "1234567A", UserPhoto = "pic_profile_big", BackgroundPhoto = "pic_profile_big" },
             };
         }
 
