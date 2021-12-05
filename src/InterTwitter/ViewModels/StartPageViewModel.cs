@@ -185,15 +185,18 @@ namespace InterTwitter.ViewModels
             }
             else
             {
-                var result = StartPageValidator.Validate(this);
-                if (string.IsNullOrEmpty(MessageErrorName))
+                if (IsWrongEmail || IsWrongName)
                 {
-                    MessageErrorName = MessageErrorEmail;
-                }
+                    var validator = StartPageValidator.Validate(this);
+                    if (string.IsNullOrEmpty(MessageErrorName))
+                    {
+                        MessageErrorName = MessageErrorEmail;
+                    }
 
-                if (!string.IsNullOrEmpty(MessageErrorName))
-                {
-                    await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, MessageErrorName, Resources.Resource.Ok);
+                    if (!string.IsNullOrEmpty(MessageErrorName))
+                    {
+                        await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, MessageErrorName, Resources.Resource.Ok);
+                    }
                 }
             }
 

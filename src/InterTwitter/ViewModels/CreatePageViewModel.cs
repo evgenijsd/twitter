@@ -146,8 +146,8 @@ namespace InterTwitter.ViewModels
             if (parameters.ContainsKey("User"))
             {
                 User = parameters.GetValue<UserModel>("User");
-                Name = User.Name;
-                Email = User.Email;
+                Name = User.Name + string.Empty;
+                Email = User.Email + string.Empty;
             }
         }
         #endregion

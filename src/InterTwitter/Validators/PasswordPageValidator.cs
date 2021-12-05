@@ -9,12 +9,14 @@ namespace InterTwitter.Validators
 {
     public class PasswordPageValidator : AbstractValidator<PasswordPageViewModel>
     {
+        private const string VALID_PASSWORD = @"^(?=.*[A-Z])(?=.*\d)[\d\D]+$";
+
         public PasswordPageValidator()
         {
             RuleFor(x => x.Password)
                 .NotEmpty().OnFailure(x => x.MessageErrorPassword = Resources.Resource.AlertDataIncorrect)
                 .MinimumLength(6).OnFailure(x => x.MessageErrorPassword = Resources.Resource.AlertPasswordLength)
-                .Must(x => Regex.IsMatch(x, @"^(?=.*[A-Z])(?=.*\d)[\d\D]+$"))
+                .Must(x => Regex.IsMatch(x, VALID_PASSWORD))
                                  .OnFailure(x => x.MessageErrorPassword = Resources.Resource.AlertPasswordLetterDigit);
             RuleFor(x => x.ConfirmPassword)
                 .Equal(x => x.Password).OnFailure(x => x.MessageErrorConfirmPassword = Resources.Resource.AlertPasswordNotEqual);

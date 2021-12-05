@@ -12,9 +12,6 @@ namespace InterTwitter.Services.Registration
     {
         Task<AOResult<int>> UserAddAsync(UserModel user);
         Task<AOResult<bool>> CheckTheCorrectEmailAsync(string email);
-        ECheckEnter CheckTheCorrectPassword(string password, string confirmPassword);
-        ECheckEnter CheckCorrectEmail(string email);
-        ECheckEnter CheckCorrectName(string name);
         List<UserModel> GetUsers();
     }
 }

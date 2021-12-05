@@ -19,6 +19,7 @@ namespace InterTwitter.ViewModels
         private IRegistrationService _registrationService { get; }
         private IAutorizationService _autorizationService { get; }
         private IPageDialogService _dialogs { get; }
+        private LogInPageValidator _LogInPageValidator { get; }
 
         public LogInPageViewModel(INavigationService navigationService, IPageDialogService dialogs, IRegistrationService registrationService, IAutorizationService autorizationService)
             : base(navigationService)
@@ -26,12 +27,10 @@ namespace InterTwitter.ViewModels
             _registrationService = registrationService;
             _autorizationService = autorizationService;
             _dialogs = dialogs;
-            LogInPageValidator = new LogInPageValidator();
+            _LogInPageValidator = new LogInPageValidator();
         }
 
         #region -- Public properties --
-        public LogInPageValidator LogInPageValidator;
-
         private UserModel _user = new ();
         public UserModel User
         {
@@ -130,14 +129,14 @@ namespace InterTwitter.ViewModels
             if (args.PropertyName == nameof(Email))
             {
                 MessageErrorEmail = string.Empty;
-                var validator = LogInPageValidator.Validate(this);
+                var validator = _LogInPageValidator.Validate(this);
                 IsWrongEmail = !string.IsNullOrEmpty(MessageErrorEmail) && !string.IsNullOrEmpty(Email);
             }
 
             if (args.PropertyName == nameof(Password))
             {
                 MessageErrorPassword = string.Empty;
-                var validator = LogInPageValidator.Validate(this);
+                var validator = _LogInPageValidator.Validate(this);
                 IsWrongPassword = !string.IsNullOrEmpty(MessageErrorPassword) && !string.IsNullOrEmpty(Password);
             }
 
@@ -152,8 +151,8 @@ namespace InterTwitter.ViewModels
             if (parameters.ContainsKey("User"))
             {
                 User = parameters.GetValue<UserModel>("User");
-                Email = User.Email;
-                Password = User.Password;
+                Email = User.Email + string.Empty;
+                Password = User.Password + string.Empty;
             }
         }
         #endregion
@@ -167,7 +166,7 @@ namespace InterTwitter.ViewModels
 
         private async Task OnTwitterCommandAsync()
         {
-            var validator = LogInPageValidator.Validate(this);
+            var validator = _LogInPageValidator.Validate(this);
             if (validator.IsValid)
             {
                 var result = await _autorizationService.CheckUserAsync(Email, Password);
