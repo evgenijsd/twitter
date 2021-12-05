@@ -70,6 +70,15 @@ namespace InterTwitter.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Database failure.
+        /// </summary>
+        internal static string AlertDatabase {
+            get {
+                return ResourceManager.GetString("AlertDatabase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на The data is incorrect field!.
         /// </summary>
         internal static string AlertDataIncorrect {
@@ -106,11 +115,20 @@ namespace InterTwitter.Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Invalid login or password!.
+        ///   Ищет локализованную строку, похожую на Invalid login!.
         /// </summary>
         internal static string AlertInvalidLogin {
             get {
                 return ResourceManager.GetString("AlertInvalidLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Invalid password!.
+        /// </summary>
+        internal static string AlertInvalidPassword {
+            get {
+                return ResourceManager.GetString("AlertInvalidPassword", resourceCulture);
             }
         }
         

@@ -120,6 +120,9 @@
   <data name="Alert" xml:space="preserve">
     <value>Alert</value>
   </data>
+  <data name="AlertDatabase" xml:space="preserve">
+    <value>Database failure</value>
+  </data>
   <data name="AlertDataIncorrect" xml:space="preserve">
     <value>The data is incorrect field!</value>
   </data>
@@ -133,7 +136,10 @@
     <value>In Email there is no symbol @</value>
   </data>
   <data name="AlertInvalidLogin" xml:space="preserve">
-    <value>Invalid login or password!</value>
+    <value>Invalid login!</value>
+  </data>
+  <data name="AlertInvalidPassword" xml:space="preserve">
+    <value>Invalid password!</value>
   </data>
   <data name="AlertLoginNotExist" xml:space="preserve">
     <value>This login does not exist</value>

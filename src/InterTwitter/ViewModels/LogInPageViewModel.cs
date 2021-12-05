@@ -6,6 +6,7 @@ using InterTwitter.Enums;
 using InterTwitter.Models;
 using InterTwitter.Services.Autorization;
 using InterTwitter.Services.Registration;
+using InterTwitter.Validators;
 using InterTwitter.Views;
 using MapNotePad.Helpers;
 using Prism.Navigation;
@@ -25,9 +26,12 @@ namespace InterTwitter.ViewModels
             _registrationService = registrationService;
             _autorizationService = autorizationService;
             _dialogs = dialogs;
+            LogInPageValidator = new LogInPageValidator();
         }
 
         #region -- Public properties --
+        public LogInPageValidator LogInPageValidator;
+
         private UserModel _user = new ();
         public UserModel User
         {
@@ -98,6 +102,20 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _isUnVisibleButton, value);
         }
 
+        private string _messageErrorEmail = string.Empty;
+        public string MessageErrorEmail
+        {
+            get => _messageErrorEmail;
+            set => SetProperty(ref _messageErrorEmail, value);
+        }
+
+        private string _messageErrorPassword = string.Empty;
+        public string MessageErrorPassword
+        {
+            get => _messageErrorPassword;
+            set => SetProperty(ref _messageErrorPassword, value);
+        }
+
         private ICommand _StartCommand;
         public ICommand StartCommand => _StartCommand ??= SingleExecutionCommand.FromFunc(OnStartCommandAsync);
         private ICommand _TwitterCommand;
@@ -111,20 +129,16 @@ namespace InterTwitter.ViewModels
 
             if (args.PropertyName == nameof(Email))
             {
-                IsWrongEmail = _registrationService.CheckCorrectEmail(Email) != ECheckEnter.ChecksArePassed;
-                if (string.IsNullOrEmpty(Email))
-                {
-                    IsWrongEmail = false;
-                }
+                MessageErrorEmail = string.Empty;
+                var validator = LogInPageValidator.Validate(this);
+                IsWrongEmail = !string.IsNullOrEmpty(MessageErrorEmail) && !string.IsNullOrEmpty(Email);
             }
 
             if (args.PropertyName == nameof(Password))
             {
-                IsWrongPassword = _registrationService.CheckTheCorrectPassword(Password, Password) != ECheckEnter.ChecksArePassed;
-                if (string.IsNullOrEmpty(Password))
-                {
-                    IsWrongPassword = false;
-                }
+                MessageErrorPassword = string.Empty;
+                var validator = LogInPageValidator.Validate(this);
+                IsWrongPassword = !string.IsNullOrEmpty(MessageErrorPassword) && !string.IsNullOrEmpty(Password);
             }
 
             if (args.PropertyName == nameof(IsVisibleButton))
@@ -153,19 +167,39 @@ namespace InterTwitter.ViewModels
 
         private async Task OnTwitterCommandAsync()
         {
-            var result = await _autorizationService.CheckUserAsync(Email, Password);
-            if (result.IsSuccess)
+            var validator = LogInPageValidator.Validate(this);
+            if (validator.IsValid)
             {
-                User = result.Result;
-                _autorizationService.UserId = User.Id;
-                await _dialogs.DisplayAlertAsync("Alert", $"TwitterCommand id - {User.Id}", "Ok");
-                //var p = new NavigationParameters { { "User", User } };
-                //await _navigationService.NavigateAsync($"/{nameof(TwitterPage)}", p);
+                var result = await _autorizationService.CheckUserAsync(Email, Password);
+                if (result.IsSuccess)
+                {
+                    if (result.Result.Password == Password)
+                    {
+                        User = result.Result;
+                        _autorizationService.UserId = User.Id;
+                        await _dialogs.DisplayAlertAsync("Alert", $"TwitterCommand id - {User.Id}", "Ok");
+                        //var p = new NavigationParameters { { "User", User } };
+                        //await _navigationService.NavigateAsync($"/{nameof(TwitterPage)}", p);
+                    }
+                    else
+                    {
+                        await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertInvalidPassword, Resources.Resource.Ok);
+                        Password = string.Empty;
+                    }
+                }
+                else
+                {
+                    await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertInvalidLogin, Resources.Resource.Ok);
+                }
             }
             else
             {
-                await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertInvalidLogin, Resources.Resource.Ok);
-                Password = string.Empty;
+                if (string.IsNullOrEmpty(MessageErrorEmail))
+                {
+                    MessageErrorEmail = MessageErrorPassword;
+                }
+
+                await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, MessageErrorEmail, Resources.Resource.Ok);
             }
         }
         #endregion

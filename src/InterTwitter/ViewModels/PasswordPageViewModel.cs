@@ -1,6 +1,7 @@
 ﻿using InterTwitter.Enums;
 using InterTwitter.Models;
 using InterTwitter.Services.Registration;
+using InterTwitter.Validators;
 using InterTwitter.Views;
 using MapNotePad.Helpers;
 using Prism.Navigation;
@@ -24,9 +25,12 @@ namespace InterTwitter.ViewModels
         {
             _registrationService = registrationService;
             _dialogs = dialogs;
+            PasswordPageValidator = new PasswordPageValidator();
         }
 
         #region -- Public properties --
+        public PasswordPageValidator PasswordPageValidator;
+
         private UserModel _user = new ();
         public UserModel User
         {
@@ -90,6 +94,20 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _isUnVisibleButton, value);
         }
 
+        private string _messageErrorPassword = string.Empty;
+        public string MessageErrorPassword
+        {
+            get => _messageErrorPassword;
+            set => SetProperty(ref _messageErrorPassword, value);
+        }
+
+        private string _messageErrorConfirmPassword = string.Empty;
+        public string MessageErrorConfirmPassword
+        {
+            get => _messageErrorConfirmPassword;
+            set => SetProperty(ref _messageErrorConfirmPassword, value);
+        }
+
         private ICommand _CreateCommand;
         public ICommand CreateCommand => _CreateCommand ??= SingleExecutionCommand.FromFunc(OnCreateCommandAsync);
         private ICommand _StartCommand;
@@ -101,25 +119,18 @@ namespace InterTwitter.ViewModels
         {
             base.OnPropertyChanged(args);
 
-            if (args.PropertyName != nameof(Password))
+            if (args.PropertyName == nameof(Password))
             {
-            }
-            else
-            {
-                IsWrongPassword = _registrationService.CheckTheCorrectPassword(Password, Password) != ECheckEnter.ChecksArePassed;
-                if (string.IsNullOrEmpty(Password))
-                {
-                    IsWrongPassword = false;
-                }
+                MessageErrorPassword = string.Empty;
+                var validator = PasswordPageValidator.Validate(this);
+                IsWrongPassword = !string.IsNullOrEmpty(MessageErrorPassword) && !string.IsNullOrEmpty(Password);
             }
 
             if (args.PropertyName == nameof(ConfirmPassword))
             {
-                IsWrongConfirmPassword = _registrationService.CheckTheCorrectPassword(Password, ConfirmPassword) != ECheckEnter.ChecksArePassed;
-                if (string.IsNullOrEmpty(ConfirmPassword))
-                {
-                    IsWrongConfirmPassword = false;
-                }
+                MessageErrorConfirmPassword = string.Empty;
+                var validator = PasswordPageValidator.Validate(this);
+                IsWrongConfirmPassword = !string.IsNullOrEmpty(MessageErrorConfirmPassword) && !string.IsNullOrEmpty(ConfirmPassword);
             }
 
             if (args.PropertyName == nameof(IsVisibleButton))
@@ -146,33 +157,31 @@ namespace InterTwitter.ViewModels
 
         private async Task OnStartCommandAsync()
         {
-            var check = _registrationService.CheckTheCorrectPassword(Password, ConfirmPassword);
-
-            switch (check)
+            var validator = PasswordPageValidator.Validate(this);
+            if (validator.IsValid)
             {
-                case ECheckEnter.PasswordBigLetterAndDigit:
-                    await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertPasswordLetterDigit, Resources.Resource.Ok);
-                    break;
-                case ECheckEnter.PasswordLengthNotValid:
-                    await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertPasswordLength, Resources.Resource.Ok);
-                    break;
-                case ECheckEnter.PasswordsNotEqual:
-                    await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertPasswordNotEqual, Resources.Resource.Ok);
-                    break;
+                User.Password = Password;
+                User.UserPhoto = "pic_profile_big";
+                User.BackgroundPhoto = "pic_profile_big";
+                var result = await _registrationService.UserAddAsync(User);
+                if (result.IsSuccess)
+                {
+                    var p = new NavigationParameters { { "User", User } };
+                    await _navigationService.NavigateAsync($"/{nameof(StartPage)}", p);
+                }
+                else
+                {
+                    await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertDatabase, Resources.Resource.Ok);
+                }
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(MessageErrorPassword))
+                {
+                    MessageErrorPassword = MessageErrorConfirmPassword;
+                }
 
-                default:
-                    {
-                        User.Password = Password;
-                        User.UserPhoto = "pic_profile_big";
-                        var result = await _registrationService.UserAddAsync(User);
-                        if (result.IsSuccess)
-                        {
-                            var p = new NavigationParameters { { "User", User } };
-                            await _navigationService.NavigateAsync($"/{nameof(StartPage)}", p);
-                        }
-                    }
-
-                    break;
+                await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, MessageErrorPassword, Resources.Resource.Ok);
             }
         }
         #endregion

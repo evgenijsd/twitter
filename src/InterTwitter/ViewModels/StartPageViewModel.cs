@@ -2,6 +2,7 @@
 using InterTwitter.Models;
 using InterTwitter.Services.Autorization;
 using InterTwitter.Services.Registration;
+using InterTwitter.ViewModels.Validators;
 using InterTwitter.Views;
 using MapNotePad.Helpers;
 using Prism.Navigation;
@@ -29,9 +30,12 @@ namespace InterTwitter.ViewModels
             _autorizationService = autorizationService;
             UserId = _autorizationService.UserId;
             _dialogs = dialogs;
+            StartPageValidator = new StartPageValidator();
         }
 
         #region -- Public properties --
+        public StartPageValidator StartPageValidator;
+
         private UserModel _user = new ();
         public UserModel User
         {
@@ -102,6 +106,20 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _email, value);
         }
 
+        private string _messageErrorName = string.Empty;
+        public string MessageErrorName
+        {
+            get => _messageErrorName;
+            set => SetProperty(ref _messageErrorName, value);
+        }
+
+        private string _messageErrorEmail = string.Empty;
+        public string MessageErrorEmail
+        {
+            get => _messageErrorEmail;
+            set => SetProperty(ref _messageErrorEmail, value);
+        }
+
         private ICommand _LogInCommand;
         public ICommand LogInCommand => _LogInCommand ??= SingleExecutionCommand.FromFunc(OnLogInCommandAsync);
         private ICommand _CreateCommand;
@@ -115,20 +133,16 @@ namespace InterTwitter.ViewModels
 
             if (args.PropertyName == nameof(Name))
             {
-                IsWrongName = _registrationService.CheckCorrectName(Name) != ECheckEnter.ChecksArePassed;
-                if (string.IsNullOrEmpty(Name))
-                {
-                    IsWrongName = false;
-                }
+                MessageErrorName = string.Empty;
+                var validator = StartPageValidator.Validate(this);
+                IsWrongName = !string.IsNullOrEmpty(MessageErrorName) && !string.IsNullOrEmpty(Name);
             }
 
             if (args.PropertyName == nameof(Email))
             {
-                IsWrongEmail = _registrationService.CheckCorrectEmail(Email) != ECheckEnter.ChecksArePassed;
-                if (string.IsNullOrEmpty(Email))
-                {
-                    IsWrongEmail = false;
-                }
+                MessageErrorEmail = string.Empty;
+                var validator = StartPageValidator.Validate(this);
+                IsWrongEmail = !string.IsNullOrEmpty(MessageErrorEmail) && !string.IsNullOrEmpty(Email);
             }
 
             if (args.PropertyName == nameof(IsVisibleButton))
@@ -165,9 +179,22 @@ namespace InterTwitter.ViewModels
         private async Task OnLogInCommandAsync()
         {
             var emailCheck = await _registrationService.CheckTheCorrectEmailAsync(Email);
-            if (emailCheck.Result != ECheckEnter.LoginExist && !string.IsNullOrEmpty(Email))
+            if (!emailCheck.Result && !string.IsNullOrEmpty(Email))
             {
                 await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertLoginNotExist, Resources.Resource.Ok);
+            }
+            else
+            {
+                var result = StartPageValidator.Validate(this);
+                if (string.IsNullOrEmpty(MessageErrorName))
+                {
+                    MessageErrorName = MessageErrorEmail;
+                }
+
+                if (!string.IsNullOrEmpty(MessageErrorName))
+                {
+                    await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, MessageErrorName, Resources.Resource.Ok);
+                }
             }
 
             User.Email = Email;
@@ -179,7 +206,7 @@ namespace InterTwitter.ViewModels
         private async Task OnCreateCommandAsync()
         {
             var emailCheck = await _registrationService.CheckTheCorrectEmailAsync(Email);
-            if (emailCheck.Result == ECheckEnter.LoginExist)
+            if (emailCheck.Result)
             {
                 await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertLoginTaken, Resources.Resource.Ok);
             }

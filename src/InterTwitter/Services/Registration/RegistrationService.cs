@@ -32,16 +32,16 @@ namespace InterTwitter.Services.Registration
             return _users;
         }
 
-        public async Task<AOResult<ECheckEnter>> CheckTheCorrectEmailAsync(string email)
+        public async Task<AOResult<bool>> CheckTheCorrectEmailAsync(string email)
         {
-            var result = new AOResult<ECheckEnter>();
+            var result = new AOResult<bool>();
             try
             {
                 var user = _users.FirstOrDefault(x => x.Email.ToLower() == email.ToLower());
-                ECheckEnter check = ECheckEnter.ChecksArePassed;
+                bool check = false;
                 if (user != null)
                 {
-                    check = ECheckEnter.LoginExist;
+                    check = true;
                 }
                 else
                 {

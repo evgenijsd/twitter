@@ -34,7 +34,7 @@ namespace InterTwitter.Services.Autorization
             try
             {
                 var user = _registrationService.GetUsers().FirstOrDefault(x => x.Email.ToLower() == email.ToLower());
-                if (user != null && user.Email.ToLower() == email.ToLower() && user.Password == password)
+                if (user != null)
                 {
                     result.SetSuccess(user);
                 }

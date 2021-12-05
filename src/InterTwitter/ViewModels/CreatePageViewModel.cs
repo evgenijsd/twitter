@@ -1,6 +1,9 @@
-﻿using InterTwitter.Enums;
+﻿using FluentValidation;
+using InterTwitter.Enums;
 using InterTwitter.Models;
 using InterTwitter.Services.Registration;
+using InterTwitter.Validators;
+using InterTwitter.ViewModels.Validators;
 using InterTwitter.Views;
 using MapNotePad.Helpers;
 using Prism.Navigation;
@@ -24,9 +27,12 @@ namespace InterTwitter.ViewModels
         {
             _registrationService = registrationService;
             _dialogs = dialogs;
+            CreatePageValidator = new CreatePageValidator();
         }
 
         #region -- Public properties --
+        public CreatePageValidator CreatePageValidator;
+
         private UserModel _user = new ();
         public UserModel User
         {
@@ -90,6 +96,20 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _isUnVisibleButton, value);
         }
 
+        private string _messageErrorName = string.Empty;
+        public string MessageErrorName
+        {
+            get => _messageErrorName;
+            set => SetProperty(ref _messageErrorName, value);
+        }
+
+        private string _messageErrorEmail = string.Empty;
+        public string MessageErrorEmail
+        {
+            get => _messageErrorEmail;
+            set => SetProperty(ref _messageErrorEmail, value);
+        }
+
         private ICommand _StartCommand;
         public ICommand StartCommand => _StartCommand ??= SingleExecutionCommand.FromFunc(OnStartCommandAsync);
         private ICommand _PasswordCommand;
@@ -103,20 +123,16 @@ namespace InterTwitter.ViewModels
 
             if (args.PropertyName == nameof(Name))
             {
-                IsWrongName = _registrationService.CheckCorrectName(Name) != ECheckEnter.ChecksArePassed;
-                if (string.IsNullOrEmpty(Name))
-                {
-                    IsWrongName = false;
-                }
+                MessageErrorName = string.Empty;
+                var validator = CreatePageValidator.Validate(this);
+                IsWrongName = !string.IsNullOrEmpty(MessageErrorName) && !string.IsNullOrEmpty(Name);
             }
 
             if (args.PropertyName == nameof(Email))
             {
-                IsWrongEmail = _registrationService.CheckCorrectEmail(Email) != ECheckEnter.ChecksArePassed;
-                if (string.IsNullOrEmpty(Email))
-                {
-                    IsWrongEmail = false;
-                }
+                MessageErrorEmail = string.Empty;
+                var validator = CreatePageValidator.Validate(this);
+                IsWrongEmail = !string.IsNullOrEmpty(MessageErrorEmail) && !string.IsNullOrEmpty(Email);
             }
 
             if (args.PropertyName == nameof(IsVisibleButton))
@@ -145,49 +161,31 @@ namespace InterTwitter.ViewModels
 
         private async Task OnPasswordCommandAsync()
         {
-            var result = await _registrationService.CheckTheCorrectEmailAsync(Email);
-            var check = result.Result;
-            if (check == ECheckEnter.ChecksArePassed)
+            var check = await _registrationService.CheckTheCorrectEmailAsync(Email);
+            if (check.Result)
             {
-                check = _registrationService.CheckCorrectEmail(Email);
+                await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertLoginTaken, Resources.Resource.Ok);
             }
-
-            if (check == ECheckEnter.ChecksArePassed)
+            else
             {
-                check = _registrationService.CheckCorrectName(Name);
-            }
-
-            switch (check)
+                var validator = CreatePageValidator.Validate(this);
+                if (validator.IsValid)
                 {
-                    case ECheckEnter.LoginExist:
-                        await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertLoginTaken, Resources.Resource.Ok);
-                        break;
-                    case ECheckEnter.EmailANotVaid:
-                        await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertEmailNoA, Resources.Resource.Ok);
-                        break;
-                    case ECheckEnter.EmailNotValid:
-                        await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertEmailInvalid, Resources.Resource.Ok);
-                        break;
-                    case ECheckEnter.EmailLengthNotValid:
-                        await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertEmailLength, Resources.Resource.Ok);
-                        break;
-                    case ECheckEnter.NameLengthNotValid:
-                        await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertNameLength, Resources.Resource.Ok);
-                        break;
-                    case ECheckEnter.NameNotValid:
-                        await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertNameLetter, Resources.Resource.Ok);
-                        break;
-
-                    default:
-                        {
-                            User.Email = Email;
-                            User.Name = Name;
-                            var p = new NavigationParameters { { "User", User } };
-                            await _navigationService.NavigateAsync($"{nameof(PasswordPage)}", p);
-                        }
-
-                        break;
+                    User.Email = Email;
+                    User.Name = Name;
+                    var p = new NavigationParameters { { "User", User } };
+                    await _navigationService.NavigateAsync($"{nameof(PasswordPage)}", p);
                 }
+                else
+                {
+                    if (string.IsNullOrEmpty(MessageErrorName))
+                    {
+                        MessageErrorName = MessageErrorEmail;
+                    }
+
+                    await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, MessageErrorName, Resources.Resource.Ok);
+                }
+            }
         }
         #endregion
     }
