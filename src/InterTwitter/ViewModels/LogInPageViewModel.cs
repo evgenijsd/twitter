@@ -1,13 +1,10 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using InterTwitter.Enums;
 using InterTwitter.Models;
 using InterTwitter.Services.Autorization;
 using InterTwitter.Services.Registration;
 using InterTwitter.Validators;
-using InterTwitter.Views;
 using MapNotePad.Helpers;
 using Prism.Navigation;
 using Prism.Services;

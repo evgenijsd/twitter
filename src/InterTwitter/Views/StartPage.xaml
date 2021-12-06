@@ -81,6 +81,7 @@
                         WidthRequest="218" CornerRadius="25" HeightRequest="50"
                         BackgroundColor="{DynamicResource appcolor_i1}"
                         FontAttributes="Bold" FontSize="{DynamicResource tsize_i3}"
+                        FontFamily="Ubuntu-Regular"
                         TextColor="{DynamicResource appcolor_i2}"
                         Command="{Binding CreateCommand}"/>
                 <Button Command="{Binding LogInCommand}" 

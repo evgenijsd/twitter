@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using InterTwitter.Enums;
 using InterTwitter.Helpers.ProcessHelpers;
 using InterTwitter.Models;
 

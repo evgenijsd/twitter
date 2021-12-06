@@ -1,4 +1,6 @@
-﻿using InterTwitter.Enums;
+﻿using System.ComponentModel;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using InterTwitter.Helpers;
 using InterTwitter.Models;
 using InterTwitter.Services.Registration;
@@ -7,12 +9,6 @@ using InterTwitter.Views;
 using MapNotePad.Helpers;
 using Prism.Navigation;
 using Prism.Services;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
