@@ -3,16 +3,65 @@
     x:Class="InterTwitter.Views.ProfilePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:cardsControls="clr-namespace:PanCardView.Controls;assembly=PanCardView" >
-    <ContentPage.Content>
-        <StackLayout>
+    xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
+    xmlns:cardsControls="clr-namespace:PanCardView.Controls;assembly=PanCardView"
+    xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
+
+
+
+    <Grid RowDefinitions="0.278*, 0.198*, 0.524*" RowSpacing="0">
+
+        <Image
+            Grid.Row="0"
+            Aspect="AspectFill"
+            Source="https://picsum.photos/500/500?image=122" />
+
+        <cardsControls:CircleFrame
+            Grid.Row="0"
+            Margin="16,16,0,0"
+            BackgroundColor="#9902060E"
+            HeightRequest="32"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            WidthRequest="32">
+            <Image Scale="0.8" Source="ic_left_white" />
+        </cardsControls:CircleFrame>
+
+        <Grid Grid.Row="1" BackgroundColor="BlanchedAlmond">
+            <StackLayout
+                Grid.Column="0"
+                HorizontalOptions="Start"
+                VerticalOptions="Center">
+                <Label Text="Jaylon Kenter" />
+                <Label Text="JKenter@gmail.com" />
+            </StackLayout>
             <Label
-                HorizontalOptions="CenterAndExpand"
-                Text="Welcome to Profile Page!"
-                VerticalOptions="CenterAndExpand" />
-            <cardsControls:TabsControl>
-                
-            </cardsControls:TabsControl>
-        </StackLayout>
-    </ContentPage.Content>
+                Grid.Column="1"
+                HorizontalOptions="Center"
+                Text="Change Profile"
+                VerticalOptions="Start" />
+        </Grid>
+
+        <cardsControls:CircleFrame
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Margin="16,68,0,0"
+            BackgroundColor="White"
+            HeightRequest="69"
+            HorizontalOptions="Start"
+            VerticalOptions="Center"
+            WidthRequest="69">
+            <cardsControls:CircleFrame
+                HorizontalOptions="Center"
+                Size="65"
+                VerticalOptions="Center">
+                <Image Aspect="AspectFill" Source="https://picsum.photos/500/500?image=210" />
+            </cardsControls:CircleFrame>
+
+        </cardsControls:CircleFrame>
+
+        <StackLayout Grid.Row="2" BackgroundColor="Green" />
+
+    </Grid>
+
 </ContentPage>

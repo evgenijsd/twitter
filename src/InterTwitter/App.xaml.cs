@@ -35,7 +35,7 @@ namespace InterTwitter
         protected override async void OnInitialized()
         {
             InitializeComponent();
-            await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}");
+            await NavigationService.NavigateAsync($"/{nameof(ProfilePage)}");
         }
 
         protected override void OnStart()
