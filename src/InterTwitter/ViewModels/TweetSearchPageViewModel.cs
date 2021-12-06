@@ -2,7 +2,6 @@
 using InterTwitter.Helpers;
 using InterTwitter.Models;
 using Prism.Navigation;
-using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;

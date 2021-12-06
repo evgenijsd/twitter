@@ -7,6 +7,7 @@
                         xmlns:viewmodels="clr-namespace:InterTwitter.ViewModels"
                         xmlns:views="clr-namespace:InterTwitter.Views"
                         xmlns:Behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+                        Style="{DynamicResource pstyle_i1}"
                         x:DataType="viewmodels:TweetSearchPageViewModel"
                         x:Class="InterTwitter.Views.TweetSearchPage">
 
@@ -22,10 +23,20 @@
                                 PressOkOnKeyboardCommand="{Binding StartSearchTapCommand}"
                                 Text="{Binding SearchQuery}"/>
 
+            <!--<BoxView 
+                     xct:ShadowEffect.Color="{DynamicResource appcolor_i4}"
+                     xct:ShadowEffect.OffsetY="0"
+                     xct:ShadowEffect.Opacity="1"
+                     xct:ShadowEffect.Radius="15"
+                     Style="{DynamicResource SeparatorStyle}"/>-->
+
+            <BoxView Style="{DynamicResource SeparatorStyle}" />
+            
             <!-- CONTENT -->
             <StackLayout VerticalOptions="CenterAndExpand">
 
                 <stateContainer:StateContainer Grid.Column="0"
+                                               Margin="14, 0"
                                                Padding="3, 0, 3, 0"
                                                State="{Binding TweetSearchState}">
 
@@ -34,10 +45,10 @@
                         <!-- SEARCH IS NOT ACTIVE - POPULAR THEMES -->
                         <stateContainer:StateCondition State="NotActive">
 
-                            <StackLayout Margin="14, 19.5"
-                                         Spacing="0">
+                            <StackLayout Spacing="0">
 
-                                <Label Margin="0, 0, 0, 9" 
+                                <Label Margin="0, 19.5, 0, 9" 
+                                       
                                        Text="{xct:Translate PopularTheme}"
                                        Style="{DynamicResource tstyle_i4}"/>
 
@@ -134,12 +145,81 @@
 
                                         <StackLayout>
 
-                                            <BoxView Style="{DynamicResource SeparatorStyle}" />
 
-                                            <!-- TWEETS LIST MUST BE HERE --> 
-                                            <Label VerticalOptions="Center"
-                                                   HorizontalOptions="Center"
-                                                   Text="Some tweets" />
+                                            <!-- TWEETS LIST MUST BE HERE -->
+                                            <ListView HasUnevenRows="true"
+                                                      Margin="0"
+                                                      SeparatorVisibility="None"
+                                                      SeparatorColor="{DynamicResource appcolor_i6}"
+                                                      ItemsSource="{Binding ThemeModels}"
+                                                      SelectedItem="{Binding SelectedTweetsTheme}">
+
+                                                <ListView.Behaviors>
+
+                                                    <Behaviors:EventToCommandBehavior EventName="ItemTapped"
+                                                                                      Command="{Binding TeetsThemeTapCommand}" />
+                                                </ListView.Behaviors>
+
+                                                <ListView.ItemTemplate>
+
+                                                    <DataTemplate>
+
+                                                        <ViewCell>
+
+                                                            <ViewCell.View>
+
+                                                                <StackLayout Spacing="0"
+                                                                             BackgroundColor="{DynamicResource appcolor_i2}">
+
+                                                                    <StackLayout Orientation="Horizontal"
+                                                                                 Padding="0, 15, 0, 8">
+
+                                                                        <StackLayout>
+
+                                                                            <Label Margin="0, 4, 0, 2"
+                                                                                   Style="{DynamicResource tstyle_i6}"
+                                                                                   Text="{Binding Title}" />
+
+                                                                            <Label Style="{DynamicResource tstyle_i15}">
+
+                                                                                <Label.FormattedText>
+
+                                                                                    <FormattedString>
+
+                                                                                        <Span Text="{xct:Translate Posts}"></Span>
+
+                                                                                        <Span Text="{Binding TweetsCount, StringFormat=': {0}'}" />
+
+                                                                                    </FormattedString>
+
+                                                                                </Label.FormattedText>
+
+                                                                            </Label>
+
+                                                                        </StackLayout>
+
+                                                                        <Image HorizontalOptions="EndAndExpand"
+                                                                               VerticalOptions="Center"
+                                                                               Margin="0, 0, 17, 10"
+                                                                               Scale="1.25"
+                                                                               Source="{DynamicResource ic_right_gray}" />
+
+                                                                    </StackLayout>
+
+                                                                    <BoxView Grid.Row="1"
+                                                                             Style="{DynamicResource SeparatorStyle}" />
+
+                                                                </StackLayout>
+
+                                                            </ViewCell.View>
+
+                                                        </ViewCell>
+
+                                                    </DataTemplate>
+
+                                                </ListView.ItemTemplate>
+
+                                            </ListView>
 
                                             <BoxView Style="{DynamicResource SeparatorStyle}" />
 

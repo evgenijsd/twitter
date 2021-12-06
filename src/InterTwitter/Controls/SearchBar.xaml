@@ -10,15 +10,19 @@
 
     <ContentView.Content>
 
-        <StackLayout Spacing="5">
+        <StackLayout Spacing="0">
 
-            <Grid RowDefinitions="36"
+            <Grid Margin="14, 10, 14, 17"
+                  Padding="0"
                   RowSpacing="0"
-                  ColumnDefinitions="0.12*, *">
+                  RowDefinitions="42"
+                  ColumnSpacing="9"
+                  ColumnDefinitions="0.12*, *"
+                  BackgroundColor="Transparent">
 
                 <!-- PROFILE/BACK ICON -->
                 <stateContainer:StateContainer Grid.Column="0"
-                                               Padding="3, 4, 3, 7"
+                                               Padding="3"
                                                State="{Binding SearchState, Source={x:Reference searchBar}}">
 
                     <stateContainer:StateContainer.Conditions>
@@ -26,7 +30,9 @@
                         <!-- SEARCH IS NOT ACTIVE - AVATAR ICON -->
                         <stateContainer:StateCondition State="NotActive">
 
-                            <Image Source="{Binding AvatarIconSource, Source={x:Reference searchBar}}">
+                            <!--<Image Source="{Binding AvatarIconSource, Source={x:Reference searchBar}}">-->
+
+                                <Image Source="pic_profile_small">
 
                                 <Image.GestureRecognizers>
 
@@ -59,16 +65,14 @@
 
                 <!-- SEARCH LINE -->
                 <Frame Grid.Column="1"
-                       Margin="0, 0, 0, 3"
-                       Padding="15, 0"
+                       Padding="20, 0"
                        HasShadow="False"
                        IsClippedToBounds="true"
-                       CornerRadius="18"
+                       CornerRadius="24"
                        BackgroundColor="{DynamicResource appcolor_i6}">
 
-                    <controls:BorderlessEntry Margin="0"
-                                              
-                                              BackgroundColor="Brown"
+                    <controls:BorderlessEntry Margin="0"    
+                                              BackgroundColor="Transparent"
                                               FontSize="{DynamicResource tsize_i5}"
                                               FontFamily="Ubuntu-Medium"
                                               Text="{Binding Text, Source={x:Reference searchBar}}"
@@ -80,9 +84,6 @@
                 </Frame>
 
             </Grid>
-
-            <BoxView Grid.Row="1"
-                     Style="{DynamicResource SeparatorStyle}" />
 
         </StackLayout>
 
