@@ -6,13 +6,13 @@ using InterTwitter.Models;
 using InterTwitter.Services.Registration;
 using Xamarin.Essentials;
 
-namespace InterTwitter.Services.Autorization
+namespace InterTwitter.Services.Authorization
 {
-    public class AutorizationService : IAutorizationService
+    public class AuthorizationService : IAuthorizationService
     {
         private IRegistrationService _registrationService;
 
-        public AutorizationService(IRegistrationService registrationService)
+        public AuthorizationService(IRegistrationService registrationService)
         {
             _registrationService = registrationService;
         }

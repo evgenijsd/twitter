@@ -1,13 +1,11 @@
-﻿using InterTwitter.Services.Autorization;
+﻿using InterTwitter.Services.Authorization;
 using InterTwitter.Services.Registration;
 using InterTwitter.ViewModels;
 using InterTwitter.Views;
 using Prism;
 using Prism.Ioc;
 using Prism.Unity;
-using System;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace InterTwitter
 {
@@ -23,7 +21,7 @@ namespace InterTwitter
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterInstance<IRegistrationService>(Container.Resolve<RegistrationService>());
-            containerRegistry.RegisterInstance<IAutorizationService>(Container.Resolve<AutorizationService>());
+            containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
 
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 using InterTwitter.Models;
-using InterTwitter.Services.Autorization;
+using InterTwitter.Services.Authorization;
 using InterTwitter.Services.Registration;
 using InterTwitter.Validators;
 using MapNotePad.Helpers;
@@ -14,11 +14,11 @@ namespace InterTwitter.ViewModels
     public class LogInPageViewModel : BaseViewModel
     {
         private IRegistrationService _registrationService { get; }
-        private IAutorizationService _autorizationService { get; }
+        private IAuthorizationService _autorizationService { get; }
         private IPageDialogService _dialogs { get; }
         private LogInPageValidator _LogInPageValidator { get; }
 
-        public LogInPageViewModel(INavigationService navigationService, IPageDialogService dialogs, IRegistrationService registrationService, IAutorizationService autorizationService)
+        public LogInPageViewModel(INavigationService navigationService, IPageDialogService dialogs, IRegistrationService registrationService, IAuthorizationService autorizationService)
             : base(navigationService)
         {
             _registrationService = registrationService;
@@ -28,6 +28,7 @@ namespace InterTwitter.ViewModels
         }
 
         #region -- Public properties --
+
         private UserModel _user = new ();
         public UserModel User
         {
@@ -119,6 +120,7 @@ namespace InterTwitter.ViewModels
         #endregion
 
         #region -- Overrides --
+
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);

@@ -28,6 +28,7 @@ namespace InterTwitter.ViewModels
         }
 
         #region -- Public properties --
+
         private UserModel _user = new ();
         public UserModel User
         {
@@ -112,6 +113,7 @@ namespace InterTwitter.ViewModels
         #endregion
 
         #region -- Overrides --
+
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);

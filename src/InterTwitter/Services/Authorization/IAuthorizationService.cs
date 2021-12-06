@@ -2,9 +2,9 @@
 using InterTwitter.Helpers.ProcessHelpers;
 using InterTwitter.Models;
 
-namespace InterTwitter.Services.Autorization
+namespace InterTwitter.Services.Authorization
 {
-    public interface IAutorizationService
+    public interface IAuthorizationService
     {
         int UserId { get; set; }
 

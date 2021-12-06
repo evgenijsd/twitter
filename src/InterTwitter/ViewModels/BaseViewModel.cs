@@ -13,6 +13,7 @@ namespace InterTwitter.ViewModels
         }
 
         #region -- InterfaceName implementation --
+
         public virtual void Destroy()
         {
         }

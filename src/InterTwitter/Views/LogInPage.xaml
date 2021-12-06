@@ -1,44 +1,49 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:view="clr-namespace:InterTwitter.Views"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:view="clr-namespace:InterTwitter.Views"
                       xmlns:controls="clr-namespace:InterTwitter.Controls"
                       xmlns:res="clr-namespace:InterTwitter.Helpers;assembly=InterTwitter"
-             x:Class="InterTwitter.Views.LogInPage">
+                      x:Class="InterTwitter.Views.LogInPage">
     <view:BaseContentPage.Content>
         <controls:CustomGrid RowSpacing="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="170"/>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="170" />
+                <RowDefinition Height="100" />
+                <RowDefinition Height="100" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            
-            <Grid Grid.Row="0" ColumnSpacing="0">
+
+            <Grid Grid.Row="0"
+                  ColumnSpacing="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="40"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
                 </Grid.ColumnDefinitions>
-                <Image Source="{DynamicResource pic_owl_blue_small}" Grid.Column="1" 
-                           HorizontalOptions="CenterAndExpand" 
-                           VerticalOptions="Start" Aspect="AspectFill" 
-                           Margin="0,25,0,0" 
-                           HeightRequest="45" WidthRequest="50"/>
-                <Label Text="{res:Translate GetYourAccount}"  Grid.Column="1"
+                <Image Source="{DynamicResource pic_owl_blue_small}"
+                       Grid.Column="1"
+                       HorizontalOptions="CenterAndExpand"
+                       VerticalOptions="Start"
+                       Aspect="AspectFill"
+                       Margin="0,25,0,0"
+                       HeightRequest="45"
+                       WidthRequest="50" />
+                <Label Text="{res:Translate GetYourAccount}"
+                       Grid.Column="1"
                        FontSize="{DynamicResource tsize_i1}"
                        Margin="0,85,0,0"
                        HorizontalOptions="CenterAndExpand"
-                       Style="{DynamicResource tstyle_i1}"/>
+                       Style="{DynamicResource tstyle_i1}" />
             </Grid>
-            
-            <Label Grid.Row="1" 
+
+            <Label Grid.Row="1"
                    Margin="24,0,0,0"
                    Text="{res:Translate Email}"
                    IsVisible="{Binding IsVisibleEmail}"
                    Style="{DynamicResource tstyle_i2}"
-                   FontSize="{DynamicResource tsize_i4}"/>
+                   FontSize="{DynamicResource tsize_i4}" />
             <controls:CustomEntry Grid.Row="1"
                                   Margin="20,18,20,0"
                                   Text="{Binding Email}"
@@ -48,65 +53,80 @@
                                   ClearImageSource="{DynamicResource ic_clear_gray}"
                                   FontFamily="Ubuntu-Regular"
                                   PlaceholderColor="{DynamicResource appcolor_i4}"
-                                  TextColor="{DynamicResource appcolor_i3}"/>
-            <Label Grid.Row="1" Text="{res:Translate WrongEmail}" 
-                   Margin="20,65,0,0" 
+                                  TextColor="{DynamicResource appcolor_i3}" />
+            <Label Grid.Row="1"
+                   Text="{res:Translate WrongEmail}"
+                   Margin="20,65,0,0"
                    Style="{DynamicResource tstyle_i3}"
                    FontSize="{DynamicResource tsize_i4}"
-                   IsVisible="{Binding IsWrongEmail}"/>
+                   IsVisible="{Binding IsWrongEmail}" />
 
-            <Label Grid.Row="2" Text="{res:Translate Password}" 
+            <Label Grid.Row="2"
+                   Text="{res:Translate Password}"
                    FontSize="{DynamicResource tsize_i4}"
                    Margin="24,0,0,0"
                    IsVisible="{Binding IsVisiblePassword}"
                    Style="{DynamicResource tstyle_i2}" />
-            <controls:CustomEntry Grid.Row="2" Text="{Binding Password}" 
-                                  Margin="20,18,20,0" 
-                                  EyeOnImageSource="{DynamicResource ic_eye_blue}" EyeOffImageSource="{DynamicResource ic_eye_gray}"
+            <controls:CustomEntry Grid.Row="2"
+                                  Text="{Binding Password}"
+                                  Margin="20,18,20,0"
+                                  EyeOnImageSource="{DynamicResource ic_eye_blue}"
+                                  EyeOffImageSource="{DynamicResource ic_eye_gray}"
                                   ClearImageSource="{DynamicResource ic_clear_gray}"
                                   FontFamily="Ubuntu-Regular"
                                   PlaceholderColor="{DynamicResource appcolor_i4}"
                                   TextColor="{DynamicResource appcolor_i3}"
                                   IsFocusedVisible="{Binding IsVisiblePassword}"
                                   IsFocusedButton="{Binding IsVisibleButton}"
-                                  IsPassword="True" 
+                                  IsPassword="True"
                                   Placeholder="{res:Translate Password}" />
-            <Label Grid.Row="2" 
+            <Label Grid.Row="2"
                    Text="{res:Translate PasswordIncorrect}"
                    Style="{DynamicResource tstyle_i3}"
                    FontSize="{DynamicResource tsize_i4}"
-                   Margin="20,65,0,0"    
+                   Margin="20,65,0,0"
                    IsVisible="{Binding IsWrongPassword}" />
 
-            <StackLayout Grid.Row="3" HorizontalOptions="Center" Margin="0,20,0,0" IsVisible="{Binding IsUnVisibleButton}">
-                <Button Text="{res:Translate LogIn}" 
-                        WidthRequest="218" CornerRadius="25" HeightRequest="50"
-                        Command="{Binding TwitterCommand}" 
+            <StackLayout Grid.Row="3"
+                         HorizontalOptions="Center"
+                         Margin="0,20,0,0"
+                         IsVisible="{Binding IsUnVisibleButton}">
+                <Button Text="{res:Translate LogIn}"
+                        WidthRequest="218"
+                        CornerRadius="25"
+                        HeightRequest="50"
+                        Command="{Binding TwitterCommand}"
                         BackgroundColor="{DynamicResource appcolor_i1}"
-                        FontAttributes="Bold" FontSize="{DynamicResource tsize_i3}"
+                        FontAttributes="Bold"
+                        FontSize="{DynamicResource tsize_i3}"
                         FontFamily="Ubuntu-Regular"
-                        TextColor="{DynamicResource appcolor_i2}"/>
-                <Button Command="{Binding StartCommand}" 
-                        WidthRequest="218" CornerRadius="25" HeightRequest="50"
-                        Margin="0,20,0,0" 
-                        Text="{res:Translate SignUp}" 
-                        FontAttributes="Bold" FontSize="{DynamicResource tsize_i3}"
+                        TextColor="{DynamicResource appcolor_i2}" />
+                <Button Command="{Binding StartCommand}"
+                        WidthRequest="218"
+                        CornerRadius="25"
+                        HeightRequest="50"
+                        Margin="0,20,0,0"
+                        Text="{res:Translate SignUp}"
+                        FontAttributes="Bold"
+                        FontSize="{DynamicResource tsize_i3}"
                         FontFamily="Ubuntu-Regular"
                         TextColor="{DynamicResource appcolor_i1}"
                         BackgroundColor="Transparent"
-                        BorderColor="Transparent"/>
+                        BorderColor="Transparent" />
             </StackLayout>
 
             <StackLayout Grid.Row="4"
-                         VerticalOptions="EndAndExpand" HeightRequest="50"
+                         VerticalOptions="EndAndExpand"
+                         HeightRequest="50"
                          BackgroundColor="{DynamicResource appcolor_i1}"
                          IsVisible="{Binding IsVisibleButton}">
                 <StackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding TwitterCommand}"/>
+                    <TapGestureRecognizer Command="{Binding TwitterCommand}" />
                 </StackLayout.GestureRecognizers>
                 <Label Text="{res:Translate LogIn}"
                        VerticalOptions="CenterAndExpand"
-                       FontAttributes="Bold" FontSize="{DynamicResource tsize_i3}"
+                       FontAttributes="Bold"
+                       FontSize="{DynamicResource tsize_i3}"
                        FontFamily="Ubuntu-Regular"
                        TextColor="{DynamicResource appcolor_i2}"
                        HorizontalOptions="Center" />

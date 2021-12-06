@@ -6,7 +6,6 @@ using Xamarin.Forms.Xaml;
 
 namespace InterTwitter.Controls
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CustomEntry : Grid
     {
         public CustomEntry()
@@ -15,6 +14,7 @@ namespace InterTwitter.Controls
         }
 
         #region -- Public properties --
+
         public static readonly BindableProperty TextProperty = BindableProperty.Create(
             propertyName: nameof(Text),
             returnType: typeof(string),
@@ -106,17 +106,17 @@ namespace InterTwitter.Controls
             set => SetValue(IsPasswordProperty, value);
         }
 
-        public static readonly BindableProperty IsPasswordHideProperty = BindableProperty.Create(
-            propertyName: nameof(IsPasswordHide),
+        public static readonly BindableProperty IsPasswordHiddenProperty = BindableProperty.Create(
+            propertyName: nameof(IsPasswordHidden),
             returnType: typeof(bool),
             declaringType: typeof(CustomEntry),
             defaultValue: false,
             defaultBindingMode: BindingMode.TwoWay);
 
-        public bool IsPasswordHide
+        public bool IsPasswordHidden
         {
-            get => (bool)GetValue(IsPasswordHideProperty);
-            set => SetValue(IsPasswordHideProperty, value);
+            get => (bool)GetValue(IsPasswordHiddenProperty);
+            set => SetValue(IsPasswordHiddenProperty, value);
         }
 
         public static readonly BindableProperty IsFocusedVisibleProperty = BindableProperty.Create(
@@ -246,7 +246,7 @@ namespace InterTwitter.Controls
             switch (propertyName)
             {
                 case nameof(IsPassword):
-                    IsPasswordHide = IsPassword;
+                    IsPasswordHidden = IsPassword;
                     break;
                 case nameof(Text):
                 case nameof(ClearImageSource):
@@ -255,7 +255,7 @@ namespace InterTwitter.Controls
 
                     if (IsPassword)
                     {
-                        if (IsPasswordHide)
+                        if (IsPasswordHidden)
                         {
                             ImageSource = EyeOnImageSource;
                         }
@@ -297,12 +297,12 @@ namespace InterTwitter.Controls
             {
                 if (ImageSource == EyeOnImageSource)
                 {
-                    IsPasswordHide = false;
+                    IsPasswordHidden = false;
                     ImageSource = EyeOffImageSource;
                 }
                 else
                 {
-                    IsPasswordHide = true;
+                    IsPasswordHidden = true;
                     ImageSource = EyeOnImageSource;
                 }
             }

@@ -28,10 +28,9 @@ namespace InterTwitter.Droid.Renderers
 
         public void HideKeyboard()
         {
-            var inputMethodManager = _context.GetSystemService(Context.InputMethodService) as InputMethodManager;
-            if (inputMethodManager != null && _context is Activity)
+            var inputMethodManager = _context?.GetSystemService(Context.InputMethodService) as InputMethodManager;
+            if (inputMethodManager != null && _context is Activity activity)
             {
-                var activity = _context as Activity;
                 var token = activity.CurrentFocus?.WindowToken;
                 inputMethodManager.HideSoftInputFromWindow(token, HideSoftInputFlags.None);
                 activity.Window.DecorView.ClearFocus();
