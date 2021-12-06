@@ -43,16 +43,14 @@
 
             <Button Text="Refresh" Command="{Binding OnRefresh}"/>
 
-            <Entry Text="Cursor position and selection length set" CursorPosition="5" SelectionLength="10" />
-
-            <Editor Text="Cursor position and selection length set"
-                    Margin="10"/>
-
-            <controls:CustomEditor HeightRequest="100"
-                                   Text="Helloworld Developer sdsd"
-                                   BackgroundColor="White"
-                                   VerticalOptions="CenterAndExpand"/>
-
+            <controls:CustomEditor Text="Hello, World"
+                                   TextColor="Black"
+                                   Placeholder="Start writing"
+                                   PlaceholderColor="Silver"
+                                   VerticalOptions="CenterAndExpand"
+                                   IsExpandable="True"
+                                   CorrectLength="250"
+                                   MaxLength="300"/>
 
         </StackLayout>
         

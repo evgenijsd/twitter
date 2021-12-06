@@ -1,31 +1,88 @@
-﻿using CoreAnimation;
-using CoreGraphics;
-using Foundation;
-using ObjCRuntime;
-using System;
+﻿using Foundation;
+using InterTwitter.Controls;
+using InterTwitter.iOS.Renderers;
 using System.ComponentModel;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
-using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
-namespace InterTwitter.Droid.Renderers
+[assembly: ExportRenderer(typeof(CustomEditor), typeof(CustomEditorRenderer))]
+namespace InterTwitter.iOS.Renderers
 {
     public class CustomEditorRenderer : EditorRenderer
     {
+        #region -- Overrides --
+
         protected override void OnElementChanged(ElementChangedEventArgs<Editor> e)
         {
             base.OnElementChanged(e);
 
-            NSMutableAttributedString str = new NSMutableAttributedString("Hello, World");
+            TextView.InputAccessoryView = null;
+            Control.ScrollEnabled = !((CustomEditor)Element).IsExpandable;
 
-            NSString attributeName = (NSString)"textColor";
-            NSObject value = UIColor.Red;
-            NSRange range = new NSRange(1, 5);
-
-            str.AddAttribute(attributeName, value, range);
-
-            this.TextView.AttributedText = str;
+            Check();
         }
+
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+
+            switch (e.PropertyName)
+            {
+                case "Text":
+                    Check();
+                    break;
+
+                case "Renderer":
+                    Control.ScrollEnabled = !((CustomEditor)Element).IsExpandable;
+                    break;
+            }
+        }
+
+        #endregion
+
+        #region -- Private methods --
+
+        private void Check()
+        {
+            var text = TextView.Text;
+
+            if (!string.IsNullOrEmpty(text))
+            {
+                TextView.TextColor = Element.TextColor.ToUIColor();
+
+                var length = text.Length;
+                var correctLength = ((CustomEditor)Element).CorrectLength;
+                //var pos = Control.SelectionAffinity;
+
+                if (length > correctLength)
+                {
+                    //_clear = true;
+
+                    NSMutableAttributedString str = new NSMutableAttributedString(TextView.Text);
+
+                    NSObject value = ((CustomEditor)Element).OverflowLengthColor.ToUIColor();
+                    NSRange range = new NSRange(correctLength, length - correctLength);
+
+                    str.AddAttribute(UIStringAttributeKey.ForegroundColor, value, range);
+
+                    TextView.AttributedText = str;
+
+                    //Control.SetSelectionAffinity(pos);
+                }
+                else
+                {
+                    //if (_clear)
+                    //{
+                    //    EditText.Text = text;
+                    //    Control.SetSelection(pos);
+
+                    //    _clear = false;
+                    //}
+                }
+            }
+        }
+
+        #endregion
     }
 }

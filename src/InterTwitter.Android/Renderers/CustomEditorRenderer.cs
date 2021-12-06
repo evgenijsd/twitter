@@ -1,30 +1,10 @@
-﻿using Android.Animation;
-using Android.App;
-using Android.Content;
-using Android.Content.Res;
-using Android.Graphics;
-using Android.Graphics.Drawables;
-using Android.OS;
-using Android.Runtime;
+﻿using Android.Content;
 using Android.Text;
-using Android.Text.Method;
 using Android.Text.Style;
-using Android.Util;
-using Android.Views;
-using Android.Views.Accessibility;
-using Android.Views.Animations;
-using Android.Views.Autofill;
-using Android.Views.InputMethods;
 using Android.Widget;
 using InterTwitter.Controls;
 using InterTwitter.Droid.Renderers;
-using Java.Interop;
-using Java.Lang;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -34,65 +14,47 @@ namespace InterTwitter.Droid.Renderers
     public class CustomEditorRenderer : EditorRenderer
     {
         private bool _clear;
-        private bool initial = true;
-        private Drawable originalBackground;
 
         public CustomEditorRenderer(Context context) 
             : base(context)
         {
         }
 
+        #region -- Overrides --
+
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
 
-            if(e.PropertyName == "Text")
+            switch (e.PropertyName)
             {
-                Check();
-            }
+                case "Text":
+                    Check();
+                    break;
 
-            Control.VerticalScrollBarEnabled = false;
-            this.Control.Background = originalBackground;
+                case "IsExpandable":
+                    Control.VerticalScrollBarEnabled = !((CustomEditor)Element).IsExpandable;
+                    break;
+            }
         }
 
         protected override void OnElementChanged(ElementChangedEventArgs<Editor> e)
         {
             base.OnElementChanged(e);
 
-            if (Control != null)
-            {
-                if (initial)
-                {
-                    originalBackground = Control.Background;
-                    initial = false;
-                }
-
-            }
+            Control.SetPadding(0, 0, 0, 0);
+            Control.SetBackgroundColor(e.NewElement.BackgroundColor.ToAndroid());
+            Control.VerticalScrollBarEnabled = !((CustomEditor)Element).IsExpandable;
 
             if (e.NewElement != null)
             {
                 Check();
             }
-
-            Control.SetBackgroundColor(e.NewElement.BackgroundColor.ToAndroid());
-            //Control.SetPadding(0, 0, 0, 0);
-
-            Control.Hint = "Text to show";
-            Control.SetHintTextColor(e.NewElement.PlaceholderColor.ToAndroid());
-
-
-            if (Control != null)
-            {
-                if (initial)
-                {
-                    originalBackground = Control.Background;
-                    initial = false;
-                }
-
-            }
-
-            
         }
+
+        #endregion
+
+        #region -- Private methods --
 
         private void Check()
         {
@@ -100,36 +62,42 @@ namespace InterTwitter.Droid.Renderers
 
             if (!string.IsNullOrEmpty(text))
             {
-                EditText.SetTextColor(Android.Graphics.Color.Black);
+                EditText.SetTextColor(Element.TextColor.ToAndroid());
                 
                 var length = text.Length;
+                var correctLength = ((CustomEditor)Element).CorrectLength;
+
                 var pos = Control.SelectionEnd;
 
-                if (length > 20)
+                if (length > correctLength)
                 {
                     _clear = true;
 
                     SpannableString spannable = new SpannableString(text);
-                    spannable.SetSpan(new ForegroundColorSpan(Android.Graphics.Color.Red), 20, length, SpanTypes.ExclusiveExclusive);
+
+                    spannable.SetSpan(new ForegroundColorSpan(
+                        ((CustomEditor)Element).OverflowLengthColor.ToAndroid()),
+                        correctLength,
+                        length,
+                        SpanTypes.ExclusiveExclusive);
 
                     EditText.TextFormatted = spannable;
+
                     Control.SetSelection(pos);
                 }
                 else
                 {
                     if (_clear)
                     {
-                        string tmp = EditText.Text[length - 1].ToString();
-                        if (!string.IsNullOrWhiteSpace(tmp))
-                        {
-                            EditText.Text = text;
-                            Control.SetSelection(pos);
-                        }
+                        EditText.Text = text;
+                        Control.SetSelection(pos);
 
                         _clear = false;
                     }
                 }
             }
         }
+
+        #endregion
     }
 }
