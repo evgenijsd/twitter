@@ -25,7 +25,7 @@ namespace InterTwitter.Controls
         public ESearchState SearchState
         {
             get => (ESearchState)GetValue(SearchStateProperty);
-            set => SetValue(SearchStateProperty, value);
+            private set => SetValue(SearchStateProperty, value);
         }
 
         public static BindableProperty TextProperty = BindableProperty.Create(

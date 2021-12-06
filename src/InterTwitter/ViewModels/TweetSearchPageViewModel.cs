@@ -2,6 +2,7 @@
 using InterTwitter.Helpers;
 using InterTwitter.Models;
 using Prism.Navigation;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -32,6 +33,20 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _searchQuery, value);
         }
 
+        private string _searchQueryWithNoResults;
+        public string SearchQueryWithNoResults
+        {
+            get => _searchQueryWithNoResults;
+            set => SetProperty(ref _searchQueryWithNoResults, value);
+        }
+
+        private ThemeModel _selectedTweetsTheme;
+        public ThemeModel SelectedTweetsTheme
+        {
+            get => _selectedTweetsTheme;
+            set => SetProperty(ref _selectedTweetsTheme, value);
+        }
+
         private ObservableCollection<ThemeModel> _themeModels;
         public ObservableCollection<ThemeModel> ThemeModels
         {
@@ -46,15 +61,15 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _tweetSearchState, value);
         }
 
-        private ETweetSearchResult _tweetSearchResult;
-        public ETweetSearchResult TweetSearchResult
+        private ESearchResult _tweetSearchResult;
+        public ESearchResult TweetSearchResult
         {
             get => _tweetSearchResult;
             set => SetProperty(ref _tweetSearchResult, value);
         }
 
-        private ICommand _profileIconTapCommand;
-        public ICommand ProfileIconTapCommand => _profileIconTapCommand ??= SingleExecutionCommand.FromFunc(ProfileTapCommandTapAsync);
+        private ICommand _avatarIconTapCommand;
+        public ICommand AvatarIconTapCommand => _avatarIconTapCommand ??= SingleExecutionCommand.FromFunc(ProfileTapCommandTapAsync);
 
         private ICommand _startSearchTapCommand;
         public ICommand StartSearchTapCommand => _startSearchTapCommand ??= SingleExecutionCommand.FromFunc(StartSearchCommandTapAsync);
@@ -62,27 +77,8 @@ namespace InterTwitter.ViewModels
         private ICommand _stopSearchTapCommand;
         public ICommand StopSearchTapCommand => _stopSearchTapCommand ??= SingleExecutionCommand.FromFunc(StopSearchCommandTapAsync);
 
-        #region --- testing ---
-
-        private ICommand _tweetFoundCommand;
-        public ICommand TweetFoundCommand => _tweetFoundCommand ??= SingleExecutionCommand.FromFunc(TweetFoundTapCommand);
-
-        private ICommand _notTweetFoundCommand;
-        public ICommand NoTweetFoundCommand => _notTweetFoundCommand ??= SingleExecutionCommand.FromFunc(NoTweetFoundTapCommand);
-
-        private Task NoTweetFoundTapCommand()
-        {
-            TweetSearchResult = ETweetSearchResult.NoTweetsFound;
-            return Task.CompletedTask;
-        }
-
-        private Task TweetFoundTapCommand()
-        {
-            TweetSearchResult = ETweetSearchResult.TweetsFound;
-            return Task.CompletedTask;
-        }
-
-        #endregion
+        private ICommand _tweetsThemeTapCommand;
+        public ICommand TeetsThemeTapCommand => _tweetsThemeTapCommand ??= SingleExecutionCommand.FromFunc(TweetsThemeCommandTapAsync);
 
         #endregion
 
@@ -94,17 +90,17 @@ namespace InterTwitter.ViewModels
             {
                 new ThemeModel()
                 {
-                    Title = "Title 1",
-                    TweetsCount = 5,
+                    Title = "#AMAs",
+                    TweetsCount = 135,
                 },
                 new ThemeModel()
                 {
-                    Title = "Title 2",
-                    TweetsCount = 15,
+                    Title = "#blockchain",
+                    TweetsCount = 55,
                 },
                 new ThemeModel()
                 {
-                    Title = "Title 3",
+                    Title = "#NoNuanceNovember",
                     TweetsCount = 25,
                 },
             };
@@ -118,18 +114,55 @@ namespace InterTwitter.ViewModels
 
         private Task ProfileTapCommandTapAsync()
         {
+            /* TEMP */
+            switch (TweetSearchResult)
+            {
+                case ESearchResult.NoResults:
+                    TweetSearchResult = ESearchResult.Success;
+                    break;
+                case ESearchResult.Success:
+                    TweetSearchResult = ESearchResult.NoResults;
+                    break;
+                default:
+                    break;
+            }
+
             return Task.CompletedTask;
         }
 
         private Task StartSearchCommandTapAsync()
         {
             TweetSearchState = ESearchState.Active;
+
+            switch (TweetSearchResult)
+            {
+                case ESearchResult.NoResults:
+                    SearchQueryWithNoResults = SearchQuery;
+                    break;
+
+                case ESearchResult.Success:
+                    SearchQueryWithNoResults = string.Empty;
+
+                    /*TODO: filling tweets list*/
+                    break;
+            }
+
             return Task.CompletedTask;
         }
 
         private Task StopSearchCommandTapAsync()
         {
+            SearchQueryWithNoResults = string.Empty;
             TweetSearchState = ESearchState.NotActive;
+
+            return Task.CompletedTask;
+        }
+
+        private Task TweetsThemeCommandTapAsync(object obj)
+        {
+            SearchQuery = SelectedTweetsTheme.Title;
+            TweetSearchState = ESearchState.Active;
+
             return Task.CompletedTask;
         }
 
