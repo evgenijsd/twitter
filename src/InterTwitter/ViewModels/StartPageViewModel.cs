@@ -24,6 +24,7 @@ namespace InterTwitter.ViewModels
         private IRegistrationService _registrationService { get; }
         private IAutorizationService _autorizationService { get; }
         private IPageDialogService _dialogs { get; }
+        public StartPageValidator _StartPageValidator { get; }
 
         public StartPageViewModel(INavigationService navigationService, IPageDialogService dialogs, IRegistrationService registrationService, IAutorizationService autorizationService)
             : base(navigationService)
@@ -32,12 +33,10 @@ namespace InterTwitter.ViewModels
             _autorizationService = autorizationService;
             UserId = _autorizationService.UserId;
             _dialogs = dialogs;
-            StartPageValidator = new StartPageValidator();
+            _StartPageValidator = new StartPageValidator();
         }
 
         #region -- Public properties --
-        public StartPageValidator StartPageValidator;
-
         private UserModel _user = new ();
         public UserModel User
         {
@@ -136,14 +135,14 @@ namespace InterTwitter.ViewModels
             if (args.PropertyName == nameof(Name))
             {
                 MessageErrorName = string.Empty;
-                var validator = StartPageValidator.Validate(this);
+                var validator = _StartPageValidator.Validate(this);
                 IsWrongName = !string.IsNullOrEmpty(MessageErrorName) && !string.IsNullOrEmpty(Name);
             }
 
             if (args.PropertyName == nameof(Email))
             {
                 MessageErrorEmail = string.Empty;
-                var validator = StartPageValidator.Validate(this);
+                var validator = _StartPageValidator.Validate(this);
                 IsWrongEmail = !string.IsNullOrEmpty(MessageErrorEmail) && !string.IsNullOrEmpty(Email);
             }
 
@@ -191,7 +190,7 @@ namespace InterTwitter.ViewModels
             {
                 if (IsWrongEmail || IsWrongName)
                 {
-                    var validator = StartPageValidator.Validate(this);
+                    var validator = _StartPageValidator.Validate(this);
                     if (string.IsNullOrEmpty(MessageErrorName))
                     {
                         MessageErrorName = MessageErrorEmail;

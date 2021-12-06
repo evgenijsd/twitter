@@ -23,18 +23,17 @@ namespace InterTwitter.ViewModels
     {
         private IRegistrationService _registrationService { get; }
         private IPageDialogService _dialogs { get; }
+        public CreatePageValidator _CreatePageValidator { get; }
 
         public CreatePageViewModel(INavigationService navigationService, IPageDialogService dialogs, IRegistrationService registrationService)
             : base(navigationService)
         {
             _registrationService = registrationService;
             _dialogs = dialogs;
-            CreatePageValidator = new CreatePageValidator();
+            _CreatePageValidator = new CreatePageValidator();
         }
 
         #region -- Public properties --
-        public CreatePageValidator CreatePageValidator;
-
         private UserModel _user = new ();
         public UserModel User
         {
@@ -126,14 +125,14 @@ namespace InterTwitter.ViewModels
             if (args.PropertyName == nameof(Name))
             {
                 MessageErrorName = string.Empty;
-                var validator = CreatePageValidator.Validate(this);
+                var validator = _CreatePageValidator.Validate(this);
                 IsWrongName = !string.IsNullOrEmpty(MessageErrorName) && !string.IsNullOrEmpty(Name);
             }
 
             if (args.PropertyName == nameof(Email))
             {
                 MessageErrorEmail = string.Empty;
-                var validator = CreatePageValidator.Validate(this);
+                var validator = _CreatePageValidator.Validate(this);
                 IsWrongEmail = !string.IsNullOrEmpty(MessageErrorEmail) && !string.IsNullOrEmpty(Email);
             }
 
@@ -172,7 +171,7 @@ namespace InterTwitter.ViewModels
             }
             else
             {
-                var validator = CreatePageValidator.Validate(this);
+                var validator = _CreatePageValidator.Validate(this);
                 if (validator.IsValid)
                 {
                     DependencyService.Get<IKeyboardHelper>().HideKeyboard();

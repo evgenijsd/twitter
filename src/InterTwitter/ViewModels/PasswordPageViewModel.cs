@@ -21,18 +21,17 @@ namespace InterTwitter.ViewModels
     {
         private IRegistrationService _registrationService { get; }
         private IPageDialogService _dialogs { get; }
+        private PasswordPageValidator _PasswordPageValidator { get; }
 
         public PasswordPageViewModel(INavigationService navigationService, IPageDialogService dialogs, IRegistrationService registrationService)
             : base(navigationService)
         {
             _registrationService = registrationService;
             _dialogs = dialogs;
-            PasswordPageValidator = new PasswordPageValidator();
+            _PasswordPageValidator = new PasswordPageValidator();
         }
 
         #region -- Public properties --
-        public PasswordPageValidator PasswordPageValidator;
-
         private UserModel _user = new ();
         public UserModel User
         {
@@ -124,14 +123,14 @@ namespace InterTwitter.ViewModels
             if (args.PropertyName == nameof(Password))
             {
                 MessageErrorPassword = string.Empty;
-                var validator = PasswordPageValidator.Validate(this);
+                var validator = _PasswordPageValidator.Validate(this);
                 IsWrongPassword = !string.IsNullOrEmpty(MessageErrorPassword) && !string.IsNullOrEmpty(Password);
             }
 
             if (args.PropertyName == nameof(ConfirmPassword))
             {
                 MessageErrorConfirmPassword = string.Empty;
-                var validator = PasswordPageValidator.Validate(this);
+                var validator = _PasswordPageValidator.Validate(this);
                 IsWrongConfirmPassword = !string.IsNullOrEmpty(MessageErrorConfirmPassword) && !string.IsNullOrEmpty(ConfirmPassword);
             }
 
@@ -161,7 +160,7 @@ namespace InterTwitter.ViewModels
 
         private async Task OnStartCommandAsync()
         {
-            var validator = PasswordPageValidator.Validate(this);
+            var validator = _PasswordPageValidator.Validate(this);
             if (validator.IsValid)
             {
                 User.Password = Password;
