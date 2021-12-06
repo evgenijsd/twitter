@@ -14,11 +14,12 @@
         <StackLayout Spacing="0">
 
              <!-- SEARCH BAR -->
-
             <controls:SearchBar SearchState="{Binding TweetSearchState}"
-                                AvatarIconSource="{Binding ProfileIcon}"
+                                AvatarIconSource="{Binding AvatarIcon}"
+                                AvatarIconTapCommand="{Binding ProfileIconTapCommand}"
                                 BackIconTapCommand="{Binding StopSearchTapCommand}"
-                                ReturnCommand="{Binding StartSearchTapCommand}"/>
+                                PressOkOnKeyboardCommand="{Binding StartSearchTapCommand}"
+                                Text="{Binding SearchQuery}"/>
 
             <!-- CONTENT --> 
             <StackLayout VerticalOptions="CenterAndExpand">
@@ -29,7 +30,7 @@
 
                     <stateContainer:StateContainer.Conditions>
 
-                        <!-- SEARCH NO ACTIVE -->
+                        <!-- SEARCH NO ACTIVE STATE a-->
                         <stateContainer:StateCondition State="NotActive">
 
                             <StackLayout Spacing="5"

@@ -2,7 +2,6 @@
 using InterTwitter.Helpers;
 using InterTwitter.Models;
 using Prism.Navigation;
-using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -14,16 +13,16 @@ namespace InterTwitter.ViewModels
         public TweetSearchPageViewModel()
             : base()
         {
-            ProfileIcon = "pic_profile_small";
+            AvatarIcon = "pic_profile_small";
         }
 
         #region --- Public properties ---
 
-        private string _profileIcon;
-        public string ProfileIcon
+        private string _avatarIcon;
+        public string AvatarIcon
         {
-            get => _profileIcon;
-            set => SetProperty(ref _profileIcon, value);
+            get => _avatarIcon;
+            set => SetProperty(ref _avatarIcon, value);
         }
 
         private string _searchQuery;
