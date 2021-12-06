@@ -101,7 +101,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Helpers\ProcessHelpers\" />
-    <Folder Include="Helpers\" />
     <Folder Include="Enums\" />
     <Folder Include="Services\" />
   </ItemGroup>

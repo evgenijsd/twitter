@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using InterTwitter.Enums;
+using InterTwitter.Helpers;
 using InterTwitter.Models;
 using InterTwitter.Services.Registration;
 using InterTwitter.Validators;
@@ -14,6 +15,7 @@ using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
 {
@@ -156,6 +158,8 @@ namespace InterTwitter.ViewModels
 
         private async Task OnStartCommandAsync()
         {
+            DependencyService.Get<IKeyboardHelper>().HideKeyboard();
+
             await _navigationService.GoBackAsync();
         }
 
@@ -171,6 +175,8 @@ namespace InterTwitter.ViewModels
                 var validator = CreatePageValidator.Validate(this);
                 if (validator.IsValid)
                 {
+                    DependencyService.Get<IKeyboardHelper>().HideKeyboard();
+
                     User.Email = Email;
                     User.Name = Name;
                     var p = new NavigationParameters { { "User", User } };

@@ -15,15 +15,15 @@ namespace InterTwitter.Validators
         public CreatePageValidator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty().OnFailure(x => x.MessageErrorName = Resources.Resource.AlertDataIncorrect)
-                .MinimumLength(2).OnFailure(x => x.MessageErrorName = Resources.Resource.AlertNameLength)
                 .Must(x => Regex.IsMatch(x, VALID_NAME))
-                                 .OnFailure(x => x.MessageErrorName = Resources.Resource.AlertNameLetter);
+                                 .OnFailure(x => x.MessageErrorName = Resources.Resource.AlertNameLetter)
+                .MinimumLength(2).OnFailure(x => x.MessageErrorName = Resources.Resource.AlertNameLength)
+                .NotEmpty().OnFailure(x => x.MessageErrorName = Resources.Resource.AlertNameEmpty);
             RuleFor(x => x.Email)
-                .NotEmpty().OnFailure(x => x.MessageErrorEmail = Resources.Resource.AlertDataIncorrect)
-                .Must(x => x.Contains("@")).OnFailure(x => x.MessageErrorEmail = Resources.Resource.AlertEmailNoA)
                 .Must(x => Regex.IsMatch(x, VALID_EMAIL))
-                                 .OnFailure(x => x.MessageErrorEmail = Resources.Resource.AlertEmailInvalid);
+                                 .OnFailure(x => x.MessageErrorEmail = Resources.Resource.AlertEmailInvalid)
+                .Must(x => x.Contains("@")).OnFailure(x => x.MessageErrorEmail = Resources.Resource.AlertEmailNoA)
+                .NotEmpty().OnFailure(x => x.MessageErrorEmail = Resources.Resource.AlertEmailEmpty);
         }
     }
 }

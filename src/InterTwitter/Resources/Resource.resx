@@ -124,13 +124,13 @@
     <value>Database failure</value>
   </data>
   <data name="AlertDataIncorrect" xml:space="preserve">
-    <value>The data is incorrect field!</value>
+    <value>The data is incorrectly filled</value>
+  </data>
+  <data name="AlertEmailEmpty" xml:space="preserve">
+    <value>Email is empty</value>
   </data>
   <data name="AlertEmailInvalid" xml:space="preserve">
     <value>Email does not match the format</value>
-  </data>
-  <data name="AlertEmailLength" xml:space="preserve">
-    <value>In email name and domain no more than 64 characters</value>
   </data>
   <data name="AlertEmailNoA" xml:space="preserve">
     <value>In Email there is no symbol @</value>
@@ -147,11 +147,17 @@
   <data name="AlertLoginTaken" xml:space="preserve">
     <value>This login is already taken</value>
   </data>
+  <data name="AlertNameEmpty" xml:space="preserve">
+    <value>Name is empty</value>
+  </data>
   <data name="AlertNameLength" xml:space="preserve">
     <value>The name cannot be shorter 2 character</value>
   </data>
   <data name="AlertNameLetter" xml:space="preserve">
     <value>Name includes only letters</value>
+  </data>
+  <data name="AlertPasswordEmpty" xml:space="preserve">
+    <value>Password is empty</value>
   </data>
   <data name="AlertPasswordLength" xml:space="preserve">
     <value>Password less than 6 characters</value>

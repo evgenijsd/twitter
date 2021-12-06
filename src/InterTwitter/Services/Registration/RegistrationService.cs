@@ -52,7 +52,7 @@ namespace InterTwitter.Services.Registration
             }
             catch (Exception ex)
             {
-                result.SetError($"Exception: {nameof(CheckTheCorrectEmailAsync)}", "Wrong result", ex);
+                result.SetError($"Exception: {nameof(CheckTheCorrectEmailAsync)}", Resources.Resource.AlertDatabase, ex);
             }
 
             return result;
@@ -77,7 +77,7 @@ namespace InterTwitter.Services.Registration
             }
             catch (Exception ex)
             {
-                result.SetError($"Exception: {nameof(UserAddAsync)}", "Wrong result", ex);
+                result.SetError($"Exception: {nameof(UserAddAsync)}", Resources.Resource.AlertDatabase, ex);
             }
 
             return result;

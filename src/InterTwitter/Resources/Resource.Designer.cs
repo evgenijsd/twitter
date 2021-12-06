@@ -79,11 +79,20 @@ namespace InterTwitter.Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на The data is incorrect field!.
+        ///   Ищет локализованную строку, похожую на The data is incorrectly filled.
         /// </summary>
         internal static string AlertDataIncorrect {
             get {
                 return ResourceManager.GetString("AlertDataIncorrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Email is empty.
+        /// </summary>
+        internal static string AlertEmailEmpty {
+            get {
+                return ResourceManager.GetString("AlertEmailEmpty", resourceCulture);
             }
         }
         
@@ -93,15 +102,6 @@ namespace InterTwitter.Resources {
         internal static string AlertEmailInvalid {
             get {
                 return ResourceManager.GetString("AlertEmailInvalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на In email name and domain no more than 64 characters.
-        /// </summary>
-        internal static string AlertEmailLength {
-            get {
-                return ResourceManager.GetString("AlertEmailLength", resourceCulture);
             }
         }
         
@@ -151,6 +151,15 @@ namespace InterTwitter.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Name is empty.
+        /// </summary>
+        internal static string AlertNameEmpty {
+            get {
+                return ResourceManager.GetString("AlertNameEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на The name cannot be shorter 2 character.
         /// </summary>
         internal static string AlertNameLength {
@@ -165,6 +174,15 @@ namespace InterTwitter.Resources {
         internal static string AlertNameLetter {
             get {
                 return ResourceManager.GetString("AlertNameLetter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Password is empty.
+        /// </summary>
+        internal static string AlertPasswordEmpty {
+            get {
+                return ResourceManager.GetString("AlertPasswordEmpty", resourceCulture);
             }
         }
         

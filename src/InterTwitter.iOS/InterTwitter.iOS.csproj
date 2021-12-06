@@ -112,6 +112,7 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Renderers\KeyboardHelper.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -188,7 +189,6 @@
   <ItemGroup>
     <Folder Include="Controls\" />
     <Folder Include="Services\" />
-    <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\ic_add_blue.png" />

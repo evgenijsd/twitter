@@ -15,15 +15,15 @@ namespace InterTwitter.Validators
         public LogInPageValidator()
         {
             RuleFor(x => x.Email)
-                .NotEmpty().OnFailure(x => x.MessageErrorEmail = Resources.Resource.AlertDataIncorrect)
-                .Must(x => x.Contains("@")).OnFailure(x => x.MessageErrorEmail = Resources.Resource.AlertEmailNoA)
                 .Must(x => Regex.IsMatch(x, VALID_EMAIL))
-                           .OnFailure(x => x.MessageErrorEmail = Resources.Resource.AlertEmailInvalid);
+                           .OnFailure(x => x.MessageErrorEmail = Resources.Resource.AlertEmailInvalid)
+                .Must(x => x.Contains("@")).OnFailure(x => x.MessageErrorEmail = Resources.Resource.AlertEmailNoA)
+                .NotEmpty().OnFailure(x => x.MessageErrorEmail = Resources.Resource.AlertEmailEmpty);
             RuleFor(x => x.Password)
-                .NotEmpty().OnFailure(x => x.MessageErrorPassword = Resources.Resource.AlertDataIncorrect)
-                .MinimumLength(6).OnFailure(x => x.MessageErrorPassword = Resources.Resource.AlertPasswordLength)
                 .Must(x => Regex.IsMatch(x, VALID_PASSWORD))
-                           .OnFailure(x => x.MessageErrorPassword = Resources.Resource.AlertPasswordLetterDigit);
+                           .OnFailure(x => x.MessageErrorPassword = Resources.Resource.AlertPasswordLetterDigit)
+                .MinimumLength(6).OnFailure(x => x.MessageErrorPassword = Resources.Resource.AlertPasswordLength)
+                .NotEmpty().OnFailure(x => x.MessageErrorPassword = Resources.Resource.AlertPasswordEmpty);
         }
     }
 }

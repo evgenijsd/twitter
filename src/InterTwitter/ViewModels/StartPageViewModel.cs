@@ -1,4 +1,5 @@
 ﻿using InterTwitter.Enums;
+using InterTwitter.Helpers;
 using InterTwitter.Models;
 using InterTwitter.Services.Autorization;
 using InterTwitter.Services.Registration;
@@ -14,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
 {
@@ -178,6 +180,8 @@ namespace InterTwitter.ViewModels
 
         private async Task OnLogInCommandAsync()
         {
+            DependencyService.Get<IKeyboardHelper>().HideKeyboard();
+
             var emailCheck = await _registrationService.CheckTheCorrectEmailAsync(Email);
             if (!emailCheck.Result && !string.IsNullOrEmpty(Email))
             {
@@ -215,6 +219,8 @@ namespace InterTwitter.ViewModels
             }
             else
             {
+                DependencyService.Get<IKeyboardHelper>().HideKeyboard();
+
                 if (IsWrongEmail || IsWrongName)
                 {
                     await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertDataIncorrect, Resources.Resource.Ok);
