@@ -33,6 +33,7 @@
         </Grid>
 
         <ListView
+            x:Name="menuItems"
             Grid.Row="1"
             HasUnevenRows="true"
             ItemsSource="{Binding MenuItems}"
@@ -90,7 +91,7 @@
                     VerticalOptions="Center" />
 
                 <StackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ChangeProfileTapCommand}" Tapped="OnSettingsTapped" />
+                    <TapGestureRecognizer Command="{Binding ChangeProfileTapCommand}" Tapped="SettingsTappedHandler" />
                 </StackLayout.GestureRecognizers>
 
             </StackLayout>
@@ -101,10 +102,12 @@
                 Spacing="20"
                 VerticalOptions="End">
                 <Image
+                    x:Name="logoutImage"
                     HeightRequest="35"
                     Source="{DynamicResource ic_logout_blue}"
                     WidthRequest="35" />
                 <Label
+                    x:Name="logoutLabel"
                     FontSize="{DynamicResource tsize_i5}"
                     Style="{DynamicResource BaseContent_i2}"
                     Text="Logout"
@@ -112,7 +115,7 @@
                     VerticalOptions="Center" />
 
                 <StackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding LogoutTapCommand}" />
+                    <TapGestureRecognizer Command="{Binding LogoutTapCommand}" Tapped="LogoutTappedHandler" />
                 </StackLayout.GestureRecognizers>
 
             </StackLayout>

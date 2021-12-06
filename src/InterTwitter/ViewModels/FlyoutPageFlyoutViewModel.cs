@@ -4,7 +4,6 @@ using Prism.Navigation;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -141,12 +140,13 @@ namespace InterTwitter.ViewModels.Flyout
 
         private Task OnLogoutTapCommand()
         {
-            return Task.FromResult(true);
+            return Task.FromResult(false);
         }
 
-        private Task OnChangeProfileTapCommand()
+        private async Task OnChangeProfileTapCommand()
         {
-            return Task.FromResult(true);
+            MessagingCenter.Send(this, "OpenSidebar", false);
+            await NavigationService.NavigateAsync($"{nameof(ProfilePage)}");
         }
 
         #endregion
