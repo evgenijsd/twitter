@@ -65,10 +65,9 @@
                                            Grid.Column="1"
                                            VerticalScrollBarVisibility="Never">
 
-                    <StackLayout BackgroundColor="{DynamicResource appcolor_i2}"
-                                 Padding="14">
+                    <StackLayout BackgroundColor="{DynamicResource appcolor_i2}">
 
-                        <controls:CustomEditor Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, neque, metus ipsum fermentum morbi at."
+                        <controls:CustomEditor Text="{Binding Text}"
                                                TextColor="{DynamicResource appcolor_i3}"
                                                FontSize="{DynamicResource tsize_i4}"
                                                FontFamily="Ubuntu-Regular"
@@ -78,17 +77,51 @@
                                                VerticalOptions="Start"
                                                IsExpandable="True"
                                                CorrectLength="250"
-                                               MaxLength="300"/>
+                                               MaxLength="300"
+                                               Margin="14"/>
 
-                        <StackLayout Orientation="Horizontal"
-                                     VerticalOptions="Start">
+                        <FlexLayout Direction="Row"
+                                    Wrap="Wrap"
+                                    VerticalOptions="Start"
+                                    BindableLayout.ItemsSource="{Binding ListUploadPhotos}">
                             
-                            <Label Text="video"/>
-                            <Label Text="photos"/>
-                            <Label Text="gif"/>
+                            <BindableLayout.ItemTemplate>
+                                
+                                <DataTemplate>
+                                    
+                                    <Grid HeightRequest="65"
+                                          Margin="7, 0, 0, 0">
 
-                        </StackLayout>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="44.1167"/>
+                                            <RowDefinition Height="21"/>
+                                        </Grid.RowDefinitions>
 
+                                        <Image Grid.Row="0"
+                                               Source="{Binding PathImage}"
+                                               HeightRequest="44.1167"
+                                               WidthRequest="44.1167"/>
+
+                                        <Frame Grid.Row="1"
+                                               HasShadow="False"
+                                               Padding="0"
+                                               Margin="41.11, -60, 0, 60"
+                                               BackgroundColor="Transparent">
+
+                                            <Image Source="{Binding PathActionImage}"
+                                                   HeightRequest="21"
+                                                   WidthRequest="21"/>
+
+                                        </Frame>
+
+                                    </Grid>
+                                    
+                                </DataTemplate>
+                                
+                            </BindableLayout.ItemTemplate>
+
+                        </FlexLayout>
+                        
                     </StackLayout>
 
                 </controls:CustomScrollView>
@@ -99,43 +132,49 @@
                         Grid.Column="0"
                         VerticalOptions="EndAndExpand"
                         HeightRequest="56"
-                        Shades="{sh:SingleShade Offset='0, -2',
-                                                Opacity={OnPlatform Android=1, iOS=0.7},
+                        Shades="{sh:SingleShade Offset='0, -2.32',
+                                                Opacity={OnPlatform Android=0.05, iOS=0.05},
                                                 BlurRadius={OnPlatform Android=14, iOS=14},
-                                                Color={StaticResource appcolor_i6}}">
+                                                Color=Black}">
 
                 <StackLayout Spacing="0"
                              BackgroundColor="{DynamicResource appcolor_i2}">
 
                     <BoxView Color="{DynamicResource appcolor_i6}"
-                         HeightRequest="1"/>
+                             HeightRequest="1"/>
 
                     <StackLayout Orientation="Horizontal">
 
-                        <Button Text="Refresh" 
-                            Command="{Binding OnRefresh}"/>
+                        <Image Source="{DynamicResource ic_media_blue}"
+                               Margin="13.93, 4, 0, 4"
+                               WidthRequest="28.86"/>
+                        
+                        <Image Source="{DynamicResource ic_gif_blue}"
+                               Margin="13.93, 4, 0, 4"
+                               WidthRequest="28.86"/>
 
-                        <Label Text="Video"/>
-
-                        <Label Text="Photos"/>
+                        <Image Source="{DynamicResource ic_video_square_blue}"
+                               Margin="13.93, 4, 0, 4"
+                               WidthRequest="28.86"/>
 
                         <controls:CircleProgressBar HorizontalOptions="EndAndExpand"
-                                                HeightRequest="24"
-                                                WidthRequest="24"
-                                                Text="{Binding CircleProgressBarText}"
-                                                TextColor="{Binding CircleProgressBarTextColor}"
-                                                FontScale="{Binding CircleProgressBarFontScale}"
-                                                FontFamily="Ubuntu-Regular"
-                                                FontAttributes="{Binding CircleProgressBarFontAttributes}"
-                                                Value="{Binding CircleProgressBarValue}"
-                                                Minimum="0"
-                                                Maximum="30"
-                                                LineWidth="15"
-                                                ProgressLineColor="{Binding CircleProgressBarProgressLineColor}"
-                                                BackgroundLineColor="{DynamicResource appcolor_i5}"
-                                                BackgroundProgressColor="{DynamicResource appcolor_i2}"
-                                                BackgroundColor="Transparent"
-                                                Padding="16"/>
+                                                    HeightRequest="24"
+                                                    WidthRequest="24"
+                                                    Text="{Binding CircleProgressBarText}"
+                                                    TextColor="{Binding CircleProgressBarTextColor}"
+                                                    FontScale="{Binding CircleProgressBarFontScale}"
+                                                    FontFamily="Ubuntu-Regular"
+                                                    FontAttributes="{Binding CircleProgressBarFontAttributes}"
+                                                    Value="{Binding CircleProgressBarValue}"
+                                                    Minimum="0"
+                                                    Maximum="250"
+                                                    LineWidth="15"
+                                                    ProgressLineColor="{Binding CircleProgressBarProgressLineColor}"
+                                                    BackgroundLineColor="{DynamicResource appcolor_i5}"
+                                                    BackgroundProgressColor="{DynamicResource appcolor_i2}"
+                                                    BackgroundColor="Transparent"
+                                                    Padding="16"/>
+                        
                     </StackLayout>
 
                 </StackLayout>
