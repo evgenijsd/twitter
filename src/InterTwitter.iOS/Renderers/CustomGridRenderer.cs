@@ -55,7 +55,7 @@ namespace InterTwitter.iOS.Renderers
 
             if (Element != null)
             {
-                Element.Margin = new Thickness(0, 0, 0, keyboardSize.Height - 35);
+                Element.Margin = new Thickness(0, 0, 0, keyboardSize.Height);
             }
         }
 

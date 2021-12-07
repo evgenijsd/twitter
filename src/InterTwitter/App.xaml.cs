@@ -28,6 +28,8 @@ namespace InterTwitter
         {
             InitializeComponent();
 
+            Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
+
             await NavigationService.NavigateAsync($"/{nameof(CreateTweetPage)}");
         }
 
