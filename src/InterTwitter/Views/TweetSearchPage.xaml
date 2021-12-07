@@ -13,25 +13,42 @@
 
     <views:BaseContentPage.Content>
 
-        <StackLayout Spacing="0">
+        <StackLayout Spacing="0" 
+                     BackgroundColor="{DynamicResource appcolor_i2}">
 
-             <!-- SEARCH BAR -->
-            <controls:SearchBar SearchState="{Binding TweetSearchState}"
-                                AvatarIconSource="{Binding AvatarIcon}"
-                                AvatarIconTapCommand="{Binding AvatarIconTapCommand}"
-                                BackIconTapCommand="{Binding StopSearchTapCommand}"
-                                PressOkOnKeyboardCommand="{Binding StartSearchTapCommand}"
-                                Text="{Binding SearchQuery}"/>
+            <!-- SEARCH BAR -->
+            <Grid RowDefinitions="auto">
 
-            <!--<BoxView 
-                     xct:ShadowEffect.Color="{DynamicResource appcolor_i4}"
-                     xct:ShadowEffect.OffsetY="0"
-                     xct:ShadowEffect.Opacity="1"
-                     xct:ShadowEffect.Radius="15"
-                     Style="{DynamicResource SeparatorStyle}"/>-->
+                <!--<Frame IsVisible="true"
+                       BackgroundColor="Orange"
+                       xct:ShadowEffect.Color="{DynamicResource appcolor_i3}"
+                       xct:ShadowEffect.Opacity="0.9">
 
-            <BoxView Style="{DynamicResource SeparatorStyle}" />
-            
+                    <Frame.Triggers>
+
+                        <DataTrigger TargetType="Frame"
+                                     Binding="{Binding Source={x:Reference tweetSearchResultContainer}, Path=State}"
+                                     Value="Success">
+
+                            <Setter Property="BackgroundColor" Value="Green"/>
+                            
+                        </DataTrigger>
+
+                    </Frame.Triggers>
+
+                </Frame>-->
+
+                <controls:SearchBar SearchState="{Binding TweetSearchState}"
+                                    AvatarIconSource="{Binding AvatarIcon}"
+                                    AvatarIconTapCommand="{Binding AvatarIconTapCommand}"
+                                    BackIconTapCommand="{Binding StopSearchTapCommand}"
+                                    PressOkOnKeyboardCommand="{Binding StartSearchTapCommand}"
+                                    Text="{Binding SearchQuery}"/>
+
+            </Grid>
+
+            <BoxView Style="{DynamicResource SeparatorStyle}"/>
+
             <!-- CONTENT -->
             <StackLayout VerticalOptions="CenterAndExpand">
 
@@ -136,7 +153,8 @@
                         <!-- SEARCH IS ACTIVE - SEARCH RESULTS -->
                         <stateContainer:StateCondition State="Active">
 
-                            <stateContainer:StateContainer State="{Binding TweetSearchResult}">
+                            <stateContainer:StateContainer State="{Binding TweetSearchResult}"
+                                                           x:Name="tweetSearchResultContainer">
 
                                 <stateContainer:StateContainer.Conditions>
 
@@ -264,11 +282,20 @@
 
             </StackLayout>
 
-            <!-- BOTTOM -->
-            <Frame HeightRequest="56"
-                   Padding="0"
-                   HasShadow="False"
-                   BackgroundColor="White"/>
+            <BoxView Style="{DynamicResource SeparatorStyle}" />
+
+            <Grid RowDefinitions="auto">
+
+                <Frame xct:ShadowEffect.Color="{DynamicResource appcolor_i3}"
+                       xct:ShadowEffect.OffsetY="50"/>
+
+                <!-- BOTTOM -->
+                <Frame HeightRequest="56"
+                       Padding="0"
+                       HasShadow="False"
+                       BackgroundColor="White" />
+
+            </Grid>
 
         </StackLayout>
 
