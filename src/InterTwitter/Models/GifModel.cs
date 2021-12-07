@@ -4,12 +4,10 @@ using System.Text;
 
 namespace InterTwitter.Models
 {
-    public class UserLike : IEntityBase
+    public class GifModel : IEntity
     {
         public int Id { get; set; }
-
-        public int UserId { get; set; }
-
-        public int TweetId { get; set; }
+        public int PostId { get; set; }
+        public string Gif { get; set; }
     }
 }
