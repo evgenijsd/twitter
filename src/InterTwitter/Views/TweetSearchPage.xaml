@@ -17,17 +17,8 @@
         <StackLayout Spacing="0" 
                      BackgroundColor="{DynamicResource appcolor_i2}">
 
+             <!-- SEARCH BAR -->
             <Grid RowDefinitions="auto">
-
-                <!-- SEARCH BAR -->
-                <sh:Shadows CornerRadius="30"
-                            Shades="{sh:SingleShade Offset='0, 0',
-                                                    Opacity={OnPlatform Android=1, iOS=0.7},
-                                                    BlurRadius={OnPlatform Android=50, iOS=50},
-                                                    Color={StaticResource appcolor_i6}}">
-                    <Frame/>
-
-                </sh:Shadows>
 
                 <controls:SearchBar Grid.Row="0"
                                     SearchState="{Binding TweetsSearchState}"
@@ -40,32 +31,7 @@
 
             </Grid>
             
-
-            <!--<BoxView Style="{DynamicResource SeparatorStyle}"/>-->
-
-            <!--<sh:Shadows CornerRadius="30"
-                        Shades="{sh:SingleShade Offset='0, 0',
-                                                Opacity={OnPlatform Android=0.7, iOS=0.7},
-                                                BlurRadius={OnPlatform Android=30, iOS=10},
-                                                Color={StaticResource appcolor_i5}}">
-
-                <BoxView HeightRequest="2" Color="{DynamicResource appcolor_i6}"></BoxView>
-
-            </sh:Shadows>-->
-
-            <!--<sh:Shadows CornerRadius="30"
-                        Shades="{sh:SingleShade Offset='0, 10',
-                                    Opacity=0.7,
-                                    Color=Violet}">
-                <ImageButton WidthRequest="60"
-                             HeightRequest="60"
-                             Padding="20"
-                             HorizontalOptions="Center"
-                             VerticalOptions="Center"
-                             BackgroundColor="Violet"
-                             CornerRadius="30"
-                             Source="pic_profile_small"/>
-            </sh:Shadows>-->
+            <BoxView Style="{DynamicResource SeparatorStyle}"/>
 
             <!-- CONTENT -->
             <stateContainer:StateContainer Grid.Column="0"
@@ -74,162 +40,176 @@
                                            Padding="3, 0, 3, 0"
                                            State="{Binding TweetsSearchState}">
 
-                    <stateContainer:StateContainer.Conditions>
+                <stateContainer:StateContainer.Conditions>
 
-                        <!-- SEARCH IS NOT ACTIVE - POPULAR THEMES -->
-                        <stateContainer:StateCondition State="NotActive">
+                    <!-- SEARCH IS NOT ACTIVE - POPULAR THEMES -->
+                    <stateContainer:StateCondition State="NotActive">
 
-                            <StackLayout Spacing="0">
+                        <StackLayout Spacing="0">
 
-                                <Label Margin="0, 19, 0, 10.5" 
-                                       
-                                       Text="{xct:Translate PopularTheme}"
-                                       Style="{DynamicResource tstyle_i4}"/>
+                            <Label Margin="0, 19, 0, 10.5"
+                                   Text="{xct:Translate PopularTheme}"
+                                   Style="{DynamicResource tstyle_i4}" />
 
-                                <BoxView Style="{DynamicResource SeparatorStyle}"
-                                         Margin="0"/>
+                            <BoxView Style="{DynamicResource SeparatorStyle}"
+                                     Margin="0" />
 
-                                <ListView HasUnevenRows="true" 
-                                          Margin="0"
-                                          SeparatorVisibility="None"
-                                          SeparatorColor="{DynamicResource appcolor_i6}"
-                                          ItemsSource="{Binding HashtagModels}"
-                                          SelectedItem="{Binding SelectedHashtag}">
+                            <ListView HasUnevenRows="true"
+                                      Margin="0"
+                                      SeparatorVisibility="None"
+                                      SeparatorColor="{DynamicResource appcolor_i6}"
+                                      ItemsSource="{Binding HashtagModels}"
+                                      SelectedItem="{Binding SelectedHashtag}">
 
-                                    <ListView.Behaviors>
+                                <ListView.Behaviors>
 
-                                        <Behaviors:EventToCommandBehavior EventName="ItemTapped"
-                                                                          Command="{Binding HashTagTapCommand}"/>
-                                    </ListView.Behaviors>
+                                    <Behaviors:EventToCommandBehavior EventName="ItemTapped"
+                                                                      Command="{Binding HashTagTapCommand}" />
+                                </ListView.Behaviors>
 
-                                    <ListView.ItemTemplate>
+                                <ListView.ItemTemplate>
 
-                                        <DataTemplate>
+                                    <DataTemplate>
 
-                                            <ViewCell>
+                                        <ViewCell>
 
-                                                <ViewCell.View>
+                                            <ViewCell.View>
 
-                                                    <StackLayout Spacing="0"
-                                                                 BackgroundColor="{DynamicResource appcolor_i2}">
+                                                <StackLayout Spacing="0"
+                                                             BackgroundColor="{DynamicResource appcolor_i2}">
 
-                                                        <StackLayout Orientation="Horizontal"
-                                                                     Padding="0, 15, 0, 8">
+                                                    <StackLayout Orientation="Horizontal"
+                                                                 Padding="0, 15, 0, 8">
 
-                                                            <StackLayout>
+                                                        <StackLayout>
 
-                                                                <Label Margin="0, 4, 0, 2"
-                                                                       Style="{DynamicResource tstyle_i6}"
-                                                                       Text="{Binding Text}"/>
+                                                            <Label Margin="0, 4, 0, 2"
+                                                                   Style="{DynamicResource tstyle_i6}"
+                                                                   Text="{Binding Text}" />
 
-                                                                <Label Style="{DynamicResource tstyle_i15}">
+                                                            <Label Style="{DynamicResource tstyle_i15}">
 
-                                                                    <Label.FormattedText>
+                                                                <Label.FormattedText>
 
-                                                                        <FormattedString>
+                                                                    <FormattedString>
 
-                                                                            <Span Text="{xct:Translate Posts}"></Span>
+                                                                        <Span Text="{xct:Translate Posts}"></Span>
 
-                                                                            <Span Text="{Binding TweetsCount, StringFormat=': {0}'}"/>
+                                                                        <Span Text="{Binding TweetsCount, StringFormat=': {0}'}" />
 
-                                                                        </FormattedString>
+                                                                    </FormattedString>
 
-                                                                    </Label.FormattedText>
+                                                                </Label.FormattedText>
 
-                                                                </Label>
-
-                                                            </StackLayout>
-
-                                                            <Image HorizontalOptions="EndAndExpand" 
-                                                                   VerticalOptions="Center"
-                                                                   Margin="0, 0, 12, 10"
-                                                                   Scale="1.25"
-                                                                   Source="{DynamicResource ic_right_gray}"/>
+                                                            </Label>
 
                                                         </StackLayout>
 
-                                                        <BoxView Grid.Row="1"  
-                                                                 Style="{DynamicResource SeparatorStyle}"/>
+                                                        <Image HorizontalOptions="EndAndExpand"
+                                                               VerticalOptions="Center"
+                                                               Margin="0, 0, 12, 10"
+                                                               Scale="1.25"
+                                                               Source="{DynamicResource ic_right_gray}" />
 
                                                     </StackLayout>
 
-                                                </ViewCell.View>
+                                                    <BoxView Grid.Row="1"
+                                                             Style="{DynamicResource SeparatorStyle}" />
 
-                                            </ViewCell>
+                                                </StackLayout>
 
-                                        </DataTemplate>
+                                            </ViewCell.View>
 
-                                    </ListView.ItemTemplate>
+                                        </ViewCell>
 
-                                </ListView>
+                                    </DataTemplate>
 
-                            </StackLayout>
+                                </ListView.ItemTemplate>
 
-                        </stateContainer:StateCondition>
+                            </ListView>
 
-                        <!-- SEARCH IS ACTIVE - SEARCH RESULTS -->
-                        <stateContainer:StateCondition State="Active">
+                        </StackLayout>
 
-                            <stateContainer:StateContainer State="{Binding TweetSearchResult}"
-                                                           x:Name="tweetSearchResultContainer">
+                    </stateContainer:StateCondition>
 
-                                <stateContainer:StateContainer.Conditions>
+                    <!-- SEARCH IS ACTIVE - SEARCH RESULTS -->
+                    <stateContainer:StateCondition State="Active">
 
-                                    <!-- TWEETS FOUND -->
-                                    <stateContainer:StateCondition State="Success">
+                        <stateContainer:StateContainer State="{Binding TweetSearchResult}"
+                                                       x:Name="tweetSearchResultContainer">
 
-                                        <StackLayout>
+                            <stateContainer:StateContainer.Conditions>
 
-                                            <!-- TWEETS LIST MUST BE HERE -->
-              
-                                        </StackLayout>
+                                <!-- TWEETS FOUND -->
+                                <stateContainer:StateCondition State="Success">
 
-                                    </stateContainer:StateCondition>
+                                    
+                                    <StackLayout>
 
-                                    <!-- NO RESULTS FOR QUERY -->
-                                    <stateContainer:StateCondition State="NoResults">
+                                        
+                                        <sh:Shadows VerticalOptions="Start"
+                                                    CornerRadius="30"
+                                                    Shades="{sh:SingleShade Offset='0, 0',
+                                                                            Opacity={OnPlatform Android=0.7, iOS=0.7},
+                                                                            BlurRadius={OnPlatform Android=30, iOS=10},
+                                                                            Color={StaticResource appcolor_i5}}">
+
+                                            <BoxView HeightRequest="2"></BoxView>
+
+                                        </sh:Shadows>
+
+                                        <!-- TWEETS LIST MUST BE HERE -->
+
+                                        <sh:Shadows VerticalOptions="EndAndExpand" 
+                                                    CornerRadius="30"
+                                                    Shades="{sh:SingleShade Offset='0, 0',
+                                                                            Opacity={OnPlatform Android=0.7, iOS=0.7},
+                                                                            BlurRadius={OnPlatform Android=30, iOS=10},
+                                                                            Color={StaticResource appcolor_i5}}">
+
+                                            <BoxView HeightRequest="2"></BoxView>
+
+                                        </sh:Shadows>
+
+                                    </StackLayout>
+
+                                </stateContainer:StateCondition>
+
+                                <!-- NO RESULTS FOR QUERY -->
+                                <stateContainer:StateCondition State="NoResults">
 
                                     <StackLayout VerticalOptions="CenterAndExpand"
                                                  Margin="0, 0, 0, 38"
                                                  Spacing="24">
 
-                                            <Image Scale="1.195" Source="{DynamicResource pic_owl_blue_big}"/>
+                                        <Image Scale="1.195"
+                                               Source="{DynamicResource pic_owl_blue_big}" />
 
-                                            <StackLayout>
+                                        <StackLayout>
 
-                                                <Label HorizontalOptions="Center"
-                                                       Style="{DynamicResource tstyle_i5}"
-                                                       Text="{xct:Translate NoResultsFor}"></Label>
+                                            <Label HorizontalOptions="Center"
+                                                   Style="{DynamicResource tstyle_i5}"
+                                                   Text="{xct:Translate NoResultsFor}"></Label>
 
-                                                <Label HorizontalOptions="Center"
-                                                       Style="{DynamicResource tstyle_i5}"
-                                                       Text="{Binding QueryStringWithNoResults, StringFormat='&quot;{0}&quot;'}"/>
-
-                                            </StackLayout>
+                                            <Label HorizontalOptions="Center"
+                                                   Style="{DynamicResource tstyle_i5}"
+                                                   Text="{Binding QueryStringWithNoResults, StringFormat='&quot;{0}&quot;'}" />
 
                                         </StackLayout>
 
-                                    </stateContainer:StateCondition>
+                                    </StackLayout>
 
-                                </stateContainer:StateContainer.Conditions>
+                                </stateContainer:StateCondition>
 
-                            </stateContainer:StateContainer>
+                            </stateContainer:StateContainer.Conditions>
 
-                        </stateContainer:StateCondition>
+                        </stateContainer:StateContainer>
 
-                    </stateContainer:StateContainer.Conditions>
+                    </stateContainer:StateCondition>
 
-                </stateContainer:StateContainer>
+                </stateContainer:StateContainer.Conditions>
 
-            <sh:Shadows CornerRadius="30"
-                        Shades="{sh:SingleShade Offset='0, 0',
-                                                Opacity={OnPlatform Android=0.7, iOS=0.7},
-                                                BlurRadius={OnPlatform Android=30, iOS=10},
-                                                Color={StaticResource appcolor_i5}}">
-
-                <BoxView HeightRequest="2"></BoxView>
-                
-            </sh:Shadows>
+            </stateContainer:StateContainer>
 
             <BoxView Style="{DynamicResource SeparatorStyle}"/>
 
