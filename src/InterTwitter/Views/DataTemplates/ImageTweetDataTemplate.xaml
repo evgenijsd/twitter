@@ -11,11 +11,10 @@
                  Orientation="Horizontal"
                  Spacing="0">
 
-            <ffimageloading:CachedImage
-            VerticalOptions="Start"
-            Source="man"
-            HeightRequest="34"
-            Margin="0, 0, 15, 0">
+            <ffimageloading:CachedImage VerticalOptions="Start"
+                                        Source="man"
+                                        HeightRequest="34"
+                                        Margin="0, 0, 15, 0">
 
                 <ffimageloading:CachedImage.Transformations>
                     <fftransformations:CircleTransformation/>
@@ -23,38 +22,37 @@
 
             </ffimageloading:CachedImage>
 
-            <StackLayout 
-                     VerticalOptions="Start">
+            <StackLayout VerticalOptions="Start">
 
-                <Label Text="{Binding UserName}" 
-                   TextColor="Black" 
-                   FontAttributes="Bold"/>
+                <Label Style="{StaticResource tstyle_i6}"
+                       Text="{Binding UserName}" 
+                       FontAttributes="Bold"/>
 
-                <Label VerticalOptions="Start"
-                   MaxLines="5" 
-                   LineBreakMode="TailTruncation"
-                   Text="{Binding Text}"/>
+                <Label Style="{StaticResource tstyle_i7}" 
+                       VerticalOptions="Start"
+                       MaxLines="5" 
+                       LineBreakMode="TailTruncation"
+                       Text="{Binding Text}"/>
 
                 <flv:FlowListView FlowColumnCount="{Binding CountColumn}"
-                              RowHeight="{Binding RowHeight}"
-                              HasUnevenRows="False"
-                              HorizontalScrollBarVisibility="Never"
-                              VerticalScrollBarVisibility="Never"
-                              SeparatorVisibility="None"
-                              FlowColumnExpand="First"
-                              VerticalOptions="Start"
-                              FlowItemsSource="{Binding ImagesPaths}">
+                                  RowHeight="{Binding RowHeight}"
+                                  HasUnevenRows="False"
+                                  HorizontalScrollBarVisibility="Never"
+                                  VerticalScrollBarVisibility="Never"
+                                  SeparatorVisibility="None"
+                                  FlowColumnExpand="First"
+                                  VerticalOptions="Start"
+                                  FlowItemsSource="{Binding ImagesPaths}">
 
                     <flv:FlowListView.FlowColumnTemplate>
                         <DataTemplate>
                             <Frame Margin="2"
-                               Padding="0"
-                               HasShadow="False"
-                               CornerRadius="5"
-                               IsClippedToBounds="True">
+                                   Padding="0"
+                                   HasShadow="False"
+                                   CornerRadius="5"
+                                   IsClippedToBounds="True">
 
-                                <ffimageloading:CachedImage Aspect="AspectFit"
-                                                        Source="{Binding .}"/>
+                                <ffimageloading:CachedImage Aspect="AspectFit" Source="{Binding .}"/>
 
                             </Frame>
                         </DataTemplate>
@@ -67,9 +65,9 @@
                              Padding="0">
 
                     <Label Style="{StaticResource tstyle_i8}"
-                           Text="{Binding CreationTime,  StringFormat='{}{0:dd.MM.yyyy•HH:mm}'}"/>
+                           Text="{Binding CreationTime,  StringFormat='{}{0:dd.MM.yyyy • HH:mm}'}"/>
 
-                        <ffimageloading:CachedImage Source="ic_like_gray" HorizontalOptions="EndAndExpand">
+                    <ffimageloading:CachedImage Source="ic_like_gray" HorizontalOptions="EndAndExpand">
                         <ffimageloading:CachedImage.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding LikeTweetCommand}"/>
                         </ffimageloading:CachedImage.GestureRecognizers>
@@ -105,28 +103,10 @@
 
             </StackLayout>
         </StackLayout>
-        
+
         <BoxView HeightRequest="1"
                  Margin="0, 16, 0, 0"
-                 BackgroundColor="Silver"/>
-        
+                 BackgroundColor="{StaticResource appcolor_i6}"/>
+
     </StackLayout>
-    
-    <!--<StackLayout Orientation="Horizontal" Padding="12, 0, 12, 0">
-
-        <StackLayout Orientation="Vertical">
-            <Label Text="{Binding UserName}" TextColor="Black" FontAttributes="Bold" />
-
-            <Label Text="{Binding Text}" TextColor="Red" MaxLines="5" LineBreakMode="TailTruncation"/>
-
-            <ListView x:Name="images" HasUnevenRows="True" ItemsSource="{Binding Images}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ImageCell ImageSource="{Binding .}" Height="120"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-
-            </ListView>
-        </StackLayout>
-    </StackLayout>-->
 </DataTemplate>

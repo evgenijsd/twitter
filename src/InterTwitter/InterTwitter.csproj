@@ -37,7 +37,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Controls\CustomToolbar.xaml">
+    <Compile Update="Controls\CustomNavigationbar.xaml.cs">
+      <DependentUpon>CustomNavigationbar.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Controls\CustomNavigationbar.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\TweetDataTemplates.xaml">

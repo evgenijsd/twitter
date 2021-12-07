@@ -1,23 +1,136 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <DataTemplate xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="InterTwitter.Views.DataTemplates.VideoTweetDataTemplate">
-    
-    <StackLayout Orientation="Horizontal" Padding="12, 0, 12, 0">
+              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
+              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+              x:Class="InterTwitter.Views.DataTemplates.VideoTweetDataTemplate">
 
-        <StackLayout Orientation="Vertical">
-            <Label Text="{Binding UserName}" TextColor="Black" FontAttributes="Bold" />
 
-            <Label Text="{Binding Text}" TextColor="Red" MaxLines="5" LineBreakMode="TailTruncation"/>
 
-            <!--<ListView x:Name="images" HasUnevenRows="True" ItemsSource="{Binding Images}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ImageCell ImageSource="{Binding .}" Height="120"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+    <StackLayout Spacing="0">
+        <StackLayout Padding="15, 15, 15, 0"
+                 Orientation="Horizontal"
+                 Spacing="0">
 
-            </ListView>-->
+            <ffimageloading:CachedImage
+            VerticalOptions="Start"
+            Source="man"
+            HeightRequest="34"
+            Margin="0, 0, 15, 0">
+
+                <ffimageloading:CachedImage.Transformations>
+                    <fftransformations:CircleTransformation/>
+                </ffimageloading:CachedImage.Transformations>
+
+            </ffimageloading:CachedImage>
+
+            <StackLayout 
+                     VerticalOptions="Start">
+
+                <Label Style="{StaticResource tstyle_i6}"
+                       Text="{Binding UserName}" 
+                       FontAttributes="Bold"/>
+
+                <Grid>
+                    <Label Grid.Row="0"
+                           Style="{StaticResource tstyle_i7}" 
+                           MaxLines="5" 
+                           LineBreakMode="TailTruncation"
+                           Margin="0, 0, 31, 0">
+
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding Text}">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OnRegCommand}"/>
+                                    </Span.GestureRecognizers>
+                                </Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                        
+                    </Label>
+                    <Label Grid.Row="0" 
+                           Style="{StaticResource BaseContent_i2}"
+                           FontSize="{Binding tsize_i4}"
+                           Text="more" 
+                           TextColor="{StaticResource appcolor_i1}" 
+                           VerticalOptions="End" 
+                           HorizontalOptions="End">
+                        
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenTweetCommand}"/>
+                        </Label.GestureRecognizers>
+                        <Label.Triggers>
+                            
+                            <DataTrigger TargetType="Label" Binding="{Binding IsTextOverSized}" Value="true">
+                                <Setter Property="IsVisible" Value="True"/>
+
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </Grid>
+
+                <Frame CornerRadius="5"
+                       Padding="0"
+                       HasShadow="False">
+
+                    <WebView Grid.Row="0"
+                                 Grid.Column="0"
+                                 Source="{Binding VideoPath}" 
+                                 WidthRequest="300"
+                                 HeightRequest="180"
+                                 MinimumWidthRequest="360"
+                                 MinimumHeightRequest="240">
+                    </WebView>
+                </Frame>
+
+                <StackLayout Orientation="Horizontal"
+                             HeightRequest="20"
+                             Padding="0">
+
+                    <Label Style="{StaticResource tstyle_i8}"
+                           Text="{Binding CreationTime,  StringFormat='{}{0:dd.MM.yyyy • HH:mm}'}"/>
+
+                    <ffimageloading:CachedImage Source="ic_like_gray" HorizontalOptions="EndAndExpand">
+                        <ffimageloading:CachedImage.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding LikeTweetCommand}"/>
+                        </ffimageloading:CachedImage.GestureRecognizers>
+                        <ffimageloading:CachedImage.Triggers>
+                            <DataTrigger Binding="{Binding IsTweekLiked}"
+                                         TargetType="ffimageloading:CachedImage"
+                                         Value="true">
+                                <Setter Property="Source" Value="ic_like_blue"/>
+                            </DataTrigger>
+                        </ffimageloading:CachedImage.Triggers>
+                    </ffimageloading:CachedImage>
+
+                    <Label Text="{Binding LikesNumber}" Margin="0,0,15,0" Style="{StaticResource tstyle_i9}">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsWeetLiked}" Value="true">
+                                <Setter Property="TextColor" Value="{StaticResource appcolor_i1}"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+
+                    <ffimageloading:CachedImage Source="ic_bookmarks_gray">
+                        <ffimageloading:CachedImage.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding MarkTweetCommand}"/>
+                        </ffimageloading:CachedImage.GestureRecognizers>
+                        <ffimageloading:CachedImage.Triggers>
+                            <DataTrigger TargetType="ffimageloading:CachedImage" Binding="{Binding IsBookmarked}" Value="true">
+                                <Setter Property="Source" Value="ic_bookmarks_blue"/>
+                            </DataTrigger>
+                        </ffimageloading:CachedImage.Triggers>
+                    </ffimageloading:CachedImage>
+
+                </StackLayout>
+
+            </StackLayout>
         </StackLayout>
+
+        <BoxView HeightRequest="1"
+                 Margin="0, 16, 0, 0"
+                 BackgroundColor="{StaticResource appcolor_i6}"/>
+
     </StackLayout>
 </DataTemplate>

@@ -85,6 +85,9 @@ namespace InterTwitter.Models.TweetViewModel
         private ICommand _likeTweetCommand;
         public ICommand LikeTweetCommand => _likeTweetCommand ?? (_likeTweetCommand = SingleExecutionCommand.FromFunc<ImagesTweetViewModel>(OnLikeCommandAsync));
 
+        private ICommand _openTweetCommand;
+        public ICommand OpenTweetCommand => _openTweetCommand ?? (_openTweetCommand = SingleExecutionCommand.FromFunc<ImagesTweetViewModel>(OnOpenTweetCommandAsync));
+
         private ICommand _markTweetCommand;
         public ICommand MarkTweetCommand => _markTweetCommand ?? (_markTweetCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnMarkCommandAsync));
 
@@ -102,6 +105,11 @@ namespace InterTwitter.Models.TweetViewModel
         {
             IsTweekLiked = !IsTweekLiked;
             return Task.CompletedTask;
+        }
+
+        private Task OnOpenTweetCommandAsync(ImagesTweetViewModel arg)
+        {
+            throw new NotImplementedException();
         }
 
         private Task OnMarkCommandAsync(BaseTweetViewModel tweet)

@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace InterTwitter.Controls
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CustomToolbar : ContentView
+    public partial class CustomNavigationbar : ContentView
     {
-        public CustomToolbar()
+        public CustomNavigationbar()
         {
             InitializeComponent();
         }
@@ -22,7 +22,7 @@ namespace InterTwitter.Controls
         public static readonly BindableProperty RightUserImageButtonProperty = BindableProperty.Create(
             propertyName: nameof(RightUserImageButton),
             returnType: typeof(string),
-            declaringType: typeof(CustomToolbar),
+            declaringType: typeof(CustomNavigationbar),
             defaultBindingMode: BindingMode.TwoWay);
 
         public string RightUserImageButton
@@ -34,7 +34,7 @@ namespace InterTwitter.Controls
         public static readonly BindableProperty RightUserButtonCommandProperty = BindableProperty.Create(
           propertyName: nameof(RightUserButtonCommand),
           returnType: typeof(ICommand),
-          declaringType: typeof(CustomToolbar),
+          declaringType: typeof(CustomNavigationbar),
           defaultBindingMode: BindingMode.TwoWay);
 
         public ICommand RightUserButtonCommand
@@ -46,7 +46,7 @@ namespace InterTwitter.Controls
         public static readonly BindableProperty LeftImageAddButtonProperty = BindableProperty.Create(
            propertyName: nameof(LeftImageAddButton),
            returnType: typeof(string),
-           declaringType: typeof(CustomToolbar),
+           declaringType: typeof(CustomNavigationbar),
            defaultBindingMode: BindingMode.TwoWay);
 
         public string LeftImageAddButton
@@ -58,7 +58,7 @@ namespace InterTwitter.Controls
         public static readonly BindableProperty LeftAddButtonCommandProperty = BindableProperty.Create(
             propertyName: nameof(LeftAddButtonCommand),
             returnType: typeof(ICommand),
-            declaringType: typeof(CustomToolbar),
+            declaringType: typeof(CustomNavigationbar),
             defaultBindingMode: BindingMode.TwoWay);
 
         public ICommand LeftAddButtonCommand
@@ -70,7 +70,7 @@ namespace InterTwitter.Controls
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(
            propertyName: nameof(Title),
            returnType: typeof(string),
-           declaringType: typeof(CustomToolbar),
+           declaringType: typeof(CustomNavigationbar),
            defaultBindingMode: BindingMode.TwoWay);
 
         public string Title
@@ -82,7 +82,7 @@ namespace InterTwitter.Controls
         public static readonly BindableProperty TitleColorProperty = BindableProperty.Create(
         propertyName: nameof(Title),
         returnType: typeof(Color),
-        declaringType: typeof(CustomToolbar),
+        declaringType: typeof(CustomNavigationbar),
         defaultBindingMode: BindingMode.TwoWay);
 
         public Color TitleColor

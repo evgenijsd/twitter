@@ -9,7 +9,7 @@ namespace InterTwitter.Models.TweetViewModel
         #region -- Public properties --
 
         private string _videoPath;
-        public string VideoPaths
+        public string VideoPath
         {
             get => _videoPath;
             set => SetProperty(ref _videoPath, value);

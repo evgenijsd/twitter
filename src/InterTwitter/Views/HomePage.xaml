@@ -18,11 +18,11 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <controls:CustomToolbar Title="Home"
-                                        Grid.Row="0"
-                                        RightUserImageButton="pic_profile_small"
-                                        LeftImageAddButton="ic_add_blue">
-            </controls:CustomToolbar>
+            <controls:CustomNavigationbar Title="Home"
+                                          Grid.Row="0"
+                                          RightUserImageButton="pic_profile_small"
+                                          LeftImageAddButton="ic_add_blue">
+            </controls:CustomNavigationbar>
 
 
             <CollectionView Grid.Row="1" 
