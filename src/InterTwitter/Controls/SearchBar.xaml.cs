@@ -1,4 +1,6 @@
 ﻿using InterTwitter.Enums;
+using InterTwitter.Helpers;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -28,16 +30,16 @@ namespace InterTwitter.Controls
             private set => SetValue(SearchStateProperty, value);
         }
 
-        public static BindableProperty TextProperty = BindableProperty.Create(
-            propertyName: nameof(Text),
+        public static BindableProperty QueryStringProperty = BindableProperty.Create(
+            propertyName: nameof(QueryString),
             returnType: typeof(string),
             declaringType: typeof(SearchBar),
             defaultBindingMode: BindingMode.TwoWay);
 
-        public string Text
+        public string QueryString
         {
-            get => (string)GetValue(TextProperty);
-            set => SetValue(TextProperty, value);
+            get => (string)GetValue(QueryStringProperty);
+            set => SetValue(QueryStringProperty, value);
         }
 
         public static BindableProperty AvatarIconSourceProperty = BindableProperty.Create(
@@ -86,6 +88,20 @@ namespace InterTwitter.Controls
         {
             get => (ICommand)GetValue(PressOkOnKeyboardCommandProperty);
             set => SetValue(PressOkOnKeyboardCommandProperty, value);
+        }
+
+        private ICommand _searchFrameTapCommand;
+        public ICommand SearchEdgesTapCommand => _searchFrameTapCommand ??= SingleExecutionCommand.FromFunc(OnSearchEdgesTap);
+
+        #endregion
+
+        #region --- Private helpers ---
+
+        private Task OnSearchEdgesTap()
+        {
+            searchEntry.Focus();
+
+            return Task.CompletedTask;
         }
 
         #endregion

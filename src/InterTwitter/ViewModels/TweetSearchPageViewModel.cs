@@ -39,15 +39,15 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _searchQueryWithNoResults, value);
         }
 
-        private ThemeModel _selectedTweetsTheme;
-        public ThemeModel SelectedTweetsTheme
+        private HashTagModel _selectedTweetsTheme;
+        public HashTagModel SelectedTweetsTheme
         {
             get => _selectedTweetsTheme;
             set => SetProperty(ref _selectedTweetsTheme, value);
         }
 
-        private ObservableCollection<ThemeModel> _themeModels;
-        public ObservableCollection<ThemeModel> ThemeModels
+        private ObservableCollection<HashTagModel> _themeModels;
+        public ObservableCollection<HashTagModel> ThemeModels
         {
             get => _themeModels;
             set => SetProperty(ref _themeModels, value);
@@ -77,7 +77,7 @@ namespace InterTwitter.ViewModels
         public ICommand StopSearchTapCommand => _stopSearchTapCommand ??= SingleExecutionCommand.FromFunc(StopSearchCommandTapAsync);
 
         private ICommand _tweetsThemeTapCommand;
-        public ICommand TeetsThemeTapCommand => _tweetsThemeTapCommand ??= SingleExecutionCommand.FromFunc(TweetsThemeCommandTapAsync);
+        public ICommand TweetsThemeTapCommand => _tweetsThemeTapCommand ??= SingleExecutionCommand.FromFunc(TweetsThemeCommandTapAsync);
 
         #endregion
 
@@ -85,21 +85,21 @@ namespace InterTwitter.ViewModels
 
         public override Task InitializeAsync(INavigationParameters parameters)
         {
-            ThemeModels = new ObservableCollection<ThemeModel>()
+            ThemeModels = new ObservableCollection<HashTagModel>()
             {
-                new ThemeModel()
+                new HashTagModel()
                 {
-                    Title = "#AMAs",
+                    Text = "#AMAs",
                     TweetsCount = 135,
                 },
-                new ThemeModel()
+                new HashTagModel()
                 {
-                    Title = "#blockchain",
+                    Text = "#blockchain",
                     TweetsCount = 55,
                 },
-                new ThemeModel()
+                new HashTagModel()
                 {
-                    Title = "#NoNuanceNovember",
+                    Text = "#NoNuanceNovember",
                     TweetsCount = 25,
                 },
             };
@@ -114,6 +114,7 @@ namespace InterTwitter.ViewModels
         private Task ProfileTapCommandTapAsync()
         {
             /* TEMP */
+
             switch (TweetSearchResult)
             {
                 case ESearchResult.NoResults:
@@ -159,7 +160,7 @@ namespace InterTwitter.ViewModels
 
         private Task TweetsThemeCommandTapAsync(object obj)
         {
-            SearchQuery = SelectedTweetsTheme.Title;
+            SearchQuery = SelectedTweetsTheme.Text;
             TweetSearchState = ESearchState.Active;
 
             return Task.CompletedTask;

@@ -12,12 +12,12 @@
 
         <StackLayout Spacing="0">
 
-            <Grid Margin="14, 10, 14, 12.5"
+            <Grid Margin="10, 10, 14, 12"
                   Padding="0"
                   RowSpacing="0"
                   RowDefinitions="33"
-                  ColumnSpacing="9"
-                  ColumnDefinitions="0.12*, *"
+                  ColumnSpacing="10"
+                  ColumnDefinitions="0.125*, *"
                   BackgroundColor="Transparent">
 
                 <!-- PROFILE/BACK ICON -->
@@ -63,17 +63,24 @@
 
                 <!-- SEARCH LINE -->
                 <Frame Grid.Column="1"
-                       Padding="20, 0"
+                       Padding="13.5, 0"
                        HasShadow="False"
                        IsClippedToBounds="true"
                        CornerRadius="16"
                        BackgroundColor="{DynamicResource appcolor_i6}">
 
-                    <controls:SearchEntry Margin="0"    
+                    <Frame.GestureRecognizers>
+
+                        <TapGestureRecognizer Command="{Binding SearchEdgesTapCommand, Source={x:Reference searchBar}}" />
+
+                    </Frame.GestureRecognizers>
+
+                    <controls:SearchEntry x:Name="searchEntry"
+                                          Margin="0"    
                                           BackgroundColor="Transparent"
                                           FontSize="{DynamicResource tsize_i5}"
                                           FontFamily="Ubuntu-Medium"
-                                          Text="{Binding Text, Source={x:Reference searchBar}}"
+                                          Text="{Binding QueryString, Source={x:Reference searchBar}}"
                                           TextColor="{DynamicResource appcolor_i3}"
                                           Placeholder="{xct:Translate Search}"
                                           PlaceholderColor="{DynamicResource appcolor_i4}"

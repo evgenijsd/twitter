@@ -17,45 +17,41 @@
                      BackgroundColor="{DynamicResource appcolor_i2}">
 
             <!-- SEARCH BAR -->
-            <Grid RowDefinitions="auto">
+  
+            <!--<Frame IsVisible="true"
+                    BackgroundColor="Orange"
+                    xct:ShadowEffect.Color="{DynamicResource appcolor_i3}"
+                    xct:ShadowEffect.Opacity="0.9">
 
-                <!--<Frame IsVisible="true"
-                       BackgroundColor="Orange"
-                       xct:ShadowEffect.Color="{DynamicResource appcolor_i3}"
-                       xct:ShadowEffect.Opacity="0.9">
+                <Frame.Triggers>
 
-                    <Frame.Triggers>
+                    <DataTrigger TargetType="Frame"
+                                    Binding="{Binding Source={x:Reference tweetSearchResultContainer}, Path=State}"
+                                    Value="Success">
 
-                        <DataTrigger TargetType="Frame"
-                                     Binding="{Binding Source={x:Reference tweetSearchResultContainer}, Path=State}"
-                                     Value="Success">
-
-                            <Setter Property="BackgroundColor" Value="Green"/>
+                        <Setter Property="BackgroundColor" Value="Green"/>
                             
-                        </DataTrigger>
+                    </DataTrigger>
 
-                    </Frame.Triggers>
+                </Frame.Triggers>
 
-                </Frame>-->
+            </Frame>-->
 
-                <controls:SearchBar SearchState="{Binding TweetSearchState}"
-                                    AvatarIconSource="{Binding AvatarIcon}"
-                                    AvatarIconTapCommand="{Binding AvatarIconTapCommand}"
-                                    BackIconTapCommand="{Binding StopSearchTapCommand}"
-                                    PressOkOnKeyboardCommand="{Binding StartSearchTapCommand}"
-                                    Text="{Binding SearchQuery}"/>
-
-            </Grid>
+            <controls:SearchBar SearchState="{Binding TweetSearchState}"
+                                AvatarIconSource="{Binding AvatarIcon}"
+                                AvatarIconTapCommand="{Binding AvatarIconTapCommand}"
+                                BackIconTapCommand="{Binding StopSearchTapCommand}"
+                                PressOkOnKeyboardCommand="{Binding StartSearchTapCommand}"
+                                QueryString="{Binding SearchQuery}"/>
 
             <BoxView Style="{DynamicResource SeparatorStyle}"/>
 
             <!-- CONTENT -->
-            <StackLayout VerticalOptions="CenterAndExpand">
-
-                <stateContainer:StateContainer Grid.Column="0"
-                                               Margin="14, 0"
-                                               Padding="3, 0, 3, 0"
-                                               State="{Binding TweetSearchState}">
+            <stateContainer:StateContainer Grid.Column="0"
+                                           VerticalOptions="FillAndExpand"
+                                           Margin="14, 0"
+                                           Padding="3, 0, 3, 0"
+                                           State="{Binding TweetSearchState}">
 
                     <stateContainer:StateContainer.Conditions>
 
@@ -82,7 +78,7 @@
                                     <ListView.Behaviors>
 
                                         <Behaviors:EventToCommandBehavior EventName="ItemTapped"
-                                                                          Command="{Binding TeetsThemeTapCommand}"/>
+                                                                          Command="{Binding TweetsThemeTapCommand}"/>
                                     </ListView.Behaviors>
 
                                     <ListView.ItemTemplate>
@@ -125,7 +121,7 @@
 
                                                             <Image HorizontalOptions="EndAndExpand" 
                                                                    VerticalOptions="Center"
-                                                                   Margin="0, 0, 17, 10"
+                                                                   Margin="0, 0, 12, 10"
                                                                    Scale="1.25"
                                                                    Source="{DynamicResource ic_right_gray}"/>
 
@@ -163,96 +159,20 @@
 
                                         <StackLayout>
 
-
                                             <!-- TWEETS LIST MUST BE HERE -->
-                                            <ListView HasUnevenRows="true"
-                                                      Margin="0"
-                                                      SeparatorVisibility="None"
-                                                      SeparatorColor="{DynamicResource appcolor_i6}"
-                                                      ItemsSource="{Binding ThemeModels}"
-                                                      SelectedItem="{Binding SelectedTweetsTheme}">
-
-                                                <ListView.Behaviors>
-
-                                                    <Behaviors:EventToCommandBehavior EventName="ItemTapped"
-                                                                                      Command="{Binding TeetsThemeTapCommand}" />
-                                                </ListView.Behaviors>
-
-                                                <ListView.ItemTemplate>
-
-                                                    <DataTemplate>
-
-                                                        <ViewCell>
-
-                                                            <ViewCell.View>
-
-                                                                <StackLayout Spacing="0"
-                                                                             BackgroundColor="{DynamicResource appcolor_i2}">
-
-                                                                    <StackLayout Orientation="Horizontal"
-                                                                                 Padding="0, 15, 0, 8">
-
-                                                                        <StackLayout>
-
-                                                                            <Label Margin="0, 4, 0, 2"
-                                                                                   Style="{DynamicResource tstyle_i6}"
-                                                                                   Text="{Binding Title}" />
-
-                                                                            <Label Style="{DynamicResource tstyle_i15}">
-
-                                                                                <Label.FormattedText>
-
-                                                                                    <FormattedString>
-
-                                                                                        <Span Text="{xct:Translate Posts}"></Span>
-
-                                                                                        <Span Text="{Binding TweetsCount, StringFormat=': {0}'}" />
-
-                                                                                    </FormattedString>
-
-                                                                                </Label.FormattedText>
-
-                                                                            </Label>
-
-                                                                        </StackLayout>
-
-                                                                        <Image HorizontalOptions="EndAndExpand"
-                                                                               VerticalOptions="Center"
-                                                                               Margin="0, 0, 17, 10"
-                                                                               Scale="1.25"
-                                                                               Source="{DynamicResource ic_right_gray}" />
-
-                                                                    </StackLayout>
-
-                                                                    <BoxView Grid.Row="1"
-                                                                             Style="{DynamicResource SeparatorStyle}" />
-
-                                                                </StackLayout>
-
-                                                            </ViewCell.View>
-
-                                                        </ViewCell>
-
-                                                    </DataTemplate>
-
-                                                </ListView.ItemTemplate>
-
-                                            </ListView>
-
-                                            <BoxView Style="{DynamicResource SeparatorStyle}" />
-
+              
                                         </StackLayout>
 
                                     </stateContainer:StateCondition>
 
-                                    <!-- NO RESULTS FOR ... -->
+                                    <!-- NO RESULTS FOR QUERY -->
                                     <stateContainer:StateCondition State="NoResults">
 
-                                        <StackLayout VerticalOptions="FillAndExpand" 
-                                                     Spacing="23">
+                                    <StackLayout VerticalOptions="CenterAndExpand"
+                                                 Margin="0, 0, 0, 38"
+                                                 Spacing="24">
 
-                                            <Image HeightRequest="84"
-                                                   Source="{DynamicResource pic_owl_blue_big}"/>
+                                            <Image Scale="1.195" Source="{DynamicResource pic_owl_blue_big}"/>
 
                                             <StackLayout>
 
@@ -280,16 +200,11 @@
 
                 </stateContainer:StateContainer>
 
-            </StackLayout>
-
             <BoxView Style="{DynamicResource SeparatorStyle}" />
 
             <Grid RowDefinitions="auto">
 
-                <Frame xct:ShadowEffect.Color="{DynamicResource appcolor_i3}"
-                       xct:ShadowEffect.OffsetY="50"/>
-
-                <!-- BOTTOM -->
+                <!-- TEMP BOTTOM -->
                 <Frame HeightRequest="56"
                        Padding="0"
                        HasShadow="False"

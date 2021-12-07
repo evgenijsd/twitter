@@ -1,8 +1,8 @@
 ﻿namespace InterTwitter.Models
 {
-    public class ThemeModel
+    public class HashTagModel
     {
-        public string Title { get; set; }
+        public string Text { get; set; }
 
         public int TweetsCount { get; set; }
     }
