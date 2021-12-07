@@ -30,7 +30,7 @@
                         <!-- SEARCH IS NOT ACTIVE - AVATAR ICON -->
                         <stateContainer:StateCondition State="NotActive">
 
-                                <Image Source="pic_profile_small">
+                            <Image Source="{Binding AvatarIconSource, Source={x:Reference searchBar}}">
 
                                 <Image.GestureRecognizers>
 

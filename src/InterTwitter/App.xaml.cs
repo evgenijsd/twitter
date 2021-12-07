@@ -32,6 +32,7 @@ namespace InterTwitter
         {
             InitializeComponent();
 
+            Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             LocalizationResourceManager.Current.Init(Strings.ResourceManager);
 
             await NavigationService.NavigateAsync(nameof(TweetSearchPage));

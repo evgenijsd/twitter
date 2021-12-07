@@ -7,6 +7,7 @@
                         xmlns:viewmodels="clr-namespace:InterTwitter.ViewModels"
                         xmlns:views="clr-namespace:InterTwitter.Views"
                         xmlns:Behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+                        xmlns:sh="http://sharpnado.com"
                         Style="{DynamicResource pstyle_i1}"
                         x:DataType="viewmodels:TweetSearchPageViewModel"
                         x:Class="InterTwitter.Views.TweetSearchPage">
@@ -16,35 +17,55 @@
         <StackLayout Spacing="0" 
                      BackgroundColor="{DynamicResource appcolor_i2}">
 
-            <!-- SEARCH BAR -->
-  
-            <!--<Frame IsVisible="true"
-                    BackgroundColor="Orange"
-                    xct:ShadowEffect.Color="{DynamicResource appcolor_i3}"
-                    xct:ShadowEffect.Opacity="0.9">
+            <Grid RowDefinitions="auto">
 
-                <Frame.Triggers>
+                <!-- SEARCH BAR -->
+                <sh:Shadows CornerRadius="30"
+                            Shades="{sh:SingleShade Offset='0, 0',
+                                                    Opacity={OnPlatform Android=1, iOS=0.7},
+                                                    BlurRadius={OnPlatform Android=50, iOS=50},
+                                                    Color={StaticResource appcolor_i6}}">
+                    <Frame/>
 
-                    <DataTrigger TargetType="Frame"
-                                    Binding="{Binding Source={x:Reference tweetSearchResultContainer}, Path=State}"
-                                    Value="Success">
+                </sh:Shadows>
 
-                        <Setter Property="BackgroundColor" Value="Green"/>
-                            
-                    </DataTrigger>
+                <controls:SearchBar Grid.Row="0"
+                                    SearchState="{Binding TweetsSearchState}"
+                                    AvatarIconSource="{Binding AvatarIcon}"
+                                    AvatarIconTapCommand="{Binding AvatarIconTapCommand}"
+                                    BackIconTapCommand="{Binding BackTohashtagsTapCommand}"
+                                    PressOkOnKeyboardCommand="{Binding StartTweetsSearchTapCommand}"
+                                    BackgroundColor="{DynamicResource appcolor_i2}"
+                                    QueryString="{Binding QueryString}" />
 
-                </Frame.Triggers>
+            </Grid>
+            
 
-            </Frame>-->
+            <!--<BoxView Style="{DynamicResource SeparatorStyle}"/>-->
 
-            <controls:SearchBar SearchState="{Binding TweetsSearchState}"
-                                AvatarIconSource="{Binding AvatarIcon}"
-                                AvatarIconTapCommand="{Binding AvatarIconTapCommand}"
-                                BackIconTapCommand="{Binding BackTohashtagsTapCommand}"
-                                PressOkOnKeyboardCommand="{Binding StartTweetsSearchTapCommand}"
-                                QueryString="{Binding QueryString}"/>
+            <!--<sh:Shadows CornerRadius="30"
+                        Shades="{sh:SingleShade Offset='0, 0',
+                                                Opacity={OnPlatform Android=0.7, iOS=0.7},
+                                                BlurRadius={OnPlatform Android=30, iOS=10},
+                                                Color={StaticResource appcolor_i5}}">
 
-            <BoxView Style="{DynamicResource SeparatorStyle}"/>
+                <BoxView HeightRequest="2" Color="{DynamicResource appcolor_i6}"></BoxView>
+
+            </sh:Shadows>-->
+
+            <!--<sh:Shadows CornerRadius="30"
+                        Shades="{sh:SingleShade Offset='0, 10',
+                                    Opacity=0.7,
+                                    Color=Violet}">
+                <ImageButton WidthRequest="60"
+                             HeightRequest="60"
+                             Padding="20"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center"
+                             BackgroundColor="Violet"
+                             CornerRadius="30"
+                             Source="pic_profile_small"/>
+            </sh:Shadows>-->
 
             <!-- CONTENT -->
             <stateContainer:StateContainer Grid.Column="0"
@@ -200,7 +221,17 @@
 
                 </stateContainer:StateContainer>
 
-            <BoxView Style="{DynamicResource SeparatorStyle}" />
+            <sh:Shadows CornerRadius="30"
+                        Shades="{sh:SingleShade Offset='0, 0',
+                                                Opacity={OnPlatform Android=0.7, iOS=0.7},
+                                                BlurRadius={OnPlatform Android=30, iOS=10},
+                                                Color={StaticResource appcolor_i5}}">
+
+                <BoxView HeightRequest="2"></BoxView>
+                
+            </sh:Shadows>
+
+            <BoxView Style="{DynamicResource SeparatorStyle}"/>
 
             <Grid RowDefinitions="auto">
 

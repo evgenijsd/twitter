@@ -208,6 +208,7 @@ namespace InterTwitter.ViewModels
         {
             QueryString = string.Empty;
             QueryStringWithNoResults = string.Empty;
+
             /* TO DO: clear found tweets */
         }
 
