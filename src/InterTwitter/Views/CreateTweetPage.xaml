@@ -7,53 +7,85 @@
 
     <view:BaseContentPage.Content>
 
-        <StackLayout>
+        <controls:CustomGrid RowSpacing="0"
+                             VerticalOptions="FillAndExpand">
 
-            <controls:CircleProgressBar HeightRequest="24"
-                                        Text="{Binding CircleProgressBarText}"
-                                        TextColor="{Binding CircleProgressBarTextColor}"
-                                        FontScale="{Binding CircleProgressBarFontScale}"
-                                        FontFamily="Arial"
-                                        FontAttributes="{Binding CircleProgressBarFontAttributes}"
-                                        Value="{Binding CircleProgressBarValue}"
-                                        Minimum="0"
-                                        Maximum="30"
-                                        LineWidth="15"
-                                        ProgressLineColor="{Binding CircleProgressBarProgressLineColor}"
-                                        BackgroundLineColor="Gray"
-                                        BackgroundProgressColor="White"
-                                        BackgroundColor="Transparent"
-                                        Padding="20"/>
+            <controls:CustomGrid.RowDefinitions>
+                <RowDefinition Height="0.8*" />
+                <RowDefinition Height="*" />
+            </controls:CustomGrid.RowDefinitions>
 
-            <controls:CircleProgressBar HeightRequest="100"
-                                        Text="{Binding CircleProgressBarText}"
-                                        TextColor="{Binding CircleProgressBarTextColor}"
-                                        FontScale="{Binding CircleProgressBarFontScale}"
-                                        FontFamily="Arial"
-                                        FontAttributes="{Binding CircleProgressBarFontAttributes}"
-                                        Value="{Binding CircleProgressBarValue}"
-                                        Minimum="0"
-                                        Maximum="30"
-                                        LineWidth="15"
-                                        ProgressLineColor="{Binding CircleProgressBarProgressLineColor}"
-                                        BackgroundLineColor="Gray"
-                                        BackgroundProgressColor="White"
-                                        BackgroundColor="Transparent"
-                                        Padding="20"/>
+            <Grid Grid.Row="0">
 
-            <Button Text="Refresh" Command="{Binding OnRefresh}"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.1*" />
+                    <ColumnDefinition Width="0.9*" />
+                </Grid.ColumnDefinitions>
 
-            <controls:CustomEditor Text="Hello, World"
-                                   TextColor="Black"
-                                   Placeholder="Start writing"
-                                   PlaceholderColor="Silver"
-                                   VerticalOptions="CenterAndExpand"
-                                   IsExpandable="True"
-                                   CorrectLength="250"
-                                   MaxLength="300"/>
+                <Image Grid.Row="0"
+                       Grid.Column="0"
+                       Source="{DynamicResource pic_profile_small}"/>
 
-        </StackLayout>
-        
+                <ScrollView Grid.Row="0"
+                            Grid.Column="1">
+
+                    <StackLayout>
+                        
+                        <controls:CustomEditor Text="Hello, World hjjhhjjhhjjh"
+                                               TextColor="Black"
+                                               Placeholder="Start writing"
+                                               PlaceholderColor="Silver"
+                                               VerticalOptions="CenterAndExpand"
+                                               IsExpandable="True"
+                                               CorrectLength="250"
+                                               MaxLength="300"/>
+                                              
+                        <StackLayout>
+                            <Label Text="sdsd"/>
+                            <Label Text="sdsd"/>
+                            <Label Text="sdsd"/>
+
+                        </StackLayout>
+                        
+                    </StackLayout>
+
+                </ScrollView>
+                
+            </Grid>
+            
+
+            <StackLayout Grid.Row="1"
+                         Orientation="Horizontal"
+                         VerticalOptions="EndAndExpand"
+                         HeightRequest="90"
+                         BackgroundColor="Gray">
+
+                <Button Text="Refresh" Command="{Binding OnRefresh}"/>
+                
+                <Label Text="dsds"/>
+                
+                <Label Text="455445"/>
+                
+                <controls:CircleProgressBar HeightRequest="24"
+                                            Text="{Binding CircleProgressBarText}"
+                                            TextColor="{Binding CircleProgressBarTextColor}"
+                                            FontScale="{Binding CircleProgressBarFontScale}"
+                                            FontFamily="Arial"
+                                            FontAttributes="{Binding CircleProgressBarFontAttributes}"
+                                            Value="{Binding CircleProgressBarValue}"
+                                            Minimum="0"
+                                            Maximum="30"
+                                            LineWidth="15"
+                                            ProgressLineColor="{Binding CircleProgressBarProgressLineColor}"
+                                            BackgroundLineColor="Gray"
+                                            BackgroundProgressColor="White"
+                                            BackgroundColor="Transparent"
+                                            Padding="20"/>
+
+            </StackLayout>
+
+        </controls:CustomGrid>
+
     </view:BaseContentPage.Content>
     
 </view:BaseContentPage>
