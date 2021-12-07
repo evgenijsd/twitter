@@ -3,6 +3,7 @@ using InterTwitter.Helpers;
 using InterTwitter.Models;
 using Prism.Navigation;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -25,39 +26,39 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _avatarIcon, value);
         }
 
-        private string _searchQuery;
-        public string SearchQuery
+        private string _queryString;
+        public string QueryString
         {
-            get => _searchQuery;
-            set => SetProperty(ref _searchQuery, value);
+            get => _queryString;
+            set => SetProperty(ref _queryString, value);
         }
 
-        private string _searchQueryWithNoResults;
-        public string SearchQueryWithNoResults
+        private string _queryStringWithNoResults;
+        public string QueryStringWithNoResults
         {
-            get => _searchQueryWithNoResults;
-            set => SetProperty(ref _searchQueryWithNoResults, value);
+            get => _queryStringWithNoResults;
+            set => SetProperty(ref _queryStringWithNoResults, value);
         }
 
-        private HashTagModel _selectedTweetsTheme;
-        public HashTagModel SelectedTweetsTheme
+        private HashTagModel _selectedHashtag;
+        public HashTagModel SelectedHashtag
         {
-            get => _selectedTweetsTheme;
-            set => SetProperty(ref _selectedTweetsTheme, value);
+            get => _selectedHashtag;
+            set => SetProperty(ref _selectedHashtag, value);
         }
 
-        private ObservableCollection<HashTagModel> _themeModels;
-        public ObservableCollection<HashTagModel> ThemeModels
+        private ObservableCollection<HashTagModel> _hashtagModels;
+        public ObservableCollection<HashTagModel> HashtagModels
         {
-            get => _themeModels;
-            set => SetProperty(ref _themeModels, value);
+            get => _hashtagModels;
+            set => SetProperty(ref _hashtagModels, value);
         }
 
-        private ESearchState _tweetSearchState;
-        public ESearchState TweetSearchState
+        private ESearchState _tweetsSearchState;
+        public ESearchState TweetsSearchState
         {
-            get => _tweetSearchState;
-            set => SetProperty(ref _tweetSearchState, value);
+            get => _tweetsSearchState;
+            set => SetProperty(ref _tweetsSearchState, value);
         }
 
         private ESearchResult _tweetSearchResult;
@@ -68,16 +69,16 @@ namespace InterTwitter.ViewModels
         }
 
         private ICommand _avatarIconTapCommand;
-        public ICommand AvatarIconTapCommand => _avatarIconTapCommand ??= SingleExecutionCommand.FromFunc(ProfileTapCommandTapAsync);
+        public ICommand AvatarIconTapCommand => _avatarIconTapCommand ??= SingleExecutionCommand.FromFunc(OnAvatarIconTapCommandTapAsync);
 
-        private ICommand _startSearchTapCommand;
-        public ICommand StartSearchTapCommand => _startSearchTapCommand ??= SingleExecutionCommand.FromFunc(StartSearchCommandTapAsync);
+        private ICommand _startTweetsSearchTapCommand;
+        public ICommand StartTweetsSearchTapCommand => _startTweetsSearchTapCommand ??= SingleExecutionCommand.FromFunc(OnStartTweetsSearchCommandTapAsync);
 
-        private ICommand _stopSearchTapCommand;
-        public ICommand StopSearchTapCommand => _stopSearchTapCommand ??= SingleExecutionCommand.FromFunc(StopSearchCommandTapAsync);
+        private ICommand _backToHashtagsTapCommand;
+        public ICommand BackTohashtagsTapCommand => _backToHashtagsTapCommand ??= SingleExecutionCommand.FromFunc(OnBackTohashTagsCommandTapAsync);
 
-        private ICommand _tweetsThemeTapCommand;
-        public ICommand TweetsThemeTapCommand => _tweetsThemeTapCommand ??= SingleExecutionCommand.FromFunc(TweetsThemeCommandTapAsync);
+        private ICommand _hashTagTapCommand;
+        public ICommand HashTagTapCommand => _hashTagTapCommand ??= SingleExecutionCommand.FromFunc(OnHashTagTapCommandAsync);
 
         #endregion
 
@@ -85,7 +86,7 @@ namespace InterTwitter.ViewModels
 
         public override Task InitializeAsync(INavigationParameters parameters)
         {
-            ThemeModels = new ObservableCollection<HashTagModel>()
+            HashtagModels = new ObservableCollection<HashTagModel>()
             {
                 new HashTagModel()
                 {
@@ -107,13 +108,47 @@ namespace InterTwitter.ViewModels
             return base.InitializeAsync(parameters);
         }
 
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+
+            switch (args.PropertyName)
+            {
+                case nameof(TweetsSearchState):
+                    if (TweetsSearchState == ESearchState.NotActive)
+                    {
+                        ResetSearchData();
+                    }
+
+                    break;
+            }
+        }
+
+        public override void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            base.OnNavigatedFrom(parameters);
+
+            TweetsSearchState = ESearchState.NotActive;
+
+            HashtagModels.Clear();
+            ResetSearchData();
+        }
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+
+            /* TO DO: Load avatar icon */
+            /* TO DO: Load hashtags */
+        }
+
         #endregion
 
         #region --- Private helpers ---
 
-        private Task ProfileTapCommandTapAsync()
+        private Task OnAvatarIconTapCommandTapAsync()
         {
-            /* TEMP */
+            /* TEMP TESTING CODE */
 
             switch (TweetSearchResult)
             {
@@ -123,47 +158,57 @@ namespace InterTwitter.ViewModels
                 case ESearchResult.Success:
                     TweetSearchResult = ESearchResult.NoResults;
                     break;
-                default:
-                    break;
             }
 
             return Task.CompletedTask;
         }
 
-        private Task StartSearchCommandTapAsync()
+        private Task OnStartTweetsSearchCommandTapAsync()
         {
-            TweetSearchState = ESearchState.Active;
+            TweetsSearch();
+
+            return Task.CompletedTask;
+        }
+
+        private Task OnHashTagTapCommandAsync(object obj)
+        {
+            QueryString = SelectedHashtag.Text;
+            TweetsSearch();
+
+            return Task.CompletedTask;
+        }
+
+        private Task OnBackTohashTagsCommandTapAsync()
+        {
+            TweetsSearchState = ESearchState.NotActive;
+
+            ResetSearchData();
+
+            return Task.CompletedTask;
+        }
+
+        private void TweetsSearch()
+        {
+            TweetsSearchState = ESearchState.Active;
+
+            /* TO DO: calling of the tweets search */
 
             switch (TweetSearchResult)
             {
                 case ESearchResult.NoResults:
-                    SearchQueryWithNoResults = SearchQuery;
+                    QueryStringWithNoResults = QueryString;
                     break;
-
                 case ESearchResult.Success:
-                    SearchQueryWithNoResults = string.Empty;
-
-                    /*TODO: filling tweets list*/
+                    QueryStringWithNoResults = string.Empty;
                     break;
             }
-
-            return Task.CompletedTask;
         }
 
-        private Task StopSearchCommandTapAsync()
+        private void ResetSearchData()
         {
-            SearchQueryWithNoResults = string.Empty;
-            TweetSearchState = ESearchState.NotActive;
-
-            return Task.CompletedTask;
-        }
-
-        private Task TweetsThemeCommandTapAsync(object obj)
-        {
-            SearchQuery = SelectedTweetsTheme.Text;
-            TweetSearchState = ESearchState.Active;
-
-            return Task.CompletedTask;
+            QueryString = string.Empty;
+            QueryStringWithNoResults = string.Empty;
+            /* TO DO: clear found tweets */
         }
 
         #endregion

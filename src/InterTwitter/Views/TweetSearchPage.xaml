@@ -37,12 +37,12 @@
 
             </Frame>-->
 
-            <controls:SearchBar SearchState="{Binding TweetSearchState}"
+            <controls:SearchBar SearchState="{Binding TweetsSearchState}"
                                 AvatarIconSource="{Binding AvatarIcon}"
                                 AvatarIconTapCommand="{Binding AvatarIconTapCommand}"
-                                BackIconTapCommand="{Binding StopSearchTapCommand}"
-                                PressOkOnKeyboardCommand="{Binding StartSearchTapCommand}"
-                                QueryString="{Binding SearchQuery}"/>
+                                BackIconTapCommand="{Binding BackTohashtagsTapCommand}"
+                                PressOkOnKeyboardCommand="{Binding StartTweetsSearchTapCommand}"
+                                QueryString="{Binding QueryString}"/>
 
             <BoxView Style="{DynamicResource SeparatorStyle}"/>
 
@@ -51,7 +51,7 @@
                                            VerticalOptions="FillAndExpand"
                                            Margin="14, 0"
                                            Padding="3, 0, 3, 0"
-                                           State="{Binding TweetSearchState}">
+                                           State="{Binding TweetsSearchState}">
 
                     <stateContainer:StateContainer.Conditions>
 
@@ -72,13 +72,13 @@
                                           Margin="0"
                                           SeparatorVisibility="None"
                                           SeparatorColor="{DynamicResource appcolor_i6}"
-                                          ItemsSource="{Binding ThemeModels}"
-                                          SelectedItem="{Binding SelectedTweetsTheme}">
+                                          ItemsSource="{Binding HashtagModels}"
+                                          SelectedItem="{Binding SelectedHashtag}">
 
                                     <ListView.Behaviors>
 
                                         <Behaviors:EventToCommandBehavior EventName="ItemTapped"
-                                                                          Command="{Binding TweetsThemeTapCommand}"/>
+                                                                          Command="{Binding HashTagTapCommand}"/>
                                     </ListView.Behaviors>
 
                                     <ListView.ItemTemplate>
@@ -99,7 +99,7 @@
 
                                                                 <Label Margin="0, 4, 0, 2"
                                                                        Style="{DynamicResource tstyle_i6}"
-                                                                       Text="{Binding Title}"/>
+                                                                       Text="{Binding Text}"/>
 
                                                                 <Label Style="{DynamicResource tstyle_i15}">
 
@@ -182,7 +182,7 @@
 
                                                 <Label HorizontalOptions="Center"
                                                        Style="{DynamicResource tstyle_i5}"
-                                                       Text="{Binding SearchQueryWithNoResults, StringFormat='&quot;{0}&quot;'}"/>
+                                                       Text="{Binding QueryStringWithNoResults, StringFormat='&quot;{0}&quot;'}"/>
 
                                             </StackLayout>
 
