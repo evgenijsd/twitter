@@ -95,34 +95,31 @@
 
             </Grid>
 
-            <sh:Shadows CornerRadius="30"
-                            Shades="{sh:SingleShade Offset='0, 0',
-                                                    Opacity={OnPlatform Android=1, iOS=0.7},
-                                                    BlurRadius={OnPlatform Android=50, iOS=50},
-                                                    Color={StaticResource appcolor_i6}}">
-                <Frame/>
+            <sh:Shadows Grid.Row="2"
+                        Grid.Column="0"
+                        VerticalOptions="EndAndExpand"
+                        HeightRequest="56"
+                        Shades="{sh:SingleShade Offset='0, -2',
+                                                Opacity={OnPlatform Android=1, iOS=0.7},
+                                                BlurRadius={OnPlatform Android=14, iOS=14},
+                                                Color={StaticResource appcolor_i6}}">
 
-            </sh:Shadows>
-            
-            <StackLayout Grid.Row="2"
-                         Grid.Column="0"
-                         VerticalOptions="EndAndExpand"
-                         HeightRequest="56"
-                         Spacing="0">
+                <StackLayout Spacing="0"
+                             BackgroundColor="{DynamicResource appcolor_i2}">
 
-                <BoxView Color="{DynamicResource appcolor_i6}"
+                    <BoxView Color="{DynamicResource appcolor_i6}"
                          HeightRequest="1"/>
-                
-                <StackLayout Orientation="Horizontal">
-                    
-                    <Button Text="Refresh" 
+
+                    <StackLayout Orientation="Horizontal">
+
+                        <Button Text="Refresh" 
                             Command="{Binding OnRefresh}"/>
 
-                    <Label Text="Video"/>
+                        <Label Text="Video"/>
 
-                    <Label Text="Photos"/>
+                        <Label Text="Photos"/>
 
-                    <controls:CircleProgressBar HorizontalOptions="EndAndExpand"
+                        <controls:CircleProgressBar HorizontalOptions="EndAndExpand"
                                                 HeightRequest="24"
                                                 WidthRequest="24"
                                                 Text="{Binding CircleProgressBarText}"
@@ -139,9 +136,11 @@
                                                 BackgroundProgressColor="{DynamicResource appcolor_i2}"
                                                 BackgroundColor="Transparent"
                                                 Padding="16"/>
+                    </StackLayout>
+
                 </StackLayout>
-                
-            </StackLayout>
+
+            </sh:Shadows>
 
         </controls:CustomGrid>
 
