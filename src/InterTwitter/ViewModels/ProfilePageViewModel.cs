@@ -1,9 +1,8 @@
 ﻿using InterTwitter.Views;
+using MapNotepad.Helpers;
 using Prism.Navigation;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
+using System.Windows.Input;
 
 namespace InterTwitter.ViewModels
 {
@@ -16,20 +15,23 @@ namespace InterTwitter.ViewModels
                 {
                     new MenuItemViewModel
                     {
-                        Id = 0, Title = "Home",
+                        Id = 0, Title = "Posts",
                         TargetType = typeof(HomePage),
                         ImageSource = "ic_home_gray",
+                        TextColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
                     },
 
                     new MenuItemViewModel
                     {
                         Id = 1,
-                        Title = "Search",
+                        Title = "Likes",
                         TargetType = typeof(SearchPage),
                         ImageSource = "ic_search_gray",
+                        TextColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
                     },
                 });
         }
+        #region --- Public Properties ---
 
         private ObservableCollection<MenuItemViewModel> _menuItems;
         public ObservableCollection<MenuItemViewModel> MenuItems
@@ -37,5 +39,12 @@ namespace InterTwitter.ViewModels
             get => _menuItems;
             set => SetProperty(ref _menuItems, value);
         }
+
+        public ICommand NavgationCommand => SingleExecutionCommand.FromFunc(NavigationService.GoBackAsync);
+
+        #endregion
+
+        #region --- Private Helpers ---
+        #endregion
     }
 }

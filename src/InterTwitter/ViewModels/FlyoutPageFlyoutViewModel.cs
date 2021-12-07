@@ -62,22 +62,23 @@ namespace InterTwitter.ViewModels.Flyout
             set => SetProperty(ref _menuItems, value);
         }
 
-        private string _profileName;
+        private string _profileName = "Gianna Press";
         public string ProfileName
         {
             get => _profileName;
             set => SetProperty(ref _profileName, value);
         }
 
-        private string _profileEmail;
+        private string _profileEmail = "gianap@gmail.com";
         public string ProfileEmail
         {
             get => _profileEmail;
             set => SetProperty(ref _profileEmail, value);
         }
 
-        public ICommand LogoutTapCommand => SingleExecutionCommand.FromFunc(OnLogoutTapCommand);
-        public ICommand ChangeProfileTapCommand => SingleExecutionCommand.FromFunc(OnChangeProfileTapCommand);
+        public ICommand LogoutCommand => SingleExecutionCommand.FromFunc(OnLogoutCommand);
+        public ICommand ChangeProfileCommand => SingleExecutionCommand.FromFunc(OnChangeProfileCommand);
+        public ICommand OpenProfileCommand => SingleExecutionCommand.FromFunc(OnOpenProfileCommand);
 
         #endregion
 
@@ -139,14 +140,19 @@ namespace InterTwitter.ViewModels.Flyout
             NavigationService.NavigateAsync(nameof(menuItem.TargetType));
         }
 
-        private Task OnLogoutTapCommand()
+        private Task OnLogoutCommand()
         {
             return Task.FromResult(false);
         }
 
-        private async Task OnChangeProfileTapCommand()
+        private Task OnChangeProfileCommand()
         {
-            MessagingCenter.Send(this, "OpenSidebar", false);
+            return Task.FromResult(false);
+        }
+
+        private async Task OnOpenProfileCommand()
+        {
+           // MessagingCenter.Send(this, "OpenSidebar", false);
             await NavigationService.NavigateAsync($"{nameof(ProfilePage)}");
         }
 

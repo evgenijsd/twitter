@@ -3,10 +3,11 @@
     x:Class="InterTwitter.Views.FlyoutPageFlyout"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
     xmlns:local="clr-namespace:InterTwitter.Views"
     xmlns:prism="http://prismlibrary.com"
     Title="Flyout"
-    
     prism:ViewModelLocator.AutowireViewModel="True"
     BackgroundColor="{DynamicResource appcolor_i2}">
 
@@ -24,12 +25,20 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
+            <ffimageloading:CachedImage
+                Margin="10"
+                Aspect="AspectFit"
+                Source="https://picsum.photos/500/500?image=741">
+                <ffimageloading:CachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenProfileCommand}" />
+                </ffimageloading:CachedImage.GestureRecognizers>
+                <ffimageloading:CachedImage.Transformations>
+                    <fftransformations:CircleTransformation />
+                </ffimageloading:CachedImage.Transformations>
+            </ffimageloading:CachedImage>
             <StackLayout Grid.Column="1" VerticalOptions="Center">
-                <Label
-                    FontAttributes="Bold"
-                    FontSize="20"
-                    Text="{Binding ProfileName}" />
-                <Label Text="{Binding ProfileMail}" TextColor="{DynamicResource appcolor_i5}" />
+                <Label Style="{DynamicResource tstyle_i14}" Text="{Binding ProfileName}" />
+                <Label Style="{DynamicResource Content_i7}" Text="{Binding ProfileEmail}" />
             </StackLayout>
         </Grid>
 
@@ -92,7 +101,7 @@
                     VerticalOptions="Center" />
 
                 <StackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ChangeProfileTapCommand}" Tapped="SettingsTappedHandler" />
+                    <TapGestureRecognizer Command="{Binding ChangeProfileCommand}" Tapped="SettingsTappedHandler" />
                 </StackLayout.GestureRecognizers>
 
             </StackLayout>
@@ -116,7 +125,7 @@
                     VerticalOptions="Center" />
 
                 <StackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding LogoutTapCommand}" Tapped="LogoutTappedHandler" />
+                    <TapGestureRecognizer Command="{Binding LogoutCommand}" Tapped="LogoutTappedHandler" />
                 </StackLayout.GestureRecognizers>
 
             </StackLayout>
