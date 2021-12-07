@@ -133,9 +133,10 @@ namespace InterTwitter.ViewModels.Flyout
 
         private void OnItemTapCommand(object param)
         {
-            var nenuItem = param as MenuItemViewModel;
+            var menuItem = param as MenuItemViewModel;
             MessagingCenter.Send(this, "OpenSidebar", false);
-            MessagingCenter.Send(this, "TabSelected", nenuItem.Id);
+            MessagingCenter.Send(this, "TabSelected", menuItem.Id);
+            NavigationService.NavigateAsync(nameof(menuItem.TargetType));
         }
 
         private Task OnLogoutTapCommand()
