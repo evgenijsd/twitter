@@ -102,6 +102,51 @@ namespace InterTwitter.ViewModels
                     Text = "#NoNuanceNovember",
                     TweetsCount = 25,
                 },
+                new HashTagModel()
+                {
+                    Text = "#NoNuanceNovember_2",
+                    TweetsCount = 25,
+                },
+                new HashTagModel()
+                {
+                    Text = "#NoNuanceNovember_3",
+                    TweetsCount = 25,
+                },
+                new HashTagModel()
+                {
+                    Text = "#NoNuanceNovember_4",
+                    TweetsCount = 25,
+                },
+                new HashTagModel()
+                {
+                    Text = "#NoNuanceNovember_5",
+                    TweetsCount = 25,
+                },
+                new HashTagModel()
+                {
+                    Text = "#NoNuanceNovember_6",
+                    TweetsCount = 25,
+                },
+                new HashTagModel()
+                {
+                    Text = "#NoNuanceNovember_7",
+                    TweetsCount = 25,
+                },
+                new HashTagModel()
+                {
+                    Text = "#NoNuanceNovember_8",
+                    TweetsCount = 25,
+                },
+                new HashTagModel()
+                {
+                    Text = "#NoNuanceNovember_9",
+                    TweetsCount = 25,
+                },
+                new HashTagModel()
+                {
+                    Text = "#NoNuanceNovember_10",
+                    TweetsCount = 25,
+                },
             };
 
             return base.InitializeAsync(parameters);

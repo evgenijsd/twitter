@@ -5,8 +5,8 @@
              xmlns:controls="clr-namespace:InterTwitter.Controls"
              xmlns:stateContainer="clr-namespace:InterTwitter.Controls.StateContainer"
              x:DataType="controls:SearchBar"
-             x:Name="searchBar"
-             x:Class="InterTwitter.Controls.SearchBar">
+             x:Class="InterTwitter.Controls.SearchBar"
+             x:Name="searchBar">
 
     <ContentView.Content>
 
@@ -27,7 +27,7 @@
 
                     <stateContainer:StateContainer.Conditions>
 
-                        <!-- SEARCH IS NOT ACTIVE - AVATAR ICON -->
+                        <!-- SEARCH IS NOT ACTIVE - DISPLAY AVATAR ICON -->
                         <stateContainer:StateCondition State="NotActive">
 
                             <Image Source="{Binding AvatarIconSource, Source={x:Reference searchBar}}">
@@ -42,7 +42,7 @@
 
                         </stateContainer:StateCondition>
 
-                        <!-- SEARCH IS ACTIVE - BACK ICON -->
+                        <!-- SEARCH IS ACTIVE - DISPLAY BACK ICON -->
                         <stateContainer:StateCondition State="Active">
 
                             <Image Source="{DynamicResource ic_left_gray}">

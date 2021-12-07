@@ -135,83 +135,9 @@
                                         <Grid>
 
                                             <!-- TWEETS LIST MUST BE HERE -->
-                                            <ListView Margin="0"
-                                                      HasUnevenRows="true"
-                                                      SeparatorVisibility="None"
-                                                      SeparatorColor="{DynamicResource appcolor_i6}"
-                                                      ItemsSource="{Binding HashtagModels}"
-                                                      SelectedItem="{Binding SelectedHashtag}">
-
-                                                <ListView.Behaviors>
-
-                                                    <Behaviors:EventToCommandBehavior EventName="ItemTapped"
-                                                                          Command="{Binding HashTagTapCommand}"/>
-                                                    
-                                                </ListView.Behaviors>
-
-                                                <ListView.ItemTemplate>
-
-                                                    <DataTemplate>
-
-                                                        <ViewCell>
-
-                                                            <ViewCell.View>
-
-                                                                <StackLayout Spacing="0"
-                                                                             BackgroundColor="{DynamicResource appcolor_i2}">
-
-                                                                    <StackLayout Orientation="Horizontal"
-                                                                                 Padding="0, 15, 0, 8">
-
-                                                                        <StackLayout>
-
-                                                                            <Label Margin="0, 4, 0, 2"
-                                                                                   Style="{DynamicResource tstyle_i6}"
-                                                                                   Text="{Binding Text}" />
-
-                                                                            <Label Style="{DynamicResource tstyle_i15}">
-
-                                                                                <Label.FormattedText>
-
-                                                                                    <FormattedString>
-
-                                                                                        <Span Text="{xct:Translate Posts}"></Span>
-
-                                                                                        <Span Text="{Binding TweetsCount, StringFormat=': {0}'}" />
-
-                                                                                    </FormattedString>
-
-                                                                                </Label.FormattedText>
-
-                                                                            </Label>
-
-                                                                        </StackLayout>
-
-                                                                        <Image Margin="0, 0, 12, 10"
-                                                                               HorizontalOptions="EndAndExpand"
-                                                                               VerticalOptions="Center"
-                                                                               Scale="1.25"
-                                                                               Source="{DynamicResource ic_right_gray}" />
-
-                                                                    </StackLayout>
-
-                                                                    <BoxView Grid.Row="1"
-                                                                             Style="{DynamicResource SeparatorStyle}" />
-
-                                                                </StackLayout>
-
-                                                            </ViewCell.View>
-
-                                                        </ViewCell>
-
-                                                    </DataTemplate>
-
-                                                </ListView.ItemTemplate>
-
-                                            </ListView>
 
                                             <sh:Shadows VerticalOptions="EndAndExpand"
-                                                        Shades="{sh:SingleShade Offset='0, -2',
+                                                        Shades="{sh:SingleShade Offset='0, -2.858',
                                                                                 Opacity={OnPlatform Android=0.08, iOS=0.7},
                                                                                 BlurRadius={OnPlatform Android=8, iOS=2},
                                                                                 Color={StaticResource appcolor_i3}}">
@@ -265,7 +191,7 @@
                             VerticalOptions="EndAndExpand"
                             IsVisible="false"
                             CornerRadius="30"
-                            Shades="{sh:SingleShade Offset='0, 2',
+                            Shades="{sh:SingleShade Offset='0, 2.858',
                                                     Opacity={OnPlatform Android=0.08, iOS=0.7},
                                                     BlurRadius={OnPlatform Android=8, iOS=2},
                                                     Color={StaticResource appcolor_i3}}">
@@ -306,18 +232,6 @@
 
             </Grid>
             
-            <BoxView Style="{DynamicResource SeparatorStyle}"/>
-
-            <Grid RowDefinitions="auto">
-
-                <!-- TEMP BOTTOM -->
-                <Frame HeightRequest="56"
-                       Padding="0"
-                       HasShadow="False"
-                       BackgroundColor="White" />
-
-            </Grid>
-
         </StackLayout>
 
     </views:BaseContentPage.Content>
