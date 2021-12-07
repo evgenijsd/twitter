@@ -2,7 +2,7 @@
 
 namespace InterTwitter.Controls
 {
-    public class BorderlessEntry : Entry
+    public class SearchEntry : Entry
     {
     }
 }

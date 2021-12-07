@@ -1,15 +1,16 @@
 ﻿using Android.Content;
+using Android.Widget;
 using InterTwitter.Controls;
 using InterTwitter.Droid.Renderers.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-[assembly: ExportRenderer(typeof(BorderlessEntry), typeof(BorderlessEntryRenderer))]
+[assembly: ExportRenderer(typeof(SearchEntry), typeof(SearchEntryRenderer))]
 namespace InterTwitter.Droid.Renderers.Controls
 {
-    public class BorderlessEntryRenderer : EntryRenderer
+    public class SearchEntryRenderer : EntryRenderer
     {
-        public BorderlessEntryRenderer(Context context)
+        public SearchEntryRenderer(Context context)
             : base(context)
         {
         }
@@ -22,6 +23,12 @@ namespace InterTwitter.Droid.Renderers.Controls
             {
                 Control.SetPadding(0, 0, 0, 0);
                 Control.SetBackgroundColor(Android.Graphics.Color.Transparent);
+            }
+
+            if (e.OldElement == null)
+            {
+                var editText = (EditText)Control;
+                editText.SetSelectAllOnFocus(true);
             }
         }
     }

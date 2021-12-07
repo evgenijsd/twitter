@@ -71,15 +71,15 @@
                        CornerRadius="24"
                        BackgroundColor="{DynamicResource appcolor_i6}">
 
-                    <controls:BorderlessEntry Margin="0"    
-                                              BackgroundColor="Transparent"
-                                              FontSize="{DynamicResource tsize_i5}"
-                                              FontFamily="Ubuntu-Medium"
-                                              Text="{Binding Text, Source={x:Reference searchBar}}"
-                                              TextColor="{DynamicResource appcolor_i3}"
-                                              Placeholder="{xct:Translate Search}"
-                                              PlaceholderColor="{DynamicResource appcolor_i4}"
-                                              ReturnCommand="{Binding PressOkOnKeyboardCommand, Source={x:Reference searchBar}}" />
+                    <controls:SearchEntry Margin="0"    
+                                          BackgroundColor="Transparent"
+                                          FontSize="{DynamicResource tsize_i5}"
+                                          FontFamily="Ubuntu-Medium"
+                                          Text="{Binding Text, Source={x:Reference searchBar}}"
+                                          TextColor="{DynamicResource appcolor_i3}"
+                                          Placeholder="{xct:Translate Search}"
+                                          PlaceholderColor="{DynamicResource appcolor_i4}"
+                                          ReturnCommand="{Binding PressOkOnKeyboardCommand, Source={x:Reference searchBar}}"/>
 
                 </Frame>
 
