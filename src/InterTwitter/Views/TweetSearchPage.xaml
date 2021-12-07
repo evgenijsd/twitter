@@ -14,12 +14,12 @@
 
     <views:BaseContentPage.Content>
 
-        <StackLayout Spacing="0" 
+        <StackLayout Spacing="0"
                      BackgroundColor="{DynamicResource appcolor_i2}">
 
             <Grid RowDefinitions="auto" 
-                  VerticalOptions="FillAndExpand"
-                  RowSpacing="0">
+                  RowSpacing="0"
+                  VerticalOptions="FillAndExpand">
 
                 <!-- CONTENT -->
                 <stateContainer:StateContainer Grid.Row="1"
@@ -30,20 +30,20 @@
 
                     <stateContainer:StateContainer.Conditions>
 
-                        <!-- SEARCH IS NOT ACTIVE - POPULAR THEMES -->
+                        <!-- SEARCH IS NOT ACTIVE - DISPLAY POPULAR THEMES -->
                         <stateContainer:StateCondition State="NotActive">
 
                             <StackLayout Spacing="0">
 
                                 <Label Margin="0, 19, 0, 10.5"
                                        Text="{xct:Translate PopularTheme}"
-                                       Style="{DynamicResource tstyle_i4}" />
+                                       Style="{DynamicResource tstyle_i4}"/>
 
                                 <BoxView Style="{DynamicResource SeparatorStyle}"
                                          Margin="0" />
 
-                                <ListView HasUnevenRows="true"
-                                          Margin="0"
+                                <ListView Margin="0"
+                                          HasUnevenRows="true"
                                           SeparatorVisibility="None"
                                           SeparatorColor="{DynamicResource appcolor_i6}"
                                           ItemsSource="{Binding HashtagModels}"
@@ -52,7 +52,8 @@
                                     <ListView.Behaviors>
 
                                         <Behaviors:EventToCommandBehavior EventName="ItemTapped"
-                                                                          Command="{Binding HashTagTapCommand}" />
+                                                                          Command="{Binding HashTagTapCommand}"/>
+                                        
                                     </ListView.Behaviors>
 
                                     <ListView.ItemTemplate>
@@ -66,8 +67,8 @@
                                                     <StackLayout Spacing="0"
                                                                  BackgroundColor="{DynamicResource appcolor_i2}">
 
-                                                        <StackLayout Orientation="Horizontal"
-                                                                     Padding="0, 15, 0, 8">
+                                                        <StackLayout Padding="0, 15, 0, 8"
+                                                                     Orientation="Horizontal">
 
                                                             <StackLayout>
 
@@ -93,9 +94,9 @@
 
                                                             </StackLayout>
 
-                                                            <Image HorizontalOptions="EndAndExpand"
+                                                            <Image Margin="0, 0, 12, 10"
+                                                                   HorizontalOptions="EndAndExpand"
                                                                    VerticalOptions="Center"
-                                                                   Margin="0, 0, 12, 10"
                                                                    Scale="1.25"
                                                                    Source="{DynamicResource ic_right_gray}" />
 
@@ -120,7 +121,7 @@
 
                         </stateContainer:StateCondition>
 
-                        <!-- SEARCH IS ACTIVE - SEARCH RESULTS -->
+                        <!-- SEARCH IS ACTIVE - DISPLAY SEARCH RESULTS -->
                         <stateContainer:StateCondition State="Active">
 
                             <stateContainer:StateContainer State="{Binding TweetSearchResult}"
@@ -128,14 +129,14 @@
 
                                 <stateContainer:StateContainer.Conditions>
 
-                                    <!-- TWEETS FOUND -->
+                                    <!-- TWEETS FOUND - DISPLAY TWEETS -->
                                     <stateContainer:StateCondition State="Success">
 
                                         <Grid>
 
                                             <!-- TWEETS LIST MUST BE HERE -->
-                                            <ListView HasUnevenRows="true"
-                                                      Margin="0"
+                                            <ListView Margin="0"
+                                                      HasUnevenRows="true"
                                                       SeparatorVisibility="None"
                                                       SeparatorColor="{DynamicResource appcolor_i6}"
                                                       ItemsSource="{Binding HashtagModels}"
@@ -144,7 +145,8 @@
                                                 <ListView.Behaviors>
 
                                                     <Behaviors:EventToCommandBehavior EventName="ItemTapped"
-                                                                          Command="{Binding HashTagTapCommand}" />
+                                                                          Command="{Binding HashTagTapCommand}"/>
+                                                    
                                                 </ListView.Behaviors>
 
                                                 <ListView.ItemTemplate>
@@ -156,16 +158,16 @@
                                                             <ViewCell.View>
 
                                                                 <StackLayout Spacing="0"
-                                                                 BackgroundColor="{DynamicResource appcolor_i2}">
+                                                                             BackgroundColor="{DynamicResource appcolor_i2}">
 
                                                                     <StackLayout Orientation="Horizontal"
-                                                                     Padding="0, 15, 0, 8">
+                                                                                 Padding="0, 15, 0, 8">
 
                                                                         <StackLayout>
 
                                                                             <Label Margin="0, 4, 0, 2"
-                                                                       Style="{DynamicResource tstyle_i6}"
-                                                                       Text="{Binding Text}" />
+                                                                                   Style="{DynamicResource tstyle_i6}"
+                                                                                   Text="{Binding Text}" />
 
                                                                             <Label Style="{DynamicResource tstyle_i15}">
 
@@ -185,16 +187,16 @@
 
                                                                         </StackLayout>
 
-                                                                        <Image HorizontalOptions="EndAndExpand"
-                                                                   VerticalOptions="Center"
-                                                                   Margin="0, 0, 12, 10"
-                                                                   Scale="1.25"
-                                                                   Source="{DynamicResource ic_right_gray}" />
+                                                                        <Image Margin="0, 0, 12, 10"
+                                                                               HorizontalOptions="EndAndExpand"
+                                                                               VerticalOptions="Center"
+                                                                               Scale="1.25"
+                                                                               Source="{DynamicResource ic_right_gray}" />
 
                                                                     </StackLayout>
 
                                                                     <BoxView Grid.Row="1"
-                                                                 Style="{DynamicResource SeparatorStyle}" />
+                                                                             Style="{DynamicResource SeparatorStyle}" />
 
                                                                 </StackLayout>
 
@@ -209,11 +211,10 @@
                                             </ListView>
 
                                             <sh:Shadows VerticalOptions="EndAndExpand"
-                                                        CornerRadius="30"
-                                                        Shades="{sh:SingleShade Offset='0, 0',
-                                                                            Opacity={OnPlatform Android=0.7, iOS=0.7},
-                                                                            BlurRadius={OnPlatform Android=30, iOS=10},
-                                                                            Color={StaticResource appcolor_i5}}">
+                                                        Shades="{sh:SingleShade Offset='0, -2',
+                                                                                Opacity={OnPlatform Android=0.08, iOS=0.7},
+                                                                                BlurRadius={OnPlatform Android=8, iOS=2},
+                                                                                Color={StaticResource appcolor_i3}}">
 
                                                 <BoxView HeightRequest="2"></BoxView>
 
@@ -223,7 +224,7 @@
 
                                     </stateContainer:StateCondition>
 
-                                    <!-- NO RESULTS FOR QUERY -->
+                                    <!-- NO RESULTS FOR QUERY - DISPLAY OWL -->
                                     <stateContainer:StateCondition State="NoResults">
 
                                         <StackLayout VerticalOptions="CenterAndExpand"
@@ -259,14 +260,15 @@
 
                 </stateContainer:StateContainer>
                
-                <!-- SEARCH BAR -->
-                <sh:Shadows VerticalOptions="EndAndExpand"
+                <!-- SEARCH BAR SHADOW -->
+                <sh:Shadows Grid.Row="0"
+                            VerticalOptions="EndAndExpand"
                             IsVisible="false"
                             CornerRadius="30"
-                            Shades="{sh:SingleShade Offset='0, 0',
-                                                    Opacity={OnPlatform Android=0.4, iOS=0.7},
-                                                    BlurRadius={OnPlatform Android=30, iOS=10},
-                                                    Color={StaticResource appcolor_i5}}">
+                            Shades="{sh:SingleShade Offset='0, 2',
+                                                    Opacity={OnPlatform Android=0.08, iOS=0.7},
+                                                    BlurRadius={OnPlatform Android=8, iOS=2},
+                                                    Color={StaticResource appcolor_i3}}">
 
                     <sh:Shadows.Triggers>
 
@@ -274,7 +276,6 @@
                                      Binding="{Binding Source={x:Reference tweetSearchResultContainer}, Path=State}"
                                      Value="Success">
 
-                            <Setter Property="BackgroundColor" Value="Green"/>
                             <Setter Property="IsVisible" Value="true"/>
 
                         </DataTrigger>
@@ -286,6 +287,7 @@
 
                 </sh:Shadows>
 
+                <!-- SEARCH BAR -->
                 <StackLayout Grid.Row="0"
                              IsVisible="true"
                              Spacing="0">

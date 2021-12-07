@@ -14,7 +14,6 @@ namespace InterTwitter.ViewModels
         public TweetSearchPageViewModel()
             : base()
         {
-            AvatarIcon = "pic_profile_small";
         }
 
         #region --- Public properties ---
@@ -139,6 +138,8 @@ namespace InterTwitter.ViewModels
             base.OnNavigatedTo(parameters);
 
             /* TO DO: Load avatar icon */
+            AvatarIcon = "pic_profile_small";
+
             /* TO DO: Load hashtags */
         }
 
@@ -165,7 +166,10 @@ namespace InterTwitter.ViewModels
 
         private Task OnStartTweetsSearchCommandTapAsync()
         {
-            TweetsSearch();
+            if (QueryString.Length > 1)
+            {
+                TweetsSearch();
+            }
 
             return Task.CompletedTask;
         }
