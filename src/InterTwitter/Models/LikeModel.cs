@@ -4,7 +4,7 @@ using System.Text;
 
 namespace InterTwitter.Models
 {
-    public class LikeModel : IEntity
+    public class LikeModel : IEntityBase
     {
         public int Id { get; set; }
         public int UserId { get; set; }

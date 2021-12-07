@@ -5,7 +5,7 @@ using System.Text;
 
 namespace InterTwitter.Models
 {
-    public class Tweet : IEntityBase
+    public class TweetModel : IEntityBase
     {
         public int Id { get; set; }
 
@@ -15,7 +15,7 @@ namespace InterTwitter.Models
 
         public TweetType Media { get; set; }
 
-        public List<string> MediaPaths { get; set; }
+        public IEnumerable<string> MediaPaths { get; set; }
 
         public DateTime CreationTime { get; set; }
     }

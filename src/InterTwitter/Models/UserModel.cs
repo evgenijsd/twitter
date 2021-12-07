@@ -4,7 +4,7 @@ using System.Text;
 
 namespace InterTwitter.Models
 {
-    public class User : IEntityBase
+    public class UserModel : IEntityBase
     {
         public int Id { get; set; }
 
@@ -15,5 +15,7 @@ namespace InterTwitter.Models
         public string Email { get; set; }
 
         public string AvatarPath { get; set; }
+
+        public string BackgroundUserImage { get; set; }
     }
 }

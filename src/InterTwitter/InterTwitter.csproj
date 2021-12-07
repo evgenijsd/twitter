@@ -31,9 +31,7 @@
   <ItemGroup>
     <Folder Include="Behaviors\" />
     <Folder Include="Converters\" />
-    <Folder Include="Extensions\" />
     <Folder Include="Resources\Fonts\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>

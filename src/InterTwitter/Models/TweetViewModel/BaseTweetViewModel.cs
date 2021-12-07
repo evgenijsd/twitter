@@ -10,13 +10,25 @@ namespace InterTwitter.Models.TweetViewModel
 {
     public class BaseTweetViewModel : BindableBase
     {
+        public BaseTweetViewModel(UserModel userModel, TweetModel tweetModel)
+        {
+            _tweetModel = tweetModel;
+            _userModel = userModel;
+        }
         #region -- Public properties --
 
-        private int _id;
-        public int Id
+        private UserModel _userModel;
+        public UserModel UserModel
         {
-            get => _id;
-            set => SetProperty(ref _id, value);
+            get => _userModel;
+            set => SetProperty(ref _userModel, value);
+        }
+
+        private TweetModel _tweetModel;
+        public TweetModel TweetModel
+        {
+            get => _tweetModel;
+            set => SetProperty(ref _tweetModel, value);
         }
 
         private int _likesNumber = 123;
@@ -24,41 +36,6 @@ namespace InterTwitter.Models.TweetViewModel
         {
             get => _likesNumber;
             set => SetProperty(ref _likesNumber, value);
-        }
-
-        private int _userId;
-        public int UserId
-        {
-            get => _userId;
-            set => SetProperty(ref _userId, value);
-        }
-
-        private string _userName;
-        public string UserName
-        {
-            get => _userName;
-            set => SetProperty(ref _userName, value);
-        }
-
-        private string _userAvatar;
-        public string UserAvatar
-        {
-            get => _userAvatar;
-            set => SetProperty(ref _userAvatar, value);
-        }
-
-        private string _text;
-        public string Text
-        {
-            get => _text;
-            set => SetProperty(ref _text, value);
-        }
-
-        private string _hashtag;
-        public string Hashtag
-        {
-            get => _hashtag;
-            set => SetProperty(ref _hashtag, value);
         }
 
         private bool _IsTweetLiked;
@@ -83,13 +60,17 @@ namespace InterTwitter.Models.TweetViewModel
         }
 
         private ICommand _likeTweetCommand;
-        public ICommand LikeTweetCommand => _likeTweetCommand ?? (_likeTweetCommand = SingleExecutionCommand.FromFunc<ImagesTweetViewModel>(OnLikeCommandAsync));
+        public ICommand LikeTweetCommand => _likeTweetCommand ?? (_likeTweetCommand = SingleExecutionCommand.FromFunc<ImagesTweetViewModel>(OnLikeAsync));
 
         private ICommand _openTweetCommand;
-        public ICommand OpenTweetCommand => _openTweetCommand ?? (_openTweetCommand = SingleExecutionCommand.FromFunc<ImagesTweetViewModel>(OnOpenTweetCommandAsync));
+        public ICommand OpenTweetCommand => _openTweetCommand ?? (_openTweetCommand = SingleExecutionCommand.FromFunc<ImagesTweetViewModel>(OnOpenTweetAsync));
 
         private ICommand _markTweetCommand;
-        public ICommand MarkTweetCommand => _markTweetCommand ?? (_markTweetCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnMarkCommandAsync));
+        public ICommand MarkTweetCommand => _markTweetCommand ?? (_markTweetCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnMarkAsync));
+
+
+        private ICommand _moveToProfileCommand;
+        public ICommand MoveToProfileCommand => _moveToProfileCommand ?? (_moveToProfileCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnGoToProfileAsync));
 
         private DateTime _CreationTime;
         public DateTime CreationTime
@@ -101,20 +82,25 @@ namespace InterTwitter.Models.TweetViewModel
 
         #region -- Private helpers --
 
-        private Task OnLikeCommandAsync(ImagesTweetViewModel tweet)
+        private Task OnLikeAsync(BaseTweetViewModel tweet)
         {
             IsTweekLiked = !IsTweekLiked;
             return Task.CompletedTask;
         }
 
-        private Task OnOpenTweetCommandAsync(ImagesTweetViewModel arg)
+        private Task OnOpenTweetAsync(BaseTweetViewModel arg)
         {
             throw new NotImplementedException();
         }
 
-        private Task OnMarkCommandAsync(BaseTweetViewModel tweet)
+        private Task OnMarkAsync(BaseTweetViewModel tweet)
         {
             IsBookmarked = !IsBookmarked;
+            return Task.CompletedTask;
+        }
+
+        private Task OnGoToProfileAsync(BaseTweetViewModel arg)
+        {
             return Task.CompletedTask;
         }
 

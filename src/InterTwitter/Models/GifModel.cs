@@ -4,7 +4,7 @@ using System.Text;
 
 namespace InterTwitter.Models
 {
-    public class GifModel : IEntity
+    public class GifModel : IEntityBase
     {
         public int Id { get; set; }
         public int PostId { get; set; }
