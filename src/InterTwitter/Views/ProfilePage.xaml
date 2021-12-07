@@ -1,11 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<local:BaseContentPage
     x:Class="InterTwitter.Views.ProfilePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
     xmlns:cardsControls="clr-namespace:PanCardView.Controls;assembly=PanCardView"
-    xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
+    xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:fftranform ="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+    xmlns:local="clr-namespace:InterTwitter.Views">
 
 
 
@@ -35,11 +37,16 @@
                 <Label Text="Jaylon Kenter" />
                 <Label Text="JKenter@gmail.com" />
             </StackLayout>
-            <Label
+            <Frame
                 Grid.Column="1"
+                CornerRadius="23"
+                HeightRequest="12"
                 HorizontalOptions="Center"
-                Text="Change Profile"
-                VerticalOptions="Start" />
+                VerticalOptions="Start">
+
+                <Label Text="Change Profile" />
+            </Frame>
+
         </Grid>
 
         <cardsControls:CircleFrame
@@ -55,13 +62,51 @@
                 HorizontalOptions="Center"
                 Size="65"
                 VerticalOptions="Center">
-                <Image Aspect="AspectFill" Source="https://picsum.photos/500/500?image=210" />
+                <ffimage:CachedImage Aspect="AspectFill" Source="https://picsum.photos/500/500?image=290" >
+                    <ffimage:CachedImage.Transformations>
+                        <fftranform:CircleTransformation/>
+                    </ffimage:CachedImage.Transformations>
+                </ffimage:CachedImage>
             </cardsControls:CircleFrame>
-
+            
+            <!--<Image Source="https://picsum.photos/500/500?image=290" Aspect="Fill" />-->
         </cardsControls:CircleFrame>
 
-        <StackLayout Grid.Row="2" BackgroundColor="Green" />
+        <StackLayout Grid.Row="2" BackgroundColor="{DynamicResource appcolor_i2}">
+            <ContentView HeightRequest="40" HorizontalOptions="FillAndExpand">
+                <cardsControls:TabsControl BindingContext="{x:Reference list}" StripeColor="{DynamicResource appcolor_i1}">
+                    <cardsControls:TabsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Label
+                                Margin="16,0,0,0"
+                                HorizontalOptions="Start"
+                                Style="{DynamicResource Content_i7}"
+                                Text="{Binding Title}"
+                                TextColor="{DynamicResource appcolor_i4}"
+                                VerticalOptions="CenterAndExpand"
+                                VerticalTextAlignment="Center" />
+
+                        </DataTemplate>
+                    </cardsControls:TabsControl.ItemTemplate>
+                </cardsControls:TabsControl>
+            </ContentView>
+            <cards:CarouselView x:Name="list" ItemsSource="{Binding MenuItems}">
+
+                <cards:CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <ContentView>
+
+                            <Label
+                                HorizontalOptions="Center"
+                                Text="{Binding Title}"
+                                VerticalOptions="Center" />
+                        </ContentView>
+                    </DataTemplate>
+                </cards:CarouselView.ItemTemplate>
+
+            </cards:CarouselView>
+        </StackLayout>
 
     </Grid>
 
-</ContentPage>
+</local:BaseContentPage>

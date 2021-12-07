@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:InterTwitter.Views"
     xmlns:prism="http://prismlibrary.com"
     Title="Flyout"
+    
     prism:ViewModelLocator.AutowireViewModel="True"
     BackgroundColor="{DynamicResource appcolor_i2}">
 
