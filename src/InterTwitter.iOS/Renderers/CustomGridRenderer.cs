@@ -43,7 +43,7 @@ namespace InterTwitter.iOS.Renderers
             CGSize keyboardSize = result.RectangleFValue.Size;
             if (Element != null)
             {
-                Element.Margin = new Thickness(0, 0, 0, keyboardSize.Height - 35);
+                Element.Margin = new Thickness(0, 0, 0, keyboardSize.Height);
 
             }
         }
