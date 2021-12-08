@@ -6,6 +6,7 @@ using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+//test
 namespace InterTwitter
 {
     public partial class App : PrismApplication
