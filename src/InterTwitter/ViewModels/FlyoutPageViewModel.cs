@@ -27,11 +27,11 @@ namespace InterTwitter.ViewModels
 
         private void Subscribe()
         {
-            MessagingCenter.Subscribe<HomePageViewModel, bool>(this, "OpenSidebar", (sender, arg) => IsPresented = arg);
-            MessagingCenter.Subscribe<SearchPageViewModel, bool>(this, "OpenSidebar", (sender, arg) => IsPresented = arg);
-            MessagingCenter.Subscribe<BookmarksPageViewModel, bool>(this, "OpenSidebar", (sender, arg) => IsPresented = arg);
-            MessagingCenter.Subscribe<NotificationPageViewModel, bool>(this, "OpenSidebar", (sender, arg) => IsPresented = arg);
-            MessagingCenter.Subscribe<FlyoutPageFlyoutViewModel, bool>(this, "OpenSidebar", (sender, arg) => IsPresented = arg);
+            MessagingCenter.Subscribe<HomePageViewModel, bool>(this, Constants.Messages.OPEN_SIDEBAR, (sender, arg) => IsPresented = arg);
+            MessagingCenter.Subscribe<SearchPageViewModel, bool>(this, Constants.Messages.OPEN_SIDEBAR, (sender, arg) => IsPresented = arg);
+            MessagingCenter.Subscribe<BookmarksPageViewModel, bool>(this, Constants.Messages.OPEN_SIDEBAR, (sender, arg) => IsPresented = arg);
+            MessagingCenter.Subscribe<NotificationPageViewModel, bool>(this, Constants.Messages.OPEN_SIDEBAR, (sender, arg) => IsPresented = arg);
+            MessagingCenter.Subscribe<FlyoutPageFlyoutViewModel, bool>(this, Constants.Messages.OPEN_SIDEBAR, (sender, arg) => IsPresented = arg);
         }
 
         #endregion

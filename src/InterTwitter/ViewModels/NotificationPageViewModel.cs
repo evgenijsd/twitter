@@ -12,12 +12,12 @@ namespace InterTwitter.ViewModels
         public NotificationPageViewModel(INavigationService navigationService)
                                                   : base(navigationService)
         {
-            IconPath = "ic_notifications_gray.png";
+            IconPath = Prism.PrismApplicationBase.Current.Resources["ic_notifications_gray"] as ImageSource;
         }
 
         #region --- Public Properties ---
 
-        public ICommand GotoFlyoutCommand => SingleExecutionCommand.FromFunc(OnGotoFlyoutCommand);
+        public ICommand OpenFlyoutCommand => SingleExecutionCommand.FromFunc(OnOpenFlyoutCommand);
 
         #endregion
 
@@ -25,23 +25,23 @@ namespace InterTwitter.ViewModels
 
         public override void OnAppearing()
         {
-            IconPath = "ic_notifications_blue.png";
+            IconPath = Prism.PrismApplicationBase.Current.Resources["ic_notifications_blue"] as ImageSource;
         }
 
         public override void OnDisappearing()
         {
-            IconPath = "ic_notifications_gray.png";
+            IconPath = Prism.PrismApplicationBase.Current.Resources["ic_notifications_gray"] as ImageSource;
         }
 
         #endregion
 
         #region --- Private Helpers ---
 
-        private Task OnGotoFlyoutCommand()
+        private Task OnOpenFlyoutCommand()
         {
-            MessagingCenter.Send(this, "OpenSidebar", true);
-            MessagingCenter.Send(this, "TabChange", typeof(NotificationsPage));
-            return Task.FromResult(true);
+            MessagingCenter.Send(this, Constants.Messages.OPEN_SIDEBAR, true);
+            MessagingCenter.Send(this, Constants.Messages.TAB_CHANGE, typeof(NotificationsPage));
+            return Task.CompletedTask;
         }
 
         #endregion

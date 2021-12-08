@@ -7,18 +7,10 @@
     xmlns:styles="clr-namespace:InterTwitter.Resources.Styles">
 
     <prism:PrismApplication.Resources>
-
         <styles:DefaultResources>
-
             <styles:DefaultResources.MergedDictionaries>
-
                 <styles:LightModeResources />
-
             </styles:DefaultResources.MergedDictionaries>
-
         </styles:DefaultResources>
-
     </prism:PrismApplication.Resources>
-
-
 </prism:PrismApplication>

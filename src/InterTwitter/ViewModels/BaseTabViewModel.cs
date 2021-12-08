@@ -1,5 +1,6 @@
 ﻿using InterTwitter.Helpers;
 using Prism.Navigation;
+using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
 {
@@ -12,8 +13,8 @@ namespace InterTwitter.ViewModels
 
         #region --- Public Properties ---
 
-        private string _iconPath;
-        public string IconPath
+        private ImageSource _iconPath;
+        public ImageSource IconPath
         {
             get => _iconPath;
             set => SetProperty(ref _iconPath, value);

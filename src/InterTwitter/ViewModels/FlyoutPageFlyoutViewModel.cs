@@ -21,7 +21,7 @@ namespace InterTwitter.ViewModels.Flyout
                     {
                         Id = 0, Title = "Home",
                         TargetType = typeof(HomePage),
-                        ImageSource = "ic_home_gray",
+                        ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource,
                         TapCommand = new Command(OnItemTapCommand),
                     },
 
@@ -30,7 +30,7 @@ namespace InterTwitter.ViewModels.Flyout
                         Id = 1,
                         Title = "Search",
                         TargetType = typeof(SearchPage),
-                        ImageSource = "ic_search_gray",
+                        ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource,
                         TapCommand = new Command(OnItemTapCommand),
                     },
                     new MenuItemViewModel
@@ -38,7 +38,7 @@ namespace InterTwitter.ViewModels.Flyout
                         Id = 2,
                         Title = "Notification",
                         TargetType = typeof(NotificationsPage),
-                        ImageSource = "ic_notifications_gray",
+                        ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_notifications_gray"] as ImageSource,
                         TapCommand = new Command(OnItemTapCommand),
                     },
                     new MenuItemViewModel
@@ -46,7 +46,7 @@ namespace InterTwitter.ViewModels.Flyout
                         Id = 3,
                         Title = "Bookmarks",
                         TargetType = typeof(BookmarksPage),
-                        ImageSource = "ic_bookmarks_gray",
+                        ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_bookmarks_gray"] as ImageSource,
                         TapCommand = new Command(OnItemTapCommand),
                     },
                 });
@@ -94,27 +94,27 @@ namespace InterTwitter.ViewModels.Flyout
 
         private void Subscribe()
         {
-            MessagingCenter.Subscribe<SearchPageViewModel, Type>(this, "TabChange", ChangeVisualState);
-            MessagingCenter.Subscribe<BookmarksPageViewModel, Type>(this, "TabChange", ChangeVisualState);
-            MessagingCenter.Subscribe<NotificationPageViewModel, Type>(this, "TabChange", ChangeVisualState);
-            MessagingCenter.Subscribe<FlyoutPageDetailViewModel, Type>(this, "TabChange", ChangeVisualState);
+            MessagingCenter.Subscribe<SearchPageViewModel, Type>(this, Constants.Messages.TAB_CHANGE, ChangeVisualState);
+            MessagingCenter.Subscribe<BookmarksPageViewModel, Type>(this, Constants.Messages.TAB_CHANGE, ChangeVisualState);
+            MessagingCenter.Subscribe<NotificationPageViewModel, Type>(this, Constants.Messages.TAB_CHANGE, ChangeVisualState);
+            MessagingCenter.Subscribe<FlyoutPageDetailViewModel, Type>(this, Constants.Messages.TAB_CHANGE, ChangeVisualState);
         }
 
         private void ChangeVisualState(object sender, Type selectedTabType)
         {
             if (MenuItems != null)
             {
-                string[] selectedItemImageSource = new string[8];
+                ImageSource[] selectedItemImageSource = new ImageSource[8];
 
-                selectedItemImageSource[0] = "ic_home_blue";
-                selectedItemImageSource[1] = "ic_search_blue";
-                selectedItemImageSource[2] = "ic_notifications_blue";
-                selectedItemImageSource[3] = "ic_bookmarks_blue";
+                selectedItemImageSource[0] = Prism.PrismApplicationBase.Current.Resources["ic_home_blue"] as ImageSource;
+                selectedItemImageSource[1] = Prism.PrismApplicationBase.Current.Resources["ic_search_blue"] as ImageSource;
+                selectedItemImageSource[2] = Prism.PrismApplicationBase.Current.Resources["ic_notifications_blue"] as ImageSource;
+                selectedItemImageSource[3] = Prism.PrismApplicationBase.Current.Resources["ic_bookmarks_blue"] as ImageSource;
 
-                selectedItemImageSource[4] = "ic_home_gray";
-                selectedItemImageSource[5] = "ic_search_gray";
-                selectedItemImageSource[6] = "ic_notifications_gray";
-                selectedItemImageSource[7] = "ic_bookmarks_gray";
+                selectedItemImageSource[4] = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource;
+                selectedItemImageSource[5] = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource;
+                selectedItemImageSource[6] = Prism.PrismApplicationBase.Current.Resources["ic_notifications_gray"] as ImageSource;
+                selectedItemImageSource[7] = Prism.PrismApplicationBase.Current.Resources["ic_bookmarks_gray"] as ImageSource;
 
                 foreach (var item in MenuItems)
                 {
@@ -135,19 +135,19 @@ namespace InterTwitter.ViewModels.Flyout
         private void OnItemTapCommand(object param)
         {
             var menuItem = param as MenuItemViewModel;
-            MessagingCenter.Send(this, "OpenSidebar", false);
-            MessagingCenter.Send(this, "TabSelected", menuItem.Id);
+            MessagingCenter.Send(this, Constants.Messages.OPEN_SIDEBAR, false);
+            MessagingCenter.Send(this, Constants.Messages.TAB_SELECTED, menuItem.Id);
             NavigationService.NavigateAsync(nameof(menuItem.TargetType));
         }
 
         private Task OnLogoutCommand()
         {
-            return Task.FromResult(false);
+            return Task.CompletedTask;
         }
 
         private Task OnChangeProfileCommand()
         {
-            return Task.FromResult(false);
+            return Task.CompletedTask;
         }
 
         private async Task OnOpenProfileCommand()

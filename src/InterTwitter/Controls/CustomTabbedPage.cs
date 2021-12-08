@@ -42,15 +42,17 @@ namespace InterTwitter.Controls
         #endregion
 
         #region --- Private Helpers ---
+
         private void Subscribe()
         {
-            MessagingCenter.Subscribe<FlyoutPageFlyoutViewModel, int>(this, "TabSelected", ChangeTab);
+            MessagingCenter.Subscribe<FlyoutPageFlyoutViewModel, int>(this, Constants.Messages.TAB_SELECTED, ChangeTab);
         }
 
         private void ChangeTab(object obj, int id)
         {
             this.CurrentPage = this.Children[id];
         }
+
         #endregion
     }
 }

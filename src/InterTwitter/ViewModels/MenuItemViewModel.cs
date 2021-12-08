@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
 {
@@ -34,15 +35,15 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _targetType, value);
         }
 
-        private string _imageSource;
-        public string ImageSource
+        private ImageSource _imageSource;
+        public ImageSource ImageSource
         {
             get => _imageSource;
             set => SetProperty(ref _imageSource, value);
         }
 
-        private Color _textColor;
-        public Color TextColor
+        private Xamarin.Forms.Color _textColor;
+        public Xamarin.Forms.Color TextColor
         {
             get => _textColor;
             set => SetProperty(ref _textColor, value);

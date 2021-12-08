@@ -14,10 +14,6 @@ namespace InterTwitter.Views
         public HomePage()
         {
             InitializeComponent();
-
-            //MessagingCenter.Send(this, "");
-
-            //MessagingCenter.Subscribe<HomePage>(this, "", () => { })
         }
     }
 }

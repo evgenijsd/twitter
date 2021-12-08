@@ -13,7 +13,7 @@
         <StackLayout>
 
             <Button
-                Command="{Binding GotoFlyoutCommand}"
+                Command="{Binding OpenFlyoutCommand}"
                 Text="goto flyout"
                 VerticalOptions="Start" />
             <Label
