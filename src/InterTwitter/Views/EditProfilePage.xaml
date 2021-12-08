@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage
+    x:Class="InterTwitter.Views.EditProfilePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
+    xmlns:cardsControls="clr-namespace:PanCardView.Controls;assembly=PanCardView"
+    xmlns:controls="clr-namespace:InterTwitter.Controls"
+    xmlns:local="clr-namespace:InterTwitter.Views"
+    xmlns:prism="http://prismlibrary.com"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    BackgroundColor="{DynamicResource appcolor_i2}">
+
+    <local:BaseContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="entry_style" TargetType="StackLayout">
+                <Setter Property="Margin" Value="21,0,21,0" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </local:BaseContentPage.Resources>
+
+    <Grid RowDefinitions="0.087*, 0.190*, 0.069*, 0.149*, 0.149*, 0.149*, 0.149*, 0.06*" RowSpacing="0">
+
+        <StackLayout Grid.Row="0" Orientation="Horizontal">
+            <ImageButton />
+            <Label />
+            <ImageButton />
+        </StackLayout>
+
+        <Image
+            Grid.Row="1"
+            Aspect="AspectFill"
+            Source="https://picsum.photos/500/500?image=182" />
+
+        <Label Grid.Row="2" />
+
+        <StackLayout Grid.Row="3" Style="{StaticResource entry_style}">
+            <Label
+                Margin="6.6,0,0,0"
+                Style="{DynamicResource tstyle_i2}"
+                Text="Name" />
+            <controls:CustomEntry />
+        </StackLayout>
+
+        <StackLayout Grid.Row="4" Style="{StaticResource entry_style}">
+            <Label
+                Margin="6.6,0,0,0"
+                Style="{DynamicResource tstyle_i2}"
+                Text="Email" />
+            <controls:CustomEntry />
+        </StackLayout>
+
+        <StackLayout Grid.Row="5" Style="{StaticResource entry_style}">
+            <Label
+                Margin="6.6,0,0,0"
+                Style="{DynamicResource tstyle_i2}"
+                Text="Old password" />
+            <controls:CustomEntry IsSwapButtons="True"
+                EyeOffImageSource="{DynamicResource ic_eye_blue}"
+                EyeOnImageSource="{DynamicResource ic_eye_gray}"
+                IsButtonEyeVisible="True"
+                IsPassword="True" />
+        </StackLayout>
+
+        <StackLayout Grid.Row="6" Style="{StaticResource entry_style}">
+            <Label
+                Margin="6.6,0,0,0"
+                Style="{DynamicResource tstyle_i2}"
+                Text="New password" />
+            <controls:CustomEntry IsSwapButtons="True"
+                EyeOffImageSource="{DynamicResource ic_eye_blue}"
+                EyeOnImageSource="{DynamicResource ic_eye_gray}"
+                IsButtonEyeVisible="True"
+                IsPassword="True" />
+        </StackLayout>
+
+        <Label Grid.Row="7" />
+    </Grid>
+
+</local:BaseContentPage>
