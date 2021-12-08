@@ -9,9 +9,6 @@ namespace InterTwitter.Services.Registration
 {
     public class RegistrationService : IRegistrationService
     {
-        private const int MAX_LENGTH_EMAIL = 64;
-        private const int MIN_LENGTH_NAME = 2;
-        private const int MIN_PASSWORD_LENGTH = 6;
         private List<UserModel> _users;
 
         public RegistrationService()
