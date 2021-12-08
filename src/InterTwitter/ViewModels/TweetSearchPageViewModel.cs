@@ -74,10 +74,10 @@ namespace InterTwitter.ViewModels
         public ICommand StartTweetsSearchTapCommand => _startTweetsSearchTapCommand ??= SingleExecutionCommand.FromFunc(OnStartTweetsSearchCommandTapAsync);
 
         private ICommand _backToHashtagsTapCommand;
-        public ICommand BackTohashtagsTapCommand => _backToHashtagsTapCommand ??= SingleExecutionCommand.FromFunc(OnBackTohashTagsCommandTapAsync);
+        public ICommand BackToHashtagsTapCommand => _backToHashtagsTapCommand ??= SingleExecutionCommand.FromFunc(OnBackToHashTagsCommandTapAsync);
 
-        private ICommand _hashTagTapCommand;
-        public ICommand HashTagTapCommand => _hashTagTapCommand ??= SingleExecutionCommand.FromFunc(OnHashTagTapCommandAsync);
+        private ICommand _hashtagTapCommand;
+        public ICommand HashtagTapCommand => _hashtagTapCommand ??= SingleExecutionCommand.FromFunc(OnHashtagTapCommandAsync);
 
         #endregion
 
@@ -182,10 +182,9 @@ namespace InterTwitter.ViewModels
         {
             base.OnNavigatedTo(parameters);
 
-            /* TO DO: Load avatar icon */
             AvatarIcon = "pic_profile_small";
 
-            /* TO DO: Load hashtags */
+            /* TO DO: load hashtags */
         }
 
         #endregion
@@ -207,7 +206,7 @@ namespace InterTwitter.ViewModels
             return Task.CompletedTask;
         }
 
-        private Task OnHashTagTapCommandAsync(object obj)
+        private Task OnHashtagTapCommandAsync()
         {
             QueryString = SelectedHashtag.Text;
             TweetsSearch();
@@ -215,7 +214,7 @@ namespace InterTwitter.ViewModels
             return Task.CompletedTask;
         }
 
-        private Task OnBackTohashTagsCommandTapAsync()
+        private Task OnBackToHashTagsCommandTapAsync()
         {
             TweetsSearchState = ESearchState.NotActive;
 

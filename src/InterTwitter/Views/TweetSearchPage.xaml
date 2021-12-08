@@ -52,7 +52,7 @@
                                     <ListView.Behaviors>
 
                                         <Behaviors:EventToCommandBehavior EventName="ItemTapped"
-                                                                          Command="{Binding HashTagTapCommand}"/>
+                                                                          Command="{Binding HashtagTapCommand}"/>
                                         
                                     </ListView.Behaviors>
 
@@ -210,7 +210,7 @@
                     <controls:SearchBar SearchState="{Binding TweetsSearchState}"
                                         AvatarIconSource="{Binding AvatarIcon}"
                                         AvatarIconTapCommand="{Binding AvatarIconTapCommand}"
-                                        BackIconTapCommand="{Binding BackTohashtagsTapCommand}"
+                                        BackIconTapCommand="{Binding BackToHashtagsTapCommand}"
                                         PressOkOnKeyboardCommand="{Binding StartTweetsSearchTapCommand}"
                                         BackgroundColor="{DynamicResource appcolor_i2}"
                                         QueryString="{Binding QueryString}" />

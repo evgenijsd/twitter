@@ -36,8 +36,7 @@ namespace InterTwitter
             Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             LocalizationResourceManager.Current.Init(Strings.ResourceManager);
 
-            await NavigationService.NavigateAsync(nameof(TweetSearchPage));
-            //await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainPage)}");
+            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainPage)}");
         }
 
         protected override void OnStart()
