@@ -11,108 +11,109 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Grid RowSpacing="0" Grid.Row="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="170" />
-                <RowDefinition Height="100" />
-                <RowDefinition Height="100" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0"
-                  ColumnSpacing="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="40" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="40" />
-                </Grid.ColumnDefinitions>
-                <ImageButton Grid.Column="0"
-                             Command="{Binding StartCommand}"
-                             Source="{DynamicResource ic_left_gray}"
-                             HeightRequest="70"
-                             Margin="0,10,0,0"
-                             Aspect="AspectFit"
-                             VerticalOptions="StartAndExpand"
-                             BackgroundColor="Transparent" />
-                <Image Source="{DynamicResource pic_owl_blue_small}"
-                       Grid.Column="1"
-                       HorizontalOptions="CenterAndExpand"
-                       VerticalOptions="Start"
-                       Aspect="AspectFill"
-                       Margin="0,25,0,0"
-                       HeightRequest="45"
-                       WidthRequest="50" />
-                <Label Text="{res:Translate CreateYourAccount}"
-                       Grid.Column="1"
-                       FontSize="{DynamicResource tsize_i1}"
-                       Style="{DynamicResource tstyle_i1}"
-                       Margin="0,85,0,0"
-                       HorizontalOptions="CenterAndExpand" />
-            </Grid>
-
-            <Label Grid.Row="1"
-                   Margin="24,0,0,0"
-                   Text="{res:Translate Name}"
-                   FontSize="{DynamicResource tsize_i4}"
-                   IsVisible="{Binding IsVisibleName}"
-                   Style="{DynamicResource tstyle_i2}" />
-            <controls:CustomEntry Grid.Row="1"
-                                  Margin="20,18,20,0"
-                                  Text="{Binding Name}"
-                                  ClearImageSource="{DynamicResource ic_clear_gray}"
-                                  FontFamily="Ubuntu-Regular"
-                                  PlaceholderColor="{DynamicResource appcolor_i4}"
-                                  TextColor="{DynamicResource appcolor_i3}"
-                                  IsVisible="true"
-                                  IsFocusedVisible="{Binding IsVisibleName}"
-                                  IsFocusedButton="{Binding IsVisibleButton}"
-                                  Placeholder="{res:Translate Name}" />
-            <Label Grid.Row="1"
-                   Text="{res:Translate PleaseName}"
-                   Margin="20,65,0,0"
-                   Style="{DynamicResource tstyle_i3}"
-                   FontSize="{DynamicResource tsize_i4}"
-                   IsVisible="{Binding IsWrongName}" />
-
-            <Label Grid.Row="2"
-                   Text="{res:Translate Email}"
-                   FontSize="{DynamicResource tsize_i4}"
-                   Margin="24,0,0,0"
-                   IsVisible="{Binding IsVisibleEmail}"
-                   Style="{DynamicResource tstyle_i2}" />
-            <controls:CustomEntry Grid.Row="2"
-                                  Text="{Binding Email}"
-                                  Margin="20,18,20,0"
-                                  IsFocusedVisible="{Binding IsVisibleEmail}"
-                                  IsFocusedButton="{Binding IsVisibleButton}"
-                                  Placeholder="{res:Translate Email}"
-                                  ClearImageSource="{DynamicResource ic_clear_gray}"
-                                  FontFamily="Ubuntu-Regular"
-                                  PlaceholderColor="{DynamicResource appcolor_i4}"
-                                  TextColor="{DynamicResource appcolor_i3}" />
-            <Label Grid.Row="2"
-                   Text="{res:Translate WrongEmail}"
-                   Style="{DynamicResource tstyle_i3}"
-                   FontSize="{DynamicResource tsize_i4}"
-                   Margin="20,65,0,0"
-                   IsVisible="{Binding IsWrongEmail}" />
-
-            <StackLayout Grid.Row="3"
-                         HorizontalOptions="Center"
-                         Margin="0,20,0,0"
-                         IsVisible="{Binding IsUnVisibleButton}">
-                <Button Text="{res:Translate Next}"
-                        WidthRequest="218"
-                        CornerRadius="25"
-                        HeightRequest="50"
-                        Command="{Binding PasswordCommand}"
-                        BackgroundColor="{DynamicResource appcolor_i1}"
-                        FontAttributes="Bold"
-                        FontSize="{DynamicResource tsize_i3}"
-                        FontFamily="Ubuntu-Regular"
-                        TextColor="{DynamicResource appcolor_i2}" />
-            </StackLayout>
+            <Grid RowSpacing="0"
+                  Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="170" />
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0"
+                      ColumnSpacing="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                    </Grid.ColumnDefinitions>
+                    <ImageButton Grid.Column="0"
+                                 Command="{Binding StartCommand}"
+                                 Source="{DynamicResource ic_left_gray}"
+                                 HeightRequest="70"
+                                 Margin="0,10,0,0"
+                                 Aspect="AspectFit"
+                                 VerticalOptions="StartAndExpand"
+                                 BackgroundColor="Transparent" />
+                    <Image Source="{DynamicResource pic_owl_blue_small}"
+                           Grid.Column="1"
+                           HorizontalOptions="CenterAndExpand"
+                           VerticalOptions="Start"
+                           Aspect="AspectFill"
+                           Margin="0,25,0,0"
+                           HeightRequest="45"
+                           WidthRequest="50" />
+                    <Label Text="{res:Translate CreateYourAccount}"
+                           Grid.Column="1"
+                           FontSize="{DynamicResource tsize_i1}"
+                           Style="{DynamicResource tstyle_i1}"
+                           Margin="0,85,0,0"
+                           HorizontalOptions="CenterAndExpand" />
                 </Grid>
+
+                <Label Grid.Row="1"
+                       Margin="24,0,0,0"
+                       Text="{res:Translate Name}"
+                       FontSize="{DynamicResource tsize_i4}"
+                       IsVisible="{Binding IsVisibleName}"
+                       Style="{DynamicResource tstyle_i2}" />
+                <controls:CustomEntry Grid.Row="1"
+                                      Margin="20,18,20,0"
+                                      Text="{Binding Name}"
+                                      ClearImageSource="{DynamicResource ic_clear_gray}"
+                                      FontFamily="Ubuntu-Regular"
+                                      PlaceholderColor="{DynamicResource appcolor_i4}"
+                                      TextColor="{DynamicResource appcolor_i3}"
+                                      IsVisible="true"
+                                      IsFocusedVisible="{Binding IsVisibleName}"
+                                      IsFocusedButton="{Binding IsVisibleButton}"
+                                      Placeholder="{res:Translate Name}" />
+                <Label Grid.Row="1"
+                       Text="{res:Translate PleaseName}"
+                       Margin="20,65,0,0"
+                       Style="{DynamicResource tstyle_i3}"
+                       FontSize="{DynamicResource tsize_i4}"
+                       IsVisible="{Binding IsWrongName}" />
+
+                <Label Grid.Row="2"
+                       Text="{res:Translate Email}"
+                       FontSize="{DynamicResource tsize_i4}"
+                       Margin="24,0,0,0"
+                       IsVisible="{Binding IsVisibleEmail}"
+                       Style="{DynamicResource tstyle_i2}" />
+                <controls:CustomEntry Grid.Row="2"
+                                      Text="{Binding Email}"
+                                      Margin="20,18,20,0"
+                                      IsFocusedVisible="{Binding IsVisibleEmail}"
+                                      IsFocusedButton="{Binding IsVisibleButton}"
+                                      Placeholder="{res:Translate Email}"
+                                      ClearImageSource="{DynamicResource ic_clear_gray}"
+                                      FontFamily="Ubuntu-Regular"
+                                      PlaceholderColor="{DynamicResource appcolor_i4}"
+                                      TextColor="{DynamicResource appcolor_i3}" />
+                <Label Grid.Row="2"
+                       Text="{res:Translate WrongEmail}"
+                       Style="{DynamicResource tstyle_i3}"
+                       FontSize="{DynamicResource tsize_i4}"
+                       Margin="20,65,0,0"
+                       IsVisible="{Binding IsWrongEmail}" />
+
+                <StackLayout Grid.Row="3"
+                             HorizontalOptions="Center"
+                             Margin="0,20,0,0"
+                             IsVisible="{Binding IsUnVisibleButton}">
+                    <Button Text="{res:Translate Next}"
+                            WidthRequest="218"
+                            CornerRadius="25"
+                            HeightRequest="50"
+                            Command="{Binding PasswordCommand}"
+                            BackgroundColor="{DynamicResource appcolor_i1}"
+                            FontAttributes="Bold"
+                            FontSize="{DynamicResource tsize_i3}"
+                            FontFamily="Ubuntu-Regular"
+                            TextColor="{DynamicResource appcolor_i2}" />
+                </StackLayout>
+            </Grid>
 
             <StackLayout Grid.Row="0"
                          VerticalOptions="EndAndExpand"
@@ -130,6 +131,7 @@
                        TextColor="{DynamicResource appcolor_i2}"
                        HorizontalOptions="Center" />
             </StackLayout>
+
         </controls:CustomGrid>
     </view:BaseContentPage.Content>
 </view:BaseContentPage>
