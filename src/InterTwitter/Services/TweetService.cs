@@ -23,6 +23,7 @@ namespace InterTwitter.Services
         }
 
         #region -- ITweetService implementation --
+
         public async Task<AOResult<IEnumerable<BaseTweetViewModel>>> GetUserTweetsAsync(int userId)
         {
             var result = new AOResult<IEnumerable<BaseTweetViewModel>>();

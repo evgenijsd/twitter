@@ -16,6 +16,7 @@ namespace InterTwitter.Models.TweetViewModel
             _userModel = userModel;
             _tweetModel = tweetModel;
         }
+
         #region -- Public properties --
 
         private UserModel _userModel;
