@@ -16,13 +16,13 @@
                   Padding="0"
                   RowSpacing="0"
                   RowDefinitions="33"
-                  ColumnSpacing="10"
+                  ColumnSpacing="8"
                   ColumnDefinitions="0.125*, *"
                   BackgroundColor="Transparent">
 
                 <!-- PROFILE/BACK ICON -->
                 <stateContainer:StateContainer Grid.Column="0"
-                                               Padding="3"
+                                               Padding="2.5"
                                                State="{Binding SearchState, Source={x:Reference searchBar}}">
 
                     <stateContainer:StateContainer.Conditions>

@@ -24,7 +24,6 @@
                 <!-- CONTENT -->
                 <stateContainer:StateContainer Grid.Row="1"
                                                VerticalOptions="FillAndExpand"
-                                               Margin="14, 0"
                                                Padding="3, 0, 3, 0"
                                                State="{Binding TweetsSearchState}">
 
@@ -33,7 +32,8 @@
                         <!-- SEARCH IS NOT ACTIVE - DISPLAY POPULAR THEMES -->
                         <stateContainer:StateCondition State="NotActive">
 
-                            <StackLayout Spacing="0">
+                            <StackLayout Spacing="0"
+                                         Margin="10.5, 0">
 
                                 <Label Margin="0, 19, 0, 10.5"
                                        Text="{xct:Translate PopularTheme}"
@@ -72,7 +72,7 @@
 
                                                             <StackLayout>
 
-                                                                <Label Margin="0, 4, 0, 2"
+                                                                <Label Margin="0, 5, 0, 2"
                                                                        Style="{DynamicResource tstyle_i6}"
                                                                        Text="{Binding Text}" />
 
@@ -94,7 +94,7 @@
 
                                                             </StackLayout>
 
-                                                            <Image Margin="0, 0, 12, 10"
+                                                            <Image Margin="0, 0, 15.5, 10"
                                                                    HorizontalOptions="EndAndExpand"
                                                                    VerticalOptions="Center"
                                                                    Scale="1.25"
@@ -132,19 +132,9 @@
                                     <!-- TWEETS FOUND - DISPLAY TWEETS -->
                                     <stateContainer:StateCondition State="Success">
 
-                                        <Grid>
+                                        <Grid> 
 
                                             <!-- TWEETS LIST MUST BE HERE -->
-
-                                            <sh:Shadows VerticalOptions="EndAndExpand"
-                                                        Shades="{sh:SingleShade Offset='0, -2.858',
-                                                                                Opacity={OnPlatform Android=0.08, iOS=0.7},
-                                                                                BlurRadius={OnPlatform Android=8, iOS=2},
-                                                                                Color={StaticResource appcolor_i3}}">
-
-                                                <BoxView HeightRequest="2"></BoxView>
-
-                                            </sh:Shadows>
 
                                         </Grid>
 
@@ -190,10 +180,9 @@
                 <sh:Shadows Grid.Row="0"
                             VerticalOptions="EndAndExpand"
                             IsVisible="false"
-                            CornerRadius="30"
                             Shades="{sh:SingleShade Offset='0, 2.858',
-                                                    Opacity={OnPlatform Android=0.08, iOS=0.7},
-                                                    BlurRadius={OnPlatform Android=8, iOS=2},
+                                                    Opacity={OnPlatform Android=0.08, iOS=0.08},
+                                                    BlurRadius={OnPlatform Android=8, iOS=8},
                                                     Color={StaticResource appcolor_i3}}">
 
                     <sh:Shadows.Triggers>
