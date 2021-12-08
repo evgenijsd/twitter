@@ -12,7 +12,7 @@
                  Spacing="0">
 
             <ffimageloading:CachedImage VerticalOptions="Start"
-                                        Source="man"
+                                        Source="{Binding UserModel.AvatarPath}"
                                         HeightRequest="34"
                                         Margin="0, 0, 15, 0">
 
@@ -25,16 +25,16 @@
             <StackLayout VerticalOptions="Start">
 
                 <Label Style="{StaticResource tstyle_i6}"
-                       Text="{Binding UserName}" 
+                       Text="{Binding UserModel.Name}" 
                        FontAttributes="Bold"/>
 
                 <Label Style="{StaticResource tstyle_i7}" 
                        VerticalOptions="Start"
                        MaxLines="5" 
                        LineBreakMode="TailTruncation"
-                       Text="{Binding Text}"/>
+                       Text="{Binding TweetModel.Text}"/>
 
-                <flv:FlowListView FlowColumnCount="{Binding CountColumn}"
+                <flv:FlowListView FlowColumnCount="{Binding ColumnNumber}"
                                   RowHeight="{Binding RowHeight}"
                                   HasUnevenRows="False"
                                   HorizontalScrollBarVisibility="Never"
@@ -42,7 +42,7 @@
                                   SeparatorVisibility="None"
                                   FlowColumnExpand="First"
                                   VerticalOptions="Start"
-                                  FlowItemsSource="{Binding ImagesPaths}">
+                                  FlowItemsSource="{Binding TweetModel.MediaPaths}">
 
                     <flv:FlowListView.FlowColumnTemplate>
                         <DataTemplate>
@@ -52,7 +52,8 @@
                                    CornerRadius="5"
                                    IsClippedToBounds="True">
 
-                                <ffimageloading:CachedImage Aspect="AspectFit" Source="{Binding .}"/>
+                                <ffimageloading:CachedImage Aspect="AspectFit" 
+                                                            Source="{Binding .}"/>
 
                             </Frame>
                         </DataTemplate>
@@ -65,9 +66,10 @@
                              Padding="0">
 
                     <Label Style="{StaticResource tstyle_i8}"
-                           Text="{Binding CreationTime,  StringFormat='{}{0:dd.MM.yyyy • HH:mm}'}"/>
+                           Text="{Binding TweetModel.CreationTime,  StringFormat='{}{0:dd.MM.yyyy • HH:mm}'}"/>
 
-                    <ffimageloading:CachedImage Source="ic_like_gray" HorizontalOptions="EndAndExpand">
+                    <ffimageloading:CachedImage Source="ic_like_gray" 
+                                                HorizontalOptions="EndAndExpand">
                         <ffimageloading:CachedImage.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding LikeTweetCommand}"/>
                         </ffimageloading:CachedImage.GestureRecognizers>
@@ -80,7 +82,9 @@
                         </ffimageloading:CachedImage.Triggers>
                     </ffimageloading:CachedImage>
 
-                    <Label Text="{Binding LikesNumber}" Margin="0,0,15,0" Style="{StaticResource tstyle_i9}">
+                    <Label Text="{Binding LikesNumber}" 
+                           Margin="0,0,15,0" 
+                           Style="{StaticResource tstyle_i9}">
                         <Label.Triggers>
                             <DataTrigger TargetType="Label" Binding="{Binding IsWeetLiked}" Value="true">
                                 <Setter Property="TextColor" Value="{StaticResource appcolor_i1}"/>

@@ -1,5 +1,6 @@
 ﻿using DLToolkit.Forms.Controls;
 using InterTwitter.Services;
+using InterTwitter.Services.Settings;
 using InterTwitter.ViewModels;
 using InterTwitter.Views;
 using Prism.Ioc;
@@ -23,6 +24,7 @@ namespace InterTwitter
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             //Services
+            containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
             containerRegistry.RegisterInstance<IMockService>(Container.Resolve<MockService>());
             containerRegistry.RegisterInstance<ITweetService>(Container.Resolve<TweetService>());
             // Navigation

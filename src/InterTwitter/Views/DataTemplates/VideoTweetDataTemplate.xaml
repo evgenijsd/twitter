@@ -14,7 +14,7 @@
 
             <ffimageloading:CachedImage
             VerticalOptions="Start"
-            Source="man"
+            Source="{Binding UserModel.AvatarPath}"
             HeightRequest="34"
             Margin="0, 0, 15, 0">
 
@@ -28,7 +28,7 @@
                      VerticalOptions="Start">
 
                 <Label Style="{StaticResource tstyle_i6}"
-                       Text="{Binding UserName}" 
+                       Text="{Binding UserModel.UserName}" 
                        FontAttributes="Bold"/>
 
                 <Grid>
@@ -40,7 +40,7 @@
 
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="{Binding Text}">
+                                <Span Text="{Binding TweetModel.Text}">
                                     <Span.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding OnRegCommand}"/>
                                     </Span.GestureRecognizers>
@@ -76,7 +76,7 @@
 
                     <WebView Grid.Row="0"
                                  Grid.Column="0"
-                                 Source="{Binding VideoPath}" 
+                                 Source="{Binding TweetModel.MediaPaths}" 
                                  WidthRequest="300"
                                  HeightRequest="180"
                                  MinimumWidthRequest="360"
@@ -89,7 +89,7 @@
                              Padding="0">
 
                     <Label Style="{StaticResource tstyle_i8}"
-                           Text="{Binding CreationTime,  StringFormat='{}{0:dd.MM.yyyy • HH:mm}'}"/>
+                           Text="{Binding TweetModel.CreationTime,  StringFormat='{}{0:dd.MM.yyyy • HH:mm}'}"/>
 
                     <ffimageloading:CachedImage Source="ic_like_gray" HorizontalOptions="EndAndExpand">
                         <ffimageloading:CachedImage.GestureRecognizers>

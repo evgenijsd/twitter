@@ -28,16 +28,13 @@ namespace InterTwitter.Helpers
             DataTemplate dataTemplate = null;
 
             var tweet = item as BaseTweetViewModel;
-            switch (tweet.TweetType)
+            switch (tweet.TweetModel.Media)
             {
                 case TweetType.ImagesTweet:
                      dataTemplate = ImageTweetDataTemplate;
                     break;
                 case TweetType.VideoTweet:
                     dataTemplate = VideoTweetDataTemplate;
-                    break;
-                case TweetType.GifTweet:
-                    dataTemplate = GifTweetDataTemplate;
                     break;
                 default:
                     dataTemplate = TextTweetDataTemplate;

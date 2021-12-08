@@ -12,8 +12,8 @@ namespace InterTwitter.Models.TweetViewModel
     {
         public BaseTweetViewModel(UserModel userModel, TweetModel tweetModel)
         {
-            _tweetModel = tweetModel;
             _userModel = userModel;
+            _tweetModel = tweetModel;
         }
         #region -- Public properties --
 
@@ -68,7 +68,6 @@ namespace InterTwitter.Models.TweetViewModel
         private ICommand _markTweetCommand;
         public ICommand MarkTweetCommand => _markTweetCommand ?? (_markTweetCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnMarkAsync));
 
-
         private ICommand _moveToProfileCommand;
         public ICommand MoveToProfileCommand => _moveToProfileCommand ?? (_moveToProfileCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnGoToProfileAsync));
 
@@ -90,7 +89,7 @@ namespace InterTwitter.Models.TweetViewModel
 
         private Task OnOpenTweetAsync(BaseTweetViewModel arg)
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
 
         private Task OnMarkAsync(BaseTweetViewModel tweet)

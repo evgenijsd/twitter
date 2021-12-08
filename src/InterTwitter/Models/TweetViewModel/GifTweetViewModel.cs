@@ -4,17 +4,15 @@ using System.Text;
 
 namespace InterTwitter.Models.TweetViewModel
 {
-    public class GifTweetViewModel : BaseTweetViewModel
+    public class GifTweetViewModel
     {
         #region -- Public properties --
-
-        private string _gifPath;
-        public string GifPath
-        {
-            get => _gifPath;
-            set => SetProperty(ref _gifPath, value);
-        }
-
+        //private string _gifPath;
+        //public string GifPath
+        //{
+        //    get => _gifPath;
+        //    set => SetProperty(ref _gifPath, value);
+        //}
         #endregion
     }
 }

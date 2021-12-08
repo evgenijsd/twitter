@@ -4,17 +4,15 @@ using System.Text;
 
 namespace InterTwitter.Models.TweetViewModel
 {
-    public class VideoTweetViewModel : BaseTweetViewModel
+    public class VideoTweetViewModel
     {
         #region -- Public properties --
-
-        private string _videoPath;
-        public string VideoPath
-        {
-            get => _videoPath;
-            set => SetProperty(ref _videoPath, value);
-        }
-
+        //private string _videoPath;
+        //public string VideoPath
+        //{
+        //    get => _videoPath;
+        //    set => SetProperty(ref _videoPath, value);
+        //}
         #endregion
     }
 }

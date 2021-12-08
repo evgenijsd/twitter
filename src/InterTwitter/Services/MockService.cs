@@ -15,8 +15,9 @@ namespace InterTwitter.Services
         }
 
         #region -- IMockService implementation --
-        public List<UserModel> Users { get; set; }
-        public List<TweetModel> Tweets { get; set; }
+
+        public IEnumerable<UserModel> Users { get; set; }
+        public IEnumerable<TweetModel> Tweets { get; set; }
 
         #endregion
 
@@ -29,10 +30,10 @@ namespace InterTwitter.Services
                 new UserModel
                 {
                     Id = 1,
-                    Name = "Tom Black",
+                    Name = "Bill Gates",
                     Email = "test@gmail.com",
                     Password = "1111",
-                    AvatarPath = "https://yapx.ru/viral/O39J0",
+                    AvatarPath = "https://inhabitat.com/wp-content/blogs.dir/1/files/2017/08/Bill-Gates-889x598.jpg",
                     BackgroundUserImage = "https://yapx.ru/viral/PMYaG",
                 },
                 new UserModel
@@ -41,7 +42,7 @@ namespace InterTwitter.Services
                     Name = "Kate White",
                     Email = "test2@gmail.com",
                     Password = "2222",
-                    AvatarPath = "https://ru.depositphotos.com/stock-photos/%D0%BB%D0%B8%D1%86%D0%BE.html?qview=36297389",
+                    AvatarPath = "https://i.pinimg.com/236x/01/e1/10/01e11011168eb3e1c83d16747192d490.jpg",
                     BackgroundUserImage = "https://yapx.ru/viral/PMYaG",
                 },
                 new UserModel
@@ -50,25 +51,25 @@ namespace InterTwitter.Services
                     Name = "Sam Smith",
                     Email = "test3@gmail.com",
                     Password = "3333",
-                    AvatarPath = "https://ru.depositphotos.com/stock-photos/%D0%BB%D0%B8%D1%86%D0%BE.html?qview=19266867",
-                    BackgroundUserImage = "https://yapx.ru/viral/PMYaG",
-                },
-                new UserModel
-                {
-                    Id = 3,
-                    Name = "Tim White",
-                    Email = "test4@gmail.com",
-                    Password = "4444",
-                    AvatarPath = "https://ru.depositphotos.com/stock-photos/%D0%BB%D0%B8%D1%86%D0%BE.html?qview=10729165",
+                    AvatarPath = "https://vinyla.com/files/products/sam-smith-the-thrill-of-it-all.1280x1280.jpg?7fbc171f41eab1db6755cea723eaa98f",
                     BackgroundUserImage = "https://yapx.ru/viral/PMYaG",
                 },
                 new UserModel
                 {
                     Id = 4,
-                    Name = "Tim White",
+                    Name = "Steve Jobs",
                     Email = "test4@gmail.com",
                     Password = "4444",
-                    AvatarPath = "https://ru.depositphotos.com/stock-photos/%D0%BB%D0%B8%D1%86%D0%BE.html?qview=24980299",
+                    AvatarPath = "https://upload.wikimedia.org/wikipedia/commons/b/b9/Steve_Jobs_Headshot_2010-CROP.jpg",
+                    BackgroundUserImage = "https://yapx.ru/viral/PMYaG",
+                },
+                new UserModel
+                {
+                    Id = 5,
+                    Name = "Elon musk ",
+                    Email = "test4@gmail.com",
+                    Password = "4444",
+                    AvatarPath = "https://lh3.googleusercontent.com/proxy/rwJfD7fujR9zs5CXXesandy8nUc4PXDpbJ4zFpWJcOhofAp5QY2-wlVY7Mbf4-Ne39yzjDvrjszKSHEHCszSJGc0Hw",
                     BackgroundUserImage = "https://yapx.ru/viral/PMYaG",
                 },
             };
@@ -86,12 +87,12 @@ namespace InterTwitter.Services
                     Media = Enums.TweetType.ImagesTweet,
                     MediaPaths = new List<string>
                     {
-                        "https://www.google.com/search?q=%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&sxsrf=AOaemvKFjuN0q93Rk8eQw1xn0wsgsdC48w:1638891686174&tbm=isch&source=iu&ictx=1&fir=HnhKplPWRplAkM%252CL8rVp5-ioCDE7M%252C_%253BYpoI8CfGWzIXnM%252C1fs8sSJXUJGajM%252C_%253BRFhiNUszsG7cMM%252C8BIoRL6-LGNLiM%252C_%253BD0bk8ElIOhiZ5M%252CZJLWMCPC-_5rnM%252C_%253BbPlxidVrXgqXEM%252COnwwlJcQkF8MpM%252C_%253B2UgBGuhHoDuRLM%252CVfMqV6vzF2zCOM%252C_%253BAeiapjk76udJkM%252CCsQ2GrWsr0EnMM%252C_%253BIeY4BSkRnz6uzM%252Csv_TK010Or4XHM%252C_%253B_X0kq5PtD0pEcM%252CGdIVzLX49klOrM%252C_%253BUgREe_1vqkFAUM%252C3zMrEijU_-MiFM%252C_%253BD7vBWSFMCZDnPM%252CbzlpbwEP8kf0HM%252C_%253BjhNZyWamo_ATjM%252CgUF_TIJvyPy1nM%252C_%253Bu1v9qDnMo17dYM%252Cd1AsRu93nuUrhM%252C_%253BWQJDCwjnjFuftM%252CPTj2zCP0IlvLWM%252C_%253BmhJzJuUufQVwHM%252CsEGIYATiGbAkcM%252C_%253B2Ph16iACytFGwM%252CcrHo620giV5_JM%252C_%253BuFV_9rgQPyFBkM%252C4tK2AtcQn54dXM%252C_%253BUx_pBzczrhsiMM%252Cl8a2l50v2XhkBM%252C_&vet=1&usg=AI4_-kSFi3ZDecMqKIbCdrARKChWUpB8Mg&sa=X&ved=2ahUKEwih7J2mg9L0AhVPhv0HHfDwC1wQ9QF6BAgPEAE&biw=1654&bih=1262&dpr=1",
-                        "https://mirpozitiva.ru/photo/1252-krasivye-kartinki.html",
-                        "https://mirpozitiva.ru/photo/1252-krasivye-kartinki.html",
-                        "https://mirpozitiva.ru/photo/1252-krasivye-kartinki.html",
-                        "https://mirpozitiva.ru/photo/1252-krasivye-kartinki.html",
-                        "https://mirpozitiva.ru/photo/1252-krasivye-kartinki.html",
+                        "https://images.unsplash.com/photo-1610878180933-123728745d22?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2FuYWRhJTIwbmF0dXJlfGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+                        "https://i.pinimg.com/originals/a7/3d/6e/a73d6e4ac85c6a822841e449b24c78e1.jpg",
+                        "https://media.springernature.com/full/springer-cms/rest/v1/img/18893370/v1/height/320",
+                        "https://www.lombardodier.com/files/live/sites/loportail/files/news/2021/May/20210521/Nature_LOcom.jpg",
+                        "https://aka.ms/campus.jpg",
+                        "image1",
                     },
                     CreationTime = DateTime.Now,
                 },
@@ -103,7 +104,7 @@ namespace InterTwitter.Services
                     Media = Enums.TweetType.GifTweet,
                     MediaPaths = new List<string>
                     {
-                        "https://i.gifer.com/7rF1.mp4",
+                        "http://nretnil.com/gif/bang.gif",
                     },
                     CreationTime = DateTime.Now,
                 },

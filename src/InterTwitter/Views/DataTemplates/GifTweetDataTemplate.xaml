@@ -11,7 +11,7 @@
                  Spacing="0">
 
             <ffimageloading:CachedImage VerticalOptions="Start"
-                                        Source="man"
+                                        Source="{Binding UserModel.AvatarPath}"
                                         HeightRequest="34"
                                         Margin="0, 0, 15, 0">
 
@@ -24,16 +24,16 @@
             <StackLayout VerticalOptions="Start">
 
                 <Label Style="{StaticResource tstyle_i6}"
-                       Text="{Binding UserName}" 
+                       Text="{Binding UserModel.UserName}" 
                        FontAttributes="Bold"/>
 
                 <Label Style="{StaticResource tstyle_i7}" 
                        VerticalOptions="Start"
                        MaxLines="5" 
                        LineBreakMode="TailTruncation"
-                       Text="{Binding Text}"/>
+                       Text="{Binding TweetModel.Text}"/>
 
-                <ffimageloading:CachedImage Source="{Binding GifPath}"
+                <ffimageloading:CachedImage Source="{Binding TweetModel.MediaPaths}"
                                             Aspect="AspectFill"/>
 
                 <StackLayout Orientation="Horizontal"
@@ -41,7 +41,7 @@
                              Padding="0">
 
                     <Label Style="{StaticResource tstyle_i8}"
-                           Text="{Binding CreationTime,  StringFormat='{}{0:dd.MM.yyyy • HH:mm}'}"/>
+                           Text="{Binding TweetModel.CreationTime,  StringFormat='{}{0:dd.MM.yyyy • HH:mm}'}"/>
 
                     <ffimageloading:CachedImage Source="ic_like_gray" HorizontalOptions="EndAndExpand">
                         <ffimageloading:CachedImage.GestureRecognizers>
