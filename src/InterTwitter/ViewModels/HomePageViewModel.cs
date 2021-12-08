@@ -9,7 +9,7 @@ namespace InterTwitter.ViewModels
     public class HomePageViewModel : BaseTabViewModel
     {
         public HomePageViewModel(INavigationService navigationService)
-                                                  : base(navigationService)
+            : base(navigationService)
         {
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource;
         }

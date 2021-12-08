@@ -7,7 +7,7 @@ namespace InterTwitter.ViewModels
     public class FlyOutPageViewModel : BaseViewModel
     {
         public FlyOutPageViewModel(INavigationService navigationService)
-                                               : base(navigationService)
+            : base(navigationService)
         {
             Subscribe();
         }

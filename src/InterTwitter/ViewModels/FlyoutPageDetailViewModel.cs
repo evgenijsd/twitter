@@ -9,7 +9,7 @@ namespace InterTwitter.ViewModels.Flyout
     public class FlyoutPageDetailViewModel : BaseViewModel
     {
         public FlyoutPageDetailViewModel(INavigationService navigationService)
-                                                     : base(navigationService)
+            : base(navigationService)
         {
         }
 

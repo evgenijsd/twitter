@@ -7,7 +7,7 @@ namespace InterTwitter.ViewModels
     public class BaseTabViewModel : BaseViewModel, IPageActionsHandler
     {
         public BaseTabViewModel(INavigationService navigationService)
-                                                  : base(navigationService)
+            : base(navigationService)
         {
         }
 

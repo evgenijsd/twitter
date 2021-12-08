@@ -10,7 +10,7 @@ namespace InterTwitter.ViewModels
     public class NotificationPageViewModel : BaseTabViewModel
     {
         public NotificationPageViewModel(INavigationService navigationService)
-                                                  : base(navigationService)
+            : base(navigationService)
         {
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_notifications_gray"] as ImageSource;
         }

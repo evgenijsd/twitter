@@ -10,7 +10,7 @@ namespace InterTwitter.ViewModels
     public class SearchPageViewModel : BaseTabViewModel
     {
         public SearchPageViewModel(INavigationService navigationService)
-                                                  : base(navigationService)
+            : base(navigationService)
         {
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource;
         }

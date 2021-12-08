@@ -13,7 +13,7 @@ namespace InterTwitter.ViewModels.Flyout
     public class FlyoutPageFlyoutViewModel : BaseViewModel
     {
         public FlyoutPageFlyoutViewModel(INavigationService navigationService)
-                                                     : base(navigationService)
+            : base(navigationService)
         {
             MenuItems = new ObservableCollection<MenuItemViewModel>(new[]
                 {

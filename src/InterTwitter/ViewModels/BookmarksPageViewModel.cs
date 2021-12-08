@@ -10,7 +10,7 @@ namespace InterTwitter.ViewModels
     public class BookmarksPageViewModel : BaseTabViewModel
     {
         public BookmarksPageViewModel(INavigationService navigationService)
-                                                  : base(navigationService)
+            : base(navigationService)
         {
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_bookmarks_gray"] as ImageSource;
         }

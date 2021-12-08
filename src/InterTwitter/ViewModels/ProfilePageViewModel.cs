@@ -9,7 +9,7 @@ namespace InterTwitter.ViewModels
     public class ProfilePageViewModel : BaseViewModel
     {
         public ProfilePageViewModel(INavigationService navigationService)
-                                                     : base(navigationService)
+            : base(navigationService)
         {
             MenuItems = new ObservableCollection<MenuItemViewModel>(new[]
                 {
