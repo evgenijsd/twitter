@@ -28,7 +28,7 @@
                        Margin="15, 2, 14, 0"
                        WidthRequest="33"/> 
 
-                <Button CornerRadius="25"
+                <Button CornerRadius="15 "
                         Margin="14"
                         Padding="0"
                         Text="Post"

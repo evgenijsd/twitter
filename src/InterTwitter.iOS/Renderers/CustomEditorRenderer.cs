@@ -1,6 +1,7 @@
 ﻿using Foundation;
 using InterTwitter.Controls;
 using InterTwitter.iOS.Renderers;
+using System;
 using System.ComponentModel;
 using UIKit;
 using Xamarin.Forms;
@@ -45,6 +46,7 @@ namespace InterTwitter.iOS.Renderers
 
         private void Check()
         {
+            var cursorPosition = Control.SelectedTextRange;
             var text = TextView.Text;
 
             if (!string.IsNullOrEmpty(text))
@@ -53,34 +55,27 @@ namespace InterTwitter.iOS.Renderers
 
                 var length = text.Length;
                 var correctLength = ((CustomEditor)Element).CorrectLength;
-                //var pos = Control.SelectionAffinity;
+
+                var labelString = new NSMutableAttributedString(TextView.Text);
+                var paragraphStyle = new NSMutableParagraphStyle{ LineSpacing = 14};
+                var style = UIStringAttributeKey.ParagraphStyle;
+                var range2 = new NSRange(0, labelString.Length);
+
+                labelString.AddAttribute(style, paragraphStyle, range2);
+                
 
                 if (length > correctLength)
                 {
-                    //_clear = true;
-
-                    NSMutableAttributedString str = new NSMutableAttributedString(TextView.Text);
-
                     NSObject value = ((CustomEditor)Element).OverflowLengthColor.ToUIColor();
                     NSRange range = new NSRange(correctLength, length - correctLength);
 
-                    str.AddAttribute(UIStringAttributeKey.ForegroundColor, value, range);
-
-                    TextView.AttributedText = str;
-
-                    //Control.SetSelectionAffinity(pos);
+                    labelString.AddAttribute(UIStringAttributeKey.ForegroundColor, value, range);
                 }
-                else
-                {
-                    //if (_clear)
-                    //{
-                    //    EditText.Text = text;
-                    //    Control.SetSelection(pos);
 
-                    //    _clear = false;
-                    //}
-                }
+                TextView.AttributedText = labelString;
             }
+
+            Control.SelectedTextRange = cursorPosition;
         }
 
         #endregion
