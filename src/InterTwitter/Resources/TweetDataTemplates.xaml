@@ -8,12 +8,10 @@
 
     <dataTemplates:ImageTweetDataTemplate x:Key="imageTweetTemplate"/>
     <dataTemplates:VideoTweetDataTemplate x:Key="videoTweetTemplate"/>
-    <dataTemplates:GifTweetDataTemplate x:Key="gifTweetTemplate"/>
     <dataTemplates:TextTweetDataTemplate x:Key="textTweetTemplate"/>
 
     <dataTemplatesSelector:TweetDataTemplateSelector x:Key="templateSelector"
                                                      ImageTweetDataTemplate="{StaticResource imageTweetTemplate}"
                                                      VideoTweetDataTemplate="{StaticResource videoTweetTemplate}"
-                                                     GifTweetDataTemplate="{StaticResource gifTweetTemplate}"
                                                      TextTweetDataTemplate="{StaticResource textTweetTemplate}"/>
 </ResourceDictionary>

@@ -1,4 +1,5 @@
-﻿using InterTwitter.Helpers;
+﻿using InterTwitter.Enums;
+using InterTwitter.Helpers;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -50,13 +51,6 @@ namespace InterTwitter.Models.TweetViewModel
         {
             get => _isBookmarked;
             set => SetProperty(ref _isBookmarked, value, nameof(IsBookmarked));
-        }
-
-        private Enum _tweetType;
-        public Enum TweetType
-        {
-            get => _tweetType;
-            set => SetProperty(ref _tweetType, value);
         }
 
         private ICommand _likeTweetCommand;

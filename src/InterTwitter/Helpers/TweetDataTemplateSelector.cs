@@ -31,6 +31,7 @@ namespace InterTwitter.Helpers
             switch (tweet.TweetModel.Media)
             {
                 case TweetType.ImagesTweet:
+                case TweetType.GifTweet:
                      dataTemplate = ImageTweetDataTemplate;
                     break;
                 case TweetType.VideoTweet:

@@ -51,7 +51,7 @@ namespace InterTwitter.Services
                     Name = "Sam Smith",
                     Email = "test3@gmail.com",
                     Password = "3333",
-                    AvatarPath = "https://vinyla.com/files/products/sam-smith-the-thrill-of-it-all.1280x1280.jpg?7fbc171f41eab1db6755cea723eaa98f",
+                    AvatarPath = "http://www.kinofilms.ua/images/person/big/738231.jpg",
                     BackgroundUserImage = "https://yapx.ru/viral/PMYaG",
                 },
                 new UserModel
@@ -104,7 +104,7 @@ namespace InterTwitter.Services
                     Media = Enums.TweetType.GifTweet,
                     MediaPaths = new List<string>
                     {
-                        "http://nretnil.com/gif/bang.gif",
+                        "https://c.tenor.com/nMkmGwGH8s8AAAAd/elon-musk-smoke.gif",
                     },
                     CreationTime = DateTime.Now,
                 },
@@ -125,6 +125,7 @@ namespace InterTwitter.Services
                     Id = 4,
                     UserId = 4,
                     Text = "um quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
+                    Media = Enums.TweetType.TextTweet,
                     CreationTime = DateTime.Now,
                 },
             };

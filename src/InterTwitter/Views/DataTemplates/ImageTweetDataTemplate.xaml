@@ -52,7 +52,7 @@
                                    CornerRadius="5"
                                    IsClippedToBounds="True">
 
-                                <ffimageloading:CachedImage Aspect="AspectFit" 
+                                <ffimageloading:CachedImage Aspect="Fill" 
                                                             Source="{Binding .}"/>
 
                             </Frame>

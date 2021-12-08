@@ -12,11 +12,10 @@
                  Orientation="Horizontal"
                  Spacing="0">
 
-            <ffimageloading:CachedImage
-            VerticalOptions="Start"
-            Source="{Binding UserModel.AvatarPath}"
-            HeightRequest="34"
-            Margin="0, 0, 15, 0">
+            <ffimageloading:CachedImage VerticalOptions="Start"
+                                        Source="{Binding UserModel.AvatarPath}"
+                                        HeightRequest="34"
+                                        Margin="0, 0, 15, 0">
 
                 <ffimageloading:CachedImage.Transformations>
                     <fftransformations:CircleTransformation/>
@@ -24,63 +23,29 @@
 
             </ffimageloading:CachedImage>
 
-            <StackLayout 
-                     VerticalOptions="Start">
+            <StackLayout VerticalOptions="Start">
 
                 <Label Style="{StaticResource tstyle_i6}"
-                       Text="{Binding UserModel.UserName}" 
+                       Text="{Binding UserModel.Name}" 
                        FontAttributes="Bold"/>
 
-                <Grid>
-                    <Label Grid.Row="0"
-                           Style="{StaticResource tstyle_i7}" 
-                           MaxLines="5" 
-                           LineBreakMode="TailTruncation"
-                           Margin="0, 0, 31, 0">
-
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding TweetModel.Text}">
-                                    <Span.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding OnRegCommand}"/>
-                                    </Span.GestureRecognizers>
-                                </Span>
-                            </FormattedString>
-                        </Label.FormattedText>
-                        
-                    </Label>
-                    <Label Grid.Row="0" 
-                           Style="{StaticResource BaseContent_i2}"
-                           FontSize="{Binding tsize_i4}"
-                           Text="more" 
-                           TextColor="{StaticResource appcolor_i1}" 
-                           VerticalOptions="End" 
-                           HorizontalOptions="End">
-                        
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding OpenTweetCommand}"/>
-                        </Label.GestureRecognizers>
-                        <Label.Triggers>
-                            
-                            <DataTrigger TargetType="Label" Binding="{Binding IsTextOverSized}" Value="true">
-                                <Setter Property="IsVisible" Value="True"/>
-
-                            </DataTrigger>
-                        </Label.Triggers>
-                    </Label>
-                </Grid>
+                <Label Style="{StaticResource tstyle_i7}" 
+                       VerticalOptions="Start"
+                       MaxLines="5" 
+                       LineBreakMode="TailTruncation"
+                       Text="{Binding TweetModel.Text}"/>
 
                 <Frame CornerRadius="5"
                        Padding="0"
                        HasShadow="False">
 
                     <WebView Grid.Row="0"
-                                 Grid.Column="0"
-                                 Source="{Binding TweetModel.MediaPaths}" 
-                                 WidthRequest="300"
-                                 HeightRequest="180"
-                                 MinimumWidthRequest="360"
-                                 MinimumHeightRequest="240">
+                             Grid.Column="0"
+                             Source="{Binding TweetModel.MediaPaths, Converter={StaticResource listToFirstConverter}}" 
+                             WidthRequest="300"
+                             HeightRequest="180"
+                             MinimumWidthRequest="360"
+                             MinimumHeightRequest="240">
                     </WebView>
                 </Frame>
 

@@ -24,10 +24,10 @@
             <StackLayout VerticalOptions="Start">
 
                 <Label Style="{StaticResource tstyle_i6}"
-                       Text="{Binding UserModel.UserName}" 
+                       Text="{Binding UserModel.Name}" 
                        FontAttributes="Bold"/>
 
-                <Label Style="{StaticResource Content_i6}" 
+                <Label Style="{StaticResource tstyle_i7}" 
                        VerticalOptions="Start"
                        MaxLines="5" 
                        LineBreakMode="TailTruncation"
@@ -53,7 +53,9 @@
                         </ffimageloading:CachedImage.Triggers>
                     </ffimageloading:CachedImage>
 
-                    <Label Text="{Binding LikesNumber}" Margin="0,0,15,0" Style="{StaticResource tstyle_i9}">
+                    <Label Text="{Binding LikesNumber}" 
+                           Margin="0,0,15,0" 
+                           Style="{StaticResource tstyle_i9}">
                         <Label.Triggers>
                             <DataTrigger TargetType="Label" Binding="{Binding IsWeetLiked}" Value="true">
                                 <Setter Property="TextColor" Value="{StaticResource appcolor_i1}"/>

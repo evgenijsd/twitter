@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+                    xmlns:converters="clr-namespace:InterTwitter.Converters"
                     x:Class="InterTwitter.Resources.Styles.DefaultResources">
     
     <!-- TEXT SIZE -->
@@ -93,5 +94,8 @@
     <Style x:Key="tstyle_i15" TargetType="Label" BasedOn="{StaticResource Content_i8}"> <!-- Caption 2/ 10px/ Dark Gray-->
         <Setter Property="TextColor" Value="{DynamicResource appcolor_i4}"/>
     </Style>
+    
+    <!-- CONVERTERS -->
+    <converters:ListToFirstConverter x:Key="listToFirstConverter"/>
 
 </ResourceDictionary>

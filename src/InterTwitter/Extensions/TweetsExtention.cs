@@ -16,13 +16,13 @@ namespace InterTwitter.Extensions
 
             if (tweetModel != null && userModel != null)
             {
-                if (tweetModel.Media == Enums.TweetType.ImagesTweet)
+                if (tweetModel.Media == Enums.TweetType.VideoTweet || tweetModel.Media == Enums.TweetType.TextTweet)
                 {
-                    tweetViewModel = new ImagesTweetViewModel(userModel, tweetModel);
+                    tweetViewModel = new BaseTweetViewModel(userModel, tweetModel);
                 }
                 else
                 {
-                    tweetViewModel = new BaseTweetViewModel(userModel, tweetModel);
+                    tweetViewModel = new ImagesTweetViewModel(userModel, tweetModel);
                 }
             }
 
