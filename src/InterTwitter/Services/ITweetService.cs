@@ -10,9 +10,8 @@ namespace InterTwitter.Services
 {
     public interface ITweetService
     {
-        Task<AOResult<IEnumerable<BaseTweetViewModel>>> GetUserTweetsAsync(int userId);
+        Task<AOResult<IEnumerable<TweetModel>>> GetAllTweetsAsync();
 
-        Task<AOResult<IEnumerable<BaseTweetViewModel>>> GetAllTweetsAsync();
         Task<AOResult<UserModel>> GetUserAsync(int userId);
     }
 }

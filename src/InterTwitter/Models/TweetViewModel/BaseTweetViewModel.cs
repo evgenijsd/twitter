@@ -11,29 +11,58 @@ namespace InterTwitter.Models.TweetViewModel
 {
     public class BaseTweetViewModel : BindableBase
     {
-        public BaseTweetViewModel(UserModel userModel, TweetModel tweetModel)
-        {
-            _userModel = userModel;
-            _tweetModel = tweetModel;
-        }
-
         #region -- Public properties --
 
-        private UserModel _userModel;
-        public UserModel UserModel
+        private int _tweetId;
+        public int TweetId
         {
-            get => _userModel;
-            set => SetProperty(ref _userModel, value);
+            get => _tweetId;
+            set => SetProperty(ref _tweetId, value);
         }
 
-        private TweetModel _tweetModel;
-        public TweetModel TweetModel
+        private int _userId;
+        public int UserId
         {
-            get => _tweetModel;
-            set => SetProperty(ref _tweetModel, value);
+            get => _userId;
+            set => SetProperty(ref _userId, value);
         }
 
-        private int _likesNumber = 123;
+        private string _userName;
+        public string UserName
+        {
+            get => _userName;
+            set => SetProperty(ref _userName, value);
+        }
+
+        private string _userAvatar;
+        public string UserAvatar
+        {
+            get => _userAvatar;
+            set => SetProperty(ref _userAvatar, value);
+        }
+
+        private string _text;
+        public string Text
+        {
+            get => _text;
+            set => SetProperty(ref _text, value);
+        }
+
+        private IEnumerable<string> _mediaPaths;
+        public IEnumerable<string> MediaPaths
+        {
+            get => _mediaPaths;
+            set => SetProperty(ref _mediaPaths, value);
+        }
+
+        private ETweetType _mediaType;
+        public ETweetType Media
+        {
+            get => _mediaType;
+            set => SetProperty(ref _mediaType, value);
+        }
+
+        private int _likesNumber;
         public int LikesNumber
         {
             get => _likesNumber;

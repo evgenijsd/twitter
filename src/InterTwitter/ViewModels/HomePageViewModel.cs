@@ -1,4 +1,5 @@
 ﻿using InterTwitter.Enums;
+using InterTwitter.Extensions;
 using InterTwitter.Helpers;
 using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services;
@@ -65,9 +66,10 @@ namespace InterTwitter.ViewModels
 
             if (getTweetResult.IsSuccess)
             {
-                Tweets = new ObservableCollection<BaseTweetViewModel>(getTweetResult.Result);
+                Tweets = new ObservableCollection<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.ToBaseTweetViewModel()));
             }
 
+            int rt = 5;
             //var listPhotos = new List<string> { "gif1", };
             //var rowHeight = listPhotos.Count < 3 ? 186 : 80; //error there pixel
             //rowHeight = listPhotos.Count == 3 | listPhotos.Count == 4 ? 89 : rowHeight; //error there pixel

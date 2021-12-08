@@ -8,12 +8,9 @@ namespace InterTwitter.Models.TweetViewModel
 {
     public class ImagesTweetViewModel : BaseTweetViewModel
     {
-        public ImagesTweetViewModel(
-            UserModel userModel,
-            TweetModel tweetModel)
-            : base(userModel, tweetModel)
+        public ImagesTweetViewModel()
         {
-            InitImagesPositioning(tweetModel);
+            InitImagesPositioning();
         }
 
         #region -- Public properties --
@@ -36,9 +33,9 @@ namespace InterTwitter.Models.TweetViewModel
 
         #region -- Private helpers --
 
-        private void InitImagesPositioning(TweetModel tweet)
+        private void InitImagesPositioning()
         {
-            var imagesNumber = tweet.MediaPaths.Count();
+            int imagesNumber = MediaPaths.Count();
 
             _rowHeight = imagesNumber < 3 ? 186 : 80;
 

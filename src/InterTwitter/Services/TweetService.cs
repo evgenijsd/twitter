@@ -24,60 +24,17 @@ namespace InterTwitter.Services
 
         #region -- ITweetService implementation --
 
-        public async Task<AOResult<IEnumerable<BaseTweetViewModel>>> GetUserTweetsAsync(int userId)
+        public async Task<AOResult<IEnumerable<TweetModel>>> GetAllTweetsAsync()
         {
-            var result = new AOResult<IEnumerable<BaseTweetViewModel>>();
-            try
-            {
-                var tweets = _mockService.Tweets.Where(x => x.UserId == userId);
-
-                var tweetViewModels = new List<BaseTweetViewModel>();
-                foreach (var tweetModel in tweets)
-                {
-                    var user = await GetUserAsync(tweetModel.UserId);
-                    if (user.IsSuccess)
-                    {
-                        tweetViewModels.Add(tweetModel.ToViewModel(user.Result));
-                    }
-                }
-
-                if (tweetViewModels != null)
-                {
-                    result.SetSuccess(tweetViewModels.OrderByDescending(x => x.TweetModel.CreationTime));
-                }
-                else
-                {
-                    result.SetFailure("No tweets found");
-                }
-            }
-            catch (Exception ex)
-            {
-                result.SetError($"{nameof(GetUserTweetsAsync)}: exception", "Some issues", ex);
-            }
-
-            return result;
-        }
-
-        public async Task<AOResult<IEnumerable<BaseTweetViewModel>>> GetAllTweetsAsync()
-        {
-            var result = new AOResult<IEnumerable<BaseTweetViewModel>>();
+            await Task.Delay(50);
+            var result = new AOResult<IEnumerable<TweetModel>>();
             try
             {
                 var tweets = _mockService.Tweets;
 
-                var tweetViewModels = new List<BaseTweetViewModel>();
-                foreach (var tweetModel in tweets)
+                if (tweets != null)
                 {
-                    var user = await GetUserAsync(tweetModel.UserId);
-                    if (user.IsSuccess)
-                    {
-                        tweetViewModels.Add(tweetModel.ToViewModel(user.Result));
-                    }
-                }
-
-                if (tweetViewModels != null)
-                {
-                    result.SetSuccess(tweetViewModels.OrderByDescending(x => x.TweetModel.CreationTime));
+                    result.SetSuccess(tweets.OrderByDescending(x => x.CreationTime));
                 }
                 else
                 {
@@ -86,7 +43,7 @@ namespace InterTwitter.Services
             }
             catch (Exception ex)
             {
-                result.SetError($"{nameof(GetUserTweetsAsync)}: exception", "Some issues", ex);
+                result.SetError($"{nameof(GetAllTweetsAsync)}: exception", "Some issues", ex);
             }
 
             return result;

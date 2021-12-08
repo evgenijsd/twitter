@@ -10,24 +10,15 @@ namespace InterTwitter.Extensions
     {
         #region -- Public methods --
 
-        public static BaseTweetViewModel ToViewModel(this TweetModel tweetModel, UserModel userModel)
+        public static BaseTweetViewModel ToBaseTweetViewModel(this TweetModel tweetModel) => new BaseTweetViewModel
         {
-            BaseTweetViewModel tweetViewModel = null;
-
-            if (tweetModel != null && userModel != null)
-            {
-                if (tweetModel.Media == Enums.TweetType.VideoTweet || tweetModel.Media == Enums.TweetType.TextTweet)
-                {
-                    tweetViewModel = new BaseTweetViewModel(userModel, tweetModel);
-                }
-                else
-                {
-                    tweetViewModel = new ImagesTweetViewModel(userModel, tweetModel);
-                }
-            }
-
-            return tweetViewModel;
-        }
+            TweetId = tweetModel.Id,
+            UserId = tweetModel.UserId,
+            Text = tweetModel.Text,
+            Media = tweetModel.Media,
+            MediaPaths = tweetModel.MediaPaths,
+            CreationTime = tweetModel.CreationTime,
+        };
 
         #endregion
     }

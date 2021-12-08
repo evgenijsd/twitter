@@ -25,14 +25,14 @@
             <StackLayout VerticalOptions="Start">
 
                 <Label Style="{StaticResource tstyle_i6}"
-                       Text="{Binding UserModel.Name}" 
+                       Text="{Binding UserName}" 
                        FontAttributes="Bold"/>
 
                 <Label Style="{StaticResource tstyle_i7}" 
                        VerticalOptions="Start"
                        MaxLines="5" 
                        LineBreakMode="TailTruncation"
-                       Text="{Binding TweetModel.Text}"/>
+                       Text="{Binding Text}"/>
 
                 <flv:FlowListView FlowColumnCount="{Binding ColumnNumber}"
                                   RowHeight="{Binding RowHeight}"
@@ -42,7 +42,7 @@
                                   SeparatorVisibility="None"
                                   FlowColumnExpand="First"
                                   VerticalOptions="Start"
-                                  FlowItemsSource="{Binding TweetModel.MediaPaths}">
+                                  FlowItemsSource="{Binding MediaPaths}">
 
                     <flv:FlowListView.FlowColumnTemplate>
                         <DataTemplate>
@@ -66,7 +66,7 @@
                              Padding="0">
 
                     <Label Style="{StaticResource tstyle_i8}"
-                           Text="{Binding TweetModel.CreationTime,  StringFormat='{}{0:dd.MM.yyyy • HH:mm}'}"/>
+                           Text="{Binding CreationTime,  StringFormat='{}{0:dd.MM.yyyy • HH:mm}'}"/>
 
                     <ffimageloading:CachedImage Source="ic_like_gray" 
                                                 HorizontalOptions="EndAndExpand">

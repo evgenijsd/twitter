@@ -4,7 +4,7 @@ using System.Text;
 
 namespace InterTwitter.Enums
 {
-    public enum TweetType
+    public enum ETweetType
     {
         VideoTweet,
 
