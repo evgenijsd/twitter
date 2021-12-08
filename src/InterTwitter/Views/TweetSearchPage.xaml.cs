@@ -1,4 +1,7 @@
-﻿namespace InterTwitter.Views
+﻿using System.Threading.Tasks;
+using Xamarin.Forms;
+
+namespace InterTwitter.Views
 {
     public partial class TweetSearchPage : BaseContentPage
     {

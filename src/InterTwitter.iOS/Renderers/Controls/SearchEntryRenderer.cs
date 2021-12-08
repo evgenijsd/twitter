@@ -20,7 +20,6 @@ namespace InterTwitter.iOS.Renderers.Controls
 
                 var uTextField = (UITextField)Control;
 
-                //FIX ME
                 uTextField.EditingDidBegin += (object sender, EventArgs eIos) =>
                 {
                     uTextField.PerformSelector(new ObjCRuntime.Selector("selectAll"), null, 0.0f);

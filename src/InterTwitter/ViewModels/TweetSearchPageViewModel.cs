@@ -194,6 +194,18 @@ namespace InterTwitter.ViewModels
 
         private Task OnAvatarIconTapCommandTapAsync()
         {
+            /* TEMP TESTING CODE */
+
+            switch (TweetSearchResult)
+            {
+                case ESearchResult.NoResults:
+                    TweetSearchResult = ESearchResult.Success;
+                    break;
+                case ESearchResult.Success:
+                    TweetSearchResult = ESearchResult.NoResults;
+                    break;
+            }
+
             return Task.CompletedTask;
         }
 

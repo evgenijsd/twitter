@@ -74,7 +74,7 @@
 
                                                                 <Label Margin="0, 5, 0, 2"
                                                                        Style="{DynamicResource tstyle_i6}"
-                                                                       Text="{Binding Text}" />
+                                                                       Text="{Binding SelectedHashtag, Text}" />
 
                                                                 <Label Style="{DynamicResource tstyle_i15}">
 
@@ -84,7 +84,7 @@
 
                                                                             <Span Text="{xct:Translate Posts}"></Span>
 
-                                                                            <Span Text="{Binding TweetsCount, StringFormat=': {0}'}" />
+                                                                            <Span Text="{Binding SelectedHashtag, TweetsCount, StringFormat=': {0}'}" />
 
                                                                         </FormattedString>
 

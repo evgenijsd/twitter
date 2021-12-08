@@ -14,7 +14,7 @@
     <AssemblyName>InterTwitter.iOS</AssemblyName>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
-    <ProvisioningType>automatic</ProvisioningType>
+    <ProvisioningType>manual</ProvisioningType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -112,6 +112,7 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Renderers\Controls\NonSelectableListViewRenderer.cs" />
     <Compile Include="Renderers\Controls\SearchEntryRenderer.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
