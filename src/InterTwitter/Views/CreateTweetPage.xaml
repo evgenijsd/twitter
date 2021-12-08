@@ -3,6 +3,7 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                       xmlns:sh="http://sharpnado.com"
                       xmlns:controls="clr-namespace:InterTwitter.Controls"
+                      xmlns:statecontainer="clr-namespace:InterTwitter.Controls.StateContainer"
                       xmlns:view="clr-namespace:InterTwitter.Views"
                       x:Class="InterTwitter.Views.CreateTweetPage">
 
@@ -26,18 +27,40 @@
                 <Image Source="{DynamicResource ic_cancel_gray}"
                        HorizontalOptions="Start"
                        Margin="15, 2, 14, 0"
-                       WidthRequest="33"/> 
+                       WidthRequest="30"/>
 
-                <Button CornerRadius="15 "
-                        Margin="14"
-                        Padding="0"
-                        Text="Post"
-                        TextTransform="None"
-                        FontFamily="Ubuntu-Medium"
-                        FontSize="{DynamicResource tsize_i4}"
-                        TextColor="{DynamicResource appcolor_i2}"
-                        BackgroundColor="{DynamicResource appcolor_i1}"
-                        HorizontalOptions="EndAndExpand"/>
+                <statecontainer:StateContainer State="{Binding CanUseButtonPost}"
+                                               HorizontalOptions="EndAndExpand">
+
+                    <statecontainer:StateCondition State="True">
+
+                        <Button CornerRadius="15 "
+                                Margin="14"
+                                Padding="0"
+                                Text="Post"
+                                TextTransform="None"
+                                FontFamily="Ubuntu-Medium"
+                                FontSize="{DynamicResource tsize_i4}"
+                                TextColor="{DynamicResource appcolor_i2}"
+                                BackgroundColor="{DynamicResource appcolor_i1}"/>
+
+                    </statecontainer:StateCondition>
+
+                    <statecontainer:StateCondition State="False">
+
+                        <Button CornerRadius="15 "
+                                Margin="14"
+                                Padding="0"
+                                Text="Post"
+                                TextTransform="None"
+                                FontFamily="Ubuntu-Medium"
+                                FontSize="{DynamicResource tsize_i4}"
+                                TextColor="{DynamicResource appcolor_i2}"
+                                BackgroundColor="{DynamicResource appcolor_i4}"/>
+
+                    </statecontainer:StateCondition>
+
+                </statecontainer:StateContainer>
 
             </StackLayout>
             
@@ -80,48 +103,110 @@
                                                MaxLength="300"
                                                Margin="14"/>
 
-                        <FlexLayout Direction="Row"
-                                    Wrap="Wrap"
-                                    VerticalOptions="Start"
-                                    BindableLayout.ItemsSource="{Binding ListUploadPhotos}">
-                            
-                            <BindableLayout.ItemTemplate>
+                        <statecontainer:StateContainer State="{Binding TypeAttachedMedia}"
+                                                       VerticalOptions="Start">
+
+                            <statecontainer:StateCondition State="Photos">
+
+                                <FlexLayout Direction="Row"
+                                            Wrap="Wrap"
+                                            VerticalOptions="Start"
+                                            BindableLayout.ItemsSource="{Binding ListUploadPhotos}">
+
+                                    <BindableLayout.ItemTemplate>
+
+                                        <DataTemplate>
+
+                                            <Grid HeightRequest="65"
+                                                  Margin="7, 0, 0, 0">
+
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="44.1167"/>
+                                                    <RowDefinition Height="21"/>
+                                                </Grid.RowDefinitions>
+
+                                                <Image Grid.Row="0"
+                                                       Source="{Binding PathImage}"
+                                                       HeightRequest="44.1167"
+                                                       WidthRequest="44.1167"/>
+
+                                                <Frame Grid.Row="1"
+                                                       HasShadow="False"
+                                                       Padding="0"
+                                                       Margin="41.11, -60, 0, 60"
+                                                       BackgroundColor="Transparent">
+
+                                                    <Image Source="{Binding PathActionImage}"
+                                                           HeightRequest="21"
+                                                           WidthRequest="21"/>
+
+                                                </Frame>
+
+                                            </Grid>
+
+                                        </DataTemplate>
+
+                                    </BindableLayout.ItemTemplate>
+
+                                </FlexLayout>
+
+                            </statecontainer:StateCondition>
+
+                            <statecontainer:StateCondition State="Gif">
+
+                                <Grid HeightRequest="65"
+                                      Margin="7, 0, 0, 0"
+                                      HorizontalOptions="Start">
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="44.1167"/>
+                                        <RowDefinition Height="21"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Image Grid.Row="0"
+                                           Source="test_upload.png"
+                                           HeightRequest="44.1167"
+                                           WidthRequest="44.1167"/>
+
+                                    <Frame Grid.Row="1"
+                                           HasShadow="False"
+                                           Padding="0"
+                                           Margin="41.11, -60, 0, 60"
+                                           BackgroundColor="Transparent">
+
+                                        <Image Source="ic_clear_filled_blue.png"
+                                               HeightRequest="21"
+                                               WidthRequest="21"/>
+
+                                    </Frame>
+
+                                </Grid>
                                 
-                                <DataTemplate>
+                            </statecontainer:StateCondition>
+
+                            <statecontainer:StateCondition State="Video">
+
+                                <StackLayout Orientation="Horizontal">
+
+                                    <Image Source="{DynamicResource ic_video_blue}"
+                                           HeightRequest="21"
+                                           WidthRequest="21"/>
                                     
-                                    <Grid HeightRequest="65"
-                                          Margin="7, 0, 0, 0">
+                                    <Label Text="Video"
+                                           TextColor="{DynamicResource appcolor_i1}"
+                                           FontSize="{DynamicResource tsize_i4}"
+                                           FontFamily="Ubuntu-Medium"/>
 
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="44.1167"/>
-                                            <RowDefinition Height="21"/>
-                                        </Grid.RowDefinitions>
+                                    <Image Source="{DynamicResource ic_clear_filled_blue}"
+                                           HeightRequest="21"
+                                           WidthRequest="21"/>
 
-                                        <Image Grid.Row="0"
-                                               Source="{Binding PathImage}"
-                                               HeightRequest="44.1167"
-                                               WidthRequest="44.1167"/>
+                                </StackLayout>
 
-                                        <Frame Grid.Row="1"
-                                               HasShadow="False"
-                                               Padding="0"
-                                               Margin="41.11, -60, 0, 60"
-                                               BackgroundColor="Transparent">
+                            </statecontainer:StateCondition>
 
-                                            <Image Source="{Binding PathActionImage}"
-                                                   HeightRequest="21"
-                                                   WidthRequest="21"/>
+                        </statecontainer:StateContainer>
 
-                                        </Frame>
-
-                                    </Grid>
-                                    
-                                </DataTemplate>
-                                
-                            </BindableLayout.ItemTemplate>
-
-                        </FlexLayout>
-                        
                     </StackLayout>
 
                 </controls:CustomScrollView>
@@ -145,17 +230,71 @@
 
                     <StackLayout Orientation="Horizontal">
 
-                        <Image Source="{DynamicResource ic_media_blue}"
-                               Margin="13.93, 4, 0, 4"
-                               WidthRequest="28.86"/>
-                        
-                        <Image Source="{DynamicResource ic_gif_blue}"
-                               Margin="13.93, 4, 0, 4"
-                               WidthRequest="28.86"/>
+                        <statecontainer:StateContainer State="{Binding CanUseButtonUploadPhotos}">
+                            
+                            <statecontainer:StateCondition State="True">
 
-                        <Image Source="{DynamicResource ic_video_square_blue}"
-                               Margin="13.93, 4, 0, 4"
-                               WidthRequest="28.86"/>
+                                <ImageButton Source="{DynamicResource ic_media_blue}"
+                                             Margin="13.93, 4, 0, 4"
+                                             WidthRequest="28.86"
+                                             BackgroundColor="Transparent"/>
+
+                            </statecontainer:StateCondition>
+                            
+                            <statecontainer:StateCondition State="False">
+
+                                <ImageButton Source="{DynamicResource ic_media_gray}"
+                                             Margin="13.93, 4, 0, 4"
+                                             WidthRequest="28.86"
+                                             BackgroundColor="Transparent"/>
+
+                            </statecontainer:StateCondition>
+                            
+                        </statecontainer:StateContainer>
+
+                        <statecontainer:StateContainer State="{Binding CanUseButtonUploadGif}">
+                            
+                            <statecontainer:StateCondition State="True">
+
+                                <ImageButton Source="{DynamicResource ic_gif_blue}"
+                                             Margin="13.93, 4, 0, 4"
+                                             WidthRequest="28.86"
+                                             BackgroundColor="Transparent"/>
+
+                            </statecontainer:StateCondition>
+                            
+                            <statecontainer:StateCondition State="False">
+
+                                <ImageButton Source="{DynamicResource ic_gif_gray}"
+                                             Margin="13.93, 4, 0, 4"
+                                             WidthRequest="28.86"
+                                             BackgroundColor="Transparent"/>
+
+                            </statecontainer:StateCondition>
+                            
+                        </statecontainer:StateContainer>
+
+                        <statecontainer:StateContainer State="{Binding CanUseButtonUploadVideo}">
+
+                            <statecontainer:StateCondition State="True">
+
+                                <ImageButton Source="{DynamicResource ic_video_square_blue}"
+                                             Margin="13.93, 4, 0, 4"
+                                             WidthRequest="28.86"
+                                             BackgroundColor="Transparent"/>
+
+                            </statecontainer:StateCondition>
+
+                            <statecontainer:StateCondition State="False">
+
+                                <ImageButton Source="{DynamicResource ic_video_square_gray}"
+                                             Margin="13.93, 4, 0, 4"
+                                             WidthRequest="28.86"
+                                             BackgroundColor="Transparent"/>
+
+                            </statecontainer:StateCondition>
+
+                        </statecontainer:StateContainer>
 
                         <controls:CircleProgressBar HorizontalOptions="EndAndExpand"
                                                     HeightRequest="24"

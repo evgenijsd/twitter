@@ -56,23 +56,28 @@ namespace InterTwitter.iOS.Renderers
                 var length = text.Length;
                 var correctLength = ((CustomEditor)Element).CorrectLength;
 
-                var labelString = new NSMutableAttributedString(TextView.Text);
-                var paragraphStyle = new NSMutableParagraphStyle{ LineSpacing = 14};
-                var style = UIStringAttributeKey.ParagraphStyle;
-                var range2 = new NSRange(0, labelString.Length);
+                var attributedString = new NSMutableAttributedString(TextView.Text);
 
-                labelString.AddAttribute(style, paragraphStyle, range2);
+                var paragraphStyle = new NSMutableParagraphStyle
+                {
+                    LineSpacing = 7,
+                };
+
+                var style = UIStringAttributeKey.ParagraphStyle;
+                var rangeAll = new NSRange(0, attributedString.Length);
+
+                attributedString.AddAttribute(style, paragraphStyle, rangeAll);
                 
 
                 if (length > correctLength)
                 {
-                    NSObject value = ((CustomEditor)Element).OverflowLengthColor.ToUIColor();
-                    NSRange range = new NSRange(correctLength, length - correctLength);
+                    var value = ((CustomEditor)Element).OverflowLengthColor.ToUIColor();
+                    var range = new NSRange(correctLength, length - correctLength);
 
-                    labelString.AddAttribute(UIStringAttributeKey.ForegroundColor, value, range);
+                    attributedString.AddAttribute(UIStringAttributeKey.ForegroundColor, value, range);
                 }
 
-                TextView.AttributedText = labelString;
+                TextView.AttributedText = attributedString;
             }
 
             Control.SelectedTextRange = cursorPosition;

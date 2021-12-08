@@ -1,9 +1,11 @@
-﻿using Prism.Navigation;
+﻿using InterTwitter.Enums;
+using MapNotepad.Helpers;
+using Prism.Navigation;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -111,12 +113,71 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _circleProgressBarProgressLineColor, value);
         }
 
+        private bool _canUseButtonUploadPhotos = true;
+        public bool CanUseButtonUploadPhotos
+        {
+            get => _canUseButtonUploadPhotos;
+            set => SetProperty(ref _canUseButtonUploadPhotos, value);
+        }
+
+        private bool _canUseButtonUploadGif = true;
+        public bool CanUseButtonUploadGif
+        {
+            get => _canUseButtonUploadGif;
+            set => SetProperty(ref _canUseButtonUploadGif, value);
+        }
+
+        private bool _canUseButtonUploadVideo = true;
+        public bool CanUseButtonUploadVideo
+        {
+            get => _canUseButtonUploadVideo;
+            set => SetProperty(ref _canUseButtonUploadVideo, value);
+        }
+
+        private bool _canUseButtonPost;
+        public bool CanUseButtonPost
+        {
+            get => _canUseButtonPost;
+            set => SetProperty(ref _canUseButtonPost, value);
+        }
+
+        private ETypeAttachedMedia _typeAttachedMedia = ETypeAttachedMedia.Video;
+        public ETypeAttachedMedia TypeAttachedMedia
+        {
+            get => _typeAttachedMedia;
+            set => SetProperty(ref _typeAttachedMedia, value);
+        }
+
         private List<MiniCardViewModel> _listUploadPhotos;
         public List<MiniCardViewModel> ListUploadPhotos
         {
             get => _listUploadPhotos;
             set => SetProperty(ref _listUploadPhotos, value);
         }
+
+        private ICommand _goBackCommand;
+        public ICommand GoBackCommand => _goBackCommand = SingleExecutionCommand.FromFunc(OnGoBackCommandAsync);
+
+        private ICommand _postTweetCommand;
+        public ICommand PostTweetCommand => _postTweetCommand = SingleExecutionCommand.FromFunc(OnPostTweetCommandAsync);
+
+        private ICommand _deleteAttachedPhotoCommand;
+        public ICommand DeleteAttachedPhotoCommand => _deleteAttachedPhotoCommand = SingleExecutionCommand.FromFunc(OnDeleteAttachedPhotoCommandAsync);
+
+        private ICommand _Command;
+        public ICommand DeleteAttachedGifCommand => _Command = SingleExecutionCommand.FromFunc(OnDeleteAttachedGifAsync);
+
+        private ICommand _Command;
+        public ICommand DeleteAttachedVideoCommand => _Command = SingleExecutionCommand.FromFunc(OnDeleteAttachedVideoAsync);
+
+        private ICommand _Command;
+        public ICommand Command => _Command = SingleExecutionCommand.FromFunc(OnAsync);
+
+        private ICommand _Command;
+        public ICommand Command => _Command = SingleExecutionCommand.FromFunc(OnAsync);
+
+        private ICommand _Command;
+        public ICommand Command => _Command = SingleExecutionCommand.FromFunc(OnAsync);
 
         #endregion
 
@@ -137,6 +198,28 @@ namespace InterTwitter.ViewModels
         #endregion
 
         #region -- Private methods --
+
+        private async Task OnGoBackCommandAsync()
+        {
+        }
+
+        private async Task OnPostTweetCommandAsync()
+        {
+        }
+
+        private async Task OnDeleteAttachedPhotoCommandAsync()
+        {
+        }
+
+        private Task OnDeleteAttachedGifAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        private Task OnDeleteAttachedVideoAsync()
+        {
+            throw new NotImplementedException();
+        }
 
         private void Counter()
         {
