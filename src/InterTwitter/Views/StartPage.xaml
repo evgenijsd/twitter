@@ -8,6 +8,11 @@
     <view:BaseContentPage.Content>
         <controls:CustomGrid RowSpacing="0">
             <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid RowSpacing="0" Grid.Row="0">
+            <Grid.RowDefinitions>
                 <RowDefinition Height="170" />
                 <RowDefinition Height="100" />
                 <RowDefinition Height="100" />
@@ -109,8 +114,9 @@
                         BackgroundColor="Transparent"
                         BorderColor="Transparent" />
             </StackLayout>
+                </Grid>
 
-            <StackLayout Grid.Row="4"
+            <StackLayout Grid.Row="0"
                          VerticalOptions="EndAndExpand"
                          BackgroundColor="{DynamicResource appcolor_i1}"
                          HeightRequest="50"

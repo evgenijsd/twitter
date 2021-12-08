@@ -8,13 +8,17 @@
     <view:BaseContentPage.Content>
         <controls:CustomGrid RowSpacing="0">
             <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid RowSpacing="0" Grid.Row="0">
+            <Grid.RowDefinitions>
                 <RowDefinition Height="170" />
                 <RowDefinition Height="100" />
                 <RowDefinition Height="100" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-
             <Grid Grid.Row="0"
                   ColumnSpacing="0">
                 <Grid.ColumnDefinitions>
@@ -108,8 +112,9 @@
                         FontFamily="Ubuntu-Regular"
                         TextColor="{DynamicResource appcolor_i2}" />
             </StackLayout>
+                </Grid>
 
-            <StackLayout Grid.Row="4"
+            <StackLayout Grid.Row="0"
                          VerticalOptions="EndAndExpand"
                          HeightRequest="50"
                          BackgroundColor="{DynamicResource appcolor_i1}"
