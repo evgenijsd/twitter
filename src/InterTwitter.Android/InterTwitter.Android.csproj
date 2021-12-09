@@ -1022,7 +1022,7 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\pic_empty_state_2.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable-hdpi\test_upload.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ava.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

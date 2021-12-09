@@ -110,7 +110,7 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _canUseButtonUploadVideo, value);
         }
 
-        private bool _canUseButtonPost = true;
+        private bool _canUseButtonPost;
         public bool CanUseButtonPost
         {
             get => _canUseButtonPost;
@@ -166,7 +166,7 @@ namespace InterTwitter.ViewModels
             switch (args.PropertyName)
             {
                 case nameof(Text):
-                    CanUseButtonPost = Text.Length < 250;
+                    CanUseButtonPost = canPostTweet();
                     Counter();
                     break;
             }
@@ -178,11 +178,14 @@ namespace InterTwitter.ViewModels
 
         private async Task OnGoBackCommandAsync()
         {
-            var confirm = await _pageDialogService.DisplayAlertAsync("Confirm", "Confirm?", "Ok", "Cancel");
-
-            if (confirm)
+            if (Text.Length > 0 || ListAttachedMedia.Count > 0)
             {
-                await _pageDialogService.DisplayAlertAsync("Exit", "Confirm", "Ok");
+                var confirm = await _pageDialogService.DisplayAlertAsync("Confirm", "Do you want to come back?", "Ok", "Cancel");
+
+                if (confirm)
+                {
+                    await _pageDialogService.DisplayAlertAsync("Exit", "Confirm", "Ok");
+                }
             }
         }
 
@@ -200,37 +203,22 @@ namespace InterTwitter.ViewModels
 
             if (ListAttachedMedia.Count == 0)
             {
-                CanUseButtonUploadGif = true;
-                CanUseButtonUploadVideo = true;
-
-                TypeAttachedMedia = ETypeAttachedMedia.None;
+                clearAttachedMedia();
+            }
+            else
+            {
+                CanUseButtonPost = true;
             }
         }
 
         private async Task OnDeleteAttachedGifAsync(object obj)
         {
-            var item = obj as MiniCardViewModel;
-
-            ListAttachedMedia.Clear();
-
-            CanUseButtonUploadPhotos = true;
-            CanUseButtonUploadGif = true;
-            CanUseButtonUploadVideo = true;
-
-            TypeAttachedMedia = ETypeAttachedMedia.None;
+            clearAttachedMedia();
         }
 
         private async Task OnDeleteAttachedVideoAsync(object obj)
         {
-            var item = obj as MiniCardViewModel;
-
-            ListAttachedMedia.Clear();
-
-            CanUseButtonUploadPhotos = true;
-            CanUseButtonUploadGif = true;
-            CanUseButtonUploadVideo = true;
-
-            TypeAttachedMedia = ETypeAttachedMedia.None;
+            clearAttachedMedia();
         }
 
         private async Task OnAddPhotoAsync()
@@ -239,20 +227,28 @@ namespace InterTwitter.ViewModels
 
             if (canUseStorage)
             {
-                var photo = await MediaPicker.PickPhotoAsync();
-
-                ListAttachedMedia.Add(new MiniCardViewModel()
+                try
                 {
-                    PathImage = photo.FullPath,
-                    PathActionImage = "ic_clear_filled_blue.png",
-                    ActionCommand = DeleteAttachedPhotoCommand,
-                });
+                    var photo = await MediaPicker.PickPhotoAsync();
 
-                CanUseButtonUploadPhotos = ListAttachedMedia.Count < 6;
-                CanUseButtonUploadGif = false;
-                CanUseButtonUploadVideo = false;
+                    ListAttachedMedia.Add(new MiniCardViewModel()
+                    {
+                        PathImage = photo.FullPath,
+                        PathActionImage = "ic_clear_filled_blue.png",
+                        ActionCommand = DeleteAttachedPhotoCommand,
+                    });
 
-                TypeAttachedMedia = ETypeAttachedMedia.Photos;
+                    CanUseButtonUploadPhotos = ListAttachedMedia.Count < 6;
+                    CanUseButtonUploadGif = false;
+                    CanUseButtonUploadVideo = false;
+
+                    TypeAttachedMedia = ETypeAttachedMedia.Photos;
+
+                    CanUseButtonPost = canPostTweet();
+                }
+                catch (Exception e)
+                {
+                }
             }
             else
             {
@@ -266,20 +262,28 @@ namespace InterTwitter.ViewModels
 
             if (canUseStorage)
             {
-                var photo = await MediaPicker.PickPhotoAsync();
-
-                ListAttachedMedia.Add(new MiniCardViewModel()
+                try
                 {
-                    PathImage = photo.FullPath,
-                    PathActionImage = "ic_clear_filled_blue.png",
-                    ActionCommand = DeleteAttachedGifCommand,
-                });
+                    var photo = await MediaPicker.PickPhotoAsync();
 
-                CanUseButtonUploadPhotos = false;
-                CanUseButtonUploadGif = false;
-                CanUseButtonUploadVideo = false;
+                    ListAttachedMedia.Add(new MiniCardViewModel()
+                    {
+                        PathImage = photo.FullPath,
+                        PathActionImage = "ic_clear_filled_blue.png",
+                        ActionCommand = DeleteAttachedGifCommand,
+                    });
 
-                TypeAttachedMedia = ETypeAttachedMedia.Gif;
+                    CanUseButtonUploadPhotos = false;
+                    CanUseButtonUploadGif = false;
+                    CanUseButtonUploadVideo = false;
+
+                    TypeAttachedMedia = ETypeAttachedMedia.Gif;
+
+                    CanUseButtonPost = canPostTweet();
+                }
+                catch (Exception e)
+                {
+                }
             }
             else
             {
@@ -293,25 +297,51 @@ namespace InterTwitter.ViewModels
 
             if (canUseStorage)
             {
-                var photo = await MediaPicker.PickVideoAsync();
-
-                ListAttachedMedia.Add(new MiniCardViewModel()
+                try
                 {
-                    PathImage = photo.FullPath,
-                    PathActionImage = "ic_clear_filled_blue.png",
-                    ActionCommand = DeleteAttachedVideoCommand,
-                });
+                    var photo = await MediaPicker.PickVideoAsync();
 
-                CanUseButtonUploadPhotos = false;
-                CanUseButtonUploadGif = false;
-                CanUseButtonUploadVideo = false;
+                    ListAttachedMedia.Add(new MiniCardViewModel()
+                    {
+                        PathImage = photo.FullPath,
+                        PathActionImage = "ic_clear_filled_blue.png",
+                        ActionCommand = DeleteAttachedVideoCommand,
+                    });
 
-                TypeAttachedMedia = ETypeAttachedMedia.Video;
+                    CanUseButtonUploadPhotos = false;
+                    CanUseButtonUploadGif = false;
+                    CanUseButtonUploadVideo = false;
+
+                    TypeAttachedMedia = ETypeAttachedMedia.Video;
+
+                    CanUseButtonPost = canPostTweet();
+                }
+                catch (Exception e)
+                {
+                }
             }
             else
             {
                 await _pageDialogService.DisplayAlertAsync("Error", "This app needs access to photos gallery for picking photos and videos.", "Ok");
             }
+        }
+
+        private void clearAttachedMedia()
+        {
+            ListAttachedMedia.Clear();
+
+            CanUseButtonUploadPhotos = true;
+            CanUseButtonUploadGif = true;
+            CanUseButtonUploadVideo = true;
+
+            TypeAttachedMedia = ETypeAttachedMedia.None;
+
+            CanUseButtonPost = canPostTweet();
+        }
+
+        private bool canPostTweet()
+        {
+            return (Text.Length > 0 || ListAttachedMedia.Count > 0) && Text.Length < 250;
         }
 
         private void Counter()

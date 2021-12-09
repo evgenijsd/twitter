@@ -60,14 +60,15 @@ namespace InterTwitter.iOS.Renderers
 
                 var paragraphStyle = new NSMutableParagraphStyle
                 {
-                    LineSpacing = 7,
+                    LineSpacing = 5,
                 };
 
                 var style = UIStringAttributeKey.ParagraphStyle;
                 var rangeAll = new NSRange(0, attributedString.Length);
-
                 attributedString.AddAttribute(style, paragraphStyle, rangeAll);
-                
+
+                var styleFontSize = UIStringAttributeKey.Font;
+                attributedString.AddAttribute(styleFontSize, Control.Font, rangeAll);
 
                 if (length > correctLength)
                 {

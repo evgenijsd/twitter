@@ -14,7 +14,7 @@
 
             <controls:CustomGrid.RowDefinitions>
                 
-                <RowDefinition Height="56" />
+                <RowDefinition Height="54.67" />
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="auto" />
                 
@@ -22,12 +22,13 @@
 
             <StackLayout Grid.Row="0"
                          Grid.Column="0"
-                         Orientation="Horizontal">
+                         Orientation="Horizontal"
+                         BackgroundColor="{DynamicResource appcolor_i2}">
 
                 <ImageButton Source="{DynamicResource ic_cancel_gray}"
                              Command="{Binding GoBackCommand}"
                              HorizontalOptions="Start"
-                             Margin="15, 2, 14, 0"
+                             Margin="13, 1, 14, 0"
                              WidthRequest="30"
                              BackgroundColor="Transparent"/>
 
@@ -36,13 +37,13 @@
 
                     <statecontainer:StateCondition State="True">
 
-                        <Button CornerRadius="15"
-                                Margin="14"
-                                Padding="0"
+                        <Button CornerRadius="14"
+                                Margin="13, 14, 13, 12"
+                                Padding="26, 10, 26, 11"
                                 Text="Post"
                                 TextTransform="None"
                                 FontFamily="Ubuntu-Medium"
-                                FontSize="{DynamicResource tsize_i4}"
+                                FontSize="{DynamicResource tsize_i3}"
                                 TextColor="{DynamicResource appcolor_i2}"
                                 BackgroundColor="{DynamicResource appcolor_i1}"
                                 Command="{Binding PostTweetCommand}"/>
@@ -53,7 +54,7 @@
 
                         <Button CornerRadius="15"
                                 Margin="14"
-                                Padding="0"
+                                Padding="30, 0, 30, 0"
                                 Text="Post"
                                 TextTransform="None"
                                 FontFamily="Ubuntu-Medium"
@@ -69,7 +70,8 @@
             
             <Grid Grid.Row="1"
                   Grid.Column="0"
-                  RowSpacing="0">
+                  RowSpacing="0"
+                  BackgroundColor="{DynamicResource appcolor_i2}">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="42" />
@@ -78,18 +80,28 @@
 
                 <StackLayout Grid.Row="0"
                              Grid.Column="0"
-                             Spacing="0">
+                             Spacing="0"
+                             BackgroundColor="{DynamicResource appcolor_i2}">
 
-                    <Image Source="{DynamicResource pic_profile_small}"
-                           HeightRequest="28"
-                           Margin="14, 14, 0, 0"
-                           HorizontalOptions="FillAndExpand"/>
+                    <Frame HeightRequest="32"
+                           WidthRequest="33"
+                           Margin="13, 14, 0, 0"
+                           HorizontalOptions="FillAndExpand"
+                           HasShadow="False"
+                           Padding="0"
+                           BorderColor="Transparent">
 
+                        <Image Source="ava.png"
+                               Aspect="AspectFit"/>
+
+                    </Frame>
+                    
                 </StackLayout>
 
                 <controls:CustomScrollView Grid.Row="0"
                                            Grid.Column="1"
-                                           VerticalScrollBarVisibility="Never">
+                                           VerticalScrollBarVisibility="Never"
+                                           BackgroundColor="{DynamicResource appcolor_i2}">
 
                     <StackLayout BackgroundColor="{DynamicResource appcolor_i2}">
 
@@ -104,7 +116,7 @@
                                                IsExpandable="True"
                                                CorrectLength="250"
                                                MaxLength="300"
-                                               Margin="14"/>
+                                               Margin="4, 11, 0, 0"/>
 
                         <statecontainer:StateContainer State="{Binding TypeAttachedMedia}"
                                                        VerticalOptions="Start">
@@ -129,6 +141,7 @@
                                                 </Grid.RowDefinitions>
 
                                                 <Image Grid.Row="0"
+                                                       Aspect="AspectFill"
                                                        Source="{Binding PathImage}"
                                                        HeightRequest="44.1167"
                                                        WidthRequest="44.1167"/>
@@ -178,6 +191,7 @@
 
                                                 <Image Grid.Row="0"
                                                        Source="{Binding PathImage}"
+                                                       Aspect="AspectFill"
                                                        HeightRequest="44.1167"
                                                        WidthRequest="44.1167"/>
 
@@ -251,7 +265,8 @@
                     <BoxView Color="{DynamicResource appcolor_i6}"
                              HeightRequest="1"/>
 
-                    <StackLayout Orientation="Horizontal">
+                    <StackLayout Orientation="Horizontal"
+                                 BackgroundColor="{DynamicResource appcolor_i2}">
 
                         <statecontainer:StateContainer State="{Binding CanUseButtonUploadPhotos}">
                             

@@ -727,6 +727,6 @@
     <BundleResource Include="Resources\pic_empty_state_2%403x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\test_upload.png" />
+    <BundleResource Include="Resources\ava.png" />
   </ItemGroup>
 </Project>
