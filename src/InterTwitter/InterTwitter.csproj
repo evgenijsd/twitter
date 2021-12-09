@@ -15,6 +15,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Fonts\Ubuntu-Bold.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-BoldItalic.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-Italic.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-Light.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-LightItalic.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-Medium.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-MediumItalic.ttf" />
+    <None Remove="Resources\Fonts\Ubuntu-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-Bold.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-BoldItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-Italic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-Light.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-LightItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-Medium.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-MediumItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Ubuntu-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="DLToolkit.Forms.Controls.FlowListView" Version="2.0.11" />
     <PackageReference Include="Prism.Unity.Forms" Version="8.1.97" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
@@ -30,7 +52,6 @@
 
   <ItemGroup>
     <Folder Include="Behaviors\" />
-    <Folder Include="Resources\Fonts\" />
   </ItemGroup>
 
   <ItemGroup>
