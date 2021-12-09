@@ -1,109 +1,110 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<local:BaseContentPage 
-    x:Class="InterTwitter.Views.ProfilePage"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
-    xmlns:cardsControls="clr-namespace:PanCardView.Controls;assembly=PanCardView"
-    xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-    xmlns:fftranform="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
-    xmlns:local="clr-namespace:InterTwitter.Views"
-    BackgroundColor="{DynamicResource appcolor_i2}">
+<local:BaseContentPage x:Class="InterTwitter.Views.ProfilePage"
+                       xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
+                       xmlns:cardsControls="clr-namespace:PanCardView.Controls;assembly=PanCardView"
+                       xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                       xmlns:fftranform="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+                       xmlns:local="clr-namespace:InterTwitter.Views"
+                       BackgroundColor="{DynamicResource appcolor_i2}">
 
-    <Grid RowDefinitions="0.278*, 0.198*, 0.524*" RowSpacing="0">
 
-        <Image
-            Grid.Row="0"
-            Aspect="AspectFill"
-            Source="https://picsum.photos/500/500?image=122" />
+    <Grid RowDefinitions="0.278*, 0.198*, 0.524*" 
+          RowSpacing="0">
 
-        <cardsControls:CircleFrame
-            Grid.Row="0"
-            Margin="16,16,0,0"
-            BackgroundColor="#9902060E"
-            HeightRequest="32"
-            HorizontalOptions="Start"
-            VerticalOptions="Start"
-            WidthRequest="32">
-            <Image Scale="0.8" Source="ic_left_white" />
+        <Image Grid.Row="0"
+               Aspect="AspectFill"
+               Source="https://picsum.photos/500/500?image=122" />
+
+        <cardsControls:CircleFrame Grid.Row="0"
+                                   Margin="16,16,0,0"
+                                   BackgroundColor="#9902060E"
+                                   HeightRequest="32"
+                                   HorizontalOptions="Start"
+                                   VerticalOptions="Start"
+                                   WidthRequest="32">
+            <Image Scale="0.8" 
+                   Source="ic_left_white" />
             <cardsControls:CircleFrame.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding NavgationCommand}" />
+                <TapGestureRecognizer Command="{Binding NavgationCommandAsync}" />
             </cardsControls:CircleFrame.GestureRecognizers>
         </cardsControls:CircleFrame>
 
-        <cardsControls:CircleFrame
-            Grid.Row="0"
-            Margin="0,16,16,0"
-            BackgroundColor="#9902060E"
-            HeightRequest="32"
-            HorizontalOptions="End"
-            VerticalOptions="Start"
-            WidthRequest="32">
-            <Image Scale="0.8" Source="ic_hidden_menu_white_small" />
+        <cardsControls:CircleFrame Grid.Row="0"
+                                   Margin="0,16,16,0"
+                                   BackgroundColor="#9902060E"
+                                   HeightRequest="32"
+                                   HorizontalOptions="End"
+                                   VerticalOptions="Start"
+                                   WidthRequest="32">
+            <Image Scale="0.8" 
+                   Source="ic_hidden_menu_white_small" />
             <cardsControls:CircleFrame.GestureRecognizers>
                 <TapGestureRecognizer Tapped="OnMenuTappedHandler" />
             </cardsControls:CircleFrame.GestureRecognizers>
         </cardsControls:CircleFrame>
 
-        <Frame
-            x:Name="menu"
-            Grid.Row="0"
-            Grid.RowSpan="2"
-            Margin="0,16,16,0"
-            Padding="16,21,66,21"
-            CornerRadius="6"
-            HasShadow="True"
-            HorizontalOptions="End"
-            IsVisible="false"
-            VerticalOptions="Start">
+        <Frame x:Name="menu"
+               Grid.Row="0"
+               Grid.RowSpan="2"
+               Margin="0,16,16,0"
+               Padding="16,21,66,21"
+               CornerRadius="6"
+               HasShadow="True"
+               HorizontalOptions="End"
+               IsVisible="false"
+               VerticalOptions="Start">
             <StackLayout Spacing="28">
-                <Label Style="{DynamicResource tstyle_i7}" Text="Share" />
-                <Label Style="{DynamicResource tstyle_i7}" Text="Change profile" />
-                <Label Style="{DynamicResource tstyle_i7}" Text="Muted profiles" />
-                <Label Style="{DynamicResource tstyle_i7}" Text="Blacklist" />
+                <Label Style="{DynamicResource tstyle_i7}" 
+                       Text="Share" />
+                <Label Style="{DynamicResource tstyle_i7}" 
+                       Text="Change profile" />
+                <Label Style="{DynamicResource tstyle_i7}" 
+                       Text="Muted profiles" />
+                <Label Style="{DynamicResource tstyle_i7}" 
+                       Text="Blacklist" />
             </StackLayout>
         </Frame>
 
-        <Grid Grid.Row="1" BackgroundColor="Transparent">
-
-            <StackLayout
-                Grid.Column="0"
-                Margin="16,0,0,0"
-                HorizontalOptions="Start"
-                VerticalOptions="Center">
-                <Label Style="{DynamicResource tstyle_i14}" Text="Jaylon Kenter" />
-                <Label Style="{DynamicResource tstyle_i9}" Text="JKenter@gmail.com" />
+        <Grid Grid.Row="1" 
+              BackgroundColor="Transparent">
+            <StackLayout Grid.Column="0"
+                         Margin="16,0,0,0"
+                         HorizontalOptions="Start"
+                         VerticalOptions="Center">
+                <Label Style="{DynamicResource tstyle_i14}" 
+                       Text="Jaylon Kenter" />
+                <Label Style="{DynamicResource tstyle_i9}" 
+                       Text="JKenter@gmail.com" />
             </StackLayout>
-
-            <Frame
-                Grid.Column="1"
-                Margin="0,8,0,0"
-                Padding="28,6,28,6"
-                BorderColor="{DynamicResource appcolor_i4}"
-                CornerRadius="45"
-                HasShadow="False"
-                HorizontalOptions="Center"
-                VerticalOptions="Start">
-                <Label Style="{DynamicResource tstyle_i8}" Text="Change Profile" />
+            <Frame Grid.Column="1"
+                   Margin="0,8,0,0"
+                   Padding="28,6,28,6"
+                   BorderColor="{DynamicResource appcolor_i4}"
+                   CornerRadius="45"
+                   HasShadow="False"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Start">
+                <Label Style="{DynamicResource tstyle_i8}" 
+                       Text="Change Profile" />
             </Frame>
 
             <ContentView>
-                <cardsControls:TabsControl
-                    BindingContext="{x:Reference lists}"
-                    HorizontalOptions="Start"
-                    StripeColor="{DynamicResource appcolor_i1}"
-                    StripeHeight="1.4"
-                    VerticalOptions="End">
+                <cardsControls:TabsControl BindingContext="{x:Reference lists}"
+                                           HorizontalOptions="Start"
+                                           StripeColor="{DynamicResource appcolor_i1}"
+                                           StripeHeight="1.4"
+                                           VerticalOptions="End">
                     <cardsControls:TabsControl.ItemTemplate>
                         <DataTemplate>
-                            <Label
-                                x:Name="itemLabel"
-                                Margin="0,0,0,8"
-                                HorizontalOptions="Start"
-                                Style="{DynamicResource Content_i7}"
-                                TextColor="{Binding TextColor}"
-                                VerticalOptions="CenterAndExpand"
-                                VerticalTextAlignment="Center">
+                            <Label x:Name="itemLabel"
+                                   Margin="0,0,0,8"
+                                   HorizontalOptions="Start"
+                                   Style="{DynamicResource Content_i7}"
+                                   TextColor="{Binding TextColor}"
+                                   VerticalOptions="CenterAndExpand"
+                                   VerticalTextAlignment="Center">
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span Text="     " />
@@ -120,20 +121,19 @@
 
         </Grid>
 
-        <cardsControls:CircleFrame
-            Grid.Row="0"
-            Grid.RowSpan="2"
-            Margin="16,68,0,0"
-            BackgroundColor="{DynamicResource appcolor_i2}"
-            HeightRequest="69"
-            HorizontalOptions="Start"
-            VerticalOptions="Center"
-            WidthRequest="69">
-            <cardsControls:CircleFrame
-                HorizontalOptions="Center"
-                Size="65"
-                VerticalOptions="Center">
-                <ffimage:CachedImage Aspect="AspectFill" Source="https://picsum.photos/500/500?image=290">
+        <cardsControls:CircleFrame Grid.Row="0"
+                                   Grid.RowSpan="2"
+                                   Margin="16,68,0,0"
+                                   BackgroundColor="{DynamicResource appcolor_i2}"
+                                   HeightRequest="69"
+                                   HorizontalOptions="Start"
+                                   VerticalOptions="Center"
+                                   WidthRequest="69">
+            <cardsControls:CircleFrame HorizontalOptions="Center"
+                                       Size="65"
+                                       VerticalOptions="Center">
+                <ffimage:CachedImage Aspect="AspectFill" 
+                                     Source="https://picsum.photos/500/500?image=290">
                     <ffimage:CachedImage.Transformations>
                         <fftranform:CircleTransformation />
                     </ffimage:CachedImage.Transformations>
@@ -141,20 +141,18 @@
             </cardsControls:CircleFrame>
         </cardsControls:CircleFrame>
 
-        <cards:CarouselView
-            x:Name="lists"
-            Grid.Row="2"
-            BackgroundColor="{DynamicResource appcolor_i2}"
-            ItemAppearing="OnItemApearingHandler"
-            ItemsSource="{Binding MenuItems}">
+        <cards:CarouselView x:Name="lists"
+                            Grid.Row="2"
+                            BackgroundColor="{DynamicResource appcolor_i2}"
+                            ItemAppearing="OnItemApearingHandler"
+                            ItemsSource="{Binding MenuItems}">
 
             <cards:CarouselView.ItemTemplate>
                 <DataTemplate>
                     <ContentView>
-                        <Label
-                            HorizontalOptions="Center"
-                            Text="{Binding Title}"
-                            VerticalOptions="Center" />
+                        <Label HorizontalOptions="Center"
+                               Text="{Binding Title}"
+                               VerticalOptions="Center" />
                     </ContentView>
                 </DataTemplate>
             </cards:CarouselView.ItemTemplate>

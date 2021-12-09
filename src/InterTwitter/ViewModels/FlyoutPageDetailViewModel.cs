@@ -1,5 +1,4 @@
-﻿using InterTwitter.Views;
-using Prism.Navigation;
+﻿using Prism.Navigation;
 using System;
 using System.ComponentModel;
 using Xamarin.Forms;
@@ -28,13 +27,11 @@ namespace InterTwitter.ViewModels.Flyout
 
             if (args.PropertyName == nameof(SelectedTabType))
             {
-                MessagingCenter.Send(this, "TabChange", SelectedTabType);
+                MessagingCenter.Send(this, Constants.Messages.TAB_CHANGE, SelectedTabType);
             }
         }
 
         #endregion
 
-        #region --- Private Helpers ---
-        #endregion
     }
 }

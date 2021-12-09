@@ -1,26 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ResourceDictionary
-    x:Class="InterTwitter.Resources.Styles.LightModeResources"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="InterTwitter.Resources.Styles.LightModeResources">
 
-    <!--  APP COLORS  -->
+    <!--APP COLORS-->
     <Color x:Key="appcolor_i1">#2356C5</Color>
-    <!--  Primary  -->
+    <!-- Primary -->
     <Color x:Key="appcolor_i2">#FCFDFE</Color>
-    <!--  System white  -->
+    <!-- System white -->
     <Color x:Key="appcolor_i3">#02060E</Color>
-    <!--  System black  -->
+    <!-- System black -->
     <Color x:Key="appcolor_i4">#66696E</Color>
-    <!--  Dark Gray  -->
+    <!-- Dark Gray -->
     <Color x:Key="appcolor_i5">#9D9FA3</Color>
-    <!--  Gray  -->
+    <!-- Gray -->
     <Color x:Key="appcolor_i6">#DEDFE1</Color>
-    <!--  Light Gray  -->
+    <!-- Light Gray -->
     <Color x:Key="appcolor_i7">#F44336</Color>
-    <!--  Error  -->
+    <!-- Error -->
 
-    <!--  IMAGES  -->
+    <!-- IMAGES -->
     <ImageSource x:Key="ic_add_blue">ic_add_blue</ImageSource>
     <ImageSource x:Key="ic_add_photo_white">ic_add_photo_white</ImageSource>
     <ImageSource x:Key="ic_bookmarks_blue">ic_bookmarks_blue</ImageSource>

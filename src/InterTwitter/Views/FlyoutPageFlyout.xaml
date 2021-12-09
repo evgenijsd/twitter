@@ -1,15 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<local:BaseContentPage
-    x:Class="InterTwitter.Views.FlyoutPageFlyout"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
-    xmlns:local="clr-namespace:InterTwitter.Views"
-    xmlns:prism="http://prismlibrary.com"
-    Title="Flyout"
-    prism:ViewModelLocator.AutowireViewModel="True"
-    BackgroundColor="{DynamicResource appcolor_i2}">
+<local:BaseContentPage x:Class="InterTwitter.Views.FlyoutPageFlyout"
+                       xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                       xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+                       xmlns:local="clr-namespace:InterTwitter.Views"
+                       xmlns:prism="http://prismlibrary.com"
+                       Title="Flyout"
+                       prism:ViewModelLocator.AutowireViewModel="True"
+                       BackgroundColor="{DynamicResource appcolor_i2}">
 
     <Grid RowSpacing="0">
         <Grid.RowDefinitions>
@@ -19,55 +18,55 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid Padding="5,10" VerticalOptions="Center">
+        <Grid Padding="5,10" 
+              VerticalOptions="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <ffimageloading:CachedImage
-                Margin="10"
-                Aspect="AspectFit"
-                Source="https://picsum.photos/500/500?image=741">
+            <ffimageloading:CachedImage Margin="10"
+                                        Aspect="AspectFit"
+                                        Source="https://picsum.photos/500/500?image=741">
                 <ffimageloading:CachedImage.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding OpenProfileCommand}" />
+                    <TapGestureRecognizer Command="{Binding OpenProfileCommandAsync}" />
                 </ffimageloading:CachedImage.GestureRecognizers>
                 <ffimageloading:CachedImage.Transformations>
                     <fftransformations:CircleTransformation />
                 </ffimageloading:CachedImage.Transformations>
             </ffimageloading:CachedImage>
-            <StackLayout Grid.Column="1" VerticalOptions="Center">
-                <Label Style="{DynamicResource tstyle_i14}" Text="{Binding ProfileName}" />
-                <Label Style="{DynamicResource Content_i7}" Text="{Binding ProfileEmail}" />
+            <StackLayout Grid.Column="1" 
+                         VerticalOptions="Center">
+                <Label Style="{DynamicResource tstyle_i14}" 
+                       Text="{Binding ProfileName}" />
+                <Label Style="{DynamicResource Content_i7}" 
+                       Text="{Binding ProfileEmail}" />
             </StackLayout>
         </Grid>
 
-        <ListView
-            x:Name="menuItems"
-            Grid.Row="1"
-            HasUnevenRows="true"
-            ItemsSource="{Binding MenuItems}"
-            SeparatorVisibility="None">
+        <ListView x:Name="menuItems"
+                  Grid.Row="1"
+                  HasUnevenRows="true"
+                  ItemsSource="{Binding MenuItems}"
+                  SeparatorVisibility="None">
 
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout
-                            Padding="20,12"
-                            Orientation="Horizontal"
-                            Spacing="20">
-                            <Image
-                                HeightRequest="35"
-                                Source="{Binding ImageSource}"
-                                WidthRequest="35" />
-                            <Label
-                                Style="{DynamicResource BaseContent_i2}"
-                                Text="{Binding Title}"
-                                TextColor="{Binding TextColor}"
-                                VerticalOptions="Center" />
+                        <StackLayout Padding="20,12"
+                                     Orientation="Horizontal"
+                                     Spacing="20">
+                            <Image HeightRequest="35"
+                                   Source="{Binding ImageSource}"
+                                   WidthRequest="35" />
+                            <Label Style="{DynamicResource BaseContent_i2}"
+                                   Text="{Binding Title}"
+                                   TextColor="{Binding TextColor}"
+                                   VerticalOptions="Center" />
 
                             <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding TapCommand}" CommandParameter="{Binding .}" />
+                                <TapGestureRecognizer Command="{Binding TapCommand}" 
+                                                      CommandParameter="{Binding .}" />
                             </StackLayout.GestureRecognizers>
 
                         </StackLayout>
@@ -76,56 +75,54 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <BoxView Grid.Row="2" BackgroundColor="{DynamicResource appcolor_i6}" />
+        <BoxView Grid.Row="2" 
+                 BackgroundColor="{DynamicResource appcolor_i6}" />
 
-        <Grid Grid.Row="3" Margin="20">
+        <Grid Grid.Row="3" 
+              Margin="20">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <StackLayout
-                Orientation="Horizontal"
-                Spacing="20"
-                VerticalOptions="Start">
-                <Image
-                    HeightRequest="35"
-                    Source="{DynamicResource ic_setting_gray}"
-                    WidthRequest="35" />
-                <Label
-                    x:Name="settingsLabel"
-                    FontSize="{DynamicResource tsize_i5}"
-                    Style="{DynamicResource BaseContent_i2}"
-                    Text="Change profile"
-                    TextColor="{DynamicResource appcolor_i3}"
-                    VerticalOptions="Center" />
+            <StackLayout Orientation="Horizontal"
+                         Spacing="20"
+                         VerticalOptions="Start">
+                <Image HeightRequest="35"
+                       Source="{DynamicResource ic_setting_gray}"
+                       WidthRequest="35" />
+                <Label x:Name="settingsLabel"
+                       FontSize="{DynamicResource tsize_i5}"
+                       Style="{DynamicResource BaseContent_i2}"
+                       Text="Change profile"
+                       TextColor="{DynamicResource appcolor_i3}"
+                       VerticalOptions="Center" />
 
                 <StackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ChangeProfileCommand}" Tapped="SettingsTappedHandler" />
+                    <TapGestureRecognizer Command="{Binding ChangeProfileCommandAsync}" 
+                                          Tapped="SettingsTappedHandler" />
                 </StackLayout.GestureRecognizers>
 
             </StackLayout>
 
-            <StackLayout
-                Grid.Row="1"
-                Orientation="Horizontal"
-                Spacing="20"
-                VerticalOptions="End">
-                <Image
-                    x:Name="logoutImage"
-                    HeightRequest="35"
-                    Source="{DynamicResource ic_logout_blue}"
-                    WidthRequest="35" />
-                <Label
-                    x:Name="logoutLabel"
-                    FontSize="{DynamicResource tsize_i5}"
-                    Style="{DynamicResource BaseContent_i2}"
-                    Text="Logout"
-                    TextColor="{DynamicResource appcolor_i1}"
-                    VerticalOptions="Center" />
+            <StackLayout Grid.Row="1"
+                         Orientation="Horizontal"
+                         Spacing="20"
+                         VerticalOptions="End">
+                <Image x:Name="logoutImage"
+                       HeightRequest="35"
+                       Source="{DynamicResource ic_logout_blue}"
+                       WidthRequest="35" />
+                <Label x:Name="logoutLabel"
+                       FontSize="{DynamicResource tsize_i5}"
+                       Style="{DynamicResource BaseContent_i2}"
+                       Text="Logout"
+                       TextColor="{DynamicResource appcolor_i1}"
+                       VerticalOptions="Center" />
 
                 <StackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding LogoutCommand}" Tapped="LogoutTappedHandler" />
+                    <TapGestureRecognizer Command="{Binding LogoutCommandAsync}" 
+                                          Tapped="LogoutTappedHandler" />
                 </StackLayout.GestureRecognizers>
 
             </StackLayout>

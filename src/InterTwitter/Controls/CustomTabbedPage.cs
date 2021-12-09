@@ -39,6 +39,7 @@ namespace InterTwitter.Controls
                 SelectedTabType = CurrentPage?.GetType();
             }
         }
+
         #endregion
 
         #region --- Private Helpers ---
@@ -54,5 +55,6 @@ namespace InterTwitter.Controls
         }
 
         #endregion
+
     }
 }

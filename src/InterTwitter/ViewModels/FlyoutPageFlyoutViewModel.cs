@@ -50,6 +50,7 @@ namespace InterTwitter.ViewModels.Flyout
                         TapCommand = new Command(OnItemTapCommand),
                     },
                 });
+
             Subscribe();
         }
 
@@ -76,9 +77,9 @@ namespace InterTwitter.ViewModels.Flyout
             set => SetProperty(ref _profileEmail, value);
         }
 
-        public ICommand LogoutCommand => SingleExecutionCommand.FromFunc(OnLogoutCommand);
-        public ICommand ChangeProfileCommand => SingleExecutionCommand.FromFunc(OnChangeProfileCommand);
-        public ICommand OpenProfileCommand => SingleExecutionCommand.FromFunc(OnOpenProfileCommand);
+        public ICommand LogoutCommandAsync => SingleExecutionCommand.FromFunc(OnLogoutCommandAsync);
+        public ICommand ChangeProfileCommandAsync => SingleExecutionCommand.FromFunc(OnChangeProfileCommandAsync);
+        public ICommand OpenProfileCommandAsync => SingleExecutionCommand.FromFunc(OnOpenProfileCommandAsync);
 
         #endregion
 
@@ -88,6 +89,7 @@ namespace InterTwitter.ViewModels.Flyout
         {
             base.OnPropertyChanged(args);
         }
+
         #endregion
 
         #region --- Private Helpers ---
@@ -140,22 +142,23 @@ namespace InterTwitter.ViewModels.Flyout
             NavigationService.NavigateAsync(nameof(menuItem.TargetType));
         }
 
-        private Task OnLogoutCommand()
+        private Task OnLogoutCommandAsync()
         {
             return Task.CompletedTask;
         }
 
-        private Task OnChangeProfileCommand()
+        private Task OnChangeProfileCommandAsync()
         {
             return Task.CompletedTask;
         }
 
-        private async Task OnOpenProfileCommand()
+        private async Task OnOpenProfileCommandAsync()
         {
            // MessagingCenter.Send(this, "OpenSidebar", false);
             await NavigationService.NavigateAsync($"{nameof(ProfilePage)}");
         }
 
         #endregion
+
     }
 }
