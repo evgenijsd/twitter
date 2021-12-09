@@ -27,7 +27,6 @@ namespace InterTwitter.Helpers
             {
                 case ETypeAttachedMedia.Photos:
                 case ETypeAttachedMedia.Gif:
-                case ETypeAttachedMedia.None:
                     dataTemplate = ImageTweetDataTemplate;
                     break;
                 case ETypeAttachedMedia.Video:

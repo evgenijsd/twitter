@@ -121,8 +121,8 @@ namespace InterTwitter.Services
                 {
                     Id = 4,
                     UserId = 4,
-                    Text = "um quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
-                    Media = Enums.ETypeAttachedMedia.Text,
+                    Text = "Only text",
+                    Media = Enums.ETypeAttachedMedia.None,
                     CreationTime = DateTime.Now,
                 },
                 new TweetModel
@@ -142,7 +142,7 @@ namespace InterTwitter.Services
                 {
                     Id = 5,
                     UserId = 5,
-                    Media = Enums.ETypeAttachedMedia.None,
+                    Media = Enums.ETypeAttachedMedia.Photos,
                     CreationTime = DateTime.Now,
                     MediaPaths = new List<string>
                     {
