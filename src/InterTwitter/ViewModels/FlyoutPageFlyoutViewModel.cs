@@ -77,9 +77,16 @@ namespace InterTwitter.ViewModels.Flyout
             set => SetProperty(ref _profileEmail, value);
         }
 
+        private string _userImagePath = "https://picsum.photos/500/500?image=290";
+        public string UserImagePath
+        {
+            get => _userImagePath;
+            set => SetProperty(ref _userImagePath, value);
+        }
+
         public ICommand LogoutCommandAsync => SingleExecutionCommand.FromFunc(OnLogoutCommandAsync);
-        public ICommand ChangeProfileCommandAsync => SingleExecutionCommand.FromFunc(OnChangeProfileCommandAsync);
-        public ICommand OpenProfileCommandAsync => SingleExecutionCommand.FromFunc(OnOpenProfileCommandAsync);
+        public ICommand NavigateEditProfileCommandAsync => SingleExecutionCommand.FromFunc(() => NavigationService.NavigateAsync(nameof(EditProfilePage)));
+        public ICommand NavigateProfileCommandAsync => SingleExecutionCommand.FromFunc(() => NavigationService.NavigateAsync(nameof(ProfilePage)));
 
         #endregion
 
@@ -145,17 +152,6 @@ namespace InterTwitter.ViewModels.Flyout
         private Task OnLogoutCommandAsync()
         {
             return Task.CompletedTask;
-        }
-
-        private Task OnChangeProfileCommandAsync()
-        {
-            return Task.CompletedTask;
-        }
-
-        private async Task OnOpenProfileCommandAsync()
-        {
-           // MessagingCenter.Send(this, "OpenSidebar", false);
-            await NavigationService.NavigateAsync($"{nameof(ProfilePage)}");
         }
 
         #endregion

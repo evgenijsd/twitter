@@ -27,9 +27,9 @@
 
             <ffimageloading:CachedImage Margin="10"
                                         Aspect="AspectFit"
-                                        Source="https://picsum.photos/500/500?image=741">
+                                        Source="{Binding UserImagePath}">
                 <ffimageloading:CachedImage.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding OpenProfileCommandAsync}" />
+                    <TapGestureRecognizer Command="{Binding NavigateProfileCommandAsync}" />
                 </ffimageloading:CachedImage.GestureRecognizers>
                 <ffimageloading:CachedImage.Transformations>
                     <fftransformations:CircleTransformation />
@@ -99,7 +99,7 @@
                        VerticalOptions="Center" />
 
                 <StackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ChangeProfileCommandAsync}" 
+                    <TapGestureRecognizer Command="{Binding NavigateEditProfileCommandAsync}" 
                                           Tapped="SettingsTappedHandler" />
                 </StackLayout.GestureRecognizers>
 
@@ -126,9 +126,6 @@
                 </StackLayout.GestureRecognizers>
 
             </StackLayout>
-
         </Grid>
-
     </Grid>
-
 </local:BaseContentPage>

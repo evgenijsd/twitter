@@ -10,12 +10,12 @@
                        BackgroundColor="{DynamicResource appcolor_i2}">
 
 
-    <Grid RowDefinitions="0.278*, 0.198*, 0.524*" 
+    <Grid RowDefinitions="0.278*, 0.250*, 0.472*" 
           RowSpacing="0">
 
         <Image Grid.Row="0"
                Aspect="AspectFill"
-               Source="https://picsum.photos/500/500?image=122" />
+               Source="{Binding UserBackgroundImage}" />
 
         <cardsControls:CircleFrame Grid.Row="0"
                                    Margin="16,16,0,0"
@@ -25,7 +25,7 @@
                                    VerticalOptions="Start"
                                    WidthRequest="32">
             <Image Scale="0.8" 
-                   Source="ic_left_white" />
+                   Source="{DynamicResource ic_left_white}" />
             <cardsControls:CircleFrame.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding NavgationCommandAsync}" />
             </cardsControls:CircleFrame.GestureRecognizers>
@@ -39,12 +39,13 @@
                                    VerticalOptions="Start"
                                    WidthRequest="32">
             <Image Scale="0.8" 
-                   Source="ic_hidden_menu_white_small" />
+                   Source="{DynamicResource ic_hidden_menu_white_small}" />
             <cardsControls:CircleFrame.GestureRecognizers>
                 <TapGestureRecognizer Tapped="OnMenuTappedHandler" />
             </cardsControls:CircleFrame.GestureRecognizers>
         </cardsControls:CircleFrame>
-
+        
+        <!--Hidden menu-->
         <Frame x:Name="menu"
                Grid.Row="0"
                Grid.RowSpan="2"
@@ -66,7 +67,9 @@
                        Text="Blacklist" />
             </StackLayout>
         </Frame>
-
+        <!--Hidden menu-->
+        
+        <!--MIDDLE SPACE-->
         <Grid Grid.Row="1" 
               BackgroundColor="Transparent">
             <StackLayout Grid.Column="0"
@@ -74,11 +77,12 @@
                          HorizontalOptions="Start"
                          VerticalOptions="Center">
                 <Label Style="{DynamicResource tstyle_i14}" 
-                       Text="Jaylon Kenter" />
+                       Text="{Binding UserName}" />
                 <Label Style="{DynamicResource tstyle_i9}" 
-                       Text="JKenter@gmail.com" />
+                       Text="{Binding UserMail}" />
             </StackLayout>
-            <Frame Grid.Column="1"
+            <Frame Grid.Column="1" 
+                   x:Name="changeProfFrame"
                    Margin="0,8,0,0"
                    Padding="28,6,28,6"
                    BorderColor="{DynamicResource appcolor_i4}"
@@ -87,14 +91,20 @@
                    HorizontalOptions="Center"
                    VerticalOptions="Start">
                 <Label Style="{DynamicResource tstyle_i8}" 
-                       Text="Change Profile" />
+                       Text="Change Profile" 
+                       x:Name="changeProfLabel"/>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigationToEditCommandAsync}" Tapped="OnChangeProfTapHandler"/>
+                </Frame.GestureRecognizers>
             </Frame>
-
+            <!--MIDDLE SPACE-->
+            
+            <!--CONTENT Control-->
             <ContentView>
-                <cardsControls:TabsControl BindingContext="{x:Reference lists}"
+                <cardsControls:TabsControl BindingContext="{x:Reference lists}" 
                                            HorizontalOptions="Start"
                                            StripeColor="{DynamicResource appcolor_i1}"
-                                           StripeHeight="1.4"
+                                           StripeHeight="1.4" 
                                            VerticalOptions="End">
                     <cardsControls:TabsControl.ItemTemplate>
                         <DataTemplate>
@@ -118,29 +128,33 @@
                     </cardsControls:TabsControl.ItemTemplate>
                 </cardsControls:TabsControl>
             </ContentView>
-
+            <!--CONTENT Control-->
+            
         </Grid>
-
+        
+        <!--User photo-->
         <cardsControls:CircleFrame Grid.Row="0"
                                    Grid.RowSpan="2"
-                                   Margin="16,68,0,0"
+                                   Margin="16,25,0,0"
                                    BackgroundColor="{DynamicResource appcolor_i2}"
-                                   HeightRequest="69"
+                                   HeightRequest="64"
                                    HorizontalOptions="Start"
                                    VerticalOptions="Center"
-                                   WidthRequest="69">
+                                   WidthRequest="64">
             <cardsControls:CircleFrame HorizontalOptions="Center"
-                                       Size="65"
+                                       Size="60"
                                        VerticalOptions="Center">
                 <ffimage:CachedImage Aspect="AspectFill" 
-                                     Source="https://picsum.photos/500/500?image=290">
+                                     Source="{Binding UserImagePath}">
                     <ffimage:CachedImage.Transformations>
                         <fftranform:CircleTransformation />
                     </ffimage:CachedImage.Transformations>
                 </ffimage:CachedImage>
             </cardsControls:CircleFrame>
         </cardsControls:CircleFrame>
-
+        <!--User photo-->
+        
+        <!--CONTENT SPACE-->
         <cards:CarouselView x:Name="lists"
                             Grid.Row="2"
                             BackgroundColor="{DynamicResource appcolor_i2}"
@@ -158,6 +172,8 @@
             </cards:CarouselView.ItemTemplate>
 
         </cards:CarouselView>
+        <!--CONTENT SPACE-->
+        
         <Grid.GestureRecognizers>
             <TapGestureRecognizer Tapped="OnAnywhereTappedHandler" />
         </Grid.GestureRecognizers>

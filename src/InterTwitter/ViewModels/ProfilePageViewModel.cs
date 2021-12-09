@@ -40,7 +40,36 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _menuItems, value);
         }
 
+        private string _userMail = "JKenter@gmail.com";
+        public string UserMail
+        {
+            get => _userMail;
+            set => SetProperty(ref _userMail, value);
+        }
+
+        private string _userName = "Jaylon Kenter";
+        public string UserName
+        {
+            get => _userName;
+            set => SetProperty(ref _userName, value);
+        }
+
+        private string _userBackgroundImage = "https://picsum.photos/500/500?image=122";
+        public string UserBackgroundImage
+        {
+            get => _userBackgroundImage;
+            set => SetProperty(ref _userBackgroundImage, value);
+        }
+
+        private string _userImagePath = "https://picsum.photos/500/500?image=290";
+        public string UserImagePath
+        {
+            get => _userImagePath;
+            set => SetProperty(ref _userImagePath, value);
+        }
+
         public ICommand NavgationCommandAsync => SingleExecutionCommand.FromFunc(NavigationService.GoBackAsync);
+        public ICommand NavigationToEditCommandAsync => SingleExecutionCommand.FromFunc(() => NavigationService.NavigateAsync(nameof(EditProfilePage)));
 
         #endregion
 

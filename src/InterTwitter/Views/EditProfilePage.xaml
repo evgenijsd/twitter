@@ -6,7 +6,7 @@
                                 xmlns:cardsControls="clr-namespace:PanCardView.Controls;assembly=PanCardView"
                                 xmlns:controls="clr-namespace:InterTwitter.Controls"
                                 xmlns:local="clr-namespace:InterTwitter.Views"
-                                xmlns:prism="http://prismlibrary.com"
+                                xmlns:prism="http://prismlibrary.com" xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" xmlns:fftranform="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
                                 prism:ViewModelLocator.AutowireViewModel="True"
                                 BackgroundColor="{DynamicResource appcolor_i2}">
 
@@ -31,26 +31,86 @@
 
     <Grid RowDefinitions="0.087*, 0.190*, 0.069*, 0.149*, 0.149*, 0.149*, 0.149*, 0.06*" 
           RowSpacing="0">
-
+        
+        <!--NAVBAR-->
         <StackLayout Grid.Row="0" 
                      Orientation="Horizontal">
             <Image HorizontalOptions="StartAndExpand" 
+                   x:Name="leftArrowImage"
                    Margin="18,0,0,0"
-                   Source="{DynamicResource ic_left_gray}"
-                   VerticalOptions="CenterAndExpand" />
+                   Source="{DynamicResource ic_left_blue}"
+                   VerticalOptions="CenterAndExpand">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigationCommandAsync}" Tapped="OnLeftArrowTapHandler"/>
+                </Image.GestureRecognizers>
+            </Image>
+            
             <Label HorizontalOptions="Center"
                    Style="{DynamicResource tstyle_i4}"
                    Text="Change Profile"
                    VerticalOptions="Center" />
-            <Image HorizontalOptions="EndAndExpand" Margin="0,0,18,0"
-                         Source="{DynamicResource ic_check_gray}"
-                         VerticalOptions="Center" />
+            
+            <Image HorizontalOptions="EndAndExpand" 
+                   Margin="0,0,18,0" x:Name="checkImage"
+                   Source="{DynamicResource ic_check_blue}"
+                   VerticalOptions="Center">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CheckCommandAsync}" Tapped="OnCheckTapHandler"/>
+                </Image.GestureRecognizers>
+            </Image>
         </StackLayout>
+        <!--NAVBAR-->
 
+        <!--PHOTO SPACE-->
         <Image Grid.Row="1"
                Aspect="AspectFill"
-               Source="https://picsum.photos/500/500?image=182" />
+               Source="{Binding UserBackgroundImage}" />
 
+        <cardsControls:CircleFrame Grid.Row="1" 
+                                   BackgroundColor="#9902060E"
+                                   WidthRequest="64"
+                                   HeightRequest="64"
+                                   >
+            <Image  Source="{DynamicResource ic_add_photo_white}"
+                    Aspect="AspectFit" Scale="0.5"
+                   />
+        </cardsControls:CircleFrame>
+
+        <cardsControls:CircleFrame Grid.Row="1"
+                                   Grid.RowSpan="3"
+                                   Margin="16,0,0,0"
+                                   BackgroundColor="{DynamicResource appcolor_i2}"
+                                   HeightRequest="69"
+                                   HorizontalOptions="Start"
+                                   VerticalOptions="Center"
+                                   WidthRequest="69">
+            <cardsControls:CircleFrame HorizontalOptions="Center"
+                                       Size="65"
+                                       VerticalOptions="Center">
+                <ffimage:CachedImage Aspect="AspectFill" 
+                                     Source="{Binding UserImagePath}">
+                    <ffimage:CachedImage.Transformations>
+                        <fftranform:CircleTransformation />
+                    </ffimage:CachedImage.Transformations>
+                </ffimage:CachedImage>
+            </cardsControls:CircleFrame>
+        </cardsControls:CircleFrame>
+        <cardsControls:CircleFrame Grid.Row="1" 
+                                   Grid.RowSpan="3"
+                                   Margin="18,0,0,0"
+                                   BackgroundColor="#9902060E" 
+                                   HorizontalOptions="Start" 
+                                   VerticalOptions="Center"
+                                   WidthRequest="65"
+                                   HeightRequest="65"
+                                   >
+            <Image  Source="{DynamicResource ic_add_photo_white}"
+                    Aspect="AspectFit" Scale="0.5"
+                   />
+        </cardsControls:CircleFrame>
+        <!--PHOTO SPACE-->
+
+        <!--ENTRY SPACE-->
         <Label Grid.Row="2" />
 
         <StackLayout Grid.Row="3" 
@@ -94,7 +154,8 @@
                                   IsPassword="True"
                                   IsSwapButtons="True" />
         </StackLayout>
-
+        <!--ENTRY SPACE-->
+        
         <Label Grid.Row="7" />
     </Grid>
 

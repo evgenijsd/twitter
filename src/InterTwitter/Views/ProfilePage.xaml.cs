@@ -38,5 +38,14 @@ namespace InterTwitter.Views
         {
             menu.IsVisible = false;
         }
+
+        private async void OnChangeProfTapHandler(object sender, EventArgs e)
+        {
+            changeProfFrame.BorderColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i1"];
+            changeProfLabel.TextColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i1"];
+            await System.Threading.Tasks.Task.Delay(300);
+            changeProfFrame.BorderColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"];
+            changeProfLabel.TextColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"];
+        }
     }
 }
