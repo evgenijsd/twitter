@@ -95,6 +95,13 @@ namespace InterTwitter.Models.TweetViewModel
             set => SetProperty(ref _isBookmarked, value, nameof(IsBookmarked));
         }
 
+        private ICommand _DeleteBookmarkCommand;
+        public ICommand DeleteBookmarkCommand
+        {
+            get => _DeleteBookmarkCommand;
+            set => SetProperty(ref _DeleteBookmarkCommand, value);
+        }
+
         private ICommand _likeTweetCommand;
         public ICommand LikeTweetCommand => _likeTweetCommand ?? (_likeTweetCommand = SingleExecutionCommand.FromFunc<ImagesTweetViewModel>(OnLikeAsync));
 

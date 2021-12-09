@@ -1,5 +1,6 @@
 ﻿using InterTwitter.Enums;
 using InterTwitter.Extensions;
+using InterTwitter.Helpers;
 using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services;
 using InterTwitter.Services.Settings;
@@ -8,14 +9,15 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace InterTwitter.ViewModels
 {
-    public class HomePageViewModel : BasePageViewModel
+    public class BookmarksPageViewModel : BasePageViewModel
     {
         private readonly ITweetService _tweetService;
 
-        public HomePageViewModel(
+        public BookmarksPageViewModel(
             ISettingsManager settingManager,
             ITweetService tweetService)
         {
@@ -39,6 +41,9 @@ namespace InterTwitter.ViewModels
             get => _tweets;
             set => SetProperty(ref _tweets, value);
         }
+
+        private ICommand _DeleteCommand;
+        public ICommand DeleteCommand => _DeleteCommand ??= SingleExecutionCommand.FromFunc<object>(OnDeleteCommandAsync);
 
         #endregion
 
@@ -71,10 +76,37 @@ namespace InterTwitter.ViewModels
                         tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
                         tweet.UserName = tweetAuthor.Result.Name;
                     }
+
+                    tweet.DeleteBookmarkCommand = DeleteCommand;
                 }
 
-                Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
+                Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels/*.Where(x => x.UserId == 1)*/);
             }
+        }
+
+        private Task OnDeleteCommandAsync(object args)
+        {
+            if (args != null)
+            {
+                _IsTweetLiked = !_IsTweetLiked;
+            }
+
+            /*{
+   var confirmConfig = new ConfirmConfig()
+   {
+       Message = "Delete pin",
+       OkText = "Delete",
+       CancelText = "Cancel"
+   };
+   var confirm = await UserDialogs.Instance.ConfirmAsync(confirmConfig);
+   if (confirm)
+   {
+       await _mapService.DeletePinAsync(PinSearch, args);
+   }
+}
+PinView pinv = args as PinView;
+PinModel pindel = pinv.ToPinModel();*/
+            return Task.CompletedTask;
         }
 
         #endregion

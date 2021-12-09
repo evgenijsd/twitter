@@ -81,9 +81,9 @@
                     </Label>
 
                     <ffimageloading:CachedImage Source="ic_bookmarks_gray">
-                        
+
                         <ffimageloading:CachedImage.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding MarkTweetCommand}"/>
+                            <TapGestureRecognizer Command="{Binding DeleteBookmarkCommand}" />
                         </ffimageloading:CachedImage.GestureRecognizers>
                         
                         <ffimageloading:CachedImage.Triggers>

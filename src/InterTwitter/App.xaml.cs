@@ -30,14 +30,14 @@ namespace InterTwitter
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage>();
-            containerRegistry.RegisterForNavigation<HomePage, HomePageViewModel>();
+            containerRegistry.RegisterForNavigation<BookmarksPage, BookmarksPageViewModel>();
         }
 
         protected override async void OnInitialized()
         {
             InitializeComponent();
             FlowListView.Init();
-            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(HomePage)}");
+            await NavigationService.NavigateAsync($"/{nameof(BookmarksPage)}/{nameof(BookmarksPage)}");
         }
 
         protected override void OnStart()

@@ -11,9 +11,9 @@ using Xamarin.Forms.Xaml;
 namespace InterTwitter.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class HomePage : BaseContentPage
+    public partial class BookmarksPage : BaseContentPage
     {
-        public HomePage()
+        public BookmarksPage()
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
