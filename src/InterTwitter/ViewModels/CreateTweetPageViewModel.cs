@@ -178,6 +178,12 @@ namespace InterTwitter.ViewModels
 
         private async Task OnGoBackCommandAsync()
         {
+            var confirm = await _pageDialogService.DisplayAlertAsync("Confirm", "Confirm?", "Ok", "Cancel");
+
+            if (confirm)
+            {
+                await _pageDialogService.DisplayAlertAsync("Exit", "Confirm", "Ok");
+            }
         }
 
         private async Task OnPostTweetCommandAsync()
