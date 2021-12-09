@@ -17,7 +17,7 @@ namespace InterTwitter.ViewModels
 
         #region --- Public Properties ---
 
-        public ICommand OpenFlyoutCommand => SingleExecutionCommand.FromFunc(OnOpenFlyoutCommand);
+        public ICommand OpenFlyoutCommandAsync => SingleExecutionCommand.FromFunc(OnOpenFlyoutCommandAsync);
 
         #endregion
 
@@ -37,7 +37,7 @@ namespace InterTwitter.ViewModels
 
         #region --- Private Helpers ---
 
-        private Task OnOpenFlyoutCommand()
+        private Task OnOpenFlyoutCommandAsync()
         {
             MessagingCenter.Send(this, Constants.Messages.OPEN_SIDEBAR, true);
             MessagingCenter.Send(this, Constants.Messages.TAB_CHANGE, typeof(SearchPage));
@@ -45,5 +45,6 @@ namespace InterTwitter.ViewModels
         }
 
         #endregion
+
     }
 }

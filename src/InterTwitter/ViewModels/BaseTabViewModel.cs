@@ -23,6 +23,7 @@ namespace InterTwitter.ViewModels
         #endregion
 
         #region -- IActiveAware implementation --
+
         public virtual void OnAppearing()
         {
         }
@@ -30,6 +31,8 @@ namespace InterTwitter.ViewModels
         public virtual void OnDisappearing()
         {
         }
+
         #endregion
+
     }
 }

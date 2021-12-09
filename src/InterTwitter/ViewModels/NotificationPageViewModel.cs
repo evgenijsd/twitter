@@ -17,11 +17,7 @@ namespace InterTwitter.ViewModels
 
         #region --- Public Properties ---
 
-        public ICommand OpenFlyoutCommand => SingleExecutionCommand.FromFunc(OnOpenFlyoutCommand);
-
-        #endregion
-
-        #region --- Overrides ---
+        public ICommand OpenFlyoutCommandAsync => SingleExecutionCommand.FromFunc(OnOpenFlyoutCommandAsync);
 
         public override void OnAppearing()
         {
@@ -37,7 +33,7 @@ namespace InterTwitter.ViewModels
 
         #region --- Private Helpers ---
 
-        private Task OnOpenFlyoutCommand()
+        private Task OnOpenFlyoutCommandAsync()
         {
             MessagingCenter.Send(this, Constants.Messages.OPEN_SIDEBAR, true);
             MessagingCenter.Send(this, Constants.Messages.TAB_CHANGE, typeof(NotificationsPage));
@@ -45,5 +41,6 @@ namespace InterTwitter.ViewModels
         }
 
         #endregion
+
     }
 }

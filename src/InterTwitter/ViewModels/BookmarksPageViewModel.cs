@@ -14,9 +14,10 @@ namespace InterTwitter.ViewModels
         {
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_bookmarks_gray"] as ImageSource;
         }
+
         #region --- Public Properties ---
 
-        public ICommand OpenFlyoutCommand => SingleExecutionCommand.FromFunc(OnOpenFlyoutCommand);
+        public ICommand OpenFlyoutCommandAsync => SingleExecutionCommand.FromFunc(OnOpenFlyoutCommandAsync);
 
         #endregion
 
@@ -36,7 +37,7 @@ namespace InterTwitter.ViewModels
 
         #region --- Private Helpers ---
 
-        private Task OnOpenFlyoutCommand()
+        private Task OnOpenFlyoutCommandAsync()
         {
             MessagingCenter.Send(this, Constants.Messages.OPEN_SIDEBAR, true);
             MessagingCenter.Send(this, Constants.Messages.TAB_CHANGE, typeof(BookmarksPage));
@@ -44,5 +45,6 @@ namespace InterTwitter.ViewModels
         }
 
         #endregion
+
     }
 }

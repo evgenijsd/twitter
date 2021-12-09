@@ -1,6 +1,5 @@
 ﻿using Prism.Mvvm;
 using System;
-using System.Drawing;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -12,6 +11,7 @@ namespace InterTwitter.ViewModels
         {
             TargetType = typeof(MenuItemViewModel);
         }
+
         #region --- Public Properties ---
 
         private int _id;
@@ -57,5 +57,6 @@ namespace InterTwitter.ViewModels
         }
 
         #endregion
+
     }
 }

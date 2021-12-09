@@ -40,11 +40,9 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _menuItems, value);
         }
 
-        public ICommand NavgationCommand => SingleExecutionCommand.FromFunc(NavigationService.GoBackAsync);
+        public ICommand NavgationCommandAsync => SingleExecutionCommand.FromFunc(NavigationService.GoBackAsync);
 
         #endregion
 
-        #region --- Private Helpers ---
-        #endregion
     }
 }
