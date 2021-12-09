@@ -24,17 +24,19 @@
                          Grid.Column="0"
                          Orientation="Horizontal">
 
-                <Image Source="{DynamicResource ic_cancel_gray}"
-                       HorizontalOptions="Start"
-                       Margin="15, 2, 14, 0"
-                       WidthRequest="30"/>
+                <ImageButton Source="{DynamicResource ic_cancel_gray}"
+                             Command="{Binding GoBackCommand}"
+                             HorizontalOptions="Start"
+                             Margin="15, 2, 14, 0"
+                             WidthRequest="30"
+                             BackgroundColor="Transparent"/>
 
                 <statecontainer:StateContainer State="{Binding CanUseButtonPost}"
                                                HorizontalOptions="EndAndExpand">
 
                     <statecontainer:StateCondition State="True">
 
-                        <Button CornerRadius="15 "
+                        <Button CornerRadius="15"
                                 Margin="14"
                                 Padding="0"
                                 Text="Post"
@@ -42,13 +44,14 @@
                                 FontFamily="Ubuntu-Medium"
                                 FontSize="{DynamicResource tsize_i4}"
                                 TextColor="{DynamicResource appcolor_i2}"
-                                BackgroundColor="{DynamicResource appcolor_i1}"/>
+                                BackgroundColor="{DynamicResource appcolor_i1}"
+                                Command="{Binding PostTweetCommand}"/>
 
                     </statecontainer:StateCondition>
 
                     <statecontainer:StateCondition State="False">
 
-                        <Button CornerRadius="15 "
+                        <Button CornerRadius="15"
                                 Margin="14"
                                 Padding="0"
                                 Text="Post"
@@ -111,7 +114,7 @@
                                 <FlexLayout Direction="Row"
                                             Wrap="Wrap"
                                             VerticalOptions="Start"
-                                            BindableLayout.ItemsSource="{Binding ListUploadPhotos}">
+                                            BindableLayout.ItemsSource="{Binding ListAttachedMedia}">
 
                                     <BindableLayout.ItemTemplate>
 
@@ -136,9 +139,11 @@
                                                        Margin="41.11, -60, 0, 60"
                                                        BackgroundColor="Transparent">
 
-                                                    <Image Source="{Binding PathActionImage}"
-                                                           HeightRequest="21"
-                                                           WidthRequest="21"/>
+                                                    <ImageButton Source="{Binding PathActionImage}"
+                                                                 Command="{Binding ActionCommand}"
+                                                                 CommandParameter="{Binding .}"
+                                                                 HeightRequest="21"
+                                                                 WidthRequest="21"/>
 
                                                 </Frame>
 
@@ -154,33 +159,49 @@
 
                             <statecontainer:StateCondition State="Gif">
 
-                                <Grid HeightRequest="65"
-                                      Margin="7, 0, 0, 0"
-                                      HorizontalOptions="Start">
+                                <FlexLayout Direction="Row"
+                                            Wrap="Wrap"
+                                            VerticalOptions="Start"
+                                            BindableLayout.ItemsSource="{Binding ListAttachedMedia}">
 
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="44.1167"/>
-                                        <RowDefinition Height="21"/>
-                                    </Grid.RowDefinitions>
+                                    <BindableLayout.ItemTemplate>
 
-                                    <Image Grid.Row="0"
-                                           Source="test_upload.png"
-                                           HeightRequest="44.1167"
-                                           WidthRequest="44.1167"/>
+                                        <DataTemplate>
 
-                                    <Frame Grid.Row="1"
-                                           HasShadow="False"
-                                           Padding="0"
-                                           Margin="41.11, -60, 0, 60"
-                                           BackgroundColor="Transparent">
+                                            <Grid HeightRequest="65"
+                                                  Margin="7, 0, 0, 0">
 
-                                        <Image Source="ic_clear_filled_blue.png"
-                                               HeightRequest="21"
-                                               WidthRequest="21"/>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="44.1167"/>
+                                                    <RowDefinition Height="21"/>
+                                                </Grid.RowDefinitions>
 
-                                    </Frame>
+                                                <Image Grid.Row="0"
+                                                       Source="{Binding PathImage}"
+                                                       HeightRequest="44.1167"
+                                                       WidthRequest="44.1167"/>
 
-                                </Grid>
+                                                <Frame Grid.Row="1"
+                                                       HasShadow="False"
+                                                       Padding="0"
+                                                       Margin="41.11, -60, 0, 60"
+                                                       BackgroundColor="Transparent">
+
+                                                    <ImageButton Source="{Binding PathActionImage}"
+                                                                 Command="{Binding ActionCommand}"
+                                                                 CommandParameter="{Binding .}"
+                                                                 HeightRequest="21"
+                                                                 WidthRequest="21"/>
+
+                                                </Frame>
+
+                                            </Grid>
+
+                                        </DataTemplate>
+
+                                    </BindableLayout.ItemTemplate>
+
+                                </FlexLayout>
                                 
                             </statecontainer:StateCondition>
 
@@ -197,9 +218,11 @@
                                            FontSize="{DynamicResource tsize_i4}"
                                            FontFamily="Ubuntu-Medium"/>
 
-                                    <Image Source="{DynamicResource ic_clear_filled_blue}"
-                                           HeightRequest="21"
-                                           WidthRequest="21"/>
+                                    <ImageButton Source="{DynamicResource ic_clear_filled_blue}"
+                                                 Command="{Binding DeleteAttachedVideoCommand}"
+                                                 CommandParameter="{Binding .}"
+                                                 HeightRequest="21"
+                                                 WidthRequest="21"/>
 
                                 </StackLayout>
 
@@ -235,6 +258,7 @@
                             <statecontainer:StateCondition State="True">
 
                                 <ImageButton Source="{DynamicResource ic_media_blue}"
+                                             Command="{Binding AddPhotoCommand}"
                                              Margin="13.93, 4, 0, 4"
                                              WidthRequest="28.86"
                                              BackgroundColor="Transparent"/>
@@ -257,6 +281,7 @@
                             <statecontainer:StateCondition State="True">
 
                                 <ImageButton Source="{DynamicResource ic_gif_blue}"
+                                             Command="{Binding AddGifCommand}"
                                              Margin="13.93, 4, 0, 4"
                                              WidthRequest="28.86"
                                              BackgroundColor="Transparent"/>
@@ -279,6 +304,7 @@
                             <statecontainer:StateCondition State="True">
 
                                 <ImageButton Source="{DynamicResource ic_video_square_blue}"
+                                             Command="{Binding AddVideoCommand}"
                                              Margin="13.93, 4, 0, 4"
                                              WidthRequest="28.86"
                                              BackgroundColor="Transparent"/>

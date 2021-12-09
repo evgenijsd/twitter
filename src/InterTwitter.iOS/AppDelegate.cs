@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using InterTwitter.iOS.Services.PermissionsService;
+using InterTwitter.Services.PermissionsService;
+using Prism;
+using Prism.Ioc;
+using Prism.Unity;
 using UIKit;
 
 namespace InterTwitter.iOS
@@ -24,9 +29,25 @@ namespace InterTwitter.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             Sharpnado.Shades.iOS.iOSShadowsRenderer.Initialize();
-            LoadApplication(new App());
+            LoadApplication(new App(new IOSInitializer()));
 
             return base.FinishedLaunching(app, options);
+        }
+
+        public class IOSInitializer : IPlatformInitializer
+        {
+            public void RegisterTypes(IContainerRegistry containerRegistry)
+            {
+                containerRegistry.RegisterInstance<IPermissionsService>(PrismApplication.Current.Container.Resolve<PermissionsService>());
+            }
+        }
+
+        public override bool ContinueUserActivity(UIApplication application, NSUserActivity userActivity, UIApplicationRestorationHandler completionHandler)
+        {
+            if (Xamarin.Essentials.Platform.ContinueUserActivity(application, userActivity, completionHandler))
+                return true;
+
+            return base.ContinueUserActivity(application, userActivity, completionHandler);
         }
     }
 }

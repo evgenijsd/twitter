@@ -1,5 +1,6 @@
 ﻿using InterTwitter.ViewModels;
 using InterTwitter.Views;
+using Prism;
 using Prism.Ioc;
 using Prism.Unity;
 using System;
@@ -12,6 +13,11 @@ namespace InterTwitter
     public partial class App : PrismApplication
     {
         public App()
+        {
+        }
+
+        public App(IPlatformInitializer platformInitializer)
+            : base(platformInitializer)
         {
         }
 

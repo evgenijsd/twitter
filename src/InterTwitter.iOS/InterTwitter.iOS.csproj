@@ -115,6 +115,7 @@
     <Compile Include="Renderers\CustomEditorRenderer.cs" />
     <Compile Include="Renderers\CustomGridRenderer.cs" />
     <Compile Include="Renderers\CustomScrollViewRenderer.cs" />
+    <Compile Include="Services\PermissionsService\PermissionsService.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -193,7 +194,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
-    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\ic_add_blue.png" />

@@ -1,12 +1,16 @@
 ﻿using InterTwitter.Enums;
+using InterTwitter.Services.PermissionsService;
 using MapNotepad.Helpers;
 using Prism.Navigation;
+using Prism.Services;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
@@ -15,51 +19,23 @@ namespace InterTwitter.ViewModels
     {
         private int value;
 
-        public CreateTweetPageViewModel(INavigationService navigationService)
+        private IPageDialogService _pageDialogService;
+
+        private IPermissionsService _permissionsService;
+
+        public CreateTweetPageViewModel(
+            INavigationService navigationService,
+            IPermissionsService permissionsService,
+            IPageDialogService pageDialogService)
             : base(navigationService)
         {
             Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, neque, metus ipsum fermentum morbi at.";
             value = _text.Length;
 
-            _listUploadPhotos = new List<MiniCardViewModel>()
-            {
-                new MiniCardViewModel()
-                {
-                    PathImage = "test_upload.png",
-                    PathActionImage = "ic_clear_filled_blue.png",
-                    ActionCommand = null,
-                },
-                new MiniCardViewModel()
-                {
-                    PathImage = "test_upload.png",
-                    PathActionImage = "ic_clear_filled_blue.png",
-                    ActionCommand = null,
-                },
-                new MiniCardViewModel()
-                {
-                    PathImage = "test_upload.png",
-                    PathActionImage = "ic_clear_filled_blue.png",
-                    ActionCommand = null,
-                },
-                new MiniCardViewModel()
-                {
-                    PathImage = "test_upload.png",
-                    PathActionImage = "ic_clear_filled_blue.png",
-                    ActionCommand = null,
-                },
-                new MiniCardViewModel()
-                {
-                    PathImage = "test_upload.png",
-                    PathActionImage = "ic_clear_filled_blue.png",
-                    ActionCommand = null,
-                },
-                new MiniCardViewModel()
-                {
-                    PathImage = "test_upload.png",
-                    PathActionImage = "ic_clear_filled_blue.png",
-                    ActionCommand = null,
-                },
-            };
+            _permissionsService = permissionsService;
+            _pageDialogService = pageDialogService;
+
+            _listAttachedMedia = new ObservableCollection<MiniCardViewModel>();
         }
 
         #region -- Public properties --
@@ -134,25 +110,25 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _canUseButtonUploadVideo, value);
         }
 
-        private bool _canUseButtonPost;
+        private bool _canUseButtonPost = true;
         public bool CanUseButtonPost
         {
             get => _canUseButtonPost;
             set => SetProperty(ref _canUseButtonPost, value);
         }
 
-        private ETypeAttachedMedia _typeAttachedMedia = ETypeAttachedMedia.Video;
+        private ETypeAttachedMedia _typeAttachedMedia;
         public ETypeAttachedMedia TypeAttachedMedia
         {
             get => _typeAttachedMedia;
             set => SetProperty(ref _typeAttachedMedia, value);
         }
 
-        private List<MiniCardViewModel> _listUploadPhotos;
-        public List<MiniCardViewModel> ListUploadPhotos
+        private ObservableCollection<MiniCardViewModel> _listAttachedMedia;
+        public ObservableCollection<MiniCardViewModel> ListAttachedMedia
         {
-            get => _listUploadPhotos;
-            set => SetProperty(ref _listUploadPhotos, value);
+            get => _listAttachedMedia;
+            set => SetProperty(ref _listAttachedMedia, value);
         }
 
         private ICommand _goBackCommand;
@@ -164,20 +140,20 @@ namespace InterTwitter.ViewModels
         private ICommand _deleteAttachedPhotoCommand;
         public ICommand DeleteAttachedPhotoCommand => _deleteAttachedPhotoCommand = SingleExecutionCommand.FromFunc(OnDeleteAttachedPhotoCommandAsync);
 
-        private ICommand _Command;
-        public ICommand DeleteAttachedGifCommand => _Command = SingleExecutionCommand.FromFunc(OnDeleteAttachedGifAsync);
+        private ICommand _deleteAttachedGifCommand;
+        public ICommand DeleteAttachedGifCommand => _deleteAttachedGifCommand = SingleExecutionCommand.FromFunc(OnDeleteAttachedGifAsync);
 
-        private ICommand _Command;
-        public ICommand DeleteAttachedVideoCommand => _Command = SingleExecutionCommand.FromFunc(OnDeleteAttachedVideoAsync);
+        private ICommand _deleteAttachedVideoCommand;
+        public ICommand DeleteAttachedVideoCommand => _deleteAttachedVideoCommand = SingleExecutionCommand.FromFunc(OnDeleteAttachedVideoAsync);
 
-        private ICommand _Command;
-        public ICommand Command => _Command = SingleExecutionCommand.FromFunc(OnAsync);
+        private ICommand _addPhotoCommand;
+        public ICommand AddPhotoCommand => _addPhotoCommand = SingleExecutionCommand.FromFunc(OnAddPhotoAsync);
 
-        private ICommand _Command;
-        public ICommand Command => _Command = SingleExecutionCommand.FromFunc(OnAsync);
+        private ICommand _addGifCommand;
+        public ICommand AddGifCommand => _addGifCommand = SingleExecutionCommand.FromFunc(OnAddGifAsync);
 
-        private ICommand _Command;
-        public ICommand Command => _Command = SingleExecutionCommand.FromFunc(OnAsync);
+        private ICommand _addVideoCommand;
+        public ICommand AddVideoCommand => _addVideoCommand = SingleExecutionCommand.FromFunc(OnAddVideoAsync);
 
         #endregion
 
@@ -190,6 +166,7 @@ namespace InterTwitter.ViewModels
             switch (args.PropertyName)
             {
                 case nameof(Text):
+                    CanUseButtonPost = Text.Length < 250;
                     Counter();
                     break;
             }
@@ -207,34 +184,146 @@ namespace InterTwitter.ViewModels
         {
         }
 
-        private async Task OnDeleteAttachedPhotoCommandAsync()
+        private async Task OnDeleteAttachedPhotoCommandAsync(object obj)
         {
+            var item = obj as MiniCardViewModel;
+
+            ListAttachedMedia.Remove(item);
+
+            CanUseButtonUploadPhotos = ListAttachedMedia.Count < 6;
+
+            if (ListAttachedMedia.Count == 0)
+            {
+                CanUseButtonUploadGif = true;
+                CanUseButtonUploadVideo = true;
+
+                TypeAttachedMedia = ETypeAttachedMedia.None;
+            }
         }
 
-        private Task OnDeleteAttachedGifAsync()
+        private async Task OnDeleteAttachedGifAsync(object obj)
         {
-            throw new NotImplementedException();
+            var item = obj as MiniCardViewModel;
+
+            ListAttachedMedia.Clear();
+
+            CanUseButtonUploadPhotos = true;
+            CanUseButtonUploadGif = true;
+            CanUseButtonUploadVideo = true;
+
+            TypeAttachedMedia = ETypeAttachedMedia.None;
         }
 
-        private Task OnDeleteAttachedVideoAsync()
+        private async Task OnDeleteAttachedVideoAsync(object obj)
         {
-            throw new NotImplementedException();
+            var item = obj as MiniCardViewModel;
+
+            ListAttachedMedia.Clear();
+
+            CanUseButtonUploadPhotos = true;
+            CanUseButtonUploadGif = true;
+            CanUseButtonUploadVideo = true;
+
+            TypeAttachedMedia = ETypeAttachedMedia.None;
+        }
+
+        private async Task OnAddPhotoAsync()
+        {
+            var canUseStorage = await _permissionsService.RequestAsync<Permissions.StorageRead>() == Xamarin.Essentials.PermissionStatus.Granted;
+
+            if (canUseStorage)
+            {
+                var photo = await MediaPicker.PickPhotoAsync();
+
+                ListAttachedMedia.Add(new MiniCardViewModel()
+                {
+                    PathImage = photo.FullPath,
+                    PathActionImage = "ic_clear_filled_blue.png",
+                    ActionCommand = DeleteAttachedPhotoCommand,
+                });
+
+                CanUseButtonUploadPhotos = ListAttachedMedia.Count < 6;
+                CanUseButtonUploadGif = false;
+                CanUseButtonUploadVideo = false;
+
+                TypeAttachedMedia = ETypeAttachedMedia.Photos;
+            }
+            else
+            {
+                await _pageDialogService.DisplayAlertAsync("Error", "This app needs access to photos gallery for picking photos and videos.", "Ok");
+            }
+        }
+
+        private async Task OnAddGifAsync()
+        {
+            var canUseStorage = await _permissionsService.RequestAsync<Permissions.StorageRead>() == Xamarin.Essentials.PermissionStatus.Granted;
+
+            if (canUseStorage)
+            {
+                var photo = await MediaPicker.PickPhotoAsync();
+
+                ListAttachedMedia.Add(new MiniCardViewModel()
+                {
+                    PathImage = photo.FullPath,
+                    PathActionImage = "ic_clear_filled_blue.png",
+                    ActionCommand = DeleteAttachedGifCommand,
+                });
+
+                CanUseButtonUploadPhotos = false;
+                CanUseButtonUploadGif = false;
+                CanUseButtonUploadVideo = false;
+
+                TypeAttachedMedia = ETypeAttachedMedia.Gif;
+            }
+            else
+            {
+                await _pageDialogService.DisplayAlertAsync("Error", "This app needs access to photos gallery for picking photos and videos.", "Ok");
+            }
+        }
+
+        private async Task OnAddVideoAsync()
+        {
+            var canUseStorage = await _permissionsService.RequestAsync<Permissions.StorageRead>() == Xamarin.Essentials.PermissionStatus.Granted;
+
+            if (canUseStorage)
+            {
+                var photo = await MediaPicker.PickVideoAsync();
+
+                ListAttachedMedia.Add(new MiniCardViewModel()
+                {
+                    PathImage = photo.FullPath,
+                    PathActionImage = "ic_clear_filled_blue.png",
+                    ActionCommand = DeleteAttachedVideoCommand,
+                });
+
+                CanUseButtonUploadPhotos = false;
+                CanUseButtonUploadGif = false;
+                CanUseButtonUploadVideo = false;
+
+                TypeAttachedMedia = ETypeAttachedMedia.Video;
+            }
+            else
+            {
+                await _pageDialogService.DisplayAlertAsync("Error", "This app needs access to photos gallery for picking photos and videos.", "Ok");
+            }
         }
 
         private void Counter()
         {
             value = Text.Length;
 
-            if (value == 251)
-            {
-                CircleProgressBarTextColor = Color.Red;
-                CircleProgressBarFontScale = 0.8f;
-                CircleProgressBarProgressLineColor = Color.Red;
-            }
-
             if (value > 250)
             {
+                CircleProgressBarTextColor = Color.Red;
+                CircleProgressBarFontScale = 0.7f;
+                CircleProgressBarProgressLineColor = Color.Red;
+
                 CircleProgressBarText = (250 - value).ToString();
+            }
+            else
+            {
+                CircleProgressBarText = " ";
+                CircleProgressBarProgressLineColor = Color.Blue;
             }
 
             if (value == 300)
