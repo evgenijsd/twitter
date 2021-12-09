@@ -1,7 +1,6 @@
 ﻿using InterTwitter.Enums;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace InterTwitter.Models
 {

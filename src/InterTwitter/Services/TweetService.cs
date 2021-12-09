@@ -1,7 +1,5 @@
-﻿using InterTwitter.Extensions;
-using InterTwitter.Helpers;
+﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
-using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services.Settings;
 using System;
 using System.Collections.Generic;

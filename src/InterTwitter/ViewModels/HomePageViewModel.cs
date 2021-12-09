@@ -1,31 +1,24 @@
 ﻿using InterTwitter.Enums;
 using InterTwitter.Extensions;
-using InterTwitter.Helpers;
 using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services;
 using InterTwitter.Services.Settings;
 using Prism.Navigation;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
 {
     public class HomePageViewModel : BasePageViewModel
     {
-        private readonly ISettingsManager _settingsManager;
         private readonly ITweetService _tweetService;
 
         public HomePageViewModel(
             ISettingsManager settingManager,
             ITweetService tweetService)
         {
-            _settingsManager = settingManager;
             _tweetService = tweetService;
         }
 

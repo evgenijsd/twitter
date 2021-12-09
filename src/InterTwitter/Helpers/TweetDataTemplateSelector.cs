@@ -1,8 +1,5 @@
 ﻿using InterTwitter.Enums;
 using InterTwitter.Models.TweetViewModel;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
 
 namespace InterTwitter.Helpers
@@ -32,31 +29,16 @@ namespace InterTwitter.Helpers
                 case ETypeAttachedMedia.Gif:
                 case ETypeAttachedMedia.None:
                     dataTemplate = ImageTweetDataTemplate;
-                     break;
+                    break;
                 case ETypeAttachedMedia.Video:
-                     dataTemplate = VideoTweetDataTemplate;
-                     break;
+                    dataTemplate = VideoTweetDataTemplate;
+                    break;
                 default:
-                     dataTemplate = TextTweetDataTemplate;
-                     break;
+                    dataTemplate = TextTweetDataTemplate;
+                    break;
             }
 
             return dataTemplate;
-
-            //if (tweet.Media.CompareTo(TweetType.VideoTweet) == 0)
-            //{
-            //    return VideoTweetDataTemplate;
-            //}
-            //else if (tweet.Media == TweetType.ImageTweet.ToString())
-            //{
-            //    return ImageTweetDataTemplate;
-            //}
-            //else if (tweet?.Media == TweetType.GifTweet.ToString())
-            //{
-            //    return GifTweetDataTemplate;
-            //}
-
-            //return TextTweetDataTemplate;
         }
 
         #endregion
