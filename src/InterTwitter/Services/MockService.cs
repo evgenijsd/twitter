@@ -83,8 +83,7 @@ namespace InterTwitter.Services
                 {
                     Id = 1,
                     UserId = 1,
-                    Text = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
-                    Media = Enums.ETweetType.ImagesTweet,
+                    Media = Enums.ETypeAttachedMedia.Photos,
                     MediaPaths = new List<string>
                     {
                         "https://images.unsplash.com/photo-1610878180933-123728745d22?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2FuYWRhJTIwbmF0dXJlfGVufDB8fDB8fA%3D%3D&w=1000&q=80",
@@ -100,7 +99,7 @@ namespace InterTwitter.Services
                     Id = 2,
                     UserId = 2,
                     Text = "onsequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
-                    Media = Enums.ETweetType.GifTweet,
+                    Media = Enums.ETypeAttachedMedia.Gif,
                     MediaPaths = new List<string>
                     {
                         "https://c.tenor.com/nMkmGwGH8s8AAAAd/elon-musk-smoke.gif",
@@ -112,7 +111,7 @@ namespace InterTwitter.Services
                     Id = 3,
                     UserId = 3,
                     Text = "um quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
-                    Media = Enums.ETweetType.VideoTweet,
+                    Media = Enums.ETypeAttachedMedia.Video,
                     MediaPaths = new List<string>
                     {
                        "https://www.youtube.com/embed/BWfBP5sTW18",
@@ -124,7 +123,7 @@ namespace InterTwitter.Services
                     Id = 4,
                     UserId = 4,
                     Text = "um quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
-                    Media = Enums.ETweetType.TextTweet,
+                    Media = Enums.ETypeAttachedMedia.Text,
                     CreationTime = DateTime.Now,
                 },
                 new TweetModel
@@ -132,12 +131,23 @@ namespace InterTwitter.Services
                     Id = 5,
                     UserId = 5,
                     Text = "Hi there!",
-                    Media = Enums.ETweetType.ImagesTweet,
+                    Media = Enums.ETypeAttachedMedia.Photos,
                     CreationTime = DateTime.Now,
                     MediaPaths = new List<string>
                     {
                        "https://i.guim.co.uk/img/media/32e584f481b3900eb8ffb0727990cafccec100e0/0_129_5321_3194/master/5321.jpg?width=465&quality=45&auto=format&fit=max&dpr=2&s=b463391383c3c2f3444f99697bcdc2c6",
                        "http://internetua.com/uploads/wysiwyg/RomanR/ELON.SPACEX.web_.jpg",
+                    },
+                },
+                new TweetModel
+                {
+                    Id = 5,
+                    UserId = 5,
+                    Media = Enums.ETypeAttachedMedia.None,
+                    CreationTime = DateTime.Now,
+                    MediaPaths = new List<string>
+                    {
+                       "https://i.pinimg.com/474x/f7/f7/73/f7f7733f9e3409f0ef433f3074525790.jpg",
                     },
                 },
             };

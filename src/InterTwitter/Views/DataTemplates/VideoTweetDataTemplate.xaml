@@ -33,7 +33,8 @@
                        VerticalOptions="Start"
                        MaxLines="5" 
                        LineBreakMode="TailTruncation"
-                       Text="{Binding Text}"/>
+                       Text="{Binding Text}"
+                       IsVisible="{Binding IsTextVisible}"/>
 
                 <Frame CornerRadius="5"
                        Padding="0"

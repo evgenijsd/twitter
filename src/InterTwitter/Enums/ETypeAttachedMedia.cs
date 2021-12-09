@@ -4,14 +4,16 @@ using System.Text;
 
 namespace InterTwitter.Enums
 {
-    public enum ETweetType
+    public enum ETypeAttachedMedia
     {
-        VideoTweet,
+        None,
 
-        GifTweet,
+        Video,
 
-        TextTweet,
+        Gif,
 
-        ImagesTweet,
+        Text,
+
+        Photos,
     }
 }

@@ -31,7 +31,8 @@
                        VerticalOptions="Start"
                        MaxLines="5" 
                        LineBreakMode="TailTruncation"
-                       Text="{Binding Text}"/>
+                       Text="{Binding Text}"
+                       IsVisible="{Binding IsTextVisible}"/>
 
                 <StackLayout Orientation="Horizontal"
                              HeightRequest="20"

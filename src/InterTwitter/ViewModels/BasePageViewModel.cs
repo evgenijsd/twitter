@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace InterTwitter.ViewModels
 {
-    public class BaseViewModel : BindableBase, IDestructible, IInitializeAsync, IInitialize, INavigationAware
+    public class BasePageViewModel : BindableBase, IDestructible, IInitializeAsync, IInitialize, INavigationAware
     {
         protected readonly INavigationService _navigationService;
 
-        public BaseViewModel()
+        public BasePageViewModel()
         {
             NavigationService = App.Resolve<INavigationService>();
         }

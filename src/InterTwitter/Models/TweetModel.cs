@@ -13,7 +13,7 @@ namespace InterTwitter.Models
 
         public string Text { get; set; }
 
-        public ETweetType Media { get; set; }
+        public ETypeAttachedMedia Media { get; set; }
 
         public IEnumerable<string> MediaPaths { get; set; }
 

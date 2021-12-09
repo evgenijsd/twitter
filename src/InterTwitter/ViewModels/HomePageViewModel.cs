@@ -16,7 +16,7 @@ using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
 {
-    public class HomePageViewModel : BaseViewModel
+    public class HomePageViewModel : BasePageViewModel
     {
         private readonly ISettingsManager _settingsManager;
         private readonly ITweetService _tweetService;
@@ -66,7 +66,7 @@ namespace InterTwitter.ViewModels
 
             if (getTweetResult.IsSuccess)
             {
-                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == ETweetType.ImagesTweet || x.Media == ETweetType.GifTweet ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
+                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == ETypeAttachedMedia.Photos || x.Media == ETypeAttachedMedia.Gif || x.Media == ETypeAttachedMedia.None ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
 
                 foreach (var tweet in tweetViewModels)
                 {

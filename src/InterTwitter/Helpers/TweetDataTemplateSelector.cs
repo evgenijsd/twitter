@@ -13,8 +13,6 @@ namespace InterTwitter.Helpers
 
         public DataTemplate VideoTweetDataTemplate { get; set; }
 
-        public DataTemplate GifTweetDataTemplate { get; set; }
-
         public DataTemplate ImageTweetDataTemplate { get; set; }
 
         public DataTemplate TextTweetDataTemplate { get; set; }
@@ -30,11 +28,12 @@ namespace InterTwitter.Helpers
             var tweet = item as BaseTweetViewModel;
             switch (tweet.Media)
             {
-                case ETweetType.ImagesTweet:
-                case ETweetType.GifTweet:
-                     dataTemplate = ImageTweetDataTemplate;
+                case ETypeAttachedMedia.Photos:
+                case ETypeAttachedMedia.Gif:
+                case ETypeAttachedMedia.None:
+                    dataTemplate = ImageTweetDataTemplate;
                      break;
-                case ETweetType.VideoTweet:
+                case ETypeAttachedMedia.Video:
                      dataTemplate = VideoTweetDataTemplate;
                      break;
                 default:

@@ -52,8 +52,14 @@ namespace InterTwitter.Models.TweetViewModel
         public string Text
         {
             get => _text;
-            set => SetProperty(ref _text, value);
+            set
+            {
+                SetProperty(ref _text, value);
+                RaisePropertyChanged(nameof(IsTextVisible));
+            }
         }
+
+        public bool IsTextVisible => !string.IsNullOrEmpty(Text);
 
         private IEnumerable<string> _mediaPaths;
         public IEnumerable<string> MediaPaths
@@ -62,8 +68,8 @@ namespace InterTwitter.Models.TweetViewModel
             set => SetProperty(ref _mediaPaths, value);
         }
 
-        private ETweetType _mediaType;
-        public ETweetType Media
+        private ETypeAttachedMedia _mediaType;
+        public ETypeAttachedMedia Media
         {
             get => _mediaType;
             set => SetProperty(ref _mediaType, value);
