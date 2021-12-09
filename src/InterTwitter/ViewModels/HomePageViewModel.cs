@@ -66,10 +66,23 @@ namespace InterTwitter.ViewModels
 
             if (getTweetResult.IsSuccess)
             {
-                Tweets = new ObservableCollection<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.ToBaseTweetViewModel()));
+                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == ETweetType.ImagesTweet || x.Media == ETweetType.GifTweet ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
+
+                foreach (var tweet in tweetViewModels)
+                {
+                    var tweetAuthor = await _tweetService.GetUserAsync(tweet.UserId);
+
+                    if (tweetAuthor.IsSuccess)
+                    {
+                        tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
+                        tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
+                        tweet.UserName = tweetAuthor.Result.Name;
+                    }
+                }
+
+                Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
             }
 
-            int rt = 5;
             //var listPhotos = new List<string> { "gif1", };
             //var rowHeight = listPhotos.Count < 3 ? 186 : 80; //error there pixel
             //rowHeight = listPhotos.Count == 3 | listPhotos.Count == 4 ? 89 : rowHeight; //error there pixel

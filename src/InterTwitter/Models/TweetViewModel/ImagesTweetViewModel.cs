@@ -8,9 +8,16 @@ namespace InterTwitter.Models.TweetViewModel
 {
     public class ImagesTweetViewModel : BaseTweetViewModel
     {
-        public ImagesTweetViewModel()
+        private readonly int _imagesNumber;
+
+        public ImagesTweetViewModel(int imagesNumber)
         {
-            InitImagesPositioning();
+            if (imagesNumber > 0)
+            {
+                _imagesNumber = imagesNumber;
+
+                InitImagesPositioning();
+            }
         }
 
         #region -- Public properties --
@@ -35,20 +42,18 @@ namespace InterTwitter.Models.TweetViewModel
 
         private void InitImagesPositioning()
         {
-            int imagesNumber = MediaPaths.Count();
+            _rowHeight = _imagesNumber < 3 ? 186 : 80;
 
-            _rowHeight = imagesNumber < 3 ? 186 : 80;
+            _rowHeight = _imagesNumber == 3 | _imagesNumber == 4 ? 89 : _rowHeight;
 
-            _rowHeight = imagesNumber == 3 | imagesNumber == 4 ? 89 : _rowHeight;
-
-            DefiningColumnNumber(imagesNumber);
+            DefiningColumnNumber();
         }
 
-        private void DefiningColumnNumber(int imagesNumber)
+        private void DefiningColumnNumber()
         {
-            _columnNumber = imagesNumber <= 4 ? 2 : 3;
+            _columnNumber = _imagesNumber <= 4 ? 2 : 3;
 
-            _columnNumber = imagesNumber == 1 ? 1 : _columnNumber;
+            _columnNumber = _imagesNumber == 1 ? 1 : _columnNumber;
         }
 
         #endregion

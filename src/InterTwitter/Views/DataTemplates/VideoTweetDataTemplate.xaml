@@ -13,7 +13,7 @@
                  Spacing="0">
 
             <ffimageloading:CachedImage VerticalOptions="Start"
-                                        Source="{Binding UserModel.AvatarPath}"
+                                        Source="{Binding UserAvatar}"
                                         HeightRequest="34"
                                         Margin="0, 0, 15, 0">
 
@@ -26,14 +26,14 @@
             <StackLayout VerticalOptions="Start">
 
                 <Label Style="{StaticResource tstyle_i6}"
-                       Text="{Binding UserModel.Name}" 
+                       Text="{Binding UserName}" 
                        FontAttributes="Bold"/>
 
                 <Label Style="{StaticResource tstyle_i7}" 
                        VerticalOptions="Start"
                        MaxLines="5" 
                        LineBreakMode="TailTruncation"
-                       Text="{Binding TweetModel.Text}"/>
+                       Text="{Binding Text}"/>
 
                 <Frame CornerRadius="5"
                        Padding="0"
@@ -41,7 +41,7 @@
 
                     <WebView Grid.Row="0"
                              Grid.Column="0"
-                             Source="{Binding TweetModel.MediaPaths, Converter={StaticResource listToFirstConverter}}" 
+                             Source="{Binding MediaPaths, Converter={StaticResource listToFirstConverter}}" 
                              WidthRequest="300"
                              HeightRequest="180"
                              MinimumWidthRequest="360"
@@ -54,7 +54,7 @@
                              Padding="0">
 
                     <Label Style="{StaticResource tstyle_i8}"
-                           Text="{Binding TweetModel.CreationTime,  StringFormat='{}{0:dd.MM.yyyy • HH:mm}'}"/>
+                           Text="{Binding CreationTime,  StringFormat='{}{0:dd.MM.yyyy • HH:mm}'}"/>
 
                     <ffimageloading:CachedImage Source="ic_like_gray" HorizontalOptions="EndAndExpand">
                         <ffimageloading:CachedImage.GestureRecognizers>

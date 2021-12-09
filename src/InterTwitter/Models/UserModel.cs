@@ -16,6 +16,6 @@ namespace InterTwitter.Models
 
         public string AvatarPath { get; set; }
 
-        public string BackgroundUserImage { get; set; }
+        public string BackgroundUserImagePath { get; set; }
     }
 }

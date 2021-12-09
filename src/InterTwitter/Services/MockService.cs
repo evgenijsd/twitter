@@ -34,7 +34,7 @@ namespace InterTwitter.Services
                     Email = "test@gmail.com",
                     Password = "1111",
                     AvatarPath = "https://inhabitat.com/wp-content/blogs.dir/1/files/2017/08/Bill-Gates-889x598.jpg",
-                    BackgroundUserImage = "https://yapx.ru/viral/PMYaG",
+                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
                 new UserModel
                 {
@@ -43,7 +43,7 @@ namespace InterTwitter.Services
                     Email = "test2@gmail.com",
                     Password = "2222",
                     AvatarPath = "https://i.pinimg.com/236x/01/e1/10/01e11011168eb3e1c83d16747192d490.jpg",
-                    BackgroundUserImage = "https://yapx.ru/viral/PMYaG",
+                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
                 new UserModel
                 {
@@ -52,7 +52,7 @@ namespace InterTwitter.Services
                     Email = "test3@gmail.com",
                     Password = "3333",
                     AvatarPath = "http://www.kinofilms.ua/images/person/big/738231.jpg",
-                    BackgroundUserImage = "https://yapx.ru/viral/PMYaG",
+                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
                 new UserModel
                 {
@@ -61,7 +61,7 @@ namespace InterTwitter.Services
                     Email = "test4@gmail.com",
                     Password = "4444",
                     AvatarPath = "https://upload.wikimedia.org/wikipedia/commons/b/b9/Steve_Jobs_Headshot_2010-CROP.jpg",
-                    BackgroundUserImage = "https://yapx.ru/viral/PMYaG",
+                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
                 new UserModel
                 {
@@ -69,8 +69,8 @@ namespace InterTwitter.Services
                     Name = "Elon musk ",
                     Email = "test4@gmail.com",
                     Password = "4444",
-                    AvatarPath = "https://lh3.googleusercontent.com/proxy/rwJfD7fujR9zs5CXXesandy8nUc4PXDpbJ4zFpWJcOhofAp5QY2-wlVY7Mbf4-Ne39yzjDvrjszKSHEHCszSJGc0Hw",
-                    BackgroundUserImage = "https://yapx.ru/viral/PMYaG",
+                    AvatarPath = "https://ichef.bbci.co.uk/news/640/cpsprodpb/81F4/production/_118486233_gettyimages-1229892674.jpg",
+                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
             };
         }
@@ -92,7 +92,6 @@ namespace InterTwitter.Services
                         "https://media.springernature.com/full/springer-cms/rest/v1/img/18893370/v1/height/320",
                         "https://www.lombardodier.com/files/live/sites/loportail/files/news/2021/May/20210521/Nature_LOcom.jpg",
                         "https://aka.ms/campus.jpg",
-                        "image1",
                     },
                     CreationTime = DateTime.Now,
                 },
@@ -116,7 +115,7 @@ namespace InterTwitter.Services
                     Media = Enums.ETweetType.VideoTweet,
                     MediaPaths = new List<string>
                     {
-                        "https://www.youtube.com/embed/mcHt8L6CAB8",
+                       "https://www.youtube.com/embed/BWfBP5sTW18",
                     },
                     CreationTime = DateTime.Now,
                 },
@@ -127,6 +126,19 @@ namespace InterTwitter.Services
                     Text = "um quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
                     Media = Enums.ETweetType.TextTweet,
                     CreationTime = DateTime.Now,
+                },
+                new TweetModel
+                {
+                    Id = 5,
+                    UserId = 5,
+                    Text = "Hi there!",
+                    Media = Enums.ETweetType.ImagesTweet,
+                    CreationTime = DateTime.Now,
+                    MediaPaths = new List<string>
+                    {
+                       "https://i.guim.co.uk/img/media/32e584f481b3900eb8ffb0727990cafccec100e0/0_129_5321_3194/master/5321.jpg?width=465&quality=45&auto=format&fit=max&dpr=2&s=b463391383c3c2f3444f99697bcdc2c6",
+                       "http://internetua.com/uploads/wysiwyg/RomanR/ELON.SPACEX.web_.jpg",
+                    },
                 },
             };
         }

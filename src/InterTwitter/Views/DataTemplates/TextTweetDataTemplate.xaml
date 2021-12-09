@@ -11,7 +11,7 @@
                      Spacing="0">
 
             <ffimageloading:CachedImage VerticalOptions="Start"
-                                        Source="{Binding UserModel.AvatarPath}"
+                                        Source="{Binding UserAvatar}"
                                         HeightRequest="34"
                                         Margin="0, 0, 15, 0">
 
@@ -24,14 +24,14 @@
             <StackLayout VerticalOptions="Start">
 
                 <Label Style="{StaticResource tstyle_i6}"
-                       Text="{Binding UserModel.Name}" 
+                       Text="{Binding UserName}" 
                        FontAttributes="Bold"/>
 
                 <Label Style="{StaticResource tstyle_i7}" 
                        VerticalOptions="Start"
                        MaxLines="5" 
                        LineBreakMode="TailTruncation"
-                       Text="{Binding TweetModel.Text}"/>
+                       Text="{Binding Text}"/>
 
                 <StackLayout Orientation="Horizontal"
                              HeightRequest="20"

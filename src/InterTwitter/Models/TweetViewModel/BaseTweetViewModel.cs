@@ -41,6 +41,13 @@ namespace InterTwitter.Models.TweetViewModel
             set => SetProperty(ref _userAvatar, value);
         }
 
+        private string _userBackgroundImage;
+        public string UserBackgroundImage
+        {
+            get => _userBackgroundImage;
+            set => SetProperty(ref _userBackgroundImage, value);
+        }
+
         private string _text;
         public string Text
         {
