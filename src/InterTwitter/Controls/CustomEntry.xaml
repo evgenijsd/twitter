@@ -40,7 +40,7 @@
                 <Behaviors:EventToCommandBehavior Command="{Binding UnFocusedCommand, Source={x:Reference customEntry}}" EventName="Unfocused" />
             </control:CustomNoBorderEntry.Behaviors>
         </control:CustomNoBorderEntry>
-        <ImageButton x:Name="eye"
+        <ImageButton
             Grid.Row="0"
             Grid.Column="{Binding Eye_grid_column, Source={x:Reference customEntry}}"
             Margin="0,0,10,0"
@@ -53,7 +53,7 @@
             Source="{Binding ImageSource, Source={x:Reference customEntry}}"
             VerticalOptions="Center"
             WidthRequest="30" />
-        <ImageButton x:Name="cross"
+        <ImageButton
             Grid.Row="0"
             Grid.Column="{Binding Cross_grid_column, Source={x:Reference customEntry}}"
             Margin="0,0,10,0"

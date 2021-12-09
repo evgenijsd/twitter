@@ -23,9 +23,19 @@
     <Grid RowDefinitions="0.087*, 0.190*, 0.069*, 0.149*, 0.149*, 0.149*, 0.149*, 0.06*" RowSpacing="0">
 
         <StackLayout Grid.Row="0" Orientation="Horizontal">
-            <ImageButton />
-            <Label />
-            <ImageButton />
+            <ImageButton
+                HorizontalOptions="Start"
+                Source="{DynamicResource ic_left_gray}"
+                VerticalOptions="Center" />
+            <Label
+                HorizontalOptions="Center"
+                Style="{DynamicResource tstyle_i4}"
+                Text="Change Profile"
+                VerticalOptions="Center" />
+            <ImageButton
+                HorizontalOptions="End"
+                Source="{DynamicResource ic_check_gray}"
+                VerticalOptions="Center" />
         </StackLayout>
 
         <Image
@@ -56,11 +66,12 @@
                 Margin="6.6,0,0,0"
                 Style="{DynamicResource tstyle_i2}"
                 Text="Old password" />
-            <controls:CustomEntry IsSwapButtons="True"
+            <controls:CustomEntry
                 EyeOffImageSource="{DynamicResource ic_eye_blue}"
                 EyeOnImageSource="{DynamicResource ic_eye_gray}"
                 IsButtonEyeVisible="True"
-                IsPassword="True" />
+                IsPassword="True"
+                IsSwapButtons="True" />
         </StackLayout>
 
         <StackLayout Grid.Row="6" Style="{StaticResource entry_style}">
@@ -68,11 +79,12 @@
                 Margin="6.6,0,0,0"
                 Style="{DynamicResource tstyle_i2}"
                 Text="New password" />
-            <controls:CustomEntry IsSwapButtons="True"
+            <controls:CustomEntry
                 EyeOffImageSource="{DynamicResource ic_eye_blue}"
                 EyeOnImageSource="{DynamicResource ic_eye_gray}"
                 IsButtonEyeVisible="True"
-                IsPassword="True" />
+                IsPassword="True"
+                IsSwapButtons="True" />
         </StackLayout>
 
         <Label Grid.Row="7" />
