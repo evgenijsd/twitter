@@ -8,8 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using VideoTrimmer.Services;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -229,22 +231,34 @@ namespace InterTwitter.ViewModels
             {
                 try
                 {
-                    var photo = await MediaPicker.PickPhotoAsync();
+                    var openFile = await MediaPicker.PickPhotoAsync();
 
-                    ListAttachedMedia.Add(new MiniCardViewModel()
+                    FileInfo fileInf = new FileInfo(openFile.FullPath);
+
+                    if (fileInf.Exists)
                     {
-                        PathImage = photo.FullPath,
-                        PathActionImage = "ic_clear_filled_blue.png",
-                        ActionCommand = DeleteAttachedPhotoCommand,
-                    });
+                        if (fileInf.Length <= 5 * 1024 * 1024)
+                        {
+                            ListAttachedMedia.Add(new MiniCardViewModel()
+                            {
+                                PathImage = openFile.FullPath,
+                                PathActionImage = "ic_clear_filled_blue.png",
+                                ActionCommand = DeleteAttachedPhotoCommand,
+                            });
 
-                    CanUseButtonUploadPhotos = ListAttachedMedia.Count < 6;
-                    CanUseButtonUploadGif = false;
-                    CanUseButtonUploadVideo = false;
+                            CanUseButtonUploadPhotos = ListAttachedMedia.Count < 6;
+                            CanUseButtonUploadGif = false;
+                            CanUseButtonUploadVideo = false;
 
-                    TypeAttachedMedia = ETypeAttachedMedia.Photos;
+                            TypeAttachedMedia = ETypeAttachedMedia.Photos;
 
-                    CanUseButtonPost = canPostTweet();
+                            CanUseButtonPost = canPostTweet();
+                        }
+                        else
+                        {
+                            await _pageDialogService.DisplayAlertAsync("Error", "The size of the photo should not exceed 5 MB", "Ok");
+                        }
+                    }
                 }
                 catch (Exception e)
                 {
@@ -252,7 +266,7 @@ namespace InterTwitter.ViewModels
             }
             else
             {
-                await _pageDialogService.DisplayAlertAsync("Error", "This app needs access to photos gallery for picking photos and videos.", "Ok");
+                await _pageDialogService.DisplayAlertAsync("Alert", "This app needs access to photos gallery for picking photos and videos.", "Ok");
             }
         }
 
@@ -264,22 +278,34 @@ namespace InterTwitter.ViewModels
             {
                 try
                 {
-                    var photo = await MediaPicker.PickPhotoAsync();
+                    var openFile = await MediaPicker.PickPhotoAsync();
 
-                    ListAttachedMedia.Add(new MiniCardViewModel()
+                    FileInfo fileInf = new FileInfo(openFile.FullPath);
+
+                    if (fileInf.Exists)
                     {
-                        PathImage = photo.FullPath,
-                        PathActionImage = "ic_clear_filled_blue.png",
-                        ActionCommand = DeleteAttachedGifCommand,
-                    });
+                        if (fileInf.Length <= 5 * 1024 * 1024)
+                        {
+                            ListAttachedMedia.Add(new MiniCardViewModel()
+                            {
+                                PathImage = openFile.FullPath,
+                                PathActionImage = "ic_clear_filled_blue.png",
+                                ActionCommand = DeleteAttachedGifCommand,
+                            });
 
-                    CanUseButtonUploadPhotos = false;
-                    CanUseButtonUploadGif = false;
-                    CanUseButtonUploadVideo = false;
+                            CanUseButtonUploadPhotos = false;
+                            CanUseButtonUploadGif = false;
+                            CanUseButtonUploadVideo = false;
 
-                    TypeAttachedMedia = ETypeAttachedMedia.Gif;
+                            TypeAttachedMedia = ETypeAttachedMedia.Gif;
 
-                    CanUseButtonPost = canPostTweet();
+                            CanUseButtonPost = canPostTweet();
+                        }
+                        else
+                        {
+                            await _pageDialogService.DisplayAlertAsync("Error", "The size of the gif should not exceed 5 MB", "Ok");
+                        }
+                    }
                 }
                 catch (Exception e)
                 {
@@ -287,34 +313,65 @@ namespace InterTwitter.ViewModels
             }
             else
             {
-                await _pageDialogService.DisplayAlertAsync("Error", "This app needs access to photos gallery for picking photos and videos.", "Ok");
+                await _pageDialogService.DisplayAlertAsync("Alert", "This app needs access to photos gallery for picking photos and videos.", "Ok");
             }
         }
 
         private async Task OnAddVideoAsync()
         {
-            var canUseStorage = await _permissionsService.RequestAsync<Permissions.StorageRead>() == Xamarin.Essentials.PermissionStatus.Granted;
+            var canUseStorage = await _permissionsService.RequestAsync<Permissions.StorageRead>() == Xamarin.Essentials.PermissionStatus.Granted
+                                && await _permissionsService.RequestAsync<Permissions.StorageWrite>() == Xamarin.Essentials.PermissionStatus.Granted;
 
             if (canUseStorage)
             {
                 try
                 {
-                    var photo = await MediaPicker.PickVideoAsync();
+                    var openFile = await MediaPicker.PickVideoAsync();
 
-                    ListAttachedMedia.Add(new MiniCardViewModel()
+                    FileInfo fileInf = new FileInfo(openFile.FullPath);
+
+                    if (fileInf.Exists)
                     {
-                        PathImage = photo.FullPath,
-                        PathActionImage = "ic_clear_filled_blue.png",
-                        ActionCommand = DeleteAttachedVideoCommand,
-                    });
+                        if (fileInf.Length <= 15 * 1024 * 1024)
+                        {
+                            string fileName = DateTime.Now.ToString("yyyyMMddhhmmss") + (Device.RuntimePlatform == Device.iOS ? ".mov" : ".mp4");
+                            string outputPath = Path.Combine(Xamarin.Essentials.FileSystem.AppDataDirectory, fileName);
 
-                    CanUseButtonUploadPhotos = false;
-                    CanUseButtonUploadGif = false;
-                    CanUseButtonUploadVideo = false;
+                            if (await VideoTrimmerService.Instance.TrimAsync(0, 10 * 1000, openFile.FullPath, outputPath))
+                            {
+                                await Share.RequestAsync(new ShareFileRequest
+                                {
+                                    Title = "Title",
+                                    File = new ShareFile(outputPath),
+                                });
 
-                    TypeAttachedMedia = ETypeAttachedMedia.Video;
+                                ListAttachedMedia.Add(new MiniCardViewModel()
+                                {
+                                    PathImage = openFile.FullPath,
+                                    PathActionImage = "ic_clear_filled_blue.png",
+                                    ActionCommand = DeleteAttachedVideoCommand,
+                                });
 
-                    CanUseButtonPost = canPostTweet();
+                                CanUseButtonUploadPhotos = false;
+                                CanUseButtonUploadGif = false;
+                                CanUseButtonUploadVideo = false;
+
+                                TypeAttachedMedia = ETypeAttachedMedia.Video;
+
+                                CanUseButtonPost = canPostTweet();
+
+                                await _pageDialogService.DisplayAlertAsync("Success", "Video Trimmed Successfully", "Ok");
+                            }
+                            else
+                            {
+                                await _pageDialogService.DisplayAlertAsync("Error", "Video Trimming failed", "Ok");
+                            }
+                        }
+                        else
+                        {
+                            await _pageDialogService.DisplayAlertAsync("Error", "The size of the video should not exceed 15 MB", "Ok");
+                        }
+                    }
                 }
                 catch (Exception e)
                 {
@@ -322,7 +379,7 @@ namespace InterTwitter.ViewModels
             }
             else
             {
-                await _pageDialogService.DisplayAlertAsync("Error", "This app needs access to photos gallery for picking photos and videos.", "Ok");
+                await _pageDialogService.DisplayAlertAsync("Alert", "This app needs access to photos gallery for picking photos and videos.", "Ok");
             }
         }
 
