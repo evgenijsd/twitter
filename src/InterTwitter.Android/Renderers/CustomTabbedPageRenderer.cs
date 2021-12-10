@@ -3,9 +3,6 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android.AppCompat;
 using Xamarin.Forms.Platform.Android;
 using Google.Android.Material.BottomNavigation;
-using Android.Views;
-using Android.Widget;
-using Google.Android.Material.Internal;
 using InterTwitter.Controls;
 using InterTwitter.Droid;
 
