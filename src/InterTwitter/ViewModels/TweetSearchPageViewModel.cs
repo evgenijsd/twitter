@@ -12,11 +12,15 @@ namespace InterTwitter.ViewModels
 {
     public class TweetSearchPageViewModel : BaseViewModel
     {
+        private INavigationService _navigationService;
         private IHashtagManager _hashtagManager;
 
-        public TweetSearchPageViewModel(IHashtagManager hashtagManager)
-            : base()
+        public TweetSearchPageViewModel(
+            INavigationService navigationService,
+            IHashtagManager hashtagManager)
+            : base(navigationService)
         {
+            _navigationService = navigationService;
             _hashtagManager = hashtagManager;
         }
 

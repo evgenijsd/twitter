@@ -38,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CardsView" Version="2.8.0" />
     <PackageReference Include="Prism.Unity.Forms" Version="8.1.97" />
     <PackageReference Include="Sharpnado.Shadows" Version="1.2.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
@@ -45,6 +46,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Xamarin.CommunityToolkit" Version="1.1.0" />
+    <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2244" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
   </ItemGroup>
@@ -53,7 +57,59 @@
     <Folder Include="Behaviors\" />
     <Folder Include="Converters\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Enums\" />
     <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\BookmarksPage.xaml.cs">
+      <DependentUpon>BookmarksPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\FlyOutPage.xaml.cs">
+      <DependentUpon>FlyOutPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\FlyoutPageDetail.xaml.cs">
+      <DependentUpon>FlyoutPageDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\FlyoutPageFlyout.xaml.cs">
+      <DependentUpon>FlyoutPageFlyout.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\NotificationsPage.xaml.cs">
+      <DependentUpon>NotificationsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SearchPage.xaml.cs">
+      <DependentUpon>SearchPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\FlyOutPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\FlyoutPageDetail.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\FlyoutPageFlyout.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\BookmarksPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\HomePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\NotificationsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ProfilePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SearchPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

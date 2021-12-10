@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using FFImageLoading.Forms.Platform;
 using Foundation;
 using UIKit;
 
@@ -24,6 +24,8 @@ namespace InterTwitter.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             Sharpnado.Shades.iOS.iOSShadowsRenderer.Initialize();
+            CachedImageRenderer.Init();
+            CachedImageRenderer.InitImageSourceHandler();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

@@ -19,7 +19,7 @@ namespace InterTwitter.Helpers
         {
         }
 
-        public static SingleExecutionCommand FromFunc(Func<Task> command, Func<bool> canExecute = null, int delayMillisec = 300)
+        public static SingleExecutionCommand FromFunc(Func<Task> command, Func<bool> canExecute = null, int delayMillisec = 400)
         {
             if (command == null)
             {
@@ -36,7 +36,7 @@ namespace InterTwitter.Helpers
             return ret;
         }
 
-        public static SingleExecutionCommand FromFunc(Func<object, Task> command, Func<object, bool> canExecute = null, int delayMillisec = 300)
+        public static SingleExecutionCommand FromFunc(Func<object, Task> command, Func<object, bool> canExecute = null, int delayMillisec = 400)
         {
             if (command == null)
             {
@@ -53,17 +53,12 @@ namespace InterTwitter.Helpers
             return ret;
         }
 
-        internal static ICommand FromFunc<T1, T2>(Func<T1, T2, Task> onMapLongTap)
-        {
-            throw new NotImplementedException();
-        }
-
         internal static ICommand FromFunc(Func<Task> onConfirmWithdrawCommandAsync, bool canWithdrawFunds)
         {
             throw new NotImplementedException();
         }
 
-        public static SingleExecutionCommand FromFunc<T>(Func<T, Task> func, Func<T, bool> canExecute = null, int delayMillisec = 300)
+        public static SingleExecutionCommand FromFunc<T>(Func<T, Task> func, Func<T, bool> canExecute = null, int delayMillisec = 400)
         {
             var ret = new SingleExecutionCommand
             {
@@ -101,11 +96,6 @@ namespace InterTwitter.Helpers
             }
 
             _isExecuting = false;
-        }
-
-        internal static ICommand FromFunc<T1, T2>(object onMapLongTap)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion
