@@ -11,110 +11,16 @@ namespace InterTwitter.Services
             InitUsers();
 
             InitTweets();
-
-            InitBookmarks();
         }
 
         #region -- IMockService implementation --
 
         public IEnumerable<UserModel> Users { get; set; }
         public IEnumerable<TweetModel> Tweets { get; set; }
-        public IEnumerable<Bookmark> Bookmarks { get; set; }
 
         #endregion
 
         #region -- Private helpers --
-
-        private void InitBookmarks()
-        {
-            Bookmarks = new List<Bookmark>
-            {
-                new Bookmark
-                {
-                    Id = 2,
-                    UserId = 1,
-                    TweetId = 2,
-                },
-                new Bookmark
-                {
-                    Id = 3,
-                    UserId = 1,
-                    TweetId = 3,
-                },
-                new Bookmark
-                {
-                    Id = 4,
-                    UserId = 1,
-                    TweetId = 4,
-                },
-                new Bookmark
-                {
-                    Id = 5,
-                    UserId = 1,
-                    TweetId = 5,
-                },
-                new Bookmark
-                {
-                    Id = 6,
-                    UserId = 2,
-                    TweetId = 1,
-                },
-                new Bookmark
-                {
-                    Id = 7,
-                    UserId = 2,
-                    TweetId = 2,
-                },
-                new Bookmark
-                {
-                    Id = 8,
-                    UserId = 2,
-                    TweetId = 3,
-                },
-                new Bookmark
-                {
-                    Id = 9,
-                    UserId = 2,
-                    TweetId = 4,
-                },
-                new Bookmark
-                {
-                    Id = 10,
-                    UserId = 2,
-                    TweetId = 5,
-                },
-                new Bookmark
-                {
-                    Id = 11,
-                    UserId = 3,
-                    TweetId = 1,
-                },
-                new Bookmark
-                {
-                    Id = 12,
-                    UserId = 3,
-                    TweetId = 2,
-                },
-                new Bookmark
-                {
-                    Id = 13,
-                    UserId = 3,
-                    TweetId = 3,
-                },
-                new Bookmark
-                {
-                    Id = 14,
-                    UserId = 3,
-                    TweetId = 4,
-                },
-                new Bookmark
-                {
-                    Id = 15,
-                    UserId = 3,
-                    TweetId = 5,
-                },
-            };
-        }
 
         private void InitUsers()
         {

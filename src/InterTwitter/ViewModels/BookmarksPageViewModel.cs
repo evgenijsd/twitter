@@ -3,6 +3,7 @@ using InterTwitter.Extensions;
 using InterTwitter.Helpers;
 using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services;
+using InterTwitter.Services.BookmarkService;
 using InterTwitter.Services.Settings;
 using Prism.Events;
 using Prism.Navigation;
@@ -19,16 +20,21 @@ namespace InterTwitter.ViewModels
     public class BookmarksPageViewModel : BasePageViewModel
     {
         private readonly ITweetService _tweetService;
+        private readonly IBookmarkService _bookmarkService;
         private readonly IEventAggregator _event;
         private IPageDialogService _dialogs { get; }
 
         public BookmarksPageViewModel(
+            INavigationService navigationService,
             ISettingsManager settingManager,
             IEventAggregator aggregator,
             ITweetService tweetService,
+            IBookmarkService bookmarkService,
             IPageDialogService dialogs)
+            : base(navigationService)
         {
             _tweetService = tweetService;
+            _bookmarkService = bookmarkService;
             _event = aggregator;
             _dialogs = dialogs;
         }
@@ -93,7 +99,35 @@ namespace InterTwitter.ViewModels
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
-            await InitAsync();
+            int userid = 1;
+
+            var resultTweet = _tweetService.GetAllTweetsAsync().Result;
+            var resultBookmark = _bookmarkService.GetBookmarksAsync(userid).Result;
+            var getTweetResult = resultTweet.Result;
+            var getBookmarks = resultBookmark.Result;
+
+            if (resultTweet.IsSuccess && resultBookmark.IsSuccess)
+            {
+                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Where(x => getBookmarks.Any(y => y.TweetId == x.Id))
+                    .Select(x => x.Media == ETypeAttachedMedia.Photos || x.Media == ETypeAttachedMedia.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()).OrderBy(x => x.CreationTime));
+
+                foreach (var tweet in tweetViewModels)
+                {
+                    var tweetAuthor = await _tweetService.GetUserAsync(tweet.UserId);
+
+                    if (tweetAuthor.IsSuccess)
+                    {
+                        tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
+                        tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
+                        tweet.UserName = tweetAuthor.Result.Name;
+                    }
+
+                    tweet.IsBookmarked = true;
+                    tweet.CurrentUserId = userid;
+                }
+
+                Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
+            }
         }
 
         public override void Initialize(INavigationParameters parameters)
@@ -105,48 +139,13 @@ namespace InterTwitter.ViewModels
 
         #region -- Private helpers --
 
-        private async Task InitAsync()
-        {
-            int userid = 1;
-
-            var getTweetResult = await _tweetService.GetAllTweetsAsync();
-            var getBookmarks = _tweetService.GetBookmarksAsync(userid).Result.Result;
-
-            if (getTweetResult.IsSuccess)
-            {
-                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Where(x => getBookmarks.Any(y => y.TweetId == x.Id)).Select(x => x.Media == ETypeAttachedMedia.Photos || x.Media == ETypeAttachedMedia.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()).OrderBy(x => x.CreationTime));
-
-                foreach (var tweet in tweetViewModels)
-                {
-                        var tweetAuthor = await _tweetService.GetUserAsync(tweet.UserId);
-
-                        if (tweetAuthor.IsSuccess)
-                        {
-                            tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
-                            tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
-                            tweet.UserName = tweetAuthor.Result.Name;
-                        }
-
-                        tweet.IsBookmarked = true;
-                }
-
-                Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels/*.Where(x => x.UserId == 1)*/);
-                //Tweets.Remove(_tweets.FirstOrDefault(x => x.TweetId == 6));
-                //_tweetService.DeleteBoormarkAsync(6);
-            }
-        }
-
         private void DeleteTweet(int tweetId)
         {
-            //_dialogs.DisplayAlertAsync("Alert", $"Id post - {tweetId}", "Ok");
             Tweets = new (Tweets.Where(x => x.TweetId != tweetId));
-            //implement logic
         }
-        #endregion
 
         private Task OnVisibleButtonCommandAsync()
         {
-            //await _navigationService.NavigateAsync("/MainPage");
             if (!IsNotFound)
             {
                 IsVisibleButton = true;
@@ -157,9 +156,11 @@ namespace InterTwitter.ViewModels
 
         private Task UnvisibleButtonCommandAsync()
         {
-            //await _navigationService.NavigateAsync("/MainPage");
             IsVisibleButton = false;
+
             return Task.CompletedTask;
         }
+
+        #endregion
     }
 }

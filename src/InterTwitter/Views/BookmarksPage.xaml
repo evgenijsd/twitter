@@ -12,46 +12,65 @@
     <view:BaseContentPage.Content>
 
         <Grid>
-           <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-        <Grid HorizontalOptions="Fill"
+            <Grid HorizontalOptions="Fill"
                   VerticalOptions="Fill">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
 
-            <controls:CustomNavigationbar Title="Bookmarks"
-                                          Grid.Row="0"
-                                          LeftImageAddButton="{Binding ImageSource}"
-                                           LeftAddButtonCommand="{Binding VisibleButtonCommand}">
-            </controls:CustomNavigationbar>
-            
+                <controls:CustomNavigationbar Title="Bookmarks"
+                                              Grid.Row="0"
+                                              LeftImageAddButton="{Binding ImageSource}"
+                                              LeftAddButtonCommand="{Binding VisibleButtonCommand}">
+                </controls:CustomNavigationbar>
 
-            <CollectionView Grid.Row="1" 
-                            ItemsSource="{Binding Tweets}" 
-                            ItemTemplate="{StaticResource templateSelector}">
-                
-            </CollectionView>
 
-            <StackLayout Grid.Row="1" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" HeightRequest="300" IsVisible ="{Binding IsNotFound}" BackgroundColor="Transparent">
-                <Image Source="{DynamicResource pic_owl_blue_big}" Aspect="AspectFit" HeightRequest="90"/>
-            <Label Text="You have no bookmarks yet"  Margin="0,20,0,0"
-                    Style="{DynamicResource tstyle_i5}"/>
+                <CollectionView Grid.Row="1"
+                                ItemsSource="{Binding Tweets}"
+                                ItemTemplate="{StaticResource templateSelector}">
+
+                </CollectionView>
+
+                <StackLayout Grid.Row="1"
+                             HorizontalOptions="CenterAndExpand"
+                             VerticalOptions="CenterAndExpand"
+                             HeightRequest="300"
+                             IsVisible="{Binding IsNotFound}"
+                             BackgroundColor="Transparent">
+                    <Image Source="{DynamicResource pic_owl_blue_big}"
+                           Aspect="AspectFit"
+                           HeightRequest="90" />
+                    <Label Text="You have no bookmarks yet"
+                           Margin="0,20,0,0"
+                           Style="{DynamicResource tstyle_i5}" />
                 </StackLayout>
 
-        </Grid>
-            <Frame Grid.Row="0" HeightRequest="10" WidthRequest="150" BackgroundColor="White" IsVisible ="{Binding IsVisibleButton}" VerticalOptions="StartAndExpand" Margin="0,13,20,0" HorizontalOptions="EndAndExpand">
-                <Button Text="Delete all bookmarks" Command="{Binding UnvisibleButtonCommand}" BackgroundColor="White"/>
+            </Grid>
+            <Frame Grid.Row="0"
+                   HeightRequest="10"
+                   WidthRequest="150"
+                   BackgroundColor="White"
+                   IsVisible="{Binding IsVisibleButton}"
+                   VerticalOptions="StartAndExpand"
+                   Margin="0,13,20,0"
+                   HorizontalOptions="EndAndExpand">
+                <Button Text="Delete all bookmarks"
+                        Command="{Binding UnvisibleButtonCommand}"
+                        BackgroundColor="White" />
             </Frame>
-            <StackLayout Margin="0,70,0,0" BackgroundColor="Transparent" IsVisible ="{Binding IsVisibleButton}">
+            <StackLayout Margin="0,70,0,0"
+                         BackgroundColor="Transparent"
+                         IsVisible="{Binding IsVisibleButton}">
                 <StackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding UnvisibleButtonCommand}"/>
+                    <TapGestureRecognizer Command="{Binding UnvisibleButtonCommand}" />
                 </StackLayout.GestureRecognizers>
             </StackLayout>
-         </Grid>
+        </Grid>
 
 
     </view:BaseContentPage.Content>

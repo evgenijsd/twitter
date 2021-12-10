@@ -1,6 +1,6 @@
 ﻿using InterTwitter.Enums;
 using InterTwitter.Helpers;
-using InterTwitter.Services;
+using InterTwitter.Services.BookmarkService;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -13,11 +13,11 @@ namespace InterTwitter.Models.TweetViewModel
     {
         public BaseTweetViewModel()
         {
-            TweetService = App.Resolve<ITweetService>();
+            BookmarkService = App.Resolve<IBookmarkService>();
         }
 
         #region -- Public properties --
-        protected ITweetService TweetService { get; }
+        protected IBookmarkService BookmarkService { get; }
 
         private int _tweetId;
         public int TweetId
@@ -31,6 +31,13 @@ namespace InterTwitter.Models.TweetViewModel
         {
             get => _userId;
             set => SetProperty(ref _userId, value);
+        }
+
+        private int _currentUserId;
+        public int CurrentUserId
+        {
+            get => _currentUserId;
+            set => SetProperty(ref _currentUserId, value);
         }
 
         private string _userName;
@@ -140,7 +147,7 @@ namespace InterTwitter.Models.TweetViewModel
             IsBookmarked = !IsBookmarked;
             if (!IsBookmarked)
             {
-                TweetService.DeleteBoormark(TweetId, UserId);
+                BookmarkService.DeleteBoormarkAsync(TweetId, CurrentUserId);
             }
 
             return Task.CompletedTask;

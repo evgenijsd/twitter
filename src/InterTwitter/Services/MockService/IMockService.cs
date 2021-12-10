@@ -8,7 +8,5 @@ namespace InterTwitter.Services
         IEnumerable<UserModel> Users { get; set; }
 
         IEnumerable<TweetModel> Tweets { get; set; }
-
-        IEnumerable<Bookmark> Bookmarks { get; set; }
     }
 }

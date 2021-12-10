@@ -1,10 +1,16 @@
-﻿using System;
+﻿using InterTwitter.Helpers;
+using InterTwitter.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace InterTwitter.Services.BookmarkService
 {
     public interface IBookmarkService
     {
+        Task<AOResult> DeleteBoormarkAsync(int tweetId, int userId);
+        Task<AOResult> DeleteAllBookmarksAsync(int userId);
+        Task<AOResult<List<Bookmark>>> GetBookmarksAsync(int userId);
     }
 }

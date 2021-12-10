@@ -12,8 +12,5 @@ namespace InterTwitter.Services
         Task<AOResult<IEnumerable<TweetModel>>> GetAllTweetsAsync();
 
         Task<AOResult<UserModel>> GetUserAsync(int userId);
-
-        void DeleteBoormark(int tweetId, int userId);
-        Task<AOResult<IEnumerable<Bookmark>>> GetBookmarksAsync(int userId);
     }
 }

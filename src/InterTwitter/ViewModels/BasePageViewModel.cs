@@ -8,18 +8,18 @@ namespace InterTwitter.ViewModels
 {
     public class BasePageViewModel : BindableBase, IDestructible, IInitializeAsync, IInitialize, INavigationAware
     {
-        protected readonly INavigationService _navigationService;
+        protected INavigationService _navigationService { get; }
 
-        public BasePageViewModel()
+        public BasePageViewModel(INavigationService navigationService)
         {
-            NavigationService = App.Resolve<INavigationService>();
+            _navigationService = navigationService;
         }
 
         protected INavigationService NavigationService { get; }
 
         #region -- IDestructible implementation --
 
-        public void Destroy()
+        public virtual void Destroy()
         {
         }
 

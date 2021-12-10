@@ -3,6 +3,7 @@ using InterTwitter.Services;
 using InterTwitter.Services.Settings;
 using InterTwitter.ViewModels;
 using InterTwitter.Views;
+using Prism;
 using Prism.Ioc;
 using Prism.Unity;
 using System;
@@ -15,7 +16,8 @@ namespace InterTwitter
     {
         public static T Resolve<T>() => Current.Container.Resolve<T>();
 
-        public App()
+        public App(IPlatformInitializer initializer = null)
+            : base(initializer)
         {
         }
 
@@ -37,7 +39,7 @@ namespace InterTwitter
         {
             InitializeComponent();
             FlowListView.Init();
-            await NavigationService.NavigateAsync($"{nameof(BookmarksPage)}");
+            await NavigationService.NavigateAsync($"{nameof(MainPage)}");
         }
 
         protected override void OnStart()
