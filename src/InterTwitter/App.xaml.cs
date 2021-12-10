@@ -1,4 +1,6 @@
-﻿using InterTwitter.Views;
+﻿using InterTwitter.ViewModels;
+using InterTwitter.ViewModels.Flyout;
+using InterTwitter.Views;
 using Prism.Ioc;
 using Prism.Unity;
 using System;
@@ -20,13 +22,21 @@ namespace InterTwitter
         {
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
+            containerRegistry.RegisterForNavigation<FlyOutPage, FlyOutPageViewModel>();
+            containerRegistry.RegisterForNavigation<FlyoutPageDetail, FlyoutPageDetailViewModel>();
+            containerRegistry.RegisterForNavigation<FlyoutPageFlyout, FlyoutPageFlyoutViewModel>();
+            containerRegistry.RegisterForNavigation<HomePage, HomePageViewModel>();
+            containerRegistry.RegisterForNavigation<SearchPage, SearchPageViewModel>();
+            containerRegistry.RegisterForNavigation<BookmarksPage, BookmarksPageViewModel>();
+            containerRegistry.RegisterForNavigation<NotificationsPage, NotificationPageViewModel>();
+            containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
             containerRegistry.RegisterForNavigation<MainPage>();
         }
 
         protected override async void OnInitialized()
         {
             InitializeComponent();
-            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainPage)}");
+            await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}");
         }
 
         protected override void OnStart()
