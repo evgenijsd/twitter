@@ -1,6 +1,7 @@
 ﻿using InterTwitter.Enums;
 using InterTwitter.Helpers;
 using InterTwitter.Models;
+using InterTwitter.Services.HashtagManager;
 using Prism.Navigation;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -11,9 +12,12 @@ namespace InterTwitter.ViewModels
 {
     public class TweetSearchPageViewModel : BaseViewModel
     {
-        public TweetSearchPageViewModel()
+        private IHashtagManager _hashtagManager;
+
+        public TweetSearchPageViewModel(IHashtagManager hashtagManager)
             : base()
         {
+            _hashtagManager = hashtagManager;
         }
 
         #region --- Public properties ---
@@ -39,15 +43,15 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _queryStringWithNoResults, value);
         }
 
-        private HashTagModel _selectedHashtag;
-        public HashTagModel SelectedHashtag
+        private HashtagModel _selectedHashtag;
+        public HashtagModel SelectedHashtag
         {
             get => _selectedHashtag;
             set => SetProperty(ref _selectedHashtag, value);
         }
 
-        private ObservableCollection<HashTagModel> _hashtagModels;
-        public ObservableCollection<HashTagModel> HashtagModels
+        private ObservableCollection<HashtagModel> _hashtagModels;
+        public ObservableCollection<HashtagModel> HashtagModels
         {
             get => _hashtagModels;
             set => SetProperty(ref _hashtagModels, value);
@@ -83,73 +87,81 @@ namespace InterTwitter.ViewModels
 
         #region --- Overrides ---
 
-        public override Task InitializeAsync(INavigationParameters parameters)
+        public override async Task InitializeAsync(INavigationParameters parameters)
         {
-            HashtagModels = new ObservableCollection<HashTagModel>()
+            var result = await _hashtagManager.GetPopularHashtags(5);
+
+            if (result.IsSuccess)
             {
-                new HashTagModel()
+                HashtagModels = new ObservableCollection<HashtagModel>(result.Result);
+            }
+        }
+
+        private void TestInit()
+        {
+            HashtagModels = new ObservableCollection<HashtagModel>()
+            {
+                new HashtagModel()
                 {
                     Text = "#AMAs",
                     TweetsCount = 135,
                 },
-                new HashTagModel()
+                new HashtagModel()
                 {
                     Text = "#blockchain",
                     TweetsCount = 55,
                 },
-                new HashTagModel()
+                new HashtagModel()
                 {
                     Text = "#NoNuanceNovember",
                     TweetsCount = 25,
                 },
-                new HashTagModel()
+                new HashtagModel()
                 {
                     Text = "#NoNuanceNovember_2",
                     TweetsCount = 25,
                 },
-                new HashTagModel()
+                new HashtagModel()
                 {
                     Text = "#NoNuanceNovember_3",
                     TweetsCount = 25,
                 },
-                new HashTagModel()
+                new HashtagModel()
                 {
                     Text = "#NoNuanceNovember_4",
                     TweetsCount = 25,
                 },
-                new HashTagModel()
+                new HashtagModel()
                 {
                     Text = "#NoNuanceNovember_5",
                     TweetsCount = 25,
                 },
-                new HashTagModel()
+                new HashtagModel()
                 {
                     Text = "#NoNuanceNovember_6",
                     TweetsCount = 25,
                 },
-                new HashTagModel()
+                new HashtagModel()
                 {
                     Text = "#NoNuanceNovember_7",
                     TweetsCount = 25,
                 },
-                new HashTagModel()
+                new HashtagModel()
                 {
                     Text = "#NoNuanceNovember_8",
                     TweetsCount = 25,
                 },
-                new HashTagModel()
+                new HashtagModel()
                 {
                     Text = "#NoNuanceNovember_9",
                     TweetsCount = 25,
                 },
-                new HashTagModel()
+                new HashtagModel()
                 {
                     Text = "#NoNuanceNovember_10",
                     TweetsCount = 25,
                 },
             };
-
-            return base.InitializeAsync(parameters);
         }
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
