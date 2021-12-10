@@ -1,4 +1,6 @@
-﻿using InterTwitter.ViewModels;
+﻿using InterTwitter.Droid.Services.PermissionsService;
+using InterTwitter.Services.PermissionsService;
+using InterTwitter.ViewModels;
 using InterTwitter.ViewModels.Flyout;
 using InterTwitter.Views;
 using Prism.Ioc;
@@ -31,14 +33,16 @@ namespace InterTwitter
             containerRegistry.RegisterForNavigation<NotificationsPage, NotificationPageViewModel>();
             containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
             containerRegistry.RegisterForNavigation<EditProfilePage, EditProfilePageViewModel>();
-
             containerRegistry.RegisterForNavigation<MainPage>();
+
+            // Services
+            containerRegistry.RegisterInstance<IPermissionsService>(Container.Resolve<PermissionsService>());
         }
 
         protected override async void OnInitialized()
         {
             InitializeComponent();
-            await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}");
+            await NavigationService.NavigateAsync($"/{nameof(ProfilePage)}");
         }
 
         protected override void OnStart()

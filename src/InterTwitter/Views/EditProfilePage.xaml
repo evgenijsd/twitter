@@ -87,9 +87,11 @@
                                    HorizontalOptions="Start"
                                    VerticalOptions="Center"
                                    WidthRequest="69">
+            
             <cardsControls:CircleFrame HorizontalOptions="Center"
                                        Size="65"
                                        VerticalOptions="Center">
+                
                 <ffimage:CachedImage Aspect="AspectFill" 
                                      Source="{Binding UserImagePath}">
                     <ffimage:CachedImage.Transformations>
@@ -97,9 +99,6 @@
                     </ffimage:CachedImage.Transformations>
                 </ffimage:CachedImage>
             </cardsControls:CircleFrame>
-            <cardsControls:CircleFrame.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding PickUserImageAsync}"/>
-            </cardsControls:CircleFrame.GestureRecognizers>
         </cardsControls:CircleFrame>
         <cardsControls:CircleFrame Grid.Row="1" 
                                    Grid.RowSpan="3"
@@ -111,13 +110,14 @@
                                    HeightRequest="65"
                                    >
             <Image  Source="{DynamicResource ic_add_photo_white}"
-                    Aspect="AspectFit" Scale="0.5"
-                   />
+                    Aspect="AspectFit" Scale="0.5"/>
+            <cardsControls:CircleFrame.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding PickUserImageAsync}"/>
+            </cardsControls:CircleFrame.GestureRecognizers>
         </cardsControls:CircleFrame>
         <!--PHOTO SPACE-->
 
         <!--ENTRY SPACE-->
-        <Label Grid.Row="2" />
 
         <StackLayout Grid.Row="3" 
                      Style="{StaticResource entry_style}">

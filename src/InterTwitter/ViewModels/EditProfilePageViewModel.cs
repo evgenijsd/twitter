@@ -4,6 +4,7 @@ using Prism.Navigation;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 
 namespace InterTwitter.ViewModels
 {
@@ -72,19 +73,55 @@ namespace InterTwitter.ViewModels
 
         #region --- Private Helpers ---
 
-        private Task OnPickBackgroundImageAsync()
+        private async Task OnPickBackgroundImageAsync()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var status = await _permissionsService.RequestAsync<Permissions.StorageRead>();
+
+                if (status == PermissionStatus.Granted)
+                {
+                    var file = await MediaPicker.PickPhotoAsync();
+
+                    if (file == null)
+                    {
+                        return;
+                    }
+
+                    UserBackgroundImage = file.FullPath;
+                }
+            }
+            catch (Exception)
+            {
+            }
         }
 
-        private Task OnPickUserImageAsync()
+        private async Task OnPickUserImageAsync()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var status = await _permissionsService.RequestAsync<Permissions.StorageRead>();
+
+                if (status == PermissionStatus.Granted)
+                {
+                    var file = await MediaPicker.PickPhotoAsync();
+
+                    if (file == null)
+                    {
+                        return;
+                    }
+
+                    UserImagePath = file.FullPath;
+                }
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private Task OnCheckCommandAsync()
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
 
         #endregion
