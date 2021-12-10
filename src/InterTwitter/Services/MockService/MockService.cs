@@ -31,12 +31,6 @@ namespace InterTwitter.Services
             {
                 new Bookmark
                 {
-                    Id = 1,
-                    UserId = 1,
-                    TweetId = 1,
-                },
-                new Bookmark
-                {
                     Id = 2,
                     UserId = 1,
                     TweetId = 2,

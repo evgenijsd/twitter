@@ -140,7 +140,7 @@ namespace InterTwitter.Models.TweetViewModel
             IsBookmarked = !IsBookmarked;
             if (!IsBookmarked)
             {
-                TweetService.DeleteBoormarkAsync(TweetId);
+                TweetService.DeleteBoormark(TweetId, UserId);
             }
 
             return Task.CompletedTask;

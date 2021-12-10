@@ -82,11 +82,58 @@ namespace InterTwitter.Services
             return await Task.FromResult(result);
         }
 
-        public void DeleteBoormarkAsync(int tweetId)
+        public async Task<AOResult<IEnumerable<Bookmark>>> GetBookmarksAsync(int userId)
         {
-            //_dialogs.DisplayAlertAsync("Alert", $"Id post - {tweetId}", "Ok");
+            var result = new AOResult<IEnumerable<Bookmark>>();
+
+            try
+            {
+                var bookmarks = _mockService.Bookmarks.Where(x => x.UserId == userId);
+                if (bookmarks != null)
+                {
+                    result.SetSuccess(bookmarks);
+                }
+                else
+                {
+                    result.SetFailure("not found any bookmark");
+                }
+            }
+            catch (Exception ex)
+            {
+                result.SetError($"{nameof(GetUserAsync)}: exception", "Some issues", ex);
+            }
+
+            return await Task.FromResult(result);
+        }
+
+        public Task GetDeleteAllBookmarksAsync(int userId)
+        {
+            //var result = new AOResult<IEnumerable<Bookmark>>();
+            try
+            {
+                /*var bookmarks = _mockService.Bookmarks.Where(x => x.UserId == userId);
+                if (bookmarks != null)
+                {
+                    result.SetSuccess(bookmarks);
+                }
+                else
+                {
+                    result.SetFailure("not found any bookmark");
+                }*/
+                _mockService.Bookmarks = _mockService.Bookmarks.Where(x => x.UserId != userId);
+            }
+            catch (Exception ex)
+            {
+                //result.SetError($"{nameof(GetUserAsync)}: exception", "Some issues", ex);
+            }
+
+            return Task.CompletedTask;
+        }
+
+        public void DeleteBoormark(int tweetId, int userId)
+        {
+            _mockService.Bookmarks = _mockService.Bookmarks.Where(x => !(x.UserId == userId && x.TweetId == tweetId));
             _event.GetEvent<DeleteBookmarkEvent>().Publish(tweetId);
-            //_tweets.Remove(_tweets.FirstOrDefault(x => x.TweetId == postId));
         }
 
         #endregion

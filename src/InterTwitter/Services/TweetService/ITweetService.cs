@@ -13,6 +13,7 @@ namespace InterTwitter.Services
 
         Task<AOResult<UserModel>> GetUserAsync(int userId);
 
-        void DeleteBoormarkAsync(int postId);
+        void DeleteBoormark(int tweetId, int userId);
+        Task<AOResult<IEnumerable<Bookmark>>> GetBookmarksAsync(int userId);
     }
 }

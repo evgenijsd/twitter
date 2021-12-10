@@ -9,6 +9,7 @@ using Prism.Navigation;
 using Prism.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -34,11 +35,25 @@ namespace InterTwitter.ViewModels
 
         #region -- Public properties --
 
-        private bool _IsTweetLiked;
-        public bool IsTweetLiked
+        private bool _IsNotFound;
+        public bool IsNotFound
         {
-            get => _IsTweetLiked;
-            set => SetProperty(ref _IsTweetLiked, value);
+            get => _IsNotFound;
+            set => SetProperty(ref _IsNotFound, value);
+        }
+
+        private bool _IsVisibleButton = false;
+        public bool IsVisibleButton
+        {
+            get => _IsVisibleButton;
+            set => SetProperty(ref _IsVisibleButton, value);
+        }
+
+        private string _imageSource = "ic_hidden_menu_gray";
+        public string ImageSource
+        {
+            get => _imageSource;
+            set => SetProperty(ref _imageSource, value);
         }
 
         private ObservableCollection<BaseTweetViewModel> _tweets;
@@ -49,9 +64,32 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _tweets, value);
         }
 
+        private ICommand _VisibleButtonCommand;
+        public ICommand VisibleButtonCommand => _VisibleButtonCommand ??= SingleExecutionCommand.FromFunc(OnVisibleButtonCommandAsync);
+
+        private ICommand _UnvisibleButtonCommand;
+        public ICommand UnvisibleButtonCommand => _UnvisibleButtonCommand ??= SingleExecutionCommand.FromFunc(UnvisibleButtonCommandAsync);
+
         #endregion
 
         #region -- Overrides --
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+
+            if (args.PropertyName == nameof(Tweets))
+            {
+                IsNotFound = Tweets == null || Tweets.Count == 0;
+                if (IsNotFound)
+                {
+                    ImageSource = string.Empty;
+                }
+                else
+                {
+                    ImageSource = "ic_hidden_menu_gray";
+                }
+            }
+        }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
@@ -69,24 +107,27 @@ namespace InterTwitter.ViewModels
 
         private async Task InitAsync()
         {
+            int userid = 1;
+
             var getTweetResult = await _tweetService.GetAllTweetsAsync();
+            var getBookmarks = _tweetService.GetBookmarksAsync(userid).Result.Result;
 
             if (getTweetResult.IsSuccess)
             {
-                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == ETypeAttachedMedia.Photos || x.Media == ETypeAttachedMedia.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()).OrderBy(x => x.CreationTime));
+                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Where(x => getBookmarks.Any(y => y.TweetId == x.Id)).Select(x => x.Media == ETypeAttachedMedia.Photos || x.Media == ETypeAttachedMedia.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()).OrderBy(x => x.CreationTime));
 
                 foreach (var tweet in tweetViewModels)
                 {
-                    var tweetAuthor = await _tweetService.GetUserAsync(tweet.UserId);
+                        var tweetAuthor = await _tweetService.GetUserAsync(tweet.UserId);
 
-                    if (tweetAuthor.IsSuccess)
-                    {
-                        tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
-                        tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
-                        tweet.UserName = tweetAuthor.Result.Name;
-                    }
+                        if (tweetAuthor.IsSuccess)
+                        {
+                            tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
+                            tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
+                            tweet.UserName = tweetAuthor.Result.Name;
+                        }
 
-                    tweet.IsBookmarked = true;
+                        tweet.IsBookmarked = true;
                 }
 
                 Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels/*.Where(x => x.UserId == 1)*/);
@@ -97,10 +138,28 @@ namespace InterTwitter.ViewModels
 
         private void DeleteTweet(int tweetId)
         {
-            _dialogs.DisplayAlertAsync("Alert", $"Id post - {tweetId}", "Ok");
-            Tweets.Remove(_tweets.FirstOrDefault(x => x.TweetId == tweetId));
+            //_dialogs.DisplayAlertAsync("Alert", $"Id post - {tweetId}", "Ok");
+            Tweets = new (Tweets.Where(x => x.TweetId != tweetId));
             //implement logic
         }
         #endregion
+
+        private Task OnVisibleButtonCommandAsync()
+        {
+            //await _navigationService.NavigateAsync("/MainPage");
+            if (!IsNotFound)
+            {
+                IsVisibleButton = true;
+            }
+
+            return Task.CompletedTask;
+        }
+
+        private Task UnvisibleButtonCommandAsync()
+        {
+            //await _navigationService.NavigateAsync("/MainPage");
+            IsVisibleButton = false;
+            return Task.CompletedTask;
+        }
     }
 }
