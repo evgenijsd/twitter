@@ -18,7 +18,7 @@ namespace InterTwitter.ViewModels
 
         #region -- IDestructible implementation --
 
-        public void Destroy()
+        public virtual void Destroy()
         {
         }
 
@@ -34,7 +34,7 @@ namespace InterTwitter.ViewModels
 
         #region -- IInitialize implementation --
 
-        public void Initialize(INavigationParameters parameters)
+        public virtual void Initialize(INavigationParameters parameters)
         {
         }
 

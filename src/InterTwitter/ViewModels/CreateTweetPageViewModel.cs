@@ -349,16 +349,23 @@ namespace InterTwitter.ViewModels
                     {
                         if (fileInf.Length <= 15 * 1024 * 1024)
                         {
-                            string fileName = DateTime.Now.ToString("yyyyMMddhhmmss") + (Device.RuntimePlatform == Device.iOS ? ".mov" : ".mp4");
-                            string outputPath = Path.Combine(Xamarin.Essentials.FileSystem.AppDataDirectory, fileName);
+                            string fileName = DateTime.Now.ToString("yyyyMMddhhmmss") + (Device.RuntimePlatform == Device.iOS ? ".MOV" : ".mp4");
+                            string outputPath = Path.Combine(FileSystem.CacheDirectory, fileName);
 
                             if (await VideoTrimmerService.Instance.TrimAsync(0, 10 * 1000, openFile.FullPath, outputPath))
                             {
-                                //await Share.RequestAsync(new ShareFileRequest
-                                //{
-                                //    Title = "Title",
-                                //    File = new ShareFile(outputPath),
-                                //});
+                                await Share.RequestAsync(new ShareFileRequest
+                                {
+                                    Title = "Title",
+                                    File = new ShareFile(outputPath),
+                                });
+                                ListAttachedMedia.Add(new MiniCardViewModel()
+                                {
+                                    PathImage = outputPath,
+                                    PathActionImage = "ic_clear_filled_blue.png",
+                                    ActionCommand = DeleteAttachedVideoCommand,
+                                });
+
                                 ListAttachedMedia.Add(new MiniCardViewModel()
                                 {
                                     PathImage = openFile.FullPath,
