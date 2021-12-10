@@ -68,7 +68,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Behaviors\" />
     <Folder Include="Converters\" />
     <Folder Include="Models\" />
     <Folder Include="Extensions\" />

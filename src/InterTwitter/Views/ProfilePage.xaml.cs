@@ -1,5 +1,6 @@
 ﻿using InterTwitter.ViewModels;
 using System;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace InterTwitter.Views
@@ -32,6 +33,8 @@ namespace InterTwitter.Views
         private void OnMenuTappedHandler(object sender, EventArgs e)
         {
             menu.IsVisible = true;
+            var height = Prism.PrismApplicationBase.Current.MainPage.Height;
+            menuStack.Spacing = ((19 * height) - 8308) / 207;
         }
 
         private void OnAnywhereTappedHandler(object sender, EventArgs e)

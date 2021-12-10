@@ -47,23 +47,23 @@
         
         <!--Hidden menu-->
         <Frame x:Name="menu"
-               Grid.Row="0"
+               Grid.Row="0" 
                Grid.RowSpan="2"
-               Margin="0,16,16,0"
-               Padding="16,21,66,21"
+               Margin="0,16,6,0"
+               Padding="16,21,64,21" 
                CornerRadius="6"
                HasShadow="True"
                HorizontalOptions="End"
                IsVisible="false"
                VerticalOptions="Start">
-            <StackLayout Spacing="28">
-                <Label Style="{DynamicResource tstyle_i7}" 
+            <StackLayout  x:Name="menuStack">
+                <Label Style="{DynamicResource tstyle_i9}" TextColor="{DynamicResource appcolor_i3}" 
                        Text="Share" />
-                <Label Style="{DynamicResource tstyle_i7}" 
+                <Label Style="{DynamicResource tstyle_i9}" TextColor="{DynamicResource appcolor_i3}" 
                        Text="Change profile" />
-                <Label Style="{DynamicResource tstyle_i7}" 
+                <Label Style="{DynamicResource tstyle_i9}" TextColor="{DynamicResource appcolor_i3}" 
                        Text="Muted profiles" />
-                <Label Style="{DynamicResource tstyle_i7}" 
+                <Label Style="{DynamicResource tstyle_i9}" TextColor="{DynamicResource appcolor_i3}" 
                        Text="Blacklist" />
             </StackLayout>
         </Frame>
