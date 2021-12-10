@@ -3,95 +3,101 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
                     xmlns:converters="clr-namespace:InterTwitter.Converters"
                     x:Class="InterTwitter.Resources.Styles.DefaultResources">
-    
+
     <!-- TEXT SIZE -->
-    <x:Double x:Key="tsize_i1">24</x:Double> <!-- 22px -->    
-    <x:Double x:Key="tsize_i2">21</x:Double> <!-- 18px -->
-    <x:Double x:Key="tsize_i3">19</x:Double> <!-- 16px -->
-    <x:Double x:Key="tsize_i4">16</x:Double> <!-- 14px -->
-    <x:Double x:Key="tsize_i5">14</x:Double> <!-- 12px -->
-    <x:Double x:Key="tsize_i6">12</x:Double> <!-- 10px -->
+    <x:Double x:Key="tsize_i1">24</x:Double><!-- 22px -->
+    
+    <x:Double x:Key="tsize_i2">21</x:Double><!-- 18px -->
+    
+    <x:Double x:Key="tsize_i3">19</x:Double><!-- 16px -->
+    
+    <x:Double x:Key="tsize_i4">16</x:Double><!-- 14px -->
+    
+    <x:Double x:Key="tsize_i5">14</x:Double><!-- 12px -->
+    
+    <x:Double x:Key="tsize_i6">12</x:Double><!-- 10px -->
+    
 
     <!-- CONTENT STYLES -->
     <Style x:Key="BaseContent_i1" TargetType="Label">
-        <Setter Property="FontFamily" Value="Ubuntu-Medium"/>
+        <Setter Property="FontFamily" Value="Ubuntu-Medium"/><!-- 500  -->
     </Style>
     <Style x:Key="BaseContent_i2" TargetType="Label">
-        <Setter Property="FontFamily" Value="Ubuntu-Regular"/>
+        <Setter Property="FontFamily" Value="Ubuntu-Regular"/><!-- 400 -->
     </Style>
     <Style x:Key="BaseContent_i3" TargetType="Label">
-        <Setter Property="FontFamily" Value="Ubuntu-Bold"/>
+        <Setter Property="FontFamily" Value="Ubuntu-Bold"/><!-- 700 -->
     </Style>
 
-    <Style x:Key="Content_i1" TargetType="Label" BasedOn="{StaticResource BaseContent_i1}"> <!-- Header 1 Medium 22px -->
+    <Style x:Key="Content_i1" TargetType="Label" BasedOn="{StaticResource BaseContent_i1}"><!-- Header 1 Medium 22px -->
         <Setter Property="FontSize" Value="{DynamicResource tsize_i1}"/>
     </Style>
-    <Style x:Key="Content_i2" TargetType="Label" BasedOn="{StaticResource BaseContent_i1}"> <!-- Header 2 Medium 18px -->
+    <Style x:Key="Content_i2" TargetType="Label" BasedOn="{StaticResource BaseContent_i1}"><!-- Header 2 Medium 18px -->
         <Setter Property="FontSize" Value="{DynamicResource tsize_i2}"/>
     </Style>
-    <Style x:Key="Content_i3" TargetType="Label" BasedOn="{StaticResource BaseContent_i3}"> <!-- Subtitle 1 Bold 16px -->
+    <Style x:Key="Content_i3" TargetType="Label" BasedOn="{StaticResource BaseContent_i3}"><!-- Subtitle 1 Bold 16px -->
         <Setter Property="FontSize" Value="{DynamicResource tsize_i3}"/>
     </Style>
-    <Style x:Key="Content_i4" TargetType="Label" BasedOn="{StaticResource BaseContent_i3}"> <!-- Subtitle 2 Bold 14px -->
-        <Setter Property="FontSize" Value="{DynamicResource tsize_i4}"/>
+    <Style x:Key="Content_i4" TargetType="Label" BasedOn="{StaticResource BaseContent_i3}"><!-- Subtitle 2 Bold 14px -->
+        <Setter Property="FontSize" Value="{DynamicResource tsize_i4}"/> 
     </Style>
-    <Style x:Key="Content_i5" TargetType="Label" BasedOn="{StaticResource BaseContent_i2}"> <!-- Body 1 Regular 16px -->
+    <Style x:Key="Content_i5" TargetType="Label" BasedOn="{StaticResource BaseContent_i2}"><!-- Body 1 Regular 16px -->
         <Setter Property="FontSize" Value="{DynamicResource tsize_i3}"/>
     </Style>
-    <Style x:Key="Content_i6" TargetType="Label" BasedOn="{StaticResource BaseContent_i2}"> <!-- Body 2 Regular 14px -->
-        <Setter Property="FontSize" Value="{DynamicResource tsize_i4}"/>
+    <Style x:Key="Content_i6" TargetType="Label" BasedOn="{StaticResource BaseContent_i2}"><!-- Body 2 Regular 14px -->
+        <Setter Property="FontSize" Value="{DynamicResource tsize_i4}"/> 
     </Style>
-    <Style x:Key="Content_i7" TargetType="Label" BasedOn="{StaticResource BaseContent_i2}"> <!-- Caption 1 Regular 12px -->
+    <Style x:Key="Content_i7" TargetType="Label" BasedOn="{StaticResource BaseContent_i2}"><!-- Caption 1 Regular 12px -->
         <Setter Property="FontSize" Value="{DynamicResource tsize_i5}"/>
     </Style>
-    <Style x:Key="Content_i8" TargetType="Label" BasedOn="{StaticResource BaseContent_i2}"> <!-- Caption 2 Regular 10px -->
+    <Style x:Key="Content_i8" TargetType="Label" BasedOn="{StaticResource BaseContent_i2}"><!-- Caption 2 Regular 10px -->
         <Setter Property="FontSize" Value="{DynamicResource tsize_i6}"/>
     </Style>
-    
+
     <!-- LABEL STYLES -->
-    <Style x:Key="tstyle_i1" TargetType="Label" BasedOn="{StaticResource Content_i2}"> <!-- Header 2/ 18px/ Primary -->
+    <Style x:Key="tstyle_i1" TargetType="Label" BasedOn="{StaticResource Content_i2}"><!-- Header 2/ 18px/ Primary -->
+        <Setter Property="TextColor" Value="{DynamicResource appcolor_i1}"/> 
+    </Style>
+    <Style x:Key="tstyle_i2" TargetType="Label" BasedOn="{StaticResource Content_i7}"><!-- Caption 1/ 12px/ Primary -->
         <Setter Property="TextColor" Value="{DynamicResource appcolor_i1}"/>
     </Style>
-    <Style x:Key="tstyle_i2" TargetType="Label" BasedOn="{StaticResource Content_i7}"> <!-- Caption 1/ 12px/ Primary -->
-        <Setter Property="TextColor" Value="{DynamicResource appcolor_i1}"/>
-    </Style>
-    <Style x:Key="tstyle_i3" TargetType="Label" BasedOn="{StaticResource Content_i7}"> <!-- Caption 1/ 12px/ Error -->
+    <Style x:Key="tstyle_i3" TargetType="Label" BasedOn="{StaticResource Content_i7}"><!-- Caption 1/ 12px/ Error -->
         <Setter Property="TextColor" Value="{DynamicResource appcolor_i7}"/>
     </Style>
-    <Style x:Key="tstyle_i4" TargetType="Label" BasedOn="{StaticResource Content_i2}"> <!-- Header 2/ 18px/ System/Black -->
+    <Style x:Key="tstyle_i4" TargetType="Label" BasedOn="{StaticResource Content_i2}"><!-- Header 2/ 18px/ System/Black -->
+        <Setter Property="TextColor" Value="{DynamicResource appcolor_i3}"/> 
+    </Style>
+    <Style x:Key="tstyle_i5" TargetType="Label" BasedOn="{StaticResource Content_i5}"><!-- Body 1/ 16px/ System/Black-->
         <Setter Property="TextColor" Value="{DynamicResource appcolor_i3}"/>
     </Style>
-    <Style x:Key="tstyle_i5" TargetType="Label" BasedOn="{StaticResource Content_i5}"> <!-- Body 1/ 16px/ System/Black-->
+    <Style x:Key="tstyle_i6" TargetType="Label" BasedOn="{StaticResource Content_i4}"><!-- Subtitle 2/ 14px/ System/Black -->
         <Setter Property="TextColor" Value="{DynamicResource appcolor_i3}"/>
     </Style>
-    <Style x:Key="tstyle_i6" TargetType="Label" BasedOn="{StaticResource Content_i4}"> <!-- Subtitle 2/ 14px/ System/Black -->
+    <Style x:Key="tstyle_i7" TargetType="Label" BasedOn="{StaticResource Content_i6}"><!-- Body 2/ 14px/ System/Black -->
         <Setter Property="TextColor" Value="{DynamicResource appcolor_i3}"/>
     </Style>
-    <Style x:Key="tstyle_i7" TargetType="Label" BasedOn="{StaticResource Content_i6}"> <!-- Body 2/ 14px/ System/Black -->
-        <Setter Property="TextColor" Value="{DynamicResource appcolor_i3}"/>
-    </Style>
-    <Style x:Key="tstyle_i8" TargetType="Label" BasedOn="{StaticResource Content_i6}"> <!-- Body 2/ 14px/ Dark Gray -->
+    <Style x:Key="tstyle_i8" TargetType="Label" BasedOn="{StaticResource Content_i6}"><!-- Body 2/ 14px/ Dark Gray -->
         <Setter Property="TextColor" Value="{DynamicResource appcolor_i4}"/>
     </Style>
-    <Style x:Key="tstyle_i9" TargetType="Label" BasedOn="{StaticResource Content_i7}"> <!-- Caption 1/ 12px/ Dark Gray -->
+    <Style x:Key="tstyle_i9" TargetType="Label" BasedOn="{StaticResource Content_i7}"><!-- Caption 1/ 12px/ Dark Gray -->
         <Setter Property="TextColor" Value="{DynamicResource appcolor_i4}"/>
     </Style>
-     <Style x:Key="tstyle_i10" TargetType="Label" BasedOn="{StaticResource Content_i7}"> <!-- Caption 1/ 12px/ System/White -->
+    <Style x:Key="tstyle_i10" TargetType="Label" BasedOn="{StaticResource Content_i7}"><!-- Caption 1/ 12px/ System/White -->
         <Setter Property="TextColor" Value="{DynamicResource appcolor_i2}"/>
     </Style>
-    <Style x:Key="tstyle_i11" TargetType="Label" BasedOn="{StaticResource Content_i7}"> <!-- Caption 1/ 12px/ Primary -->
+    <Style x:Key="tstyle_i11" TargetType="Label" BasedOn="{StaticResource Content_i7}"><!-- Caption 1/ 12px/ Primary -->
         <Setter Property="TextColor" Value="{DynamicResource appcolor_i1}"/>
     </Style>
-    <Style x:Key="tstyle_i12" TargetType="Label" BasedOn="{StaticResource Content_i7}"> <!-- Caption 1/ 12px/ System/White -->
+    <Style x:Key="tstyle_i12" TargetType="Label" BasedOn="{StaticResource Content_i7}"><!-- Caption 1/ 12px/ System/White -->
         <Setter Property="TextColor" Value="{DynamicResource appcolor_i2}"/>
     </Style>
-    <Style x:Key="tstyle_i13" TargetType="Label" BasedOn="{StaticResource Content_i6}"> <!-- Body 2/ 14px/  System/Black -->
+    <Style x:Key="tstyle_i13" TargetType="Label" BasedOn="{StaticResource Content_i6}"><!-- Body 2/ 14px/  System/Black -->
         <Setter Property="TextColor" Value="{DynamicResource appcolor_i3}"/>
     </Style>
-    <Style x:Key="tstyle_i14" TargetType="Label" BasedOn="{StaticResource Content_i3}"> <!-- Subtitle 1/ 16px/ System/Black -->
+    <Style x:Key="tstyle_i14" TargetType="Label" BasedOn="{StaticResource Content_i3}"><!-- Subtitle 1/ 16px/ System/Black -->
         <Setter Property="TextColor" Value="{DynamicResource appcolor_i3}"/>
     </Style>
-    <Style x:Key="tstyle_i15" TargetType="Label" BasedOn="{StaticResource Content_i8}"> <!-- Caption 2/ 10px/ Dark Gray-->
+    <Style x:Key="tstyle_i15" TargetType="Label" BasedOn="{StaticResource Content_i8}"><!-- Caption 2/ 10px/ Dark Gray-->
         <Setter Property="TextColor" Value="{DynamicResource appcolor_i4}"/>
     </Style>
     

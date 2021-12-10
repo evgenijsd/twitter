@@ -1,5 +1,6 @@
-﻿using InterTwitter.Enums;
+using InterTwitter.Enums;
 using InterTwitter.Extensions;
+using InterTwitter.Helpers;
 using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services;
 using InterTwitter.Services.Settings;
@@ -8,29 +9,27 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
 {
-    public class HomePageViewModel : BasePageViewModel
+    public class HomePageViewModel : BaseTabViewModel
     {
         private readonly ITweetService _tweetService;
 
         public HomePageViewModel(
-            ISettingsManager settingManager,
+            INavigationService navigationService,
             ITweetService tweetService)
+            : base(navigationService)
         {
+            IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource;
             _tweetService = tweetService;
         }
 
         #region -- Public properties --
 
-        private bool _IsTweetLiked;
-
-        public bool IsTweetLiked
-        {
-            get => _IsTweetLiked;
-            set => SetProperty(ref _IsTweetLiked, value);
-        }
+        public ICommand OpenFlyoutCommandAsync => SingleExecutionCommand.FromFunc(OnOpenFlyoutCommandAsync);
 
         private ObservableCollection<BaseTweetViewModel> _tweets;
 
@@ -44,9 +43,19 @@ namespace InterTwitter.ViewModels
 
         #region -- Overrides --
 
-        public override async void OnNavigatedTo(INavigationParameters parameters)
+        public new async void OnNavigatedTo(INavigationParameters parameters)
         {
             await InitAsync();
+        }
+
+        public override void OnAppearing()
+        {
+            IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_blue"] as ImageSource;
+        }
+
+        public override void OnDisappearing()
+        {
+            IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource;
         }
 
         #endregion
@@ -75,6 +84,12 @@ namespace InterTwitter.ViewModels
 
                 Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
             }
+        }
+
+        private Task OnOpenFlyoutCommandAsync()
+        {
+            MessagingCenter.Send(this, Constants.Messages.OPEN_SIDEBAR, true);
+            return Task.CompletedTask;
         }
 
         #endregion
