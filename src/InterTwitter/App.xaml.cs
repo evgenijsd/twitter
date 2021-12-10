@@ -37,7 +37,7 @@ namespace InterTwitter
         {
             InitializeComponent();
             FlowListView.Init();
-            await NavigationService.NavigateAsync($"/{nameof(BookmarksPage)}/{nameof(BookmarksPage)}");
+            await NavigationService.NavigateAsync($"/{nameof(BookmarksPage)}");
         }
 
         protected override void OnStart()

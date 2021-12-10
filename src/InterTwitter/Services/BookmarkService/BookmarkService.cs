@@ -4,7 +4,7 @@ using System.Text;
 
 namespace InterTwitter.Services.BookmarkService
 {
-    class BookmarkService
+    public class BookmarkService : IBookmarkService
     {
     }
 }

@@ -4,7 +4,9 @@ using InterTwitter.Helpers;
 using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services;
 using InterTwitter.Services.Settings;
+using Prism.Events;
 using Prism.Navigation;
+using Prism.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -16,18 +18,23 @@ namespace InterTwitter.ViewModels
     public class BookmarksPageViewModel : BasePageViewModel
     {
         private readonly ITweetService _tweetService;
+        private readonly IEventAggregator _event;
+        private IPageDialogService _dialogs { get; }
 
         public BookmarksPageViewModel(
             ISettingsManager settingManager,
-            ITweetService tweetService)
+            IEventAggregator aggregator,
+            ITweetService tweetService,
+            IPageDialogService dialogs)
         {
             _tweetService = tweetService;
+            _event = aggregator;
+            _dialogs = dialogs;
         }
 
         #region -- Public properties --
 
         private bool _IsTweetLiked;
-
         public bool IsTweetLiked
         {
             get => _IsTweetLiked;
@@ -42,9 +49,6 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _tweets, value);
         }
 
-        private ICommand _DeleteCommand;
-        public ICommand DeleteCommand => _DeleteCommand ??= SingleExecutionCommand.FromFunc<object>(OnDeleteCommandAsync);
-
         #endregion
 
         #region -- Overrides --
@@ -52,6 +56,11 @@ namespace InterTwitter.ViewModels
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             await InitAsync();
+        }
+
+        public override void Initialize(INavigationParameters parameters)
+        {
+            _event.GetEvent<DeleteBookmarkEvent>().Subscribe(DeleteTweet);
         }
 
         #endregion
@@ -64,7 +73,7 @@ namespace InterTwitter.ViewModels
 
             if (getTweetResult.IsSuccess)
             {
-                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == ETypeAttachedMedia.Photos || x.Media == ETypeAttachedMedia.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
+                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == ETypeAttachedMedia.Photos || x.Media == ETypeAttachedMedia.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()).OrderBy(x => x.CreationTime));
 
                 foreach (var tweet in tweetViewModels)
                 {
@@ -77,38 +86,21 @@ namespace InterTwitter.ViewModels
                         tweet.UserName = tweetAuthor.Result.Name;
                     }
 
-                    tweet.DeleteBookmarkCommand = DeleteCommand;
+                    tweet.IsBookmarked = true;
                 }
 
                 Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels/*.Where(x => x.UserId == 1)*/);
+                //Tweets.Remove(_tweets.FirstOrDefault(x => x.TweetId == 6));
+                //_tweetService.DeleteBoormarkAsync(6);
             }
         }
 
-        private Task OnDeleteCommandAsync(object args)
+        private void DeleteTweet(int tweetId)
         {
-            if (args != null)
-            {
-                _IsTweetLiked = !_IsTweetLiked;
-            }
-
-            /*{
-   var confirmConfig = new ConfirmConfig()
-   {
-       Message = "Delete pin",
-       OkText = "Delete",
-       CancelText = "Cancel"
-   };
-   var confirm = await UserDialogs.Instance.ConfirmAsync(confirmConfig);
-   if (confirm)
-   {
-       await _mapService.DeletePinAsync(PinSearch, args);
-   }
-}
-PinView pinv = args as PinView;
-PinModel pindel = pinv.ToPinModel();*/
-            return Task.CompletedTask;
+            _dialogs.DisplayAlertAsync("Alert", $"Id post - {tweetId}", "Ok");
+            Tweets.Remove(_tweets.FirstOrDefault(x => x.TweetId == tweetId));
+            //implement logic
         }
-
         #endregion
     }
 }

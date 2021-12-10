@@ -35,7 +35,7 @@ namespace InterTwitter.ViewModels
 
         #region -- IInitialize implementation --
 
-        public void Initialize(INavigationParameters parameters)
+        public virtual void Initialize(INavigationParameters parameters)
         {
         }
 
