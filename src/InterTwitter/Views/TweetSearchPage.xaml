@@ -9,8 +9,8 @@
                         xmlns:views="clr-namespace:InterTwitter.Views"
                         xmlns:Behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
                         Style="{DynamicResource pstyle_i1}"
-                        x:DataType="viewmodels:TweetSearchPageViewModel"
-                        x:Class="InterTwitter.Views.TweetSearchPage">
+                        x:DataType="viewmodels:SearchPageViewModel"
+                        x:Class="InterTwitter.Views.SearchPage">
 
     <views:BaseContentPage.Content>
 

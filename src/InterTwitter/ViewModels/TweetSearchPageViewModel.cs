@@ -198,7 +198,6 @@ namespace InterTwitter.ViewModels
         {
             base.OnNavigatedTo(parameters);
 
-            AvatarIcon = "pic_profile_small";
 
             /* TO DO: load hashtags */
         }

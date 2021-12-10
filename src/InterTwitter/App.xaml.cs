@@ -40,7 +40,6 @@ namespace InterTwitter
             containerRegistry.RegisterForNavigation<NotificationsPage, NotificationPageViewModel>();
             containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
             containerRegistry.RegisterForNavigation<MainPage>();
-            containerRegistry.RegisterForNavigation<TweetSearchPage, TweetSearchPageViewModel>();
         }
 
         protected override async void OnInitialized()
