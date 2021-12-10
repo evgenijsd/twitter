@@ -73,7 +73,6 @@
     <Folder Include="Models\" />
     <Folder Include="Extensions\" />
     <Folder Include="Enums\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>

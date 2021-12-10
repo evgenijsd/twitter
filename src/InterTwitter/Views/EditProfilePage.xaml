@@ -74,6 +74,9 @@
             <Image  Source="{DynamicResource ic_add_photo_white}"
                     Aspect="AspectFit" Scale="0.5"
                    />
+            <cardsControls:CircleFrame.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding PickBackgroundImageAsync}"/>
+            </cardsControls:CircleFrame.GestureRecognizers>
         </cardsControls:CircleFrame>
 
         <cardsControls:CircleFrame Grid.Row="1"
@@ -94,6 +97,9 @@
                     </ffimage:CachedImage.Transformations>
                 </ffimage:CachedImage>
             </cardsControls:CircleFrame>
+            <cardsControls:CircleFrame.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding PickUserImageAsync}"/>
+            </cardsControls:CircleFrame.GestureRecognizers>
         </cardsControls:CircleFrame>
         <cardsControls:CircleFrame Grid.Row="1" 
                                    Grid.RowSpan="3"

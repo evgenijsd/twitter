@@ -109,6 +109,7 @@
     <Compile Include="Renderers\CustomNoBorderEntryRenderer .cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\PermissionsService\PermissionsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -134,7 +135,6 @@
   <ItemGroup>
     <Folder Include="Controls\" />
     <Folder Include="Resources\drawable\" />
-    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\InterTwitter\InterTwitter.csproj">

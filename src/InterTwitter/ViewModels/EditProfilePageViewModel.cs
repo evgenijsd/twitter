@@ -1,17 +1,19 @@
-﻿using MapNotepad.Helpers;
+﻿using InterTwitter.Services.PermissionsService;
+using MapNotepad.Helpers;
 using Prism.Navigation;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace InterTwitter.ViewModels
 {
     public class EditProfilePageViewModel : BaseViewModel
     {
-        public EditProfilePageViewModel(INavigationService navigationService)
+        private readonly IPermissionsService _permissionsService;
+        public EditProfilePageViewModel(INavigationService navigationService, IPermissionsService permissionsService)
             : base(navigationService)
         {
+            _permissionsService = permissionsService;
         }
 
         #region --- Public Properties ---
@@ -59,6 +61,31 @@ namespace InterTwitter.ViewModels
         }
 
         public ICommand NavigationCommandAsync => SingleExecutionCommand.FromFunc(() => NavigationService.GoBackAsync());
+
+        public ICommand CheckCommandAsync => SingleExecutionCommand.FromFunc(OnCheckCommandAsync);
+
+        public ICommand PickBackgroundImageAsync => SingleExecutionCommand.FromFunc(OnPickBackgroundImageAsync);
+
+        public ICommand PickUserImageAsync => SingleExecutionCommand.FromFunc(OnPickUserImageAsync);
+
+        #endregion
+
+        #region --- Private Helpers ---
+
+        private Task OnPickBackgroundImageAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        private Task OnPickUserImageAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        private Task OnCheckCommandAsync()
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
 
