@@ -3,6 +3,7 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                       xmlns:sh="http://sharpnado.com"
                       xmlns:controls="clr-namespace:InterTwitter.Controls"
+                      xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
                       xmlns:statecontainer="clr-namespace:InterTwitter.Controls.StateContainer"
                       xmlns:view="clr-namespace:InterTwitter.Views"
                       x:Class="InterTwitter.Views.CreateTweetPage">
@@ -90,9 +91,9 @@
                            HasShadow="False"
                            Padding="0"
                            BorderColor="Transparent">
-
-                        <Image Source="ava.png"
-                               Aspect="AspectFit"/>
+                        
+                        <ffimageloading:CachedImage Source="ava.png"
+                                                    Aspect="AspectFit"/>
 
                     </Frame>
                     
@@ -140,11 +141,11 @@
                                                     <RowDefinition Height="21"/>
                                                 </Grid.RowDefinitions>
 
-                                                <Image Grid.Row="0"
-                                                       Aspect="AspectFill"
-                                                       Source="{Binding PathImage}"
-                                                       HeightRequest="44.1167"
-                                                       WidthRequest="44.1167"/>
+                                                <ffimageloading:CachedImage Grid.Row="0"
+                                                                            Source="{Binding PathImage}"
+                                                                            Aspect="AspectFill"
+                                                                            HeightRequest="44.1167"
+                                                                            WidthRequest="44.1167"/>
 
                                                 <Frame Grid.Row="1"
                                                        HasShadow="False"
@@ -189,11 +190,11 @@
                                                     <RowDefinition Height="21"/>
                                                 </Grid.RowDefinitions>
 
-                                                <Image Grid.Row="0"
-                                                       Source="{Binding PathImage}"
-                                                       Aspect="AspectFill"
-                                                       HeightRequest="44.1167"
-                                                       WidthRequest="44.1167"/>
+                                                <ffimageloading:CachedImage Grid.Row="0"
+                                                                            Source="{Binding PathImage}"
+                                                                            Aspect="AspectFill"
+                                                                            HeightRequest="44.1167"
+                                                                            WidthRequest="44.1167"/>
 
                                                 <Frame Grid.Row="1"
                                                        HasShadow="False"

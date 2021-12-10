@@ -186,13 +186,14 @@ namespace InterTwitter.ViewModels
 
                 if (confirm)
                 {
-                    await _pageDialogService.DisplayAlertAsync("Exit", "Confirm", "Ok");
+                    await _pageDialogService.DisplayAlertAsync("Exit", "Заглушка", "Ok");
                 }
             }
         }
 
         private async Task OnPostTweetCommandAsync()
         {
+            await _pageDialogService.DisplayAlertAsync("Post", "Заглушка", "Ok");
         }
 
         private async Task OnDeleteAttachedPhotoCommandAsync(object obj)
@@ -233,31 +234,38 @@ namespace InterTwitter.ViewModels
                 {
                     var openFile = await MediaPicker.PickPhotoAsync();
 
-                    FileInfo fileInf = new FileInfo(openFile.FullPath);
-
-                    if (fileInf.Exists)
+                    if (openFile.ContentType != "image/gif")
                     {
-                        if (fileInf.Length <= 5 * 1024 * 1024)
+                        FileInfo fileInf = new FileInfo(openFile.FullPath);
+
+                        if (fileInf.Exists)
                         {
-                            ListAttachedMedia.Add(new MiniCardViewModel()
+                            if (fileInf.Length <= 5 * 1024 * 1024)
                             {
-                                PathImage = openFile.FullPath,
-                                PathActionImage = "ic_clear_filled_blue.png",
-                                ActionCommand = DeleteAttachedPhotoCommand,
-                            });
+                                ListAttachedMedia.Add(new MiniCardViewModel()
+                                {
+                                    PathImage = openFile.FullPath,
+                                    PathActionImage = "ic_clear_filled_blue.png",
+                                    ActionCommand = DeleteAttachedPhotoCommand,
+                                });
 
-                            CanUseButtonUploadPhotos = ListAttachedMedia.Count < 6;
-                            CanUseButtonUploadGif = false;
-                            CanUseButtonUploadVideo = false;
+                                CanUseButtonUploadPhotos = ListAttachedMedia.Count < 6;
+                                CanUseButtonUploadGif = false;
+                                CanUseButtonUploadVideo = false;
 
-                            TypeAttachedMedia = ETypeAttachedMedia.Photos;
+                                TypeAttachedMedia = ETypeAttachedMedia.Photos;
 
-                            CanUseButtonPost = canPostTweet();
+                                CanUseButtonPost = canPostTweet();
+                            }
+                            else
+                            {
+                                await _pageDialogService.DisplayAlertAsync("Error", "The size of the photo should not exceed 5 MB", "Ok");
+                            }
                         }
-                        else
-                        {
-                            await _pageDialogService.DisplayAlertAsync("Error", "The size of the photo should not exceed 5 MB", "Ok");
-                        }
+                    }
+                    else
+                    {
+                        await _pageDialogService.DisplayAlertAsync("Error", "Only picture", "Ok");
                     }
                 }
                 catch (Exception e)
@@ -280,31 +288,38 @@ namespace InterTwitter.ViewModels
                 {
                     var openFile = await MediaPicker.PickPhotoAsync();
 
-                    FileInfo fileInf = new FileInfo(openFile.FullPath);
-
-                    if (fileInf.Exists)
+                    if (openFile.ContentType == "image/gif")
                     {
-                        if (fileInf.Length <= 5 * 1024 * 1024)
+                        FileInfo fileInf = new FileInfo(openFile.FullPath);
+
+                        if (fileInf.Exists)
                         {
-                            ListAttachedMedia.Add(new MiniCardViewModel()
+                            if (fileInf.Length <= 5 * 1024 * 1024)
                             {
-                                PathImage = openFile.FullPath,
-                                PathActionImage = "ic_clear_filled_blue.png",
-                                ActionCommand = DeleteAttachedGifCommand,
-                            });
+                                ListAttachedMedia.Add(new MiniCardViewModel()
+                                {
+                                    PathImage = openFile.FullPath,
+                                    PathActionImage = "ic_clear_filled_blue.png",
+                                    ActionCommand = DeleteAttachedGifCommand,
+                                });
 
-                            CanUseButtonUploadPhotos = false;
-                            CanUseButtonUploadGif = false;
-                            CanUseButtonUploadVideo = false;
+                                CanUseButtonUploadPhotos = false;
+                                CanUseButtonUploadGif = false;
+                                CanUseButtonUploadVideo = false;
 
-                            TypeAttachedMedia = ETypeAttachedMedia.Gif;
+                                TypeAttachedMedia = ETypeAttachedMedia.Gif;
 
-                            CanUseButtonPost = canPostTweet();
+                                CanUseButtonPost = canPostTweet();
+                            }
+                            else
+                            {
+                                await _pageDialogService.DisplayAlertAsync("Error", "The size of the gif should not exceed 5 MB", "Ok");
+                            }
                         }
-                        else
-                        {
-                            await _pageDialogService.DisplayAlertAsync("Error", "The size of the gif should not exceed 5 MB", "Ok");
-                        }
+                    }
+                    else
+                    {
+                        await _pageDialogService.DisplayAlertAsync("Error", "Only gif", "Ok");
                     }
                 }
                 catch (Exception e)
@@ -339,12 +354,11 @@ namespace InterTwitter.ViewModels
 
                             if (await VideoTrimmerService.Instance.TrimAsync(0, 10 * 1000, openFile.FullPath, outputPath))
                             {
-                                await Share.RequestAsync(new ShareFileRequest
-                                {
-                                    Title = "Title",
-                                    File = new ShareFile(outputPath),
-                                });
-
+                                //await Share.RequestAsync(new ShareFileRequest
+                                //{
+                                //    Title = "Title",
+                                //    File = new ShareFile(outputPath),
+                                //});
                                 ListAttachedMedia.Add(new MiniCardViewModel()
                                 {
                                     PathImage = openFile.FullPath,
