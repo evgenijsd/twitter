@@ -24,7 +24,7 @@ namespace InterTwitter.Droid
 
             if(e.NewElement != null)
             {
-               // _tabbedPage = e.NewElement as CustomTabbedPage;
+                _tabbedPage = e.NewElement as CustomTabbedPage;
                 _bottomNavigationView = (GetChildAt(0) as Android.Widget.RelativeLayout).GetChildAt(1) as BottomNavigationView;
                 _bottomNavigationView.LabelVisibilityMode = LabelVisibilityMode.LabelVisibilityUnlabeled;
             }

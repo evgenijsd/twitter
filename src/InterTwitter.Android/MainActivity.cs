@@ -6,10 +6,11 @@ using Android.Runtime;
 using Android.OS;
 using InterTwitter.Droid.Renderers;
 using FFImageLoading.Forms.Platform;
+using Android.Support.V7.App;
 
 namespace InterTwitter.Droid
 {
-    [Activity(Label = "InterTwitter", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize, ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "@string/ApplicationName", Icon = "@mipmap/icon", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -21,6 +22,7 @@ namespace InterTwitter.Droid
             KeyboardHelper.Init(this);
             CachedImageRenderer.Init(true);
             CachedImageRenderer.InitImageViewHandler();
+
             LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
