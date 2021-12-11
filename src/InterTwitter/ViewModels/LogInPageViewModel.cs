@@ -1,13 +1,14 @@
-﻿using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
 using InterTwitter.Services.Authorization;
 using InterTwitter.Services.Registration;
-using InterTwitter.Validators;
-using MapNotePad.Helpers;
+using InterTwitter.ViewModels.Validators;
+using InterTwitter.Views;
 using Prism.Navigation;
 using Prism.Services;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace InterTwitter.ViewModels
 {
@@ -160,7 +161,7 @@ namespace InterTwitter.ViewModels
 
         private async Task OnStartCommandAsync()
         {
-            await _navigationService.GoBackAsync();
+            await NavigationService.GoBackAsync();
         }
 
         private async Task OnTwitterCommandAsync()
@@ -175,9 +176,9 @@ namespace InterTwitter.ViewModels
                     {
                         User = result.Result;
                         _autorizationService.UserId = User.Id;
-                        await _dialogs.DisplayAlertAsync("Alert", $"TwitterCommand id - {User.Id}", "Ok");
-                        //var p = new NavigationParameters { { "User", User } };
-                        //await _navigationService.NavigateAsync($"/{nameof(TwitterPage)}", p);
+                        //await _dialogs.DisplayAlertAsync("Alert", $"TwitterCommand id - {User.Id}", "Ok");
+                        var p = new NavigationParameters { { "User", User } };
+                        await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", p);
                     }
                     else
                     {

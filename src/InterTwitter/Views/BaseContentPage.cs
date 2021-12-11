@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using InterTwitter.Helpers;
+using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
@@ -10,16 +11,26 @@ namespace InterTwitter.Views
         {
             On<iOS>().SetUseSafeArea(true);
         }
-    }
+        #region ---Overrides---
 
-    #region -- Public properties --
-    #endregion
-    #region -- InterfaceName implementation --
-    #endregion
-    #region -- Overrides --
-    #endregion
-    #region -- Public helpers --
-    #endregion
-    #region -- Private helpers --
-    #endregion
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (BindingContext is IPageActionsHandler actionsHandler)
+            {
+                actionsHandler.OnAppearing();
+            }
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            if (BindingContext is IPageActionsHandler actionsHandler)
+            {
+                actionsHandler.OnDisappearing();
+            }
+        }
+
+        #endregion
+    }
 }

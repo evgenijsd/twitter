@@ -1,17 +1,16 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using InterTwitter.Helpers;
+﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
 using InterTwitter.Services.Authorization;
 using InterTwitter.Services.Registration;
 using InterTwitter.ViewModels.Validators;
 using InterTwitter.Views;
-using MapNotePad.Helpers;
 using Prism.Navigation;
 using Prism.Services;
+using System;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
@@ -205,7 +204,7 @@ namespace InterTwitter.ViewModels
             User.Email = Email;
             User.Name = Name;
             var p = new NavigationParameters { { "User", User } };
-            await _navigationService.NavigateAsync($"{nameof(LogInPage)}", p);
+            await NavigationService.NavigateAsync($"{nameof(LogInPage)}", p);
         }
 
         private async Task OnCreateCommandAsync()
@@ -227,7 +226,7 @@ namespace InterTwitter.ViewModels
                 User.Email = Email;
                 User.Name = Name;
                 var p = new NavigationParameters { { "User", User } };
-                await _navigationService.NavigateAsync($"{nameof(CreatePage)}", p);
+                await NavigationService.NavigateAsync($"{nameof(CreatePage)}", p);
             }
         }
         #endregion

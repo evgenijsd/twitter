@@ -1,14 +1,13 @@
-﻿using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using InterTwitter.Helpers;
+﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
 using InterTwitter.Services.Registration;
-using InterTwitter.Validators;
+using InterTwitter.ViewModels.Validators;
 using InterTwitter.Views;
-using MapNotePad.Helpers;
 using Prism.Navigation;
 using Prism.Services;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
@@ -153,7 +152,7 @@ namespace InterTwitter.ViewModels
         {
             DependencyService.Get<IKeyboardHelper>().HideKeyboard();
 
-            await _navigationService.GoBackAsync();
+            await NavigationService.GoBackAsync();
         }
 
         private async Task OnStartCommandAsync()
@@ -170,7 +169,7 @@ namespace InterTwitter.ViewModels
                     DependencyService.Get<IKeyboardHelper>().HideKeyboard();
 
                     var p = new NavigationParameters { { "User", User } };
-                    await _navigationService.NavigateAsync($"/{nameof(StartPage)}", p);
+                    await NavigationService.NavigateAsync($"/{nameof(StartPage)}", p);
                 }
                 else
                 {

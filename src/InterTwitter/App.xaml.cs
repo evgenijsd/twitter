@@ -1,4 +1,5 @@
 ﻿using InterTwitter.Services.Authorization;
+using InterTwitter.ViewModels.Flyout;
 using InterTwitter.Services.Registration;
 using InterTwitter.ViewModels;
 using InterTwitter.Views;
@@ -25,6 +26,14 @@ namespace InterTwitter
 
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
+            containerRegistry.RegisterForNavigation<FlyOutPage, FlyOutPageViewModel>();
+            containerRegistry.RegisterForNavigation<FlyoutPageDetail, FlyoutPageDetailViewModel>();
+            containerRegistry.RegisterForNavigation<FlyoutPageFlyout, FlyoutPageFlyoutViewModel>();
+            containerRegistry.RegisterForNavigation<HomePage, HomePageViewModel>();
+            containerRegistry.RegisterForNavigation<SearchPage, SearchPageViewModel>();
+            containerRegistry.RegisterForNavigation<BookmarksPage, BookmarksPageViewModel>();
+            containerRegistry.RegisterForNavigation<NotificationsPage, NotificationPageViewModel>();
+            containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
             containerRegistry.RegisterForNavigation<StartPage, StartPageViewModel>();
             containerRegistry.RegisterForNavigation<CreatePage, CreatePageViewModel>();
             containerRegistry.RegisterForNavigation<LogInPage, LogInPageViewModel>();

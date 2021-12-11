@@ -1,12 +1,11 @@
-﻿using System.Text.RegularExpressions;
-using FluentValidation;
-using InterTwitter.ViewModels;
+﻿using FluentValidation;
+using System.Text.RegularExpressions;
 
-namespace InterTwitter.Validators
+namespace InterTwitter.ViewModels.Validators
 {
     public class CreatePageValidator : AbstractValidator<CreatePageViewModel>
     {
-        private const string VALID_NAME = @"^[a-zA-Z]+$";
+        private const string VALID_NAME = @"^[a-zA-Z\s]+$";
         private const string VALID_EMAIL = @"\A[^@]+@([^@\.]+\.)+[^@\.]+\z";
 
         public CreatePageValidator()

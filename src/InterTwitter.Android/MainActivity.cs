@@ -5,6 +5,7 @@ using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
 using InterTwitter.Droid.Renderers;
+using FFImageLoading.Forms.Platform;
 
 namespace InterTwitter.Droid
 {
@@ -18,6 +19,8 @@ namespace InterTwitter.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             KeyboardHelper.Init(this);
+            CachedImageRenderer.Init(true);
+            CachedImageRenderer.InitImageViewHandler();
             LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

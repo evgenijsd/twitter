@@ -2,7 +2,7 @@
 using FluentValidation;
 using InterTwitter.ViewModels;
 
-namespace InterTwitter.Validators
+namespace InterTwitter.ViewModels.Validators
 {
     public class LogInPageValidator : AbstractValidator<LogInPageViewModel>
     {

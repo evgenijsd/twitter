@@ -1,8 +1,7 @@
-﻿using System.Text.RegularExpressions;
-using FluentValidation;
-using InterTwitter.ViewModels;
+﻿using FluentValidation;
+using System.Text.RegularExpressions;
 
-namespace InterTwitter.Validators
+namespace InterTwitter.ViewModels.Validators
 {
     public class PasswordPageValidator : AbstractValidator<PasswordPageViewModel>
     {
