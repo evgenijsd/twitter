@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <DataTemplate xmlns="http://xamarin.com/schemas/2014/forms"
-              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
+              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
               xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
               x:Class="InterTwitter.Views.DataTemplates.VideoTweetDataTemplate">
 
@@ -18,7 +18,7 @@
                                         Margin="0, 0, 15, 0">
 
                 <ffimageloading:CachedImage.Transformations>
-                    <fftransformations:CircleTransformation/>
+                    <fftransformations:CircleTransformation />
                 </ffimageloading:CachedImage.Transformations>
 
             </ffimageloading:CachedImage>
@@ -26,15 +26,15 @@
             <StackLayout VerticalOptions="Start">
 
                 <Label Style="{StaticResource tstyle_i6}"
-                       Text="{Binding UserName}" 
-                       FontAttributes="Bold"/>
+                       Text="{Binding UserName}"
+                       FontAttributes="Bold" />
 
-                <Label Style="{StaticResource tstyle_i7}" 
+                <Label Style="{StaticResource tstyle_i7}"
                        VerticalOptions="Start"
-                       MaxLines="5" 
+                       MaxLines="5"
                        LineBreakMode="TailTruncation"
                        Text="{Binding Text}"
-                       IsVisible="{Binding IsTextVisible}"/>
+                       IsVisible="{Binding IsTextVisible}" />
 
                 <Frame CornerRadius="5"
                        Padding="0"
@@ -42,7 +42,7 @@
 
                     <WebView Grid.Row="0"
                              Grid.Column="0"
-                             Source="{Binding MediaPaths, Converter={StaticResource listToFirstConverter}}" 
+                             Source="{Binding MediaPaths, Converter={StaticResource listToFirstConverter}}"
                              WidthRequest="300"
                              HeightRequest="180"
                              MinimumWidthRequest="360"
@@ -55,27 +55,32 @@
                              Padding="0">
 
                     <Label Style="{StaticResource tstyle_i8}"
-                           Text="{Binding CreationTime,  StringFormat='{}{0:dd.MM.yyyy • HH:mm}'}"/>
+                           Text="{Binding CreationTime,  StringFormat='{}{0:dd.MM.yyyy • HH:mm}'}" />
 
-                    <ffimageloading:CachedImage Source="ic_like_gray" HorizontalOptions="EndAndExpand">
+                    <ffimageloading:CachedImage Source="ic_like_gray"
+                                                HorizontalOptions="EndAndExpand">
                         <ffimageloading:CachedImage.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding LikeTweetCommand}"/>
+                            <TapGestureRecognizer Command="{Binding LikeTweetCommand}" />
                         </ffimageloading:CachedImage.GestureRecognizers>
                         <ffimageloading:CachedImage.Triggers>
                             <DataTrigger Binding="{Binding IsTweekLiked}"
                                          TargetType="ffimageloading:CachedImage"
                                          Value="true">
-                                <Setter Property="Source" Value="ic_like_blue"/>
+                                <Setter Property="Source"
+                                        Value="ic_like_blue" />
                             </DataTrigger>
                         </ffimageloading:CachedImage.Triggers>
                     </ffimageloading:CachedImage>
 
                     <Label Style="{StaticResource tstyle_i9}"
-                           Text="{Binding LikesNumber}" 
-                           Margin="0, 1, 15, -1" >
+                           Text="{Binding LikesNumber}"
+                           Margin="0, 1, 15, -1">
                         <Label.Triggers>
-                            <DataTrigger TargetType="Label" Binding="{Binding IsWeetLiked}" Value="true">
-                                <Setter Property="TextColor" Value="{StaticResource appcolor_i1}"/>
+                            <DataTrigger TargetType="Label"
+                                         Binding="{Binding IsWeetLiked}"
+                                         Value="true">
+                                <Setter Property="TextColor"
+                                        Value="{StaticResource appcolor_i1}" />
                             </DataTrigger>
                         </Label.Triggers>
                     </Label>
@@ -85,13 +90,16 @@
                         <ffimageloading:CachedImage.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding MarkTweetCommand}" />
                         </ffimageloading:CachedImage.GestureRecognizers>
-                        
+
                         <ffimageloading:CachedImage.Triggers>
-                            <DataTrigger TargetType="ffimageloading:CachedImage" Binding="{Binding IsBookmarked}" Value="true">
-                                <Setter Property="Source" Value="ic_bookmarks_blue"/>
+                            <DataTrigger TargetType="ffimageloading:CachedImage"
+                                         Binding="{Binding IsBookmarked}"
+                                         Value="true">
+                                <Setter Property="Source"
+                                        Value="ic_bookmarks_blue" />
                             </DataTrigger>
                         </ffimageloading:CachedImage.Triggers>
-                        
+
                     </ffimageloading:CachedImage>
 
                 </StackLayout>
@@ -101,7 +109,7 @@
 
         <BoxView HeightRequest="1"
                  Margin="0, 16, 0, 0"
-                 BackgroundColor="{StaticResource appcolor_i6}"/>
+                 BackgroundColor="{StaticResource appcolor_i6}" />
 
     </StackLayout>
 </DataTemplate>

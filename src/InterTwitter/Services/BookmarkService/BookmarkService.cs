@@ -21,6 +21,12 @@ namespace InterTwitter.Services.BookmarkService
             {
                 new Bookmark
                 {
+                    Id = 1,
+                    UserId = 1,
+                    TweetId = 1,
+                },
+                new Bookmark
+                {
                     Id = 2,
                     UserId = 1,
                     TweetId = 2,
@@ -142,20 +148,17 @@ namespace InterTwitter.Services.BookmarkService
             var result = new AOResult();
             try
             {
-                var bookmarks = _bookmarks.Where(x => x.UserId == userId);
+                var bookmark = _bookmarks.FirstOrDefault(x => x.UserId == userId);
 
-                if (bookmarks != null)
+                if (bookmark != null)
                 {
+                    _bookmarks.RemoveAll(x => x.UserId == userId);
+
                     result.SetSuccess();
                 }
                 else
                 {
                     result.SetFailure("not found any bookmark");
-                }
-
-                foreach (var bookmark in bookmarks)
-                {
-                    _bookmarks.Remove(bookmark);
                 }
             }
             catch (Exception ex)

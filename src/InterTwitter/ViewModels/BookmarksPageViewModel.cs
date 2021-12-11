@@ -56,6 +56,13 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _IsVisibleButton, value);
         }
 
+        private int _userId = 1;
+        public int UserId
+        {
+            get => _userId;
+            set => SetProperty(ref _userId, value);
+        }
+
         private string _imageSource = "ic_hidden_menu_gray";
         public string ImageSource
         {
@@ -76,6 +83,9 @@ namespace InterTwitter.ViewModels
 
         private ICommand _UnvisibleButtonCommand;
         public ICommand UnvisibleButtonCommand => _UnvisibleButtonCommand ??= SingleExecutionCommand.FromFunc(OnUnvisibleButtonCommandAsync);
+
+        private ICommand _DeleteAllBookmarks;
+        public ICommand DeleteAllBookmarks => _DeleteAllBookmarks ??= SingleExecutionCommand.FromFunc(OnDeleteAllBookmarksCommandAsync);
 
         private ICommand _GoBackCommand;
         public ICommand GoBackCommand => _GoBackCommand ??= SingleExecutionCommand.FromFunc(OnGoBackCommandAsync);
@@ -104,6 +114,8 @@ namespace InterTwitter.ViewModels
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             int userid = 1;
+            UserId = userid;
+
             await Task.Delay(TimeSpan.FromSeconds(0.1));
 
             var resultTweet = _tweetService.GetAllTweetsAsync().Result;
@@ -128,7 +140,7 @@ namespace InterTwitter.ViewModels
                     }
 
                     tweet.IsBookmarked = true;
-                    tweet.CurrentUserId = userid;
+                    tweet.CurrentUserId = UserId;
                 }
 
                 Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
@@ -169,6 +181,17 @@ namespace InterTwitter.ViewModels
         private async Task OnGoBackCommandAsync()
         {
             await _navigationService.GoBackAsync();
+        }
+
+        private async Task OnDeleteAllBookmarksCommandAsync()
+        {
+            var result = await _bookmarkService.DeleteAllBookmarksAsync(UserId);
+            if (result.IsSuccess)
+            {
+                Tweets = new ();
+            }
+
+            IsVisibleButton = false;
         }
 
         #endregion
