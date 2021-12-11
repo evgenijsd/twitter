@@ -14,13 +14,13 @@ namespace InterTwitter.ViewModels
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource;
         }
 
-        #region --- Public Properties ---
+        #region -- Public Properties --
 
         public ICommand OpenFlyoutCommandAsync => SingleExecutionCommand.FromFunc(OnOpenFlyoutCommandAsync);
 
         #endregion
 
-        #region --- Overrides ---
+        #region -- Overrides --
 
         public override void OnAppearing()
         {
@@ -34,7 +34,7 @@ namespace InterTwitter.ViewModels
 
         #endregion
 
-        #region --- Private Helpers ---
+        #region -- Private Helpers --
 
         private Task OnOpenFlyoutCommandAsync()
         {

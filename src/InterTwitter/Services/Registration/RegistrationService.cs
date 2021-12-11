@@ -15,9 +15,51 @@ namespace InterTwitter.Services.Registration
         {
             _users = new List<UserModel>
             {
-                new UserModel { Id = 1, Name = "Gabriela", Email = "aaa@aaa.aaa", Password = "1234567A", UserPhoto = "pic_profile_big", BackgroundPhoto = "pic_profile_big" },
-                new UserModel { Id = 2, Name = "Yuki", Email = "bbb@bbb.bbb", Password = "1234567A", UserPhoto = "pic_profile_big", BackgroundPhoto = "pic_profile_big" },
-                new UserModel { Id = 3, Name = "John", Email = "ccc@ccc.ccc", Password = "1234567A", UserPhoto = "pic_profile_big", BackgroundPhoto = "pic_profile_big" },
+                new UserModel
+                {
+                    Id = 1,
+                    Name = "Bill Gates",
+                    Email = "aaa@aaa.aaa",
+                    Password = "1234567A",
+                    AvatarPath = "https://inhabitat.com/wp-content/blogs.dir/1/files/2017/08/Bill-Gates-889x598.jpg",
+                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
+                },
+                new UserModel
+                {
+                    Id = 2,
+                    Name = "Kate White",
+                    Email = "bbb@bbb.bbb",
+                    Password = "1234567A",
+                    AvatarPath = "https://i.pinimg.com/236x/01/e1/10/01e11011168eb3e1c83d16747192d490.jpg",
+                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
+                },
+                new UserModel
+                {
+                    Id = 3,
+                    Name = "Sam Smith",
+                    Email = "ccc@ccc.ccc",
+                    Password = "1234567A",
+                    AvatarPath = "http://www.kinofilms.ua/images/person/big/738231.jpg",
+                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
+                },
+                new UserModel
+                {
+                    Id = 4,
+                    Name = "Steve Jobs",
+                    Email = "ddd@ddd.ddd",
+                    Password = "1234567A",
+                    AvatarPath = "https://upload.wikimedia.org/wikipedia/commons/b/b9/Steve_Jobs_Headshot_2010-CROP.jpg",
+                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
+                },
+                new UserModel
+                {
+                    Id = 5,
+                    Name = "Elon Musk",
+                    Email = "eee@eee.eee",
+                    Password = "1234567A",
+                    AvatarPath = "https://ichef.bbci.co.uk/news/640/cpsprodpb/81F4/production/_118486233_gettyimages-1229892674.jpg",
+                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
+                },
             };
         }
 

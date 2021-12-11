@@ -9,6 +9,7 @@ using Prism.Services;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
 {
@@ -161,6 +162,8 @@ namespace InterTwitter.ViewModels
 
         private async Task OnStartCommandAsync()
         {
+            DependencyService.Get<IKeyboardHelper>().HideKeyboard();
+
             await NavigationService.GoBackAsync();
         }
 
@@ -174,6 +177,8 @@ namespace InterTwitter.ViewModels
                 {
                     if (result.Result.Password == Password)
                     {
+                        DependencyService.Get<IKeyboardHelper>().HideKeyboard();
+
                         User = result.Result;
                         _autorizationService.UserId = User.Id;
                         //await _dialogs.DisplayAlertAsync("Alert", $"TwitterCommand id - {User.Id}", "Ok");

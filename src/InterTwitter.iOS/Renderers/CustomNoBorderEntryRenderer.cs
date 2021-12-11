@@ -10,7 +10,7 @@ namespace InterTwitter.iOS.Renderers
     class CustomNoBorderEntryRenderer : EntryRenderer
     {
 
-        #region --- Ovverides ---
+        #region -- Ovverides --
 
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {

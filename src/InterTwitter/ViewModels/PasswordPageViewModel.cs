@@ -161,8 +161,8 @@ namespace InterTwitter.ViewModels
             if (validator.IsValid)
             {
                 User.Password = Password;
-                User.UserPhoto = "pic_profile_big";
-                User.BackgroundPhoto = "pic_profile_big";
+                User.AvatarPath = "pic_profile_big";
+                User.BackgroundUserImagePath = "pic_profile_big";
                 var result = await _registrationService.UserAddAsync(User);
                 if (result.IsSuccess)
                 {

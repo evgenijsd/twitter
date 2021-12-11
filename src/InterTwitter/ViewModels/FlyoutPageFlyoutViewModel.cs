@@ -54,7 +54,7 @@ namespace InterTwitter.ViewModels.Flyout
             Subscribe();
         }
 
-        #region --- Public Properties ---
+        #region -- Public Properties --
 
         private ObservableCollection<MenuItemViewModel> _menuItems;
         public ObservableCollection<MenuItemViewModel> MenuItems
@@ -83,7 +83,7 @@ namespace InterTwitter.ViewModels.Flyout
 
         #endregion
 
-        #region --- Overrides ---
+        #region -- Overrides --
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
@@ -92,7 +92,7 @@ namespace InterTwitter.ViewModels.Flyout
 
         #endregion
 
-        #region --- Private Helpers ---
+        #region -- Private Helpers --
 
         private void Subscribe()
         {

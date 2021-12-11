@@ -11,7 +11,7 @@ namespace InterTwitter.Views
         {
             On<iOS>().SetUseSafeArea(true);
         }
-        #region ---Overrides---
+        #region --Overrides--
 
         protected override void OnAppearing()
         {

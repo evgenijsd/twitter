@@ -20,7 +20,8 @@ namespace InterTwitter.ViewModels
         private IRegistrationService _registrationService { get; }
         private IAuthorizationService _autorizationService { get; }
         private IPageDialogService _dialogs { get; }
-        public StartPageValidator _StartPageValidator { get; }
+        private StartPageValidator _StartPageValidator { get; }
+        private bool IsAutoLogin = true;
 
         public StartPageViewModel(INavigationService navigationService, IPageDialogService dialogs, IRegistrationService registrationService, IAuthorizationService autorizationService)
             : base(navigationService)
@@ -157,6 +158,7 @@ namespace InterTwitter.ViewModels
                 User = parameters.GetValue<UserModel>("User");
                 Name = User.Name;
                 Email = User.Email;
+                IsAutoLogin = false;
             }
         }
 
@@ -164,12 +166,14 @@ namespace InterTwitter.ViewModels
         {
             await Task.Delay(TimeSpan.FromSeconds(0.1));
             var user = _registrationService.GetUsers().FirstOrDefault(x => x.Id == UserId);
-            if (user != null)
+            if (user != null && IsAutoLogin)
             {
-                await _dialogs.DisplayAlertAsync("Alert", $"TwitterCommand id - {user.Id}", "Ok");
-                //var p = new NavigationParameters { { "User", User } };
-                //await _navigationService.NavigateAsync($"/{nameof(TwitterPage)}", p);
+                //await _dialogs.DisplayAlertAsync("Alert", $"TwitterCommand id - {user.Id}", "Ok");
+                var p = new NavigationParameters { { "User", User } };
+                await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", p);
             }
+
+            IsAutoLogin = true;
         }
         #endregion
 
@@ -200,6 +204,8 @@ namespace InterTwitter.ViewModels
                     }
                 }
             }
+
+            DependencyService.Get<IKeyboardHelper>().HideKeyboard();
 
             User.Email = Email;
             User.Name = Name;
