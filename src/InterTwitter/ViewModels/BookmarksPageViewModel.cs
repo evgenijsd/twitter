@@ -8,6 +8,7 @@ using InterTwitter.Services.Settings;
 using Prism.Events;
 using Prism.Navigation;
 using Prism.Services;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -74,7 +75,10 @@ namespace InterTwitter.ViewModels
         public ICommand VisibleButtonCommand => _VisibleButtonCommand ??= SingleExecutionCommand.FromFunc(OnVisibleButtonCommandAsync);
 
         private ICommand _UnvisibleButtonCommand;
-        public ICommand UnvisibleButtonCommand => _UnvisibleButtonCommand ??= SingleExecutionCommand.FromFunc(UnvisibleButtonCommandAsync);
+        public ICommand UnvisibleButtonCommand => _UnvisibleButtonCommand ??= SingleExecutionCommand.FromFunc(OnUnvisibleButtonCommandAsync);
+
+        private ICommand _GoBackCommand;
+        public ICommand GoBackCommand => _GoBackCommand ??= SingleExecutionCommand.FromFunc(OnGoBackCommandAsync);
 
         #endregion
 
@@ -100,10 +104,11 @@ namespace InterTwitter.ViewModels
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             int userid = 1;
+            await Task.Delay(TimeSpan.FromSeconds(0.1));
 
             var resultTweet = _tweetService.GetAllTweetsAsync().Result;
             var resultBookmark = _bookmarkService.GetBookmarksAsync(userid).Result;
-            var getTweetResult = resultTweet.Result;
+            var getTweetResult = resultTweet.Result.ToList();
             var getBookmarks = resultBookmark.Result;
 
             if (resultTweet.IsSuccess && resultBookmark.IsSuccess)
@@ -154,11 +159,16 @@ namespace InterTwitter.ViewModels
             return Task.CompletedTask;
         }
 
-        private Task UnvisibleButtonCommandAsync()
+        private Task OnUnvisibleButtonCommandAsync()
         {
             IsVisibleButton = false;
 
             return Task.CompletedTask;
+        }
+
+        private async Task OnGoBackCommandAsync()
+        {
+            await _navigationService.GoBackAsync();
         }
 
         #endregion

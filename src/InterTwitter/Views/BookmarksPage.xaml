@@ -25,6 +25,8 @@
 
                 <controls:CustomNavigationbar Title="Bookmarks"
                                               Grid.Row="0"
+                                              RightUserImageButton="{Binding ImageSource}"
+                                              RightUserButtonCommand="{Binding GoBackCommand}"
                                               LeftImageAddButton="{Binding ImageSource}"
                                               LeftAddButtonCommand="{Binding VisibleButtonCommand}">
                 </controls:CustomNavigationbar>

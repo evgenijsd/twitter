@@ -1,5 +1,6 @@
 ﻿using DLToolkit.Forms.Controls;
 using InterTwitter.Services;
+using InterTwitter.Services.BookmarkService;
 using InterTwitter.Services.Settings;
 using InterTwitter.ViewModels;
 using InterTwitter.Views;
@@ -29,6 +30,7 @@ namespace InterTwitter
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
             containerRegistry.RegisterInstance<IMockService>(Container.Resolve<MockService>());
             containerRegistry.RegisterInstance<ITweetService>(Container.Resolve<TweetService>());
+            containerRegistry.RegisterInstance<IBookmarkService>(Container.Resolve<BookmarkService>());
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage>();
