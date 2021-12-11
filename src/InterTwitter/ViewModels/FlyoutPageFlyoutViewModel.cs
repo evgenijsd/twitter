@@ -1,4 +1,5 @@
 ﻿using InterTwitter.Helpers;
+using InterTwitter.Services.Authorization;
 using InterTwitter.Views;
 using Prism.Navigation;
 using System;
@@ -12,9 +13,14 @@ namespace InterTwitter.ViewModels.Flyout
 {
     public class FlyoutPageFlyoutViewModel : BaseViewModel
     {
-        public FlyoutPageFlyoutViewModel(INavigationService navigationService)
+        private IAuthorizationService _authorizationService;
+        public FlyoutPageFlyoutViewModel(
+            INavigationService navigationService,
+            IAuthorizationService authorizationService)
             : base(navigationService)
         {
+            _authorizationService = authorizationService;
+
             MenuItems = new ObservableCollection<MenuItemViewModel>(new[]
                 {
                     new MenuItemViewModel
@@ -142,9 +148,11 @@ namespace InterTwitter.ViewModels.Flyout
             NavigationService.NavigateAsync(nameof(menuItem.TargetType));
         }
 
-        private Task OnLogoutCommandAsync()
+        private async Task OnLogoutCommandAsync()
         {
-            return Task.CompletedTask;
+            _authorizationService.UserId = 0;
+
+            await NavigationService.NavigateAsync($"/{nameof(StartPage)}");
         }
 
         private Task OnChangeProfileCommandAsync()
