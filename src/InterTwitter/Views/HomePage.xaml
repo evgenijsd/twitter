@@ -6,7 +6,9 @@
                        xmlns:helpers="clr-namespace:InterTwitter.Helpers" 
                        xmlns:resources="clr-namespace:InterTwitter.Resources"
                        x:Class="InterTwitter.Views.HomePage"
-                       xmlns:prism="http://prismlibrary.com"
+                       xmlns:prism="http://prismlibrary.com" 
+                       xmlns:viewmodels="clr-namespace:InterTwitter.ViewModels" 
+                       x:DataType="viewmodels:HomePageViewModel"
                        prism:ViewModelLocator.AutowireViewModel="True"
                        IconImageSource="{Binding IconPath}">
     
@@ -32,11 +34,32 @@
             </controls:CustomNavigationbar>
 
 
-            <CollectionView Grid.Row="1" 
-                            ItemsSource="{Binding Tweets}" 
-                            ItemTemplate="{StaticResource templateSelector}">
-            </CollectionView>
+            <controls:CustomCollectionView x:Name="customCollectView"
+                                           Grid.Row="1" 
+                                           ItemsSource="{Binding Tweets}" 
+                                           ItemTemplate="{StaticResource templateSelector}">
+            </controls:CustomCollectionView>
 
+            <controls:CustomFrame Grid.Row="1"
+                                  HeightRequest="52"
+                                  WidthRequest="52"
+                                  CornerRadius="52"
+                                  VerticalOptions="End"
+                                  HorizontalOptions="End"
+                                  Margin="0, 0, 17, 14"
+                                  Padding="-2"
+                                  HasShadow="True"
+                                  Elevation="40"
+                                  IsVisible="{Binding Source={x:Reference customCollectView}, Path=IsAddButtonVisible}">
+                
+                <ImageButton Source="ic_add_blue"
+                             Scale="1.17"
+                             HorizontalOptions="Fill"
+                             VerticalOptions="Fill"
+                             Command="{Binding AddTweetCommandAsync}">
+                </ImageButton>
+            </controls:CustomFrame>
+          
         </Grid>
 
     </local:BaseContentPage.Content>

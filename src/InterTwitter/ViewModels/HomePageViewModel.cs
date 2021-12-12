@@ -5,6 +5,7 @@ using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services;
 using InterTwitter.Views;
 using Prism.Navigation;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace InterTwitter.ViewModels
     public class HomePageViewModel : BaseTabViewModel
     {
         private readonly ITweetService _tweetService;
+        private bool _isFirstStart = true;
 
         public HomePageViewModel(
             INavigationService navigationService,
@@ -31,6 +33,8 @@ namespace InterTwitter.ViewModels
 
         public ICommand OpenFlyoutCommandAsync => SingleExecutionCommand.FromFunc(OnOpenFlyoutCommandAsync);
 
+        public ICommand AddTweetCommandAsync => SingleExecutionCommand.FromFunc(OnOpenAddTweetPageAsync);
+
         private ObservableCollection<BaseTweetViewModel> _tweets;
 
         public ObservableCollection<BaseTweetViewModel> Tweets
@@ -43,13 +47,14 @@ namespace InterTwitter.ViewModels
 
         #region -- Overrides --
 
-        public override async void OnNavigatedTo(INavigationParameters parameters)
+        public override async void OnAppearing()
         {
-            await InitAsync();
-        }
+            if (_isFirstStart)
+            {
+                await InitAsync();
+                _isFirstStart = false;
+            }
 
-        public override void OnAppearing()
-        {
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_blue"] as ImageSource;
         }
 
@@ -84,6 +89,11 @@ namespace InterTwitter.ViewModels
 
                 Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
             }
+        }
+
+        private Task OnOpenAddTweetPageAsync()
+        {
+            return Task.CompletedTask;
         }
 
         private Task OnOpenFlyoutCommandAsync()

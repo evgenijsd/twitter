@@ -3,7 +3,8 @@
               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
               xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
+              xmlns:controls="clr-namespace:InterTwitter.Controls"
               x:Class="InterTwitter.Views.DataTemplates.ImageTweetDataTemplate">
 
     <StackLayout Spacing="0">
@@ -28,12 +29,19 @@
                        Text="{Binding UserName}" 
                        FontAttributes="Bold"/>
 
-                <Label Style="{StaticResource tstyle_i7}" 
+                <controls:CustomLabel Style="{StaticResource tstyle_i7}" 
                        VerticalOptions="Start"
                        MaxLines="5" 
                        LineBreakMode="TailTruncation"
                        IsVisible="{Binding IsTextVisible}"
-                       Text="{Binding Text}"/>
+                       Text="{Binding Text}">
+                    <controls:CustomLabel.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding Text}" Style="{StaticResource tstyle_i7}"/>
+                            <Span Text="more" TextColor="{ StaticResource appcolor_i1}"/>
+                        </FormattedString>
+                    </controls:CustomLabel.FormattedText>
+                </controls:CustomLabel>
 
                 <flv:FlowListView FlowColumnCount="{Binding ColumnNumber}"
                                   RowHeight="{Binding RowHeight}"

@@ -140,6 +140,5 @@ namespace InterTwitter.Models.TweetViewModel
         }
 
         #endregion
-
     }
 }
