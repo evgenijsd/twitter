@@ -1,15 +1,14 @@
-﻿using DLToolkit.Forms.Controls;
+using DLToolkit.Forms.Controls;
 using InterTwitter.Services;
 using InterTwitter.Services.BookmarkService;
 using InterTwitter.Services.Settings;
 using InterTwitter.ViewModels;
+using InterTwitter.ViewModels.Flyout;
 using InterTwitter.Views;
 using Prism;
 using Prism.Ioc;
 using Prism.Unity;
-using System;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace InterTwitter
 {
@@ -33,15 +32,23 @@ namespace InterTwitter
             containerRegistry.RegisterInstance<IBookmarkService>(Container.Resolve<BookmarkService>());
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<MainPage>();
+            containerRegistry.RegisterForNavigation<FlyOutPage, FlyOutPageViewModel>();
+            containerRegistry.RegisterForNavigation<FlyoutPageDetail, FlyoutPageDetailViewModel>();
+            containerRegistry.RegisterForNavigation<FlyoutPageFlyout, FlyoutPageFlyoutViewModel>();
+            containerRegistry.RegisterForNavigation<HomePage, HomePageViewModel>();
+            containerRegistry.RegisterForNavigation<SearchPage, SearchPageViewModel>();
             containerRegistry.RegisterForNavigation<BookmarksPage, BookmarksPageViewModel>();
+            containerRegistry.RegisterForNavigation<NotificationsPage, NotificationPageViewModel>();
+            containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
+            containerRegistry.RegisterForNavigation<MainPage>();
         }
 
         protected override async void OnInitialized()
         {
             InitializeComponent();
             FlowListView.Init();
-            await NavigationService.NavigateAsync($"{nameof(MainPage)}");
+            //await NavigationService.NavigateAsync($"{nameof(MainPage)}");
+            await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}");
         }
 
         protected override void OnStart()

@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace InterTwitter.ViewModels
 {
-    public class BasePageViewModel : BindableBase, IDestructible, IInitializeAsync, IInitialize, INavigationAware
+    public class BaseViewModel : BindableBase, IInitialize, INavigationAware, IInitializeAsync, IDestructible
     {
-        protected INavigationService _navigationService { get; }
-
-        public BasePageViewModel(INavigationService navigationService)
+        public BaseViewModel(INavigationService navigationService)
         {
-            _navigationService = navigationService;
+            NavigationService = navigationService;
         }
 
         protected INavigationService NavigationService { get; }
@@ -25,18 +23,15 @@ namespace InterTwitter.ViewModels
 
         #endregion
 
-        #region -- IInitializeAsync implementation --
-
-        public async virtual Task InitializeAsync(INavigationParameters parameters)
-        {
-        }
-
-        #endregion
-
-        #region -- IInitialize implementation --
+        #region -- IInitialize, IInitializeAsync implementation --
 
         public virtual void Initialize(INavigationParameters parameters)
         {
+        }
+
+        public virtual Task InitializeAsync(INavigationParameters parameters)
+        {
+            return Task.CompletedTask;
         }
 
         #endregion

@@ -5,6 +5,9 @@
                       xmlns:controls="clr-namespace:InterTwitter.Controls"
                       xmlns:helpers="clr-namespace:InterTwitter.Helpers"
                       xmlns:resources="clr-namespace:InterTwitter.Resources"
+                      xmlns:prism="http://prismlibrary.com"
+                      prism:ViewModelLocator.AutowireViewModel="True"
+                      IconImageSource="{Binding IconPath}"
                       x:Class="InterTwitter.Views.BookmarksPage">
     <view:BaseContentPage.Resources>
         <resources:TweetDataTemplates />
@@ -25,8 +28,8 @@
 
                 <controls:CustomNavigationbar Title="Bookmarks"
                                               Grid.Row="0"
-                                              LeftImageAddButton="{Binding ImageSource}"
-                                              LeftAddButtonCommand="{Binding VisibleButtonCommand}">
+                                              RightUserImageButton="{Binding ImageSource}"
+                                              RightUserButtonCommand="{Binding VisibleButtonCommand}">
                 </controls:CustomNavigationbar>
 
 

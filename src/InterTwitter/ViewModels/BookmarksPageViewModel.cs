@@ -5,6 +5,7 @@ using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services;
 using InterTwitter.Services.BookmarkService;
 using InterTwitter.Services.Settings;
+using InterTwitter.Views;
 using Prism.Events;
 using Prism.Navigation;
 using Prism.Services;
@@ -15,10 +16,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
 {
-    public class BookmarksPageViewModel : BasePageViewModel
+    public class BookmarksPageViewModel : BaseTabViewModel
     {
         private readonly ITweetService _tweetService;
         private readonly IBookmarkService _bookmarkService;
@@ -34,6 +36,7 @@ namespace InterTwitter.ViewModels
             IPageDialogService dialogs)
             : base(navigationService)
         {
+            IconPath = Prism.PrismApplicationBase.Current.Resources["ic_bookmarks_gray"] as ImageSource;
             _tweetService = tweetService;
             _bookmarkService = bookmarkService;
             _event = aggregator;
@@ -89,6 +92,8 @@ namespace InterTwitter.ViewModels
 
         private ICommand _GoBackCommand;
         public ICommand GoBackCommand => _GoBackCommand ??= SingleExecutionCommand.FromFunc(OnGoBackCommandAsync);
+
+        public ICommand OpenFlyoutCommandAsync => SingleExecutionCommand.FromFunc(OnOpenFlyoutCommandAsync);
 
         #endregion
 
@@ -156,6 +161,13 @@ namespace InterTwitter.ViewModels
 
         #region -- Private helpers --
 
+        private Task OnOpenFlyoutCommandAsync()
+        {
+            MessagingCenter.Send(this, Constants.Messages.OPEN_SIDEBAR, true);
+            MessagingCenter.Send(this, Constants.Messages.TAB_CHANGE, typeof(BookmarksPage));
+            return Task.CompletedTask;
+        }
+
         private void DeleteTweet(int tweetId)
         {
             Tweets = new (Tweets.Where(x => x.TweetId != tweetId));
@@ -180,7 +192,7 @@ namespace InterTwitter.ViewModels
 
         private async Task OnGoBackCommandAsync()
         {
-            await _navigationService.GoBackAsync();
+            await NavigationService.GoBackAsync();
         }
 
         private async Task OnDeleteAllBookmarksCommandAsync()
