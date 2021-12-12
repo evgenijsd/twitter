@@ -1,14 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <local:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
                        xmlns:prism="http://prismlibrary.com"
-                        xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-                       
                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:sh="http://sharpnado.com"
+                       xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+                       xmlns:controls="clr-namespace:InterTwitter.Controls"
                        xmlns:stateContainer="clr-namespace:InterTwitter.Controls.StateContainer"
-                       xmlns:local="clr-namespace:InterTwitter.Views" xmlns:viewmodels="clr-namespace:InterTwitter.ViewModels" xmlns:Behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms" xmlns:sh="http://sharpnado.com" xmlns:controls="clr-namespace:InterTwitter.Controls" x:DataType="viewmodels:SearchPageViewModel"
-    prism:ViewModelLocator.AutowireViewModel="True"                       
+                       xmlns:resources="clr-namespace:InterTwitter.Resources"
+                       xmlns:viewmodels="clr-namespace:InterTwitter.ViewModels"
+                       xmlns:local="clr-namespace:InterTwitter.Views"
+                       xmlns:Behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+                       prism:ViewModelLocator.AutowireViewModel="True"                       
                        IconImageSource="{Binding IconPath}"
+                       x:DataType="viewmodels:SearchPageViewModel"
                        x:Class="InterTwitter.Views.SearchPage">
+
+    <local:BaseContentPage.Resources>
+        <resources:TweetDataTemplates/>
+    </local:BaseContentPage.Resources>
 
     <ContentPage.Content>
 
@@ -130,9 +139,14 @@
                                     <!-- TWEETS FOUND - DISPLAY TWEETS -->
                                     <stateContainer:StateCondition State="Success">
 
-                                        <Grid>
+                                        <Grid RowDefinitions="auto"
+                                              HorizontalOptions="Fill"
+                                              VerticalOptions="Fill">
 
-                                            <!-- TWEETS LIST MUST BE HERE -->
+                                            <controls:CustomCollectionView x:Name="customCollectView"
+                                                                           Grid.Row="1" 
+                                                                           ItemsSource="{Binding Tweets}" 
+                                                                           ItemTemplate="{StaticResource templateSelector}"/>
 
                                         </Grid>
 

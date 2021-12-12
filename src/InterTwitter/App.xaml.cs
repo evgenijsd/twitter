@@ -1,4 +1,5 @@
-﻿using InterTwitter.Resources.Strings;
+﻿using DLToolkit.Forms.Controls;
+using InterTwitter.Resources.Strings;
 using InterTwitter.Services.HashtagManager;
 using InterTwitter.Services.MockService;
 using InterTwitter.Services.SettingsManager;
@@ -46,6 +47,7 @@ namespace InterTwitter
         {
             InitializeComponent();
 
+            FlowListView.Init();
             Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             LocalizationResourceManager.Current.Init(Strings.ResourceManager);
 

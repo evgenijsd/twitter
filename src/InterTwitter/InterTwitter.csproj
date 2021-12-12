@@ -48,6 +48,7 @@
 
   <ItemGroup>
     <PackageReference Include="CardsView" Version="2.8.0" />
+    <PackageReference Include="DLToolkit.Forms.Controls.FlowListView" Version="2.0.11" />
     <PackageReference Include="Prism.Unity.Forms" Version="8.1.97" />
     <PackageReference Include="Sharpnado.Shadows" Version="1.2.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
@@ -63,10 +64,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Behaviors\" />
-    <Folder Include="Converters\" />
-    <Folder Include="Extensions\" />
-    <Folder Include="Enums\" />
     <Folder Include="Services\" />
   </ItemGroup>
 
@@ -95,6 +92,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Controls\CustomNavigationbar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\TweetDataTemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\FlyOutPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

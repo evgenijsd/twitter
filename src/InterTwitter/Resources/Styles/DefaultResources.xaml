@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                    xmlns:views="clr-namespace:InterTwitter.Views"
+                    xmlns:views="clr-namespace:InterTwitter.Views" xmlns:converters="clr-namespace:InterTwitter.Converters"
                     x:Class="InterTwitter.Resources.Styles.DefaultResources">
 
     <!-- TEXT SIZE -->
@@ -115,5 +115,8 @@
     <Style x:Key="pstyle_i1" TargetType="views:BaseContentPage">
         <Setter Property="BackgroundColor" Value="{DynamicResource appcolor_i2}" />
     </Style>
+
+    <!-- CONVERTERS -->
+    <converters:ListToFirstConverter x:Key="listToFirstConverter"/>
 
 </ResourceDictionary>

@@ -9,12 +9,13 @@ using Xamarin.Forms.Xaml;
 
 namespace InterTwitter.Views
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SearchPage : BaseContentPage
     {
         public SearchPage()
         {
             InitializeComponent();
+
+            NavigationPage.SetHasNavigationBar(this, false);
         }
     }
 }

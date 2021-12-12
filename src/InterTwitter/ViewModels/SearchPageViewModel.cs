@@ -1,11 +1,16 @@
 ﻿using InterTwitter.Enums;
+using InterTwitter.Extensions;
 using InterTwitter.Helpers;
 using InterTwitter.Models;
+using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services.HashtagManager;
+using InterTwitter.Services.TweetService;
 using InterTwitter.Views;
 using Prism.Navigation;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -14,15 +19,20 @@ namespace InterTwitter.ViewModels
 {
     public class SearchPageViewModel : BaseTabViewModel
     {
+        private readonly ITweetService _tweetService;
         private IHashtagManager _hashtagManager;
 
         public SearchPageViewModel(
             INavigationService navigationService,
+            ITweetService tweetService,
             IHashtagManager hashtagManager)
             : base(navigationService)
         {
+            _tweetService = tweetService;
             _hashtagManager = hashtagManager;
             AvatarIcon = "pic_profile_small";
+
+            TweetSearchResult = ESearchResult.Success;
 
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource;
         }
@@ -64,6 +74,13 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _hashtagModels, value);
         }
 
+        private ObservableCollection<BaseTweetViewModel> _tweets;
+        public ObservableCollection<BaseTweetViewModel> Tweets
+        {
+            get => _tweets;
+            set => SetProperty(ref _tweets, value);
+        }
+
         private ESearchState _tweetsSearchState;
         public ESearchState TweetsSearchState
         {
@@ -92,10 +109,12 @@ namespace InterTwitter.ViewModels
 
         #endregion
 
-        #region --- Overrides ---
+        #region -- Overrides --
 
         public override async void OnAppearing()
         {
+            await LoadAsync();
+
             var result = await _hashtagManager.GetPopularHashtags(5);
 
             if (result.IsSuccess)
@@ -130,6 +149,34 @@ namespace InterTwitter.ViewModels
         #endregion
 
         #region --- Private Helpers ---
+
+        private async Task LoadAsync()
+        {
+            var result = await _tweetService.GetAllTweetsAsync();
+
+            if (result.IsSuccess)
+            {
+                var tweetViewModels = new List<BaseTweetViewModel>(
+                    result.Result.Select(x => x.Media == ETypeAttachedMedia.Photos
+                        || x.Media == ETypeAttachedMedia.Gif
+                        ? x.ToImagesTweetViewModel()
+                        : x.ToBaseTweetViewModel()));
+
+                foreach (var tweet in tweetViewModels)
+                {
+                    var tweetAuthor = await _tweetService.GetUserAsync(tweet.UserId);
+
+                    if (tweetAuthor.IsSuccess)
+                    {
+                        tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
+                        tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
+                        tweet.UserName = tweetAuthor.Result.Name;
+                    }
+                }
+
+                Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
+            }
+        }
 
         private Task OnOpenFlyoutCommandAsync()
         {
