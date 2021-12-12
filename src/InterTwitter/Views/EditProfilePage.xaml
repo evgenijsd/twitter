@@ -124,7 +124,8 @@
             <Label Margin="5.3,0,0,0"
                    Style="{DynamicResource tstyle_i2}"
                    Text="Name" />
-            <controls:CustomEntry Style="{StaticResource entry_text_style}"/>
+            <controls:CustomEntry Style="{StaticResource entry_text_style}" 
+                                  Text="{Binding UserName}"/>
         </StackLayout>
 
         <StackLayout Grid.Row="4" 
@@ -132,7 +133,8 @@
             <Label Margin="5.3,0,0,0"
                    Style="{DynamicResource tstyle_i2}"
                    Text="Email" />
-            <controls:CustomEntry Style="{StaticResource entry_text_style}"/>
+            <controls:CustomEntry Style="{StaticResource entry_text_style}" 
+                                  Text="{Binding UserMail}"/>
         </StackLayout>
 
         <StackLayout Grid.Row="5" 
@@ -142,7 +144,8 @@
                    Text="Old password" />
             <controls:CustomEntry EyeOffImageSource="{DynamicResource ic_eye_blue}" 
                                   Style="{StaticResource entry_text_style}"
-                                  EyeOnImageSource="{DynamicResource ic_eye_gray}"
+                                  EyeOnImageSource="{DynamicResource ic_eye_gray}" 
+                                  Text="{Binding OldPassword}"
                                   IsButtonEyeVisible="True"
                                   IsPassword="True"
                                   IsSwapButtons="True" />
@@ -155,7 +158,8 @@
                    Text="New password" />
             <controls:CustomEntry EyeOffImageSource="{DynamicResource ic_eye_blue}" 
                                   Style="{StaticResource entry_text_style}"
-                                  EyeOnImageSource="{DynamicResource ic_eye_gray}"
+                                  EyeOnImageSource="{DynamicResource ic_eye_gray}" 
+                                  Text="{Binding NewPassword}"
                                   IsButtonEyeVisible="True"
                                   IsPassword="True"
                                   IsSwapButtons="True" />

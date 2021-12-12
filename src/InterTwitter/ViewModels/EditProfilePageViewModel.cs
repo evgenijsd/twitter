@@ -1,4 +1,6 @@
 ﻿using InterTwitter.Services.PermissionsService;
+using InterTwitter.Services.Settings;
+using InterTwitter.Services.UserService;
 using MapNotepad.Helpers;
 using Prism.Navigation;
 using System;
@@ -11,10 +13,15 @@ namespace InterTwitter.ViewModels
     public class EditProfilePageViewModel : BaseViewModel
     {
         private readonly IPermissionsService _permissionsService;
-        public EditProfilePageViewModel(INavigationService navigationService, IPermissionsService permissionsService)
+        private readonly ISettingsManager _settingsManager;
+        private readonly IUserService _userService;
+
+        public EditProfilePageViewModel(INavigationService navigationService, IPermissionsService permissionsService, ISettingsManager settingsManager, IUserService userService)
             : base(navigationService)
         {
             _permissionsService = permissionsService;
+            _settingsManager = settingsManager;
+            _userService = userService;
         }
 
         #region --- Public Properties ---
@@ -47,14 +54,14 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _newPassword, value);
         }
 
-        private string _userBackgroundImage = "https://picsum.photos/500/500?image=182";
+        private string _userBackgroundImage;
         public string UserBackgroundImage
         {
             get => _userBackgroundImage;
             set => SetProperty(ref _userBackgroundImage, value);
         }
 
-        private string _userImagePath = "https://picsum.photos/500/500?image=290";
+        private string _userImagePath;
         public string UserImagePath
         {
             get => _userImagePath;
@@ -68,6 +75,20 @@ namespace InterTwitter.ViewModels
         public ICommand PickBackgroundImageAsync => SingleExecutionCommand.FromFunc(OnPickBackgroundImageAsync);
 
         public ICommand PickUserImageAsync => SingleExecutionCommand.FromFunc(OnPickUserImageAsync);
+
+        #endregion
+
+        #region -- Overrides --
+
+        public override Task InitializeAsync(INavigationParameters parameters)
+        {
+            UserBackgroundImage = "https://picsum.photos/500/500?image=182";
+            UserImagePath = "https://picsum.photos/500/500?image=290";
+            UserMail = "aaa@asd.ru";
+            UserName = "Vasya";
+            OldPassword = "irtkegrokjojoijongo6@@JJJK@4556";
+            return Task.CompletedTask;
+        }
 
         #endregion
 

@@ -1,0 +1,12 @@
+﻿using InterTwitter.Models;
+using System.Collections.Generic;
+
+namespace InterTwitter.Services
+{
+    public interface IMockService
+    {
+        List<UserModel> Users { get; set; }
+
+        IEnumerable<TweetModel> Tweets { get; set; }
+    }
+}

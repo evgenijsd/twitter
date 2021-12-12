@@ -23,11 +23,11 @@ namespace InterTwitter.ViewModels
 
         #region --- IInitialize, IInitializeAsync implementation ---
 
-        public void Initialize(INavigationParameters parameters)
+        public virtual void Initialize(INavigationParameters parameters)
         {
         }
 
-        public Task InitializeAsync(INavigationParameters parameters)
+        public virtual Task InitializeAsync(INavigationParameters parameters)
         {
             return Task.CompletedTask;
         }
@@ -36,11 +36,11 @@ namespace InterTwitter.ViewModels
 
         #region --- INavigationAware implementation ---
 
-        public void OnNavigatedFrom(INavigationParameters parameters)
+        public virtual void OnNavigatedFrom(INavigationParameters parameters)
         {
         }
 
-        public void OnNavigatedTo(INavigationParameters parameters)
+        public virtual void OnNavigatedTo(INavigationParameters parameters)
         {
         }
 
