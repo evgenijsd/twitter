@@ -52,10 +52,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Behaviors\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Controls\CustomNavigationbar.xaml.cs">
       <DependentUpon>CustomNavigationbar.xaml</DependentUpon>
     </Compile>

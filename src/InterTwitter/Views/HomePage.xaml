@@ -9,17 +9,16 @@
                        xmlns:prism="http://prismlibrary.com"
                        prism:ViewModelLocator.AutowireViewModel="True"
                        IconImageSource="{Binding IconPath}">
+    
     <local:BaseContentPage.Resources>
         <resources:TweetDataTemplates/>
     </local:BaseContentPage.Resources>
+    
     <local:BaseContentPage.Content>
 
         <Grid HorizontalOptions="Fill"
               VerticalOptions="Fill">
-            
-            <Button Command="{Binding OpenFlyoutCommandAsync}"
-                    Text="goto flyout"
-                    VerticalOptions="Start"/>
+           
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -27,15 +26,15 @@
 
             <controls:CustomNavigationbar Title="Home"
                                           Grid.Row="0"
-                                          RightUserImageButton="pic_profile_small"
-                                          LeftImageAddButton="ic_add_blue">
+                                          RightUserImageButton="ic_add_blue"
+                                          LeftImageAddButton="pic_profile_small"
+                                          LeftAddButtonCommand="{Binding OpenFlyoutCommandAsync}">
             </controls:CustomNavigationbar>
 
 
             <CollectionView Grid.Row="1" 
                             ItemsSource="{Binding Tweets}" 
                             ItemTemplate="{StaticResource templateSelector}">
-                
             </CollectionView>
 
         </Grid>

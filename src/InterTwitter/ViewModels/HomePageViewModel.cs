@@ -3,7 +3,6 @@ using InterTwitter.Extensions;
 using InterTwitter.Helpers;
 using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services;
-using InterTwitter.Services.Settings;
 using InterTwitter.Views;
 using Prism.Navigation;
 using System.Collections.Generic;
@@ -44,10 +43,11 @@ namespace InterTwitter.ViewModels
 
         #region -- Overrides --
 
-        //public override async void OnNavigatedTo(INavigationParameters parameters)
-        //{
-        //    await InitAsync();
-        //}
+        public override async void OnNavigatedTo(INavigationParameters parameters)
+        {
+            await InitAsync();
+        }
+
         public override void OnAppearing()
         {
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_blue"] as ImageSource;

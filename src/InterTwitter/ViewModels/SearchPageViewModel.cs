@@ -23,6 +23,11 @@ namespace InterTwitter.ViewModels
 
         #region --- Overrides ---
 
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+        }
+
         public override void OnAppearing()
         {
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_search_blue"] as ImageSource;
