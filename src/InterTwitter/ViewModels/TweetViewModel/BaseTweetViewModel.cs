@@ -1,23 +1,17 @@
 ﻿using InterTwitter.Enums;
 using InterTwitter.Helpers;
-using InterTwitter.Services.BookmarkService;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace InterTwitter.Models.TweetViewModel
 {
     public class BaseTweetViewModel : BindableBase
     {
-        public BaseTweetViewModel()
-        {
-            BookmarkService = App.Resolve<IBookmarkService>();
-        }
-
         #region -- Public properties --
-        protected IBookmarkService BookmarkService { get; }
 
         private int _tweetId;
         public int TweetId
@@ -31,13 +25,6 @@ namespace InterTwitter.Models.TweetViewModel
         {
             get => _userId;
             set => SetProperty(ref _userId, value);
-        }
-
-        private int _currentUserId;
-        public int CurrentUserId
-        {
-            get => _currentUserId;
-            set => SetProperty(ref _currentUserId, value);
         }
 
         private string _userName;
@@ -147,7 +134,8 @@ namespace InterTwitter.Models.TweetViewModel
             IsBookmarked = !IsBookmarked;
             if (!IsBookmarked)
             {
-                BookmarkService.DeleteBoormarkAsync(TweetId, CurrentUserId);
+                //MessagingCenter.Send(this, "DeleteBookmark", TweetId);
+                MessagingCenter.Send<MessageEvent>(new MessageEvent(TweetId), MessageEvent.DeleteBookmark);
             }
 
             return Task.CompletedTask;

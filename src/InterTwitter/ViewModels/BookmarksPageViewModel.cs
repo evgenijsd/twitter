@@ -24,23 +24,17 @@ namespace InterTwitter.ViewModels
     {
         private readonly ITweetService _tweetService;
         private readonly IBookmarkService _bookmarkService;
-        private readonly IEventAggregator _event;
-        private IPageDialogService _dialogs { get; }
 
         public BookmarksPageViewModel(
             INavigationService navigationService,
             ISettingsManager settingManager,
-            IEventAggregator aggregator,
             ITweetService tweetService,
-            IBookmarkService bookmarkService,
-            IPageDialogService dialogs)
+            IBookmarkService bookmarkService)
             : base(navigationService)
         {
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_bookmarks_gray"] as ImageSource;
             _tweetService = tweetService;
             _bookmarkService = bookmarkService;
-            _event = aggregator;
-            _dialogs = dialogs;
         }
 
         #region -- Public properties --
@@ -74,7 +68,6 @@ namespace InterTwitter.ViewModels
         }
 
         private ObservableCollection<BaseTweetViewModel> _tweets;
-
         public ObservableCollection<BaseTweetViewModel> Tweets
         {
             get => _tweets;
@@ -89,9 +82,6 @@ namespace InterTwitter.ViewModels
 
         private ICommand _DeleteAllBookmarks;
         public ICommand DeleteAllBookmarks => _DeleteAllBookmarks ??= SingleExecutionCommand.FromFunc(OnDeleteAllBookmarksCommandAsync);
-
-        private ICommand _GoBackCommand;
-        public ICommand GoBackCommand => _GoBackCommand ??= SingleExecutionCommand.FromFunc(OnGoBackCommandAsync);
 
         public ICommand OpenFlyoutCommandAsync => SingleExecutionCommand.FromFunc(OnOpenFlyoutCommandAsync);
 
@@ -114,6 +104,16 @@ namespace InterTwitter.ViewModels
                     ImageSource = "ic_hidden_menu_gray";
                 }
             }
+        }
+
+        public override void OnAppearing()
+        {
+            IconPath = Prism.PrismApplicationBase.Current.Resources["ic_bookmarks_blue"] as ImageSource;
+        }
+
+        public override void OnDisappearing()
+        {
+            IconPath = Prism.PrismApplicationBase.Current.Resources["ic_bookmarks_gray"] as ImageSource;
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
@@ -145,32 +145,32 @@ namespace InterTwitter.ViewModels
                     }
 
                     tweet.IsBookmarked = true;
-                    tweet.CurrentUserId = UserId;
                 }
 
                 Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
-            }
-        }
 
-        public override void Initialize(INavigationParameters parameters)
-        {
-            _event.GetEvent<DeleteBookmarkEvent>().Subscribe(DeleteTweet);
+                MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.DeleteBookmark, (me) => DeleteBookmark(me));
+            }
         }
 
         #endregion
 
         #region -- Private helpers --
 
+        private async void DeleteBookmark(MessageEvent me)
+        {
+            var result = await _bookmarkService.DeleteBoormarkAsync(me.UnTweetId, UserId);
+            if (result.IsSuccess)
+            {
+                Tweets = new (Tweets.Where(x => x.TweetId != me.UnTweetId));
+            }
+        }
+
         private Task OnOpenFlyoutCommandAsync()
         {
             MessagingCenter.Send(this, Constants.Messages.OPEN_SIDEBAR, true);
             MessagingCenter.Send(this, Constants.Messages.TAB_CHANGE, typeof(BookmarksPage));
             return Task.CompletedTask;
-        }
-
-        private void DeleteTweet(int tweetId)
-        {
-            Tweets = new (Tweets.Where(x => x.TweetId != tweetId));
         }
 
         private Task OnVisibleButtonCommandAsync()
@@ -188,11 +188,6 @@ namespace InterTwitter.ViewModels
             IsVisibleButton = false;
 
             return Task.CompletedTask;
-        }
-
-        private async Task OnGoBackCommandAsync()
-        {
-            await NavigationService.GoBackAsync();
         }
 
         private async Task OnDeleteAllBookmarksCommandAsync()

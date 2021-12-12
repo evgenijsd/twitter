@@ -11,12 +11,9 @@ namespace InterTwitter.Services.BookmarkService
     public class BookmarkService : IBookmarkService
     {
         private List<Bookmark> _bookmarks;
-        private IEventAggregator _event;
 
-        public BookmarkService(IEventAggregator aggregator)
+        public BookmarkService()
         {
-            _event = aggregator;
-
             _bookmarks = new List<Bookmark>
             {
                 new Bookmark
@@ -113,6 +110,7 @@ namespace InterTwitter.Services.BookmarkService
         }
 
         #region -- Public helpers --
+
         public List<Bookmark> GetBookmarks()
         {
             return _bookmarks;
@@ -179,14 +177,12 @@ namespace InterTwitter.Services.BookmarkService
                 if (bookmark != null)
                 {
                     result.SetSuccess();
+                    _bookmarks.Remove(bookmark);
                 }
                 else
                 {
                     result.SetFailure("not found any bookmark");
                 }
-
-                _bookmarks.Remove(bookmark);
-                _event.GetEvent<DeleteBookmarkEvent>().Publish(tweetId);
             }
             catch (Exception ex)
             {
@@ -195,7 +191,6 @@ namespace InterTwitter.Services.BookmarkService
 
             return result;
         }
-
         #endregion
     }
 }

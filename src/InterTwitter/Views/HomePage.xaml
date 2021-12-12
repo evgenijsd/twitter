@@ -5,10 +5,10 @@
                        xmlns:controls="clr-namespace:InterTwitter.Controls" 
                        xmlns:helpers="clr-namespace:InterTwitter.Helpers" 
                        xmlns:resources="clr-namespace:InterTwitter.Resources"
-                       x:Class="InterTwitter.Views.HomePage"
                        xmlns:prism="http://prismlibrary.com"
                        prism:ViewModelLocator.AutowireViewModel="True"
-                       IconImageSource="{Binding IconPath}">
+                       IconImageSource="{Binding IconPath}"
+                       x:Class="InterTwitter.Views.HomePage">
     
     <local:BaseContentPage.Resources>
         <resources:TweetDataTemplates/>

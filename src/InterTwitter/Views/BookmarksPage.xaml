@@ -42,7 +42,7 @@
                 <StackLayout Grid.Row="1"
                              HorizontalOptions="CenterAndExpand"
                              VerticalOptions="CenterAndExpand"
-                             HeightRequest="300"
+                             HeightRequest="200"
                              IsVisible="{Binding IsNotFound}"
                              BackgroundColor="Transparent">
                     <Image Source="{DynamicResource pic_owl_blue_big}"
