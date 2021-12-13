@@ -51,7 +51,7 @@ namespace InterTwitter
             Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             LocalizationResourceManager.Current.Init(Strings.ResourceManager);
 
-            await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}");
+            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(FlyOutPage)}");
         }
 
         protected override void OnStart()

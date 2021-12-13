@@ -53,7 +53,7 @@
                                           HasUnevenRows="true"
                                           SeparatorVisibility="None"
                                           SeparatorColor="{DynamicResource appcolor_i6}"
-                                          ItemsSource="{Binding HashtagModels}"
+                                          ItemsSource="{Binding Hashtags}"
                                           SelectedItem="{Binding SelectedHashtag}">
 
                                     <ListView.Behaviors>

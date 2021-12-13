@@ -34,7 +34,7 @@ namespace InterTwitter.ViewModels
             _hashtagManager = hashtagManager;
             AvatarIcon = "pic_profile_small";
 
-            /*TweetSearchResult = ESearchResult.Success;*/
+            TweetSearchResult = ESearchResult.Success;
 
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource;
         }
@@ -69,18 +69,18 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _selectedHashtag, value);
         }
 
-        private ObservableCollection<HashtagModel> _hashtagModels;
-        public ObservableCollection<HashtagModel> HashtagModels
+        private ObservableCollection<HashtagModel> _hashtags;
+        public ObservableCollection<HashtagModel> Hashtags
         {
-            get => _hashtagModels;
-            set => SetProperty(ref _hashtagModels, value);
+            get => _hashtags;
+            set => SetProperty(ref _hashtags, value);
         }
 
-        private ObservableCollection<BaseTweetViewModel> _foundTweets;
-        public ObservableCollection<BaseTweetViewModel> FoundTweets
+        private ObservableCollection<BaseTweetViewModel> _tweets;
+        public ObservableCollection<BaseTweetViewModel> Tweets
         {
-            get => _foundTweets;
-            set => SetProperty(ref _foundTweets, value);
+            get => _tweets;
+            set => SetProperty(ref _tweets, value);
         }
 
         private ESearchState _tweetsSearchState;
@@ -113,17 +113,27 @@ namespace InterTwitter.ViewModels
 
         #region -- Overrides --
 
+        public override async Task InitializeAsync(INavigationParameters parameters)
+        {
+            await LoadHashtags();
+        }
+
+        public override async void OnNavigatedTo(INavigationParameters parameters)
+        {
+            await LoadTweetsAsync();
+
+            base.OnNavigatedTo(parameters);
+        }
+
+        public override void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            ResetSearchData();
+
+            base.OnNavigatedFrom(parameters);
+        }
+
         public override async void OnAppearing()
         {
-            await LoadAsync();
-
-            var result = await _hashtagManager.GetPopularHashtags(5);
-
-            if (result.IsSuccess)
-            {
-                HashtagModels = new ObservableCollection<HashtagModel>(result.Result);
-            }
-
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_search_blue"] as ImageSource;
         }
 
@@ -152,7 +162,17 @@ namespace InterTwitter.ViewModels
 
         #region --- Private Helpers ---
 
-        private async Task LoadAsync()
+        private async Task LoadHashtags()
+        {
+            var result = await _hashtagManager.GetPopularHashtags(5);
+
+            if (result.IsSuccess)
+            {
+                Hashtags = new ObservableCollection<HashtagModel>(result.Result);
+            }
+        }
+
+        private async Task LoadTweetsAsync()
         {
             var result = await _tweetService.GetAllTweetsAsync();
 
@@ -176,14 +196,13 @@ namespace InterTwitter.ViewModels
                     }
                 }
 
-                FoundTweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
+                Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
             }
         }
 
         private Task OnOpenFlyoutCommandAsync()
         {
             MessagingCenter.Send(this, Constants.Messages.OPEN_SIDEBAR, true);
-            MessagingCenter.Send(this, Constants.Messages.TAB_CHANGE, typeof(SearchPage));
             return Task.CompletedTask;
         }
 
@@ -217,7 +236,7 @@ namespace InterTwitter.ViewModels
 
             if (QueryString.Length <= 2)
             {
-                NoResultsMessage = LocalizationResourceManager.Current[SearchRequestMessages.INACCURATE_REQUEST];
+                NoResultsMessage = LocalizationResourceManager.Current[Constants.TweetsSearch.INACCURATE_REQUEST];
             }
             else
             {
@@ -233,7 +252,7 @@ namespace InterTwitter.ViewModels
                 switch (TweetSearchResult)
                 {
                     case ESearchResult.NoResults:
-                        NoResultsMessage = $"{LocalizationResourceManager.Current[SearchRequestMessages.NO_RESULTS_FOR]}\n\"{QueryString}\"";
+                        NoResultsMessage = $"{LocalizationResourceManager.Current[Constants.TweetsSearch.NO_RESULTS_FOR]}\n\"{QueryString}\"";
                         break;
                     case ESearchResult.Success:
                         NoResultsMessage = string.Empty;
@@ -244,7 +263,7 @@ namespace InterTwitter.ViewModels
 
         private void ResetSearchData()
         {
-            FoundTweets.Clear();
+            Tweets.Clear();
             QueryString = string.Empty;
             NoResultsMessage = string.Empty;
         }
