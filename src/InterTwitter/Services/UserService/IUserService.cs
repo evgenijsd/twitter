@@ -1,4 +1,5 @@
-﻿using InterTwitter.Models;
+﻿using InterTwitter.Helpers;
+using InterTwitter.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,10 +9,10 @@ namespace InterTwitter.Services.UserService
 {
     public interface IUserService
     {
-        Task<UserModel> GetUser(int id);
-        Task<List<UserModel>> GetAllUsers();
-        Task InsertUser(UserModel user);
-        Task DeleteUser(int id);
-        Task UpdateUser(UserModel user);
+        Task<AOResult<UserModel>> GetUserAsync(int id);
+        Task<AOResult<List<UserModel>>> GetAllUsersAsync();
+        Task<AOResult<int>> InsertUserAsync(UserModel user);
+        Task<AOResult<int>> DeleteUserAsync(UserModel user);
+        Task<AOResult<int>> UpdateUserAsync(UserModel user);
     }
 }

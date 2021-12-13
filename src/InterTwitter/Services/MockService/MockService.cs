@@ -82,7 +82,7 @@ namespace InterTwitter.Services
                 {
                     Id = 1,
                     UserId = 1,
-                    Media = Enums.ETypeAttachedMedia.Photos,
+                    Media = Enums.ETypeAttachedMediaType.Photos,
                     MediaPaths = new List<string>
                     {
                         "https://images.unsplash.com/photo-1610878180933-123728745d22?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2FuYWRhJTIwbmF0dXJlfGVufDB8fDB8fA%3D%3D&w=1000&q=80",
@@ -98,7 +98,7 @@ namespace InterTwitter.Services
                     Id = 2,
                     UserId = 2,
                     Text = "onsequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
-                    Media = Enums.ETypeAttachedMedia.Gif,
+                    Media = Enums.ETypeAttachedMediaType.Gif,
                     MediaPaths = new List<string>
                     {
                         "https://c.tenor.com/nMkmGwGH8s8AAAAd/elon-musk-smoke.gif",
@@ -110,7 +110,7 @@ namespace InterTwitter.Services
                     Id = 3,
                     UserId = 3,
                     Text = "um quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
-                    Media = Enums.ETypeAttachedMedia.Video,
+                    Media = Enums.ETypeAttachedMediaType.Video,
                     MediaPaths = new List<string>
                     {
                        "https://www.youtube.com/embed/BWfBP5sTW18",
@@ -122,7 +122,7 @@ namespace InterTwitter.Services
                     Id = 4,
                     UserId = 4,
                     Text = "Only text",
-                    Media = Enums.ETypeAttachedMedia.None,
+                    Media = Enums.ETypeAttachedMediaType.None,
                     CreationTime = DateTime.Now,
                 },
                 new TweetModel
@@ -130,7 +130,7 @@ namespace InterTwitter.Services
                     Id = 5,
                     UserId = 5,
                     Text = "Hi there!",
-                    Media = Enums.ETypeAttachedMedia.Photos,
+                    Media = Enums.ETypeAttachedMediaType.Photos,
                     CreationTime = DateTime.Now,
                     MediaPaths = new List<string>
                     {
@@ -142,7 +142,7 @@ namespace InterTwitter.Services
                 {
                     Id = 6,
                     UserId = 5,
-                    Media = Enums.ETypeAttachedMedia.Photos,
+                    Media = Enums.ETypeAttachedMediaType.Photos,
                     CreationTime = DateTime.Now,
                     MediaPaths = new List<string>
                     {

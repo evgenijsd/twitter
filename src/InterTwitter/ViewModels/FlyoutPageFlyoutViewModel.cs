@@ -1,20 +1,26 @@
-﻿using InterTwitter.Views;
+﻿using InterTwitter.Services.Settings;
+using InterTwitter.Services.UserService;
+using InterTwitter.Views;
 using MapNotepad.Helpers;
 using Prism.Navigation;
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels.Flyout
 {
-    public class FlyoutPageFlyoutViewModel : BaseViewModel
+    public class FlyoutPageFlyoutViewModel : BaseTabViewModel
     {
-        public FlyoutPageFlyoutViewModel(INavigationService navigationService)
+        private readonly ISettingsManager _settingsManager;
+        private readonly IUserService _userService;
+        public FlyoutPageFlyoutViewModel(INavigationService navigationService, ISettingsManager settingsManager, IUserService userService)
             : base(navigationService)
         {
+            _settingsManager = settingsManager;
+            _userService = userService;
+
             MenuItems = new ObservableCollection<MenuItemViewModel>(new[]
                 {
                     new MenuItemViewModel
@@ -63,21 +69,21 @@ namespace InterTwitter.ViewModels.Flyout
             set => SetProperty(ref _menuItems, value);
         }
 
-        private string _profileName = "Gianna Press";
+        private string _profileName;
         public string ProfileName
         {
             get => _profileName;
             set => SetProperty(ref _profileName, value);
         }
 
-        private string _profileEmail = "gianap@gmail.com";
+        private string _profileEmail;
         public string ProfileEmail
         {
             get => _profileEmail;
             set => SetProperty(ref _profileEmail, value);
         }
 
-        private string _userImagePath = "https://picsum.photos/500/500?image=290";
+        private string _userImagePath;
         public string UserImagePath
         {
             get => _userImagePath;
@@ -92,9 +98,13 @@ namespace InterTwitter.ViewModels.Flyout
 
         #region --- Overrides ---
 
-        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        public override Task InitializeAsync(INavigationParameters parameters)
         {
-            base.OnPropertyChanged(args);
+            var user = _userService.GetUserAsync(_settingsManager.UserId).Result.Result;
+            ProfileName = user.Name;
+            ProfileEmail = user.Email;
+            UserImagePath = user.AvatarPath;
+            return base.InitializeAsync(parameters);
         }
 
         #endregion
@@ -107,6 +117,7 @@ namespace InterTwitter.ViewModels.Flyout
             MessagingCenter.Subscribe<BookmarksPageViewModel, Type>(this, Constants.Messages.TAB_CHANGE, ChangeVisualState);
             MessagingCenter.Subscribe<NotificationPageViewModel, Type>(this, Constants.Messages.TAB_CHANGE, ChangeVisualState);
             MessagingCenter.Subscribe<FlyoutPageDetailViewModel, Type>(this, Constants.Messages.TAB_CHANGE, ChangeVisualState);
+            MessagingCenter.Subscribe<EditProfilePageViewModel>(this, Constants.Messages.USER_PROFILE_CHANGED, UpdateAsync);
         }
 
         private void ChangeVisualState(object sender, Type selectedTabType)
@@ -152,6 +163,15 @@ namespace InterTwitter.ViewModels.Flyout
         private Task OnLogoutCommandAsync()
         {
             return Task.CompletedTask;
+        }
+
+        private async void UpdateAsync(object sender)
+        {
+            await Task.Delay(1);
+            var user = _userService.GetUserAsync(_settingsManager.UserId).Result.Result;
+            ProfileName = user.Name;
+            ProfileEmail = user.Email;
+            UserImagePath = user.AvatarPath;
         }
 
         #endregion

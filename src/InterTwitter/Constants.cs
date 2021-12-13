@@ -13,6 +13,17 @@ namespace InterTwitter
             public const string OPEN_SIDEBAR = "OpenSidebar";
 
             public const string TAB_CHANGE = "TabChange";
+
+            public const string USER_PROFILE_CHANGED = "UserProfileChanged";
+        }
+
+        public static class RegexPatterns
+        {
+            public const string USERNAME_REGEX = @"^[A-Za-z ]{1,}$";
+
+            public const string EMAIL_REGEX = @"^[\w\.]+@([\w-]+\.)+[\w-]{1,}$";
+
+            public const string PASSWORD_REGEX = @"^(?=.*\d)(?=.*[A-ZА-ЯЁ]).{6,}$";
         }
     }
 }

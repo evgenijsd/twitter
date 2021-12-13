@@ -82,8 +82,8 @@ namespace InterTwitter.Models.TweetViewModel
             set => SetProperty(ref _mediaPaths, value);
         }
 
-        private ETypeAttachedMedia _mediaType;
-        public ETypeAttachedMedia Media
+        private ETypeAttachedMediaType _mediaType;
+        public ETypeAttachedMediaType Media
         {
             get => _mediaType;
             set => SetProperty(ref _mediaType, value);

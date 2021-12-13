@@ -5,10 +5,15 @@
                        xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
                        xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
                        xmlns:local="clr-namespace:InterTwitter.Views"
-                       xmlns:prism="http://prismlibrary.com"
+                       xmlns:prism="http://prismlibrary.com"                
+                       xmlns:behaviors="clr-namespace:InterTwitter.Behaviors"
                        Title="Flyout"
                        prism:ViewModelLocator.AutowireViewModel="True"
                        BackgroundColor="{DynamicResource appcolor_i2}">
+
+    <ContentPage.Behaviors>
+        <behaviors:TabPageBehavior/>
+    </ContentPage.Behaviors>
 
     <Grid RowSpacing="0">
         <Grid.RowDefinitions>
