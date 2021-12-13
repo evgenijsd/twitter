@@ -6,9 +6,7 @@ using InterTwitter.Services;
 using InterTwitter.Services.BookmarkService;
 using InterTwitter.Services.Settings;
 using InterTwitter.Views;
-using Prism.Events;
 using Prism.Navigation;
-using Prism.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,7 +25,6 @@ namespace InterTwitter.ViewModels
 
         public BookmarksPageViewModel(
             INavigationService navigationService,
-            ISettingsManager settingManager,
             ITweetService tweetService,
             IBookmarkService bookmarkService)
             : base(navigationService)
@@ -53,7 +50,7 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _IsVisibleButton, value);
         }
 
-        private int _userId = 1;
+        private int _userId = 0;
         public int UserId
         {
             get => _userId;
@@ -114,6 +111,7 @@ namespace InterTwitter.ViewModels
         public override void OnDisappearing()
         {
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_bookmarks_gray"] as ImageSource;
+            MessagingCenter.Unsubscribe<MessageEvent>(this, MessageEvent.DeleteBookmark);
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
@@ -149,7 +147,7 @@ namespace InterTwitter.ViewModels
 
                 Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
 
-                MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.DeleteBookmark, (me) => DeleteBookmark(me));
+                MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.DeleteBookmark, (me) => DeleteBookmarkAsync(me));
             }
         }
 
@@ -157,7 +155,7 @@ namespace InterTwitter.ViewModels
 
         #region -- Private helpers --
 
-        private async void DeleteBookmark(MessageEvent me)
+        private async void DeleteBookmarkAsync(MessageEvent me)
         {
             var result = await _bookmarkService.DeleteBoormarkAsync(me.UnTweetId, UserId);
             if (result.IsSuccess)
