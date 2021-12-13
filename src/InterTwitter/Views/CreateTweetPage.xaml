@@ -6,6 +6,7 @@
                       xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
                       xmlns:statecontainer="clr-namespace:InterTwitter.Controls.StateContainer"
                       xmlns:view="clr-namespace:InterTwitter.Views"
+                      xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
                       x:Class="InterTwitter.Views.CreateTweetPage">
 
     <view:BaseContentPage.Content>
@@ -256,7 +257,7 @@
 
                         <ActivityIndicator IsRunning="{Binding IsRunnigActivityIndicator}"
                                            Margin="-42, 60, 0, 0"/>
-
+                        
                     </StackLayout>
 
                 </controls:CustomScrollView>

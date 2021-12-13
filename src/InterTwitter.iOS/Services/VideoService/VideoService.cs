@@ -4,11 +4,8 @@ using CoreMedia;
 using Foundation;
 using InterTwitter.Services.VideoService;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
 using UIKit;
-using Xamarin.Forms;
 
 namespace InterTwitter.iOS.Services.VideoService
 {
@@ -18,11 +15,11 @@ namespace InterTwitter.iOS.Services.VideoService
         {
             AVAsset avasset = AVAsset.FromUrl((new Foundation.NSUrl(url, false)));
             var length = avasset.Duration.Seconds.ToString();
- 
+
             return Convert.ToDouble(length);
         }
 
-        public ImageSource GenerateThumbImage(string url, long usecond)
+        public Stream GenerateThumbImage(string url, long usecond)
         {
             AVAsset avasset = AVAsset.FromUrl((new Foundation.NSUrl(url, false)));
 
@@ -33,7 +30,7 @@ namespace InterTwitter.iOS.Services.VideoService
             NSError error;
             CGImage cgImage = imageGenerator.CopyCGImageAtTime(new CMTime(usecond, 1000000), out actualTime, out error);
 
-            return ImageSource.FromStream(() => new UIImage(cgImage).AsPNG().AsStream());
+            return new UIImage(cgImage).AsPNG().AsStream();
         }
     }
 }

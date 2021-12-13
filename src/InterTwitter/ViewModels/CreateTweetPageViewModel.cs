@@ -1,12 +1,12 @@
 ﻿using InterTwitter.Enums;
 using InterTwitter.Services.PermissionsService;
 using InterTwitter.Services.VideoService;
+using InterTwitter.Views;
 using MapNotepad.Helpers;
 using Prism.Navigation;
 using Prism.Services;
 using SkiaSharp;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -131,13 +131,6 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _isRunnigActivityIndicator, value);
         }
 
-        private ImageSource _pathThumb;
-        public ImageSource PathThumb
-        {
-            get => _pathThumb;
-            set => SetProperty(ref _pathThumb, value);
-        }
-
         private ETypeAttachedMedia _typeAttachedMedia;
         public ETypeAttachedMedia TypeAttachedMedia
         {
@@ -212,7 +205,10 @@ namespace InterTwitter.ViewModels
 
         private async Task OnPostTweetCommandAsync()
         {
-            await _pageDialogService.DisplayAlertAsync("Post", "Заглушка", "Ok");
+            INavigationParameters parameters = new NavigationParameters();
+            parameters.Add(Constants.Messages.MEDIA, ListAttachedMedia);
+
+            await _navigationService.NavigateAsync(nameof(VideoGalleryPage), parameters);
         }
 
         private async Task OnDeleteAttachedPhotoCommandAsync(object obj)
@@ -280,6 +276,10 @@ namespace InterTwitter.ViewModels
                             {
                                 await _pageDialogService.DisplayAlertAsync("Error", "The size of the photo should not exceed 5 MB", "Ok");
                             }
+                        }
+                        else
+                        {
+                            await _pageDialogService.DisplayAlertAsync("Error", "File does not exist", "Ok");
                         }
                     }
                     else
@@ -394,13 +394,23 @@ namespace InterTwitter.ViewModels
                                 }
                             }
 
-                            PathThumb = _videoService.GenerateThumbImage(pathFile, 5);
+                            string fileNameThumb = DateTime.Now.ToString("yyyyMMddhhmmss") + ".png";
+                            var pathThumb = Path.Combine(FileSystem.AppDataDirectory, fileNameThumb);
+
+                            using (var source = new System.IO.FileStream(pathThumb, System.IO.FileMode.OpenOrCreate))
+                            {
+                                Stream image = _videoService.GenerateThumbImage(pathFile, (long)(videoLenght / 2));
+                                image.CopyTo(source);
+                            }
 
                             ListAttachedMedia.Add(new MiniCardViewModel()
                             {
                                 PathImage = pathFile,
-                                PathActionImage = "ic_clear_filled_blue.png",
-                                ActionCommand = DeleteAttachedVideoCommand,
+                            });
+
+                            ListAttachedMedia.Add(new MiniCardViewModel()
+                            {
+                                PathImage = pathThumb,
                             });
 
                             CanUseButtonUploadPhotos = false;

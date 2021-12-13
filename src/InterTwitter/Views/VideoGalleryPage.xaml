@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+                      xmlns:view="clr-namespace:InterTwitter.Views"
+                      x:Class="InterTwitter.Views.VideoGalleryPage"
+                      BackgroundColor="{DynamicResource appcolor_i3}">
+
+    <view:BaseContentPage.Content>
+
+        <StackLayout>
+            
+            <xct:MediaElement Source="{Binding VideoSource}"
+                              AutoPlay="True"
+                              ShowsPlaybackControls="True"
+                              HeightRequest="300"
+                              WidthRequest="300"
+                              VerticalOptions="CenterAndExpand">
+
+            </xct:MediaElement>
+            
+        </StackLayout>
+        
+    </view:BaseContentPage.Content>
+   
+</view:BaseContentPage>

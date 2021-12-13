@@ -1,4 +1,4 @@
-﻿using Xamarin.Forms;
+﻿using System.IO;
 
 namespace InterTwitter.Services.VideoService
 {
@@ -6,6 +6,6 @@ namespace InterTwitter.Services.VideoService
     {
         double VideoLength(string url);
 
-        ImageSource GenerateThumbImage(string url, long usecond);
+        Stream GenerateThumbImage(string url, long usecond);
     }
 }
