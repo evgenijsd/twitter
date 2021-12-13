@@ -2,6 +2,7 @@
 using InterTwitter.Services.PermissionsService;
 using InterTwitter.Services.Settings;
 using InterTwitter.Services.UserService;
+using InterTwitter.Views;
 using MapNotepad.Helpers;
 using Prism.Navigation;
 using Prism.Services;
@@ -99,6 +100,11 @@ namespace InterTwitter.ViewModels
             return Task.CompletedTask;
         }
 
+        public async override void OnNavigatedFrom(INavigationParameters parameters)
+        {
+           await OnNavigationCommandAsync();
+        }
+
         #endregion
 
         #region --- Private Helpers ---
@@ -193,7 +199,7 @@ namespace InterTwitter.ViewModels
             }
             else
             {
-                await _dialogService.DisplayAlertAsync(string.Empty, "Email is not validor empty", "Ok");
+                await _dialogService.DisplayAlertAsync(string.Empty, "Email is not valid or empty", "Ok");
                 isAllValid = false;
             }
 
