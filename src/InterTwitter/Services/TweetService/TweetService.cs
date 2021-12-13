@@ -68,7 +68,7 @@ namespace InterTwitter.Services
                 result.SetError($"{nameof(GetUserAsync)}: exception", "Some issues", ex);
             }
 
-            return await Task.FromResult(result);
+            return result;
         }
 
         #endregion

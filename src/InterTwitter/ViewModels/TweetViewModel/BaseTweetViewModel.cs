@@ -108,11 +108,13 @@ namespace InterTwitter.Models.TweetViewModel
         public ICommand MoveToProfileCommand => _moveToProfileCommand ?? (_moveToProfileCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnGoToProfileAsync));
 
         private DateTime _CreationTime;
+
         public DateTime CreationTime
         {
             get => _CreationTime;
             set => SetProperty(ref _CreationTime, value);
         }
+
         #endregion
 
         #region -- Private helpers --

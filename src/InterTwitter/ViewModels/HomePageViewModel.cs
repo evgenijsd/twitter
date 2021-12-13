@@ -5,7 +5,6 @@ using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services;
 using InterTwitter.Views;
 using Prism.Navigation;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -18,11 +17,12 @@ namespace InterTwitter.ViewModels
     public class HomePageViewModel : BaseTabViewModel
     {
         private readonly ITweetService _tweetService;
+
         private bool _isFirstStart = true;
 
         public HomePageViewModel(
-            INavigationService navigationService,
-            ITweetService tweetService)
+            ITweetService tweetService,
+            INavigationService navigationService)
             : base(navigationService)
         {
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource;
@@ -31,9 +31,11 @@ namespace InterTwitter.ViewModels
 
         #region -- Public properties --
 
-        public ICommand OpenFlyoutCommandAsync => SingleExecutionCommand.FromFunc(OnOpenFlyoutCommandAsync);
+        private ICommand _openFlyoutCommandAsync;
+        public ICommand OpenFlyoutCommandAsync => _openFlyoutCommandAsync ?? (_openFlyoutCommandAsync = SingleExecutionCommand.FromFunc(OnOpenFlyoutCommandAsync));
 
-        public ICommand AddTweetCommandAsync => SingleExecutionCommand.FromFunc(OnOpenAddTweetPageAsync);
+        private ICommand _addTweetCommandAsync;
+        public ICommand AddTweetCommandAsync => _addTweetCommandAsync ?? (_addTweetCommandAsync = SingleExecutionCommand.FromFunc(OnOpenAddTweetPageAsync));
 
         private ObservableCollection<BaseTweetViewModel> _tweets;
 
@@ -52,7 +54,6 @@ namespace InterTwitter.ViewModels
             if (_isFirstStart)
             {
                 await InitAsync();
-                _isFirstStart = false;
             }
 
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_blue"] as ImageSource;
@@ -73,7 +74,7 @@ namespace InterTwitter.ViewModels
 
             if (getTweetResult.IsSuccess)
             {
-                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == ETypeAttachedMedia.Photos || x.Media == ETypeAttachedMedia.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
+                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == ETypeAttachedMedia.Photos || x.Media == ETypeAttachedMedia.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()).OrderByDescending(x => x.CreationTime));
 
                 foreach (var tweet in tweetViewModels)
                 {

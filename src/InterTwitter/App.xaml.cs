@@ -40,6 +40,7 @@ namespace InterTwitter
         protected override async void OnInitialized()
         {
             InitializeComponent();
+            Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             FlowListView.Init();
             await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}");
         }
