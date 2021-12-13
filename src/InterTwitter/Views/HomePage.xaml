@@ -33,7 +33,6 @@
                                           LeftAddButtonCommand="{Binding OpenFlyoutCommandAsync}">
             </controls:CustomNavigationbar>
 
-
             <controls:CustomCollectionView x:Name="customCollectView"
                                            Grid.Row="1" 
                                            ItemsSource="{Binding Tweets}" 
