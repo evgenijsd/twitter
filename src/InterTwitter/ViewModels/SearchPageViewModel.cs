@@ -35,7 +35,6 @@ namespace InterTwitter.ViewModels
             AvatarIcon = "pic_profile_small";
 
             /*TweetSearchResult = ESearchResult.Success;*/
-            TweetSearchResult = ESearchResult.Success;
 
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource;
         }
@@ -234,7 +233,7 @@ namespace InterTwitter.ViewModels
                 switch (TweetSearchResult)
                 {
                     case ESearchResult.NoResults:
-                        NoResultsMessage = $"{LocalizationResourceManager.Current[SearchRequestMessages.NO_RESULTS_FOR]}\n{QueryString}";
+                        NoResultsMessage = $"{LocalizationResourceManager.Current[SearchRequestMessages.NO_RESULTS_FOR]}\n\"{QueryString}\"";
                         break;
                     case ESearchResult.Success:
                         NoResultsMessage = string.Empty;

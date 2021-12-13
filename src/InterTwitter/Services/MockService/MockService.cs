@@ -194,8 +194,8 @@ namespace InterTwitter.Services.MockService
                 new HashtagModel()
                 {
                     Id = 4,
-                    Text = "#coffeeTime",
-                    TweetsCount = 2,
+                    Text = "#Tortorrr",
+                    TweetsCount = 20,
                 },
                 new HashtagModel()
                 {

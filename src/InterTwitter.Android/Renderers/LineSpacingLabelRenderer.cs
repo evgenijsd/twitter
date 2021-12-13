@@ -1,4 +1,5 @@
-﻿using InterTwitter.Controls;
+﻿using Android.Content;
+using InterTwitter.Controls;
 using InterTwitter.Droid.Renderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
@@ -10,7 +11,7 @@ namespace InterTwitter.Droid.Renderers
     {
         protected LineSpacingLabel LineSpacingLabel { get; private set; }
 
-        public LineSpacingLabelRenderer()
+        public LineSpacingLabelRenderer(Context context)
         {
         }
 
