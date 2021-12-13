@@ -160,7 +160,8 @@ namespace InterTwitter.ViewModels
             var result = await _bookmarkService.DeleteBoormarkAsync(me.UnTweetId, UserId);
             if (result.IsSuccess)
             {
-                Tweets = new (Tweets.Where(x => x.TweetId != me.UnTweetId));
+                var tweet = Tweets.FirstOrDefault(x => x.TweetId == me.UnTweetId);
+                Tweets.Remove(tweet);
             }
         }
 
