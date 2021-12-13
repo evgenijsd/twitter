@@ -125,6 +125,7 @@
                    Style="{DynamicResource tstyle_i2}"
                    Text="Name" />
             <controls:CustomEntry Style="{StaticResource entry_text_style}" 
+                                  IsButtonClearEnable="False"
                                   Text="{Binding UserName}"/>
         </StackLayout>
 

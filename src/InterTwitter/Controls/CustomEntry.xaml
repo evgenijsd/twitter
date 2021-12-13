@@ -62,6 +62,7 @@
                      HeightRequest="30"
                      HorizontalOptions="Center"
                      IsVisible="{Binding IsButtonClearVisible, Source={x:Reference customEntry}}"
+                     IsEnabled="{Binding IsButtonClearEnable, Source={x:Reference customEntry}}"
                      Source="{Binding ClearImageSource, Source={x:Reference customEntry}}"
                      VerticalOptions="Center"
                      WidthRequest="30" />

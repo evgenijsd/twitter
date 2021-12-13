@@ -169,6 +169,19 @@ namespace InterTwitter.Controls
             set => SetValue(IsButtonClearVisibleProperty, value);
         }
 
+        public static readonly BindableProperty IsButtonClearEnableProperty = BindableProperty.Create(
+           propertyName: nameof(IsButtonClearEnable),
+           returnType: typeof(bool),
+           declaringType: typeof(CustomEntry),
+           defaultValue: false,
+           defaultBindingMode: BindingMode.TwoWay);
+
+        public bool IsButtonClearEnable
+        {
+            get => (bool)GetValue(IsButtonClearEnableProperty);
+            set => SetValue(IsButtonClearEnableProperty, value);
+        }
+
         public static readonly BindableProperty ClearImageSourceProperty = BindableProperty.Create(
             propertyName: nameof(ClearImageSource),
             returnType: typeof(string),
