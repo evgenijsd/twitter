@@ -5,7 +5,6 @@ using InterTwitter.Models;
 using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services.HashtagManager;
 using InterTwitter.Services.TweetService;
-using InterTwitter.Views;
 using Prism.Navigation;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,7 +14,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Forms;
-using static InterTwitter.Constants;
 
 namespace InterTwitter.ViewModels
 {
@@ -32,11 +30,9 @@ namespace InterTwitter.ViewModels
         {
             _tweetService = tweetService;
             _hashtagManager = hashtagManager;
-            AvatarIcon = "pic_profile_small";
-
-            TweetSearchResult = ESearchResult.Success;
 
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource;
+            AvatarIcon = "pic_profile_small";
         }
 
         #region -- Public Properties --
@@ -113,14 +109,15 @@ namespace InterTwitter.ViewModels
 
         #region -- Overrides --
 
-        public override async Task InitializeAsync(INavigationParameters parameters)
-        {
-            await LoadHashtags();
-        }
-
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
-            await LoadTweetsAsync();
+            await LoadHashtagsAsync();
+
+            var result = await _tweetService.GetAllTweetsAsync();
+            if (result.IsSuccess)
+            {
+                await InitTweetsBeforeDisplayingAsync(result.Result);
+            }
 
             base.OnNavigatedTo(parameters);
         }
@@ -160,9 +157,9 @@ namespace InterTwitter.ViewModels
 
         #endregion
 
-        #region --- Private Helpers ---
+        #region -- Private helpers --
 
-        private async Task LoadHashtags()
+        private async Task LoadHashtagsAsync()
         {
             var result = await _hashtagManager.GetPopularHashtags(5);
 
@@ -172,43 +169,39 @@ namespace InterTwitter.ViewModels
             }
         }
 
-        private async Task LoadTweetsAsync()
+        private async Task InitTweetsBeforeDisplayingAsync(IEnumerable<TweetModel> tweets)
         {
-            var result = await _tweetService.GetAllTweetsAsync();
+            var tweetViewModels = new List<BaseTweetViewModel>(
+                tweets.Select(x => x.Media == ETypeAttachedMedia.Photos
+                    || x.Media == ETypeAttachedMedia.Gif
+                    ? x.ToImagesTweetViewModel()
+                    : x.ToBaseTweetViewModel()));
 
-            if (result.IsSuccess)
+            foreach (var tweet in tweetViewModels)
             {
-                var tweetViewModels = new List<BaseTweetViewModel>(
-                    result.Result.Select(x => x.Media == ETypeAttachedMedia.Photos
-                        || x.Media == ETypeAttachedMedia.Gif
-                        ? x.ToImagesTweetViewModel()
-                        : x.ToBaseTweetViewModel()));
+                var tweetAuthor = await _tweetService.GetUserAsync(tweet.UserId);
 
-                foreach (var tweet in tweetViewModels)
+                if (tweetAuthor.IsSuccess)
                 {
-                    var tweetAuthor = await _tweetService.GetUserAsync(tweet.UserId);
-
-                    if (tweetAuthor.IsSuccess)
-                    {
-                        tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
-                        tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
-                        tweet.UserName = tweetAuthor.Result.Name;
-                    }
+                    tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
+                    tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
+                    tweet.UserName = tweetAuthor.Result.Name;
                 }
-
-                Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
             }
+
+            Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
         }
 
         private Task OnOpenFlyoutCommandAsync()
         {
             MessagingCenter.Send(this, Constants.Messages.OPEN_SIDEBAR, true);
+
             return Task.CompletedTask;
         }
 
         private Task OnStartTweetsSearchCommandTapAsync()
         {
-            TweetsSearch();
+            TweetsSearch(QueryString);
 
             return Task.CompletedTask;
         }
@@ -216,7 +209,7 @@ namespace InterTwitter.ViewModels
         private Task OnHashtagTapCommandAsync()
         {
             QueryString = SelectedHashtag.Text;
-            TweetsSearch();
+            TweetsSearch(QueryString);
 
             return Task.CompletedTask;
         }
@@ -230,29 +223,29 @@ namespace InterTwitter.ViewModels
             return Task.CompletedTask;
         }
 
-        private async void TweetsSearch()
+        private async void TweetsSearch(string queryString)
         {
             TweetsSearchState = ESearchState.Active;
+            queryString = queryString.Trim();
 
-            if (QueryString.Length <= 2)
+            if (queryString.FirstOrDefault() == '#'
+                ? queryString.Length < 3
+                : queryString.Length < 2)
             {
                 NoResultsMessage = LocalizationResourceManager.Current[Constants.TweetsSearch.INACCURATE_REQUEST];
             }
             else
             {
-                var result = await _tweetService.GetAllTweetsByHashtagsOrKeysAsync(QueryString);
+                var result = await _tweetService.GetAllTweetsByHashtagsOrKeysAsync(queryString);
 
                 if (result.IsSuccess)
                 {
-                    //FoundTweets = (ObservableCollection<BaseTweetViewModel>)result.Result;
                 }
-
-                /* TO DO: calling of the tweets search */
 
                 switch (TweetSearchResult)
                 {
                     case ESearchResult.NoResults:
-                        NoResultsMessage = $"{LocalizationResourceManager.Current[Constants.TweetsSearch.NO_RESULTS_FOR]}\n\"{QueryString}\"";
+                        NoResultsMessage = $"{LocalizationResourceManager.Current[Constants.TweetsSearch.NO_RESULTS_FOR]}\n\"{queryString}\"";
                         break;
                     case ESearchResult.Success:
                         NoResultsMessage = string.Empty;
@@ -264,6 +257,7 @@ namespace InterTwitter.ViewModels
         private void ResetSearchData()
         {
             Tweets.Clear();
+            TweetsSearchState = ESearchState.NotActive;
             QueryString = string.Empty;
             NoResultsMessage = string.Empty;
         }

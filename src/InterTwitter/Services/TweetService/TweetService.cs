@@ -51,13 +51,25 @@ namespace InterTwitter.Services.TweetService
         public async Task<AOResult<IEnumerable<TweetModel>>> GetAllTweetsByHashtagsOrKeysAsync(string searchQuery)
         {
             var result = new AOResult<IEnumerable<TweetModel>>();
-            var keys = searchQuery.Split(' ', '\t').Select(x => x.ToLower());
+            var keys = searchQuery.ToLower().Split(' ', '\t').Distinct();
 
             try
             {
                 var allTweets = _mockService.Tweets;
+                IEnumerable<TweetModel> foundTweets = new List<TweetModel>();
 
-                /*var foundTweets = allTweets.All(x => );*/
+                var test = allTweets.All(x => x.Text.Contains(keys.Select(y => y));
+
+                foreach (var item in allTweets)
+                {
+                    foreach (var key in keys)
+                    {
+                        if (item.Text.Contains(key))
+                        {
+                            // add item to foundTweets
+                        }
+                    }
+                }
 
                 if (allTweets != null)
                 {
