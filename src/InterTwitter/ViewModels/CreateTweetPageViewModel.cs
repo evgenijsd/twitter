@@ -124,6 +124,20 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _canUseButtonPost, value);
         }
 
+        private bool _isRunnigActivityIndicator;
+        public bool IsRunnigActivityIndicator
+        {
+            get => _isRunnigActivityIndicator;
+            set => SetProperty(ref _isRunnigActivityIndicator, value);
+        }
+
+        private ImageSource _pathThumb;
+        public ImageSource PathThumb
+        {
+            get => _pathThumb;
+            set => SetProperty(ref _pathThumb, value);
+        }
+
         private ETypeAttachedMedia _typeAttachedMedia;
         public ETypeAttachedMedia TypeAttachedMedia
         {
@@ -321,6 +335,10 @@ namespace InterTwitter.ViewModels
                                 await _pageDialogService.DisplayAlertAsync("Error", "The size of the gif should not exceed 5 MB", "Ok");
                             }
                         }
+                        else
+                        {
+                            await _pageDialogService.DisplayAlertAsync("Error", "File does not exist", "Ok");
+                        }
                     }
                     else
                     {
@@ -347,65 +365,60 @@ namespace InterTwitter.ViewModels
                 try
                 {
                     var openFile = await MediaPicker.PickVideoAsync();
+                    var pathFile = openFile.FullPath;
 
-                    FileInfo fileInf = new FileInfo(openFile.FullPath);
+                    FileInfo fileInf = new FileInfo(pathFile);
 
                     if (fileInf.Exists)
                     {
                         if (fileInf.Length <= 15 * 1024 * 1024)
                         {
-                            var videoLenght = _videoService.VideoLength(openFile.FullPath);
+                            var videoLenght = _videoService.VideoLength(pathFile);
 
                             if (videoLenght > 180)
                             {
+                                IsRunnigActivityIndicator = true;
+
                                 string fileName = DateTime.Now.ToString("yyyyMMddhhmmss") + (Device.RuntimePlatform == Device.iOS ? ".MOV" : ".mp4");
-                                string outputPath = Path.Combine(FileSystem.CacheDirectory, fileName);
+                                string outputPath = Path.Combine(FileSystem.AppDataDirectory, fileName);
 
-                                if (await VideoTrimmerService.Instance.TrimAsync(0, 10 * 1000, openFile.FullPath, outputPath))
+                                if (await VideoTrimmerService.Instance.TrimAsync(0, 180 * 1000, pathFile, outputPath))
                                 {
-                                    await Share.RequestAsync(new ShareFileRequest
-                                    {
-                                        Title = "Title",
-                                        File = new ShareFile(outputPath),
-                                    });
-                                    ListAttachedMedia.Add(new MiniCardViewModel()
-                                    {
-                                        PathImage = outputPath,
-                                        PathActionImage = "ic_clear_filled_blue.png",
-                                        ActionCommand = DeleteAttachedVideoCommand,
-                                    });
-
-                                    ListAttachedMedia.Add(new MiniCardViewModel()
-                                    {
-                                        PathImage = openFile.FullPath,
-                                        PathActionImage = "ic_clear_filled_blue.png",
-                                        ActionCommand = DeleteAttachedVideoCommand,
-                                    });
-
-                                    CanUseButtonUploadPhotos = false;
-                                    CanUseButtonUploadGif = false;
-                                    CanUseButtonUploadVideo = false;
-
-                                    TypeAttachedMedia = ETypeAttachedMedia.Video;
-
-                                    CanUseButtonPost = canPostTweet();
-
-                                    await _pageDialogService.DisplayAlertAsync("Success", "Video Trimmed Successfully", "Ok");
+                                    pathFile = outputPath;
+                                    IsRunnigActivityIndicator = false;
                                 }
                                 else
                                 {
                                     await _pageDialogService.DisplayAlertAsync("Error", "Video Trimming failed", "Ok");
+                                    IsRunnigActivityIndicator = false;
                                 }
                             }
-                            else
-                            {
 
-                            }
+                            PathThumb = _videoService.GenerateThumbImage(pathFile, 5);
+
+                            ListAttachedMedia.Add(new MiniCardViewModel()
+                            {
+                                PathImage = pathFile,
+                                PathActionImage = "ic_clear_filled_blue.png",
+                                ActionCommand = DeleteAttachedVideoCommand,
+                            });
+
+                            CanUseButtonUploadPhotos = false;
+                            CanUseButtonUploadGif = false;
+                            CanUseButtonUploadVideo = false;
+
+                            TypeAttachedMedia = ETypeAttachedMedia.Video;
+
+                            CanUseButtonPost = canPostTweet();
                         }
                         else
                         {
                             await _pageDialogService.DisplayAlertAsync("Error", "The size of the video should not exceed 15 MB", "Ok");
                         }
+                    }
+                    else
+                    {
+                        await _pageDialogService.DisplayAlertAsync("Error", "File does not exist", "Ok");
                     }
                 }
                 catch (Exception e)

@@ -1,7 +1,11 @@
-﻿namespace InterTwitter.Services.VideoService
+﻿using Xamarin.Forms;
+
+namespace InterTwitter.Services.VideoService
 {
     public interface IVideoService
     {
-        int VideoLength(string url);
+        double VideoLength(string url);
+
+        ImageSource GenerateThumbImage(string url, long usecond);
     }
 }

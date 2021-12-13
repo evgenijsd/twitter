@@ -141,11 +141,18 @@
                                                     <RowDefinition Height="21"/>
                                                 </Grid.RowDefinitions>
 
-                                                <ffimageloading:CachedImage Grid.Row="0"
-                                                                            Source="{Binding PathImage}"
-                                                                            Aspect="AspectFill"
-                                                                            HeightRequest="44.1167"
-                                                                            WidthRequest="44.1167"/>
+                                                <Frame Grid.Row="0"
+                                                       HeightRequest="44.1167"
+                                                       WidthRequest="20"
+                                                       BackgroundColor="Green"
+                                                       IsClippedToBounds="True"
+                                                       HasShadow="False"
+                                                       Padding="0">
+                                                    
+                                                    <ffimageloading:CachedImage Source="{Binding PathImage}"
+                                                                                Aspect="AspectFill"/>
+                                                    
+                                                </Frame>
 
                                                 <Frame Grid.Row="1"
                                                        HasShadow="False"
@@ -229,7 +236,7 @@
                                     <Image Source="{DynamicResource ic_video_blue}"
                                            HeightRequest="21"
                                            WidthRequest="21"/>
-                                    
+
                                     <Label Text="Video"
                                            TextColor="{DynamicResource appcolor_i1}"
                                            FontSize="{DynamicResource tsize_i4}"
@@ -241,39 +248,14 @@
                                                  HeightRequest="21"
                                                  WidthRequest="21"/>
 
-                                    <FlexLayout Direction="Row"
-                                                Wrap="Wrap"
-                                                VerticalOptions="Start"
-                                                BindableLayout.ItemsSource="{Binding ListAttachedMedia}">
-
-                                        <BindableLayout.ItemTemplate>
-
-                                            <DataTemplate>
-                                                <StackLayout>
-                                                    <Label Text="Video"/>
-                                                    
-                                                    <WebView Source="{Binding PathImage}" 
-                                                         WidthRequest="300"
-                                                         HeightRequest="180"
-                                                         MinimumWidthRequest="360"
-                                                         MinimumHeightRequest="240">
-                                                        
-                                                    </WebView>
-                                                    
-                                                </StackLayout>
-
-                                            </DataTemplate>
-                                            
-                                        </BindableLayout.ItemTemplate>
-                                        
-                                    </FlexLayout>
-
                                 </StackLayout>
                                 
-
                             </statecontainer:StateCondition>
 
                         </statecontainer:StateContainer>
+
+                        <ActivityIndicator IsRunning="{Binding IsRunnigActivityIndicator}"
+                                           Margin="-42, 60, 0, 0"/>
 
                     </StackLayout>
 
