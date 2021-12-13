@@ -29,7 +29,7 @@
                 <ImageButton Source="{DynamicResource ic_cancel_gray}"
                              Command="{Binding GoBackCommand}"
                              HorizontalOptions="Start"
-                             Margin="13, 1, 14, 0"
+                             Margin="{OnPlatform Android='14, 1, 14, 0', iOS='13, 1, 14, 0'}"
                              WidthRequest="30"
                              BackgroundColor="Transparent"/>
 
@@ -40,7 +40,7 @@
 
                         <Button CornerRadius="14"
                                 Margin="{OnPlatform Android='13, 13, 13, 12', iOS='13, 14, 13, 12'}"
-                                Padding="{OnPlatform iOS='24, 12, 24, 12', Android='26, 0, 26, 0'}"
+                                Padding="{OnPlatform Android='28, 0, 28, 0', iOS='24, 12, 24, 12'}"
                                 Text="Post"
                                 TextTransform="None"
                                 FontFamily="Ubuntu-Medium"
@@ -53,9 +53,9 @@
 
                     <statecontainer:StateCondition State="False">
 
-                        <Button CornerRadius="15"
+                        <Button CornerRadius="14"
                                 Margin="{OnPlatform Android='13, 13, 13, 12', iOS='13, 14, 13, 12'}"
-                                Padding="{OnPlatform iOS='26, 10, 26, 11', Android='26, 0, 26, 0'}"
+                                Padding="{OnPlatform Android='28, 0, 28, 0', iOS='24, 12, 24, 12'}"
                                 Text="Post"
                                 TextTransform="None"
                                 FontFamily="Ubuntu-Medium"
@@ -84,9 +84,9 @@
                              Spacing="0"
                              BackgroundColor="{DynamicResource appcolor_i2}">
 
-                    <Frame HeightRequest="32"
-                           WidthRequest="33"
-                           Margin="13, 14, 0, 0"
+                    <Frame HeightRequest="{OnPlatform Android='34', iOS='32'}"
+                           WidthRequest="{OnPlatform Android='34', iOS='33'}"
+                           Margin="{OnPlatform Android='14, 16, 0, 0', iOS='13, 14, 0, 0'}"
                            HorizontalOptions="FillAndExpand"
                            HasShadow="False"
                            Padding="0"
@@ -117,7 +117,7 @@
                                                IsExpandable="True"
                                                CorrectLength="250"
                                                MaxLength="300"
-                                               Margin="{OnPlatform iOS='4, 11, 0, 0', Android='4, 11, 0, 0'}"/>
+                                               Margin="{OnPlatform Android='7, 21, 5, 0', iOS='4, 11, 0, 0'}"/>
 
                         <statecontainer:StateContainer State="{Binding TypeAttachedMedia}"
                                                        VerticalOptions="Start">

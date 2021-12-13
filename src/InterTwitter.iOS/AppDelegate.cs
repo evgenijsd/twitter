@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Foundation;
+﻿using Foundation;
 using InterTwitter.iOS.Services.PermissionsService;
+using InterTwitter.iOS.Services.VideoService;
 using InterTwitter.Services.PermissionsService;
+using InterTwitter.Services.VideoService;
 using Prism;
 using Prism.Ioc;
 using Prism.Unity;
@@ -40,6 +38,7 @@ namespace InterTwitter.iOS
             public void RegisterTypes(IContainerRegistry containerRegistry)
             {
                 containerRegistry.RegisterInstance<IPermissionsService>(PrismApplication.Current.Container.Resolve<PermissionsService>());
+                containerRegistry.RegisterInstance<IVideoService>(PrismApplication.Current.Container.Resolve<VideoService>());
             }
         }
 

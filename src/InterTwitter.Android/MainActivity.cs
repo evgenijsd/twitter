@@ -8,6 +8,8 @@ using InterTwitter.Droid.Services.PermissionsService;
 using Prism;
 using Prism.Ioc;
 using InterTwitter.Services.PermissionsService;
+using InterTwitter.Droid.Services.VideoService;
+using InterTwitter.Services.VideoService;
 
 namespace InterTwitter.Droid
 {
@@ -15,6 +17,7 @@ namespace InterTwitter.Droid
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         private static PermissionsService _permissionsService = new PermissionsService();
+        private static VideoService _videoService = new VideoService();
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -37,6 +40,7 @@ namespace InterTwitter.Droid
             public void RegisterTypes(IContainerRegistry containerRegistry)
             {
                 containerRegistry.RegisterInstance<IPermissionsService>(_permissionsService);
+                containerRegistry.RegisterInstance<IVideoService>(_videoService);
             }
         }
     }

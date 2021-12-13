@@ -1,5 +1,6 @@
 ﻿using InterTwitter.Enums;
 using InterTwitter.Services.PermissionsService;
+using InterTwitter.Services.VideoService;
 using MapNotepad.Helpers;
 using Prism.Navigation;
 using Prism.Services;
@@ -25,10 +26,13 @@ namespace InterTwitter.ViewModels
 
         private IPermissionsService _permissionsService;
 
+        private IVideoService _videoService;
+
         public CreateTweetPageViewModel(
             INavigationService navigationService,
             IPermissionsService permissionsService,
-            IPageDialogService pageDialogService)
+            IPageDialogService pageDialogService,
+            IVideoService videoService)
             : base(navigationService)
         {
             Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, neque, metus ipsum fermentum morbi at.";
@@ -36,6 +40,7 @@ namespace InterTwitter.ViewModels
 
             _permissionsService = permissionsService;
             _pageDialogService = pageDialogService;
+            _videoService = videoService;
 
             _listAttachedMedia = new ObservableCollection<MiniCardViewModel>();
         }
@@ -349,43 +354,52 @@ namespace InterTwitter.ViewModels
                     {
                         if (fileInf.Length <= 15 * 1024 * 1024)
                         {
-                            string fileName = DateTime.Now.ToString("yyyyMMddhhmmss") + (Device.RuntimePlatform == Device.iOS ? ".MOV" : ".mp4");
-                            string outputPath = Path.Combine(FileSystem.CacheDirectory, fileName);
+                            var videoLenght = _videoService.VideoLength(openFile.FullPath);
 
-                            if (await VideoTrimmerService.Instance.TrimAsync(0, 10 * 1000, openFile.FullPath, outputPath))
+                            if (videoLenght > 180)
                             {
-                                await Share.RequestAsync(new ShareFileRequest
+                                string fileName = DateTime.Now.ToString("yyyyMMddhhmmss") + (Device.RuntimePlatform == Device.iOS ? ".MOV" : ".mp4");
+                                string outputPath = Path.Combine(FileSystem.CacheDirectory, fileName);
+
+                                if (await VideoTrimmerService.Instance.TrimAsync(0, 10 * 1000, openFile.FullPath, outputPath))
                                 {
-                                    Title = "Title",
-                                    File = new ShareFile(outputPath),
-                                });
-                                ListAttachedMedia.Add(new MiniCardViewModel()
+                                    await Share.RequestAsync(new ShareFileRequest
+                                    {
+                                        Title = "Title",
+                                        File = new ShareFile(outputPath),
+                                    });
+                                    ListAttachedMedia.Add(new MiniCardViewModel()
+                                    {
+                                        PathImage = outputPath,
+                                        PathActionImage = "ic_clear_filled_blue.png",
+                                        ActionCommand = DeleteAttachedVideoCommand,
+                                    });
+
+                                    ListAttachedMedia.Add(new MiniCardViewModel()
+                                    {
+                                        PathImage = openFile.FullPath,
+                                        PathActionImage = "ic_clear_filled_blue.png",
+                                        ActionCommand = DeleteAttachedVideoCommand,
+                                    });
+
+                                    CanUseButtonUploadPhotos = false;
+                                    CanUseButtonUploadGif = false;
+                                    CanUseButtonUploadVideo = false;
+
+                                    TypeAttachedMedia = ETypeAttachedMedia.Video;
+
+                                    CanUseButtonPost = canPostTweet();
+
+                                    await _pageDialogService.DisplayAlertAsync("Success", "Video Trimmed Successfully", "Ok");
+                                }
+                                else
                                 {
-                                    PathImage = outputPath,
-                                    PathActionImage = "ic_clear_filled_blue.png",
-                                    ActionCommand = DeleteAttachedVideoCommand,
-                                });
-
-                                ListAttachedMedia.Add(new MiniCardViewModel()
-                                {
-                                    PathImage = openFile.FullPath,
-                                    PathActionImage = "ic_clear_filled_blue.png",
-                                    ActionCommand = DeleteAttachedVideoCommand,
-                                });
-
-                                CanUseButtonUploadPhotos = false;
-                                CanUseButtonUploadGif = false;
-                                CanUseButtonUploadVideo = false;
-
-                                TypeAttachedMedia = ETypeAttachedMedia.Video;
-
-                                CanUseButtonPost = canPostTweet();
-
-                                await _pageDialogService.DisplayAlertAsync("Success", "Video Trimmed Successfully", "Ok");
+                                    await _pageDialogService.DisplayAlertAsync("Error", "Video Trimming failed", "Ok");
+                                }
                             }
                             else
                             {
-                                await _pageDialogService.DisplayAlertAsync("Error", "Video Trimming failed", "Ok");
+
                             }
                         }
                         else
