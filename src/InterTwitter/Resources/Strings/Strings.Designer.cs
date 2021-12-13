@@ -61,11 +61,11 @@ namespace InterTwitter.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hello.
+        ///   Looks up a localized string similar to For a more accurate search, enter 2 or more characters.
         /// </summary>
-        internal static string Hello {
+        internal static string ForMoreAccurateSearchSnter2OrMoreCharacters {
             get {
-                return ResourceManager.GetString("Hello", resourceCulture);
+                return ResourceManager.GetString("ForMoreAccurateSearchSnter2OrMoreCharacters", resourceCulture);
             }
         }
         

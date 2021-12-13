@@ -140,12 +140,13 @@
                                     <stateContainer:StateCondition State="Success">
 
                                         <Grid RowDefinitions="auto"
+                                              RowSpacing="0"
                                               HorizontalOptions="Fill"
                                               VerticalOptions="Fill">
 
                                             <controls:CustomCollectionView x:Name="customCollectView"
                                                                            Grid.Row="1" 
-                                                                           ItemsSource="{Binding Tweets}" 
+                                                                           ItemsSource="{Binding FoundTweets}" 
                                                                            ItemTemplate="{StaticResource templateSelector}"/>
 
                                         </Grid>
@@ -157,12 +158,20 @@
 
                                         <StackLayout VerticalOptions="CenterAndExpand"
                                                      Margin="0, 0, 0, 38"
-                                                     Spacing="24">
+                                                     Spacing="30">
 
                                             <Image Scale="1.195"
                                                    Source="{DynamicResource pic_owl_blue_big}" />
 
-                                            <StackLayout>
+                                            <controls:LineSpacingLabel Style="{DynamicResource tstyle_i5}"
+                                                                       LineSpacing="{OnPlatform Android=1.3, iOS=1.3}"
+                                                                       HorizontalOptions="CenterAndExpand"
+                                                                       HorizontalTextAlignment="Center"
+                                                    
+                                                                        Margin="30, 0"
+                                                                        Text="{Binding NoResultsMessage}"/>
+
+                                            <!--<StackLayout>
 
                                                 <Label HorizontalOptions="Center"
                                                        Style="{DynamicResource tstyle_i5}"
@@ -172,7 +181,7 @@
                                                        Style="{DynamicResource tstyle_i5}"
                                                        Text="{Binding QueryStringWithNoResults, StringFormat='&quot;{0}&quot;'}" />
 
-                                            </StackLayout>
+                                            </StackLayout>-->
 
                                         </StackLayout>
 

@@ -13,7 +13,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Forms;
+using static InterTwitter.Constants;
 
 namespace InterTwitter.ViewModels
 {
@@ -32,6 +34,7 @@ namespace InterTwitter.ViewModels
             _hashtagManager = hashtagManager;
             AvatarIcon = "pic_profile_small";
 
+            /*TweetSearchResult = ESearchResult.Success;*/
             TweetSearchResult = ESearchResult.Success;
 
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource;
@@ -54,7 +57,7 @@ namespace InterTwitter.ViewModels
         }
 
         private string _queryStringWithNoResults;
-        public string QueryStringWithNoResults
+        public string NoResultsMessage
         {
             get => _queryStringWithNoResults;
             set => SetProperty(ref _queryStringWithNoResults, value);
@@ -74,11 +77,11 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _hashtagModels, value);
         }
 
-        private ObservableCollection<BaseTweetViewModel> _tweets;
-        public ObservableCollection<BaseTweetViewModel> Tweets
+        private ObservableCollection<BaseTweetViewModel> _foundTweets;
+        public ObservableCollection<BaseTweetViewModel> FoundTweets
         {
-            get => _tweets;
-            set => SetProperty(ref _tweets, value);
+            get => _foundTweets;
+            set => SetProperty(ref _foundTweets, value);
         }
 
         private ESearchState _tweetsSearchState;
@@ -174,7 +177,7 @@ namespace InterTwitter.ViewModels
                     }
                 }
 
-                Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
+                FoundTweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
             }
         }
 
@@ -187,10 +190,7 @@ namespace InterTwitter.ViewModels
 
         private Task OnStartTweetsSearchCommandTapAsync()
         {
-            if (QueryString.Length > 1)
-            {
-                TweetsSearch();
-            }
+            TweetsSearch();
 
             return Task.CompletedTask;
         }
@@ -212,29 +212,42 @@ namespace InterTwitter.ViewModels
             return Task.CompletedTask;
         }
 
-        private void TweetsSearch()
+        private async void TweetsSearch()
         {
             TweetsSearchState = ESearchState.Active;
 
-            /* TO DO: calling of the tweets search */
-
-            switch (TweetSearchResult)
+            if (QueryString.Length <= 2)
             {
-                case ESearchResult.NoResults:
-                    QueryStringWithNoResults = QueryString;
-                    break;
-                case ESearchResult.Success:
-                    QueryStringWithNoResults = string.Empty;
-                    break;
+                NoResultsMessage = LocalizationResourceManager.Current[SearchRequestMessages.INACCURATE_REQUEST];
+            }
+            else
+            {
+                var result = await _tweetService.GetAllTweetsByHashtagsOrKeysAsync(QueryString);
+
+                if (result.IsSuccess)
+                {
+                    //FoundTweets = (ObservableCollection<BaseTweetViewModel>)result.Result;
+                }
+
+                /* TO DO: calling of the tweets search */
+
+                switch (TweetSearchResult)
+                {
+                    case ESearchResult.NoResults:
+                        NoResultsMessage = $"{LocalizationResourceManager.Current[SearchRequestMessages.NO_RESULTS_FOR]}\n{QueryString}";
+                        break;
+                    case ESearchResult.Success:
+                        NoResultsMessage = string.Empty;
+                        break;
+                }
             }
         }
 
         private void ResetSearchData()
         {
+            FoundTweets.Clear();
             QueryString = string.Empty;
-            QueryStringWithNoResults = string.Empty;
-
-            /* TO DO: clear found tweets */
+            NoResultsMessage = string.Empty;
         }
 
         #endregion

@@ -64,10 +64,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Views\BookmarksPage.xaml.cs">
       <DependentUpon>BookmarksPage.xaml</DependentUpon>
     </Compile>

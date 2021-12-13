@@ -116,6 +116,7 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderers\CustomFrameRenderer.cs" />
     <Compile Include="Renderers\CustomTabbedPageRenderer.cs" />
+    <Compile Include="Renderers\LineSpacingLabelRenderer.cs" />
     <Compile Include="Renderers\SearchEntryRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

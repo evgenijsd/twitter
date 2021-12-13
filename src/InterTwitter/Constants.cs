@@ -14,5 +14,11 @@ namespace InterTwitter
 
             public const string TAB_CHANGE = "TabChange";
         }
+
+        public static class SearchRequestMessages
+        {
+            public const string INACCURATE_REQUEST = "ForMoreAccurateSearchSnter2OrMoreCharacters";
+            public const string NO_RESULTS_FOR = "NoResultsFor";
+        }
     }
 }

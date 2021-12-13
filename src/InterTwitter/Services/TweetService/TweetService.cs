@@ -22,6 +22,7 @@ namespace InterTwitter.Services.TweetService
         }
 
         #region -- ITweetService implementation --
+
         public async Task<AOResult<IEnumerable<TweetModel>>> GetAllTweetsAsync()
         {
             await Task.Delay(50);
@@ -42,6 +43,34 @@ namespace InterTwitter.Services.TweetService
             catch (Exception ex)
             {
                 result.SetError($"{nameof(GetAllTweetsAsync)}: exception", "Some issues", ex);
+            }
+
+            return result;
+        }
+
+        public async Task<AOResult<IEnumerable<TweetModel>>> GetAllTweetsByHashtagsOrKeysAsync(string searchQuery)
+        {
+            var result = new AOResult<IEnumerable<TweetModel>>();
+            var keys = searchQuery.Split(' ', '\t').Select(x => x.ToLower());
+
+            try
+            {
+                var allTweets = _mockService.Tweets;
+
+                /*var foundTweets = allTweets.All(x => );*/
+
+                if (allTweets != null)
+                {
+                    result.SetSuccess(allTweets.OrderByDescending(x => x.CreationTime));
+                }
+                else
+                {
+                    result.SetFailure("No tweets found");
+                }
+            }
+            catch (Exception ex)
+            {
+                result.SetError($"{nameof(GetAllTweetsByHashtagsOrKeysAsync)}: exception", "Some issues", ex);
             }
 
             return result;
