@@ -18,8 +18,6 @@ namespace InterTwitter.ViewModels
     {
         private readonly ITweetService _tweetService;
 
-        private bool _isFirstStart = true;
-
         public HomePageViewModel(
             ITweetService tweetService,
             INavigationService navigationService)
@@ -48,18 +46,13 @@ namespace InterTwitter.ViewModels
         #endregion
 
         #region -- Overrides --
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        public override async Task InitializeAsync(INavigationParameters parameters)
         {
-            base.OnNavigatedTo(parameters);
+            await InitAsync();
         }
 
-        public override async void OnAppearing()
+        public override void OnAppearing()
         {
-            if (_isFirstStart)
-            {
-                await InitAsync();
-            }
-
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_blue"] as ImageSource;
         }
 

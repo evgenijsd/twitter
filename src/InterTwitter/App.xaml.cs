@@ -1,5 +1,6 @@
 using DLToolkit.Forms.Controls;
 using InterTwitter.Droid.Services.PermissionsService;
+using InterTwitter.Models;
 using InterTwitter.Services;
 using InterTwitter.Services.BookmarkService;
 using InterTwitter.Services.PermissionsService;
@@ -10,6 +11,7 @@ using InterTwitter.ViewModels.Flyout;
 using InterTwitter.Views;
 using Prism;
 using Prism.Ioc;
+using Prism.Navigation;
 using Prism.Unity;
 using Xamarin.Forms;
 

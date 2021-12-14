@@ -11,6 +11,9 @@
                        prism:ViewModelLocator.AutowireViewModel="True"
                        xmlns:behaviors="clr-namespace:InterTwitter.Behaviors"
                        IconImageSource="{Binding IconPath}">
+    <ContentPage.Behaviors>
+        <behaviors:TabPageBehavior/>
+    </ContentPage.Behaviors>
    
     <local:BaseContentPage.Content>
 

@@ -1,9 +1,17 @@
-﻿using InterTwitter.Helpers;
+﻿using InterTwitter.Enums;
+using InterTwitter.Extensions;
+using InterTwitter.Helpers;
+using InterTwitter.Models;
+using InterTwitter.Models.TweetViewModel;
+using InterTwitter.Services;
 using InterTwitter.Services.Settings;
 using InterTwitter.Services.UserService;
 using InterTwitter.Views;
+using Prism.Mvvm;
 using Prism.Navigation;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -14,40 +22,30 @@ namespace InterTwitter.ViewModels
     {
         private readonly ISettingsManager _settingsManager;
         private readonly IUserService _userService;
-        public ProfilePageViewModel(INavigationService navigationService, ISettingsManager settingsManager, IUserService userService)
+        private readonly ITweetService _tweetService;
+        private UserModel _user;
+
+        public ProfilePageViewModel(INavigationService navigationService, ISettingsManager settingsManager, IUserService userService, ITweetService tweetService)
             : base(navigationService)
         {
             _settingsManager = settingsManager;
             _userService = userService;
-
-            MenuItems = new ObservableCollection<MenuItemViewModel>(new[]
-                {
-                    new MenuItemViewModel
-                    {
-                        Id = 0, Title = "Posts",
-                        TargetType = typeof(HomePage),
-                        ImageSource = "ic_home_gray",
-                        TextColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
-                    },
-
-                    new MenuItemViewModel
-                    {
-                        Id = 1,
-                        Title = "Likes",
-                        TargetType = typeof(SearchPage),
-                        ImageSource = "ic_search_gray",
-                        TextColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
-                    },
-                });
-            Subscribe();
+            _tweetService = tweetService;
         }
         #region --- Public Properties ---
 
-        private ObservableCollection<MenuItemViewModel> _menuItems;
-        public ObservableCollection<MenuItemViewModel> MenuItems
+        private List<MenuItemViewModel> _menuItems;
+        public List<MenuItemViewModel> MenuItems
         {
             get => _menuItems;
             set => SetProperty(ref _menuItems, value);
+        }
+
+        private ObservableCollection<BindableBase> _tweets;
+        public ObservableCollection<BindableBase> Tweets
+        {
+            get => _tweets;
+            set => SetProperty(ref _tweets, value);
         }
 
         private string _userMail;
@@ -85,15 +83,38 @@ namespace InterTwitter.ViewModels
 
         #region -- Overrides --
 
-        public override Task InitializeAsync(INavigationParameters parameters)
+        public async override Task InitializeAsync(INavigationParameters parameters)
         {
-            var user = _userService.GetUserAsync(_settingsManager.UserId).Result.Result;
+            Subscribe();
 
-            UserBackgroundImage = user.BackgroundUserImagePath;
-            UserImagePath = user.AvatarPath;
-            UserMail = user.Email;
-            UserName = user.Name;
-            return base.InitializeAsync(parameters);
+            await InitAsync();
+
+            MenuItems = new List<MenuItemViewModel>(new[]
+                {
+                    new MenuItemViewModel
+                    {
+                        Id = 0, Title = "Posts",
+                        ImageSource = "ic_home_gray",
+                        TextColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
+                        ContentCollection = Tweets,
+                    },
+
+                    new MenuItemViewModel
+                    {
+                        Id = 1,
+                        Title = "Likes",
+                        ImageSource = "ic_search_gray",
+                        TextColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
+                        ContentCollection = Tweets,
+                    },
+                });
+
+            _user = _userService.GetUserAsync(_settingsManager.UserId).Result.Result;
+
+            UserBackgroundImage = _user.BackgroundUserImagePath;
+            UserImagePath = _user.AvatarPath;
+            UserMail = _user.Email;
+            UserName = _user.Name;
         }
 
         #endregion
@@ -108,12 +129,37 @@ namespace InterTwitter.ViewModels
         private async void UpdateAsync(object sender)
         {
             await Task.Delay(1);
-            var user = _userService.GetUserAsync(_settingsManager.UserId).Result.Result;
+            _user = _userService.GetUserAsync(_settingsManager.UserId).Result.Result;
 
-            UserBackgroundImage = user.BackgroundUserImagePath;
-            UserImagePath = user.AvatarPath;
-            UserMail = user.Email;
-            UserName = user.Name;
+            UserBackgroundImage = _user.BackgroundUserImagePath;
+            UserImagePath = _user.AvatarPath;
+            UserMail = _user.Email;
+            UserName = _user.Name;
+        }
+
+        private async Task InitAsync()
+        {
+            var getTweetResult = await _tweetService.GetAllTweetsAsync();
+
+            if (getTweetResult.IsSuccess)
+            {
+                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.
+                    Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
+
+                foreach (var tweet in tweetViewModels)
+                {
+                    var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
+
+                    if (tweetAuthor.IsSuccess)
+                    {
+                        tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
+                        tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
+                        tweet.UserName = tweetAuthor.Result.Name;
+                    }
+                }
+
+                Tweets = new ObservableCollection<BindableBase>(tweetViewModels);
+            }
         }
 
         #endregion

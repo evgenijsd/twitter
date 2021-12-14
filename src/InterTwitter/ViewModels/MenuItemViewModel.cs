@@ -1,5 +1,7 @@
-﻿using Prism.Mvvm;
+﻿using InterTwitter.Models.TweetViewModel;
+using Prism.Mvvm;
 using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -40,6 +42,13 @@ namespace InterTwitter.ViewModels
         {
             get => _imageSource;
             set => SetProperty(ref _imageSource, value);
+        }
+
+        private ObservableCollection<BindableBase> _contentCollection;
+        public ObservableCollection<BindableBase> ContentCollection
+        {
+            get => _contentCollection;
+            set => SetProperty(ref _contentCollection, value);
         }
 
         private Xamarin.Forms.Color _textColor;

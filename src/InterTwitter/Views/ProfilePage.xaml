@@ -7,7 +7,8 @@
                        xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
                        xmlns:fftranform="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
                        xmlns:behaviors="clr-namespace:InterTwitter.Behaviors"
-                       xmlns:local="clr-namespace:InterTwitter.Views"
+                       xmlns:local="clr-namespace:InterTwitter.Views" 
+                       xmlns:controls="clr-namespace:InterTwitter.Controls"
                        BackgroundColor="{DynamicResource appcolor_i2}">
 
     <ContentPage.Behaviors>
@@ -164,14 +165,21 @@
                             Grid.Row="2"
                             BackgroundColor="{DynamicResource appcolor_i2}"
                             ItemAppearing="OnItemApearingHandler"
+                            IsCyclical="False"
+                            IsPanSwipeEnabled="False"
+                            IsPanInteractionEnabled="False"
                             ItemsSource="{Binding MenuItems}">
 
             <cards:CarouselView.ItemTemplate>
                 <DataTemplate>
                     <ContentView>
-                        <Label HorizontalOptions="Center"
-                               Text="{Binding Title}"
-                               VerticalOptions="Center" />
+                        <RefreshView>
+                            <controls:CustomCollectionView x:Name="customCollectView"
+                                                           ItemsUpdatingScrollMode="KeepItemsInView"
+                                                           HorizontalScrollBarVisibility="Never"
+                                                           ItemsSource="{Binding ContentCollection}" 
+                                                           ItemTemplate="{DynamicResource templateSelector}"/>
+                        </RefreshView>
                     </ContentView>
                 </DataTemplate>
             </cards:CarouselView.ItemTemplate>
