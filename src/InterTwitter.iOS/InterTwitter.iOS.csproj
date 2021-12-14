@@ -115,6 +115,7 @@
     <Compile Include="Renderers\CustomEditorRenderer.cs" />
     <Compile Include="Renderers\CustomGridRenderer.cs" />
     <Compile Include="Renderers\CustomScrollViewRenderer.cs" />
+    <Compile Include="Services\EnvironmentService\EnvironmentService.cs" />
     <Compile Include="Services\PermissionsService\PermissionsService.cs" />
     <Compile Include="Services\VideoService\VideoService.cs" />
     <None Include="Entitlements.plist" />

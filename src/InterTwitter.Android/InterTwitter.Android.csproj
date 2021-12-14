@@ -115,6 +115,7 @@
     <Compile Include="Renderers\CustomScrollViewRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\EnvironmentService\EnvironmentService.cs" />
     <Compile Include="Services\PermissionsService\PermissionsService.cs" />
     <Compile Include="Services\VideoService\VideoService.cs" />
   </ItemGroup>

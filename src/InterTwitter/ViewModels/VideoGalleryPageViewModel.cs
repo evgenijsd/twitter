@@ -1,7 +1,12 @@
-﻿using InterTwitter.Services.PermissionsService;
+﻿using InterTwitter.Services.EnvironmentService;
+using InterTwitter.Services.PermissionsService;
+using MapNotepad.Helpers;
 using Prism.Navigation;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace InterTwitter.ViewModels
 {
@@ -9,12 +14,20 @@ namespace InterTwitter.ViewModels
     {
         private IPermissionsService _permissionsService;
 
+        private IEnvironmentService _environmentService;
+
+        private bool status;
+
+        private Color color;
+
         public VideoGalleryPageViewModel(
             INavigationService navigationService,
-            IPermissionsService permissionsService)
+            IPermissionsService permissionsService,
+            IEnvironmentService environmentService)
             : base(navigationService)
         {
             _permissionsService = permissionsService;
+            _environmentService = environmentService;
         }
 
         #region -- Public properties --
@@ -26,11 +39,14 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _videoSource, value);
         }
 
+        private ICommand _goBackCommand;
+        public ICommand GoBackCommand => _goBackCommand = SingleExecutionCommand.FromFunc(OnGoBackCommandAsync);
+
         #endregion
 
-        #region -- INavigationAware implementation --
+        #region -- IInitializeAsync implementation --
 
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        public async override Task InitializeAsync(INavigationParameters parameters)
         {
             if (parameters.Count > 0)
             {
@@ -38,9 +54,33 @@ namespace InterTwitter.ViewModels
                 {
                     var list = parameters.GetValue<ObservableCollection<MiniCardViewModel>>(Constants.Messages.MEDIA);
 
-                    VideoSource = list.FirstOrDefault().PathImage;
+                    if (list.FirstOrDefault() != null)
+                    {
+                        VideoSource = list.FirstOrDefault().PathImage;
+                    }
                 }
+
+                status = _environmentService.GetUseDarkStatusBarTint();
+                color = _environmentService.GetStatusBarColor();
+
+                _environmentService.SetStatusBarColor(Color.Green, false);
             }
+
+            status = _environmentService.GetUseDarkStatusBarTint();
+            color = _environmentService.GetStatusBarColor();
+
+            _environmentService.SetStatusBarColor(Color.Green, false);
+        }
+
+        #endregion
+
+        #region -- Private methods --
+
+        private async Task OnGoBackCommandAsync()
+        {
+            _environmentService.SetStatusBarColor(color, status);
+
+            await _navigationService.GoBackAsync();
         }
 
         #endregion
