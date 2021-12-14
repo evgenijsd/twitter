@@ -169,8 +169,8 @@ namespace InterTwitter.ViewModels
             var user = _registrationService.GetUsers().FirstOrDefault(x => x.Id == UserId);
             if (user != null && IsAutoLogin)
             {
-                //await _dialogs.DisplayAlertAsync("Alert", $"TwitterCommand id - {user.Id}", "Ok");
-                var p = new NavigationParameters { { "User", User } };
+                User = user;
+                var p = new NavigationParameters { { nameof(User), User } };
                 await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", p);
             }
 

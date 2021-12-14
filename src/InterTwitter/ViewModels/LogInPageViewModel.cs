@@ -181,8 +181,7 @@ namespace InterTwitter.ViewModels
 
                         User = result.Result;
                         _autorizationService.UserId = User.Id;
-                        //await _dialogs.DisplayAlertAsync("Alert", $"TwitterCommand id - {User.Id}", "Ok");
-                        var p = new NavigationParameters { { "User", User } };
+                        var p = new NavigationParameters { { nameof(User), User } };
                         await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", p);
                     }
                     else
