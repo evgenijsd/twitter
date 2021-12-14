@@ -103,18 +103,6 @@ namespace InterTwitter.Services
                 },
                 new TweetModel
                 {
-                    Id = 2,
-                    UserId = 2,
-                    Text = "onsequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
-                    Media = Enums.EAttachedMediaType.Gif,
-                    MediaPaths = new List<string>
-                    {
-                        "https://thumbs.gfycat.com/PaltryWickedCrayfish-max-1mb.gif",
-                    },
-                    CreationTime = DateTime.Now,
-                },
-                new TweetModel
-                {
                     Id = 3,
                     UserId = 3,
                     Text = "um quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
@@ -166,6 +154,18 @@ namespace InterTwitter.Services
                     MediaPaths = new List<string>
                     {
                         "https://javasea.ru/uploads/posts/2013-12/1387635240_matrica.gif",
+                    },
+                    CreationTime = DateTime.Now,
+                },
+                new TweetModel
+                {
+                    Id = 2,
+                    UserId = 2,
+                    Text = "onsequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
+                    Media = Enums.EAttachedMediaType.Gif,
+                    MediaPaths = new List<string>
+                    {
+                        "https://thumbs.gfycat.com/PaltryWickedCrayfish-max-1mb.gif",
                     },
                     CreationTime = DateTime.Now,
                 },
