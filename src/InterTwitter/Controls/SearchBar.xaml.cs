@@ -17,7 +17,7 @@ namespace InterTwitter.Controls
 
         #region --- Public properties ---
 
-        public static BindableProperty SearchStateProperty = BindableProperty.Create(
+        public static readonly BindableProperty SearchStateProperty = BindableProperty.Create(
             propertyName: nameof(SearchState),
             returnType: typeof(ESearchState),
             declaringType: typeof(SearchBar),
@@ -30,9 +30,10 @@ namespace InterTwitter.Controls
             private set => SetValue(SearchStateProperty, value);
         }
 
-        public static BindableProperty QueryStringProperty = BindableProperty.Create(
+        public static readonly BindableProperty QueryStringProperty = BindableProperty.Create(
             propertyName: nameof(QueryString),
             returnType: typeof(string),
+            defaultValue: string.Empty,
             declaringType: typeof(SearchBar),
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -42,7 +43,19 @@ namespace InterTwitter.Controls
             set => SetValue(QueryStringProperty, value);
         }
 
-        public static BindableProperty AvatarIconSourceProperty = BindableProperty.Create(
+        public static readonly BindableProperty MaxLengthProperty = BindableProperty.Create(
+            propertyName: nameof(MaxLength),
+            returnType: typeof(int),
+            declaringType: typeof(SearchBar),
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public int MaxLength
+        {
+            get => (int)GetValue(MaxLengthProperty);
+            set => SetValue(MaxLengthProperty, value);
+        }
+
+        public static readonly BindableProperty AvatarIconSourceProperty = BindableProperty.Create(
             propertyName: nameof(AvatarIconSource),
             returnType: typeof(ImageSource),
             declaringType: typeof(SearchBar),
@@ -54,7 +67,7 @@ namespace InterTwitter.Controls
             set => SetValue(AvatarIconSourceProperty, value);
         }
 
-        public static BindableProperty AvatarIconTapCommandProperty = BindableProperty.Create(
+        public static readonly BindableProperty AvatarIconTapCommandProperty = BindableProperty.Create(
             propertyName: nameof(AvatarIconTapCommand),
             returnType: typeof(ICommand),
             declaringType: typeof(SearchBar),
@@ -66,7 +79,7 @@ namespace InterTwitter.Controls
             set => SetValue(AvatarIconTapCommandProperty, value);
         }
 
-        public static BindableProperty BackIconTapCommandProperty = BindableProperty.Create(
+        public static readonly BindableProperty BackIconTapCommandProperty = BindableProperty.Create(
             propertyName: nameof(BackIconTapCommand),
             returnType: typeof(ICommand),
             declaringType: typeof(SearchBar),
@@ -78,7 +91,7 @@ namespace InterTwitter.Controls
             set => SetValue(BackIconTapCommandProperty, value);
         }
 
-        public static BindableProperty PressOkOnKeyboardCommandProperty = BindableProperty.Create(
+        public static readonly BindableProperty PressOkOnKeyboardCommandProperty = BindableProperty.Create(
             propertyName: nameof(PressOkOnKeyboardCommand),
             returnType: typeof(ICommand),
             declaringType: typeof(SearchBar),

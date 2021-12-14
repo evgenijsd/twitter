@@ -36,9 +36,33 @@ namespace InterTwitter.ViewModels
 
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource;
             AvatarIcon = "pic_profile_small";
+
+            TestText = "laborum #morning #AMAs onsequuntur #coffeeTime laborum numquam #teaTime";
+
+            Keywords = new List<string>()
+            {
+                "#coffeeTime",
+                "laborum",
+                "#morning",
+                "#teaTime",
+            };
         }
 
         #region -- Public Properties --
+
+        private string _testText;
+        public string TestText
+        {
+            get => _testText;
+            set => SetProperty(ref _testText, value);
+        }
+
+        private List<string> _keywords;
+        public List<string> Keywords
+        {
+            get => _keywords;
+            set => SetProperty(ref _keywords, value);
+        }
 
         private string _avatarIcon;
         public string AvatarIcon
@@ -223,16 +247,19 @@ namespace InterTwitter.ViewModels
         private async void TweetsSearch(string queryString)
         {
             TweetsSearchState = ESearchState.Active;
-            queryString = queryString.Trim();
 
-            if (queryString.FirstOrDefault() == '#'
-                ? queryString.Length < 3
-                : queryString.Length < 2)
+            if (string.IsNullOrWhiteSpace(queryString)
+                || (!string.IsNullOrWhiteSpace(queryString)
+                && queryString.FirstOrDefault() == '#'
+                    ? queryString.Length < 3
+                    : queryString.Length < 2))
             {
+                TweetSearchResult = ESearchResult.NoResults;
                 NoResultsMessage = LocalizationResourceManager.Current[Constants.TweetsSearch.INACCURATE_REQUEST];
             }
             else
             {
+                queryString = queryString.Trim();
                 var result = await _tweetService.GetAllTweetsByHashtagsOrKeysAsync(queryString);
 
                 if (result.IsSuccess)

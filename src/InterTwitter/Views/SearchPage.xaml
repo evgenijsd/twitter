@@ -46,21 +46,11 @@
                                        Text="{xct:Translate PopularTheme}"
                                        Style="{DynamicResource tstyle_i4}"/>
 
-                                <controls:HighlighttingLabel>
-
-                                    <!--<controls:HighlighttingLabel.FormattedText>
-
-                                        <FormattedString>
-
-                                            <Span>
-                                                "One two three four"
-                                            </Span>
-                                            
-                                        </FormattedString>
-                                        
-                                    </controls:HighlighttingLabel.FormattedText>-->
-
-                                </controls:HighlighttingLabel>
+                                <controls:KeywordHighlightingLabel Text="laborum, hello world, my name is andrew, and i like #teaTime, and sometimes, #coffeetime, bla #teatime\ bla bla, laborum"
+                                                                 Keywords="{Binding Keywords}"
+                                                                   Style="{DynamicResource tstyle_i5}"
+                                                                 LineSpacing="{OnPlatform Android=1.3, iOS=6.25}"
+                                                                 />
 
                                 <BoxView Style="{DynamicResource SeparatorStyle}"
                                          Margin="0" />
@@ -172,9 +162,9 @@
                                     <!-- NO RESULTS FOR QUERY - DISPLAY OWL -->
                                     <stateContainer:StateCondition State="NoResults">
 
-                                        <StackLayout VerticalOptions="CenterAndExpand"
-                                                     Margin="0, 0, 0, 38"
-                                                     Spacing="29">
+                                        <StackLayout VerticalOptions="Start"
+                                                     Margin="0, 180, 0, 0"
+                                                     Spacing="20">
 
                                             <Image Scale="1.176"
                                                    Source="{DynamicResource pic_owl_blue_big}" />
@@ -237,9 +227,10 @@
                                         BackIconTapCommand="{Binding BackToHashtagsTapCommand}"
                                         PressOkOnKeyboardCommand="{Binding StartTweetsSearchTapCommand}"
                                         BackgroundColor="{DynamicResource appcolor_i2}"
-                                        QueryString="{Binding QueryString}" />
+                                        QueryString="{Binding QueryString}"
+                                        MaxLength="100"/>
 
-                    <BoxView Style="{DynamicResource SeparatorStyle}" />
+                    <BoxView Style="{DynamicResource SeparatorStyle}"/>
 
                 </StackLayout>
 

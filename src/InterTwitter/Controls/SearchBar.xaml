@@ -84,6 +84,7 @@
                                           TextColor="{DynamicResource appcolor_i3}"
                                           Placeholder="{xct:Translate Search}"
                                           PlaceholderColor="{DynamicResource appcolor_i4}"
+                                          MaxLength="{Binding MaxLength, Source={x:Reference searchBar}}"
                                           ReturnCommand="{Binding PressOkOnKeyboardCommand, Source={x:Reference searchBar}}"/>
 
                 </Frame>
