@@ -14,6 +14,7 @@ namespace InterTwitter.Views
         public FlyOutPage()
         {
             InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);
         }
     }
 }

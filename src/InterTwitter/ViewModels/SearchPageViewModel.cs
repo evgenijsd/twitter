@@ -1,5 +1,5 @@
-﻿using InterTwitter.Views;
-using MapNotepad.Helpers;
+﻿using InterTwitter.Helpers;
+using InterTwitter.Views;
 using Prism.Navigation;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -22,6 +22,11 @@ namespace InterTwitter.ViewModels
         #endregion
 
         #region --- Overrides ---
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+        }
 
         public override void OnAppearing()
         {

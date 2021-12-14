@@ -1,7 +1,6 @@
 ﻿using InterTwitter.Services.Settings;
 using InterTwitter.Services.UserService;
 using InterTwitter.Views;
-using MapNotepad.Helpers;
 using Prism.Navigation;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;

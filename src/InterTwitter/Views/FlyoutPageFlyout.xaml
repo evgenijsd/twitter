@@ -40,6 +40,7 @@
                     <fftransformations:CircleTransformation />
                 </ffimageloading:CachedImage.Transformations>
             </ffimageloading:CachedImage>
+            
             <StackLayout Grid.Column="1" 
                          VerticalOptions="Center">
                 <Label Style="{DynamicResource tstyle_i14}" 

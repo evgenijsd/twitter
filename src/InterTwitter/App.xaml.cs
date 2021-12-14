@@ -1,4 +1,4 @@
-﻿using DLToolkit.Forms.Controls;
+using DLToolkit.Forms.Controls;
 using InterTwitter.Droid.Services.PermissionsService;
 using InterTwitter.Services;
 using InterTwitter.Services.BookmarkService;
@@ -54,9 +54,9 @@ namespace InterTwitter
         protected override async void OnInitialized()
         {
             InitializeComponent();
+            Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             FlowListView.Init();
-            //await NavigationService.NavigateAsync($"{nameof(MainPage)}");
-            await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}");
+            await NavigationService.NavigateAsync(nameof(FlyOutPage));
         }
 
         protected override void OnStart()

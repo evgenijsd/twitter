@@ -1,5 +1,7 @@
 ﻿using Prism.Mvvm;
 using Prism.Navigation;
+using System;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace InterTwitter.ViewModels
@@ -13,7 +15,7 @@ namespace InterTwitter.ViewModels
 
         protected INavigationService NavigationService { get; }
 
-        #region --- IDestructible implementation ---
+        #region -- IDestructible implementation --
 
         public void Destroy()
         {
@@ -21,7 +23,7 @@ namespace InterTwitter.ViewModels
 
         #endregion
 
-        #region --- IInitialize, IInitializeAsync implementation ---
+        #region -- IInitialize, IInitializeAsync implementation --
 
         public virtual void Initialize(INavigationParameters parameters)
         {
@@ -34,7 +36,7 @@ namespace InterTwitter.ViewModels
 
         #endregion
 
-        #region --- INavigationAware implementation ---
+        #region -- INavigationAware implementation --
 
         public virtual void OnNavigatedFrom(INavigationParameters parameters)
         {

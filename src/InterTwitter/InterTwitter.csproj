@@ -57,6 +57,7 @@
     <PackageReference Include="CardsView" Version="2.8.0" />
     <PackageReference Include="DLToolkit.Forms.Controls.FlowListView" Version="2.0.11" />
     <PackageReference Include="Prism.Unity.Forms" Version="8.1.97" />
+    <PackageReference Include="Sharpnado.Shadows" Version="1.2.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -89,15 +90,8 @@
     </Compile>
     <Compile Update="Views\FlyoutPageFlyout.xaml.cs">
       <DependentUpon>FlyoutPageFlyout.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\HomePage.xaml.cs">
-      <DependentUpon>HomePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\NotificationsPage.xaml.cs">
-      <DependentUpon>NotificationsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\SearchPage.xaml.cs">
-      <DependentUpon>SearchPage.xaml</DependentUpon>
+    <Compile Update="Controls\CustomNavigationbar.xaml.cs">
+      <DependentUpon>CustomNavigationbar.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -109,15 +103,16 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\FlyOutPage.xaml">
+    <EmbeddedResource Update="Controls\CustomNavigationbar.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\FlyoutPageDetail.xaml">
+    <EmbeddedResource Update="Views\DataTemplates\ImageTweetDataTemplate.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\FlyoutPageFlyout.xaml">
+    <EmbeddedResource Update="Views\DataTemplates\TextTweetDataTemplate.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\BookmarksPage.xaml">
+    <EmbeddedResource Update="Views\DataTemplates\VideoTweetDataTemplate.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\HomePage.xaml">

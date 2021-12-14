@@ -1,7 +1,5 @@
 ﻿using InterTwitter.Enums;
 using InterTwitter.Helpers;
-using InterTwitter.Services.BookmarkService;
-using MapNotepad.Helpers;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -12,13 +10,7 @@ namespace InterTwitter.Models.TweetViewModel
 {
     public class BaseTweetViewModel : BindableBase
     {
-        public BaseTweetViewModel()
-        {
-            BookmarkService = App.Resolve<IBookmarkService>();
-        }
-
         #region -- Public properties --
-        protected IBookmarkService BookmarkService { get; }
 
         private int _tweetId;
         public int TweetId
@@ -32,13 +24,6 @@ namespace InterTwitter.Models.TweetViewModel
         {
             get => _userId;
             set => SetProperty(ref _userId, value);
-        }
-
-        private int _currentUserId;
-        public int CurrentUserId
-        {
-            get => _currentUserId;
-            set => SetProperty(ref _currentUserId, value);
         }
 
         private string _userName;
@@ -82,8 +67,8 @@ namespace InterTwitter.Models.TweetViewModel
             set => SetProperty(ref _mediaPaths, value);
         }
 
-        private ETypeAttachedMediaType _mediaType;
-        public ETypeAttachedMediaType Media
+        private EAttachedMediaType _mediaType;
+        public EAttachedMediaType Media
         {
             get => _mediaType;
             set => SetProperty(ref _mediaType, value);
@@ -123,11 +108,13 @@ namespace InterTwitter.Models.TweetViewModel
         public ICommand MoveToProfileCommand => _moveToProfileCommand ?? (_moveToProfileCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnGoToProfileAsync));
 
         private DateTime _CreationTime;
+
         public DateTime CreationTime
         {
             get => _CreationTime;
             set => SetProperty(ref _CreationTime, value);
         }
+
         #endregion
 
         #region -- Private helpers --
@@ -143,14 +130,9 @@ namespace InterTwitter.Models.TweetViewModel
             return Task.CompletedTask;
         }
 
-        private Task OnMarkAsync(BaseTweetViewModel arg)
+        private Task OnMarkAsync(BaseTweetViewModel tweet)
         {
             IsBookmarked = !IsBookmarked;
-            if (!IsBookmarked)
-            {
-                BookmarkService.DeleteBoormarkAsync(TweetId, CurrentUserId);
-            }
-
             return Task.CompletedTask;
         }
 

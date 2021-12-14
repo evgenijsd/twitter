@@ -25,6 +25,7 @@ namespace InterTwitter.iOS
             global::Xamarin.Forms.Forms.Init();
             CachedImageRenderer.Init();
             CachedImageRenderer.InitImageSourceHandler();
+            Sharpnado.Shades.iOS.iOSShadowsRenderer.Initialize();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
