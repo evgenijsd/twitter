@@ -88,7 +88,7 @@
     <Compile Update="Views\FlyoutPageDetail.xaml.cs">
       <DependentUpon>FlyoutPageDetail.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\FlyoutPageFlyout.xaml.cs">
+    <Compile Update="Views\FlyoutPageFlyout.xaml.cs"/>
       <DependentUpon>FlyoutPageFlyout.xaml</DependentUpon>
     <Compile Update="Controls\CustomNavigationbar.xaml.cs">
       <DependentUpon>CustomNavigationbar.xaml</DependentUpon>
@@ -102,7 +102,7 @@
     <EmbeddedResource Update="Views\EditProfilePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\FlyOutPage.xaml">
+    <EmbeddedResource Update="Views\FlyOutPage.xaml"/>
     <EmbeddedResource Update="Controls\CustomNavigationbar.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
