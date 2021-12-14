@@ -4,6 +4,7 @@ using InterTwitter.Helpers;
 using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services;
 using InterTwitter.Services.BookmarkService;
+using InterTwitter.Services.LikeService;
 using InterTwitter.Services.Settings;
 using InterTwitter.Views;
 using Prism.Navigation;
@@ -22,15 +23,18 @@ namespace InterTwitter.ViewModels
     {
         private readonly ITweetService _tweetService;
         private readonly IBookmarkService _bookmarkService;
+        private readonly ILikeService _likeService;
 
         public BookmarksPageViewModel(
             INavigationService navigationService,
             ITweetService tweetService,
+            ILikeService likeService,
             IBookmarkService bookmarkService)
             : base(navigationService)
         {
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_bookmarks_gray"] as ImageSource;
             _tweetService = tweetService;
+            _likeService = likeService;
             _bookmarkService = bookmarkService;
         }
 
@@ -121,8 +125,8 @@ namespace InterTwitter.ViewModels
 
             await Task.Delay(TimeSpan.FromSeconds(0.1));
 
-            var resultTweet = _tweetService.GetAllTweetsAsync().Result;
-            var resultBookmark = _bookmarkService.GetBookmarksAsync(userid).Result;
+            var resultTweet = await _tweetService.GetAllTweetsAsync();
+            var resultBookmark = await _bookmarkService.GetBookmarksAsync(userid);
             var getTweetResult = resultTweet.Result.ToList();
             var getBookmarks = resultBookmark.Result;
 
@@ -140,6 +144,12 @@ namespace InterTwitter.ViewModels
                         tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
                         tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
                         tweet.UserName = tweetAuthor.Result.Name;
+                        tweet.IsTweekLiked = (await _likeService.AnyAsync(tweet.TweetId, UserId)).IsSuccess;
+                        var result = await _likeService.CountAsync(tweet.TweetId);
+                        if (result.IsSuccess)
+                        {
+                            tweet.LikesNumber = result.Result;
+                        }
                     }
 
                     tweet.IsBookmarked = true;

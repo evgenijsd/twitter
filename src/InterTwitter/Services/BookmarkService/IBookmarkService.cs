@@ -12,5 +12,8 @@ namespace InterTwitter.Services.BookmarkService
         Task<AOResult> DeleteBoormarkAsync(int tweetId, int userId);
         Task<AOResult> DeleteAllBookmarksAsync(int userId);
         Task<AOResult<List<Bookmark>>> GetBookmarksAsync(int userId);
+        Task<AOResult<int>> AddBookmarkAsync(int tweetId, int userId);
+        Task<AOResult> AnyAsync(int tweetId, int userId);
+        List<Bookmark> GetBookmarks();
     }
 }

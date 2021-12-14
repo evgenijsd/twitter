@@ -1,106 +1,105 @@
 ﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
-using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace InterTwitter.Services.BookmarkService
+namespace InterTwitter.Services.LikeService
 {
-    public class BookmarkService : IBookmarkService
+    public class LikeService : ILikeService
     {
-        private List<Bookmark> _bookmarks;
+        private List<LikeModel> _likes;
 
-        public BookmarkService()
+        public LikeService()
         {
-            _bookmarks = new List<Bookmark>
+            _likes = new List<LikeModel>
             {
-                new Bookmark
+                new LikeModel
                 {
                     Id = 1,
                     UserId = 1,
                     TweetId = 1,
                 },
-                new Bookmark
+                new LikeModel
                 {
                     Id = 2,
                     UserId = 1,
                     TweetId = 2,
                 },
-                new Bookmark
+                new LikeModel
                 {
                     Id = 3,
                     UserId = 1,
                     TweetId = 3,
                 },
-                new Bookmark
+                new LikeModel
                 {
                     Id = 4,
                     UserId = 1,
                     TweetId = 4,
                 },
-                new Bookmark
+                new LikeModel
                 {
                     Id = 5,
                     UserId = 1,
                     TweetId = 5,
                 },
-                new Bookmark
+                new LikeModel
                 {
                     Id = 6,
                     UserId = 2,
                     TweetId = 1,
                 },
-                new Bookmark
+                new LikeModel
                 {
                     Id = 7,
                     UserId = 2,
                     TweetId = 2,
                 },
-                new Bookmark
+                new LikeModel
                 {
                     Id = 8,
                     UserId = 2,
                     TweetId = 3,
                 },
-                new Bookmark
+                new LikeModel
                 {
                     Id = 9,
                     UserId = 2,
                     TweetId = 4,
                 },
-                new Bookmark
+                new LikeModel
                 {
                     Id = 10,
                     UserId = 2,
                     TweetId = 5,
                 },
-                new Bookmark
+                new LikeModel
                 {
                     Id = 11,
                     UserId = 3,
                     TweetId = 1,
                 },
-                new Bookmark
+                new LikeModel
                 {
                     Id = 12,
                     UserId = 3,
                     TweetId = 2,
                 },
-                new Bookmark
+                new LikeModel
                 {
                     Id = 13,
                     UserId = 3,
                     TweetId = 3,
                 },
-                new Bookmark
+                new LikeModel
                 {
                     Id = 14,
                     UserId = 3,
                     TweetId = 4,
                 },
-                new Bookmark
+                new LikeModel
                 {
                     Id = 15,
                     UserId = 3,
@@ -111,18 +110,18 @@ namespace InterTwitter.Services.BookmarkService
 
         #region -- Public helpers --
 
-        public List<Bookmark> GetBookmarks()
+        public List<LikeModel> GetLikes()
         {
-            return _bookmarks;
+            return _likes;
         }
 
-        public async Task<AOResult<List<Bookmark>>> GetBookmarksAsync(int userId)
+        public async Task<AOResult<List<LikeModel>>> GetLikesAsync(int userId)
         {
-            var result = new AOResult<List<Bookmark>>();
+            var result = new AOResult<List<LikeModel>>();
 
             try
             {
-                var bookmarks = _bookmarks.Where(x => x.UserId == userId).ToList();
+                var bookmarks = _likes.Where(x => x.UserId == userId).ToList();
 
                 if (bookmarks != null)
                 {
@@ -135,24 +134,23 @@ namespace InterTwitter.Services.BookmarkService
             }
             catch (Exception ex)
             {
-                result.SetError($"{nameof(GetBookmarksAsync)}: exception", "Some issues", ex);
+                result.SetError($"{nameof(GetLikesAsync)}: exception", "Some issues", ex);
             }
 
             return result;
         }
 
-        public async Task<AOResult> DeleteAllBookmarksAsync(int userId)
+        public async Task<AOResult> DeleteLikeAsync(int tweetId, int userId)
         {
             var result = new AOResult();
             try
             {
-                var bookmark = _bookmarks.FirstOrDefault(x => x.UserId == userId);
+                var like = _likes.FirstOrDefault(x => x.UserId == userId && x.TweetId == tweetId);
 
-                if (bookmark != null)
+                if (like != null)
                 {
-                    _bookmarks.RemoveAll(x => x.UserId == userId);
-
                     result.SetSuccess();
+                    _likes.Remove(like);
                 }
                 else
                 {
@@ -161,51 +159,27 @@ namespace InterTwitter.Services.BookmarkService
             }
             catch (Exception ex)
             {
-                result.SetError($"{nameof(DeleteAllBookmarksAsync)}: exception", "Some issues", ex);
+                result.SetError($"{nameof(DeleteLikeAsync)}: exception", "Some issues", ex);
             }
 
             return result;
         }
 
-        public async Task<AOResult> DeleteBoormarkAsync(int tweetId, int userId)
-        {
-            var result = new AOResult();
-            try
-            {
-                var bookmark = _bookmarks.FirstOrDefault(x => x.UserId == userId && x.TweetId == tweetId);
-
-                if (bookmark != null)
-                {
-                    result.SetSuccess();
-                    _bookmarks.Remove(bookmark);
-                }
-                else
-                {
-                    result.SetFailure("not found any bookmark");
-                }
-            }
-            catch (Exception ex)
-            {
-                result.SetError($"{nameof(DeleteBoormarkAsync)}: exception", "Some issues", ex);
-            }
-
-            return result;
-        }
-
-        public async Task<AOResult<int>> AddBookmarkAsync(int tweetId, int userId)
+        public async Task<AOResult<int>> AddLikeAsync(int tweetId, int userId)
         {
             var result = new AOResult<int>();
             try
             {
-                var bookmark = new Bookmark
+                var like = new LikeModel
                 {
-                    Id = _bookmarks.Count() + 1,
+                    Id = _likes.Count() + 1,
                     TweetId = tweetId,
                     UserId = userId,
                     Notification = true,
                 };
-                _bookmarks.Add(bookmark);
-                int id = _bookmarks.Last().Id;
+
+                _likes.Add(like);
+                int id = _likes.Last().Id;
                 if (id > 0)
                 {
                     result.SetSuccess(id);
@@ -217,7 +191,7 @@ namespace InterTwitter.Services.BookmarkService
             }
             catch (Exception ex)
             {
-                result.SetError($"Exception: {nameof(AddBookmarkAsync)}", "Wrong result", ex);
+                result.SetError($"Exception: {nameof(AddLikeAsync)}", "Wrong result", ex);
             }
 
             return result;
@@ -228,7 +202,7 @@ namespace InterTwitter.Services.BookmarkService
             var result = new AOResult();
             try
             {
-                var any = _bookmarks.Any(x => x.TweetId == tweetId && x.UserId == userId);
+                var any = _likes.Any(x => x.TweetId == tweetId && x.UserId == userId);
                 if (any)
                 {
                     result.SetSuccess();
@@ -240,7 +214,30 @@ namespace InterTwitter.Services.BookmarkService
             }
             catch (Exception ex)
             {
-                result.SetError($"Exception: {nameof(AddBookmarkAsync)}", "Wrong result", ex);
+                result.SetError($"Exception: {nameof(AnyAsync)}", "Wrong result", ex);
+            }
+
+            return result;
+        }
+
+        public async Task<AOResult<int>> CountAsync(int tweetId)
+        {
+            var result = new AOResult<int>();
+            try
+            {
+                var count = _likes.Count(x => x.TweetId == tweetId);
+                if (count >= 0)
+                {
+                    result.SetSuccess(count);
+                }
+                else
+                {
+                    result.SetFailure();
+                }
+            }
+            catch (Exception ex)
+            {
+                result.SetError($"Exception: {nameof(CountAsync)}", "Wrong result", ex);
             }
 
             return result;

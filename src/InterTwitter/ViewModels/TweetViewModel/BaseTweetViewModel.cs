@@ -121,6 +121,15 @@ namespace InterTwitter.Models.TweetViewModel
         private Task OnLikeAsync(BaseTweetViewModel tweet)
         {
             IsTweekLiked = !IsTweekLiked;
+            if (IsTweekLiked)
+            {
+                MessagingCenter.Send<MessageEvent>(new MessageEvent(TweetId), MessageEvent.AddLike);
+            }
+            else
+            {
+                MessagingCenter.Send<MessageEvent>(new MessageEvent(TweetId), MessageEvent.DeleteLike);
+            }
+
             return Task.CompletedTask;
         }
 
@@ -132,9 +141,12 @@ namespace InterTwitter.Models.TweetViewModel
         private Task OnMarkAsync(BaseTweetViewModel arg)
         {
             IsBookmarked = !IsBookmarked;
-            if (!IsBookmarked)
+            if (IsBookmarked)
             {
-                //MessagingCenter.Send(this, "DeleteBookmark", TweetId);
+                MessagingCenter.Send<MessageEvent>(new MessageEvent(TweetId), MessageEvent.AddBookmark);
+            }
+            else
+            {
                 MessagingCenter.Send<MessageEvent>(new MessageEvent(TweetId), MessageEvent.DeleteBookmark);
             }
 
