@@ -1,6 +1,5 @@
 ﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
-using InterTwitter.Services.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +11,10 @@ namespace InterTwitter.Services
     {
         private readonly IMockService _mockService;
 
-        private readonly ISettingsManager _settingsManager;
-
         public TweetService(
-            IMockService mockService,
-            ISettingsManager settingsManager)
+            IMockService mockService)
         {
             _mockService = mockService;
-            _settingsManager = settingsManager;
         }
 
         #region -- ITweetService implementation --

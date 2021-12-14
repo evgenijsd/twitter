@@ -81,7 +81,7 @@
                         </ffimageloading:CachedImage.GestureRecognizers>
                         
                         <ffimageloading:CachedImage.Triggers>
-                            <DataTrigger Binding="{Binding IsTweekLiked}"
+                            <DataTrigger Binding="{Binding IsTweetLiked}"
                                          TargetType="ffimageloading:CachedImage"
                                          Value="true">
                                 <Setter Property="Source" Value="ic_like_blue"/>

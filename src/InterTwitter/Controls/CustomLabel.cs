@@ -9,7 +9,7 @@ namespace InterTwitter.Controls
     {
         public CustomLabel()
         {
-            SizeChanged += CustomLabel_OnSizeChanged;
+            SizeChanged += OnSizeChanged;
         }
 
         #region -- Public properties --
@@ -30,7 +30,7 @@ namespace InterTwitter.Controls
 
         #region  -- Private helpers --
 
-        private void CustomLabel_OnSizeChanged(object sender, EventArgs e)
+        private void OnSizeChanged(object sender, EventArgs e)
         {
             var maxRowNumber = 5;
             var fontSize = (sender as Label).FontSize;
