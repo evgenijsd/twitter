@@ -139,9 +139,9 @@ namespace InterTwitter.ViewModels
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
-            if (parameters.ContainsKey("User"))
+            if (parameters.ContainsKey(nameof(User)))
             {
-                User = parameters.GetValue<UserModel>("User");
+                User = parameters.GetValue<UserModel>(nameof(User));
             }
         }
         #endregion
@@ -163,12 +163,12 @@ namespace InterTwitter.ViewModels
                 User.Password = Password;
                 User.AvatarPath = "pic_profile_big";
                 User.BackgroundUserImagePath = "pic_profile_big";
-                var result = await _registrationService.UserAddAsync(User);
+                var result = await _registrationService.AddAsync(User);
                 if (result.IsSuccess)
                 {
                     DependencyService.Get<IKeyboardHelper>().HideKeyboard();
 
-                    var p = new NavigationParameters { { "User", User } };
+                    var p = new NavigationParameters { { nameof(User), User } };
                     await NavigationService.NavigateAsync($"/{nameof(StartPage)}", p);
                 }
                 else

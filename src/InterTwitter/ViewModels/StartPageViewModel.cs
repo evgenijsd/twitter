@@ -154,9 +154,9 @@ namespace InterTwitter.ViewModels
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
-            if (parameters.ContainsKey("User"))
+            if (parameters.ContainsKey(nameof(User)))
             {
-                User = parameters.GetValue<UserModel>("User");
+                User = parameters.GetValue<UserModel>(nameof(User));
                 Name = User.Name;
                 Email = User.Email;
                 IsAutoLogin = false;
@@ -166,10 +166,11 @@ namespace InterTwitter.ViewModels
         public override async void Initialize(INavigationParameters parameters)
         {
             await Task.Delay(TimeSpan.FromSeconds(0.1));
-            var user = _registrationService.GetUsers().FirstOrDefault(x => x.Id == UserId);
-            if (user != null && IsAutoLogin)
+            App.Current.UserAppTheme = OSAppTheme.Light;
+            var user = await _registrationService?.GetByIdAsync(UserId);
+            if (user.IsSuccess && IsAutoLogin)
             {
-                User = user;
+                User = user.Result;
                 var p = new NavigationParameters { { nameof(User), User } };
                 await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", p);
             }
@@ -184,7 +185,7 @@ namespace InterTwitter.ViewModels
         {
             DependencyService.Get<IKeyboardHelper>().HideKeyboard();
 
-            var emailCheck = await _registrationService.CheckTheCorrectEmailAsync(Email);
+            var emailCheck = await _registrationService?.CheckTheCorrectEmailAsync(Email);
             if (!emailCheck.Result && !string.IsNullOrEmpty(Email))
             {
                 await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertLoginNotExist, Resources.Resource.Ok);
@@ -210,13 +211,13 @@ namespace InterTwitter.ViewModels
 
             User.Email = Email;
             User.Name = Name;
-            var p = new NavigationParameters { { "User", User } };
+            var p = new NavigationParameters { { nameof(User), User } };
             await NavigationService.NavigateAsync($"{nameof(LogInPage)}", p);
         }
 
         private async Task OnCreateCommandAsync()
         {
-            var emailCheck = await _registrationService.CheckTheCorrectEmailAsync(Email);
+            var emailCheck = await _registrationService?.CheckTheCorrectEmailAsync(Email);
             if (emailCheck.Result)
             {
                 await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertLoginTaken, Resources.Resource.Ok);
@@ -232,7 +233,7 @@ namespace InterTwitter.ViewModels
 
                 User.Email = Email;
                 User.Name = Name;
-                var p = new NavigationParameters { { "User", User } };
+                var p = new NavigationParameters { { nameof(User), User } };
                 await NavigationService.NavigateAsync($"{nameof(CreatePage)}", p);
             }
         }

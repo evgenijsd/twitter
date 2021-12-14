@@ -53,6 +53,11 @@ namespace InterTwitter.Services.Authorization
             return result;
         }
 
+        public async Task<AOResult<UserModel>> GetCurrentUserAsync()
+        {
+            return await _registrationService?.GetByIdAsync(UserId);
+        }
+
         #endregion
     }
 }

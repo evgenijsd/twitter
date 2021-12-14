@@ -19,45 +19,54 @@ namespace InterTwitter.Services.Registration
                 {
                     Id = 1,
                     Name = "Bill Gates",
-                    Email = "aaa@aaa.aaa",
-                    Password = "1234567A",
-                    AvatarPath = "https://inhabitat.com/wp-content/blogs.dir/1/files/2017/08/Bill-Gates-889x598.jpg",
+                    Email = "test@gmail.com",
+                    Password = "1111",
+                    AvatarPath = "https://cdn.allfamous.org/people/avatars/bill-gates-zdrr-allfamous.org.jpg",
                     BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
                 new UserModel
                 {
                     Id = 2,
                     Name = "Kate White",
-                    Email = "bbb@bbb.bbb",
-                    Password = "1234567A",
-                    AvatarPath = "https://i.pinimg.com/236x/01/e1/10/01e11011168eb3e1c83d16747192d490.jpg",
+                    Email = "test2@gmail.com",
+                    Password = "2222",
+                    AvatarPath = "https://www.iso.org/files/live/sites/isoorg/files/news/News_archive/2021/03/Ref2639/Ref2639.jpg/thumbnails/300x300",
                     BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
                 new UserModel
                 {
                     Id = 3,
                     Name = "Sam Smith",
-                    Email = "ccc@ccc.ccc",
-                    Password = "1234567A",
-                    AvatarPath = "http://www.kinofilms.ua/images/person/big/738231.jpg",
+                    Email = "test3@gmail.com",
+                    Password = "3333",
+                    AvatarPath = "https://i.ebayimg.com/images/g/6EIAAOSwJHlfnm3a/s-l300.jpg",
                     BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
                 new UserModel
                 {
                     Id = 4,
                     Name = "Steve Jobs",
-                    Email = "ddd@ddd.ddd",
-                    Password = "1234567A",
-                    AvatarPath = "https://upload.wikimedia.org/wikipedia/commons/b/b9/Steve_Jobs_Headshot_2010-CROP.jpg",
+                    Email = "test4@gmail.com",
+                    Password = "4444",
+                    AvatarPath = "https://www.acumarketing.com/wp-content/uploads/2011/08/steve-jobs.jpg",
                     BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
                 new UserModel
                 {
                     Id = 5,
-                    Name = "Elon Musk",
-                    Email = "eee@eee.eee",
-                    Password = "1234567A",
-                    AvatarPath = "https://ichef.bbci.co.uk/news/640/cpsprodpb/81F4/production/_118486233_gettyimages-1229892674.jpg",
+                    Name = "Elon musk",
+                    Email = "test5@gmail.com",
+                    Password = "4444",
+                    AvatarPath = "https://file.liga.net/images/general/2021/09/20/thumbnail-20210920123323-9397.jpg?v=1632132620",
+                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
+                },
+                new UserModel
+                {
+                    Id = 6,
+                    Name = "Keano Reaves",
+                    Email = "test6@gmail.com",
+                    Password = "4444",
+                    AvatarPath = "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTE5NTU2MzE2MzU1NzI0ODEx/keanu-reeves-9454211-1-402.jpg",
                     BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
             };
@@ -96,7 +105,30 @@ namespace InterTwitter.Services.Registration
             return result;
         }
 
-        public async Task<AOResult<int>> UserAddAsync(UserModel user)
+        public async Task<AOResult<UserModel>> GetByIdAsync(int id)
+        {
+            var result = new AOResult<UserModel>();
+            try
+            {
+                var user = _users?.FirstOrDefault(x => x.Id == id);
+                if (user != null)
+                {
+                    result.SetSuccess(user);
+                }
+                else
+                {
+                    result.SetFailure();
+                }
+            }
+            catch (Exception ex)
+            {
+                result.SetError($"Exception: {nameof(GetByIdAsync)}", Resources.Resource.AlertDatabase, ex);
+            }
+
+            return result;
+        }
+
+        public async Task<AOResult<int>> AddAsync(UserModel user)
         {
             var result = new AOResult<int>();
             try
@@ -115,7 +147,7 @@ namespace InterTwitter.Services.Registration
             }
             catch (Exception ex)
             {
-                result.SetError($"Exception: {nameof(UserAddAsync)}", Resources.Resource.AlertDatabase, ex);
+                result.SetError($"Exception: {nameof(AddAsync)}", Resources.Resource.AlertDatabase, ex);
             }
 
             return result;

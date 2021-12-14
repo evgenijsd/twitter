@@ -1,10 +1,9 @@
-﻿using InterTwitter.Services.Authorization;
-using DLToolkit.Forms.Controls;
+﻿using DLToolkit.Forms.Controls;
 using InterTwitter.Services;
-using InterTwitter.ViewModels;
-using InterTwitter.ViewModels.Flyout;
+using InterTwitter.Services.Authorization;
 using InterTwitter.Services.Registration;
 using InterTwitter.ViewModels;
+using InterTwitter.ViewModels.Flyout;
 using InterTwitter.Views;
 using Prism;
 using Prism.Ioc;
@@ -53,7 +52,6 @@ namespace InterTwitter
             Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             FlowListView.Init();
             await NavigationService.NavigateAsync($"/{nameof(StartPage)}");
-            //await NavigationService.NavigateAsync(nameof(FlyOutPage));
         }
 
         protected override void OnStart()
