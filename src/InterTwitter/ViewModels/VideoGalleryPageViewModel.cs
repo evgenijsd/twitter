@@ -44,9 +44,9 @@ namespace InterTwitter.ViewModels
 
         #endregion
 
-        #region -- IInitializeAsync implementation --
+        #region -- INavigationAware implementation --
 
-        public async override Task InitializeAsync(INavigationParameters parameters)
+        public async override void OnNavigatedTo(INavigationParameters parameters)
         {
             if (parameters.Count > 0)
             {
