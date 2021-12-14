@@ -41,10 +41,18 @@ namespace InterTwitter.ViewModels
 
             Keywords = new List<string>()
             {
+                "#AMAs",
+                "#NoNuanceNovember",
+                "#blockchain",
                 "#coffeeTime",
+                "#teaTime",
                 "laborum",
                 "#morning",
-                "#teaTime",
+                "nemo",
+                "sed",
+                "odit",
+                "eaque",
+                "um",
             };
         }
 
@@ -190,7 +198,7 @@ namespace InterTwitter.ViewModels
             }
         }
 
-        private async Task InitTweetsBeforeDisplayingAsync(IEnumerable<TweetModel> tweets)
+        private async Task InitTweetsForDisplayingAsync(IEnumerable<TweetModel> tweets)
         {
             var tweetViewModels = new List<BaseTweetViewModel>(
                 tweets.Select(x => x.Media == ETypeAttachedMedia.Photos
@@ -207,6 +215,7 @@ namespace InterTwitter.ViewModels
                     tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
                     tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
                     tweet.UserName = tweetAuthor.Result.Name;
+                    tweet.Keywords = Keywords;
                 }
             }
 
@@ -265,7 +274,7 @@ namespace InterTwitter.ViewModels
                 if (result.IsSuccess)
                 {
                     TweetSearchResult = ESearchResult.Success;
-                    await InitTweetsBeforeDisplayingAsync(result.Result);
+                    await InitTweetsForDisplayingAsync(result.Result);
                 }
                 else
                 {

@@ -58,6 +58,13 @@ namespace InterTwitter.Models.TweetViewModel
             }
         }
 
+        private List<string> _keyword;
+        public List<string> Keywords
+        {
+            get => _keyword;
+            set => SetProperty(ref _keyword, value);
+        }
+
         public bool IsTextVisible => !string.IsNullOrEmpty(Text);
 
         private IEnumerable<string> _mediaPaths;

@@ -29,19 +29,15 @@
                        Text="{Binding UserName}" 
                        FontAttributes="Bold"/>
 
-                <controls:CustomLabel Style="{StaticResource tstyle_i7}" 
-                       VerticalOptions="Start"
-                       MaxLines="5" 
-                       LineBreakMode="TailTruncation"
-                       IsVisible="{Binding IsTextVisible}"
-                       Text="{Binding Text}">
-                    <controls:CustomLabel.FormattedText>
-                        <FormattedString>
-                            <Span Text="{Binding Text}" Style="{StaticResource tstyle_i7}"/>
-                            <Span Text="more" TextColor="{ StaticResource appcolor_i1}"/>
-                        </FormattedString>
-                    </controls:CustomLabel.FormattedText>
-                </controls:CustomLabel>
+                <controls:KeywordHighlightingLabel Style="{DynamicResource tstyle_i7}"
+                                                   LineSpacing="{OnPlatform Android=1.3, iOS=6.25}"
+                                                   MaxLines="5" 
+                                                   LineBreakMode="TailTruncation"
+                                                   Text="{Binding Text, StringFormat='{0}... more'}"
+                                                   Keywords="{Binding Keywords}"
+                                                   VerticalOptions="Start"
+                                                   IsVisible="{Binding IsTextVisible}"
+                                                   BackgroundColor="Yellow"/>
 
                 <flv:FlowListView FlowColumnCount="{Binding ColumnNumber}"
                                   RowHeight="{Binding RowHeight}"
