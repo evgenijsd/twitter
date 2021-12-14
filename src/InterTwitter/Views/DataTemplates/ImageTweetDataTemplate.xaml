@@ -30,14 +30,13 @@
                        FontAttributes="Bold"/>
 
                 <controls:KeywordHighlightingLabel Style="{DynamicResource tstyle_i7}"
+                                                   VerticalOptions="Start"
+                                                   IsVisible="{Binding IsTextVisible}"
                                                    LineSpacing="{OnPlatform Android=1.3, iOS=6.25}"
                                                    MaxLines="5" 
                                                    LineBreakMode="TailTruncation"
-                                                   Text="{Binding Text, StringFormat='{0}... more'}"
-                                                   Keywords="{Binding Keywords}"
-                                                   VerticalOptions="Start"
-                                                   IsVisible="{Binding IsTextVisible}"
-                                                   BackgroundColor="Yellow"/>
+                                                   Text="{Binding Text}"
+                                                   Keywords="{Binding Keywords}"/>
 
                 <flv:FlowListView FlowColumnCount="{Binding ColumnNumber}"
                                   RowHeight="{Binding RowHeight}"

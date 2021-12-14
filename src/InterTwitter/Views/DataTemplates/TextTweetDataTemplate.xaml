@@ -30,13 +30,13 @@
 
                 <!--ok-->
                 <controls:KeywordHighlightingLabel Style="{DynamicResource tstyle_i7}"
+                                                   VerticalOptions="Start"
+                                                   IsVisible="{Binding IsTextVisible}"
                                                    LineSpacing="{OnPlatform Android=1.3, iOS=6.25}"
                                                    MaxLines="5" 
                                                    LineBreakMode="TailTruncation"
                                                    Text="{Binding Text}"
-                                                   Keywords="{Binding Keywords}"
-                                                   VerticalOptions="Start"
-                                                   IsVisible="{Binding IsTextVisible}"/>
+                                                   Keywords="{Binding Keywords}"/>
 
                 <StackLayout Orientation="Horizontal"
                              HeightRequest="20"

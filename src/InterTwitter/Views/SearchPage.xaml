@@ -172,6 +172,7 @@
                                                                        HorizontalOptions="CenterAndExpand"
                                                                        HorizontalTextAlignment="Center"
                                                                        Style="{DynamicResource tstyle_i5}"
+                                                                       LineSpacing="{OnPlatform Android=1.3, iOS=6.25}" 
                                                                        Text="{Binding NoResultsMessage}"/>
 
                                         </StackLayout>
