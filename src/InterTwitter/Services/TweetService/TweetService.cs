@@ -11,7 +11,9 @@ namespace InterTwitter.Services
     public class TweetService : ITweetService
     {
         private readonly IMockService _mockService;
+
         private readonly ISettingsManager _settingsManager;
+
         public TweetService(
             IMockService mockService,
             ISettingsManager settingsManager)
@@ -25,6 +27,7 @@ namespace InterTwitter.Services
         public async Task<AOResult<IEnumerable<TweetModel>>> GetAllTweetsAsync()
         {
             await Task.Delay(50);
+
             var result = new AOResult<IEnumerable<TweetModel>>();
             try
             {
@@ -47,16 +50,16 @@ namespace InterTwitter.Services
             return result;
         }
 
-        public async Task<AOResult<UserModel>> GetUserAsync(int userId)
+        public Task<AOResult<UserModel>> GetAuthorAsync(int authorId)
         {
             var result = new AOResult<UserModel>();
 
             try
             {
-                var user = _mockService.Users.Where(x => x.Id == userId).FirstOrDefault();
-                if (user != null)
+                var author = _mockService.Users?.Where(x => x.Id == authorId)?.FirstOrDefault();
+                if (author != null)
                 {
-                    result.SetSuccess(user);
+                    result.SetSuccess(author);
                 }
                 else
                 {
@@ -65,10 +68,10 @@ namespace InterTwitter.Services
             }
             catch (Exception ex)
             {
-                result.SetError($"{nameof(GetUserAsync)}: exception", "Some issues", ex);
+                result.SetError($"{nameof(GetAuthorAsync)}: exception", "Some issues", ex);
             }
 
-            return result;
+            return Task.FromResult(result);
         }
 
         #endregion

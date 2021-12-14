@@ -8,6 +8,7 @@
               x:Class="InterTwitter.Views.DataTemplates.ImageTweetDataTemplate">
 
     <StackLayout Spacing="0">
+        
         <StackLayout Padding="15, 15, 15, 0"
                      Orientation="Horizontal"
                      Spacing="0">
@@ -47,6 +48,7 @@
                                   FlowItemsSource="{Binding MediaPaths}">
 
                     <flv:FlowListView.FlowColumnTemplate>
+                        
                         <DataTemplate>
                             <Frame Margin="2"
                                    Padding="0"
@@ -59,6 +61,7 @@
 
                             </Frame>
                         </DataTemplate>
+                        
                     </flv:FlowListView.FlowColumnTemplate>
 
                 </flv:FlowListView>
@@ -84,16 +87,19 @@
                                 <Setter Property="Source" Value="ic_like_blue"/>
                             </DataTrigger>
                         </ffimageloading:CachedImage.Triggers>
+                        
                     </ffimageloading:CachedImage>
 
                     <Label Style="{DynamicResource tstyle_i9}"
                            Text="{Binding LikesNumber}" 
                            Margin="0, 1, 15, -1">
+                        
                         <Label.Triggers>
-                            <DataTrigger TargetType="Label" Binding="{Binding IsWeetLiked}" Value="true">
+                            <DataTrigger TargetType="Label" Binding="{Binding IsTweetLiked}" Value="true">
                                 <Setter Property="TextColor" Value="{DynamicResource appcolor_i1}"/>
                             </DataTrigger>
                         </Label.Triggers>
+                        
                     </Label>
 
                     <ffimageloading:CachedImage Source="ic_bookmarks_gray">
@@ -113,6 +119,7 @@
                 </StackLayout>
 
             </StackLayout>
+            
         </StackLayout>
 
         <BoxView HeightRequest="1"
@@ -120,4 +127,5 @@
                  BackgroundColor="{DynamicResource appcolor_i6}"/>
 
     </StackLayout>
+    
 </DataTemplate>

@@ -20,10 +20,9 @@
             
 
             <controls:CustomNavigationbar Grid.Row="0"
-                                          IsVisible="{Binding Source={x:Reference customCollectView}, Path=IsNavigationBarVisible}"
                                           Title="Home"
-                                          RightUserImageButton="ic_add_blue"
-                                          LeftImageAddButton="pic_profile_small"
+                                          RightButtonImageSource="ic_add_blue"
+                                          LeftButtonImageSource="pic_profile_small"
                                           LeftAddButtonCommand="{Binding OpenFlyoutCommandAsync}"/>
 
             <controls:CustomCollectionView x:Name="customCollectView"
@@ -35,7 +34,7 @@
                         IsVisible="{Binding Source={x:Reference customCollectView}, Path=IsAddButtonVisible}"
                         CornerRadius="20"
                         VerticalOptions="EndAndExpand"
-                        Shades="{sh:SingleShade Offset='0, 5',
+                        Shades="{sh:SingleShade Offset='0, 10',
                                                 Opacity={OnPlatform Android=0.4, iOS=0.08},
                                                 BlurRadius={OnPlatform Android=10, iOS=8},
                                                 Color={StaticResource appcolor_i3}}">
@@ -61,6 +60,7 @@
         </Grid>
 
     </local:BaseContentPage.Content>
+    
 </local:BaseContentPage>
 
 

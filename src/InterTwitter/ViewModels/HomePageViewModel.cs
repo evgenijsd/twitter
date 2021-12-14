@@ -74,11 +74,11 @@ namespace InterTwitter.ViewModels
 
             if (getTweetResult.IsSuccess)
             {
-                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == ETypeAttachedMedia.Photos || x.Media == ETypeAttachedMedia.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()).OrderByDescending(x => x.CreationTime));
+                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
 
                 foreach (var tweet in tweetViewModels)
                 {
-                    var tweetAuthor = await _tweetService.GetUserAsync(tweet.UserId);
+                    var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
 
                     if (tweetAuthor.IsSuccess)
                     {

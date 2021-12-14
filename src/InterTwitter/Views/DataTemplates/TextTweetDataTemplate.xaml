@@ -49,23 +49,25 @@
                         </ffimageloading:CachedImage.GestureRecognizers>
                         
                         <ffimageloading:CachedImage.Triggers>
-                            <DataTrigger Binding="{Binding IsTweekLiked}"
+                            <DataTrigger Binding="{Binding IsTweetLiked}"
                                          TargetType="ffimageloading:CachedImage"
                                          Value="true">
                                 <Setter Property="Source" Value="ic_like_blue"/>
                             </DataTrigger>
                         </ffimageloading:CachedImage.Triggers>
+                        
                     </ffimageloading:CachedImage>
 
                     <Label Style="{DynamicResource tstyle_i9}"
                            Text="{Binding LikesNumber}" 
-                           Margin="0, 1, 15, -1" 
-                           >
+                           Margin="0, 1, 15, -1">
+                        
                         <Label.Triggers>
-                            <DataTrigger TargetType="Label" Binding="{Binding IsWeetLiked}" Value="true">
+                            <DataTrigger TargetType="Label" Binding="{Binding IsTweetLiked}" Value="true">
                                 <Setter Property="TextColor" Value="{DynamicResource appcolor_i1}"/>
                             </DataTrigger>
                         </Label.Triggers>
+                        
                     </Label>
 
                     <ffimageloading:CachedImage Source="ic_bookmarks_gray">
@@ -85,6 +87,7 @@
                 </StackLayout>
 
             </StackLayout>
+            
         </StackLayout>
 
         <BoxView HeightRequest="1"
@@ -92,4 +95,5 @@
                  BackgroundColor="{DynamicResource appcolor_i6}"/>
 
     </StackLayout>
+    
 </DataTemplate>

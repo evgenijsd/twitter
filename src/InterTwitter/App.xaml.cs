@@ -24,6 +24,7 @@ namespace InterTwitter
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
             containerRegistry.RegisterInstance<IMockService>(Container.Resolve<MockService>());
             containerRegistry.RegisterInstance<ITweetService>(Container.Resolve<TweetService>());
+
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<FlyOutPage, FlyOutPageViewModel>();

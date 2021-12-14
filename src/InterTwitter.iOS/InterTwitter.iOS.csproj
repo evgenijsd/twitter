@@ -112,6 +112,7 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Renderers\NoBounceRenderer.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -202,7 +203,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
-    <Folder Include="Renderers\" />
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
@@ -735,38 +735,5 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\pic_empty_state_2%403x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\gif1.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\image1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\image2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\image6.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\image5.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\image4.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\image3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\man.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\man2.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\woman.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\woman2.jpg" />
   </ItemGroup>
 </Project>

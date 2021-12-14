@@ -4,24 +4,26 @@
              x:Class="InterTwitter.Controls.CustomNavigationbar"
              x:Name="customNavigationbar">
     <ContentView.Content>
+        
         <StackLayout Spacing="0">
+            
             <StackLayout Orientation="Horizontal" Spacing="0"
                          HeightRequest="48">
 
-                <ImageButton Source="{Binding LeftImageAddButton, Source={x:Reference customNavigationbar}}" 
-                         HorizontalOptions="StartAndExpand"
-                         WidthRequest="24"
-                         HeightRequest="24"
-                         Margin="14, 0, 0, 0"
-                         BackgroundColor="Transparent"
-                         Command="{Binding LeftAddButtonCommand, Source={x:Reference customNavigationbar}}"/>
+                <ImageButton Source="{Binding LeftButtonImageSource, Source={x:Reference customNavigationbar}}" 
+                             HorizontalOptions="StartAndExpand"
+                             WidthRequest="24"
+                             HeightRequest="24"
+                             Margin="14, 0, 0, 0"
+                             BackgroundColor="Transparent"
+                             Command="{Binding LeftAddButtonCommand, Source={x:Reference customNavigationbar}}"/>
 
                 <Label Text="{Binding Title, Source={x:Reference customNavigationbar}}"
                        Style="{StaticResource tstyle_i4}"
                        HorizontalOptions="Center"
                        Margin="0, 10, 0, -10"/>
 
-                <ImageButton Source="{Binding RightUserImageButton, Source={x:Reference customNavigationbar}}"
+                <ImageButton Source="{Binding LeftButtonImageSource, Source={x:Reference customNavigationbar}}"
                          HorizontalOptions="EndAndExpand"
                          WidthRequest="24"
                          HeightRequest="24"
@@ -33,7 +35,9 @@
             <BoxView HeightRequest="1" 
                      BackgroundColor="{StaticResource appcolor_i6}"
                      HorizontalOptions="FillAndExpand"/>
+            
         </StackLayout>
         
     </ContentView.Content>
+    
 </ContentView>

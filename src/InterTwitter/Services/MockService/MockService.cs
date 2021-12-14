@@ -32,7 +32,7 @@ namespace InterTwitter.Services
                     Name = "Bill Gates",
                     Email = "test@gmail.com",
                     Password = "1111",
-                    AvatarPath = "https://inhabitat.com/wp-content/blogs.dir/1/files/2017/08/Bill-Gates-889x598.jpg",
+                    AvatarPath = "https://cdn.allfamous.org/people/avatars/bill-gates-zdrr-allfamous.org.jpg",
                     BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
                 new UserModel
@@ -41,7 +41,7 @@ namespace InterTwitter.Services
                     Name = "Kate White",
                     Email = "test2@gmail.com",
                     Password = "2222",
-                    AvatarPath = "https://i.pinimg.com/236x/01/e1/10/01e11011168eb3e1c83d16747192d490.jpg",
+                    AvatarPath = "https://www.iso.org/files/live/sites/isoorg/files/news/News_archive/2021/03/Ref2639/Ref2639.jpg/thumbnails/300x300",
                     BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
                 new UserModel
@@ -50,7 +50,7 @@ namespace InterTwitter.Services
                     Name = "Sam Smith",
                     Email = "test3@gmail.com",
                     Password = "3333",
-                    AvatarPath = "http://www.kinofilms.ua/images/person/big/738231.jpg",
+                    AvatarPath = "https://i.ebayimg.com/images/g/6EIAAOSwJHlfnm3a/s-l300.jpg",
                     BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
                 new UserModel
@@ -59,16 +59,25 @@ namespace InterTwitter.Services
                     Name = "Steve Jobs",
                     Email = "test4@gmail.com",
                     Password = "4444",
-                    AvatarPath = "https://upload.wikimedia.org/wikipedia/commons/b/b9/Steve_Jobs_Headshot_2010-CROP.jpg",
+                    AvatarPath = "https://www.acumarketing.com/wp-content/uploads/2011/08/steve-jobs.jpg",
                     BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
                 new UserModel
                 {
                     Id = 5,
-                    Name = "Elon musk ",
-                    Email = "test4@gmail.com",
+                    Name = "Elon musk",
+                    Email = "test5@gmail.com",
                     Password = "4444",
-                    AvatarPath = "https://ichef.bbci.co.uk/news/640/cpsprodpb/81F4/production/_118486233_gettyimages-1229892674.jpg",
+                    AvatarPath = "https://file.liga.net/images/general/2021/09/20/thumbnail-20210920123323-9397.jpg?v=1632132620",
+                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
+                },
+                new UserModel
+                {
+                    Id = 6,
+                    Name = "Keano Reaves",
+                    Email = "test6@gmail.com",
+                    Password = "4444",
+                    AvatarPath = "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTE5NTU2MzE2MzU1NzI0ODEx/keanu-reeves-9454211-1-402.jpg",
                     BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
             };
@@ -82,14 +91,13 @@ namespace InterTwitter.Services
                 {
                     Id = 1,
                     UserId = 1,
-                    Media = Enums.ETypeAttachedMedia.Photos,
+                    Media = Enums.EAttachedMediaType.Photos,
                     MediaPaths = new List<string>
                     {
-                        "https://images.unsplash.com/photo-1610878180933-123728745d22?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2FuYWRhJTIwbmF0dXJlfGVufDB8fDB8fA%3D%3D&w=1000&q=80",
-                        "https://i.pinimg.com/originals/a7/3d/6e/a73d6e4ac85c6a822841e449b24c78e1.jpg",
-                        "https://media.springernature.com/full/springer-cms/rest/v1/img/18893370/v1/height/320",
-                        "https://www.lombardodier.com/files/live/sites/loportail/files/news/2021/May/20210521/Nature_LOcom.jpg",
-                        "https://aka.ms/campus.jpg",
+                        "https://oboi-lux.com.ua/23613-home_default/fotooboi-s-prirodoj.jpg",
+                        "https://fotooboimarket.com.ua/11134-home_default/priroda.jpg",
+                        "https://oboi-lux.com.ua/23595-home_default/fotooboi-s-prirodoj.jpg",
+                        "http://intpicture.com/wp-content/uploads/2011/07/Nature-64-034-Copy-300x300.jpg",
                     },
                     CreationTime = DateTime.Now,
                 },
@@ -98,10 +106,10 @@ namespace InterTwitter.Services
                     Id = 2,
                     UserId = 2,
                     Text = "onsequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
-                    Media = Enums.ETypeAttachedMedia.Gif,
+                    Media = Enums.EAttachedMediaType.Gif,
                     MediaPaths = new List<string>
                     {
-                        "https://c.tenor.com/nMkmGwGH8s8AAAAd/elon-musk-smoke.gif",
+                        "https://thumbs.gfycat.com/PaltryWickedCrayfish-max-1mb.gif",
                     },
                     CreationTime = DateTime.Now,
                 },
@@ -110,10 +118,10 @@ namespace InterTwitter.Services
                     Id = 3,
                     UserId = 3,
                     Text = "um quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
-                    Media = Enums.ETypeAttachedMedia.Video,
+                    Media = Enums.EAttachedMediaType.Video,
                     MediaPaths = new List<string>
                     {
-                       "https://www.youtube.com/embed/BWfBP5sTW18",
+                       "https://www.youtube.com/embed/_hGuLM4Y-xM",
                     },
                     CreationTime = DateTime.Now,
                 },
@@ -122,7 +130,7 @@ namespace InterTwitter.Services
                     Id = 4,
                     UserId = 4,
                     Text = "Only text",
-                    Media = Enums.ETypeAttachedMedia.None,
+                    Media = Enums.EAttachedMediaType.None,
                     CreationTime = DateTime.Now,
                 },
                 new TweetModel
@@ -130,24 +138,36 @@ namespace InterTwitter.Services
                     Id = 5,
                     UserId = 5,
                     Text = "Hi there!",
-                    Media = Enums.ETypeAttachedMedia.Photos,
+                    Media = Enums.EAttachedMediaType.Photos,
                     CreationTime = DateTime.Now,
                     MediaPaths = new List<string>
                     {
-                       "https://i.guim.co.uk/img/media/32e584f481b3900eb8ffb0727990cafccec100e0/0_129_5321_3194/master/5321.jpg?width=465&quality=45&auto=format&fit=max&dpr=2&s=b463391383c3c2f3444f99697bcdc2c6",
-                       "http://internetua.com/uploads/wysiwyg/RomanR/ELON.SPACEX.web_.jpg",
+                       "https://akm-img-a-in.tosshub.com/indiatoday/images/story/202110/Elon-Musk_1200x768.png?WgPbwF44wHXitAAL7xu8BNhZXQXIPBbV&size=770:433",
+                       "https://i.pinimg.com/550x/23/b4/b1/23b4b13e9019667ca68d0897e154a755.jpg",
                     },
                 },
                 new TweetModel
                 {
                     Id = 5,
                     UserId = 5,
-                    Media = Enums.ETypeAttachedMedia.Photos,
+                    Media = Enums.EAttachedMediaType.Photos,
                     CreationTime = DateTime.Now,
                     MediaPaths = new List<string>
                     {
                        "https://i.pinimg.com/474x/f7/f7/73/f7f7733f9e3409f0ef433f3074525790.jpg",
                     },
+                },
+                new TweetModel
+                {
+                    Id = 6,
+                    UserId = 6,
+                    Text = "HI there!",
+                    Media = Enums.EAttachedMediaType.Gif,
+                    MediaPaths = new List<string>
+                    {
+                        "https://javasea.ru/uploads/posts/2013-12/1387635240_matrica.gif",
+                    },
+                    CreationTime = DateTime.Now,
                 },
             };
         }

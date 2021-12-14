@@ -7,8 +7,9 @@ namespace InterTwitter.Controls
 {
     public class CustomCollectionView : CollectionView
     {
-        #region -- Public properties --
         private double _scrollState;
+
+        #region -- Public properties --
 
         public static readonly BindableProperty IsAddButtonVisibleProperty = BindableProperty.Create(
           propertyName: nameof(IsAddButtonVisible),
@@ -22,16 +23,32 @@ namespace InterTwitter.Controls
             set => SetValue(IsAddButtonVisibleProperty, value);
         }
 
+        public static readonly BindableProperty IsNavigationBarVisibleProperty = BindableProperty.Create(
+          propertyName: nameof(IsNavigationBarVisible),
+          returnType: typeof(bool),
+          declaringType: typeof(CustomCollectionView),
+          defaultValue: true,
+          defaultBindingMode: BindingMode.TwoWay);
+
+        public bool IsNavigationBarVisible
+        {
+            get => (bool)GetValue(IsNavigationBarVisibleProperty);
+            set => SetValue(IsNavigationBarVisibleProperty, value);
+        }
+
         #endregion
 
         #region -- Overrides --
+
         protected override void OnScrolled(ItemsViewScrolledEventArgs e)
         {
             base.OnScrolled(e);
             IsAddButtonVisible = (e.VerticalOffset > _scrollState) || (e.VerticalOffset < _scrollState) ? true : false;
-            _scrollState = default;
+            IsNavigationBarVisible = (e.VerticalOffset == 0) ? true : false;
+            _scrollState = 0;
         }
 
         #endregion
+
     }
 }
