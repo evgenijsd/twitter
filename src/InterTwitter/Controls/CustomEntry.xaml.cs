@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using InterTwitter.Helpers;
+using System.Threading.Tasks;
 using System.Windows.Input;
-using MapNotepad.Helpers;
 using Xamarin.Forms;
 
 namespace InterTwitter.Controls

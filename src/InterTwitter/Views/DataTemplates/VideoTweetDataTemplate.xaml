@@ -106,5 +106,7 @@
                  BackgroundColor="{DynamicResource appcolor_i6}"/>
 
     </StackLayout>
-    
+        
+    </StackLayout>
+
 </DataTemplate>

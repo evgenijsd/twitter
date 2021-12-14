@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InterTwitter.ViewModels;
+using System;
 using System.Threading.Tasks;
 using Xamarin.Forms.Xaml;
 
@@ -10,6 +11,12 @@ namespace InterTwitter.Views
         public EditProfilePage()
         {
             InitializeComponent();
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            (BindingContext as EditProfilePageViewModel)?.NavigationCommandAsync.Execute(null);
+            return true;
         }
 
         public async void OnLeftArrowTapHandler(object sender, EventArgs e)

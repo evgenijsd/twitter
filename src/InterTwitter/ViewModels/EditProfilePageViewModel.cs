@@ -1,9 +1,9 @@
-﻿using InterTwitter.Models;
+﻿using InterTwitter.Helpers;
+using InterTwitter.Models;
 using InterTwitter.Services.PermissionsService;
 using InterTwitter.Services.Settings;
 using InterTwitter.Services.UserService;
 using InterTwitter.Views;
-using MapNotepad.Helpers;
 using Prism.Navigation;
 using Prism.Services;
 using System;
@@ -98,11 +98,6 @@ namespace InterTwitter.ViewModels
             UserName = _user.Name;
            // OldPassword = user.Password;
             return Task.CompletedTask;
-        }
-
-        public async override void OnNavigatedFrom(INavigationParameters parameters)
-        {
-           await OnNavigationCommandAsync();
         }
 
         #endregion
