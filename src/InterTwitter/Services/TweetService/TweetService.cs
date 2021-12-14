@@ -68,10 +68,6 @@ namespace InterTwitter.Services.TweetService
                 {
                     result.SetSuccess(foundTweets.OrderByDescending(x => x.CreationTime));
                 }
-                else
-                {
-                    result.SetFailure("No tweets found");
-                }
             }
             catch (Exception ex)
             {

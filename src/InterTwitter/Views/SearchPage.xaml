@@ -46,6 +46,22 @@
                                        Text="{xct:Translate PopularTheme}"
                                        Style="{DynamicResource tstyle_i4}"/>
 
+                                <controls:HighlighttingLabel>
+
+                                    <!--<controls:HighlighttingLabel.FormattedText>
+
+                                        <FormattedString>
+
+                                            <Span>
+                                                "One two three four"
+                                            </Span>
+                                            
+                                        </FormattedString>
+                                        
+                                    </controls:HighlighttingLabel.FormattedText>-->
+
+                                </controls:HighlighttingLabel>
+
                                 <BoxView Style="{DynamicResource SeparatorStyle}"
                                          Margin="0" />
 
