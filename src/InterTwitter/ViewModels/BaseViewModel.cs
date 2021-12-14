@@ -1,5 +1,7 @@
 ﻿using Prism.Mvvm;
 using Prism.Navigation;
+using System;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace InterTwitter.ViewModels

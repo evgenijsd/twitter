@@ -1,6 +1,8 @@
-﻿namespace InterTwitter.Models
+﻿using System;
+
+namespace InterTwitter.Models
 {
-    public class UserModel : IEntity
+    public class UserModel : IEntityBase
     {
         public int Id { get; set; }
 
