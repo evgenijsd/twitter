@@ -64,6 +64,7 @@ namespace InterTwitter.Services.Registration
         }
 
         #region -- Public helpers --
+
         public List<UserModel> GetUsers()
         {
             return _users;
@@ -74,7 +75,7 @@ namespace InterTwitter.Services.Registration
             var result = new AOResult<bool>();
             try
             {
-                var user = _users.FirstOrDefault(x => x.Email.ToLower() == email.ToLower());
+                var user = _users?.FirstOrDefault(x => x.Email.ToLower() == email.ToLower());
                 bool check = false;
                 if (user != null)
                 {

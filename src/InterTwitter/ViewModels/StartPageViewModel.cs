@@ -123,6 +123,7 @@ namespace InterTwitter.ViewModels
         public ICommand LogInCommand => _LogInCommand ??= SingleExecutionCommand.FromFunc(OnLogInCommandAsync);
         private ICommand _CreateCommand;
         public ICommand CreateCommand => _CreateCommand ??= SingleExecutionCommand.FromFunc(OnCreateCommandAsync);
+
         #endregion
 
         #region -- Overrides --
@@ -235,6 +236,7 @@ namespace InterTwitter.ViewModels
                 await NavigationService.NavigateAsync($"{nameof(CreatePage)}", p);
             }
         }
+
         #endregion
     }
 }

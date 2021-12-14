@@ -18,20 +18,24 @@ namespace InterTwitter.Services.Authorization
         }
 
         #region -- Public properties --
+
         public int UserId
         {
             get => Preferences.Get(nameof(UserId), 0);
             set => Preferences.Set(nameof(UserId), value);
         }
+
         #endregion
+
         #region -- Public helpers --
+
         public async Task<AOResult<UserModel>> CheckUserAsync(string email, string password)
         {
             var result = new AOResult<UserModel>();
 
             try
             {
-                var user = _registrationService.GetUsers().FirstOrDefault(x => x.Email.ToLower() == email.ToLower());
+                var user = _registrationService?.GetUsers()?.FirstOrDefault(x => x.Email.ToLower() == email.ToLower());
                 if (user != null)
                 {
                     result.SetSuccess(user);
@@ -48,6 +52,7 @@ namespace InterTwitter.Services.Authorization
 
             return result;
         }
+
         #endregion
     }
 }
