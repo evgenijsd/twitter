@@ -189,13 +189,13 @@ namespace InterTwitter.Services.MockService
                 {
                     Id = 3,
                     Text = "#NoNuanceNovember",
-                    TweetsCount = 1,
+                    TweetsCount = 3,
                 },
                 new HashtagModel()
                 {
                     Id = 4,
-                    Text = "#Tortorrr",
-                    TweetsCount = 20,
+                    Text = "#coffeeTime",
+                    TweetsCount = 2,
                 },
                 new HashtagModel()
                 {

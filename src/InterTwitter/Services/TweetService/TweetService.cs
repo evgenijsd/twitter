@@ -56,24 +56,17 @@ namespace InterTwitter.Services.TweetService
             try
             {
                 var allTweets = _mockService.Tweets;
-                IEnumerable<TweetModel> foundTweets = new List<TweetModel>();
+                /* var test = allTweets.Where(tweet => keys
+                    .Any(key => tweet.Text != null && tweet.Text.ToLower()
+                    .Contains(key))); */
 
-                var test = allTweets.All(x => x.Text.Contains(keys.Select(y => y));
+                var foundTweets = allTweets.Where(tweet => keys
+                    .Any(key => tweet.Text
+                    ?.IndexOf(key, StringComparison.OrdinalIgnoreCase) > -1));
 
-                foreach (var item in allTweets)
+                if (foundTweets?.FirstOrDefault() != null)
                 {
-                    foreach (var key in keys)
-                    {
-                        if (item.Text.Contains(key))
-                        {
-                            // add item to foundTweets
-                        }
-                    }
-                }
-
-                if (allTweets != null)
-                {
-                    result.SetSuccess(allTweets.OrderByDescending(x => x.CreationTime));
+                    result.SetSuccess(foundTweets.OrderByDescending(x => x.CreationTime));
                 }
                 else
                 {

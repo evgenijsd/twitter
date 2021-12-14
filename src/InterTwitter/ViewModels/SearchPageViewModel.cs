@@ -31,6 +31,9 @@ namespace InterTwitter.ViewModels
             _tweetService = tweetService;
             _hashtagManager = hashtagManager;
 
+            Tweets = new ObservableCollection<BaseTweetViewModel>();
+            Hashtags = new ObservableCollection<HashtagModel>();
+
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource;
             AvatarIcon = "pic_profile_small";
         }
@@ -113,12 +116,6 @@ namespace InterTwitter.ViewModels
         {
             await LoadHashtagsAsync();
 
-            var result = await _tweetService.GetAllTweetsAsync();
-            if (result.IsSuccess)
-            {
-                await InitTweetsBeforeDisplayingAsync(result.Result);
-            }
-
             base.OnNavigatedTo(parameters);
         }
 
@@ -129,7 +126,7 @@ namespace InterTwitter.ViewModels
             base.OnNavigatedFrom(parameters);
         }
 
-        public override async void OnAppearing()
+        public override void OnAppearing()
         {
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_search_blue"] as ImageSource;
         }
@@ -240,16 +237,13 @@ namespace InterTwitter.ViewModels
 
                 if (result.IsSuccess)
                 {
+                    TweetSearchResult = ESearchResult.Success;
+                    await InitTweetsBeforeDisplayingAsync(result.Result);
                 }
-
-                switch (TweetSearchResult)
+                else
                 {
-                    case ESearchResult.NoResults:
-                        NoResultsMessage = $"{LocalizationResourceManager.Current[Constants.TweetsSearch.NO_RESULTS_FOR]}\n\"{queryString}\"";
-                        break;
-                    case ESearchResult.Success:
-                        NoResultsMessage = string.Empty;
-                        break;
+                    TweetSearchResult = ESearchResult.NoResults;
+                    NoResultsMessage = $"{LocalizationResourceManager.Current[Constants.TweetsSearch.NO_RESULTS_FOR]}\n\"{queryString}\"";
                 }
             }
         }
