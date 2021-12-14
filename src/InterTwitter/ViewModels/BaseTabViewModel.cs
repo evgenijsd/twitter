@@ -11,7 +11,7 @@ namespace InterTwitter.ViewModels
         {
         }
 
-        #region --- Public Properties ---
+        #region -- Public Properties --
 
         private ImageSource _iconPath;
         public ImageSource IconPath

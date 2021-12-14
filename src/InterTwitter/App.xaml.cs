@@ -1,13 +1,12 @@
-﻿using InterTwitter.ViewModels;
+using DLToolkit.Forms.Controls;
+using InterTwitter.Services;
+using InterTwitter.ViewModels;
 using InterTwitter.ViewModels.Flyout;
 using InterTwitter.Views;
 using Prism.Ioc;
 using Prism.Unity;
-using System;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
-//test
 namespace InterTwitter
 {
     public partial class App : PrismApplication
@@ -20,6 +19,10 @@ namespace InterTwitter
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            //Services
+            containerRegistry.RegisterSingleton<IMockService, MockService>();
+            containerRegistry.RegisterSingleton<ITweetService, TweetService>();
+
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<FlyOutPage, FlyOutPageViewModel>();
@@ -36,7 +39,9 @@ namespace InterTwitter
         protected override async void OnInitialized()
         {
             InitializeComponent();
-            await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}");
+            Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
+            FlowListView.Init();
+            await NavigationService.NavigateAsync(nameof(FlyOutPage));
         }
 
         protected override void OnStart()

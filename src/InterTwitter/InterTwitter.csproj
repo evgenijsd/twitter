@@ -1,10 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
-    <Configurations>Debug;Release;Dev;Stage</Configurations>
-    <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -16,21 +14,6 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType></DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Dev|AnyCPU' ">
-    <IntermediateOutputPath>obj\Release\netstandard2.0</IntermediateOutputPath>
-    <DebugType></DebugType>
-    <Optimize>true</Optimize>
-    <DefineConstants>TRACE;DEV;NETSTANDARD;NETSTANDARD2_0;</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Stage|AnyCPU' ">
-    <IntermediateOutputPath>obj\Release\netstandard2.0</IntermediateOutputPath>
-    <DebugType></DebugType>
-    <Optimize>true</Optimize>
-    <DefineConstants>TRACE;STAGE;NETSTANDARD;NETSTANDARD2_0;</DefineConstants>
-  </PropertyGroup>
   <ItemGroup>
     <None Remove="Resources\Fonts\Ubuntu-Bold.ttf" />
     <None Remove="Resources\Fonts\Ubuntu-BoldItalic.ttf" />
@@ -55,7 +38,9 @@
 
   <ItemGroup>
     <PackageReference Include="CardsView" Version="2.8.0" />
+    <PackageReference Include="DLToolkit.Forms.Controls.FlowListView" Version="2.0.11" />
     <PackageReference Include="Prism.Unity.Forms" Version="8.1.97" />
+    <PackageReference Include="Sharpnado.Shadows" Version="1.2.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -68,76 +53,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Behaviors\" />
-    <Folder Include="Converters\" />
-    <Folder Include="Models\" />
-    <Folder Include="Extensions\" />
-    <Folder Include="Enums\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Views\BookmarksPage.xaml.cs">
-      <DependentUpon>BookmarksPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\FlyOutPage.xaml.cs">
-      <DependentUpon>FlyOutPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\FlyoutPageDetail.xaml.cs">
-      <DependentUpon>FlyoutPageDetail.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\FlyoutPageFlyout.xaml.cs">
-      <DependentUpon>FlyoutPageFlyout.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\HomePage.xaml.cs">
-      <DependentUpon>HomePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\NotificationsPage.xaml.cs">
-      <DependentUpon>NotificationsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\SearchPage.xaml.cs">
-      <DependentUpon>SearchPage.xaml</DependentUpon>
+    <Compile Update="Controls\CustomNavigationbar.xaml.cs">
+      <DependentUpon>CustomNavigationbar.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Views\FlyOutPage.xaml">
+    <EmbeddedResource Update="Controls\CustomNavigationbar.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\FlyoutPageDetail.xaml">
+    <EmbeddedResource Update="Views\DataTemplates\ImageTweetDataTemplate.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\FlyoutPageFlyout.xaml">
+    <EmbeddedResource Update="Views\DataTemplates\TextTweetDataTemplate.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\BookmarksPage.xaml">
+    <EmbeddedResource Update="Views\DataTemplates\VideoTweetDataTemplate.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\HomePage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\NotificationsPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\ProfilePage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\SearchPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Resources\Styles\LightModeResources.xaml.cs">
-      <DependentUpon>LightModeResources.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\Styles\DefaultResources.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Styles\LightModeResources.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

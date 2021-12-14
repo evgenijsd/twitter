@@ -1,5 +1,5 @@
-﻿using InterTwitter.Views;
-using MapNotepad.Helpers;
+﻿using InterTwitter.Helpers;
+using InterTwitter.Views;
 using Prism.Navigation;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
