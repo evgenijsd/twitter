@@ -149,9 +149,9 @@ namespace InterTwitter.ViewModels
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
-            if (parameters.ContainsKey("User"))
+            if (parameters.ContainsKey(nameof(User)))
             {
-                User = parameters.GetValue<UserModel>("User");
+                User = parameters.GetValue<UserModel>(nameof(User));
                 Email = User.Email + string.Empty;
                 Password = User.Password + string.Empty;
             }
