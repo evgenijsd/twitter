@@ -203,7 +203,7 @@ namespace InterTwitter.ViewModels
 
         private async Task OnPostTweetCommandAsync()
         {
-            await _pageDialogService.DisplayAlertAsync("Alert", "Заглушка, как будет готов TweetService", "Ok");
+            await _pageDialogService.DisplayAlertAsync("Alert", "Заглушка, как будет готов TweetService, UserService, Language", "Ok");
         }
 
         private async Task OnDeleteAttachedPhotoCommandAsync(object obj)

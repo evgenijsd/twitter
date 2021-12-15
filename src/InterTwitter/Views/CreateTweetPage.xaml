@@ -23,45 +23,29 @@
 
             <StackLayout Grid.Row="0"
                          Grid.Column="0"
-                         Orientation="Horizontal"
-                         BackgroundColor="{DynamicResource appcolor_i2}">
+                         Style="{DynamicResource stackLayout_i1}">
 
                 <ImageButton Source="{DynamicResource ic_cancel_gray}"
                              Command="{Binding GoBackCommand}"
-                             HorizontalOptions="Start"
-                             Margin="{OnPlatform Android='14, 1, 14, 0', iOS='13, 1, 14, 0'}"
-                             WidthRequest="30"
-                             BackgroundColor="Transparent"/>
+                             Style="{DynamicResource imageButton_i1}"/>
 
                 <statecontainer:StateContainer State="{Binding CanUseButtonPost}"
                                                HorizontalOptions="EndAndExpand">
 
                     <statecontainer:StateCondition State="True">
 
-                        <Button CornerRadius="14"
-                                Margin="{OnPlatform Android='13, 13, 13, 12', iOS='13, 14, 13, 12'}"
-                                Padding="{OnPlatform Android='28, 0, 28, 0', iOS='24, 12, 24, 12'}"
-                                Text="Post"
-                                TextTransform="None"
-                                FontFamily="Ubuntu-Medium"
-                                FontSize="{DynamicResource tsize_i3}"
-                                TextColor="{DynamicResource appcolor_i2}"
+                        <Button Style="{DynamicResource button_i1}"
                                 BackgroundColor="{DynamicResource appcolor_i1}"
+                                Text="Post"
                                 Command="{Binding PostTweetCommand}"/>
 
                     </statecontainer:StateCondition>
 
                     <statecontainer:StateCondition State="False">
 
-                        <Button CornerRadius="14"
-                                Margin="{OnPlatform Android='13, 13, 13, 12', iOS='13, 14, 13, 12'}"
-                                Padding="{OnPlatform Android='28, 0, 28, 0', iOS='24, 12, 24, 12'}"
-                                Text="Post"
-                                TextTransform="None"
-                                FontFamily="Ubuntu-Medium"
-                                FontSize="{DynamicResource tsize_i4}"
-                                TextColor="{DynamicResource appcolor_i2}"
-                                BackgroundColor="{DynamicResource appcolor_i4}"/>
+                        <Button Style="{DynamicResource button_i1}"
+                                BackgroundColor="{DynamicResource appcolor_i4}"
+                                Text="Post"/>
 
                     </statecontainer:StateCondition>
 
@@ -71,8 +55,7 @@
             
             <Grid Grid.Row="1"
                   Grid.Column="0"
-                  RowSpacing="0"
-                  BackgroundColor="{DynamicResource appcolor_i2}">
+                  Style="{DynamicResource grid_i1}">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="42" />
@@ -81,16 +64,9 @@
 
                 <StackLayout Grid.Row="0"
                              Grid.Column="0"
-                             Spacing="0"
-                             BackgroundColor="{DynamicResource appcolor_i2}">
+                             Style="{DynamicResource stackLayout_i1}">
 
-                    <Frame HeightRequest="{OnPlatform Android='34', iOS='32'}"
-                           WidthRequest="{OnPlatform Android='34', iOS='33'}"
-                           Margin="{OnPlatform Android='14, 16, 0, 0', iOS='13, 14, 0, 0'}"
-                           HorizontalOptions="FillAndExpand"
-                           HasShadow="False"
-                           Padding="0"
-                           BorderColor="Transparent">
+                    <Frame Style="{DynamicResource frame_i1}">
 
                         <ffimageloading:CachedImage Source="pic_profile_small.png"
                                                     Aspect="AspectFit"/>
@@ -101,43 +77,29 @@
 
                 <controls:CustomScrollView Grid.Row="0"
                                            Grid.Column="1"
-                                           VerticalScrollBarVisibility="Never"
-                                           BackgroundColor="{DynamicResource appcolor_i2}">
+                                           Style="{DynamicResource customScrollView_i1}">
 
                     <StackLayout BackgroundColor="{DynamicResource appcolor_i2}">
 
                         <controls:CustomEditor Text="{Binding Text}"
-                                               TextColor="{DynamicResource appcolor_i3}"
-                                               FontSize="{DynamicResource tsize_i4}"
-                                               FontFamily="Ubuntu-Regular"
-                                               BackgroundColor="{DynamicResource appcolor_i2}"
                                                Placeholder="Start writing"
-                                               PlaceholderColor="{DynamicResource appcolor_i4}"
-                                               VerticalOptions="Start"
-                                               IsExpandable="True"
                                                CorrectLength="250"
                                                MaxLength="300"
-                                               Margin="{OnPlatform Android='7, 21, 5, 0', iOS='4, 11, 0, 0'}"/>
+                                               Style="{DynamicResource customEditor_i1}"/>
 
                         <statecontainer:StateContainer State="{Binding TypeAttachedMedia}"
-                                                       VerticalOptions="Start"
-                                                       Margin="{OnPlatform Android='7, 10, 5, 0', iOS='4, 10, 0, 0'}">
+                                                       Style="{DynamicResource stateContainer_i1}">
 
                             <statecontainer:StateCondition State="Photos">
 
-                                <FlexLayout Direction="Row"
-                                            Wrap="Wrap"
-                                            VerticalOptions="Start"
-                                            JustifyContent="Start"
+                                <FlexLayout Style="{DynamicResource flexLayout_i1}"
                                             BindableLayout.ItemsSource="{Binding ListAttachedMedia}">
 
                                     <BindableLayout.ItemTemplate>
 
                                         <DataTemplate>
 
-                                            <Grid HeightRequest="65"
-                                                  WidthRequest="45"
-                                                  Margin="0, 0, 15, 0">
+                                            <Grid Style="{DynamicResource grid_i2}">
 
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="45"/>
@@ -152,10 +114,7 @@
                                                 </Grid.GestureRecognizers>
 
                                                 <Frame Grid.Row="0"
-                                                       BackgroundColor="Gray"
-                                                       IsClippedToBounds="True"
-                                                       HasShadow="False"
-                                                       Padding="0">
+                                                       Style="{DynamicResource frame_i2}">
                                                     
                                                     <ffimageloading:CachedImage Source="{Binding PathImage}"
                                                                                 Aspect="AspectFill"/>
@@ -163,10 +122,7 @@
                                                 </Frame>
 
                                                 <Frame Grid.Row="1"
-                                                       HasShadow="False"
-                                                       Padding="0"
-                                                       Margin="22, -62, -22, 62"
-                                                       BackgroundColor="Transparent">
+                                                       Style="{DynamicResource frame_i3}">
 
                                                     <ImageButton Source="{Binding PathActionImage}"
                                                                  Command="{Binding ActionCommand}"
@@ -187,18 +143,14 @@
 
                             <statecontainer:StateCondition State="Gif">
 
-                                <FlexLayout Direction="Row"
-                                            Wrap="Wrap"
-                                            VerticalOptions="Start"
+                                <FlexLayout Style="{DynamicResource flexLayout_i1}"
                                             BindableLayout.ItemsSource="{Binding ListAttachedMedia}">
 
                                     <BindableLayout.ItemTemplate>
 
                                         <DataTemplate>
 
-                                            <Grid HeightRequest="65"
-                                                  WidthRequest="45"
-                                                  Margin="0, 0, 15, 0">
+                                            <Grid Style="{DynamicResource grid_i2}">
 
                                                 <Grid.RowDefinitions>
                                                     
@@ -215,10 +167,7 @@
                                                 </Grid.GestureRecognizers>
                                                 
                                                 <Frame Grid.Row="0"
-                                                       BackgroundColor="Silver"
-                                                       IsClippedToBounds="True"
-                                                       HasShadow="False"
-                                                       Padding="0">
+                                                       Style="{DynamicResource frame_i2}">
                                                     
                                                     <ffimageloading:CachedImage Source="{Binding PathImage}"
                                                                                 Aspect="AspectFill"/>
@@ -226,10 +175,7 @@
                                                 </Frame>
 
                                                 <Frame Grid.Row="1"
-                                                       HasShadow="False"
-                                                       Padding="0"
-                                                       Margin="22, -62, -22, 62"
-                                                       BackgroundColor="Transparent">
+                                                       Style="{DynamicResource frame_i3}">
 
                                                     <ImageButton Source="{Binding PathActionImage}"
                                                                  Command="{Binding ActionCommand}"
@@ -253,19 +199,15 @@
                                 <StackLayout Orientation="Horizontal">
 
                                     <Image Source="{DynamicResource ic_video_blue}"
-                                           HeightRequest="21"
-                                           WidthRequest="21"/>
+                                           Style="{DynamicResource image_i1}"/>
 
                                     <Label Text="Video"
-                                           TextColor="{DynamicResource appcolor_i1}"
-                                           FontSize="{DynamicResource tsize_i4}"
-                                           FontFamily="Ubuntu-Medium"/>
+                                           Style="{DynamicResource label_i1}"/>
 
                                     <ImageButton Source="{DynamicResource ic_clear_filled_blue}"
                                                  Command="{Binding DeleteAttachedVideoCommand}"
                                                  CommandParameter="{Binding .}"
-                                                 HeightRequest="21"
-                                                 WidthRequest="21"/>
+                                                 Style="{DynamicResource imageButton_i2}"/>
 
                                 </StackLayout>
                                 
@@ -285,21 +227,13 @@
 
             <sh:Shadows Grid.Row="2"
                         Grid.Column="0"
-                        VerticalOptions="EndAndExpand"
-                        HeightRequest="56"
-                        Shades="{sh:SingleShade Offset='0, -2.32',
-                                                Opacity={OnPlatform Android=0.05, iOS=0.05},
-                                                BlurRadius={OnPlatform Android=14, iOS=14},
-                                                Color=Black}">
+                        Style="{DynamicResource shadows_i1}">
 
-                <StackLayout Spacing="0"
-                             BackgroundColor="{DynamicResource appcolor_i2}">
+                <StackLayout Style="{DynamicResource stackLayout_i2}">
 
-                    <BoxView Color="{DynamicResource appcolor_i6}"
-                             HeightRequest="1"/>
+                    <BoxView Style="{DynamicResource boxView_i1}"/>
 
-                    <StackLayout Orientation="Horizontal"
-                                 BackgroundColor="{DynamicResource appcolor_i2}">
+                    <StackLayout Style="{DynamicResource stackLayout_i1}">
 
                         <statecontainer:StateContainer State="{Binding CanUseButtonUploadPhotos}">
                             
@@ -307,18 +241,14 @@
 
                                 <ImageButton Source="{DynamicResource ic_media_blue}"
                                              Command="{Binding AddPhotoCommand}"
-                                             Margin="13.93, 4, 0, 4"
-                                             WidthRequest="28.86"
-                                             BackgroundColor="Transparent"/>
+                                             Style="{DynamicResource imageButton_i3}"/>
 
                             </statecontainer:StateCondition>
                             
                             <statecontainer:StateCondition State="False">
 
                                 <ImageButton Source="{DynamicResource ic_media_gray}"
-                                             Margin="13.93, 4, 0, 4"
-                                             WidthRequest="28.86"
-                                             BackgroundColor="Transparent"/>
+                                             Style="{DynamicResource imageButton_i3}"/>
 
                             </statecontainer:StateCondition>
                             
@@ -330,18 +260,14 @@
 
                                 <ImageButton Source="{DynamicResource ic_gif_blue}"
                                              Command="{Binding AddGifCommand}"
-                                             Margin="13.93, 4, 0, 4"
-                                             WidthRequest="28.86"
-                                             BackgroundColor="Transparent"/>
+                                             Style="{DynamicResource imageButton_i3}"/>
 
                             </statecontainer:StateCondition>
                             
                             <statecontainer:StateCondition State="False">
 
                                 <ImageButton Source="{DynamicResource ic_gif_gray}"
-                                             Margin="13.93, 4, 0, 4"
-                                             WidthRequest="28.86"
-                                             BackgroundColor="Transparent"/>
+                                             Style="{DynamicResource imageButton_i3}"/>
 
                             </statecontainer:StateCondition>
                             
@@ -353,40 +279,26 @@
 
                                 <ImageButton Source="{DynamicResource ic_video_square_blue}"
                                              Command="{Binding AddVideoCommand}"
-                                             Margin="13.93, 4, 0, 4"
-                                             WidthRequest="28.86"
-                                             BackgroundColor="Transparent"/>
+                                             Style="{DynamicResource imageButton_i3}"/>
 
                             </statecontainer:StateCondition>
 
                             <statecontainer:StateCondition State="False">
 
                                 <ImageButton Source="{DynamicResource ic_video_square_gray}"
-                                             Margin="13.93, 4, 0, 4"
-                                             WidthRequest="28.86"
-                                             BackgroundColor="Transparent"/>
+                                             Style="{DynamicResource imageButton_i3}"/>
 
                             </statecontainer:StateCondition>
 
                         </statecontainer:StateContainer>
 
-                        <controls:CircleProgressBar HorizontalOptions="EndAndExpand"
-                                                    HeightRequest="24"
-                                                    WidthRequest="24"
-                                                    Text="{Binding CircleProgressBarText}"
+                        <controls:CircleProgressBar Text="{Binding CircleProgressBarText}"
                                                     TextColor="{Binding CircleProgressBarTextColor}"
                                                     FontScale="{Binding CircleProgressBarFontScale}"
-                                                    FontFamily="Ubuntu-Regular"
+                                                    ProgressLineColor="{Binding CircleProgressBarProgressLineColor}"
                                                     FontAttributes="{Binding CircleProgressBarFontAttributes}"
                                                     Value="{Binding CircleProgressBarValue}"
-                                                    Minimum="0"
-                                                    Maximum="250"
-                                                    LineWidth="15"
-                                                    ProgressLineColor="{Binding CircleProgressBarProgressLineColor}"
-                                                    BackgroundLineColor="{DynamicResource appcolor_i5}"
-                                                    BackgroundProgressColor="{DynamicResource appcolor_i2}"
-                                                    BackgroundColor="Transparent"
-                                                    Padding="16"/>
+                                                    Style="{DynamicResource circleProgressBar_i1}"/>
                         
                     </StackLayout>
 

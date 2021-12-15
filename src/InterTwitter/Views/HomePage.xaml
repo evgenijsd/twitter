@@ -52,6 +52,7 @@
                     <ImageButton Source="{DynamicResource ic_add_blue}"
                                  HorizontalOptions="Fill"
                                  VerticalOptions="Fill"
+                                 BackgroundColor="Transparent"
                                  Command="{Binding AddTweetCommandAsync}"/>
 
                 </Frame>
