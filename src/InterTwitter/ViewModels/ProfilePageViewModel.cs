@@ -12,25 +12,26 @@ namespace InterTwitter.ViewModels
             : base(navigationService)
         {
             MenuItems = new ObservableCollection<MenuItemViewModel>(new[]
+            {
+                new MenuItemViewModel
                 {
-                    new MenuItemViewModel
-                    {
-                        Id = 0, Title = "Posts",
-                        TargetType = typeof(HomePage),
-                        ImageSource = "ic_home_gray",
-                        TextColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
-                    },
+                    Id = 0, Title = "Posts",
+                    TargetType = typeof(HomePage),
+                    ImageSource = "ic_home_gray",
+                    TextColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
+                },
 
-                    new MenuItemViewModel
-                    {
-                        Id = 1,
-                        Title = "Likes",
-                        TargetType = typeof(SearchPage),
-                        ImageSource = "ic_search_gray",
-                        TextColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
-                    },
-                });
+                new MenuItemViewModel
+                {
+                    Id = 1,
+                    Title = "Likes",
+                    TargetType = typeof(SearchPage),
+                    ImageSource = "ic_search_gray",
+                    TextColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
+                },
+            });
         }
+
         #region --- Public Properties ---
 
         private ObservableCollection<MenuItemViewModel> _menuItems;

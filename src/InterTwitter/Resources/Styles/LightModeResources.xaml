@@ -21,6 +21,7 @@
 
     <!-- IMAGES -->
     <ImageSource x:Key="ic_add_blue">ic_add_blue</ImageSource>
+    <ImageSource x:Key="ic_add_white">ic_add_white</ImageSource>
     <ImageSource x:Key="ic_add_photo_white">ic_add_photo_white</ImageSource>
     <ImageSource x:Key="ic_bookmarks_blue">ic_bookmarks_blue</ImageSource>
     <ImageSource x:Key="ic_bookmarks_gray">ic_bookmarks_gray</ImageSource>

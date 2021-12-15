@@ -19,6 +19,10 @@ namespace InterTwitter.ViewModels
 
         public ICommand OpenFlyoutCommandAsync => SingleExecutionCommand.FromFunc(OnOpenFlyoutCommandAsync);
 
+        #endregion
+
+        #region -- Overrides --
+
         public override void OnAppearing()
         {
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_notifications_blue"] as ImageSource;

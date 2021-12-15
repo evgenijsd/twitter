@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace InterTwitter.Enums
+﻿namespace InterTwitter.Enums
 {
     public enum EAttachedMediaType
     {

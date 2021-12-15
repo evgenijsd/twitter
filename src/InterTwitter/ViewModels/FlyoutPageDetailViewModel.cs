@@ -21,6 +21,10 @@ namespace InterTwitter.ViewModels.Flyout
             set => SetProperty(ref _selectedTabType, value);
         }
 
+        #endregion
+
+        #region -- Overrides --
+
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
@@ -32,6 +36,5 @@ namespace InterTwitter.ViewModels.Flyout
         }
 
         #endregion
-
     }
 }

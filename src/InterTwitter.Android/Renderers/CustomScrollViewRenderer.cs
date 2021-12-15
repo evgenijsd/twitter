@@ -15,6 +15,8 @@ namespace InterTwitter.Droid.Renderers
 
         }
 
+        #region -- Overrides --
+        
         protected override void OnElementChanged(VisualElementChangedEventArgs e)
         {
             base.OnElementChanged(e);
@@ -26,5 +28,7 @@ namespace InterTwitter.Droid.Renderers
                 Android.Views.OverScrollMode.Never;
             }
         }
+
+        #endregion
     }
 }

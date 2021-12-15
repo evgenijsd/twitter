@@ -2,7 +2,6 @@
 using InterTwitter.Helpers;
 using InterTwitter.Services.PermissionsService;
 using InterTwitter.Services.VideoService;
-using InterTwitter.Views;
 using Prism.Navigation;
 using Prism.Services;
 using SkiaSharp;
@@ -20,8 +19,6 @@ namespace InterTwitter.ViewModels
 {
     public class CreateTweetPageViewModel : BaseViewModel
     {
-        private int value;
-
         private IPageDialogService _pageDialogService;
 
         private IPermissionsService _permissionsService;
@@ -35,9 +32,6 @@ namespace InterTwitter.ViewModels
             IVideoService videoService)
             : base(navigationService)
         {
-            Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. A, neque, metus ipsum fermentum morbi at.";
-            value = _text.Length;
-
             _permissionsService = permissionsService;
             _pageDialogService = pageDialogService;
             _videoService = videoService;
@@ -192,7 +186,7 @@ namespace InterTwitter.ViewModels
 
         private async Task OnGoBackCommandAsync()
         {
-            if (Text.Length > 0 || ListAttachedMedia.Count > 0)
+            if ((!string.IsNullOrEmpty(Text) && Text.Length > 0) || ListAttachedMedia.Count > 0)
             {
                 var confirm = await _pageDialogService.DisplayAlertAsync("Confirm", "Do you want to come back?", "Ok", "Cancel");
 
@@ -201,14 +195,15 @@ namespace InterTwitter.ViewModels
                     await _navigationService.GoBackAsync();
                 }
             }
+            else
+            {
+                await _navigationService.GoBackAsync();
+            }
         }
 
         private async Task OnPostTweetCommandAsync()
         {
-            INavigationParameters parameters = new NavigationParameters();
-            parameters.Add(Constants.Messages.MEDIA, ListAttachedMedia);
-
-            await _navigationService.NavigateAsync(nameof(VideoGalleryPage), parameters);
+            await _pageDialogService.DisplayAlertAsync("Alert", "Заглушка, как будет готов TweetService", "Ok");
         }
 
         private async Task OnDeleteAttachedPhotoCommandAsync(object obj)
@@ -241,11 +236,11 @@ namespace InterTwitter.ViewModels
 
         private async Task OnAddPhotoAsync()
         {
-            var canUseStorage = await _permissionsService.RequestAsync<Permissions.StorageRead>() == Xamarin.Essentials.PermissionStatus.Granted;
-
-            if (canUseStorage)
+            try
             {
-                try
+                var canUseStorage = await _permissionsService.RequestAsync<Permissions.StorageRead>() == Xamarin.Essentials.PermissionStatus.Granted;
+
+                if (canUseStorage)
                 {
                     var openFile = await MediaPicker.PickPhotoAsync();
 
@@ -287,23 +282,23 @@ namespace InterTwitter.ViewModels
                         await _pageDialogService.DisplayAlertAsync("Error", "Only picture", "Ok");
                     }
                 }
-                catch (Exception e)
+                else
                 {
+                    await _pageDialogService.DisplayAlertAsync("Alert", "This app needs access to photos gallery for picking photos and videos.", "Ok");
                 }
             }
-            else
+            catch (Exception e)
             {
-                await _pageDialogService.DisplayAlertAsync("Alert", "This app needs access to photos gallery for picking photos and videos.", "Ok");
             }
         }
 
         private async Task OnAddGifAsync()
         {
-            var canUseStorage = await _permissionsService.RequestAsync<Permissions.StorageRead>() == Xamarin.Essentials.PermissionStatus.Granted;
-
-            if (canUseStorage)
+            try
             {
-                try
+                var canUseStorage = await _permissionsService.RequestAsync<Permissions.StorageRead>() == Xamarin.Essentials.PermissionStatus.Granted;
+
+                if (canUseStorage)
                 {
                     var openFile = await MediaPicker.PickPhotoAsync();
 
@@ -345,24 +340,24 @@ namespace InterTwitter.ViewModels
                         await _pageDialogService.DisplayAlertAsync("Error", "Only gif", "Ok");
                     }
                 }
-                catch (Exception e)
+                else
                 {
+                    await _pageDialogService.DisplayAlertAsync("Alert", "This app needs access to photos gallery for picking photos and videos.", "Ok");
                 }
             }
-            else
+            catch (Exception e)
             {
-                await _pageDialogService.DisplayAlertAsync("Alert", "This app needs access to photos gallery for picking photos and videos.", "Ok");
             }
         }
 
         private async Task OnAddVideoAsync()
         {
-            var canUseStorage = await _permissionsService.RequestAsync<Permissions.StorageRead>() == Xamarin.Essentials.PermissionStatus.Granted
+            try
+            {
+                var canUseStorage = await _permissionsService.RequestAsync<Permissions.StorageRead>() == Xamarin.Essentials.PermissionStatus.Granted
                                 && await _permissionsService.RequestAsync<Permissions.StorageWrite>() == Xamarin.Essentials.PermissionStatus.Granted;
 
-            if (canUseStorage)
-            {
-                try
+                if (canUseStorage)
                 {
                     var openFile = await MediaPicker.PickVideoAsync();
                     var pathFile = openFile.FullPath;
@@ -431,13 +426,13 @@ namespace InterTwitter.ViewModels
                         await _pageDialogService.DisplayAlertAsync("Error", "File does not exist", "Ok");
                     }
                 }
-                catch (Exception e)
+                else
                 {
+                    await _pageDialogService.DisplayAlertAsync("Alert", "This app needs access to photos gallery for picking photos and videos.", "Ok");
                 }
             }
-            else
+            catch (Exception e)
             {
-                await _pageDialogService.DisplayAlertAsync("Alert", "This app needs access to photos gallery for picking photos and videos.", "Ok");
             }
         }
 
@@ -461,7 +456,7 @@ namespace InterTwitter.ViewModels
 
         private void Counter()
         {
-            value = Text.Length;
+            var value = Text.Length;
 
             if (value > 250)
             {

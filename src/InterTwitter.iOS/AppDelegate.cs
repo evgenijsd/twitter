@@ -1,18 +1,12 @@
+using FFImageLoading.Forms.Platform;
 using Foundation;
-using InterTwitter.iOS.Services.EnvironmentService;
 using InterTwitter.iOS.Services.PermissionsService;
 using InterTwitter.iOS.Services.VideoService;
-using InterTwitter.Services.EnvironmentService;
 using InterTwitter.Services.PermissionsService;
 using InterTwitter.Services.VideoService;
 using Prism;
 using Prism.Ioc;
 using Prism.Unity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using FFImageLoading.Forms.Platform;
-using Foundation;
 using UIKit;
 
 namespace InterTwitter.iOS
@@ -51,7 +45,6 @@ namespace InterTwitter.iOS
             {
                 containerRegistry.RegisterInstance<IPermissionsService>(PrismApplication.Current.Container.Resolve<PermissionsService>());
                 containerRegistry.RegisterInstance<IVideoService>(PrismApplication.Current.Container.Resolve<VideoService>());
-                containerRegistry.RegisterInstance<IEnvironmentService>(PrismApplication.Current.Container.Resolve<EnvironmentService>());
             }
         }
 

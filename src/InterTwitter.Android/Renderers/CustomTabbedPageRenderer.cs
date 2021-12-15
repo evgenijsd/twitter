@@ -12,10 +12,15 @@ namespace InterTwitter.Droid
     public class CustomTabbedPageRenderer : TabbedPageRenderer
     {
         private TabbedPage _tabbedPage;
+
         private BottomNavigationView _bottomNavigationView;
+        
         public CustomTabbedPageRenderer(Context context) : base(context)
         {
         }
+
+        #region -- Overrides --
+
         protected override void OnElementChanged(ElementChangedEventArgs<TabbedPage> e)
         {
             base.OnElementChanged(e);
@@ -28,5 +33,7 @@ namespace InterTwitter.Droid
             }
 
         }
+
+        #endregion
     }
 }

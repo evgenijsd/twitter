@@ -24,16 +24,16 @@ namespace InterTwitter.Controls
             set => SetValue(RightButtonImageSourceProperty, value);
         }
 
-        public static readonly BindableProperty RightUserButtonCommandProperty = BindableProperty.Create(
-            propertyName: nameof(RightUserButtonCommand),
+        public static readonly BindableProperty RightButtonCommandProperty = BindableProperty.Create(
+            propertyName: nameof(RightButtonCommand),
             returnType: typeof(ICommand),
             declaringType: typeof(CustomNavigationbar),
             defaultBindingMode: BindingMode.TwoWay);
 
-        public ICommand RightUserButtonCommand
+        public ICommand RightButtonCommand
         {
-            get => (ICommand)GetValue(RightUserButtonCommandProperty);
-            set => SetValue(RightUserButtonCommandProperty, value);
+            get => (ICommand)GetValue(RightButtonCommandProperty);
+            set => SetValue(RightButtonCommandProperty, value);
         }
 
         public static readonly BindableProperty LeftButtonImageSourceProperty = BindableProperty.Create(
@@ -48,16 +48,16 @@ namespace InterTwitter.Controls
             set => SetValue(LeftButtonImageSourceProperty, value);
         }
 
-        public static readonly BindableProperty LeftAddButtonCommandProperty = BindableProperty.Create(
-            propertyName: nameof(LeftAddButtonCommand),
+        public static readonly BindableProperty LeftButtonCommandProperty = BindableProperty.Create(
+            propertyName: nameof(LeftButtonCommand),
             returnType: typeof(ICommand),
             declaringType: typeof(CustomNavigationbar),
             defaultBindingMode: BindingMode.TwoWay);
 
-        public ICommand LeftAddButtonCommand
+        public ICommand LeftButtonCommand
         {
-            get => (ICommand)GetValue(LeftAddButtonCommandProperty);
-            set => SetValue(LeftAddButtonCommandProperty, value);
+            get => (ICommand)GetValue(LeftButtonCommandProperty);
+            set => SetValue(LeftButtonCommandProperty, value);
         }
 
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(

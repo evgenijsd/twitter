@@ -8,10 +8,14 @@ namespace InterTwitter.iOS.Renderers
 {
     public class CustomScrollViewRenderer : ScrollViewRenderer
     {
+        #region -- Overrides --
+
         protected override void OnElementChanged(VisualElementChangedEventArgs e)
         {
             base.OnElementChanged(e);
             Bounces = ((CustomScrollView)e.NewElement).IsBounces;
         }
+
+        #endregion
     }
 }

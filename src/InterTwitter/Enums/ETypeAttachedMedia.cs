@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace InterTwitter.Enums
+﻿namespace InterTwitter.Enums
 {
     public enum ETypeAttachedMedia
     {

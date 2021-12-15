@@ -63,7 +63,6 @@ namespace InterTwitter.Droid.Renderers
             if (!string.IsNullOrEmpty(text))
             {
                 EditText.SetTextColor(Element.TextColor.ToAndroid());
-                //EditText.LineHeight = 65;
                 EditText.SetLineSpacing(18, 1);
 
                 var length = text.Length;

@@ -1,7 +1,6 @@
 ﻿using Foundation;
 using InterTwitter.Controls;
 using InterTwitter.iOS.Renderers;
-using System;
 using System.ComponentModel;
 using UIKit;
 using Xamarin.Forms;

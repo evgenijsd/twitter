@@ -1,17 +1,14 @@
-using System;
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
-using InterTwitter.Droid.Services.EnvironmentService;
+using FFImageLoading.Forms.Platform;
 using InterTwitter.Droid.Services.PermissionsService;
 using InterTwitter.Droid.Services.VideoService;
-using InterTwitter.Services.EnvironmentService;
 using InterTwitter.Services.PermissionsService;
 using InterTwitter.Services.VideoService;
 using Prism;
 using Prism.Ioc;
-using FFImageLoading.Forms.Platform;
 
 namespace InterTwitter.Droid
 {
@@ -20,7 +17,6 @@ namespace InterTwitter.Droid
     {
         private static IPermissionsService _permissionsService = new PermissionsService();
         private static IVideoService _videoService = new VideoService();
-        private static IEnvironmentService _environmentService = new EnvironmentService();
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -47,7 +43,6 @@ namespace InterTwitter.Droid
             {
                 containerRegistry.RegisterInstance(_permissionsService);
                 containerRegistry.RegisterInstance(_videoService);
-                containerRegistry.RegisterInstance(_environmentService);
             }
         }
     }

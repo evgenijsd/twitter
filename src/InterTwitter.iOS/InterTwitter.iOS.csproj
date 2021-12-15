@@ -115,7 +115,6 @@
     <Compile Include="Renderers\CustomEditorRenderer.cs" />
     <Compile Include="Renderers\CustomGridRenderer.cs" />
     <Compile Include="Renderers\CustomScrollViewRenderer.cs" />
-    <Compile Include="Services\EnvironmentService\EnvironmentService.cs" />
     <Compile Include="Services\PermissionsService\PermissionsService.cs" />
     <Compile Include="Services\VideoService\VideoService.cs" />
     <Compile Include="Renderers\NoBounceRenderer.cs" />
@@ -218,7 +217,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
-    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\ic_add_blue.png" />
@@ -753,5 +751,14 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\ava.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_add_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_add_white%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_add_white%403x.png" />
   </ItemGroup>
 </Project>
