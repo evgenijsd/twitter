@@ -79,6 +79,7 @@ namespace InterTwitter.Controls
 
                     if (keywordPosition != -1)
                     {
+                        // # #teatime - crush
                         lastKeywordPosition = keywordPosition + keyword.Length;
 
                         positionKeywordSpanPairs.Add(keywordPosition, keyword);
