@@ -1,4 +1,4 @@
-﻿using Foundation;
+using Foundation;
 using InterTwitter.iOS.Services.EnvironmentService;
 using InterTwitter.iOS.Services.PermissionsService;
 using InterTwitter.iOS.Services.VideoService;
@@ -8,6 +8,11 @@ using InterTwitter.Services.VideoService;
 using Prism;
 using Prism.Ioc;
 using Prism.Unity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using FFImageLoading.Forms.Platform;
+using Foundation;
 using UIKit;
 
 namespace InterTwitter.iOS
@@ -28,8 +33,13 @@ namespace InterTwitter.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             Sharpnado.Shades.iOS.iOSShadowsRenderer.Initialize();
+            
+            CachedImageRenderer.Init();
+            CachedImageRenderer.InitImageSourceHandler();
+
             LoadApplication(new App(new IOSInitializer()));
 
             return base.FinishedLaunching(app, options);

@@ -1,13 +1,13 @@
-﻿using InterTwitter.ViewModels;
+using DLToolkit.Forms.Controls;
+using InterTwitter.Services;
+using InterTwitter.ViewModels;
+using InterTwitter.ViewModels.Flyout;
 using InterTwitter.Views;
 using Prism;
 using Prism.Ioc;
 using Prism.Unity;
-using System;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
-//test
 namespace InterTwitter
 {
     public partial class App : PrismApplication
@@ -25,8 +25,20 @@ namespace InterTwitter
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            //Services
+            containerRegistry.RegisterSingleton<IMockService, MockService>();
+            containerRegistry.RegisterSingleton<ITweetService, TweetService>();
+
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
+            containerRegistry.RegisterForNavigation<FlyOutPage, FlyOutPageViewModel>();
+            containerRegistry.RegisterForNavigation<FlyoutPageDetail, FlyoutPageDetailViewModel>();
+            containerRegistry.RegisterForNavigation<FlyoutPageFlyout, FlyoutPageFlyoutViewModel>();
+            containerRegistry.RegisterForNavigation<HomePage, HomePageViewModel>();
+            containerRegistry.RegisterForNavigation<SearchPage, SearchPageViewModel>();
+            containerRegistry.RegisterForNavigation<BookmarksPage, BookmarksPageViewModel>();
+            containerRegistry.RegisterForNavigation<NotificationsPage, NotificationPageViewModel>();
+            containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
             containerRegistry.RegisterForNavigation<MainPage>();
             containerRegistry.RegisterForNavigation<CreateTweetPage, CreateTweetPageViewModel>();
             containerRegistry.RegisterForNavigation<VideoGalleryPage, VideoGalleryPageViewModel>();
@@ -35,10 +47,9 @@ namespace InterTwitter
         protected override async void OnInitialized()
         {
             InitializeComponent();
-
             Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
-
-            await NavigationService.NavigateAsync($"/{nameof(CreateTweetPage)}");
+            FlowListView.Init();
+            await NavigationService.NavigateAsync(nameof(FlyOutPage));
         }
 
         protected override void OnStart()

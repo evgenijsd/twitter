@@ -1,8 +1,8 @@
 ﻿using InterTwitter.Enums;
+using InterTwitter.Helpers;
 using InterTwitter.Services.PermissionsService;
 using InterTwitter.Services.VideoService;
 using InterTwitter.Views;
-using MapNotepad.Helpers;
 using Prism.Navigation;
 using Prism.Services;
 using SkiaSharp;

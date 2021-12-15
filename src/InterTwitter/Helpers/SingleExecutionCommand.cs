@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace MapNotepad.Helpers
+namespace InterTwitter.Helpers
 {
     public class SingleExecutionCommand : ICommand
     {
@@ -99,6 +99,5 @@ namespace MapNotepad.Helpers
         }
 
         #endregion
-
     }
 }

@@ -1,4 +1,5 @@
-﻿using Android.App;
+using System;
+using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
@@ -10,6 +11,7 @@ using InterTwitter.Services.PermissionsService;
 using InterTwitter.Services.VideoService;
 using Prism;
 using Prism.Ioc;
+using FFImageLoading.Forms.Platform;
 
 namespace InterTwitter.Droid
 {
@@ -27,6 +29,9 @@ namespace InterTwitter.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
+            CachedImageRenderer.Init(true); 
+            CachedImageRenderer.InitImageViewHandler();
+
             LoadApplication(new App(new AndroidInitializer()));
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
