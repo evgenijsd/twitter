@@ -2,11 +2,10 @@
 <view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                       xmlns:sh="http://sharpnado.com"
-                      xmlns:controls="clr-namespace:InterTwitter.Controls"
                       xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                      xmlns:controls="clr-namespace:InterTwitter.Controls"
                       xmlns:statecontainer="clr-namespace:InterTwitter.Controls.StateContainer"
                       xmlns:view="clr-namespace:InterTwitter.Views"
-                      xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
                       x:Class="InterTwitter.Views.CreateTweetPage">
 
     <view:BaseContentPage.Content>
@@ -92,12 +91,12 @@
                            HasShadow="False"
                            Padding="0"
                            BorderColor="Transparent">
-                        
-                        <ffimageloading:CachedImage Source="ava.png"
+
+                        <ffimageloading:CachedImage Source="pic_profile_small.png"
                                                     Aspect="AspectFit"/>
 
                     </Frame>
-                    
+
                 </StackLayout>
 
                 <controls:CustomScrollView Grid.Row="0"
@@ -138,7 +137,7 @@
 
                                             <Grid HeightRequest="65"
                                                   WidthRequest="45"
-                                                  Margin="0, 0, 20, 0">
+                                                  Margin="0, 0, 15, 0">
 
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="45"/>
@@ -169,8 +168,10 @@
                                                        Margin="22, -62, -22, 62"
                                                        BackgroundColor="Transparent">
 
-                                                    <ffimageloading:CachedImage Source="{Binding PathActionImage}"
-                                                                                Aspect="AspectFit"/>
+                                                    <ImageButton Source="{Binding PathActionImage}"
+                                                                 Command="{Binding ActionCommand}"
+                                                                 CommandParameter="{Binding .}"
+                                                                 BackgroundColor="Transparent"/>
 
                                                 </Frame>
 
@@ -196,32 +197,44 @@
                                         <DataTemplate>
 
                                             <Grid HeightRequest="65"
-                                                  Margin="7, 0, 0, 0">
+                                                  WidthRequest="45"
+                                                  Margin="0, 0, 15, 0">
 
                                                 <Grid.RowDefinitions>
                                                     
-                                                    <RowDefinition Height="44.1167"/>
+                                                    <RowDefinition Height="45"/>
                                                     <RowDefinition Height="21"/>
                                                     
                                                 </Grid.RowDefinitions>
 
-                                                <ffimageloading:CachedImage Grid.Row="0"
-                                                                            Source="{Binding PathImage}"
-                                                                            Aspect="AspectFill"
-                                                                            HeightRequest="44.1167"
-                                                                            WidthRequest="44.1167"/>
+                                                <Grid.GestureRecognizers>
+
+                                                    <TapGestureRecognizer Command="{Binding ActionCommand}"
+                                                                          CommandParameter="{Binding .}"/>
+
+                                                </Grid.GestureRecognizers>
+                                                
+                                                <Frame Grid.Row="0"
+                                                       BackgroundColor="Silver"
+                                                       IsClippedToBounds="True"
+                                                       HasShadow="False"
+                                                       Padding="0">
+                                                    
+                                                    <ffimageloading:CachedImage Source="{Binding PathImage}"
+                                                                                Aspect="AspectFill"/>
+
+                                                </Frame>
 
                                                 <Frame Grid.Row="1"
                                                        HasShadow="False"
                                                        Padding="0"
-                                                       Margin="41.11, -60, 0, 60"
+                                                       Margin="22, -62, -22, 62"
                                                        BackgroundColor="Transparent">
 
                                                     <ImageButton Source="{Binding PathActionImage}"
                                                                  Command="{Binding ActionCommand}"
                                                                  CommandParameter="{Binding .}"
-                                                                 HeightRequest="21"
-                                                                 WidthRequest="21"/>
+                                                                 BackgroundColor="Transparent"/>
 
                                                 </Frame>
 
@@ -261,6 +274,7 @@
                         </statecontainer:StateContainer>
 
                         <ActivityIndicator IsRunning="{Binding IsRunnigActivityIndicator}"
+                                           IsVisible="{Binding IsRunnigActivityIndicator}"
                                            Margin="-42, 60, 0, 0"/>
                         
                     </StackLayout>

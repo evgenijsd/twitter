@@ -198,7 +198,7 @@ namespace InterTwitter.ViewModels
 
                 if (confirm)
                 {
-                    await _pageDialogService.DisplayAlertAsync("Exit", "Заглушка", "Ok");
+                    await _navigationService.GoBackAsync();
                 }
             }
         }
@@ -225,7 +225,7 @@ namespace InterTwitter.ViewModels
             }
             else
             {
-                CanUseButtonPost = true;
+                CanUseButtonPost = canPostTweet();
             }
         }
 

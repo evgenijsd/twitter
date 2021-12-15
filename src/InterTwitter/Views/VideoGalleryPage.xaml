@@ -24,12 +24,12 @@
                 
             </StackLayout>
             
-            <xct:MediaElement Source="{Binding VideoSource}"
-                              AutoPlay="True"
+            <xct:MediaElement AutoPlay="True"
                               ShowsPlaybackControls="True"
                               HeightRequest="300"
                               WidthRequest="300"
-                              VerticalOptions="CenterAndExpand">
+                              VerticalOptions="CenterAndExpand"
+                              Source="{Binding VideoSource}">
 
             </xct:MediaElement>
 
