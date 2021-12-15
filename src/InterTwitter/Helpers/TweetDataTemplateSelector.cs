@@ -25,11 +25,11 @@ namespace InterTwitter.Helpers
             var tweet = item as BaseTweetViewModel;
             switch (tweet.Media)
             {
-                case ETypeAttachedMedia.Photos:
-                case ETypeAttachedMedia.Gif:
+                case EAttachedMediaType.Photos:
+                case EAttachedMediaType.Gif:
                     dataTemplate = ImageTweetDataTemplate;
                     break;
-                case ETypeAttachedMedia.Video:
+                case EAttachedMediaType.Video:
                     dataTemplate = VideoTweetDataTemplate;
                     break;
                 default:

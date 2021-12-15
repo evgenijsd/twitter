@@ -2,7 +2,6 @@ using DLToolkit.Forms.Controls;
 using InterTwitter.Services;
 using InterTwitter.Services.BookmarkService;
 using InterTwitter.Services.LikeService;
-using InterTwitter.Services.Settings;
 using InterTwitter.ViewModels;
 using InterTwitter.ViewModels.Flyout;
 using InterTwitter.Views;
@@ -25,7 +24,6 @@ namespace InterTwitter
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             //Services
-            containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
             containerRegistry.RegisterInstance<IMockService>(Container.Resolve<MockService>());
             containerRegistry.RegisterInstance<ITweetService>(Container.Resolve<TweetService>());
             containerRegistry.RegisterInstance<IBookmarkService>(Container.Resolve<BookmarkService>());
@@ -46,6 +44,7 @@ namespace InterTwitter
         protected override async void OnInitialized()
         {
             InitializeComponent();
+            Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             FlowListView.Init();
             //await NavigationService.NavigateAsync($"{nameof(MainPage)}");
             await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}");

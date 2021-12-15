@@ -68,8 +68,8 @@ namespace InterTwitter.Models.TweetViewModel
             set => SetProperty(ref _mediaPaths, value);
         }
 
-        private ETypeAttachedMedia _mediaType;
-        public ETypeAttachedMedia Media
+        private EAttachedMediaType _mediaType;
+        public EAttachedMediaType Media
         {
             get => _mediaType;
             set => SetProperty(ref _mediaType, value);
@@ -83,7 +83,7 @@ namespace InterTwitter.Models.TweetViewModel
         }
 
         private bool _IsTweetLiked;
-        public bool IsTweekLiked
+        public bool IsTweetLiked
         {
             get => _IsTweetLiked;
             set => SetProperty(ref _IsTweetLiked, value);
@@ -109,19 +109,21 @@ namespace InterTwitter.Models.TweetViewModel
         public ICommand MoveToProfileCommand => _moveToProfileCommand ?? (_moveToProfileCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnGoToProfileAsync));
 
         private DateTime _CreationTime;
+
         public DateTime CreationTime
         {
             get => _CreationTime;
             set => SetProperty(ref _CreationTime, value);
         }
+
         #endregion
 
         #region -- Private helpers --
 
         private Task OnLikeAsync(BaseTweetViewModel tweet)
         {
-            IsTweekLiked = !IsTweekLiked;
-            if (IsTweekLiked)
+            IsTweetLiked = !IsTweetLiked;
+            if (IsTweetLiked)
             {
                 MessagingCenter.Send<MessageEvent>(new MessageEvent(TweetId), MessageEvent.AddLike);
             }
@@ -159,6 +161,5 @@ namespace InterTwitter.Models.TweetViewModel
         }
 
         #endregion
-
     }
 }

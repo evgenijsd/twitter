@@ -4,12 +4,12 @@ using System.Text;
 
 namespace InterTwitter.Models
 {
-    public class ImageModel : IEntityBase
+    public class UserLike : IEntityBase
     {
         public int Id { get; set; }
 
-        public int PostId { get; set; }
+        public int UserId { get; set; }
 
-        public string Image { get; set; }
+        public int TweetId { get; set; }
     }
 }

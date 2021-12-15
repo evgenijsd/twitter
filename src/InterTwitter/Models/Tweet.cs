@@ -1,10 +1,11 @@
 ﻿using InterTwitter.Enums;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace InterTwitter.Models
 {
-    public class TweetModel : IEntityBase
+    public class Tweet : IEntityBase
     {
         public int Id { get; set; }
 
@@ -14,7 +15,7 @@ namespace InterTwitter.Models
 
         public EAttachedMediaType Media { get; set; }
 
-        public IEnumerable<string> MediaPaths { get; set; }
+        public List<string> MediaPaths { get; set; }
 
         public DateTime CreationTime { get; set; }
     }

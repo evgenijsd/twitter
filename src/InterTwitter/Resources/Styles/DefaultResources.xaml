@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-                    xmlns:converters="clr-namespace:InterTwitter.Converters"
+                    xmlns:converters="clr-namespace:InterTwitter.Converters" 
+                    xmlns:dataTemplatesSelector="clr-namespace:InterTwitter.Helpers" 
+                    xmlns:dataTemplates="clr-namespace:InterTwitter.Views.DataTemplates"
                     x:Class="InterTwitter.Resources.Styles.DefaultResources">
 
     <!-- TEXT SIZE -->
@@ -103,5 +105,16 @@
     
     <!-- CONVERTERS -->
     <converters:ListToFirstConverter x:Key="listToFirstConverter"/>
+    
+    <!-- TweetData Templates-->
+
+    <dataTemplates:ImageTweetDataTemplate x:Key="imageTweetTemplate"/>
+    <dataTemplates:VideoTweetDataTemplate x:Key="videoTweetTemplate"/>
+    <dataTemplates:TextTweetDataTemplate x:Key="textTweetTemplate"/>
+
+    <dataTemplatesSelector:TweetDataTemplateSelector x:Key="templateSelector"
+                                                     ImageTweetDataTemplate="{StaticResource imageTweetTemplate}"
+                                                     VideoTweetDataTemplate="{StaticResource videoTweetTemplate}"
+                                                     TextTweetDataTemplate="{StaticResource textTweetTemplate}"/>
 
 </ResourceDictionary>

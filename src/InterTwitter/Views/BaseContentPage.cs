@@ -10,6 +10,7 @@ namespace InterTwitter.Views
         public BaseContentPage()
         {
             On<iOS>().SetUseSafeArea(true);
+            Xamarin.Forms.NavigationPage.SetHasNavigationBar(this, false);
         }
 
         #region -- Overrides --

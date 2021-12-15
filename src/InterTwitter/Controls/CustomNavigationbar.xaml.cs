@@ -12,23 +12,23 @@ namespace InterTwitter.Controls
 
         #region -- Public properties --
 
-        public static readonly BindableProperty RightUserImageButtonProperty = BindableProperty.Create(
-            propertyName: nameof(RightUserImageButton),
+        public static readonly BindableProperty RightButtonImageSourceProperty = BindableProperty.Create(
+            propertyName: nameof(RightButtonImageSource),
             returnType: typeof(string),
             declaringType: typeof(CustomNavigationbar),
             defaultBindingMode: BindingMode.TwoWay);
 
-        public string RightUserImageButton
+        public string RightButtonImageSource
         {
-            get => (string)GetValue(RightUserImageButtonProperty);
-            set => SetValue(RightUserImageButtonProperty, value);
+            get => (string)GetValue(RightButtonImageSourceProperty);
+            set => SetValue(RightButtonImageSourceProperty, value);
         }
 
         public static readonly BindableProperty RightUserButtonCommandProperty = BindableProperty.Create(
-          propertyName: nameof(RightUserButtonCommand),
-          returnType: typeof(ICommand),
-          declaringType: typeof(CustomNavigationbar),
-          defaultBindingMode: BindingMode.TwoWay);
+            propertyName: nameof(RightUserButtonCommand),
+            returnType: typeof(ICommand),
+            declaringType: typeof(CustomNavigationbar),
+            defaultBindingMode: BindingMode.TwoWay);
 
         public ICommand RightUserButtonCommand
         {
@@ -36,16 +36,16 @@ namespace InterTwitter.Controls
             set => SetValue(RightUserButtonCommandProperty, value);
         }
 
-        public static readonly BindableProperty LeftImageAddButtonProperty = BindableProperty.Create(
-           propertyName: nameof(LeftImageAddButton),
-           returnType: typeof(string),
-           declaringType: typeof(CustomNavigationbar),
-           defaultBindingMode: BindingMode.TwoWay);
+        public static readonly BindableProperty LeftButtonImageSourceProperty = BindableProperty.Create(
+            propertyName: nameof(LeftButtonImageSource),
+            returnType: typeof(string),
+            declaringType: typeof(CustomNavigationbar),
+            defaultBindingMode: BindingMode.TwoWay);
 
-        public string LeftImageAddButton
+        public string LeftButtonImageSource
         {
-            get => (string)GetValue(LeftImageAddButtonProperty);
-            set => SetValue(LeftImageAddButtonProperty, value);
+            get => (string)GetValue(LeftButtonImageSourceProperty);
+            set => SetValue(LeftButtonImageSourceProperty, value);
         }
 
         public static readonly BindableProperty LeftAddButtonCommandProperty = BindableProperty.Create(
@@ -61,10 +61,10 @@ namespace InterTwitter.Controls
         }
 
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(
-           propertyName: nameof(Title),
-           returnType: typeof(string),
-           declaringType: typeof(CustomNavigationbar),
-           defaultBindingMode: BindingMode.TwoWay);
+            propertyName: nameof(Title),
+            returnType: typeof(string),
+            declaringType: typeof(CustomNavigationbar),
+            defaultBindingMode: BindingMode.TwoWay);
 
         public string Title
         {
@@ -73,10 +73,10 @@ namespace InterTwitter.Controls
         }
 
         public static readonly BindableProperty TitleColorProperty = BindableProperty.Create(
-        propertyName: nameof(Title),
-        returnType: typeof(Color),
-        declaringType: typeof(CustomNavigationbar),
-        defaultBindingMode: BindingMode.TwoWay);
+            propertyName: nameof(Title),
+            returnType: typeof(Color),
+            declaringType: typeof(CustomNavigationbar),
+            defaultBindingMode: BindingMode.TwoWay);
 
         public Color TitleColor
         {

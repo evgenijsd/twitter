@@ -5,7 +5,6 @@ using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services;
 using InterTwitter.Services.BookmarkService;
 using InterTwitter.Services.LikeService;
-using InterTwitter.Services.Settings;
 using InterTwitter.Views;
 using Prism.Navigation;
 using System;
@@ -32,10 +31,10 @@ namespace InterTwitter.ViewModels
             IBookmarkService bookmarkService)
             : base(navigationService)
         {
-            IconPath = Prism.PrismApplicationBase.Current.Resources["ic_bookmarks_gray"] as ImageSource;
             _tweetService = tweetService;
             _likeService = likeService;
             _bookmarkService = bookmarkService;
+            IconPath = Prism.PrismApplicationBase.Current.Resources["ic_bookmarks_gray"] as ImageSource;
         }
 
         #region -- Public properties --
@@ -61,11 +60,11 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _userId, value);
         }
 
-        private string _imageSource = "ic_hidden_menu_gray";
-        public string ImageSource
+        private string _imageButtonSource = "ic_hidden_menu_gray";
+        public string ImageButtonSource
         {
-            get => _imageSource;
-            set => SetProperty(ref _imageSource, value);
+            get => _imageButtonSource;
+            set => SetProperty(ref _imageButtonSource, value);
         }
 
         private ObservableCollection<BaseTweetViewModel> _tweets;
@@ -84,7 +83,8 @@ namespace InterTwitter.ViewModels
         private ICommand _DeleteAllBookmarks;
         public ICommand DeleteAllBookmarks => _DeleteAllBookmarks ??= SingleExecutionCommand.FromFunc(OnDeleteAllBookmarksCommandAsync);
 
-        public ICommand OpenFlyoutCommandAsync => SingleExecutionCommand.FromFunc(OnOpenFlyoutCommandAsync);
+        private ICommand _openFlyoutCommandAsync;
+        public ICommand OpenFlyoutCommandAsync => _openFlyoutCommandAsync ?? (_openFlyoutCommandAsync = SingleExecutionCommand.FromFunc(OnOpenFlyoutCommandAsync));
 
         #endregion
 
@@ -98,11 +98,11 @@ namespace InterTwitter.ViewModels
                 IsNotFound = Tweets == null || Tweets.Count == 0;
                 if (IsNotFound)
                 {
-                    ImageSource = string.Empty;
+                    ImageButtonSource = string.Empty;
                 }
                 else
                 {
-                    ImageSource = "ic_hidden_menu_gray";
+                    ImageButtonSource = "ic_hidden_menu_gray";
                 }
             }
         }
@@ -133,18 +133,18 @@ namespace InterTwitter.ViewModels
             if (resultTweet.IsSuccess && resultBookmark.IsSuccess)
             {
                 var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Where(x => getBookmarks.Any(y => y.TweetId == x.Id))
-                    .Select(x => x.Media == ETypeAttachedMedia.Photos || x.Media == ETypeAttachedMedia.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()).OrderBy(x => x.CreationTime));
+                    .Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()).OrderBy(x => x.CreationTime));
 
                 foreach (var tweet in tweetViewModels)
                 {
-                    var tweetAuthor = await _tweetService.GetUserAsync(tweet.UserId);
+                    var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
 
                     if (tweetAuthor.IsSuccess)
                     {
                         tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
                         tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
                         tweet.UserName = tweetAuthor.Result.Name;
-                        tweet.IsTweekLiked = (await _likeService.AnyAsync(tweet.TweetId, UserId)).IsSuccess;
+                        tweet.IsTweetLiked = (await _likeService.AnyAsync(tweet.TweetId, UserId)).IsSuccess;
                         var result = await _likeService.CountAsync(tweet.TweetId);
                         if (result.IsSuccess)
                         {

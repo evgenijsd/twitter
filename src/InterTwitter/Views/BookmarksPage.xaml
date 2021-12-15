@@ -3,15 +3,13 @@
                       xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                       xmlns:controls="clr-namespace:InterTwitter.Controls"
-                      xmlns:helpers="clr-namespace:InterTwitter.Helpers"
-                      xmlns:resources="clr-namespace:InterTwitter.Resources"
+                      xmlns:sh="http://sharpnado.com"
                       xmlns:prism="http://prismlibrary.com"
+                      xmlns:viewmodels="clr-namespace:InterTwitter.ViewModels"
+                      x:DataType="viewmodels:BookmarksPageViewModel"
                       prism:ViewModelLocator.AutowireViewModel="True"
                       IconImageSource="{Binding IconPath}"
                       x:Class="InterTwitter.Views.BookmarksPage">
-    <view:BaseContentPage.Resources>
-        <resources:TweetDataTemplates />
-    </view:BaseContentPage.Resources>
     <view:BaseContentPage.Content>
 
         <Grid>
@@ -20,24 +18,21 @@
             </Grid.RowDefinitions>
 
             <Grid HorizontalOptions="Fill"
-                  VerticalOptions="Fill">
+                  VerticalOptions="Fill"
+                  RowDefinitions="auto"
+                  RowSpacing="0">
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                </Grid.RowDefinitions>
-
-                <controls:CustomNavigationbar Title="Bookmarks"
-                                              Grid.Row="0"
-                                              RightUserImageButton="{Binding ImageSource}"
+                <controls:CustomNavigationbar Grid.Row="0"
+                                              Title="Bookmarks"
+                                              RightButtonImageSource="{Binding ImageButtonSource}"
                                               RightUserButtonCommand="{Binding VisibleButtonCommand}">
                 </controls:CustomNavigationbar>
 
 
-                <CollectionView Grid.Row="1"
-                                ItemsSource="{Binding Tweets}"
-                                ItemTemplate="{StaticResource templateSelector}">
-
-                </CollectionView>
+                <controls:CustomCollectionView x:Name="customCollectView"
+                                               Grid.Row="1"
+                                               ItemsSource="{Binding Tweets}"
+                                               ItemTemplate="{DynamicResource templateSelector}" />
 
                 <StackLayout Grid.Row="1"
                              HorizontalOptions="CenterAndExpand"
@@ -52,8 +47,8 @@
                            Margin="0,20,0,0"
                            Style="{DynamicResource tstyle_i5}" />
                 </StackLayout>
-
             </Grid>
+            
             <Frame Grid.Row="0"
                    HeightRequest="7"
                    WidthRequest="135"

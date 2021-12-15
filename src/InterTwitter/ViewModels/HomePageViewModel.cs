@@ -23,6 +23,8 @@ namespace InterTwitter.ViewModels
         private readonly IBookmarkService _bookmarkService;
         private readonly ILikeService _likeService;
 
+        private bool _isFirstStart = true;
+
         public HomePageViewModel(
             INavigationService navigationService,
             IBookmarkService bookmarkService,
@@ -45,7 +47,11 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _userId, value);
         }
 
-        public ICommand OpenFlyoutCommandAsync => SingleExecutionCommand.FromFunc(OnOpenFlyoutCommandAsync);
+        private ICommand _openFlyoutCommandAsync;
+        public ICommand OpenFlyoutCommandAsync => _openFlyoutCommandAsync ?? (_openFlyoutCommandAsync = SingleExecutionCommand.FromFunc(OnOpenFlyoutCommandAsync));
+
+        private ICommand _addTweetCommandAsync;
+        public ICommand AddTweetCommandAsync => _addTweetCommandAsync ?? (_addTweetCommandAsync = SingleExecutionCommand.FromFunc(OnOpenAddTweetPageAsync));
 
         private ObservableCollection<BaseTweetViewModel> _tweets;
         public ObservableCollection<BaseTweetViewModel> Tweets
@@ -57,14 +63,18 @@ namespace InterTwitter.ViewModels
         #endregion
 
         #region -- Overrides --
-
-        public override async void OnNavigatedTo(INavigationParameters parameters)
+        public override void OnNavigatedTo(INavigationParameters parameters)
         {
-            await InitAsync();
+            base.OnNavigatedTo(parameters);
         }
 
-        public override void OnAppearing()
+        public override async void OnAppearing()
         {
+            if (_isFirstStart)
+            {
+                await InitAsync();
+            }
+
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_blue"] as ImageSource;
         }
 
@@ -90,11 +100,11 @@ namespace InterTwitter.ViewModels
 
             if (getTweetResult.IsSuccess)
             {
-                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == ETypeAttachedMedia.Photos || x.Media == ETypeAttachedMedia.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
+                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
 
                 foreach (var tweet in tweetViewModels)
                 {
-                    var tweetAuthor = await _tweetService.GetUserAsync(tweet.UserId);
+                    var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
 
                     if (tweetAuthor.IsSuccess)
                     {
@@ -102,7 +112,7 @@ namespace InterTwitter.ViewModels
                         tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
                         tweet.UserName = tweetAuthor.Result.Name;
                         tweet.IsBookmarked = (await _bookmarkService.AnyAsync(tweet.TweetId, UserId)).IsSuccess;
-                        tweet.IsTweekLiked = (await _likeService.AnyAsync(tweet.TweetId, UserId)).IsSuccess;
+                        tweet.IsTweetLiked = (await _likeService.AnyAsync(tweet.TweetId, UserId)).IsSuccess;
                         var result = await _likeService.CountAsync(tweet.TweetId);
                         if (result.IsSuccess)
                         {
@@ -137,7 +147,10 @@ namespace InterTwitter.ViewModels
             if (result.IsSuccess)
             {
                 var tweet = Tweets.FirstOrDefault(x => x.TweetId == me.UnTweetId);
-                tweet.LikesNumber = result.Result;
+                if (tweet != null)
+                {
+                    tweet.LikesNumber = result.Result;
+                }
             }
         }
 
@@ -150,6 +163,11 @@ namespace InterTwitter.ViewModels
                 var tweet = Tweets.FirstOrDefault(x => x.TweetId == me.UnTweetId);
                 tweet.LikesNumber = result.Result;
             }
+        }
+
+        private Task OnOpenAddTweetPageAsync()
+        {
+            return Task.CompletedTask;
         }
 
         private Task OnOpenFlyoutCommandAsync()
