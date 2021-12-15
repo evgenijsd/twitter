@@ -44,7 +44,7 @@ namespace InterTwitter.iOS.Services.EnvironmentService
             }
 
             var style = darkStatusBarTint ? UIStatusBarStyle.DarkContent : UIStatusBarStyle.LightContent;
-            UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.BlackOpaque, false);
+            UIApplication.SharedApplication.SetStatusBarStyle(style, false);
             Xamarin.Essentials.Platform.GetCurrentUIViewController()?.SetNeedsStatusBarAppearanceUpdate();
         }
 

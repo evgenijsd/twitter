@@ -59,11 +59,6 @@ namespace InterTwitter.ViewModels
                         VideoSource = list.FirstOrDefault().PathImage;
                     }
                 }
-
-                status = _environmentService.GetUseDarkStatusBarTint();
-                color = _environmentService.GetStatusBarColor();
-
-                _environmentService.SetStatusBarColor(Color.Green, false);
             }
 
             status = _environmentService.GetUseDarkStatusBarTint();

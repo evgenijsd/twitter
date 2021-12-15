@@ -121,13 +121,15 @@
                                                Margin="{OnPlatform Android='7, 21, 5, 0', iOS='4, 11, 0, 0'}"/>
 
                         <statecontainer:StateContainer State="{Binding TypeAttachedMedia}"
-                                                       VerticalOptions="Start">
+                                                       VerticalOptions="Start"
+                                                       Margin="{OnPlatform Android='7, 10, 5, 0', iOS='4, 10, 0, 0'}">
 
                             <statecontainer:StateCondition State="Photos">
 
                                 <FlexLayout Direction="Row"
                                             Wrap="Wrap"
                                             VerticalOptions="Start"
+                                            JustifyContent="Start"
                                             BindableLayout.ItemsSource="{Binding ListAttachedMedia}">
 
                                     <BindableLayout.ItemTemplate>
@@ -135,16 +137,15 @@
                                         <DataTemplate>
 
                                             <Grid HeightRequest="65"
-                                                  Margin="7, 0, 0, 0">
+                                                  WidthRequest="45"
+                                                  Margin="0, 0, 20, 0">
 
                                                 <Grid.RowDefinitions>
-                                                    <RowDefinition Height="44.1167"/>
+                                                    <RowDefinition Height="45"/>
                                                     <RowDefinition Height="21"/>
                                                 </Grid.RowDefinitions>
 
                                                 <Frame Grid.Row="0"
-                                                       HeightRequest="44.1167"
-                                                       WidthRequest="20"
                                                        BackgroundColor="Green"
                                                        IsClippedToBounds="True"
                                                        HasShadow="False"
@@ -158,14 +159,14 @@
                                                 <Frame Grid.Row="1"
                                                        HasShadow="False"
                                                        Padding="0"
-                                                       Margin="41.11, -60, 0, 60"
+                                                       Margin="22, -63, -22, 63"
                                                        BackgroundColor="Transparent">
 
                                                     <ImageButton Source="{Binding PathActionImage}"
                                                                  Command="{Binding ActionCommand}"
                                                                  CommandParameter="{Binding .}"
-                                                                 HeightRequest="21"
-                                                                 WidthRequest="21"/>
+                                                                 Aspect="AspectFit"
+                                                                 BackgroundColor="Transparent"/>
 
                                                 </Frame>
 

@@ -9,7 +9,8 @@
 
         <StackLayout BackgroundColor="{DynamicResource appcolor_i3}">
 
-            <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal"
+                         Padding="15">
 
                 <ImageButton Source="{DynamicResource ic_left_white}"
                              Command="{Binding GoBackCommand}"
@@ -32,7 +33,8 @@
 
             </xct:MediaElement>
 
-            <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal"
+                         Padding="15">
 
                 <Label Text="1 - 6"
                        TextColor="White"
