@@ -3,6 +3,7 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                       xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
                       xmlns:view="clr-namespace:InterTwitter.Views"
+                      xmlns:statecontainer="clr-namespace:InterTwitter.Controls.StateContainer"
                       x:Class="InterTwitter.Views.VideoGalleryPage">
 
     <view:BaseContentPage.Content>
@@ -40,23 +41,59 @@
                        TextColor="White"
                        VerticalOptions="Center"/>
 
-                <ImageButton Source="{DynamicResource ic_like_blue}"
+                <statecontainer:StateContainer State="True">
+
+                    <statecontainer:StateCondition State="True">
+
+                        <ImageButton Source="{DynamicResource ic_like_blue}"
                              Command="{Binding GoBackCommand}"
                              HorizontalOptions="EndAndExpand"
                              BackgroundColor="Transparent"
                              VerticalOptions="Center"/>
+                        
+                    </statecontainer:StateCondition>
+
+                    <statecontainer:StateCondition State="False">
+
+                        <ImageButton Source="{DynamicResource ic_like_gray}"
+                             Command="{Binding GoBackCommand}"
+                             HorizontalOptions="EndAndExpand"
+                             BackgroundColor="Transparent"
+                             VerticalOptions="Center"/>
+                        
+                    </statecontainer:StateCondition>
+
+                </statecontainer:StateContainer>
 
                 <Label Text="142"
                        TextColor="White"
                        VerticalOptions="Center"
                        HorizontalOptions="End"/>
 
-                <ImageButton Source="{DynamicResource ic_bookmarks_blue}"
-                             Command="{Binding GoBackCommand}"
-                             HorizontalOptions="End"
-                             BackgroundColor="Transparent"
-                             VerticalOptions="Center"/>
+                <statecontainer:StateContainer State="True">
 
+                    <statecontainer:StateCondition State="True">
+
+                        <ImageButton Source="{DynamicResource ic_bookmarks_blue}"
+                                     Command="{Binding GoBackCommand}"
+                                     HorizontalOptions="End"
+                                     BackgroundColor="Transparent"
+                                     VerticalOptions="Center"/>
+
+                    </statecontainer:StateCondition>
+
+                    <statecontainer:StateCondition State="False">
+
+                        <ImageButton Source="{DynamicResource ic_bookmarks_blue}"
+                                     Command="{Binding GoBackCommand}"
+                                     HorizontalOptions="End"
+                                     BackgroundColor="Transparent"
+                                     VerticalOptions="Center"/>
+
+                    </statecontainer:StateCondition>
+
+                </statecontainer:StateContainer>
+                
             </StackLayout>
             
         </StackLayout>
