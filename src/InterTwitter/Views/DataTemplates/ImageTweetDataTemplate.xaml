@@ -3,11 +3,13 @@
               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
               xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
+              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
               xmlns:controls="clr-namespace:InterTwitter.Controls"
-              x:Class="InterTwitter.Views.DataTemplates.ImageTweetDataTemplate">
+              x:Class="InterTwitter.Views.DataTemplates.ImageTweetDataTemplate"
+              x:Key="imageTweetDataTemplate">
 
-    <StackLayout Spacing="0">
+    <StackLayout Spacing="0"
+                 x:Name="this">
         
         <StackLayout Padding="15, 15, 15, 0"
                      Orientation="Horizontal"
@@ -45,11 +47,13 @@
                                   SeparatorVisibility="None"
                                   FlowColumnExpand="First"
                                   VerticalOptions="Start"
+                                  SelectedItem="{Binding SelectedItem}"
                                   FlowItemsSource="{Binding MediaPaths}">
-
+                    
                     <flv:FlowListView.FlowColumnTemplate>
-                        
+
                         <DataTemplate>
+                            
                             <Frame Margin="2"
                                    Padding="0"
                                    HasShadow="False"
@@ -57,9 +61,14 @@
                                    IsClippedToBounds="True">
 
                                 <ffimageloading:CachedImage Aspect="AspectFill" 
-                                                            Source="{Binding .}"/>
+                                                            Source="{Binding .}">
+                                    <ffimageloading:CachedImage.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=BindingContext.OpenTweetCommand}"/>
+                                    </ffimageloading:CachedImage.GestureRecognizers>
+                                </ffimageloading:CachedImage>
 
                             </Frame>
+                            
                         </DataTemplate>
                         
                     </flv:FlowListView.FlowColumnTemplate>
@@ -109,7 +118,9 @@
                         </ffimageloading:CachedImage.GestureRecognizers>
                         
                         <ffimageloading:CachedImage.Triggers>
-                            <DataTrigger TargetType="ffimageloading:CachedImage" Binding="{Binding IsBookmarked}" Value="true">
+                            <DataTrigger Binding="{Binding IsBookmarked}"
+                                         TargetType="ffimageloading:CachedImage" 
+                                         Value="true">
                                 <Setter Property="Source" Value="ic_bookmarks_blue"/>
                             </DataTrigger>
                         </ffimageloading:CachedImage.Triggers>

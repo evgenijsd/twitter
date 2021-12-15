@@ -1,15 +1,21 @@
 ﻿using InterTwitter.Enums;
 using InterTwitter.Helpers;
-using Prism.Mvvm;
+using InterTwitter.Views.TweetFullPage;
+using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace InterTwitter.Models.TweetViewModel
+namespace InterTwitter.ViewModels.TweetViewModel
 {
-    public class BaseTweetViewModel : BindableBase
+    public class BaseTweetViewModel : BaseViewModel
     {
+        public BaseTweetViewModel(
+            INavigationService navigationService)
+            : base(navigationService)
+        {
+        }
         #region -- Public properties --
 
         private int _tweetId;
@@ -38,13 +44,6 @@ namespace InterTwitter.Models.TweetViewModel
         {
             get => _userAvatar;
             set => SetProperty(ref _userAvatar, value);
-        }
-
-        private string _userBackgroundImage;
-        public string UserBackgroundImage
-        {
-            get => _userBackgroundImage;
-            set => SetProperty(ref _userBackgroundImage, value);
         }
 
         private string _text;
@@ -82,7 +81,7 @@ namespace InterTwitter.Models.TweetViewModel
         }
 
         private bool _IsTweetLiked;
-        public bool IsTweekLiked
+        public bool IsTweetLiked
         {
             get => _IsTweetLiked;
             set => SetProperty(ref _IsTweetLiked, value);
@@ -92,17 +91,17 @@ namespace InterTwitter.Models.TweetViewModel
         public bool IsBookmarked
         {
             get => _isBookmarked;
-            set => SetProperty(ref _isBookmarked, value, nameof(IsBookmarked));
+            set => SetProperty(ref _isBookmarked, value);
         }
 
         private ICommand _likeTweetCommand;
-        public ICommand LikeTweetCommand => _likeTweetCommand ?? (_likeTweetCommand = SingleExecutionCommand.FromFunc<ImagesTweetViewModel>(OnLikeAsync));
-
-        private ICommand _openTweetCommand;
-        public ICommand OpenTweetCommand => _openTweetCommand ?? (_openTweetCommand = SingleExecutionCommand.FromFunc<ImagesTweetViewModel>(OnOpenTweetAsync));
+        public ICommand LikeTweetCommand => _likeTweetCommand ?? (_likeTweetCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnLikeAsync));
 
         private ICommand _markTweetCommand;
         public ICommand MarkTweetCommand => _markTweetCommand ?? (_markTweetCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnMarkAsync));
+
+        private ICommand _openTweetCommand;
+        public ICommand OpenTweetCommand => _openTweetCommand ?? (_openTweetCommand = SingleExecutionCommand.FromFunc(OnOpenFullTweetAsync));
 
         private ICommand _moveToProfileCommand;
         public ICommand MoveToProfileCommand => _moveToProfileCommand ?? (_moveToProfileCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnGoToProfileAsync));
@@ -115,18 +114,23 @@ namespace InterTwitter.Models.TweetViewModel
             set => SetProperty(ref _CreationTime, value);
         }
 
+        private string _userBackgroundImage;
+        public string UserBackgroundImage
+        {
+            get => _userBackgroundImage;
+            set
+            {
+                SetProperty(ref _userBackgroundImage, value);
+            }
+        }
+
         #endregion
 
         #region -- Private helpers --
 
         private Task OnLikeAsync(BaseTweetViewModel tweet)
         {
-            IsTweekLiked = !IsTweekLiked;
-            return Task.CompletedTask;
-        }
-
-        private Task OnOpenTweetAsync(BaseTweetViewModel arg)
-        {
+            IsTweetLiked = !IsTweetLiked;
             return Task.CompletedTask;
         }
 
@@ -134,6 +138,16 @@ namespace InterTwitter.Models.TweetViewModel
         {
             IsBookmarked = !IsBookmarked;
             return Task.CompletedTask;
+        }
+
+        public virtual async Task OnOpenFullTweetAsync()
+        {
+            var parameters = new NavigationParameters
+            {
+                { nameof(BaseTweetViewModel), this },
+            };
+
+            await NavigationService.NavigateAsync($"{nameof(ImagesFullPage)}", parameters);
         }
 
         private Task OnGoToProfileAsync(BaseTweetViewModel arg)

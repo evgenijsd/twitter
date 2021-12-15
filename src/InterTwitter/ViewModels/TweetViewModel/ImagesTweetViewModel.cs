@@ -1,12 +1,17 @@
-﻿using System;
+﻿using InterTwitter.Views.TweetFullPage;
+using Prism.Navigation;
+using System.Threading.Tasks;
 
-namespace InterTwitter.Models.TweetViewModel
+namespace InterTwitter.ViewModels.TweetViewModel
 {
     public class ImagesTweetViewModel : BaseTweetViewModel
     {
         private readonly int _imagesNumber;
 
-        public ImagesTweetViewModel(int imagesNumber)
+        public ImagesTweetViewModel(
+            INavigationService navigationService,
+            int imagesNumber)
+            : base(navigationService)
         {
             if (imagesNumber > 0)
             {
@@ -32,6 +37,19 @@ namespace InterTwitter.Models.TweetViewModel
             set => SetProperty(ref _columnNumber, value);
         }
 
+        #endregion
+
+        #region -- Overrides --
+
+        public override async Task OnOpenFullTweetAsync()
+        {
+            var parameters = new NavigationParameters
+            {
+                { nameof(ImagesTweetViewModel), this },
+            };
+
+            await NavigationService.NavigateAsync($"{nameof(ImagesFullPage)}", parameters);
+        }
         #endregion
 
         #region -- Private helpers --

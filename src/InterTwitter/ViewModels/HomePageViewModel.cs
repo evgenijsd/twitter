@@ -1,8 +1,8 @@
 using InterTwitter.Enums;
 using InterTwitter.Extensions;
 using InterTwitter.Helpers;
-using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services;
+using InterTwitter.ViewModels.TweetViewModel;
 using InterTwitter.Views;
 using Prism.Navigation;
 using System.Collections.Generic;
@@ -79,7 +79,7 @@ namespace InterTwitter.ViewModels
 
             if (getTweetResult.IsSuccess)
             {
-                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
+                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel(NavigationService) : x.ToBaseTweetViewModel(NavigationService)));
 
                 foreach (var tweet in tweetViewModels)
                 {

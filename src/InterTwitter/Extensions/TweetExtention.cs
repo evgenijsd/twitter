@@ -1,5 +1,6 @@
 ﻿using InterTwitter.Models;
-using InterTwitter.Models.TweetViewModel;
+using InterTwitter.ViewModels.TweetViewModel;
+using Prism.Navigation;
 using System.Linq;
 
 namespace InterTwitter.Extensions
@@ -8,7 +9,7 @@ namespace InterTwitter.Extensions
     {
         #region -- Public methods --
 
-        public static BaseTweetViewModel ToBaseTweetViewModel(this TweetModel tweetModel) => new BaseTweetViewModel
+        public static BaseTweetViewModel ToBaseTweetViewModel(this TweetModel tweetModel, INavigationService navigationService) => new BaseTweetViewModel(navigationService)
         {
             TweetId = tweetModel.Id,
             UserId = tweetModel.UserId,
@@ -18,7 +19,7 @@ namespace InterTwitter.Extensions
             CreationTime = tweetModel.CreationTime,
         };
 
-        public static BaseTweetViewModel ToImagesTweetViewModel(this TweetModel tweetModel) => new ImagesTweetViewModel(tweetModel.MediaPaths.Count())
+        public static BaseTweetViewModel ToImagesTweetViewModel(this TweetModel tweetModel, INavigationService navigationService) => new ImagesTweetViewModel(navigationService, tweetModel.MediaPaths.Count())
         {
             TweetId = tweetModel.Id,
             UserId = tweetModel.UserId,

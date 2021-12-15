@@ -21,8 +21,7 @@ namespace InterTwitter.Services
 
         public async Task<AOResult<IEnumerable<TweetModel>>> GetAllTweetsAsync()
         {
-            await Task.Delay(50);
-
+            //await Task.Delay(50);
             var result = new AOResult<IEnumerable<TweetModel>>();
             try
             {

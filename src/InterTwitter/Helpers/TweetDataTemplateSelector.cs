@@ -1,5 +1,5 @@
 ﻿using InterTwitter.Enums;
-using InterTwitter.Models.TweetViewModel;
+using InterTwitter.ViewModels.TweetViewModel;
 using Xamarin.Forms;
 
 namespace InterTwitter.Helpers

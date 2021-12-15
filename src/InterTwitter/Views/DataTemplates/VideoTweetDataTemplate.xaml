@@ -5,7 +5,8 @@
               xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
               x:Class="InterTwitter.Views.DataTemplates.VideoTweetDataTemplate">
     
-    <StackLayout Spacing="0">
+    <StackLayout Spacing="0"
+                 x:Name="this">
         
         <StackLayout Padding="15, 15, 15, 0"
                      Orientation="Horizontal"
@@ -41,7 +42,11 @@
 
                     <WebView Source="{Binding MediaPaths, Converter={StaticResource listToFirstConverter}}"
                              WidthRequest="240"
-                             HeightRequest="180"/>
+                             HeightRequest="180">
+                        <WebView.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=BindingContext.OpenTweetCommand}"/>
+                        </WebView.GestureRecognizers>
+                    </WebView>
 
                 </Frame>
 

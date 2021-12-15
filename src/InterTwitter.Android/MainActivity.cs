@@ -1,9 +1,9 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
 using FFImageLoading.Forms.Platform;
+using PanCardView.Droid;
 
 namespace InterTwitter.Droid
 {
@@ -16,6 +16,7 @@ namespace InterTwitter.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            CardsViewRenderer.Preserve();
             CachedImageRenderer.Init(true); 
             CachedImageRenderer.InitImageViewHandler();
             LoadApplication(new App());

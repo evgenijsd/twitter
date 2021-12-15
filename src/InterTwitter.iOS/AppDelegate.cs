@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FFImageLoading.Forms.Platform;
+﻿using FFImageLoading.Forms.Platform;
 using Foundation;
+using PanCardView.iOS;
 using UIKit;
 
 namespace InterTwitter.iOS
@@ -25,6 +23,7 @@ namespace InterTwitter.iOS
             global::Xamarin.Forms.Forms.Init();
             CachedImageRenderer.Init();
             CachedImageRenderer.InitImageSourceHandler();
+            CardsViewRenderer.Preserve();
             Sharpnado.Shades.iOS.iOSShadowsRenderer.Initialize();
             LoadApplication(new App());
 
