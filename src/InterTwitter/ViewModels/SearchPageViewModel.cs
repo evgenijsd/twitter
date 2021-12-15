@@ -274,7 +274,7 @@ namespace InterTwitter.ViewModels
                 if (result.IsSuccess)
                 {
                     TweetSearchResult = ESearchResult.Success;
-                    Keywords = new List<string>(queryString.Split(' ', '\t').Distinct());
+                    Keywords = new List<string>(queryString.Split(' ').Distinct());
 
                     await InitTweetsForDisplayingAsync(result.Result);
                 }

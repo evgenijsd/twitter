@@ -156,18 +156,18 @@
                                     <!-- NO RESULTS FOR QUERY - DISPLAY OWL -->
                                     <stateContainer:StateCondition State="NoResults">
 
-                                        <StackLayout VerticalOptions="Start"
-                                                     Margin="0, 180, 0, 0"
-                                                     Spacing="20">
+                                        <StackLayout Margin="{OnPlatform Android='0, 240.3, 0, 0', iOS='0, 176.5, 0, 0'}"
+                                                     Padding="0"
+                                                     Spacing="28">
 
                                             <Image Scale="1.176"
                                                    Source="{DynamicResource pic_owl_blue_big}" />
-                                            
+
                                             <controls:LineSpacingLabel Margin="30, 0"
-                                                                       HorizontalOptions="CenterAndExpand"
+                                                                       HorizontalOptions="Center"
                                                                        HorizontalTextAlignment="Center"
                                                                        Style="{DynamicResource tstyle_i5}"
-                                                                       LineSpacing="{OnPlatform Android=1.3, iOS=6.25}" 
+                                                                       LineSpacing="{OnPlatform Android=1.3, iOS=6.45}"
                                                                        Text="{Binding NoResultsMessage}"/>
 
                                         </StackLayout>

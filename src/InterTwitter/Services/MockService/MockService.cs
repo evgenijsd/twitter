@@ -110,7 +110,7 @@ namespace InterTwitter.Services
                 {
                     Id = 3,
                     UserId = 3,
-                    Text = "um quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
+                    Text = "#NoNuanceNovember um quisquam eius #AMAs sed odit fugiat iusto fuga #blockchain praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
                     Media = Enums.EAttachedMediaType.Video,
                     MediaPaths = new List<string>
                     {
@@ -122,7 +122,7 @@ namespace InterTwitter.Services
                 {
                     Id = 4,
                     UserId = 4,
-                    Text = "Only text",
+                    Text = "#AMAs Only #NoNuanceNovember text #coffeeTime",
                     Media = Enums.EAttachedMediaType.None,
                     CreationTime = DateTime.Now,
                 },
@@ -130,7 +130,7 @@ namespace InterTwitter.Services
                 {
                     Id = 5,
                     UserId = 5,
-                    Text = "Hi there!",
+                    Text = " #teaTime Hi #blockchain there! ",
                     Media = Enums.EAttachedMediaType.Photos,
                     CreationTime = DateTime.Now,
                     MediaPaths = new List<string>
@@ -154,7 +154,7 @@ namespace InterTwitter.Services
                 {
                     Id = 6,
                     UserId = 6,
-                    Text = "HI there!",
+                    Text = "#NoNuanceNovember #AMAs HI there#workout!",
                     Media = Enums.EAttachedMediaType.Gif,
                     MediaPaths = new List<string>
                     {
@@ -166,7 +166,7 @@ namespace InterTwitter.Services
                 {
                     Id = 2,
                     UserId = 2,
-                    Text = "onsequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
+                    Text = "#AMAs onsequuntur #cats voluptatum laborum #coffeeTime numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
                     Media = Enums.EAttachedMediaType.Gif,
                     MediaPaths = new List<string>
                     {
@@ -177,7 +177,7 @@ namespace InterTwitter.Services
             };
         }
 
-           private void InitHashtags()
+        private void InitHashtags()
         {
             Hashtags = new List<HashtagModel>
             {
@@ -222,7 +222,7 @@ namespace InterTwitter.Services
                     Id = 7,
                     Text = "#cats",
                     TweetsCount = 1,
-                }
+                },
             };
         }
 

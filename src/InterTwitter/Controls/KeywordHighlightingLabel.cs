@@ -44,7 +44,7 @@ namespace InterTwitter.Controls
                 case nameof(this.Keywords):
                     if (!string.IsNullOrEmpty(this.Text) && this.Keywords?.Count > 0)
                     {
-                        var positionsAndKeywordsPairs = GetPositionsAndKeywordsPairs(this.Keywords);
+                        var positionsAndKeywordsPairs = TryGetPositionsAndKeywordsPairs(this.Keywords);
 
                         if (positionsAndKeywordsPairs.Count > 0)
                         {
@@ -64,28 +64,34 @@ namespace InterTwitter.Controls
 
         #region -- Private helpers --
 
-        private SortedDictionary<int, string> GetPositionsAndKeywordsPairs(List<string> keywords)
+        private SortedDictionary<int, string> TryGetPositionsAndKeywordsPairs(List<string> keywords)
         {
             SortedDictionary<int, string> positionKeywordSpanPairs = new SortedDictionary<int, string>();
 
-            foreach (var keyword in keywords)
+            try
             {
-                int keywordPosition = -1;
-                int lastKeywordPosition = 0;
-
-                do
+                foreach (var keyword in keywords)
                 {
-                    keywordPosition = Text.IndexOf(keyword, lastKeywordPosition, StringComparison.OrdinalIgnoreCase);
+                    int keywordPosition = -1;
+                    int lastKeywordPosition = 0;
 
-                    if (keywordPosition != -1)
+                    do
                     {
-                        // # #teatime - crush
-                        lastKeywordPosition = keywordPosition + keyword.Length;
+                        keywordPosition = Text.IndexOf(keyword, lastKeywordPosition, StringComparison.OrdinalIgnoreCase);
 
-                        positionKeywordSpanPairs.Add(keywordPosition, keyword);
+                        if (keywordPosition != -1)
+                        {
+                            // # #teatime - crush
+                            lastKeywordPosition = keywordPosition + keyword.Length;
+
+                            positionKeywordSpanPairs.Add(keywordPosition, keyword);
+                        }
                     }
+                    while (keywordPosition != -1);
                 }
-                while (keywordPosition != -1);
+            }
+            catch (Exception e)
+            {
             }
 
             return positionKeywordSpanPairs;
