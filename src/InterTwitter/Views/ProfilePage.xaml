@@ -47,12 +47,12 @@
             <Image Scale="0.8" 
                    Source="{DynamicResource ic_hidden_menu_white_small}" />
             <cardsControls:CircleFrame.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnMenuTappedHandler" />
+                <TapGestureRecognizer Tapped="OnMenuTappedHandler" Command="{Binding HamburgerMenuCommandAsync}"/>
             </cardsControls:CircleFrame.GestureRecognizers>
         </cardsControls:CircleFrame>
         
         <!--Hidden menu-->
-        <Frame x:Name="menu"
+        <Frame x:Name="currentUserHiddenMenu"
                Grid.Row="0" 
                Grid.RowSpan="2"
                Margin="0,16,6,0"
@@ -60,25 +60,66 @@
                CornerRadius="6"
                HasShadow="True"
                HorizontalOptions="End"
-               IsVisible="false"
+               IsVisible="{Binding IsCurrentUserMenuVisible, Mode=TwoWay}"
                VerticalOptions="Start">
-            <StackLayout  x:Name="menuStack">
+            <StackLayout  x:Name="currentUserMenuStack">
                 <Label Style="{DynamicResource tstyle_i9}" TextColor="{DynamicResource appcolor_i3}" 
-                       Text="Share" />
+                       Text="Share">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ShareCommandAsync}" Tapped="OnAnywhereTappedHandler"/>
+                    </Label.GestureRecognizers>
+                </Label>
                 <Label Style="{DynamicResource tstyle_i9}" TextColor="{DynamicResource appcolor_i3}" 
-                       Text="Change profile" />
+                       Text="Change profile">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigationToEditCommandAsync}" Tapped="OnAnywhereTappedHandler"/>
+                    </Label.GestureRecognizers>
+                </Label>
                 <Label Style="{DynamicResource tstyle_i9}" TextColor="{DynamicResource appcolor_i3}" 
                        Text="Muted profiles" />
                 <Label Style="{DynamicResource tstyle_i9}" TextColor="{DynamicResource appcolor_i3}" 
                        Text="Blacklist" />
             </StackLayout>
         </Frame>
+
+        <Frame x:Name="userHiddenMenu"
+               Grid.Row="0" 
+               Grid.RowSpan="2"
+               Margin="0,16,6,0"
+               Padding="16,21,64,21" 
+               CornerRadius="6"
+               HasShadow="True"
+               HorizontalOptions="End"
+               IsVisible="{Binding IsUserMenuVisible, Mode=TwoWay}"
+               VerticalOptions="Start">
+            <StackLayout  x:Name="menuStack">
+                <Label Style="{DynamicResource tstyle_i9}" TextColor="{DynamicResource appcolor_i3}" 
+                       Text="Share">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ShareCommandAsync}" Tapped="OnAnywhereTappedHandler"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Style="{DynamicResource tstyle_i9}" TextColor="{DynamicResource appcolor_i3}" 
+                       Text="Mute">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AddUserToMuteListCommandAsync}" Tapped="OnAnywhereTappedHandler"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Style="{DynamicResource tstyle_i9}" TextColor="{DynamicResource appcolor_i3}" 
+                       Text="Add to blacklist">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AddUserToBlacklistCommandAsync}" Tapped="OnAnywhereTappedHandler"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+        </Frame>
         <!--Hidden menu-->
         
         <!--MIDDLE SPACE-->
         <Grid Grid.Row="1" 
+              ColumnDefinitions="0.4*, 0.6*"
               BackgroundColor="Transparent">
-            <StackLayout Grid.Column="0"
+            <StackLayout Grid.Column="0" Grid.ColumnSpan="2"
                          Margin="16,0,0,0"
                          HorizontalOptions="Start"
                          VerticalOptions="Center">
@@ -87,20 +128,59 @@
                 <Label Style="{DynamicResource tstyle_i9}" 
                        Text="{Binding UserMail}" />
             </StackLayout>
-            <Frame Grid.Column="1" 
+            
+            <Frame Grid.Column="1"
                    x:Name="changeProfFrame"
-                   Margin="0,8,0,0"
+                   Margin="0,8,16,0"
                    Padding="28,6,28,6"
                    BorderColor="{DynamicResource appcolor_i4}"
                    CornerRadius="45"
                    HasShadow="False"
-                   HorizontalOptions="Center"
+                   HorizontalOptions="End" 
+                   IsVisible="{Binding IsChangeProfileButtonVisible}"
                    VerticalOptions="Start">
                 <Label Style="{DynamicResource tstyle_i8}" 
                        Text="Change Profile" 
                        x:Name="changeProfLabel"/>
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding NavigationToEditCommandAsync}" Tapped="OnChangeProfTapHandler"/>
+                </Frame.GestureRecognizers>
+            </Frame>
+
+            <Frame Grid.Column="1" 
+                   x:Name="blacklistFrame"
+                   Margin="0,8,16,0"
+                   Padding="28,6,28,6"
+                   BorderColor="{DynamicResource appcolor_i7}"
+                   CornerRadius="45"
+                   HasShadow="False"
+                   HorizontalOptions="End" 
+                   IsVisible="{Binding IsBlacklistButtonVisible}"
+                   VerticalOptions="Start">
+                <Label Style="{DynamicResource tstyle_i8}"
+                       TextColor="{DynamicResource appcolor_i7}"
+                       Text="Profile in Blacklist" 
+                       x:Name="blacklistLabel"/>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding RemoveUserFromBlacklistCommandAsync}"/>
+                </Frame.GestureRecognizers>
+            </Frame>
+
+            <Frame Grid.Column="1"
+                   x:Name="muteFrame"
+                   Margin="0,8,16,0"
+                   Padding="28,6,28,6"
+                   BorderColor="{DynamicResource appcolor_i4}"
+                   CornerRadius="45"
+                   HasShadow="False"
+                   HorizontalOptions="End" 
+                   IsVisible="{Binding IsMuteButtonVisible}"
+                   VerticalOptions="Start">
+                <Label Style="{DynamicResource tstyle_i8}"
+                       Text="Muted" 
+                       x:Name="muteLabel"/>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding RemoveUserFromMuteListCommandAsync}"/>
                 </Frame.GestureRecognizers>
             </Frame>
             <!--MIDDLE SPACE-->

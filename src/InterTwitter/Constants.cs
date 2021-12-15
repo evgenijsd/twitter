@@ -25,5 +25,11 @@ namespace InterTwitter
 
             public const string PASSWORD_REGEX = @"^(?=.*\d)(?=.*[A-ZА-ЯЁ]).{6,}$";
         }
+
+        public static class NavigationKeys
+        {
+            public const string CURRENT_USER = "CurrentUser";
+            public const string USER = "User";
+        }
     }
 }

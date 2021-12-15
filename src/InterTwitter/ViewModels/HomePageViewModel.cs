@@ -1,8 +1,10 @@
 using InterTwitter.Enums;
 using InterTwitter.Extensions;
 using InterTwitter.Helpers;
+using InterTwitter.Models;
 using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services;
+using InterTwitter.Services.UserService;
 using InterTwitter.Views;
 using Prism.Navigation;
 using System.Collections.Generic;
@@ -17,14 +19,16 @@ namespace InterTwitter.ViewModels
     public class HomePageViewModel : BaseTabViewModel
     {
         private readonly ITweetService _tweetService;
-
+        private readonly IUserService _userService;
         public HomePageViewModel(
             ITweetService tweetService,
+            IUserService userService,
             INavigationService navigationService)
             : base(navigationService)
         {
-            IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource;
+           // IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource;
             _tweetService = tweetService;
+            _userService = userService;
         }
 
         #region -- Public properties --
@@ -75,6 +79,7 @@ namespace InterTwitter.ViewModels
 
                 foreach (var tweet in tweetViewModels)
                 {
+                    UserModel user = _userService.GetUserAsync(tweet.UserId).Result.Result;
                     var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
 
                     if (tweetAuthor.IsSuccess)
@@ -82,6 +87,7 @@ namespace InterTwitter.ViewModels
                         tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
                         tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
                         tweet.UserName = tweetAuthor.Result.Name;
+                        tweet.MoveToProfileCommand = new Command(() => NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters { { Constants.NavigationKeys.USER, user } }));
                     }
                 }
 

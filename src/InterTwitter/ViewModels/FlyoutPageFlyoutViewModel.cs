@@ -1,4 +1,5 @@
 ﻿using InterTwitter.Helpers;
+using InterTwitter.Models;
 using InterTwitter.Services.Settings;
 using InterTwitter.Services.UserService;
 using InterTwitter.Views;
@@ -15,6 +16,7 @@ namespace InterTwitter.ViewModels.Flyout
     {
         private readonly ISettingsManager _settingsManager;
         private readonly IUserService _userService;
+        private UserModel _user;
         public FlyoutPageFlyoutViewModel(INavigationService navigationService, ISettingsManager settingsManager, IUserService userService)
             : base(navigationService)
         {
@@ -92,7 +94,8 @@ namespace InterTwitter.ViewModels.Flyout
 
         public ICommand LogoutCommandAsync => SingleExecutionCommand.FromFunc(OnLogoutCommandAsync);
         public ICommand NavigateEditProfileCommandAsync => SingleExecutionCommand.FromFunc(() => NavigationService.NavigateAsync(nameof(EditProfilePage)));
-        public ICommand NavigateProfileCommandAsync => SingleExecutionCommand.FromFunc(() => NavigationService.NavigateAsync(nameof(ProfilePage)));
+        public ICommand NavigateProfileCommandAsync => SingleExecutionCommand.FromFunc(() =>
+        NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters { { Constants.NavigationKeys.CURRENT_USER, _user } }));
 
         #endregion
 
@@ -100,10 +103,10 @@ namespace InterTwitter.ViewModels.Flyout
 
         public override Task InitializeAsync(INavigationParameters parameters)
         {
-            var user = _userService.GetUserAsync(_settingsManager.UserId).Result.Result;
-            ProfileName = user.Name;
-            ProfileEmail = user.Email;
-            UserImagePath = user.AvatarPath;
+            _user = _userService.GetUserAsync(_settingsManager.UserId).Result.Result;
+            ProfileName = _user.Name;
+            ProfileEmail = _user.Email;
+            UserImagePath = _user.AvatarPath;
             return base.InitializeAsync(parameters);
         }
 

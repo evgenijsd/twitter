@@ -111,9 +111,9 @@ namespace InterTwitter.Services.UserService
             var result = new AOResult<int>();
             try
             {
-                var oldUser = _mockService.Users.FirstOrDefault(x => x.Id == user.Id);
-                _mockService.Users.Remove(oldUser);
-                _mockService.Users.Add(user);
+                var oldUser = _mockService.Users?.FirstOrDefault(x => x.Id == user.Id);
+                _mockService.Users?.Remove(oldUser);
+                _mockService.Users?.Add(user);
                 _mockService.Users.Sort((x1, x2) => x1.Id.CompareTo(x2.Id));
                 result.SetSuccess(user.Id);
             }
@@ -125,36 +125,153 @@ namespace InterTwitter.Services.UserService
             return Task<AOResult<int>>.Factory.StartNew(() => result);
         }
 
-        //public Task DeleteUser(int id)
-        //{
-        //    _mockService.Users.Remove(_mockService.Users.FirstOrDefault(x => x.Id == id));
-        //    return Task.CompletedTask;
-        //}
+        //7777777777777777777777777777777
+        public Task<AOResult<int>> AddToBlacklistAsync(int currentUserId, int userId)
+        {
+            var result = new AOResult<int>();
+            try
+            {
+                var id = _mockService.BlackList.Count();
+                _mockService.BlackList.Add(new BlockModel
+                {
+                    UserId = currentUserId,
+                    BlockedUserId = userId,
+                    Id = id,
+                });
+                result.SetSuccess(id);
+            }
+            catch (Exception e)
+            {
+                result.SetError($"Method:{nameof(UserService)}/{nameof(AddToBlacklistAsync)} exception:", "Error", e);
+            }
 
-        //public Task<List<UserModel>> GetAllUsers()
-        //{
-        //    return Task<List<UserModel>>.Factory.StartNew(() => _mockService.Users);
-        //}
+            return Task<AOResult<int>>.Factory.StartNew(() => result);
+        }
 
-        //public Task<UserModel> GetUser(int id)
-        //{
-        //    return Task<UserModel>.Factory.StartNew(() => _mockService.Users.FirstOrDefault(x => x.Id == id));
-        //}
+        public Task<AOResult<int>> AddToMuteListAsync(int currentUserId, int userId)
+        {
+            var result = new AOResult<int>();
+            try
+            {
+                var id = _mockService.MuteList.Count();
+                _mockService.MuteList.Add(new MuteModel
+                {
+                    UserId = currentUserId,
+                    MutedUserId = userId,
+                    Id = id,
+                });
+                result.SetSuccess(id);
+            }
+            catch (Exception e)
+            {
+                result.SetError($"Method:{nameof(UserService)}/{nameof(AddToMuteListAsync)} exception:", "Error", e);
+            }
 
-        //public Task InsertUser(UserModel user)
-        //{
-        //    _mockService.Users.Add(user);
-        //    return Task.CompletedTask;
-        //}
+            return Task<AOResult<int>>.Factory.StartNew(() => result);
+        }
 
-        //public Task UpdateUser(UserModel user)
-        //{
-        //   var v = _mockService.Users.FirstOrDefault(x => x.Id == user.Id);
-        //   _mockService.Users.Remove(v);
-        //   _mockService.Users.Add(user);
+        public Task<AOResult<bool>> IsUserBlocked(int currentUserId, int userId)
+        {
+            var result = new AOResult<bool>();
+            try
+            {
+                if (_mockService.BlackList.FirstOrDefault(x => x.UserId == currentUserId && x.BlockedUserId == userId) != null)
+                {
+                    result.SetSuccess(true);
+                }
+                else
+                {
+                    result.SetSuccess(false);
+                }
+            }
+            catch (Exception e)
+            {
+                result.SetError($"Method:{nameof(UserService)}/{nameof(IsUserBlocked)} exception:", "Error", e);
+            }
 
-        //   return Task.CompletedTask;
-        //}
+            return Task<AOResult<bool>>.Factory.StartNew(() => result);
+        }
+
+        public Task<AOResult<bool>> IsUserMuted(int currentUserId, int userId)
+        {
+            var result = new AOResult<bool>();
+            try
+            {
+                if (_mockService.MuteList.FirstOrDefault(x => x.UserId == currentUserId && x.MutedUserId == userId) != null)
+                {
+                    result.SetSuccess(true);
+                }
+                else
+                {
+                    result.SetSuccess(false);
+                }
+            }
+            catch (Exception e)
+            {
+                result.SetError($"Method:{nameof(UserService)}/{nameof(IsUserMuted)} exception:", "Error", e);
+            }
+
+            return Task<AOResult<bool>>.Factory.StartNew(() => result);
+        }
+
+        public Task<AOResult<int>> RemoveFromBlacklistAsync(int currentUserId, int userId)
+        {
+            var result = new AOResult<int>();
+            try
+            {
+                var removing = _mockService.BlackList.FirstOrDefault(x => x.UserId == currentUserId && x.BlockedUserId == userId);
+                if (removing != null)
+                {
+                    _mockService.BlackList.Remove(removing);
+                    result.SetSuccess(removing.Id);
+                }
+                else
+                {
+                    result.SetFailure("No such user in blacklist");
+                }
+            }
+            catch (Exception e)
+            {
+                result.SetError($"Method:{nameof(UserService)}/{nameof(RemoveFromBlacklistAsync)} exception:", "Error", e);
+            }
+
+            return Task<AOResult<int>>.Factory.StartNew(() => result);
+        }
+
+        public Task<AOResult<int>> RemoveFromMutelistAsync(int currentUserId, int userId)
+        {
+            var result = new AOResult<int>();
+            try
+            {
+                var removing = _mockService.MuteList.FirstOrDefault(x => x.UserId == currentUserId && x.MutedUserId == userId);
+                if (removing != null)
+                {
+                    _mockService.MuteList.Remove(removing);
+                    result.SetSuccess(removing.Id);
+                }
+                else
+                {
+                    result.SetFailure("No such user in mutelist");
+                }
+            }
+            catch (Exception e)
+            {
+                result.SetError($"Method:{nameof(UserService)}/{nameof(RemoveFromMutelistAsync)} exception:", "Error", e);
+            }
+
+            return Task<AOResult<int>>.Factory.StartNew(() => result);
+        }
+
+        public Task<AOResult<List<MuteModel>>> GetAllMutedUsersAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<AOResult<List<UserModel>>> GetAllBlockedUsersAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
     }
