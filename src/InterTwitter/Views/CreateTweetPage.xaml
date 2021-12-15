@@ -145,8 +145,15 @@
                                                     <RowDefinition Height="21"/>
                                                 </Grid.RowDefinitions>
 
+                                                <Grid.GestureRecognizers>
+                                                    
+                                                    <TapGestureRecognizer Command="{Binding ActionCommand}"
+                                                                          CommandParameter="{Binding .}"/>
+                                                    
+                                                </Grid.GestureRecognizers>
+
                                                 <Frame Grid.Row="0"
-                                                       BackgroundColor="Green"
+                                                       BackgroundColor="Gray"
                                                        IsClippedToBounds="True"
                                                        HasShadow="False"
                                                        Padding="0">
@@ -159,14 +166,11 @@
                                                 <Frame Grid.Row="1"
                                                        HasShadow="False"
                                                        Padding="0"
-                                                       Margin="22, -63, -22, 63"
+                                                       Margin="22, -62, -22, 62"
                                                        BackgroundColor="Transparent">
 
-                                                    <ImageButton Source="{Binding PathActionImage}"
-                                                                 Command="{Binding ActionCommand}"
-                                                                 CommandParameter="{Binding .}"
-                                                                 Aspect="AspectFit"
-                                                                 BackgroundColor="Transparent"/>
+                                                    <ffimageloading:CachedImage Source="{Binding PathActionImage}"
+                                                                                Aspect="AspectFit"/>
 
                                                 </Frame>
 
