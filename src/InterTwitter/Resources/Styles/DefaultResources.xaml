@@ -170,7 +170,7 @@
         <Setter Property="Margin" Value="{OnPlatform Android='7, 21, 5, 0', iOS='4, 11, 0, 0'}"/>
     </Style>
     <Style x:Key="stateContainer_i1" TargetType="statecontainer:StateContainer">
-        <Setter Property="Margin" Value="{OnPlatform Android='7, 10, 5, 0', iOS='4, 10, 0, 0'}"/>
+        <Setter Property="Margin" Value="{OnPlatform Android='7, 7, 5, 0', iOS='4, 7, 0, 0'}"/>
         <Setter Property="VerticalOptions" Value="Start"/>
     </Style>
     <Style x:Key="flexLayout_i1" TargetType="FlexLayout">
@@ -182,7 +182,7 @@
     <Style x:Key="grid_i2" TargetType="Grid">
         <Setter Property="HeightRequest" Value="65"/>
         <Setter Property="WidthRequest" Value="45"/>
-        <Setter Property="Margin" Value="0, 0, 15, 0"/>
+        <Setter Property="Margin" Value="0, 0, 16, 0"/>
     </Style>
     <Style x:Key="frame_i2" TargetType="Frame">
         <Setter Property="BackgroundColor" Value="Silver"/>
@@ -218,6 +218,10 @@
                                                          Color=Black}"/>
     </Style>
     <Style x:Key="stackLayout_i2" TargetType="StackLayout">
+        <Setter Property="Spacing" Value="0"/>
+        <Setter Property="BackgroundColor" Value="{DynamicResource appcolor_i2}"/>
+    </Style>
+    <Style x:Key="stackLayout_i3" TargetType="StackLayout">
         <Setter Property="Spacing" Value="0"/>
         <Setter Property="BackgroundColor" Value="{DynamicResource appcolor_i2}"/>
     </Style>

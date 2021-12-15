@@ -261,7 +261,9 @@ namespace InterTwitter.Controls
                 {
                     float range = Maximum - Minimum;
                     float progress = Value - Minimum;
-                    float limit = 0.1f + (360 * progress / range) - 90;
+                    float limit = (360 * progress / range) - 90;
+
+                    limit = limit == -90f ? limit : limit + 0.1f;
 
                     for (float angle = -90; angle < limit; angle += 0.05f)
                     {

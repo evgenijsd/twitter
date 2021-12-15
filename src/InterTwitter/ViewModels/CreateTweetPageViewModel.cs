@@ -451,7 +451,18 @@ namespace InterTwitter.ViewModels
 
         private bool canPostTweet()
         {
-            return (Text.Length > 0 || ListAttachedMedia.Count > 0) && Text.Length < 250;
+            bool result;
+
+            if (string.IsNullOrEmpty(Text))
+            {
+                result = ListAttachedMedia.Count > 0;
+            }
+            else
+            {
+                result = Text.Length > 0 && Text.Length < 250;
+            }
+
+            return result;
         }
 
         private void Counter()

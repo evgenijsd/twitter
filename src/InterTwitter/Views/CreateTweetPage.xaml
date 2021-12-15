@@ -64,7 +64,7 @@
 
                 <StackLayout Grid.Row="0"
                              Grid.Column="0"
-                             Style="{DynamicResource stackLayout_i1}">
+                             Style="{DynamicResource stackLayout_i3}">
 
                     <Frame Style="{DynamicResource frame_i1}">
 
