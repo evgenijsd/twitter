@@ -103,7 +103,7 @@ namespace InterTwitter.Services
                 },
                 new TweetModel
                 {
-                    Id = 3,
+                    Id = 2,
                     UserId = 3,
                     Text = "um quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
                     Media = Enums.EAttachedMediaType.Video,
@@ -115,7 +115,7 @@ namespace InterTwitter.Services
                 },
                 new TweetModel
                 {
-                    Id = 4,
+                    Id = 3,
                     UserId = 4,
                     Text = "Only text",
                     Media = Enums.EAttachedMediaType.None,
@@ -123,7 +123,7 @@ namespace InterTwitter.Services
                 },
                 new TweetModel
                 {
-                    Id = 5,
+                    Id = 4,
                     UserId = 5,
                     Text = "Hi there!",
                     Media = Enums.EAttachedMediaType.Photos,
@@ -136,7 +136,7 @@ namespace InterTwitter.Services
                 },
                 new TweetModel
                 {
-                    Id = 6,
+                    Id = 5,
                     UserId = 5,
                     Media = Enums.EAttachedMediaType.Photos,
                     CreationTime = DateTime.Now,
@@ -159,7 +159,7 @@ namespace InterTwitter.Services
                 },
                 new TweetModel
                 {
-                    Id = 2,
+                    Id = 7,
                     UserId = 2,
                     Text = "onsequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
                     Media = Enums.EAttachedMediaType.Gif,
