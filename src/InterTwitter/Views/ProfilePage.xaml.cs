@@ -1,6 +1,5 @@
 ﻿using InterTwitter.ViewModels;
 using System;
-using Xamarin.Forms.Xaml;
 
 namespace InterTwitter.Views
 {
