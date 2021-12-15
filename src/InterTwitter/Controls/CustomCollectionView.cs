@@ -40,8 +40,17 @@ namespace InterTwitter.Controls
         protected override void OnScrolled(ItemsViewScrolledEventArgs e)
         {
             base.OnScrolled(e);
+            if (e.VerticalOffset <= 5 && e.VerticalOffset >= 0)
+            {
+                IsNavigationBarVisible = true;
+            }
+            else
+            {
+                IsNavigationBarVisible = false;
+            }
+
             IsAddButtonVisible = (e.VerticalOffset > _scrollState) || (e.VerticalOffset < _scrollState) ? true : false;
-            IsNavigationBarVisible = (e.VerticalOffset == 0) ? true : false;
+
             _scrollState = 0;
         }
 

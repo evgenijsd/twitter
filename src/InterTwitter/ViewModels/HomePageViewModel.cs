@@ -4,13 +4,16 @@ using InterTwitter.Helpers;
 using InterTwitter.Services;
 using InterTwitter.ViewModels.TweetViewModel;
 using InterTwitter.Views;
+using InterTwitter.Views.TweetFullPage;
 using Prism.Navigation;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using static InterTwitter.Constants.Navigation;
 
 namespace InterTwitter.ViewModels
 {
@@ -38,7 +41,6 @@ namespace InterTwitter.ViewModels
         public ICommand AddTweetCommandAsync => _addTweetCommandAsync ?? (_addTweetCommandAsync = SingleExecutionCommand.FromFunc(OnOpenAddTweetPageAsync));
 
         private ObservableCollection<BaseTweetViewModel> _tweets;
-
         public ObservableCollection<BaseTweetViewModel> Tweets
         {
             get => _tweets;
@@ -79,10 +81,15 @@ namespace InterTwitter.ViewModels
 
             if (getTweetResult.IsSuccess)
             {
-                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel(NavigationService) : x.ToBaseTweetViewModel(NavigationService)));
+                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
+
+                var likeTweetCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnLikeTweetCommandAsync);
+                var openTweetCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnOpenTweetCommandAsync);
 
                 foreach (var tweet in tweetViewModels)
                 {
+                    tweet.LikeTweetCommand = likeTweetCommand;
+
                     var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
 
                     if (tweetAuthor.IsSuccess)
@@ -95,6 +102,22 @@ namespace InterTwitter.ViewModels
 
                 Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
             }
+        }
+
+        private Task OnOpenTweetCommandAsync(BaseTweetViewModel vm)
+        {
+            var navParams = new NavigationParameters();
+
+            navParams.Add(TWEET, vm.ToTweetModel());
+
+            return NavigationService.NavigateAsync(nameof(ImagesFullPage), navParams);
+        }
+
+        private Task OnLikeTweetCommandAsync(BaseTweetViewModel vm)
+        {
+            vm.IsTweetLiked = !vm.IsTweetLiked;
+
+            return Task.CompletedTask;
         }
 
         private Task OnOpenAddTweetPageAsync()

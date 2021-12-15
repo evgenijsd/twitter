@@ -8,10 +8,7 @@ namespace InterTwitter.ViewModels.TweetViewModel
     {
         private readonly int _imagesNumber;
 
-        public ImagesTweetViewModel(
-            INavigationService navigationService,
-            int imagesNumber)
-            : base(navigationService)
+        public ImagesTweetViewModel(int imagesNumber)
         {
             if (imagesNumber > 0)
             {
@@ -37,19 +34,6 @@ namespace InterTwitter.ViewModels.TweetViewModel
             set => SetProperty(ref _columnNumber, value);
         }
 
-        #endregion
-
-        #region -- Overrides --
-
-        public override async Task OnOpenFullTweetAsync()
-        {
-            var parameters = new NavigationParameters
-            {
-                { nameof(BaseTweetViewModel), this },
-            };
-
-            await NavigationService.NavigateAsync($"{nameof(ImagesFullPage)}", parameters);
-        }
         #endregion
 
         #region -- Private helpers --

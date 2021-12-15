@@ -10,5 +10,10 @@
 
             public const string TAB_CHANGE = "TabChange";
         }
+
+        public static class Navigation
+        {
+            public const string TWEET = nameof(TWEET);
+        }
     }
 }
