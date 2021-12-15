@@ -1,7 +1,7 @@
 ﻿using InterTwitter.Models;
 using System.Collections.Generic;
 
-namespace InterTwitter.Services.MockService
+namespace InterTwitter.Services
 {
     public interface IMockService
     {

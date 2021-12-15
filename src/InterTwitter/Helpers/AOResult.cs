@@ -1,6 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace InterTwitter.Helpers
 {
@@ -154,7 +155,7 @@ namespace InterTwitter.Helpers
 
     public class AOResult<T> : AOResult
     {
-        public AOResult([CallerMemberName]string callerName = null, [CallerFilePath]string callerFile = null, [CallerLineNumber]int callerLineNumber = 0)
+        public AOResult([CallerMemberName] string callerName = null, [CallerFilePath] string callerFile = null, [CallerLineNumber] int callerLineNumber = 0)
             : base(callerName, callerFile, callerLineNumber)
         {
         }

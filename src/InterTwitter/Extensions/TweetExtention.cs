@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace InterTwitter.Extensions
 {
-    public static class TweetsExtention
+    public static class TweetExtention
     {
         #region -- Public methods --
 

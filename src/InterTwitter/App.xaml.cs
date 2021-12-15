@@ -1,9 +1,8 @@
-﻿using DLToolkit.Forms.Controls;
+using DLToolkit.Forms.Controls;
 using InterTwitter.Resources.Strings;
+using InterTwitter.Services;
 using InterTwitter.Services.HashtagManager;
-using InterTwitter.Services.MockService;
 using InterTwitter.Services.SettingsManager;
-using InterTwitter.Services.TweetService;
 using InterTwitter.ViewModels;
 using InterTwitter.ViewModels.Flyout;
 using InterTwitter.Views;
@@ -12,7 +11,6 @@ using Prism.Unity;
 using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Forms;
 
-//test
 namespace InterTwitter
 {
     public partial class App : PrismApplication
@@ -25,6 +23,7 @@ namespace InterTwitter
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            // Services
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
             containerRegistry.RegisterInstance<IMockService>(Container.Resolve<MockService>());
             containerRegistry.RegisterInstance<ITweetService>(Container.Resolve<TweetService>());

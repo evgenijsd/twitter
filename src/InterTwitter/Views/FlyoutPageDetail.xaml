@@ -12,7 +12,7 @@
                            android:TabbedPage.ToolbarPlacement="Bottom"
                            prism:ViewModelLocator.AutowireViewModel="True"
                            SelectedTabType="{Binding SelectedTabType}">
-
+    
     <TabbedPage.Behaviors>
         <behaviors:TabbedPageNavigationBehavior/>
     </TabbedPage.Behaviors>

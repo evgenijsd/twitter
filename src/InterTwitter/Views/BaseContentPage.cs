@@ -1,5 +1,5 @@
 using Xamarin.Forms;
-using InterTwitter.Helpers;
+﻿using InterTwitter.Helpers;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
@@ -13,7 +13,7 @@ namespace InterTwitter.Views
             Xamarin.Forms.NavigationPage.SetHasNavigationBar(this, false);
         }
 
-        #region ---Overrides---
+        #region -- Overrides --
 
         protected override void OnAppearing()
         {

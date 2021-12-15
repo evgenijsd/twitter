@@ -1,5 +1,4 @@
 ﻿using System;
-
 using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
@@ -17,7 +16,7 @@ namespace InterTwitter.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            CachedImageRenderer.Init(true);
+            CachedImageRenderer.Init(true); 
             CachedImageRenderer.InitImageViewHandler();
             LoadApplication(new App());
         }

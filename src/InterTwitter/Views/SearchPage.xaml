@@ -6,7 +6,6 @@
                        xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
                        xmlns:controls="clr-namespace:InterTwitter.Controls"
                        xmlns:stateContainer="clr-namespace:InterTwitter.Controls.StateContainer"
-                       xmlns:resources="clr-namespace:InterTwitter.Resources"
                        xmlns:viewmodels="clr-namespace:InterTwitter.ViewModels"
                        xmlns:local="clr-namespace:InterTwitter.Views"
                        xmlns:Behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
@@ -14,10 +13,6 @@
                        IconImageSource="{Binding IconPath}"
                        x:DataType="viewmodels:SearchPageViewModel"
                        x:Class="InterTwitter.Views.SearchPage">
-
-    <local:BaseContentPage.Resources>
-        <resources:TweetDataTemplates/>
-    </local:BaseContentPage.Resources>
 
     <ContentPage.Content>
 

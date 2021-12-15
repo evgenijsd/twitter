@@ -1,7 +1,6 @@
 ﻿using Prism.Mvvm;
 using Prism.Navigation;
 using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,14 +23,6 @@ namespace InterTwitter.ViewModels
 
         #endregion
 
-        #region -- IInitializeAsync implementation --
-
-        public async virtual Task InitializeAsync(INavigationParameters parameters)
-        {
-        }
-
-        #endregion
-
         #region -- IInitialize implementation --
 
         public virtual void Initialize(INavigationParameters parameters)
@@ -40,7 +31,16 @@ namespace InterTwitter.ViewModels
 
         #endregion
 
-        #region --- INavigationAware implementation ---
+        #region -- IInitializeAsync implementation --
+
+        public virtual Task InitializeAsync(INavigationParameters parameters)
+        {
+            return Task.CompletedTask;
+        }
+
+        #endregion
+
+        #region -- INavigationAware implementation --
 
         public virtual void OnNavigatedFrom(INavigationParameters parameters)
         {

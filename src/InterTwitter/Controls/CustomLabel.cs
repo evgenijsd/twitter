@@ -7,6 +7,11 @@ namespace InterTwitter.Controls
 {
     public class CustomLabel : Label
     {
+        public CustomLabel()
+        {
+            SizeChanged += OnSizeChanged;
+        }
+
         #region -- Public properties --
 
         public static readonly BindableProperty IsSpanVisibleProperty = BindableProperty.Create(
@@ -21,13 +26,10 @@ namespace InterTwitter.Controls
         }
 
         #endregion
-        public CustomLabel()
-        {
-            SizeChanged += CustomLabel_SizeChanged;
-        }
 
         #region  -- Private helpers --
-        private void CustomLabel_SizeChanged(object sender, EventArgs e)
+
+        private void OnSizeChanged(object sender, EventArgs e)
         {
             var maxRowNumber = 5;
             var fontSize = (sender as Label).FontSize;

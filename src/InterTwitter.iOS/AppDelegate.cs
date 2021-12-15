@@ -26,6 +26,7 @@ namespace InterTwitter.iOS
             Sharpnado.Shades.iOS.iOSShadowsRenderer.Initialize();
             CachedImageRenderer.Init();
             CachedImageRenderer.InitImageSourceHandler();
+            Sharpnado.Shades.iOS.iOSShadowsRenderer.Initialize();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

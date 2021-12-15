@@ -2,16 +2,11 @@
 
 namespace InterTwitter.Enums
 {
-    public enum ETypeAttachedMedia
+    public enum EAttachedMediaType
     {
-        None,
-
         Video,
-
         Gif,
-
-        Text,
-
+        None,
         Photos,
     }
 }

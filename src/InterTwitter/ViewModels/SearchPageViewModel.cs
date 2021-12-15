@@ -3,8 +3,8 @@ using InterTwitter.Extensions;
 using InterTwitter.Helpers;
 using InterTwitter.Models;
 using InterTwitter.Models.TweetViewModel;
+using InterTwitter.Services;
 using InterTwitter.Services.HashtagManager;
-using InterTwitter.Services.TweetService;
 using Prism.Navigation;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -201,14 +201,14 @@ namespace InterTwitter.ViewModels
         private async Task InitTweetsForDisplayingAsync(IEnumerable<TweetModel> tweets)
         {
             var tweetViewModels = new List<BaseTweetViewModel>(
-                tweets.Select(x => x.Media == ETypeAttachedMedia.Photos
-                    || x.Media == ETypeAttachedMedia.Gif
+                tweets.Select(x => x.Media == EAttachedMediaType.Photos
+                    || x.Media == EAttachedMediaType.Gif
                     ? x.ToImagesTweetViewModel()
                     : x.ToBaseTweetViewModel()));
 
             foreach (var tweet in tweetViewModels)
             {
-                var tweetAuthor = await _tweetService.GetUserAsync(tweet.UserId);
+                var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
 
                 if (tweetAuthor.IsSuccess)
                 {

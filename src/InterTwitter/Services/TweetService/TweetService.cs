@@ -1,24 +1,20 @@
 ﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
-using InterTwitter.Services.MockService;
-using InterTwitter.Services.SettingsManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace InterTwitter.Services.TweetService
+namespace InterTwitter.Services
 {
     public class TweetService : ITweetService
     {
         private readonly IMockService _mockService;
-        private readonly ISettingsManager _settingsManager;
+
         public TweetService(
-            IMockService mockService,
-            ISettingsManager settingsManager)
+            IMockService mockService)
         {
             _mockService = mockService;
-            _settingsManager = settingsManager;
         }
 
         #region -- ITweetService implementation --
@@ -77,16 +73,16 @@ namespace InterTwitter.Services.TweetService
             return result;
         }
 
-        public async Task<AOResult<UserModel>> GetUserAsync(int userId)
+        public Task<AOResult<UserModel>> GetAuthorAsync(int authorId)
         {
             var result = new AOResult<UserModel>();
 
             try
             {
-                var user = _mockService.Users.Where(x => x.Id == userId).FirstOrDefault();
-                if (user != null)
+                var author = _mockService.Users?.Where(x => x.Id == authorId)?.FirstOrDefault();
+                if (author != null)
                 {
-                    result.SetSuccess(user);
+                    result.SetSuccess(author);
                 }
                 else
                 {
@@ -95,12 +91,13 @@ namespace InterTwitter.Services.TweetService
             }
             catch (Exception ex)
             {
-                result.SetError($"{nameof(GetUserAsync)}: exception", "Some issues", ex);
+                result.SetError($"{nameof(GetAuthorAsync)}: exception", "Some issues", ex);
             }
 
-            return await Task.FromResult(result);
+            return Task.FromResult(result);
         }
 
         #endregion
+
     }
 }

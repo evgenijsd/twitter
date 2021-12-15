@@ -4,6 +4,8 @@
                     xmlns:controls="clr-namespace:InterTwitter.Controls"
                     xmlns:converters="clr-namespace:InterTwitter.Converters"
                     xmlns:views="clr-namespace:InterTwitter.Views"
+                    xmlns:dataTemplatesSelector="clr-namespace:InterTwitter.Helpers" 
+                    xmlns:dataTemplates="clr-namespace:InterTwitter.Views.DataTemplates"
                     x:Class="InterTwitter.Resources.Styles.DefaultResources">
 
     <!-- TEXT SIZE -->
@@ -102,6 +104,17 @@
     <Style x:Key="tstyle_i15" TargetType="Label" BasedOn="{StaticResource Content_i8}"><!-- Caption 2/ 10px/ Dark Gray-->
         <Setter Property="TextColor" Value="{DynamicResource appcolor_i4}"/>
     </Style>
+
+    <!-- TweetData Templates-->
+
+    <dataTemplates:ImageTweetDataTemplate x:Key="imageTweetTemplate"/>
+    <dataTemplates:VideoTweetDataTemplate x:Key="videoTweetTemplate"/>
+    <dataTemplates:TextTweetDataTemplate x:Key="textTweetTemplate"/>
+
+    <dataTemplatesSelector:TweetDataTemplateSelector x:Key="templateSelector"
+                                                     ImageTweetDataTemplate="{StaticResource imageTweetTemplate}"
+                                                     VideoTweetDataTemplate="{StaticResource videoTweetTemplate}"
+                                                     TextTweetDataTemplate="{StaticResource textTweetTemplate}"/>
 
     <!-- BOXVIEW SEPARATORS STYLES -->
     <Style x:Key="SeparatorStyle" TargetType="BoxView" > <!-- Light Gray --> 

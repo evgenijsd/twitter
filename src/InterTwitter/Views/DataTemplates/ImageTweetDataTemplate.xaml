@@ -8,6 +8,7 @@
               x:Class="InterTwitter.Views.DataTemplates.ImageTweetDataTemplate">
 
     <StackLayout Spacing="0">
+        
         <StackLayout Padding="15, 15, 15, 0"
                      Orientation="Horizontal"
                      Spacing="0">
@@ -25,18 +26,16 @@
 
             <StackLayout VerticalOptions="Start">
 
-                <Label Style="{StaticResource tstyle_i6}"
+                <Label Style="{DynamicResource tstyle_i6}"
                        Text="{Binding UserName}" 
                        FontAttributes="Bold"/>
 
-                <controls:KeywordHighlightingLabel Style="{DynamicResource tstyle_i7}"
-                                                   VerticalOptions="Start"
-                                                   IsVisible="{Binding IsTextVisible}"
-                                                   LineSpacing="{OnPlatform Android=1.3, iOS=6.25}"
-                                                   MaxLines="5" 
-                                                   LineBreakMode="TailTruncation"
-                                                   Text="{Binding Text}"
-                                                   Keywords="{Binding Keywords}"/>
+                <controls:CustomLabel Style="{DynamicResource tstyle_i7}" 
+                                      VerticalOptions="Start"
+                                      MaxLines="5" 
+                                      LineBreakMode="TailTruncation"
+                                      IsVisible="{Binding IsTextVisible}"
+                                      Text="{Binding Text}"/>
 
                 <flv:FlowListView FlowColumnCount="{Binding ColumnNumber}"
                                   RowHeight="{Binding RowHeight}"
@@ -49,6 +48,7 @@
                                   FlowItemsSource="{Binding MediaPaths}">
 
                     <flv:FlowListView.FlowColumnTemplate>
+                        
                         <DataTemplate>
                             <Frame Margin="2"
                                    Padding="0"
@@ -61,6 +61,7 @@
 
                             </Frame>
                         </DataTemplate>
+                        
                     </flv:FlowListView.FlowColumnTemplate>
 
                 </flv:FlowListView>
@@ -69,7 +70,7 @@
                              HeightRequest="20"
                              Padding="0">
 
-                    <Label Style="{StaticResource tstyle_i8}"
+                    <Label Style="{DynamicResource tstyle_i8}"
                            Text="{Binding CreationTime,  StringFormat='{}{0:dd.MM.yyyy • HH:mm}'}"/>
 
                     <ffimageloading:CachedImage Source="ic_like_gray" 
@@ -80,23 +81,25 @@
                         </ffimageloading:CachedImage.GestureRecognizers>
                         
                         <ffimageloading:CachedImage.Triggers>
-                            <DataTrigger Binding="{Binding IsTweekLiked}"
+                            <DataTrigger Binding="{Binding IsTweetLiked}"
                                          TargetType="ffimageloading:CachedImage"
                                          Value="true">
                                 <Setter Property="Source" Value="ic_like_blue"/>
                             </DataTrigger>
                         </ffimageloading:CachedImage.Triggers>
+                        
                     </ffimageloading:CachedImage>
 
-                    <Label Style="{StaticResource tstyle_i9}"
+                    <Label Style="{DynamicResource tstyle_i9}"
                            Text="{Binding LikesNumber}" 
-                           Margin="0, 1, 15, -1" 
-                           >
+                           Margin="0, 1, 15, -1">
+                        
                         <Label.Triggers>
-                            <DataTrigger TargetType="Label" Binding="{Binding IsWeetLiked}" Value="true">
-                                <Setter Property="TextColor" Value="{StaticResource appcolor_i1}"/>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsTweetLiked}" Value="true">
+                                <Setter Property="TextColor" Value="{DynamicResource appcolor_i1}"/>
                             </DataTrigger>
                         </Label.Triggers>
+                        
                     </Label>
 
                     <ffimageloading:CachedImage Source="ic_bookmarks_gray">
@@ -116,11 +119,13 @@
                 </StackLayout>
 
             </StackLayout>
+            
         </StackLayout>
 
         <BoxView HeightRequest="1"
                  Margin="0, 16, 0, 0"
-                 BackgroundColor="{StaticResource appcolor_i6}"/>
+                 BackgroundColor="{DynamicResource appcolor_i6}"/>
 
     </StackLayout>
+    
 </DataTemplate>
