@@ -451,15 +451,11 @@ namespace InterTwitter.ViewModels
 
         private bool canPostTweet()
         {
-            bool result;
+            bool result = ListAttachedMedia.Count > 0;
 
-            if (string.IsNullOrEmpty(Text))
+            if (!string.IsNullOrEmpty(Text))
             {
-                result = ListAttachedMedia.Count > 0;
-            }
-            else
-            {
-                result = Text.Length > 0 && Text.Length < 250;
+                result |= Text.Length > 0 && Text.Length < 250;
             }
 
             return result;
