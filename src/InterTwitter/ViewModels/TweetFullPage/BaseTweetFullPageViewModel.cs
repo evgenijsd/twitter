@@ -43,7 +43,7 @@ namespace InterTwitter.ViewModels.TweetFullPage
 
             if (parameters.ContainsKey(nameof(BaseTweetViewModel)))
             {
-                parameters.TryGetValue("BaseTweetModel", out _tweetViewModel);
+                parameters.TryGetValue("BaseTweetViewModel", out _tweetViewModel);
             }
         }
         #endregion

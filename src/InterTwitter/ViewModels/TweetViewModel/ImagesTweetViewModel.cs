@@ -45,7 +45,7 @@ namespace InterTwitter.ViewModels.TweetViewModel
         {
             var parameters = new NavigationParameters
             {
-                { nameof(ImagesTweetViewModel), this },
+                { nameof(BaseTweetViewModel), this },
             };
 
             await NavigationService.NavigateAsync($"{nameof(ImagesFullPage)}", parameters);

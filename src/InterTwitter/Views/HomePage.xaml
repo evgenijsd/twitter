@@ -23,6 +23,7 @@
                                           Title="Home"
                                           RightButtonImageSource="ic_add_blue"
                                           LeftButtonImageSource="pic_profile_small"
+                                          IsVisible="{Binding Source={x:Reference customCollectView}, Path=IsNavigationBarVisible}"
                                           LeftAddButtonCommand="{Binding OpenFlyoutCommandAsync}"/>
 
             <controls:CustomCollectionView x:Name="customCollectView"
