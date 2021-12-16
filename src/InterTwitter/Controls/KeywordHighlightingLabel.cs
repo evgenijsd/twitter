@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.RegularExpressions;
 using Xamarin.Forms;
 
@@ -44,40 +45,68 @@ namespace InterTwitter.Controls
                 case nameof(this.Keywords):
                     if (!string.IsNullOrEmpty(this.Text) && this.Keywords?.Count > 0)
                     {
-                        var positionsAndKeyLenghths = GetPositionsAndKeyLengthsPairs(this.Keywords);
+                        DateTime start = DateTime.Now;
+                        var tokens = this.Text.Split(' ');
 
-                        positionsAndKeyLenghths = positionsAndKeyLenghths
-                            .OrderBy(x => x.Key)
-                            .ThenByDescending(x => x.Value)
-                            .GroupBy(x => x.Key)
-                            .Select(x => x.First()).ToList();
+                        FormattedString formattedString = new FormattedString();
+                        StringBuilder stringBuilder = new StringBuilder();
+                        Span tokenSpan = null;
+                        Span spaceSpan = new Span { Text = " " };
 
-                        // trash - не светит дубли
-                        for (int i = 0; i < positionsAndKeyLenghths.Count; i++)
+                        foreach (var token in tokens)
                         {
-                            var itemA = positionsAndKeyLenghths.ElementAt(i);
-
-                            for (int j = i + 1; j <= positionsAndKeyLenghths.Count - 1; j++)
+                            if (Keywords.Any(x => x.IndexOf(token, StringComparison.OrdinalIgnoreCase) != -1))
                             {
-                                var itemB = positionsAndKeyLenghths.ElementAt(j);
-
-                                //if (itemA.Key + itemA.Value.Length >= itemB.Key + itemB.Value.Length)
-                                if (Contain(itemA, itemB))
-                                {
-                                    positionsAndKeyLenghths.RemoveAt(j);
-                                    j--;
-                                }
+                                tokenSpan = GetKeywordSpan(token);
                             }
+                            else
+                            {
+                                tokenSpan = new Span { Text = token };
+                            }
+
+                            formattedString.Spans.Add(tokenSpan);
+                            formattedString.Spans.Add(spaceSpan);
                         }
 
-                        if (positionsAndKeyLenghths.Count > 0)
-                        {
-                            FormattedString formattedString = GetKeywordsMergedWithSimpleText(positionsAndKeyLenghths);
+                        this.FormattedText = formattedString;
 
-                            MergeWithRestOfSimpleText(positionsAndKeyLenghths.Last(), formattedString);
+                        //    var positionsAndKeyLenghths = GetPositionsAndKeyLengthsPairs(this.Keywords);
 
-                            this.FormattedText = formattedString;
-                        }
+                        //    positionsAndKeyLenghths = positionsAndKeyLenghths
+                        //        .OrderBy(x => x.Key)
+                        //        .ThenByDescending(x => x.Value)
+                        //        .GroupBy(x => x.Key)
+                        //        .Select(x => x.First()).ToList();
+
+                        //    // trash - не светит дубли
+                        //    for (int i = 0; i < positionsAndKeyLenghths.Count; i++)
+                        //    {
+                        //        var itemA = positionsAndKeyLenghths.ElementAt(i);
+
+                        //        for (int j = i + 1; j <= positionsAndKeyLenghths.Count - 1; j++)
+                        //        {
+                        //            var itemB = positionsAndKeyLenghths.ElementAt(j);
+
+                        //            //if (itemA.Key + itemA.Value.Length >= itemB.Key + itemB.Value.Length)
+                        //            if (Contain(itemA, itemB))
+                        //            {
+                        //                positionsAndKeyLenghths.RemoveAt(j);
+                        //                j--;
+                        //            }
+                        //        }
+                        //    }
+
+                        //    if (positionsAndKeyLenghths.Count > 0)
+                        //    {
+                        //        FormattedString formattedString = GetKeywordsMergedWithSimpleText(positionsAndKeyLenghths);
+
+                        //        MergeWithRestOfSimpleText(positionsAndKeyLenghths.Last(), formattedString);
+
+                        //        this.FormattedText = formattedString;
+                        //    }
+                        DateTime end = DateTime.Now;
+                        var time = end - start;
+                        var r = 4;
                     }
 
                     break;
@@ -112,19 +141,6 @@ namespace InterTwitter.Controls
                     {
                     }
 
-                    // #amas mas g coff
-                    /* ! новый ключ - подстрока существующего - не добавляем в словарь */
-                    /* abcd */
-                    /* abc */
-                    /* d */
-
-                    /* новый ключ - подстрока существующего, его длина больше - замена в словаре по индексу */
-                    /* abcd */
-                    /* abcdef */
-
-                    /* новый ключ частично внутри существующего - добавляем (или заменяем значение ключа) в словарь выступающую часть*/
-                    /* abcd */
-                    /*   cdaas */
                     if (keywordPosition != -1)
                     {
                         // # #teatime - crush
