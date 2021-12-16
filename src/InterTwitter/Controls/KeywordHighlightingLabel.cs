@@ -46,6 +46,30 @@ namespace InterTwitter.Controls
                     {
                         var positionsAndKeyLenghths = GetPositionsAndKeyLengthsPairs(this.Keywords);
 
+                        positionsAndKeyLenghths = positionsAndKeyLenghths
+                            .OrderBy(x => x.Key)
+                            .ThenByDescending(x => x.Value)
+                            .GroupBy(x => x.Key)
+                            .Select(x => x.First()).ToList();
+
+                        // trash
+                        for (int i = 0; i < positionsAndKeyLenghths.Count; i++)
+                        {
+                            var itemA = positionsAndKeyLenghths.ElementAt(i);
+
+                            for (int j = i + 1; j <= positionsAndKeyLenghths.Count - 1; j++)
+                            {
+                                var itemB = positionsAndKeyLenghths.ElementAt(j);
+
+                                //if (itemA.Key + itemA.Value.Length >= itemB.Key + itemB.Value.Length)
+                                if (itemA.Value.IndexOf(itemB.Value, 0, StringComparison.OrdinalIgnoreCase) != -1)
+                                {
+                                    positionsAndKeyLenghths.RemoveAt(j);
+                                    j--;
+                                }
+                            }
+                        }
+
                         if (positionsAndKeyLenghths.Count > 0)
                         {
                             FormattedString formattedString = GetKeywordsMergedWithSimpleText(positionsAndKeyLenghths);
@@ -64,9 +88,14 @@ namespace InterTwitter.Controls
 
         #region -- Private helpers --
 
-        private SortedDictionary<int, string> GetPositionsAndKeyLengthsPairs(List<string> keywords)
+        private bool Contain(KeyValuePair<int, string> pairA, KeyValuePair<int, string> pairB)
         {
-            SortedDictionary<int, string> positionsAndKeyLengths = new SortedDictionary<int, string>();
+            return pairA.Key + pairA.Value.Length > pairB.Key + pairB.Value.Length;
+        }
+
+        private List<KeyValuePair<int, string>> GetPositionsAndKeyLengthsPairs(List<string> keywords)
+        {
+            List<KeyValuePair<int, string>> positionsAndKeyLengths = new List<KeyValuePair<int, string>>();
 
             foreach (var keyword in keywords)
             {
@@ -75,7 +104,13 @@ namespace InterTwitter.Controls
 
                 do
                 {
-                    keywordPosition = this.Text.IndexOf(keyword, positionOfNextKeyword, StringComparison.OrdinalIgnoreCase);
+                    try
+                    {
+                        keywordPosition = this.Text.IndexOf(keyword, positionOfNextKeyword, StringComparison.OrdinalIgnoreCase);
+                    }
+                    catch (Exception)
+                    {
+                    }
 
                     // #amas mas g coff
                     /* ! новый ключ - подстрока существующего - не добавляем в словарь */
@@ -95,7 +130,7 @@ namespace InterTwitter.Controls
                         // # #teatime - crush
                         positionOfNextKeyword = keywordPosition + keyword.Length;
 
-                        positionsAndKeyLengths.Add(keywordPosition, keyword);
+                        positionsAndKeyLengths.Add(new KeyValuePair<int, string>(keywordPosition, keyword));
                     }
                 }
                 while (keywordPosition != -1);
@@ -104,7 +139,7 @@ namespace InterTwitter.Controls
             return positionsAndKeyLengths;
         }
 
-        private FormattedString GetKeywordsMergedWithSimpleText(SortedDictionary<int, string> positionKeywordPairs)
+        private FormattedString GetKeywordsMergedWithSimpleText(List<KeyValuePair<int, string>> positionKeywordPairs)
         {
             FormattedString formattedString = new FormattedString();
             int previousKeywordPosition = 0;

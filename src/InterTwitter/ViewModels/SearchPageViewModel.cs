@@ -55,7 +55,7 @@ namespace InterTwitter.ViewModels
                 "um",
             };
 
-            QueryString = "#Amas am";
+            QueryString = "#am # amas #amas masd ma";
         }
 
         #region -- Public Properties --

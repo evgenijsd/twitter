@@ -178,7 +178,19 @@ namespace InterTwitter.Services
                 {
                     Id = 2,
                     UserId = 2,
-                    Text = "#AMAs masdf",
+                    Text = "#amas masd",
+                    Media = Enums.EAttachedMediaType.Gif,
+                    MediaPaths = new List<string>
+                    {
+                        "https://thumbs.gfycat.com/PaltryWickedCrayfish-max-1mb.gif",
+                    },
+                    CreationTime = DateTime.Now,
+                },
+                new TweetModel
+                {
+                    Id = 3,
+                    UserId = 3,
+                    //Text = "#AMAs masd # masda as ama",
                     Media = Enums.EAttachedMediaType.Gif,
                     MediaPaths = new List<string>
                     {
