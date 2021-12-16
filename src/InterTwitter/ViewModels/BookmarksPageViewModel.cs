@@ -158,6 +158,8 @@ namespace InterTwitter.ViewModels
                 Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
 
                 MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.DeleteBookmark, (me) => DeleteBookmarkAsync(me));
+                MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.AddLike, (me) => AddLikeAsync(me));
+                MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.DeleteLike, (me) => DeleteLikeAsync(me));
             }
         }
 
@@ -172,6 +174,31 @@ namespace InterTwitter.ViewModels
             {
                 var tweet = Tweets.FirstOrDefault(x => x.TweetId == me.UnTweetId);
                 Tweets.Remove(tweet);
+            }
+        }
+
+        private async void AddLikeAsync(MessageEvent me)
+        {
+            var resultAdd = await _likeService.AddLikeAsync(me.UnTweetId, UserId);
+            var result = await _likeService.CountAsync(me.UnTweetId);
+            if (result.IsSuccess)
+            {
+                var tweet = Tweets.FirstOrDefault(x => x.TweetId == me.UnTweetId);
+                if (tweet != null)
+                {
+                    tweet.LikesNumber = result.Result;
+                }
+            }
+        }
+
+        private async void DeleteLikeAsync(MessageEvent me)
+        {
+            var resultAdd = await _likeService.DeleteLikeAsync(me.UnTweetId, UserId);
+            var result = await _likeService.CountAsync(me.UnTweetId);
+            if (result.IsSuccess)
+            {
+                var tweet = Tweets.FirstOrDefault(x => x.TweetId == me.UnTweetId);
+                tweet.LikesNumber = result.Result;
             }
         }
 
