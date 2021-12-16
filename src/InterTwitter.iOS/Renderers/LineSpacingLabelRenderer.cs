@@ -34,7 +34,7 @@ namespace InterTwitter.iOS.Renderers
                 str.AddAttribute(style, paragraphStyle, range);
 
                 Control.AttributedText = str;
-                Control.TextAlignment = UITextAlignment.Center;
+                Control.TextAlignment = (UITextAlignment)lineSpacingLabel.HorizontalTextAlignment;
             }
         }
     }

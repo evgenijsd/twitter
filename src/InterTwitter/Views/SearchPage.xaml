@@ -41,10 +41,10 @@
                                        Text="{xct:Translate PopularTheme}"
                                        Style="{DynamicResource tstyle_i4}"/>
 
-                                <controls:KeywordHighlightingLabel Text="{Binding TestText, StringFormat='{0}'}"
+                                <!--<controls:KeywordHighlightingLabel Text="{Binding TestText, StringFormat='{0}'}"
                                                                    Keywords="{Binding Keywords}"
                                                                    Style="{DynamicResource tstyle_i5}"
-                                                                   LineSpacing="{OnPlatform Android=1.3, iOS=6.25}"/>
+                                                                   LineSpacing="{OnPlatform Android=1.3, iOS=6.25}"/>-->
 
                                 <BoxView Style="{DynamicResource SeparatorStyle}"
                                          Margin="0" />

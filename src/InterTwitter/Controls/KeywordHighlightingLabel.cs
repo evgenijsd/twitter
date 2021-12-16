@@ -52,7 +52,7 @@ namespace InterTwitter.Controls
                             .GroupBy(x => x.Key)
                             .Select(x => x.First()).ToList();
 
-                        // trash
+                        // trash - не светит дубли
                         for (int i = 0; i < positionsAndKeyLenghths.Count; i++)
                         {
                             var itemA = positionsAndKeyLenghths.ElementAt(i);
@@ -62,7 +62,7 @@ namespace InterTwitter.Controls
                                 var itemB = positionsAndKeyLenghths.ElementAt(j);
 
                                 //if (itemA.Key + itemA.Value.Length >= itemB.Key + itemB.Value.Length)
-                                if (itemA.Value.IndexOf(itemB.Value, 0, StringComparison.OrdinalIgnoreCase) != -1)
+                                if (Contain(itemA, itemB))
                                 {
                                     positionsAndKeyLenghths.RemoveAt(j);
                                     j--;
@@ -90,7 +90,7 @@ namespace InterTwitter.Controls
 
         private bool Contain(KeyValuePair<int, string> pairA, KeyValuePair<int, string> pairB)
         {
-            return pairA.Key + pairA.Value.Length > pairB.Key + pairB.Value.Length;
+            return pairA.Key + pairA.Value.Length >= pairB.Key + pairB.Value.Length;
         }
 
         private List<KeyValuePair<int, string>> GetPositionsAndKeyLengthsPairs(List<string> keywords)
