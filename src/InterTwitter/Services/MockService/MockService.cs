@@ -1,6 +1,7 @@
 ﻿using InterTwitter.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace InterTwitter.Services
 {
@@ -85,6 +86,8 @@ namespace InterTwitter.Services
 
         private void InitTweets()
         {
+            var culture = CultureInfo.GetCultureInfo("ru-RU");
+
             Tweets = new List<TweetModel>
             {
                 new TweetModel
@@ -99,7 +102,7 @@ namespace InterTwitter.Services
                         "https://oboi-lux.com.ua/23595-home_default/fotooboi-s-prirodoj.jpg",
                         "http://intpicture.com/wp-content/uploads/2011/07/Nature-64-034-Copy-300x300.jpg",
                     },
-                    CreationTime = DateTime.Now,
+                    CreationTime = DateTime.Parse("01.01.2020 12:12:12", culture),
                 },
                 new TweetModel
                 {
@@ -111,7 +114,7 @@ namespace InterTwitter.Services
                     {
                        "https://www.youtube.com/embed/_hGuLM4Y-xM",
                     },
-                    CreationTime = DateTime.Now,
+                    CreationTime = DateTime.Parse("01.03.2020 13:12:12", culture),
                 },
                 new TweetModel
                 {
@@ -119,7 +122,7 @@ namespace InterTwitter.Services
                     UserId = 4,
                     Text = "Only text",
                     Media = Enums.EAttachedMediaType.None,
-                    CreationTime = DateTime.Now,
+                    CreationTime = DateTime.Parse("01.04.2020 15:12:12", culture),
                 },
                 new TweetModel
                 {
@@ -127,7 +130,7 @@ namespace InterTwitter.Services
                     UserId = 5,
                     Text = "Hi there!",
                     Media = Enums.EAttachedMediaType.Photos,
-                    CreationTime = DateTime.Now,
+                    CreationTime = DateTime.Parse("01.05.2021 12:00:12", culture),
                     MediaPaths = new List<string>
                     {
                        "https://akm-img-a-in.tosshub.com/indiatoday/images/story/202110/Elon-Musk_1200x768.png?WgPbwF44wHXitAAL7xu8BNhZXQXIPBbV&size=770:433",
@@ -139,7 +142,7 @@ namespace InterTwitter.Services
                     Id = 5,
                     UserId = 5,
                     Media = Enums.EAttachedMediaType.Photos,
-                    CreationTime = DateTime.Now,
+                    CreationTime = DateTime.Parse("01.11.2020 12:00:12", culture),
                     MediaPaths = new List<string>
                     {
                        "https://i.pinimg.com/474x/f7/f7/73/f7f7733f9e3409f0ef433f3074525790.jpg",
@@ -155,7 +158,7 @@ namespace InterTwitter.Services
                     {
                         "https://javasea.ru/uploads/posts/2013-12/1387635240_matrica.gif",
                     },
-                    CreationTime = DateTime.Now,
+                    CreationTime = DateTime.Parse("01.01.2021 12:12:12", culture),
                 },
                 new TweetModel
                 {
@@ -167,7 +170,7 @@ namespace InterTwitter.Services
                     {
                         "https://thumbs.gfycat.com/PaltryWickedCrayfish-max-1mb.gif",
                     },
-                    CreationTime = DateTime.Now,
+                    CreationTime = DateTime.Parse("01.02.2021 12:12:12", culture),
                 },
             };
         }

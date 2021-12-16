@@ -115,7 +115,10 @@ namespace InterTwitter.ViewModels
         public override void OnDisappearing()
         {
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_bookmarks_gray"] as ImageSource;
+
             MessagingCenter.Unsubscribe<MessageEvent>(this, MessageEvent.DeleteBookmark);
+            MessagingCenter.Unsubscribe<MessageEvent>(this, MessageEvent.AddLike);
+            MessagingCenter.Unsubscribe<MessageEvent>(this, MessageEvent.DeleteLike);
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
@@ -133,7 +136,7 @@ namespace InterTwitter.ViewModels
             if (resultTweet.IsSuccess && resultBookmark.IsSuccess)
             {
                 var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Where(x => getBookmarks.Any(y => y.TweetId == x.Id))
-                    .Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()).OrderBy(x => x.CreationTime));
+                    .Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()).OrderByDescending(x => x.CreationTime));
 
                 foreach (var tweet in tweetViewModels)
                 {
