@@ -54,6 +54,8 @@ namespace InterTwitter.ViewModels
                 "eaque",
                 "um",
             };
+
+            QueryString = "#Amas am";
         }
 
         #region -- Public Properties --
@@ -186,6 +188,18 @@ namespace InterTwitter.ViewModels
 
         #endregion
 
+        #region -- Pulic helpers --
+
+        public void ResetSearchData()
+        {
+            Tweets.Clear();
+            TweetsSearchState = ESearchState.NotActive;
+            QueryString = string.Empty;
+            NoResultsMessage = string.Empty;
+        }
+
+        #endregion
+
         #region -- Private helpers --
 
         private async Task LoadHashtagsAsync()
@@ -285,15 +299,6 @@ namespace InterTwitter.ViewModels
             }
         }
 
-        private void ResetSearchData()
-        {
-            Tweets.Clear();
-            TweetsSearchState = ESearchState.NotActive;
-            QueryString = string.Empty;
-            NoResultsMessage = string.Empty;
-        }
-
         #endregion
-
     }
 }

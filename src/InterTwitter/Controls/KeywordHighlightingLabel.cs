@@ -41,17 +41,16 @@ namespace InterTwitter.Controls
 
             switch (propertyName)
             {
-                case nameof(this.Text):
                 case nameof(this.Keywords):
                     if (!string.IsNullOrEmpty(this.Text) && this.Keywords?.Count > 0)
                     {
-                        var positionsAndKeywordsPairs = TryGetPositionsAndKeywordsPairs(this.Keywords);
+                        var positionsAndKeyLenghths = GetPositionsAndKeyLengthsPairs(this.Keywords);
 
-                        if (positionsAndKeywordsPairs.Count > 0)
+                        if (positionsAndKeyLenghths.Count > 0)
                         {
-                            FormattedString formattedString = GetKeywordsMergedWithSimpleText(positionsAndKeywordsPairs);
+                            FormattedString formattedString = GetKeywordsMergedWithSimpleText(positionsAndKeyLenghths);
 
-                            MergeWithRestOfSimpleText(positionsAndKeywordsPairs.Last(), formattedString);
+                            MergeWithRestOfSimpleText(positionsAndKeyLenghths.Last(), formattedString);
 
                             this.FormattedText = formattedString;
                         }
@@ -65,37 +64,44 @@ namespace InterTwitter.Controls
 
         #region -- Private helpers --
 
-        private SortedDictionary<int, string> TryGetPositionsAndKeywordsPairs(List<string> keywords)
+        private SortedDictionary<int, string> GetPositionsAndKeyLengthsPairs(List<string> keywords)
         {
-            SortedDictionary<int, string> positionKeywordSpanPairs = new SortedDictionary<int, string>();
+            SortedDictionary<int, string> positionsAndKeyLengths = new SortedDictionary<int, string>();
 
-            try
+            foreach (var keyword in keywords)
             {
-                foreach (var keyword in keywords)
+                int keywordPosition = -1;
+                int positionOfNextKeyword = 0;
+
+                do
                 {
-                    int keywordPosition = -1;
-                    int lastKeywordPosition = 0;
+                    keywordPosition = this.Text.IndexOf(keyword, positionOfNextKeyword, StringComparison.OrdinalIgnoreCase);
 
-                    do
+                    // #amas mas g coff
+                    /* ! новый ключ - подстрока существующего - не добавляем в словарь */
+                    /* abcd */
+                    /* abc */
+                    /* d */
+
+                    /* новый ключ - подстрока существующего, его длина больше - замена в словаре по индексу */
+                    /* abcd */
+                    /* abcdef */
+
+                    /* новый ключ частично внутри существующего - добавляем (или заменяем значение ключа) в словарь выступающую часть*/
+                    /* abcd */
+                    /*   cdaas */
+                    if (keywordPosition != -1)
                     {
-                        keywordPosition = Text.IndexOf(keyword, lastKeywordPosition, StringComparison.OrdinalIgnoreCase);
+                        // # #teatime - crush
+                        positionOfNextKeyword = keywordPosition + keyword.Length;
 
-                        if (keywordPosition != -1)
-                        {
-                            // # #teatime - crush
-                            lastKeywordPosition = keywordPosition + keyword.Length;
-
-                            positionKeywordSpanPairs.Add(keywordPosition, keyword);
-                        }
+                        positionsAndKeyLengths.Add(keywordPosition, keyword);
                     }
-                    while (keywordPosition != -1);
                 }
-            }
-            catch (Exception e)
-            {
+                while (keywordPosition != -1);
             }
 
-            return positionKeywordSpanPairs;
+            return positionsAndKeyLengths;
         }
 
         private FormattedString GetKeywordsMergedWithSimpleText(SortedDictionary<int, string> positionKeywordPairs)
@@ -145,10 +151,12 @@ namespace InterTwitter.Controls
                 Text = keyword,
             };
 
-            if (Regex.IsMatch(
-                    keyword,
-                    Constants.RegexPatterns.HASHTAG_PATTERN,
-                    RegexOptions.IgnoreCase))
+            bool isHashtag = Regex.IsMatch(
+                keyword,
+                Constants.RegexPatterns.HASHTAG_PATTERN,
+                RegexOptions.IgnoreCase);
+
+            if (isHashtag)
             {
                 keySpan.ForegroundColor = _highlightForeColor;
             }

@@ -174,6 +174,18 @@ namespace InterTwitter.Services
                     },
                     CreationTime = DateTime.Now,
                 },
+                new TweetModel
+                {
+                    Id = 2,
+                    UserId = 2,
+                    Text = "#AMAs masdf",
+                    Media = Enums.EAttachedMediaType.Gif,
+                    MediaPaths = new List<string>
+                    {
+                        "https://thumbs.gfycat.com/PaltryWickedCrayfish-max-1mb.gif",
+                    },
+                    CreationTime = DateTime.Now,
+                },
             };
         }
 
