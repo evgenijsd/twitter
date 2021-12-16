@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using Xamarin.Forms;
 
 namespace InterTwitter.Controls
@@ -116,7 +117,7 @@ namespace InterTwitter.Controls
                     formattedString.Spans.Add(span);
                 }
 
-                formattedString.Spans.Add(GetKeywordSpan(pairs.Value));
+                formattedString.Spans.Add(GetKeywordSpan(this.Text.Substring(pairs.Key, pairs.Value.Length)));
 
                 previousKeywordPosition = pairs.Key + pairs.Value.Length;
             }
@@ -144,7 +145,10 @@ namespace InterTwitter.Controls
                 Text = keyword,
             };
 
-            if (keyword.FirstOrDefault() == '#')
+            if (Regex.IsMatch(
+                    keyword,
+                    Constants.RegexPatterns.HASHTAG_PATTERN,
+                    RegexOptions.IgnoreCase))
             {
                 keySpan.ForegroundColor = _highlightForeColor;
             }

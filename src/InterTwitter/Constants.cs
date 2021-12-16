@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace InterTwitter
@@ -22,6 +23,16 @@ namespace InterTwitter
             public const string INACCURATE_REQUEST = "ForMoreAccurateSearchSnter2OrMoreCharacters";
             public const string NO_RESULTS_FOR = "NoResultsFor";
             public const int NUMBER_OF_POPULAR_HASHTAGS = 5;
+
+            public static List<string> GetParsedKeysFromQuery(string query)
+            {
+                return new List<string>(query.Trim().Split(' ').Distinct());
+            }
+        }
+
+        public static class RegexPatterns
+        {
+            public const string HASHTAG_PATTERN = @"^#[0-9a-zA-Zа-яА-Я_]{2,30}$";
         }
     }
 }

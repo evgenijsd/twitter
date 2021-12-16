@@ -44,18 +44,17 @@ namespace InterTwitter.Services
             return result;
         }
 
-        public async Task<AOResult<IEnumerable<TweetModel>>> GetAllTweetsByHashtagsOrKeysAsync(string searchQuery)
+        public async Task<AOResult<IEnumerable<TweetModel>>> GetAllTweetsByHashtagsOrKeysAsync(List<string> keys)
         {
             var result = new AOResult<IEnumerable<TweetModel>>();
-            var keys = searchQuery.Split(' ').Distinct();
 
             try
             {
                 var allTweets = _mockService.Tweets;
 
                 var foundTweets = allTweets.Where(tweet => keys
-                    .Any(key => tweet.Text
-                    ?.IndexOf(key, StringComparison.OrdinalIgnoreCase) > -1));
+                    .Any(key => tweet.Text?
+                    .IndexOf(key, StringComparison.OrdinalIgnoreCase) > -1));
 
                 if (foundTweets?.FirstOrDefault() != null)
                 {

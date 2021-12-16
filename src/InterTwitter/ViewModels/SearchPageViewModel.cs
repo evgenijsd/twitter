@@ -268,13 +268,12 @@ namespace InterTwitter.ViewModels
             }
             else
             {
-                queryString = queryString.Trim();
-                var result = await _tweetService.GetAllTweetsByHashtagsOrKeysAsync(queryString);
+                Keywords = Constants.TweetsSearch.GetParsedKeysFromQuery(queryString);
+                var result = await _tweetService.GetAllTweetsByHashtagsOrKeysAsync(Keywords);
 
                 if (result.IsSuccess)
                 {
                     TweetSearchResult = ESearchResult.Success;
-                    Keywords = new List<string>(queryString.Split(' ').Distinct());
 
                     await InitTweetsForDisplayingAsync(result.Result);
                 }
