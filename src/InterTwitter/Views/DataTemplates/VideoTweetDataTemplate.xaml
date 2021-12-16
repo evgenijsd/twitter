@@ -4,9 +4,9 @@
               xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
               xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
               x:Class="InterTwitter.Views.DataTemplates.VideoTweetDataTemplate">
-    
-    <StackLayout Spacing="0"
-                 x:Name="this">
+
+    <StackLayout x:Name="this"
+                 Spacing="0">
         
         <StackLayout Padding="15, 15, 15, 0"
                      Orientation="Horizontal"
@@ -20,6 +20,10 @@
                 <ffimageloading:CachedImage.Transformations>
                     <fftransformations:CircleTransformation/>
                 </ffimageloading:CachedImage.Transformations>
+
+                <ffimageloading:CachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=BindingContext.MoveToAuthorCommand}" CommandParameter="{Binding .}"/>
+                </ffimageloading:CachedImage.GestureRecognizers>
 
             </ffimageloading:CachedImage>
 
@@ -40,13 +44,33 @@
                        Padding="0"
                        HasShadow="False">
 
-                    <WebView Source="{Binding MediaPaths, Converter={StaticResource listToFirstConverter}}"
-                             WidthRequest="240"
-                             HeightRequest="180">
-                        <WebView.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=BindingContext.OpenTweetCommand}"/>
-                        </WebView.GestureRecognizers>
-                    </WebView>
+
+                    <Grid>
+                        <ffimageloading:CachedImage Grid.Row="0" 
+                                                    Source="{Binding MediaPaths, Converter={StaticResource listToFirstConverter}}"
+                                                    HeightRequest="186"
+                                                    Aspect="AspectFill">
+
+                        </ffimageloading:CachedImage>
+
+                        <Frame Grid.Row="0" 
+                               CornerRadius="40"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               HeightRequest="40"
+                               WidthRequest="40"
+                               BackgroundColor="{DynamicResource appcolor_i1}">
+                            
+                            <ffimageloading:CachedImage Source="{DynamicResource ic_play_white}">
+                                <ffimageloading:CachedImage.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=BindingContext.MoveToVideoGalleryCommand}" CommandParameter="{Binding Source={x:Reference this}, Path=BindingContext}"/>
+                                </ffimageloading:CachedImage.GestureRecognizers>
+                            </ffimageloading:CachedImage>
+                            
+                        </Frame>
+                    </Grid>
+                        
+                  
 
                 </Frame>
 
@@ -60,7 +84,7 @@
                     <ffimageloading:CachedImage Source="ic_like_gray" HorizontalOptions="EndAndExpand">
                         
                         <ffimageloading:CachedImage.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding LikeTweetCommand}"/>
+                            <TapGestureRecognizer Command="{Binding LikeCommand}" CommandParameter="{Binding .}"/>
                         </ffimageloading:CachedImage.GestureRecognizers>
                         
                         <ffimageloading:CachedImage.Triggers>
@@ -87,7 +111,7 @@
                     <ffimageloading:CachedImage Source="ic_bookmarks_gray">
                         
                         <ffimageloading:CachedImage.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding BookmarkTweetCommand}"/>
+                            <TapGestureRecognizer Command="{Binding BookmarkCommand}" CommandParameter="{Binding .}"/>
                         </ffimageloading:CachedImage.GestureRecognizers>
                         
                         <ffimageloading:CachedImage.Triggers>

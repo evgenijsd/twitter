@@ -105,11 +105,11 @@ namespace InterTwitter.Services
                 {
                     Id = 3,
                     UserId = 3,
-                    Text = "um quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
+                    Text = "ермин историография имеет несколько значений. Во-первых, это наука о том, как пишется история, насколько правильно применяется исторический метод и как развивается историческое",
                     Media = Enums.EAttachedMediaType.Video,
                     MediaPaths = new List<string>
                     {
-                       "https://www.youtube.com/embed/_hGuLM4Y-xM",
+                       "https://oboi-lux.com.ua/23613-home_default/fotooboi-s-prirodoj.jpg",
                     },
                     CreationTime = DateTime.Now,
                 },
@@ -117,7 +117,7 @@ namespace InterTwitter.Services
                 {
                     Id = 4,
                     UserId = 4,
-                    Text = "Only text",
+                    Text = "ермин историография имеет несколько значений. Во-первых, это наука о том, как пишется история, насколько правильно применяется исторический метод и как развивается историческое познание. Во-втор.",
                     Media = Enums.EAttachedMediaType.None,
                     CreationTime = DateTime.Now,
                 },

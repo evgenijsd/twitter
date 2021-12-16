@@ -47,7 +47,7 @@
                        VerticalOptions="End"
                        HorizontalOptions="End"
                        Margin="0, 0, 17, 14"
-                       Padding="-4"
+                       Padding="-5"
                        HasShadow="True">
 
                     <ImageButton Source="ic_add_blue"
@@ -55,27 +55,7 @@
                                  VerticalOptions="Fill"
                                  BorderWidth="0"
                                  BorderColor="Transparent"
-                                 Command="{Binding AddTweetCommandAsync}">
-                        
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal">
-                                    <VisualState.Setters>
-                                        <Setter Property="Scale"
-                            Value="1" />
-                                    </VisualState.Setters>
-                                </VisualState>
-
-                                <VisualState x:Name="Pressed">
-                                    <VisualState.Setters>
-                                        <Setter Property="Scale"
-                            Value="1" />
-                                    </VisualState.Setters>
-                                </VisualState>
-
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                    </ImageButton>
+                                 Command="{Binding AddTweetCommandAsync}"/>
 
                 </Frame>
 

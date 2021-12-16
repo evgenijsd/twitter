@@ -8,8 +8,8 @@
               x:Class="InterTwitter.Views.DataTemplates.ImageTweetDataTemplate"
               x:Key="imageTweetDataTemplate">
 
-    <StackLayout Spacing="0"
-                 x:Name="this">
+    <StackLayout x:Name="this"
+                 Spacing="0">
         
         <StackLayout Padding="15, 15, 15, 0"
                      Orientation="Horizontal"
@@ -41,7 +41,8 @@
                                       MaxLines="5" 
                                       LineBreakMode="TailTruncation"
                                       IsVisible="{Binding IsTextVisible}"
-                                      Text="{Binding Text}"/>
+                                      Text="{Binding Text}"
+                                      SpanCommand="{Binding TestCommand}"/>
 
                 <flv:FlowListView FlowColumnCount="{Binding ColumnNumber}"
                                   RowHeight="{Binding RowHeight}"

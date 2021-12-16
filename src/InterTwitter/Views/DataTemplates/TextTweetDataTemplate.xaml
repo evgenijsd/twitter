@@ -2,10 +2,13 @@
 <DataTemplate xmlns="http://xamarin.com/schemas/2014/forms"
               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
               xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
-              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
+              xmlns:controls="clr-namespace:InterTwitter.Controls"
               x:Class="InterTwitter.Views.DataTemplates.TextTweetDataTemplate">
 
-    <StackLayout Spacing="0">
+    <StackLayout x:Name="this"
+                 Spacing="0">
+        
         <StackLayout Padding="15, 15, 15, 0"
                      Orientation="Horizontal"
                      Spacing="0">
@@ -19,6 +22,11 @@
                     <fftransformations:CircleTransformation/>
                 </ffimageloading:CachedImage.Transformations>
 
+
+                <ffimageloading:CachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=BindingContext.MoveToAuthorCommand}" CommandParameter="{Binding .}"/>
+                </ffimageloading:CachedImage.GestureRecognizers>
+
             </ffimageloading:CachedImage>
 
             <StackLayout VerticalOptions="Start">
@@ -27,10 +35,11 @@
                        Text="{Binding UserName}" 
                        FontAttributes="Bold"/>
 
-                <Label Style="{DynamicResource tstyle_i7}" 
+                <controls:CustomLabel Style="{DynamicResource tstyle_i7}" 
                        VerticalOptions="Start"
                        MaxLines="5" 
                        LineBreakMode="TailTruncation"
+                       SpanCommand="{Binding Source={x:Reference this}, Path=BindingContext.TestCommand}"
                        Text="{Binding Text}"
                        IsVisible="{Binding IsTextVisible}"/>
 
@@ -45,7 +54,7 @@
                                                 HorizontalOptions="EndAndExpand">
                         
                         <ffimageloading:CachedImage.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding LikeTweetCommand}"/>
+                            <TapGestureRecognizer Command="{Binding LikeCommand}" CommandParameter="{Binding .}"/>
                         </ffimageloading:CachedImage.GestureRecognizers>
                         
                         <ffimageloading:CachedImage.Triggers>
@@ -73,7 +82,7 @@
                     <ffimageloading:CachedImage Source="ic_bookmarks_gray">
                         
                         <ffimageloading:CachedImage.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding BookmarkTweetCommand}"/>
+                            <TapGestureRecognizer Command="{Binding BookmarkCommand}" CommandParameter="{Binding .}"/>
                         </ffimageloading:CachedImage.GestureRecognizers>
                         
                         <ffimageloading:CachedImage.Triggers>

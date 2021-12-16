@@ -41,6 +41,14 @@ namespace InterTwitter.ViewModels
         private ICommand _addTweetCommandAsync;
         public ICommand AddTweetCommandAsync => _addTweetCommandAsync ?? (_addTweetCommandAsync = SingleExecutionCommand.FromFunc(OnAddTweetPageAsync));
 
+        private ICommand _testCommand;
+        public ICommand TestCommand => _testCommand ?? (_testCommand = SingleExecutionCommand.FromFunc(TestAsync));
+
+        private Task TestAsync()
+        {
+            return Task.CompletedTask;
+        }
+
         private ObservableCollection<BaseTweetViewModel> _tweets;
         public ObservableCollection<BaseTweetViewModel> Tweets
         {
@@ -100,6 +108,7 @@ namespace InterTwitter.ViewModels
                     tweetVM.MoveToImagesGalleryCommand = moveToImagesGalleryCommand;
                     tweetVM.MoveToVideoGalleryCommand = moveToVideoGalleryCommand;
                     tweetVM.MoveToAuthorCommand = moveToAuthorCommand;
+                    tweetVM.TestCommand = TestCommand;
 
                     var tweetAuthor = await _tweetService.GetAuthorAsync(tweetVM.UserId);
 
