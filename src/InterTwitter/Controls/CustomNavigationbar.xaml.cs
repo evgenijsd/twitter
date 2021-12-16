@@ -12,28 +12,28 @@ namespace InterTwitter.Controls
 
         #region -- Public properties --
 
-        public static readonly BindableProperty RightButtonImageSourceProperty = BindableProperty.Create(
-            propertyName: nameof(RightButtonImageSource),
+        public static readonly BindableProperty RigthButtonImageSourceProperty = BindableProperty.Create(
+            propertyName: nameof(RigthButtonImageSource),
             returnType: typeof(string),
             declaringType: typeof(CustomNavigationbar),
             defaultBindingMode: BindingMode.TwoWay);
 
-        public string RightButtonImageSource
+        public string RigthButtonImageSource
         {
-            get => (string)GetValue(RightButtonImageSourceProperty);
-            set => SetValue(RightButtonImageSourceProperty, value);
+            get => (string)GetValue(RigthButtonImageSourceProperty);
+            set => SetValue(RigthButtonImageSourceProperty, value);
         }
 
-        public static readonly BindableProperty RightUserButtonCommandProperty = BindableProperty.Create(
-            propertyName: nameof(RightUserButtonCommand),
+        public static readonly BindableProperty RigthButtonCommandProperty = BindableProperty.Create(
+            propertyName: nameof(RigthButtonCommand),
             returnType: typeof(ICommand),
             declaringType: typeof(CustomNavigationbar),
             defaultBindingMode: BindingMode.TwoWay);
 
-        public ICommand RightUserButtonCommand
+        public ICommand RigthButtonCommand
         {
-            get => (ICommand)GetValue(RightUserButtonCommandProperty);
-            set => SetValue(RightUserButtonCommandProperty, value);
+            get => (ICommand)GetValue(RigthButtonCommandProperty);
+            set => SetValue(RigthButtonCommandProperty, value);
         }
 
         public static readonly BindableProperty LeftButtonImageSourceProperty = BindableProperty.Create(

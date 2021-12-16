@@ -23,13 +23,13 @@
                        HorizontalOptions="Center"
                        Margin="0, 10, 0, -10"/>
 
-                <ImageButton Source="{Binding LeftButtonImageSource, Source={x:Reference customNavigationbar}}"
-                         HorizontalOptions="EndAndExpand"
-                         WidthRequest="24"
-                         HeightRequest="24"
-                         Margin="0, 0, 14, 0"
-                         BackgroundColor="Transparent"
-                         Command="{Binding RightUserButtonCommand, Source={x:Reference customNavigationbar}}"/> 
+                <ImageButton Source="{Binding RigthButtonImageSource, Source={x:Reference customNavigationbar}}"
+                             HorizontalOptions="EndAndExpand"
+                             WidthRequest="24"
+                             HeightRequest="24"
+                             Margin="0, 0, 14, 0"
+                             BackgroundColor="Transparent"
+                             Command="{Binding RigthButtonCommand, Source={x:Reference customNavigationbar}}"/> 
             </StackLayout>
             
             <BoxView HeightRequest="1" 

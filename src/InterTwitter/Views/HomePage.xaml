@@ -9,6 +9,7 @@
                        xmlns:viewmodels="clr-namespace:InterTwitter.ViewModels" 
                        x:DataType="viewmodels:HomePageViewModel"
                        prism:ViewModelLocator.AutowireViewModel="True"
+                       BackgroundColor="{DynamicResource appcolor_i2}"
                        IconImageSource="{Binding IconPath}">
    
     <local:BaseContentPage.Content>
@@ -21,7 +22,7 @@
 
             <controls:CustomNavigationbar Grid.Row="0"
                                           Title="Home"
-                                          RightButtonImageSource="ic_add_blue"
+                                          RigthButtonImageSource="ic_add_blue"
                                           LeftButtonImageSource="pic_profile_small"
                                           IsVisible="{Binding Source={x:Reference customCollectView}, Path=IsNavigationBarVisible}"
                                           LeftAddButtonCommand="{Binding OpenFlyoutCommandAsync}"/>
@@ -52,7 +53,29 @@
                     <ImageButton Source="ic_add_blue"
                                  HorizontalOptions="Fill"
                                  VerticalOptions="Fill"
-                                 Command="{Binding AddTweetCommandAsync}"/>
+                                 BorderWidth="0"
+                                 BorderColor="Transparent"
+                                 Command="{Binding AddTweetCommandAsync}">
+                        
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="Scale"
+                            Value="1" />
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Property="Scale"
+                            Value="1" />
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </ImageButton>
 
                 </Frame>
 

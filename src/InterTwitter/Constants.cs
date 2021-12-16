@@ -14,6 +14,8 @@
         public static class Navigation
         {
             public const string TWEET = nameof(TWEET);
+            public const string VIDEO_Gallery = nameof(VIDEO_Gallery);
+            public const string Images_Gallery = nameof(Images_Gallery);
         }
     }
 }

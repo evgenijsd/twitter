@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
 
-        public int PostId { get; set; }
+        public int TweetId { get; set; }
 
         public string Image { get; set; }
     }

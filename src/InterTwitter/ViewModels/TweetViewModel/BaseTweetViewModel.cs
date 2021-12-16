@@ -69,11 +69,11 @@ namespace InterTwitter.ViewModels.TweetViewModel
             set => SetProperty(ref _likesNumber, value);
         }
 
-        private bool _IsTweetLiked;
+        private bool _isTweetLiked;
         public bool IsTweetLiked
         {
-            get => _IsTweetLiked;
-            set => SetProperty(ref _IsTweetLiked, value);
+            get => _isTweetLiked;
+            set => SetProperty(ref _isTweetLiked, value);
         }
 
         private bool _isBookmarked;
@@ -97,39 +97,46 @@ namespace InterTwitter.ViewModels.TweetViewModel
             set => SetProperty(ref _mediaType, value);
         }
 
-        private DateTime _CreationTime;
+        private DateTime _creationTime;
         public DateTime CreationTime
         {
-            get => _CreationTime;
-            set => SetProperty(ref _CreationTime, value);
+            get => _creationTime;
+            set => SetProperty(ref _creationTime, value);
         }
 
-        private ICommand _likeTweetCommand;
-        public ICommand LikeTweetCommand
+        private ICommand _likeCommand;
+        public ICommand LikeCommand
         {
-            get => _likeTweetCommand;
-            set => SetProperty(ref _likeTweetCommand, value);
+            get => _likeCommand;
+            set => SetProperty(ref _likeCommand, value);
         }
 
-        private ICommand _markTweetCommand;
-        public ICommand MarkTweetCommand
+        private ICommand _bookmarkCommand;
+        public ICommand BookmarkCommand
         {
-            get => _markTweetCommand;
-            set => SetProperty(ref _markTweetCommand, value);
+            get => _bookmarkCommand;
+            set => SetProperty(ref _bookmarkCommand, value);
         }
 
-        private ICommand _openTweetCommand;
-        public ICommand OpenTweetCommand
+        private ICommand _moveToImagesGalleryCommand;
+        public ICommand MoveToImagesGalleryCommand
         {
-            get => _openTweetCommand;
-            set => SetProperty(ref _openTweetCommand, value);
+            get => _moveToImagesGalleryCommand;
+            set => SetProperty(ref _moveToImagesGalleryCommand, value);
         }
 
-        private ICommand _moveToProfileCommand;
-        public ICommand MoveToProfileCommand
+        private ICommand _moveToVideoGalleryCommand;
+        public ICommand MoveToVideoGalleryCommand
         {
-            get => _moveToProfileCommand;
-            set => SetProperty(ref _moveToProfileCommand, value);
+            get => _moveToVideoGalleryCommand;
+            set => SetProperty(ref _moveToVideoGalleryCommand, value);
+        }
+
+        private ICommand _moveToAuthorCommand;
+        public ICommand MoveToAuthorCommand
+        {
+            get => _moveToAuthorCommand;
+            set => SetProperty(ref _moveToAuthorCommand, value);
         }
 
         #endregion

@@ -24,6 +24,10 @@
                     <fftransformations:CircleTransformation/>
                 </ffimageloading:CachedImage.Transformations>
 
+                <ffimageloading:CachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=BindingContext.MoveToAuthorCommand}" CommandParameter="{Binding .}"/>
+                </ffimageloading:CachedImage.GestureRecognizers>
+
             </ffimageloading:CachedImage>
 
             <StackLayout VerticalOptions="Start">
@@ -47,7 +51,6 @@
                                   SeparatorVisibility="None"
                                   FlowColumnExpand="First"
                                   VerticalOptions="Start"
-                                  SelectedItem="{Binding SelectedItem}"
                                   FlowItemsSource="{Binding MediaPaths}">
                     
                     <flv:FlowListView.FlowColumnTemplate>
@@ -63,7 +66,7 @@
                                 <ffimageloading:CachedImage Aspect="AspectFill" 
                                                             Source="{Binding .}">
                                     <ffimageloading:CachedImage.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=BindingContext.OpenTweetCommand}"/>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=BindingContext.MoveToImagesGalleryCommand}" CommandParameter="{Binding Source={x:Reference this}, Path=BindingContext}"/> 
                                     </ffimageloading:CachedImage.GestureRecognizers>
                                 </ffimageloading:CachedImage>
 
@@ -86,7 +89,7 @@
                                                 HorizontalOptions="EndAndExpand">
                         
                         <ffimageloading:CachedImage.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding LikeTweetCommand}"/>
+                            <TapGestureRecognizer Command="{Binding LikeCommand}" CommandParameter="{Binding .}"/>
                         </ffimageloading:CachedImage.GestureRecognizers>
                         
                         <ffimageloading:CachedImage.Triggers>
@@ -114,7 +117,7 @@
                     <ffimageloading:CachedImage Source="ic_bookmarks_gray">
                         
                         <ffimageloading:CachedImage.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding MarkTweetCommand}"/>
+                            <TapGestureRecognizer Command="{Binding BookmarkCommand}" CommandParameter="{Binding .}"/>
                         </ffimageloading:CachedImage.GestureRecognizers>
                         
                         <ffimageloading:CachedImage.Triggers>
