@@ -5,6 +5,7 @@ using InterTwitter.ViewModels.Validators;
 using InterTwitter.Views;
 using Prism.Navigation;
 using Prism.Services;
+using Prism.Services.Dialogs;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -15,10 +16,12 @@ namespace InterTwitter.ViewModels
     public class CreatePageViewModel : BaseViewModel
     {
         private IRegistrationService _registrationService { get; }
-        private IPageDialogService _dialogs { get; }
-        public CreatePageValidator _CreatePageValidator { get; }
+        private IDialogService _dialogs { get; }
+        private CreatePageValidator _CreatePageValidator { get; }
+        private bool _isErrorName = false;
+        private bool _isErrorEmail = false;
 
-        public CreatePageViewModel(INavigationService navigationService, IPageDialogService dialogs, IRegistrationService registrationService)
+        public CreatePageViewModel(INavigationService navigationService, IDialogService dialogs, IRegistrationService registrationService)
             : base(navigationService)
         {
             _registrationService = registrationService;
@@ -109,6 +112,7 @@ namespace InterTwitter.ViewModels
         public ICommand StartCommand => _StartCommand ??= SingleExecutionCommand.FromFunc(OnStartCommandAsync);
         private ICommand _PasswordCommand;
         public ICommand PasswordCommand => _PasswordCommand ??= SingleExecutionCommand.FromFunc(OnPasswordCommandAsync);
+
         #endregion
 
         #region -- Overrides --
@@ -121,14 +125,16 @@ namespace InterTwitter.ViewModels
             {
                 MessageErrorName = string.Empty;
                 var validator = _CreatePageValidator.Validate(this);
-                IsWrongName = !string.IsNullOrEmpty(MessageErrorName) && !string.IsNullOrEmpty(Name);
+                _isErrorName = !string.IsNullOrEmpty(MessageErrorName) && !string.IsNullOrEmpty(Name);
+                IsWrongName = false;
             }
 
             if (args.PropertyName == nameof(Email))
             {
                 MessageErrorEmail = string.Empty;
                 var validator = _CreatePageValidator.Validate(this);
-                IsWrongEmail = !string.IsNullOrEmpty(MessageErrorEmail) && !string.IsNullOrEmpty(Email);
+                _isErrorEmail = !string.IsNullOrEmpty(MessageErrorEmail) && !string.IsNullOrEmpty(Email);
+                IsWrongEmail = false;
             }
 
             if (args.PropertyName == nameof(IsVisibleButton))
@@ -146,6 +152,7 @@ namespace InterTwitter.ViewModels
                 Email = User.Email + string.Empty;
             }
         }
+
         #endregion
 
         #region -- Private helpers --
@@ -162,7 +169,9 @@ namespace InterTwitter.ViewModels
             var check = await _registrationService.CheckTheCorrectEmailAsync(Email);
             if (check.Result)
             {
-                await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertLoginTaken, Resources.Resource.Ok);
+                //await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertLoginTaken, Resources.Resource.Ok);
+                var p = new DialogParameters { { "message", Resources.Resource.AlertLoginTaken } };
+                await _dialogs.ShowDialogAsync(nameof(AlertView), p);
             }
             else
             {
@@ -183,10 +192,15 @@ namespace InterTwitter.ViewModels
                         MessageErrorName = MessageErrorEmail;
                     }
 
-                    await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, MessageErrorName, Resources.Resource.Ok);
+                    IsWrongName = _isErrorName;
+                    IsWrongEmail = _isErrorEmail;
+                    //await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, MessageErrorName, Resources.Resource.Ok);
+                    var p = new DialogParameters { { "message", MessageErrorName } };
+                    await _dialogs.ShowDialogAsync(nameof(AlertView), p);
                 }
             }
         }
+
         #endregion
     }
 }

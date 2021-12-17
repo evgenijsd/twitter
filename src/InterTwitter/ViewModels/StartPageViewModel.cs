@@ -133,7 +133,7 @@ namespace InterTwitter.ViewModels
         {
             base.OnPropertyChanged(args);
 
-            if (args.PropertyName == nameof(Name))
+            /*if (args.PropertyName == nameof(Name))
             {
                 MessageErrorName = string.Empty;
                 var validator = _StartPageValidator.Validate(this);
@@ -145,7 +145,7 @@ namespace InterTwitter.ViewModels
                 MessageErrorEmail = string.Empty;
                 var validator = _StartPageValidator.Validate(this);
                 IsWrongEmail = !string.IsNullOrEmpty(MessageErrorEmail) && !string.IsNullOrEmpty(Email);
-            }
+            }*/
 
             if (args.PropertyName == nameof(IsVisibleButton))
             {
@@ -185,7 +185,7 @@ namespace InterTwitter.ViewModels
         {
             DependencyService.Get<IKeyboardHelper>().HideKeyboard();
 
-            var emailCheck = await _registrationService?.CheckTheCorrectEmailAsync(Email);
+            /*var emailCheck = await _registrationService?.CheckTheCorrectEmailAsync(Email);
             if (!emailCheck.Result && !string.IsNullOrEmpty(Email))
             {
                 await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertLoginNotExist, Resources.Resource.Ok);
@@ -207,7 +207,7 @@ namespace InterTwitter.ViewModels
                 }
             }
 
-            DependencyService.Get<IKeyboardHelper>().HideKeyboard();
+            DependencyService.Get<IKeyboardHelper>().HideKeyboard();*/
 
             User.Email = Email;
             User.Name = Name;
@@ -217,7 +217,7 @@ namespace InterTwitter.ViewModels
 
         private async Task OnCreateCommandAsync()
         {
-            var emailCheck = await _registrationService?.CheckTheCorrectEmailAsync(Email);
+            /*var emailCheck = await _registrationService?.CheckTheCorrectEmailAsync(Email);
             if (emailCheck.Result)
             {
                 await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertLoginTaken, Resources.Resource.Ok);
@@ -235,9 +235,13 @@ namespace InterTwitter.ViewModels
                 User.Name = Name;
                 var p = new NavigationParameters { { nameof(User), User } };
                 await NavigationService.NavigateAsync($"{nameof(CreatePage)}", p);
-            }
+            }*/
+            User.Email = Email;
+            User.Name = Name;
+            var p = new NavigationParameters { { nameof(User), User } };
+            await NavigationService.NavigateAsync($"{nameof(CreatePage)}", p);
         }
 
-        #endregion
-    }
+            #endregion
+        }
 }

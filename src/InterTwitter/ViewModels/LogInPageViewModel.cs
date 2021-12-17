@@ -6,6 +6,7 @@ using InterTwitter.ViewModels.Validators;
 using InterTwitter.Views;
 using Prism.Navigation;
 using Prism.Services;
+using Prism.Services.Dialogs;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -17,10 +18,12 @@ namespace InterTwitter.ViewModels
     {
         private IRegistrationService _registrationService { get; }
         private IAuthorizationService _autorizationService { get; }
-        private IPageDialogService _dialogs { get; }
+        private IDialogService _dialogs { get; }
         private LogInPageValidator _LogInPageValidator { get; }
+        private bool _isErrorEmail = false;
+        private bool _isErrorPassword = false;
 
-        public LogInPageViewModel(INavigationService navigationService, IPageDialogService dialogs, IRegistrationService registrationService, IAuthorizationService autorizationService)
+        public LogInPageViewModel(INavigationService navigationService, IDialogService dialogs, IRegistrationService registrationService, IAuthorizationService autorizationService)
             : base(navigationService)
         {
             _registrationService = registrationService;
@@ -131,14 +134,16 @@ namespace InterTwitter.ViewModels
             {
                 MessageErrorEmail = string.Empty;
                 var validator = _LogInPageValidator.Validate(this);
-                IsWrongEmail = !string.IsNullOrEmpty(MessageErrorEmail) && !string.IsNullOrEmpty(Email);
+                _isErrorEmail = !string.IsNullOrEmpty(MessageErrorEmail) && !string.IsNullOrEmpty(Email);
+                IsWrongEmail = false;
             }
 
             if (args.PropertyName == nameof(Password))
             {
                 MessageErrorPassword = string.Empty;
                 var validator = _LogInPageValidator.Validate(this);
-                IsWrongPassword = !string.IsNullOrEmpty(MessageErrorPassword) && !string.IsNullOrEmpty(Password);
+                _isErrorPassword = !string.IsNullOrEmpty(MessageErrorPassword) && !string.IsNullOrEmpty(Password);
+                IsWrongPassword = false;
             }
 
             if (args.PropertyName == nameof(IsVisibleButton))
@@ -186,13 +191,21 @@ namespace InterTwitter.ViewModels
                     }
                     else
                     {
-                        await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertInvalidPassword, Resources.Resource.Ok);
+                        IsWrongEmail = _isErrorEmail;
+                        IsWrongPassword = _isErrorPassword;
+                        //await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertInvalidPassword, Resources.Resource.Ok);
+                        var p = new DialogParameters { { "message", Resources.Resource.AlertInvalidPassword } };
+                        await _dialogs.ShowDialogAsync(nameof(AlertView), p);
                         Password = string.Empty;
                     }
                 }
                 else
                 {
-                    await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertInvalidLogin, Resources.Resource.Ok);
+                    IsWrongEmail = _isErrorEmail;
+                    IsWrongPassword = _isErrorPassword;
+                    //await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertInvalidLogin, Resources.Resource.Ok);
+                    var p = new DialogParameters { { "message", Resources.Resource.AlertInvalidLogin } };
+                    await _dialogs.ShowDialogAsync(nameof(AlertView), p);
                 }
             }
             else
@@ -202,7 +215,9 @@ namespace InterTwitter.ViewModels
                     MessageErrorEmail = MessageErrorPassword;
                 }
 
-                await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, MessageErrorEmail, Resources.Resource.Ok);
+                //await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, MessageErrorEmail, Resources.Resource.Ok);
+                var p = new DialogParameters { { "message", MessageErrorEmail } };
+                await _dialogs.ShowDialogAsync(nameof(AlertView), p);
             }
         }
         #endregion

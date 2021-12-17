@@ -5,6 +5,7 @@ using InterTwitter.ViewModels.Validators;
 using InterTwitter.Views;
 using Prism.Navigation;
 using Prism.Services;
+using Prism.Services.Dialogs;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -15,10 +16,12 @@ namespace InterTwitter.ViewModels
     public class PasswordPageViewModel : BaseViewModel
     {
         private IRegistrationService _registrationService { get; }
-        private IPageDialogService _dialogs { get; }
+        private IDialogService _dialogs { get; }
         private PasswordPageValidator _PasswordPageValidator { get; }
+        private bool _isErrorPassword = false;
+        private bool _isErrorConfirm = false;
 
-        public PasswordPageViewModel(INavigationService navigationService, IPageDialogService dialogs, IRegistrationService registrationService)
+        public PasswordPageViewModel(INavigationService navigationService, IDialogService dialogs, IRegistrationService registrationService)
             : base(navigationService)
         {
             _registrationService = registrationService;
@@ -121,14 +124,16 @@ namespace InterTwitter.ViewModels
             {
                 MessageErrorPassword = string.Empty;
                 var validator = _PasswordPageValidator.Validate(this);
-                IsWrongPassword = !string.IsNullOrEmpty(MessageErrorPassword) && !string.IsNullOrEmpty(Password);
+                _isErrorPassword = !string.IsNullOrEmpty(MessageErrorPassword) && !string.IsNullOrEmpty(Password);
+                IsWrongPassword = false;
             }
 
             if (args.PropertyName == nameof(ConfirmPassword))
             {
                 MessageErrorConfirmPassword = string.Empty;
                 var validator = _PasswordPageValidator.Validate(this);
-                IsWrongConfirmPassword = !string.IsNullOrEmpty(MessageErrorConfirmPassword) && !string.IsNullOrEmpty(ConfirmPassword);
+                _isErrorConfirm = !string.IsNullOrEmpty(MessageErrorConfirmPassword) && !string.IsNullOrEmpty(ConfirmPassword);
+                IsWrongConfirmPassword = false;
             }
 
             if (args.PropertyName == nameof(IsVisibleButton))
@@ -161,6 +166,8 @@ namespace InterTwitter.ViewModels
             if (validator.IsValid)
             {
                 User.Password = Password;
+                Password = string.Empty;
+                ConfirmPassword = string.Empty;
                 User.AvatarPath = "pic_profile_big";
                 User.BackgroundUserImagePath = "pic_profile_big";
                 var result = await _registrationService.AddAsync(User);
@@ -173,7 +180,9 @@ namespace InterTwitter.ViewModels
                 }
                 else
                 {
-                    await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertDatabase, Resources.Resource.Ok);
+                    //await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertDatabase, Resources.Resource.Ok);
+                    var p = new DialogParameters { { "message", Resources.Resource.AlertDatabase } };
+                    await _dialogs.ShowDialogAsync(nameof(AlertView), p);
                 }
             }
             else
@@ -183,7 +192,11 @@ namespace InterTwitter.ViewModels
                     MessageErrorPassword = MessageErrorConfirmPassword;
                 }
 
-                await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, MessageErrorPassword, Resources.Resource.Ok);
+                IsWrongPassword = _isErrorPassword;
+                _isWrongConfirmPassword = _isErrorConfirm;
+                //await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, MessageErrorPassword, Resources.Resource.Ok);
+                var p = new DialogParameters { { "message", MessageErrorPassword } };
+                await _dialogs.ShowDialogAsync(nameof(AlertView), p);
             }
         }
         #endregion
