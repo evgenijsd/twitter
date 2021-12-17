@@ -10,11 +10,11 @@ namespace InterTwitter.Services.Authorization
 {
     public class AuthorizationService : IAuthorizationService
     {
-        private IRegistrationService _registrationService;
+        private readonly IMockService _mockService;
 
-        public AuthorizationService(IRegistrationService registrationService)
+        public AuthorizationService(IMockService mockService)
         {
-            _registrationService = registrationService;
+            _mockService = mockService;
         }
 
         #region -- Public properties --
@@ -35,7 +35,7 @@ namespace InterTwitter.Services.Authorization
 
             try
             {
-                var user = _registrationService?.GetUsers()?.FirstOrDefault(x => x.Email.ToLower() == email.ToLower());
+                var user = _mockService.Users?.FirstOrDefault(x => x.Email.ToLower() == email.ToLower());
                 if (user != null)
                 {
                     result.SetSuccess(user);
@@ -52,12 +52,6 @@ namespace InterTwitter.Services.Authorization
 
             return result;
         }
-
-        public async Task<AOResult<UserModel>> GetCurrentUserAsync()
-        {
-            return await _registrationService?.GetByIdAsync(UserId);
-        }
-
         #endregion
     }
 }

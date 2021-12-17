@@ -144,10 +144,9 @@ namespace InterTwitter.ViewModels
 
         private async Task OnPasswordCommandAsync()
         {
-            var check = await _registrationService.CheckTheCorrectEmailAsync(Email);
-            if (check.Result)
+            var result = await _registrationService.CheckTheCorrectEmailAsync(Email);
+            if (result.IsSuccess)
             {
-                //await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertLoginTaken, Resources.Resource.Ok);
                 var p = new DialogParameters { { "message", Resources.Resource.AlertLoginTaken } };
                 await _dialogs.ShowDialogAsync(nameof(AlertView), p);
             }
@@ -178,7 +177,6 @@ namespace InterTwitter.ViewModels
                         }
                     }
 
-                    //await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, MessageErrorName, Resources.Resource.Ok);
                     var p = new DialogParameters { { "message", validator.Errors[0].ErrorMessage } };
                     await _dialogs.ShowDialogAsync(nameof(AlertView), p);
                 }

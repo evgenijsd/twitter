@@ -7,20 +7,16 @@ namespace InterTwitter.Services
 {
     public class MockService : IMockService
     {
-        private IRegistrationService _registrationService;
-
-        public MockService(IRegistrationService registrationService)
+        public MockService()
         {
-            _registrationService = registrationService;
-
             InitUsers();
             InitTweets();
         }
 
         #region -- IMockService implementation --
 
-        public IEnumerable<UserModel> Users { get; set; }
-        public IEnumerable<TweetModel> Tweets { get; set; }
+        public List<UserModel> Users { get; set; }
+        public List<TweetModel> Tweets { get; set; }
 
         #endregion
 
@@ -28,7 +24,63 @@ namespace InterTwitter.Services
 
         private void InitUsers()
         {
-            Users = _registrationService.GetUsers();
+            Users = new List<UserModel>
+            {
+                new UserModel
+                {
+                    Id = 1,
+                    Name = "Bill Gates",
+                    Email = "aaa@aaa.aaa",
+                    Password = "1234567A",
+                    AvatarPath = "https://cdn.allfamous.org/people/avatars/bill-gates-zdrr-allfamous.org.jpg",
+                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
+                },
+                new UserModel
+                {
+                    Id = 2,
+                    Name = "Kate White",
+                    Email = "bbb@bbb.bbb",
+                    Password = "1234567A",
+                    AvatarPath = "https://www.iso.org/files/live/sites/isoorg/files/news/News_archive/2021/03/Ref2639/Ref2639.jpg/thumbnails/300x300",
+                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
+                },
+                new UserModel
+                {
+                    Id = 3,
+                    Name = "Sam Smith",
+                    Email = "ccc@ccc.ccc",
+                    Password = "1234567A",
+                    AvatarPath = "https://i.ebayimg.com/images/g/6EIAAOSwJHlfnm3a/s-l300.jpg",
+                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
+                },
+                new UserModel
+                {
+                    Id = 4,
+                    Name = "Steve Jobs",
+                    Email = "ddd@ddd.ddd",
+                    Password = "1234567A",
+                    AvatarPath = "https://www.acumarketing.com/wp-content/uploads/2011/08/steve-jobs.jpg",
+                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
+                },
+                new UserModel
+                {
+                    Id = 5,
+                    Name = "Elon musk",
+                    Email = "eee@eee.eee",
+                    Password = "1234567A",
+                    AvatarPath = "https://file.liga.net/images/general/2021/09/20/thumbnail-20210920123323-9397.jpg?v=1632132620",
+                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
+                },
+                new UserModel
+                {
+                    Id = 6,
+                    Name = "Keano Reaves",
+                    Email = "fff@fff.fff",
+                    Password = "1234567A",
+                    AvatarPath = "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTE5NTU2MzE2MzU1NzI0ODEx/keanu-reeves-9454211-1-402.jpg",
+                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
+                },
+            };
         }
 
         private void InitTweets()

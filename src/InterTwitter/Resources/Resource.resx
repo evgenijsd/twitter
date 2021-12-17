@@ -180,6 +180,9 @@
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="FailureUsersNotFound" xml:space="preserve">
+    <value>No tweets found</value>
+  </data>
   <data name="GetYourAccount" xml:space="preserve">
     <value>Get your account</value>
   </data>

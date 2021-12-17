@@ -15,13 +15,14 @@ namespace InterTwitter.ViewModels
 {
     public class PasswordPageViewModel : BaseViewModel
     {
-        private IRegistrationService _registrationService { get; }
-        private IDialogService _dialogs { get; }
-        private PasswordPageValidator _PasswordPageValidator { get; }
-        private bool _isErrorPassword = false;
-        private bool _isErrorConfirm = false;
+        private readonly IRegistrationService _registrationService;
+        private readonly IDialogService _dialogs;
+        private readonly PasswordPageValidator _PasswordPageValidator;
 
-        public PasswordPageViewModel(INavigationService navigationService, IDialogService dialogs, IRegistrationService registrationService)
+        public PasswordPageViewModel (
+            INavigationService navigationService,
+            IDialogService dialogs,
+            IRegistrationService registrationService)
             : base(navigationService)
         {
             _registrationService = registrationService;
@@ -98,6 +99,7 @@ namespace InterTwitter.ViewModels
         public ICommand CreateCommand => _CreateCommand ??= SingleExecutionCommand.FromFunc(OnCreateCommandAsync);
         private ICommand _StartCommand;
         public ICommand StartCommand => _StartCommand ??= SingleExecutionCommand.FromFunc(OnStartCommandAsync);
+
         #endregion
 
         #region -- Overrides --
@@ -129,6 +131,7 @@ namespace InterTwitter.ViewModels
                 User = parameters.GetValue<UserModel>(nameof(User));
             }
         }
+
         #endregion
 
         #region -- Private helpers --
@@ -183,6 +186,7 @@ namespace InterTwitter.ViewModels
                 await _dialogs.ShowDialogAsync(nameof(AlertView), p);
             }
         }
+
         #endregion
     }
 }

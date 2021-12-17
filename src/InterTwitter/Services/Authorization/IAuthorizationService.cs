@@ -9,6 +9,5 @@ namespace InterTwitter.Services.Authorization
         int UserId { get; set; }
 
         Task<AOResult<UserModel>> CheckUserAsync(string login, string password);
-        Task<AOResult<UserModel>> GetCurrentUserAsync();
     }
 }

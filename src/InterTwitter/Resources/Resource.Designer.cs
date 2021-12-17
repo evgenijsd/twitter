@@ -250,6 +250,15 @@ namespace InterTwitter.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на No tweets found.
+        /// </summary>
+        internal static string FailureUsersNotFound {
+            get {
+                return ResourceManager.GetString("FailureUsersNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Get your account.
         /// </summary>
         internal static string GetYourAccount {

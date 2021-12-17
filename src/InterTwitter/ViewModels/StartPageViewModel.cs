@@ -15,12 +15,15 @@ namespace InterTwitter.ViewModels
 {
     public class StartPageViewModel : BaseViewModel
     {
-        private IRegistrationService _registrationService { get; }
-        private IAuthorizationService _autorizationService { get; }
-        private StartPageValidator _StartPageValidator { get; }
+        private readonly IRegistrationService _registrationService;
+        private readonly IAuthorizationService _autorizationService;
+        private readonly StartPageValidator _StartPageValidator;
         private bool IsAutoLogin = true;
 
-        public StartPageViewModel(INavigationService navigationService, IRegistrationService registrationService, IAuthorizationService autorizationService)
+        public StartPageViewModel(
+            INavigationService navigationService,
+            IRegistrationService registrationService,
+            IAuthorizationService autorizationService)
             : base(navigationService)
         {
             App.Current.UserAppTheme = OSAppTheme.Light;
@@ -33,6 +36,7 @@ namespace InterTwitter.ViewModels
         #region -- Public properties --
 
         private UserModel _user = new ();
+
         public UserModel User
         {
             get => _user;
@@ -40,6 +44,7 @@ namespace InterTwitter.ViewModels
         }
 
         private int _userId;
+
         public int UserId
         {
             get => _userId;
@@ -47,6 +52,7 @@ namespace InterTwitter.ViewModels
         }
 
         private string _name = string.Empty;
+
         public string Name
         {
             get => _name;
@@ -54,6 +60,7 @@ namespace InterTwitter.ViewModels
         }
 
         private bool _isVisibleName = false;
+
         public bool IsVisibleName
         {
             get => _isVisibleName;
@@ -61,6 +68,7 @@ namespace InterTwitter.ViewModels
         }
 
         private bool _isVisibleEmail = false;
+
         public bool IsVisibleEmail
         {
             get => _isVisibleEmail;
@@ -68,6 +76,7 @@ namespace InterTwitter.ViewModels
         }
 
         private bool _isWrongName = false;
+
         public bool IsWrongName
         {
             get => _isWrongName;
@@ -75,6 +84,7 @@ namespace InterTwitter.ViewModels
         }
 
         private bool _isWrongEmail = false;
+
         public bool IsWrongEmail
         {
             get => _isWrongEmail;
@@ -82,6 +92,7 @@ namespace InterTwitter.ViewModels
         }
 
         private bool _isVisibleButton = false;
+
         public bool IsVisibleButton
         {
             get => _isVisibleButton;
@@ -89,6 +100,7 @@ namespace InterTwitter.ViewModels
         }
 
         private bool _isUnVisibleButton = true;
+
         public bool IsUnVisibleButton
         {
             get => _isUnVisibleButton;
@@ -96,29 +108,19 @@ namespace InterTwitter.ViewModels
         }
 
         private string _email = string.Empty;
+
         public string Email
         {
             get => _email;
             set => SetProperty(ref _email, value);
         }
 
-        private string _messageErrorName = string.Empty;
-        public string MessageErrorName
-        {
-            get => _messageErrorName;
-            set => SetProperty(ref _messageErrorName, value);
-        }
-
-        private string _messageErrorEmail = string.Empty;
-        public string MessageErrorEmail
-        {
-            get => _messageErrorEmail;
-            set => SetProperty(ref _messageErrorEmail, value);
-        }
-
         private ICommand _LogInCommand;
+
         public ICommand LogInCommand => _LogInCommand ??= SingleExecutionCommand.FromFunc(OnLogInCommandAsync);
+
         private ICommand _CreateCommand;
+
         public ICommand CreateCommand => _CreateCommand ??= SingleExecutionCommand.FromFunc(OnCreateCommandAsync);
 
         #endregion
@@ -182,6 +184,6 @@ namespace InterTwitter.ViewModels
             await NavigationService.NavigateAsync($"{nameof(CreatePage)}", p);
         }
 
-            #endregion
-        }
+        #endregion
+    }
 }

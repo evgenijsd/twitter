@@ -5,6 +5,7 @@ using InterTwitter.Models;
 using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services;
 using InterTwitter.Services.Authorization;
+using InterTwitter.Services.Registration;
 using InterTwitter.Views;
 using Prism.Navigation;
 using System.Collections.Generic;
@@ -19,7 +20,8 @@ namespace InterTwitter.ViewModels
     public class HomePageViewModel : BaseTabViewModel
     {
         private readonly ITweetService _tweetService;
-        private IAuthorizationService _autorizationService { get; }
+        private readonly IAuthorizationService _autorizationService;
+        private readonly IRegistrationService _registrationService;
 
         private bool _isFirstStart = true;
         private UserModel _currentUser;
@@ -27,11 +29,13 @@ namespace InterTwitter.ViewModels
         public HomePageViewModel(
             ITweetService tweetService,
             INavigationService navigationService,
-            IAuthorizationService autorizationService)
+            IAuthorizationService autorizationService,
+            IRegistrationService registrationService)
             : base(navigationService)
         {
             _tweetService = tweetService;
             _autorizationService = autorizationService;
+            _registrationService = registrationService;
 
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource;
         }
@@ -81,7 +85,7 @@ namespace InterTwitter.ViewModels
 
         private async Task InitAsync()
         {
-            _currentUser = (await _autorizationService.GetCurrentUserAsync()).Result;
+            _currentUser = (await _registrationService.GetByIdAsync(_autorizationService.UserId)).Result;
             var getTweetResult = await _tweetService.GetAllTweetsAsync();
 
             if (getTweetResult.IsSuccess)
