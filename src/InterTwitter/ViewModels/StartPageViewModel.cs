@@ -1,16 +1,14 @@
-﻿using InterTwitter.Helpers;
+﻿using System;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using InterTwitter.Helpers;
 using InterTwitter.Models;
 using InterTwitter.Services.Authorization;
 using InterTwitter.Services.Registration;
 using InterTwitter.ViewModels.Validators;
 using InterTwitter.Views;
 using Prism.Navigation;
-using Prism.Services;
-using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
@@ -19,18 +17,16 @@ namespace InterTwitter.ViewModels
     {
         private IRegistrationService _registrationService { get; }
         private IAuthorizationService _autorizationService { get; }
-        private IPageDialogService _dialogs { get; }
         private StartPageValidator _StartPageValidator { get; }
         private bool IsAutoLogin = true;
 
-        public StartPageViewModel(INavigationService navigationService, IPageDialogService dialogs, IRegistrationService registrationService, IAuthorizationService autorizationService)
+        public StartPageViewModel(INavigationService navigationService, IRegistrationService registrationService, IAuthorizationService autorizationService)
             : base(navigationService)
         {
             App.Current.UserAppTheme = OSAppTheme.Light;
             _registrationService = registrationService;
             _autorizationService = autorizationService;
             UserId = _autorizationService.UserId;
-            _dialogs = dialogs;
             _StartPageValidator = new StartPageValidator();
         }
 
@@ -133,20 +129,6 @@ namespace InterTwitter.ViewModels
         {
             base.OnPropertyChanged(args);
 
-            /*if (args.PropertyName == nameof(Name))
-            {
-                MessageErrorName = string.Empty;
-                var validator = _StartPageValidator.Validate(this);
-                IsWrongName = !string.IsNullOrEmpty(MessageErrorName) && !string.IsNullOrEmpty(Name);
-            }
-
-            if (args.PropertyName == nameof(Email))
-            {
-                MessageErrorEmail = string.Empty;
-                var validator = _StartPageValidator.Validate(this);
-                IsWrongEmail = !string.IsNullOrEmpty(MessageErrorEmail) && !string.IsNullOrEmpty(Email);
-            }*/
-
             if (args.PropertyName == nameof(IsVisibleButton))
             {
                 IsUnVisibleButton = !IsVisibleButton;
@@ -166,7 +148,7 @@ namespace InterTwitter.ViewModels
 
         public override async void Initialize(INavigationParameters parameters)
         {
-            await Task.Delay(TimeSpan.FromSeconds(0.1));
+            await Task.Delay(TimeSpan.FromSeconds(0.05));
             var user = await _registrationService?.GetByIdAsync(UserId);
             if (user.IsSuccess && IsAutoLogin)
             {
@@ -185,30 +167,6 @@ namespace InterTwitter.ViewModels
         {
             DependencyService.Get<IKeyboardHelper>().HideKeyboard();
 
-            /*var emailCheck = await _registrationService?.CheckTheCorrectEmailAsync(Email);
-            if (!emailCheck.Result && !string.IsNullOrEmpty(Email))
-            {
-                await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertLoginNotExist, Resources.Resource.Ok);
-            }
-            else
-            {
-                if (IsWrongEmail || IsWrongName)
-                {
-                    var validator = _StartPageValidator.Validate(this);
-                    if (string.IsNullOrEmpty(MessageErrorName))
-                    {
-                        MessageErrorName = MessageErrorEmail;
-                    }
-
-                    if (!string.IsNullOrEmpty(MessageErrorName))
-                    {
-                        await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, MessageErrorName, Resources.Resource.Ok);
-                    }
-                }
-            }
-
-            DependencyService.Get<IKeyboardHelper>().HideKeyboard();*/
-
             User.Email = Email;
             User.Name = Name;
             var p = new NavigationParameters { { nameof(User), User } };
@@ -217,25 +175,8 @@ namespace InterTwitter.ViewModels
 
         private async Task OnCreateCommandAsync()
         {
-            /*var emailCheck = await _registrationService?.CheckTheCorrectEmailAsync(Email);
-            if (emailCheck.Result)
-            {
-                await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertLoginTaken, Resources.Resource.Ok);
-            }
-            else
-            {
-                DependencyService.Get<IKeyboardHelper>().HideKeyboard();
+            DependencyService.Get<IKeyboardHelper>().HideKeyboard();
 
-                if (IsWrongEmail || IsWrongName)
-                {
-                    await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertDataIncorrect, Resources.Resource.Ok);
-                }
-
-                User.Email = Email;
-                User.Name = Name;
-                var p = new NavigationParameters { { nameof(User), User } };
-                await NavigationService.NavigateAsync($"{nameof(CreatePage)}", p);
-            }*/
             User.Email = Email;
             User.Name = Name;
             var p = new NavigationParameters { { nameof(User), User } };

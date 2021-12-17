@@ -18,8 +18,6 @@ namespace InterTwitter.ViewModels
         private IRegistrationService _registrationService { get; }
         private IDialogService _dialogs { get; }
         private CreatePageValidator _CreatePageValidator { get; }
-        private bool _isErrorName = false;
-        private bool _isErrorEmail = false;
 
         public CreatePageViewModel(INavigationService navigationService, IDialogService dialogs, IRegistrationService registrationService)
             : base(navigationService)
@@ -94,20 +92,6 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _isUnVisibleButton, value);
         }
 
-        private string _messageErrorName = string.Empty;
-        public string MessageErrorName
-        {
-            get => _messageErrorName;
-            set => SetProperty(ref _messageErrorName, value);
-        }
-
-        private string _messageErrorEmail = string.Empty;
-        public string MessageErrorEmail
-        {
-            get => _messageErrorEmail;
-            set => SetProperty(ref _messageErrorEmail, value);
-        }
-
         private ICommand _StartCommand;
         public ICommand StartCommand => _StartCommand ??= SingleExecutionCommand.FromFunc(OnStartCommandAsync);
         private ICommand _PasswordCommand;
@@ -123,17 +107,11 @@ namespace InterTwitter.ViewModels
 
             if (args.PropertyName == nameof(Name))
             {
-                MessageErrorName = string.Empty;
-                var validator = _CreatePageValidator.Validate(this);
-                _isErrorName = !string.IsNullOrEmpty(MessageErrorName) && !string.IsNullOrEmpty(Name);
                 IsWrongName = false;
             }
 
             if (args.PropertyName == nameof(Email))
             {
-                MessageErrorEmail = string.Empty;
-                var validator = _CreatePageValidator.Validate(this);
-                _isErrorEmail = !string.IsNullOrEmpty(MessageErrorEmail) && !string.IsNullOrEmpty(Email);
                 IsWrongEmail = false;
             }
 
@@ -187,15 +165,21 @@ namespace InterTwitter.ViewModels
                 }
                 else
                 {
-                    if (string.IsNullOrEmpty(MessageErrorName))
+                    foreach (var error in validator.Errors)
                     {
-                        MessageErrorName = MessageErrorEmail;
+                        if (error.PropertyName == nameof(Name))
+                        {
+                            IsWrongName = true;
+                        }
+
+                        if (error.PropertyName == nameof(Email))
+                        {
+                            IsWrongEmail = true;
+                        }
                     }
 
-                    IsWrongName = _isErrorName;
-                    IsWrongEmail = _isErrorEmail;
                     //await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, MessageErrorName, Resources.Resource.Ok);
-                    var p = new DialogParameters { { "message", MessageErrorName } };
+                    var p = new DialogParameters { { "message", validator.Errors[0].ErrorMessage } };
                     await _dialogs.ShowDialogAsync(nameof(AlertView), p);
                 }
             }

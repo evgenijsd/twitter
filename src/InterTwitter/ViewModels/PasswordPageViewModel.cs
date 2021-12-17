@@ -94,20 +94,6 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _isUnVisibleButton, value);
         }
 
-        private string _messageErrorPassword = string.Empty;
-        public string MessageErrorPassword
-        {
-            get => _messageErrorPassword;
-            set => SetProperty(ref _messageErrorPassword, value);
-        }
-
-        private string _messageErrorConfirmPassword = string.Empty;
-        public string MessageErrorConfirmPassword
-        {
-            get => _messageErrorConfirmPassword;
-            set => SetProperty(ref _messageErrorConfirmPassword, value);
-        }
-
         private ICommand _CreateCommand;
         public ICommand CreateCommand => _CreateCommand ??= SingleExecutionCommand.FromFunc(OnCreateCommandAsync);
         private ICommand _StartCommand;
@@ -122,17 +108,11 @@ namespace InterTwitter.ViewModels
 
             if (args.PropertyName == nameof(Password))
             {
-                MessageErrorPassword = string.Empty;
-                var validator = _PasswordPageValidator.Validate(this);
-                _isErrorPassword = !string.IsNullOrEmpty(MessageErrorPassword) && !string.IsNullOrEmpty(Password);
                 IsWrongPassword = false;
             }
 
             if (args.PropertyName == nameof(ConfirmPassword))
             {
-                MessageErrorConfirmPassword = string.Empty;
-                var validator = _PasswordPageValidator.Validate(this);
-                _isErrorConfirm = !string.IsNullOrEmpty(MessageErrorConfirmPassword) && !string.IsNullOrEmpty(ConfirmPassword);
                 IsWrongConfirmPassword = false;
             }
 
@@ -180,22 +160,26 @@ namespace InterTwitter.ViewModels
                 }
                 else
                 {
-                    //await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, Resources.Resource.AlertDatabase, Resources.Resource.Ok);
                     var p = new DialogParameters { { "message", Resources.Resource.AlertDatabase } };
                     await _dialogs.ShowDialogAsync(nameof(AlertView), p);
                 }
             }
             else
             {
-                if (string.IsNullOrEmpty(MessageErrorPassword))
+                foreach (var error in validator.Errors)
                 {
-                    MessageErrorPassword = MessageErrorConfirmPassword;
+                    if (error.PropertyName == nameof(Password))
+                    {
+                        IsWrongPassword = true;
+                    }
+
+                    if (error.PropertyName == nameof(ConfirmPassword))
+                    {
+                        IsWrongConfirmPassword = true;
+                    }
                 }
 
-                IsWrongPassword = _isErrorPassword;
-                _isWrongConfirmPassword = _isErrorConfirm;
-                //await _dialogs.DisplayAlertAsync(Resources.Resource.Alert, MessageErrorPassword, Resources.Resource.Ok);
-                var p = new DialogParameters { { "message", MessageErrorPassword } };
+                var p = new DialogParameters { { "message", validator.Errors[0].ErrorMessage } };
                 await _dialogs.ShowDialogAsync(nameof(AlertView), p);
             }
         }

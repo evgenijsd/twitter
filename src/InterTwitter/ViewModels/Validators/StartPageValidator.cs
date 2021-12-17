@@ -11,13 +11,13 @@ namespace InterTwitter.ViewModels.Validators
         public StartPageValidator()
         {
             RuleFor(x => x.Name)
-                .MinimumLength(2).OnFailure(x => x.MessageErrorName = Resources.Resource.AlertNameLength)
+                .MinimumLength(2).WithMessage(Resources.Resource.AlertNameLength)
                 .Must(x => Regex.IsMatch(x, VALID_NAME))
-                        .OnFailure(x => x.MessageErrorName = Resources.Resource.AlertNameLetter);
+                        .WithMessage(Resources.Resource.AlertNameLetter);
             RuleFor(x => x.Email)
-                .Must(x => x.Contains("@")).OnFailure(x => x.MessageErrorEmail = Resources.Resource.AlertEmailNoA)
+                .Must(x => x.Contains("@")).WithMessage(Resources.Resource.AlertEmailNoA)
                 .Must(x => Regex.IsMatch(x, VALID_EMAIL))
-                        .OnFailure(x => x.MessageErrorEmail = Resources.Resource.AlertEmailInvalid);
+                        .WithMessage(Resources.Resource.AlertEmailInvalid);
         }
     }
 }

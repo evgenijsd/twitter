@@ -12,15 +12,15 @@ namespace InterTwitter.ViewModels.Validators
         public LogInPageValidator()
         {
             RuleFor(x => x.Email)
+                .NotEmpty().WithMessage(Resources.Resource.AlertEmailEmpty)
+                .Must(x => x.Contains("@")).WithMessage(Resources.Resource.AlertEmailNoA)
                 .Must(x => Regex.IsMatch(x, VALID_EMAIL))
-                           .OnFailure(x => x.MessageErrorEmail = Resources.Resource.AlertEmailInvalid)
-                .Must(x => x.Contains("@")).OnFailure(x => x.MessageErrorEmail = Resources.Resource.AlertEmailNoA)
-                .NotEmpty().OnFailure(x => x.MessageErrorEmail = Resources.Resource.AlertEmailEmpty);
+                           .WithMessage(Resources.Resource.AlertEmailInvalid);
             RuleFor(x => x.Password)
+                .NotEmpty().WithMessage(Resources.Resource.AlertPasswordEmpty)
+                .MinimumLength(6).WithMessage(Resources.Resource.AlertPasswordLength)
                 .Must(x => Regex.IsMatch(x, VALID_PASSWORD))
-                           .OnFailure(x => x.MessageErrorPassword = Resources.Resource.AlertPasswordLetterDigit)
-                .MinimumLength(6).OnFailure(x => x.MessageErrorPassword = Resources.Resource.AlertPasswordLength)
-                .NotEmpty().OnFailure(x => x.MessageErrorPassword = Resources.Resource.AlertPasswordEmpty);
+                           .WithMessage(Resources.Resource.AlertPasswordLetterDigit);
         }
     }
 }

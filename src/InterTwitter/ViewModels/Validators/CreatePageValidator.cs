@@ -11,15 +11,15 @@ namespace InterTwitter.ViewModels.Validators
         public CreatePageValidator()
         {
             RuleFor(x => x.Name)
+                .NotEmpty().WithMessage(Resources.Resource.AlertNameEmpty)
+                .MinimumLength(2).WithMessage(Resources.Resource.AlertNameLength)
                 .Must(x => Regex.IsMatch(x, VALID_NAME))
-                                 .OnFailure(x => x.MessageErrorName = Resources.Resource.AlertNameLetter)
-                .MinimumLength(2).OnFailure(x => x.MessageErrorName = Resources.Resource.AlertNameLength)
-                .NotEmpty().OnFailure(x => x.MessageErrorName = Resources.Resource.AlertNameEmpty);
+                                 .WithMessage(Resources.Resource.AlertNameLetter);
             RuleFor(x => x.Email)
+                .NotEmpty().WithMessage(Resources.Resource.AlertEmailEmpty)
+                .Must(x => x.Contains("@")).WithMessage(Resources.Resource.AlertEmailNoA)
                 .Must(x => Regex.IsMatch(x, VALID_EMAIL))
-                                 .OnFailure(x => x.MessageErrorEmail = Resources.Resource.AlertEmailInvalid)
-                .Must(x => x.Contains("@")).OnFailure(x => x.MessageErrorEmail = Resources.Resource.AlertEmailNoA)
-                .NotEmpty().OnFailure(x => x.MessageErrorEmail = Resources.Resource.AlertEmailEmpty);
+                                 .WithMessage(Resources.Resource.AlertEmailInvalid);
         }
     }
 }

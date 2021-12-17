@@ -10,12 +10,12 @@ namespace InterTwitter.ViewModels.Validators
         public PasswordPageValidator()
         {
             RuleFor(x => x.Password)
+                .NotEmpty().WithMessage(Resources.Resource.AlertPasswordEmpty)
+                .MinimumLength(6).WithMessage(Resources.Resource.AlertPasswordLength)
                 .Must(x => Regex.IsMatch(x, VALID_PASSWORD))
-                                 .OnFailure(x => x.MessageErrorPassword = Resources.Resource.AlertPasswordLetterDigit)
-                .MinimumLength(6).OnFailure(x => x.MessageErrorPassword = Resources.Resource.AlertPasswordLength)
-                .NotEmpty().OnFailure(x => x.MessageErrorPassword = Resources.Resource.AlertPasswordEmpty);
+                                 .WithMessage(Resources.Resource.AlertPasswordLetterDigit);
             RuleFor(x => x.ConfirmPassword)
-                .Equal(x => x.Password).OnFailure(x => x.MessageErrorConfirmPassword = Resources.Resource.AlertPasswordNotEqual);
+                .Equal(x => x.Password).WithMessage(Resources.Resource.AlertPasswordNotEqual);
         }
     }
 }
