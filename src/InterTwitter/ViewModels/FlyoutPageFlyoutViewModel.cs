@@ -93,9 +93,8 @@ namespace InterTwitter.ViewModels.Flyout
         }
 
         public ICommand LogoutCommandAsync => SingleExecutionCommand.FromFunc(OnLogoutCommandAsync);
-        public ICommand NavigateEditProfileCommandAsync => SingleExecutionCommand.FromFunc(() => NavigationService.NavigateAsync(nameof(EditProfilePage)));
-        public ICommand NavigateProfileCommandAsync => SingleExecutionCommand.FromFunc(() =>
-        NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters { { Constants.NavigationKeys.CURRENT_USER, _user } }));
+        public ICommand NavigateEditProfileCommandAsync => SingleExecutionCommand.FromFunc(OnNavigateEditProfileCommandAsync);
+        public ICommand NavigateProfileCommandAsync => SingleExecutionCommand.FromFunc(OnNavigateProfileCommandAsync);
 
         #endregion
 
@@ -163,11 +162,6 @@ namespace InterTwitter.ViewModels.Flyout
             NavigationService.NavigateAsync(nameof(menuItem.TargetType));
         }
 
-        private Task OnLogoutCommandAsync()
-        {
-            return Task.CompletedTask;
-        }
-
         private async void UpdateAsync(object sender)
         {
             await Task.Delay(1);
@@ -175,6 +169,25 @@ namespace InterTwitter.ViewModels.Flyout
             ProfileName = user.Name;
             ProfileEmail = user.Email;
             UserImagePath = user.AvatarPath;
+        }
+
+        private Task OnLogoutCommandAsync()
+        {
+            return Task.CompletedTask;
+        }
+
+        private Task OnNavigateProfileCommandAsync()
+        {
+            NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters { { Constants.NavigationKeys.CURRENT_USER, _user } });
+            MessagingCenter.Send(this, Constants.Messages.OPEN_SIDEBAR, false);
+            return Task.CompletedTask;
+        }
+
+        private Task OnNavigateEditProfileCommandAsync()
+        {
+            NavigationService.NavigateAsync(nameof(EditProfilePage));
+            MessagingCenter.Send(this, Constants.Messages.OPEN_SIDEBAR, false);
+            return Task.CompletedTask;
         }
 
         #endregion

@@ -10,13 +10,12 @@ namespace InterTwitter.Services.UserService
     public class UserService : IUserService
     {
         private readonly IMockService _mockService;
-
-        #region -- IUserService Implementation --
-
         public UserService(IMockService mockService)
         {
             _mockService = mockService;
         }
+
+        #region -- IUserService Implementation --
 
         public Task<AOResult<int>> DeleteUserAsync(UserModel user)
         {
@@ -262,14 +261,82 @@ namespace InterTwitter.Services.UserService
             return Task<AOResult<int>>.Factory.StartNew(() => result);
         }
 
-        public Task<AOResult<List<MuteModel>>> GetAllMutedUsersAsync()
+        public Task<AOResult<List<UserModel>>> GetAllMutedUsersAsync(int currentUserId)
         {
-            throw new NotImplementedException();
+            var result = new AOResult<List<UserModel>>();
+            try
+            {
+                var mutelist = _mockService.MuteList.Where(x => x.UserId == currentUserId);
+
+                var user_list = _mockService.Users;
+
+                List<UserModel> result_list = new List<UserModel>();
+
+                foreach (var user in user_list)
+                {
+                    foreach (var v in mutelist)
+                    {
+                        if (user.Id == v.MutedUserId)
+                        {
+                            result_list.Add(user);
+                        }
+                    }
+                }
+
+                if (result_list != null)
+                {
+                    result.SetSuccess(result_list);
+                }
+                else
+                {
+                    result.SetFailure("Mutelis is empty");
+                }
+            }
+            catch (Exception e)
+            {
+                result.SetError($"Method:{nameof(UserService)}/{nameof(GetAllMutedUsersAsync)} exception:", "Error", e);
+            }
+
+            return Task<AOResult<List<UserModel>>>.Factory.StartNew(() => result);
         }
 
-        public Task<AOResult<List<UserModel>>> GetAllBlockedUsersAsync()
+        public Task<AOResult<List<UserModel>>> GetAllBlockedUsersAsync(int currentUserId)
         {
-            throw new NotImplementedException();
+            var result = new AOResult<List<UserModel>>();
+            try
+            {
+                var blacklist = _mockService.BlackList.Where(x => x.UserId == currentUserId);
+
+                var user_list = _mockService.Users;
+
+                List<UserModel> result_list = new List<UserModel>();
+
+                foreach (var user in user_list)
+                {
+                    foreach (var v in blacklist)
+                    {
+                        if (user.Id == v.BlockedUserId)
+                        {
+                            result_list.Add(user);
+                        }
+                    }
+                }
+
+                if (result_list != null)
+                {
+                    result.SetSuccess(result_list);
+                }
+                else
+                {
+                    result.SetFailure("Blacklis is empty");
+                }
+            }
+            catch (Exception e)
+            {
+                result.SetError($"Method:{nameof(UserService)}/{nameof(GetAllBlockedUsersAsync)} exception:", "Error", e);
+            }
+
+            return Task<AOResult<List<UserModel>>>.Factory.StartNew(() => result);
         }
 
         #endregion

@@ -29,7 +29,12 @@ namespace InterTwitter
         public static class NavigationKeys
         {
             public const string CURRENT_USER = "CurrentUser";
+
             public const string USER = "User";
+
+            public const string MUTELIST = "NavigateToMutelist";
+
+            public const string BLACKLIST = "NavigateToBlacklist";
         }
     }
 }

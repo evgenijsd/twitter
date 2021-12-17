@@ -49,6 +49,7 @@ namespace InterTwitter
             containerRegistry.RegisterForNavigation<NotificationsPage, NotificationPageViewModel>();
             containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
             containerRegistry.RegisterForNavigation<EditProfilePage, EditProfilePageViewModel>();
+            containerRegistry.RegisterForNavigation<BlacklistPage, BlacklistPageViewModel>();
 
             containerRegistry.RegisterForNavigation<MainPage>();
         }

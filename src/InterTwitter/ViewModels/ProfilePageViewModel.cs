@@ -121,12 +121,30 @@ namespace InterTwitter.ViewModels
         }
 
         public ICommand NavgationCommandAsync => SingleExecutionCommand.FromFunc(NavigationService.GoBackAsync);
-        public ICommand NavigationToEditCommandAsync => SingleExecutionCommand.FromFunc(() => NavigationService.NavigateAsync(nameof(EditProfilePage)));
-        public ICommand HamburgerMenuCommandAsync => SingleExecutionCommand.FromFunc(OnHamburgerMenuCommand);
-        public ICommand AddUserToBlacklistCommandAsync => SingleExecutionCommand.FromFunc(OnAddUserToBlacklistCommandAsync);
-        public ICommand AddUserToMuteListCommandAsync => SingleExecutionCommand.FromFunc(OnAddUserToMutelistCommandAsync);
-        public ICommand RemoveUserFromBlacklistCommandAsync => SingleExecutionCommand.FromFunc(OnRemoveUserFromBlacklistCommandAsync);
-        public ICommand RemoveUserFromMuteListCommandAsync => SingleExecutionCommand.FromFunc(OnRemoveUserFromMuteCommandAsync);
+
+        public ICommand HamburgerMenuCommandAsync
+            => SingleExecutionCommand.FromFunc(OnHamburgerMenuCommand);
+
+        public ICommand AddUserToBlacklistCommandAsync
+            => SingleExecutionCommand.FromFunc(OnAddUserToBlacklistCommandAsync);
+
+        public ICommand AddUserToMuteListCommandAsync
+            => SingleExecutionCommand.FromFunc(OnAddUserToMutelistCommandAsync);
+
+        public ICommand RemoveUserFromBlacklistCommandAsync
+            => SingleExecutionCommand.FromFunc(OnRemoveUserFromBlacklistCommandAsync);
+
+        public ICommand RemoveUserFromMuteListCommandAsync
+            => SingleExecutionCommand.FromFunc(OnRemoveUserFromMuteCommandAsync);
+
+        public ICommand NavigationToEditCommandAsync => SingleExecutionCommand.FromFunc(
+            () => NavigationService.NavigateAsync(nameof(EditProfilePage), new NavigationParameters { { Constants.NavigationKeys.CURRENT_USER, _user } }));
+
+        public ICommand NavigationToBlacklistCommandAsync => SingleExecutionCommand.FromFunc(
+            () => NavigationService.NavigateAsync(nameof(BlacklistPage), new NavigationParameters { { Constants.NavigationKeys.BLACKLIST, _user } }));
+
+        public ICommand NavigationToMutelistCommandAsync => SingleExecutionCommand.FromFunc(
+            () => NavigationService.NavigateAsync(nameof(BlacklistPage), new NavigationParameters { { Constants.NavigationKeys.MUTELIST, _user } }));
 
         #endregion
 
@@ -134,31 +152,27 @@ namespace InterTwitter.ViewModels
 
         public async override Task InitializeAsync(INavigationParameters parameters)
         {
-            foreach (var k in parameters.Keys)
+            if (parameters.ContainsKey(Constants.NavigationKeys.CURRENT_USER))
             {
-                if (k == Constants.NavigationKeys.CURRENT_USER)
-                {
-                    _user = parameters[k] as UserModel;
-                    _isCurrentUser = true;
-                    IsChangeProfileButtonVisible = true;
-                }
-                else if (k == Constants.NavigationKeys.USER)
-                {
-                    _user = parameters[k] as UserModel;
-                    _isCurrentUser = false;
-                    IsChangeProfileButtonVisible = false;
+                _user = parameters[Constants.NavigationKeys.CURRENT_USER] as UserModel;
+                _isCurrentUser = true;
+                IsChangeProfileButtonVisible = true;
+            }
+            else if (parameters.ContainsKey(Constants.NavigationKeys.USER))
+            {
+                _user = parameters[Constants.NavigationKeys.USER] as UserModel;
+                _isCurrentUser = false;
+                IsChangeProfileButtonVisible = false;
 
-                    _isUserMuted = _userService.IsUserMuted(_settingsManager.UserId, _user.Id).Result.Result;
-                    _isUserBlocked = _userService.IsUserBlocked(_settingsManager.UserId, _user.Id).Result.Result;
+                _isUserMuted = _userService.IsUserMuted(_settingsManager.UserId, _user.Id).Result.Result;
+                _isUserBlocked = _userService.IsUserBlocked(_settingsManager.UserId, _user.Id).Result.Result;
 
-                    IsBlacklistButtonVisible = _isUserBlocked;
-                    IsMuteButtonVisible = _isUserMuted;
-                    // TODO: Check on blacklist and mute end set visibility of buttons
-                }
-                else
-                {
-                    Console.WriteLine("No Parameters");
-                }
+                IsBlacklistButtonVisible = _isUserBlocked;
+                IsMuteButtonVisible = _isUserMuted;
+            }
+            else
+            {
+                Console.WriteLine("No correct parameters");
             }
 
             UserBackgroundImage = _user.BackgroundUserImagePath;

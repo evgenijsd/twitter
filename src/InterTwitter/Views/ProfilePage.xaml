@@ -63,22 +63,36 @@
                IsVisible="{Binding IsCurrentUserMenuVisible, Mode=TwoWay}"
                VerticalOptions="Start">
             <StackLayout  x:Name="currentUserMenuStack">
-                <Label Style="{DynamicResource tstyle_i9}" TextColor="{DynamicResource appcolor_i3}" 
+                <Label Style="{DynamicResource tstyle_i9}" 
+                       TextColor="{DynamicResource appcolor_i3}" 
                        Text="Share">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ShareCommandAsync}" Tapped="OnAnywhereTappedHandler"/>
+                        <TapGestureRecognizer Command="{Binding ShareCommandAsync}" 
+                                              Tapped="OnAnywhereTappedHandler"/>
                     </Label.GestureRecognizers>
                 </Label>
-                <Label Style="{DynamicResource tstyle_i9}" TextColor="{DynamicResource appcolor_i3}" 
+                <Label Style="{DynamicResource tstyle_i9}" 
+                       TextColor="{DynamicResource appcolor_i3}" 
                        Text="Change profile">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavigationToEditCommandAsync}" Tapped="OnAnywhereTappedHandler"/>
+                        <TapGestureRecognizer Command="{Binding NavigationToEditCommandAsync}" 
+                                              Tapped="OnAnywhereTappedHandler"/>
                     </Label.GestureRecognizers>
                 </Label>
                 <Label Style="{DynamicResource tstyle_i9}" TextColor="{DynamicResource appcolor_i3}" 
-                       Text="Muted profiles" />
+                       Text="Muted profiles">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigationToMutelistCommandAsync}" 
+                                              Tapped="OnAnywhereTappedHandler"/>
+                    </Label.GestureRecognizers>
+                </Label>
                 <Label Style="{DynamicResource tstyle_i9}" TextColor="{DynamicResource appcolor_i3}" 
-                       Text="Blacklist" />
+                       Text="Blacklist">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigationToBlacklistCommandAsync}" 
+                                              Tapped="OnAnywhereTappedHandler"/>
+                    </Label.GestureRecognizers>
+                </Label>
             </StackLayout>
         </Frame>
 

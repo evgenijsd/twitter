@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:InterTwitter.Views"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
+             x:Class="InterTwitter.Views.BlacklistPage">
+    <ContentPage.Content>
+        <Grid RowDefinitions="0.087*, 0.913*" RowSpacing="0" ColumnSpacing="0">
+            
+            <StackLayout Grid.Row="0" 
+                         Orientation="Horizontal"
+                         Spacing="0">
+
+                <Image HorizontalOptions="Start" 
+                       VerticalOptions="Center" 
+                       Margin="21,0,0,0"
+                       Source="{DynamicResource ic_left_gray}"
+                       BackgroundColor="Transparent">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateBackCommandAsync}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+
+                <Label HorizontalOptions="CenterAndExpand"
+                       VerticalOptions="Center"
+                       Margin="-21,0,21,0"
+                       Style="{DynamicResource tstyle_i4}" 
+                       Text="{Binding Title}" />
+                
+            </StackLayout>
+
+            <ListView Grid.Row="1" 
+                      RowHeight="90" 
+                      x:Name="blacklist"
+                      ItemsSource="{Binding UsersList}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+
+                                <StackLayout Orientation="Horizontal"
+                                             >
+
+                                    <ffimageloading:CachedImage HorizontalOptions="Start" 
+                                                                VerticalOptions="Center"
+                                                                Source="{Binding AvatarPath}" Aspect="AspectFit"
+                                                                HeightRequest="43"
+                                                                WidthRequest="43"
+                                                                Margin="16, 0, 0, 0">
+
+                                        <ffimageloading:CachedImage.Transformations>
+                                            <fftransformations:CircleTransformation/>
+                                        </ffimageloading:CachedImage.Transformations>
+                                    </ffimageloading:CachedImage>
+
+                                    <StackLayout Orientation="Vertical" 
+                                                 VerticalOptions="Center"
+                                                 HorizontalOptions="Center" 
+                                                 Margin="16,0,0,0" >
+                                        <Label Text="{Binding Name}" 
+                                               Style="{DynamicResource tstyle_i6}" 
+                                               MaxLines="1"
+                                               LineBreakMode="TailTruncation" />
+                                        <Label Text="{Binding Email}" 
+                                               Style="{DynamicResource tstyle_i8}" 
+                                               MaxLines="1"
+                                               LineBreakMode="TailTruncation" />
+                                    </StackLayout>
+
+                                    <Label Text="Remove" 
+                                               HorizontalOptions="EndAndExpand" 
+                                               VerticalOptions="Center" Margin="0,0,21,0"
+                                               TextColor="{DynamicResource appcolor_i7}"
+                                               Style="{DynamicResource Content_i6}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding RemoveCommand}" CommandParameter="{Binding .}"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnTapEventHandler"/>
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ContentPage.Content>
+</local:BaseContentPage>

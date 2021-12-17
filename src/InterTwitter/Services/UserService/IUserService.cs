@@ -21,7 +21,7 @@ namespace InterTwitter.Services.UserService
         Task<AOResult<int>> RemoveFromMutelistAsync(int currentUserId, int userId);
         Task<AOResult<bool>> IsUserMuted(int currentUserId, int userId);
         Task<AOResult<bool>> IsUserBlocked(int currentUserId, int userId);
-        Task<AOResult<List<MuteModel>>> GetAllMutedUsersAsync();
-        Task<AOResult<List<UserModel>>> GetAllBlockedUsersAsync();
+        Task<AOResult<List<UserModel>>> GetAllMutedUsersAsync(int currentUserId);
+        Task<AOResult<List<UserModel>>> GetAllBlockedUsersAsync(int currentUserId);
     }
 }
