@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using FFImageLoading.Forms.Platform;
 using Foundation;
+using InterTwitter.Helpers;
+using InterTwitter.iOS.Renderers;
 using Prism;
 using Prism.Ioc;
 using UIKit;
@@ -23,7 +25,7 @@ namespace InterTwitter.iOS
             CachedImageRenderer.Init();
             CachedImageRenderer.InitImageSourceHandler();
             Sharpnado.Shades.iOS.iOSShadowsRenderer.Initialize();
-            LoadApplication(new App());
+            LoadApplication(new App(new iOSInitializer()));
 
             return base.FinishedLaunching(app, options);
         }
@@ -34,6 +36,7 @@ namespace InterTwitter.iOS
         {
             public void RegisterTypes(IContainerRegistry containerRegistry)
             {
+                //containerRegistry.Register<IKeyboardHelper, KeyboardHelper>();
             }
         }
     }

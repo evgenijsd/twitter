@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:xct="clr-namespace:InterTwitter.Helpers;assembly=InterTwitter"
                       xmlns:view="clr-namespace:InterTwitter.Views"
                       xmlns:controls="clr-namespace:InterTwitter.Controls"
-                      xmlns:res="clr-namespace:InterTwitter.Helpers;assembly=InterTwitter"
                       x:Class="InterTwitter.Views.StartPage">
     <view:BaseContentPage.Content>
         <controls:CustomGrid RowSpacing="0">
@@ -36,7 +36,7 @@
                            Margin="0,25,0,0"
                            HeightRequest="45"
                            WidthRequest="50" />
-                    <Label Text="{res:Translate GetYourAccount}"
+                    <Label Text="{xct:Translate GetYourAccount}"
                            Grid.Column="1"
                            FontSize="{DynamicResource tsize_i1}"
                            Margin="0,85,0,0"
@@ -46,7 +46,7 @@
 
                 <Label Grid.Row="1"
                        Margin="24,0,0,0"
-                       Text="{res:Translate Name}"
+                       Text="{xct:Translate Name}"
                        Style="{DynamicResource tstyle_i2}"
                        FontSize="{DynamicResource tsize_i4}"
                        IsVisible="{Binding IsVisibleName}" />
@@ -55,20 +55,20 @@
                                       Text="{Binding Name}"
                                       IsFocusedVisible="{Binding IsVisibleName}"
                                       IsFocusedButton="{Binding IsVisibleButton}"
-                                      Placeholder="{res:Translate Name}"
+                                      Placeholder="{xct:Translate Name}"
                                       ClearImageSource="{DynamicResource ic_clear_gray}"
                                       FontFamily="Ubuntu-Regular"
                                       PlaceholderColor="{DynamicResource appcolor_i4}"
                                       TextColor="{DynamicResource appcolor_i3}" />
                 <Label Grid.Row="1"
-                       Text="{res:Translate PleaseName}"
+                       Text="{xct:Translate PleaseName}"
                        Margin="20,65,0,0"
                        Style="{DynamicResource tstyle_i3}"
                        FontSize="{DynamicResource tsize_i4}"
                        IsVisible="{Binding IsWrongName}" />
 
                 <Label Grid.Row="2"
-                       Text="{res:Translate Email}"
+                       Text="{xct:Translate Email}"
                        FontSize="{DynamicResource tsize_i4}"
                        Margin="24,0,0,0"
                        Style="{DynamicResource tstyle_i2}"
@@ -82,9 +82,9 @@
                                       TextColor="{DynamicResource appcolor_i3}"
                                       IsFocusedVisible="{Binding IsVisibleEmail}"
                                       IsFocusedButton="{Binding IsVisibleButton}"
-                                      Placeholder="{res:Translate Email}" />
+                                      Placeholder="{xct:Translate Email}" />
                 <Label Grid.Row="2"
-                       Text="{res:Translate WrongEmail}"
+                       Text="{xct:Translate WrongEmail}"
                        Margin="20,65,0,0"
                        Style="{DynamicResource tstyle_i3}"
                        FontSize="{DynamicResource tsize_i4}"
@@ -94,7 +94,7 @@
                              HorizontalOptions="Center"
                              Margin="0,20,0,0"
                              IsVisible="{Binding IsUnVisibleButton}">
-                    <Button Text="{res:Translate SignUp}"
+                    <Button Text="{xct:Translate SignUp}"
                             WidthRequest="218"
                             CornerRadius="25"
                             HeightRequest="50"
@@ -107,7 +107,7 @@
                     <Button Command="{Binding LogInCommand}"
                             WidthRequest="218"
                             Margin="0,20,0,0"
-                            Text="{res:Translate LogIn}"
+                            Text="{xct:Translate LogIn}"
                             FontAttributes="Bold"
                             FontSize="{DynamicResource tsize_i3}"
                             FontFamily="Ubuntu-Regular"
@@ -125,7 +125,7 @@
                 <StackLayout.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding CreateCommand}" />
                 </StackLayout.GestureRecognizers>
-                <Label Text="{res:Translate SignUp}"
+                <Label Text="{xct:Translate SignUp}"
                        VerticalOptions="CenterAndExpand"
                        FontAttributes="Bold"
                        FontSize="{DynamicResource tsize_i3}"
