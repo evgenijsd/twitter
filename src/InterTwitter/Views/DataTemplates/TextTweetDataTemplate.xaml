@@ -36,12 +36,13 @@
                        FontAttributes="Bold"/>
 
                 <controls:CustomLabel Style="{DynamicResource tstyle_i7}" 
-                       VerticalOptions="Start"
-                       MaxLines="5" 
-                       LineBreakMode="TailTruncation"
-                       SpanCommand="{Binding Source={x:Reference this}, Path=BindingContext.TestCommand}"
-                       Text="{Binding Text}"
-                       IsVisible="{Binding IsTextVisible}"/>
+                                      VerticalOptions="Start"
+                                      MaxLines="5" 
+                                      LineBreakMode="TailTruncation"
+                                      MoreCommand="{Binding TestCommand}"
+                                      MoreCommandParameter="{Binding .}"   
+                                      Text="{Binding Text}"
+                                      IsVisible="{Binding IsTextVisible}"/>
 
                 <StackLayout Orientation="Horizontal"
                              HeightRequest="20"

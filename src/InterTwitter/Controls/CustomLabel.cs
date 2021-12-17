@@ -26,17 +26,29 @@ namespace InterTwitter.Controls
             set => SetValue(IsSpanVisibleProperty, value);
         }
 
-        public static readonly BindableProperty SpanCommandProperty = BindableProperty.Create(
-            propertyName: nameof(SpanCommand),
+        public static readonly BindableProperty MoreCommandProperty = BindableProperty.Create(
+            propertyName: nameof(MoreCommand),
             returnType: typeof(ICommand),
             declaringType: typeof(CustomLabel),
             defaultValue: null,
             defaultBindingMode: BindingMode.TwoWay);
 
-        public ICommand SpanCommand
+        public ICommand MoreCommand
         {
-            get => (ICommand)GetValue(SpanCommandProperty);
-            set => SetValue(SpanCommandProperty, value);
+            get => (ICommand)GetValue(MoreCommandProperty);
+            set => SetValue(MoreCommandProperty, value);
+        }
+
+        public static readonly BindableProperty MoreCommandParameterProperty = BindableProperty.Create(
+            propertyName: nameof(MoreCommandParameter),
+            returnType: typeof(object),
+            declaringType: typeof(CustomLabel),
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public object MoreCommandParameter
+        {
+            get => GetValue(MoreCommandParameterProperty);
+            set => SetValue(MoreCommandParameterProperty, value);
         }
 
         #endregion
@@ -78,7 +90,8 @@ namespace InterTwitter.Controls
 
                 span.GestureRecognizers.Add(new TapGestureRecognizer()
                 {
-                    Command = SpanCommand,
+                    Command = MoreCommand,
+                    CommandParameter = BindingContext,
                 });
 
                 formattedString.Spans.Add(span);

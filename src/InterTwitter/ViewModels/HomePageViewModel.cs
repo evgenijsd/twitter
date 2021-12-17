@@ -42,10 +42,15 @@ namespace InterTwitter.ViewModels
         public ICommand AddTweetCommandAsync => _addTweetCommandAsync ?? (_addTweetCommandAsync = SingleExecutionCommand.FromFunc(OnAddTweetPageAsync));
 
         private ICommand _testCommand;
-        public ICommand TestCommand => _testCommand ?? (_testCommand = SingleExecutionCommand.FromFunc(TestAsync));
+        public ICommand TestCommand => _testCommand ?? (_testCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(TestAsync));
 
-        private Task TestAsync()
+        private Task TestAsync(BaseTweetViewModel r)
         {
+            var index = Tweets.IndexOf(Tweets.FirstOrDefault(x => x.TweetId == r.TweetId));
+            var tweet = Tweets[index];
+            tweet.Text = "Hello";
+            Tweets.Remove(tweet);
+            Tweets.Add(tweet);
             return Task.CompletedTask;
         }
 

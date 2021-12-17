@@ -42,7 +42,7 @@
                                       LineBreakMode="TailTruncation"
                                       IsVisible="{Binding IsTextVisible}"
                                       Text="{Binding Text}"
-                                      SpanCommand="{Binding TestCommand}"/>
+                                      MoreCommand="{Binding TestCommand}"/>
 
                 <flv:FlowListView FlowColumnCount="{Binding ColumnNumber}"
                                   RowHeight="{Binding RowHeight}"
