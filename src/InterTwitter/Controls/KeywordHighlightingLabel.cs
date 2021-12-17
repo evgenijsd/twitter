@@ -46,10 +46,9 @@ namespace InterTwitter.Controls
                     if (!string.IsNullOrEmpty(this.Text) && this.Keywords?.Count > 0)
                     {
                         DateTime start = DateTime.Now;
-                        var tokens = this.Text.Split(' ');
+                        var tokens = Constants.TweetsSearch.GetUniqueWords(this.Text);
 
                         FormattedString formattedString = new FormattedString();
-                        StringBuilder stringBuilder = new StringBuilder();
                         Span tokenSpan = null;
                         Span spaceSpan = new Span { Text = " " };
 

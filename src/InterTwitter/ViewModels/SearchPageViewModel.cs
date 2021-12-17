@@ -282,7 +282,7 @@ namespace InterTwitter.ViewModels
             }
             else
             {
-                Keywords = Constants.TweetsSearch.GetParsedKeysFromQuery(queryString);
+                Keywords = Constants.TweetsSearch.GetUniqueWords(queryString);
                 var result = await _tweetService.GetAllTweetsByHashtagsOrKeysAsync(Keywords);
 
                 if (result.IsSuccess)

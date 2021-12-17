@@ -24,9 +24,9 @@ namespace InterTwitter
             public const string NO_RESULTS_FOR = "NoResultsFor";
             public const int NUMBER_OF_POPULAR_HASHTAGS = 5;
 
-            public static List<string> GetParsedKeysFromQuery(string query)
+            public static List<string> GetUniqueWords(string text)
             {
-                return new List<string>(query.Trim().Split(' ').Distinct());
+                return new List<string>(text.Trim().Split(' ').Distinct());
             }
         }
 

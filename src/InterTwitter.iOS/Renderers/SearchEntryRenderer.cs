@@ -24,6 +24,10 @@ namespace InterTwitter.iOS.Renderers.Controls
                 {
                     uTextField.PerformSelector(new ObjCRuntime.Selector("selectAll"), null, 0.0f);
                 };
+
+                var searchEntry = (SearchEntry)Element;
+
+                Control.TintColor = UIColor.FromCGColor(searchEntry.TintColor.ToCGColor());
             }
         }
     }
