@@ -8,6 +8,7 @@ using InterTwitter.Services.Settings;
 using InterTwitter.Services.UserService;
 using InterTwitter.Views;
 using Prism.Mvvm;
+using Prism.Services.Dialogs;
 using Prism.Navigation;
 using Prism.Services;
 using System;
@@ -26,19 +27,21 @@ namespace InterTwitter.ViewModels
         private readonly IUserService _userService;
         private readonly ITweetService _tweetService;
         private readonly IPageDialogService _dialogService;
+        private readonly IDialogService _dialogService1;
 
         private UserModel _user;
         private bool _isCurrentUser;
         private bool _isUserBlocked;
         private bool _isUserMuted;
 
-        public ProfilePageViewModel(INavigationService navigationService, ISettingsManager settingsManager, IUserService userService, ITweetService tweetService, IPageDialogService dialogService)
+        public ProfilePageViewModel(INavigationService navigationService, ISettingsManager settingsManager, IUserService userService, ITweetService tweetService, IPageDialogService dialogService, IDialogService dialogService1)
             : base(navigationService)
         {
             _settingsManager = settingsManager;
             _userService = userService;
             _tweetService = tweetService;
             _dialogService = dialogService;
+            _dialogService1 = dialogService1;
         }
 
         #region --- Public Properties ---
@@ -170,10 +173,6 @@ namespace InterTwitter.ViewModels
                 IsBlacklistButtonVisible = _isUserBlocked;
                 IsMuteButtonVisible = _isUserMuted;
             }
-            else
-            {
-                Console.WriteLine("No correct parameters");
-            }
 
             UserBackgroundImage = _user.BackgroundUserImagePath;
             UserImagePath = _user.AvatarPath;
@@ -266,11 +265,33 @@ namespace InterTwitter.ViewModels
 
         private async Task OnAddUserToBlacklistCommandAsync()
         {
-            var result = await _dialogService.DisplayAlertAsync($"Add {_user.Name} to Blacklist?", "This user will not see your posts.", "Add to Blacklist", "Cancel");
+            if (_userService.IsUserBlocked(_settingsManager.UserId, _user.Id).Result.Result)
+            {
+                var param = new DialogParameters();
+                param.Add("message", "This user is already blocked");
+                param.Add("okButtonText", "Add to Blacklist");
+
+                _dialogService1.ShowDialog("AlertView", param);
+            }
+            else
+            {
+                var param = new DialogParameters();
+                param.Add("title", $"Add {_user.Name} to Blacklist?");
+                param.Add("message", "This user will not see your posts.");
+                param.Add("okButtonText", "Add to Blacklist");
+                param.Add("cancelButtonText", "Cancel");
+
+                _dialogService1.ShowDialog("Alert2View", param, CloseDialogCallback);
+            }
+        }
+
+        private async void CloseDialogCallback(IDialogResult dialogResult)
+        {
+            bool result = (bool)dialogResult?.Parameters["Accept"];
             if (result)
             {
-                int re = _userService.RemoveFromMutelistAsync(_settingsManager.UserId, _user.Id).Result.Result;
-                int res = _userService.AddToBlacklistAsync(_settingsManager.UserId, _user.Id).Result.Result;
+                int remId = _userService.RemoveFromMutelistAsync(_settingsManager.UserId, _user.Id).Result.Result;
+                int remId2 = _userService.AddToBlacklistAsync(_settingsManager.UserId, _user.Id).Result.Result;
                 IsBlacklistButtonVisible = true;
                 IsMuteButtonVisible = false;
             }

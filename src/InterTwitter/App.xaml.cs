@@ -51,7 +51,9 @@ namespace InterTwitter
             containerRegistry.RegisterForNavigation<EditProfilePage, EditProfilePageViewModel>();
             containerRegistry.RegisterForNavigation<BlacklistPage, BlacklistPageViewModel>();
 
-            containerRegistry.RegisterForNavigation<MainPage>();
+            //Dialogs
+            containerRegistry.RegisterDialog<AlertView, AlertViewModel>();
+            containerRegistry.RegisterDialog<Alert2View, AlertViewModel>();
         }
 
         protected override async void OnInitialized()

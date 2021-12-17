@@ -5,6 +5,7 @@ using InterTwitter.Services.Settings;
 using InterTwitter.Services.UserService;
 using Prism.Navigation;
 using Prism.Services;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Frame xmlns="http://xamarin.com/schemas/2014/forms" 
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:res="clr-namespace:InterTwitter.Helpers;assembly=InterTwitter"
+       x:Class="InterTwitter.Views.Alert2View" 
+       xmlns:prism="http://prismlibrary.com"
+       prism:Navigation.CanNavigate="False"
+       prism:ViewModelLocator.AutowireViewModel="True"
+       prism:DialogLayout.UseMask="false"
+       WidthRequest="300" 
+       CornerRadius="15">
+    <StackLayout>
+        <Label Text="{Binding Title}" Margin="5,10,0,0"
+               HorizontalOptions="StartAndExpand"
+               Style="{DynamicResource tstyle_i5}"/>
+        <Label Text="{Binding Message}"
+               Margin="5,10,0,0"
+               Style="{DynamicResource tstyle_i7}" />
+        <Button Text="{Binding OkButtonText}"
+                Command="{Binding AcceptCommand}" 
+                FontSize="{DynamicResource tsize_i4}"
+                FontFamily="Ubuntu-Medium"
+                TextColor="{DynamicResource appcolor_i1}"
+                HorizontalOptions="EndAndExpand"
+                BackgroundColor="Transparent"
+                Margin="0,10,-5,-10" />
+        <Button Text="{Binding CancelButtonText}"
+                Command="{Binding DeclineCommand}" 
+                FontSize="{DynamicResource tsize_i4}"
+                FontFamily="Ubuntu-Medium"
+                TextColor="{DynamicResource appcolor_i1}"
+                HorizontalOptions="EndAndExpand"
+                BackgroundColor="Transparent"
+                Margin="0,10,-5,-10" />
+    </StackLayout>
+</Frame>
