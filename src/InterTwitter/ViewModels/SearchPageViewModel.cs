@@ -37,25 +37,13 @@ namespace InterTwitter.ViewModels
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource;
             AvatarIcon = "pic_profile_small";
 
-            TestText = "laborum #morning #AMAs onsequuntur #coffeeTime laborum numquam #teaTime";
+            TestText = "#amas masd deveex maxx";
 
-            Keywords = new List<string>()
-            {
-                "#AMAs",
-                "#NoNuanceNovember",
-                "#blockchain",
-                "#coffeeTime",
-                "#teaTime",
-                "laborum",
-                "#morning",
-                "nemo",
-                "sed",
-                "odit",
-                "eaque",
-                "um",
-            };
+            QueryString = "    dev ex #am amas masd  x dev as ma ex ma        ma";
 
-            QueryString = "#am # amas #amas masd ma";
+            Keywords = Constants.TweetsSearch.GetUniqueWords(QueryString);
+
+            //QueryString = "#am # amas #amas masd ma";
         }
 
         #region -- Public Properties --

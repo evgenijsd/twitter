@@ -26,7 +26,7 @@ namespace InterTwitter
 
             public static List<string> GetUniqueWords(string text)
             {
-                return new List<string>(text.Trim().Split(' ').Distinct());
+                return new List<string>(text.Split(' ').Where(x => !string.IsNullOrWhiteSpace(x)).Distinct());
             }
         }
 

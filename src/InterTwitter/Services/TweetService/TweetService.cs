@@ -53,7 +53,7 @@ namespace InterTwitter.Services
                 var allTweets = _mockService.Tweets;
 
                 var foundTweets = allTweets.Where(tweet => keys
-                    .Any(key => tweet.Text?
+                     .Any(key => tweet.Text?
                     .IndexOf(key, StringComparison.OrdinalIgnoreCase) > -1));
 
                 if (foundTweets?.FirstOrDefault() != null)

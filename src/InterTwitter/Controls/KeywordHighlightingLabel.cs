@@ -36,6 +36,18 @@ namespace InterTwitter.Controls
 
         #region -- Overrides --
 
+        //TestText = "#amas masd deveex max";
+
+        //    Keywords = new List<string>()
+        //    {
+        //        "dev",
+        //        "ex",
+        //        "#am",
+        //        "ma",
+        //        "amas",
+        //        "masd",
+        //        "as",
+        //    };
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
@@ -48,61 +60,21 @@ namespace InterTwitter.Controls
                         DateTime start = DateTime.Now;
                         var tokens = Constants.TweetsSearch.GetUniqueWords(this.Text);
 
-                        FormattedString formattedString = new FormattedString();
-                        Span tokenSpan = null;
-                        Span spaceSpan = new Span { Text = " " };
+                        var positionsAndKeyLenghths = GetPositionsAndKeyLengthsPairs(this.Keywords);
 
-                        foreach (var token in tokens)
-                        {
-                            if (Keywords.Any(x => x.IndexOf(token, StringComparison.OrdinalIgnoreCase) != -1))
-                            {
-                                tokenSpan = GetKeywordSpan(token);
-                            }
-                            else
-                            {
-                                tokenSpan = new Span { Text = token };
-                            }
+                        positionsAndKeyLenghths = positionsAndKeyLenghths
+                            .OrderBy(x => x.Key)
+                            .ThenByDescending(x => x.Value.Length)
+                            .ToList();
 
-                            formattedString.Spans.Add(tokenSpan);
-                            formattedString.Spans.Add(spaceSpan);
-                        }
+                        var strings = positionsAndKeyLenghths.Select(x => $"{x.Value} {x.Key}").ToArray();
+
+                        FormattedString formattedString = GetKeywordsMergedWithSimpleText(positionsAndKeyLenghths);
+
+                        MergeWithRestOfSimpleText(positionsAndKeyLenghths.Last(), formattedString);
 
                         this.FormattedText = formattedString;
 
-                        //    var positionsAndKeyLenghths = GetPositionsAndKeyLengthsPairs(this.Keywords);
-
-                        //    positionsAndKeyLenghths = positionsAndKeyLenghths
-                        //        .OrderBy(x => x.Key)
-                        //        .ThenByDescending(x => x.Value)
-                        //        .GroupBy(x => x.Key)
-                        //        .Select(x => x.First()).ToList();
-
-                        //    // trash - не светит дубли
-                        //    for (int i = 0; i < positionsAndKeyLenghths.Count; i++)
-                        //    {
-                        //        var itemA = positionsAndKeyLenghths.ElementAt(i);
-
-                        //        for (int j = i + 1; j <= positionsAndKeyLenghths.Count - 1; j++)
-                        //        {
-                        //            var itemB = positionsAndKeyLenghths.ElementAt(j);
-
-                        //            //if (itemA.Key + itemA.Value.Length >= itemB.Key + itemB.Value.Length)
-                        //            if (Contain(itemA, itemB))
-                        //            {
-                        //                positionsAndKeyLenghths.RemoveAt(j);
-                        //                j--;
-                        //            }
-                        //        }
-                        //    }
-
-                        //    if (positionsAndKeyLenghths.Count > 0)
-                        //    {
-                        //        FormattedString formattedString = GetKeywordsMergedWithSimpleText(positionsAndKeyLenghths);
-
-                        //        MergeWithRestOfSimpleText(positionsAndKeyLenghths.Last(), formattedString);
-
-                        //        this.FormattedText = formattedString;
-                        //    }
                         DateTime end = DateTime.Now;
                         var time = end - start;
                         var r = 4;
@@ -132,17 +104,10 @@ namespace InterTwitter.Controls
 
                 do
                 {
-                    try
-                    {
-                        keywordPosition = this.Text.IndexOf(keyword, positionOfNextKeyword, StringComparison.OrdinalIgnoreCase);
-                    }
-                    catch (Exception)
-                    {
-                    }
+                    keywordPosition = this.Text.IndexOf(keyword, positionOfNextKeyword, StringComparison.OrdinalIgnoreCase);
 
                     if (keywordPosition != -1)
                     {
-                        // # #teatime - crush
                         positionOfNextKeyword = keywordPosition + keyword.Length;
 
                         positionsAndKeyLengths.Add(new KeyValuePair<int, string>(keywordPosition, keyword));
@@ -154,29 +119,79 @@ namespace InterTwitter.Controls
             return positionsAndKeyLengths;
         }
 
-        private FormattedString GetKeywordsMergedWithSimpleText(List<KeyValuePair<int, string>> positionKeywordPairs)
+        private FormattedString GetKeywordsMergedWithSimpleText(List<KeyValuePair<int, string>> keys)
         {
             FormattedString formattedString = new FormattedString();
             int previousKeywordPosition = 0;
+            KeyValuePair<int, string> lastAddedKey;
 
-            foreach (var pairs in positionKeywordPairs)
+            for (int keyIndex = 0; keyIndex < keys.Count; keyIndex++)
             {
-                if (pairs.Key - previousKeywordPosition > 0)
+                // вставка спана с простым текстом между текущим и предыдущим ключем
+                if (keys[keyIndex].Key - previousKeywordPosition > 0)
                 {
-                    string str = Text.Substring(previousKeywordPosition, pairs.Key - previousKeywordPosition);
+                    string textBetweetnKeys = Text.Substring(previousKeywordPosition, keys[keyIndex].Key - previousKeywordPosition);
 
-                    Span span = new Span
+                    formattedString.Spans.Add(new Span
                     {
-                        Text = str,
-                    };
-
-                    formattedString.Spans.Add(span);
+                        Text = textBetweetnKeys,
+                    });
                 }
 
-                formattedString.Spans.Add(GetKeywordSpan(this.Text.Substring(pairs.Key, pairs.Value.Length)));
+                // самый простой случай - добавить спан первого ключа
+                if (keyIndex == 0)
+                {
+                    lastAddedKey = keys[keyIndex];
+                    formattedString.Spans.Add(GetKeywordSpan(keys[keyIndex].Value));
+                }
+                else
+                {
+                    // ключ не нарушает границы последнего добавленного ключа
+                    if (previousKeywordPosition <= keys[keyIndex].Key)
+                    {
+                        lastAddedKey = keys[keyIndex];
+                        formattedString.Spans.Add(GetKeywordSpan(keys[keyIndex].Value));
+                    }
+                    else
+                    {
+                        string subKey = lastAddedKey.Value + keys[keyIndex].Value.Substring(previousKeywordPosition);
+                        if (true)
+                        {
+                        }
+                    }
+                }
 
-                previousKeywordPosition = pairs.Key + pairs.Value.Length;
+                previousKeywordPosition = keys[keyIndex].Key + keys[keyIndex].Value.Length;
             }
+
+           /* foreach (var posAndKey in positionKeywordPairs)
+            {
+                // вставка спана с простым текстом между текущим и предыдущим ключем
+                if (posAndKey.Key - previousKeywordPosition > 0)
+                {
+                    string textBetweetnKeys = Text.Substring(previousKeywordPosition, posAndKey.Key - previousKeywordPosition);
+
+                    formattedString.Spans.Add(new Span
+                    {
+                        Text = textBetweetnKeys,
+                    });
+                }
+                else if (formattedString.Spans.Count > 0)
+                {
+                }
+
+                // решаем, стоит ли обрезать текущий ключ перед вставкой, если он уже частично содержится в предыдущем ключе
+                if (true)
+                {
+                    formattedString.Spans.Add(GetKeywordSpan(this.Text.Substring(posAndKey.Key, posAndKey.Value.Length)));
+                }
+                else
+                {
+                    formattedString.Spans.Add(GetKeywordSpan(this.Text.Substring(posAndKey.Key, posAndKey.Value.Length)));
+                }
+
+                previousKeywordPosition = posAndKey.Key + posAndKey.Value.Length;
+            }*/
 
             return formattedString;
         }
