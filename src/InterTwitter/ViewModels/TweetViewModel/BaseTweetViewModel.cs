@@ -14,6 +14,13 @@ namespace InterTwitter.ViewModels.TweetViewModel
     {
         #region -- Public properties --
 
+        private EStateMode _mode;
+        public EStateMode Mode
+        {
+            get => _mode;
+            set => SetProperty(ref _mode, value);
+        }
+
         private int _tweetId;
         public int TweetId
         {

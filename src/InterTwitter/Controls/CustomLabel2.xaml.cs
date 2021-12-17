@@ -1,17 +1,23 @@
-﻿using System;
+﻿using InterTwitter.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Essentials;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace InterTwitter.Controls
 {
-    public class CustomLabel : Label
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class CustomLabel2 : ContentView
     {
-        public CustomLabel()
+        public CustomLabel2()
         {
+            InitializeComponent();
             SizeChanged += OnSizeChanged;
         }
-
         #region -- Public properties --
 
         public static readonly BindableProperty IsSpanVisibleProperty = BindableProperty.Create(
@@ -32,6 +38,9 @@ namespace InterTwitter.Controls
             declaringType: typeof(CustomLabel),
             defaultValue: null,
             defaultBindingMode: BindingMode.TwoWay);
+
+        private ICommand _openTweetCommand;
+        public ICommand OpenTweetCommand => _openTweetCommand ?? (_openTweetCommand = SingleExecutionCommand.FromFunc(TestAsync));
 
         public ICommand MoreCommand
         {
@@ -57,26 +66,23 @@ namespace InterTwitter.Controls
 
         private void OnSizeChanged(object sender, EventArgs e)
         {
-            Text = "fg";
-
             var label = sender as Label;
 
-            var countRow = label.Height / label.FontSize;
+            var fullText = label.Text;
 
-            //var maxRowNumber = 5;
-            var text = label.Text;
+            var currentText = label.Text;
 
-            var textLength = text?.Length;
-
-            if (textLength > 175)
+            if (currentText?.Length > 199)
             {
-                text = text.Substring(0, 165);
+                currentText = currentText.Replace('\n', ' ');
+
+                currentText.Substring(0, 192);
 
                 FormattedString formattedString = new FormattedString();
 
                 formattedString.Spans.Add(new Span
                 {
-                    Text = text,
+                    Text = currentText,
                 });
 
                 formattedString.Spans.Add(new Span
@@ -92,7 +98,7 @@ namespace InterTwitter.Controls
 
                 span.GestureRecognizers.Add(new TapGestureRecognizer()
                 {
-                    Command = MoreCommand,
+                    Command = OpenTweetCommand,
                     CommandParameter = BindingContext,
                 });
 
@@ -100,13 +106,14 @@ namespace InterTwitter.Controls
 
                 label.FormattedText = formattedString;
             }
+        }
 
-            //var fontSize = (sender as Label).FontSize;
-            //var maxLabelHeight = fontSize * 1.166666666666669 * maxRowNumber;
-            //if ((sender as Label).Height > maxLabelHeight)
-            //{
-            //    IsSpanVisible = true;
-            //}
+        #endregion
+
+        #region -- Private helpers --
+        private Task TestAsync()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

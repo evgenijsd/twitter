@@ -13,6 +13,8 @@
                      Orientation="Horizontal"
                      Spacing="0">
 
+            <controls:TestLabel Mode="{Binding Mode}"/>
+            
             <ffimageloading:CachedImage VerticalOptions="Start"
                                         Source="{Binding UserAvatar}"
                                         HeightRequest="34"
