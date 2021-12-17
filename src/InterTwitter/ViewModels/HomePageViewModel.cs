@@ -48,9 +48,12 @@ namespace InterTwitter.ViewModels
         {
             var index = Tweets.IndexOf(Tweets.FirstOrDefault(x => x.TweetId == r.TweetId));
             var tweet = Tweets[index];
+
             tweet.Text = "Hello";
-            Tweets.Remove(tweet);
-            Tweets.Add(tweet);
+            Tweets[index] = tweet;
+
+            //var vm = Tweets[index];
+            //S(ref vm);
             return Task.CompletedTask;
         }
 
@@ -190,6 +193,10 @@ namespace InterTwitter.ViewModels
             return Task.CompletedTask;
         }
 
+        private void S(ref BaseTweetViewModel vm)
+        {
+            vm.Text = "Hello";
+        }
         #endregion
     }
 }
