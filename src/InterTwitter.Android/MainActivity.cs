@@ -1,11 +1,11 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
 using Android.OS;
-using InterTwitter.Droid.Renderers;
+using Android.Runtime;
 using FFImageLoading.Forms.Platform;
-using Android.Support.V7.App;
+using InterTwitter.Droid.Renderers;
+using Prism;
+using Prism.Ioc;
 
 namespace InterTwitter.Droid
 {
@@ -22,6 +22,7 @@ namespace InterTwitter.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             CachedImageRenderer.Init(true);
             CachedImageRenderer.InitImageViewHandler();
+            KeyboardHelper.Init(this);
 
             LoadApplication(new App(new AndroidInitializer()));
         }
@@ -35,9 +36,9 @@ namespace InterTwitter.Droid
 
         public class AndroidInitializer : IPlatformInitializer
         {
-            public void RegisterTypes(IContainerRegisty containerRegisty)
+            public void RegisterTypes(IContainerRegistry containerRegisty)
             {
-                KeyboardHelper.Init(this);
+                
             }
         }
 

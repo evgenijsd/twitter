@@ -1,7 +1,9 @@
+using System.Resources;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
+[assembly: NeutralResourcesLanguage("en-US")]
 [assembly: ExportFont("Ubuntu-Bold.ttf",         Alias = "Ubuntu-Bold")]
 [assembly: ExportFont("Ubuntu-BoldItalic.ttf",   Alias = "Ubuntu-BoldItalic")]
 [assembly: ExportFont("Ubuntu-Italic.ttf",       Alias = "Ubuntu-Italic")]

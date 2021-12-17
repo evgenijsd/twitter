@@ -1,11 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                      xmlns:xct="clr-namespace:InterTwitter.Helpers;assembly=InterTwitter"
+                      xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
                       xmlns:view="clr-namespace:InterTwitter.Views"
                       xmlns:controls="clr-namespace:InterTwitter.Controls"
                       x:Class="InterTwitter.Views.StartPage">
+    
     <view:BaseContentPage.Content>
+        
         <controls:CustomGrid RowSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -20,6 +22,7 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
+                
                 <Grid Grid.Row="0"
                       ColumnSpacing="0">
                     <Grid.ColumnDefinitions>
@@ -36,12 +39,14 @@
                            Margin="0,25,0,0"
                            HeightRequest="45"
                            WidthRequest="50" />
+                    
                     <Label Text="{xct:Translate GetYourAccount}"
                            Grid.Column="1"
                            FontSize="{DynamicResource tsize_i1}"
                            Margin="0,85,0,0"
                            HorizontalOptions="CenterAndExpand"
                            Style="{DynamicResource tstyle_i1}" />
+                    
                 </Grid>
 
                 <Label Grid.Row="1"
@@ -50,6 +55,7 @@
                        Style="{DynamicResource tstyle_i2}"
                        FontSize="{DynamicResource tsize_i4}"
                        IsVisible="{Binding IsVisibleName}" />
+                
                 <controls:CustomEntry Grid.Row="1"
                                       Margin="20,18,20,0"
                                       Text="{Binding Name}"
@@ -60,6 +66,7 @@
                                       FontFamily="Ubuntu-Regular"
                                       PlaceholderColor="{DynamicResource appcolor_i4}"
                                       TextColor="{DynamicResource appcolor_i3}" />
+                
                 <Label Grid.Row="1"
                        Text="{xct:Translate PleaseName}"
                        Margin="20,65,0,0"
@@ -73,6 +80,7 @@
                        Margin="24,0,0,0"
                        Style="{DynamicResource tstyle_i2}"
                        IsVisible="{Binding IsVisibleEmail}" />
+                
                 <controls:CustomEntry Grid.Row="2"
                                       Text="{Binding Email}"
                                       Margin="20,18,20,0"
@@ -83,6 +91,7 @@
                                       IsFocusedVisible="{Binding IsVisibleEmail}"
                                       IsFocusedButton="{Binding IsVisibleButton}"
                                       Placeholder="{xct:Translate Email}" />
+                
                 <Label Grid.Row="2"
                        Text="{xct:Translate WrongEmail}"
                        Margin="20,65,0,0"
@@ -94,6 +103,7 @@
                              HorizontalOptions="Center"
                              Margin="0,20,0,0"
                              IsVisible="{Binding IsUnVisibleButton}">
+                    
                     <Button Text="{xct:Translate SignUp}"
                             WidthRequest="218"
                             CornerRadius="25"
@@ -104,6 +114,7 @@
                             FontFamily="Ubuntu-Regular"
                             TextColor="{DynamicResource appcolor_i2}"
                             Command="{Binding CreateCommand}" />
+                    
                     <Button Command="{Binding LogInCommand}"
                             WidthRequest="218"
                             Margin="0,20,0,0"
@@ -114,7 +125,9 @@
                             TextColor="{DynamicResource appcolor_i1}"
                             BackgroundColor="Transparent"
                             BorderColor="Transparent" />
+                    
                 </StackLayout>
+                
             </Grid>
 
             <StackLayout Grid.Row="0"
@@ -125,6 +138,7 @@
                 <StackLayout.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding CreateCommand}" />
                 </StackLayout.GestureRecognizers>
+                
                 <Label Text="{xct:Translate SignUp}"
                        VerticalOptions="CenterAndExpand"
                        FontAttributes="Bold"
@@ -132,8 +146,11 @@
                        FontFamily="Ubuntu-Regular"
                        TextColor="{DynamicResource appcolor_i2}"
                        HorizontalOptions="Center" />
+                
             </StackLayout>
 
         </controls:CustomGrid>
+        
     </view:BaseContentPage.Content>
+    
 </view:BaseContentPage>

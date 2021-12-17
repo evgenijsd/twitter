@@ -148,7 +148,6 @@ namespace InterTwitter.ViewModels
 
         public override async void Initialize(INavigationParameters parameters)
         {
-            await Task.Delay(TimeSpan.FromSeconds(0.05));
             var user = await _registrationService?.GetByIdAsync(UserId);
             if (user.IsSuccess && IsAutoLogin)
             {

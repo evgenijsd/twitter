@@ -13,7 +13,8 @@ namespace InterTwitter.ViewModels.Flyout
 {
     public class FlyoutPageFlyoutViewModel : BaseViewModel
     {
-        private IAuthorizationService _authorizationService;
+        private readonly IAuthorizationService _authorizationService;
+
         public FlyoutPageFlyoutViewModel(
             INavigationService navigationService,
             IAuthorizationService authorizationService)
