@@ -12,6 +12,10 @@ namespace InterTwitter.ViewModels.TweetViewModel
 {
     public class BaseTweetViewModel : BindableBase
     {
+        public BaseTweetViewModel()
+        {
+            Mode = EStateMode.Full;
+        }
         #region -- Public properties --
 
         private EStateMode _mode;

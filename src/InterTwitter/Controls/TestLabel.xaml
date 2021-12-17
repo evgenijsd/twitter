@@ -2,25 +2,30 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:statecontainer="clr-namespace:InterTwitter.Controls.StateContainer"
-             x:Class="InterTwitter.Controls.TestLabel">
+             x:Class="InterTwitter.Controls.TestLabel"
+             x:Name="testLabel">
 
     <ContentView.Content>
 
-        <statecontainer:StateContainer State="{Binding Mode}">
+        <StackLayout>
 
-            <statecontainer:StateCondition State="Full">
-                
-                <Label Text="Full"/>
-                
-            </statecontainer:StateCondition>
+            <statecontainer:StateContainer State="{Binding Mode, Source={x:Reference testLabel}}">
 
-            <statecontainer:StateCondition State="Cut">
+                <statecontainer:StateCondition State="Full">
 
-                <Label Text="Cut"/>
-                
-            </statecontainer:StateCondition>
-            
-        </statecontainer:StateContainer>
+                    <Label Text="Full"/>
+
+                </statecontainer:StateCondition>
+
+                <statecontainer:StateCondition State="Cut">
+
+                    <Label Text="Cut"/>
+
+                </statecontainer:StateCondition>
+
+            </statecontainer:StateContainer>
+
+        </StackLayout>
         
     </ContentView.Content>
     

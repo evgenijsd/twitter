@@ -8,13 +8,11 @@
 
     <StackLayout x:Name="this"
                  Spacing="0">
-        
+
         <StackLayout Padding="15, 15, 15, 0"
                      Orientation="Horizontal"
                      Spacing="0">
 
-            <controls:TestLabel Mode="{Binding Mode}"/>
-            
             <ffimageloading:CachedImage VerticalOptions="Start"
                                         Source="{Binding UserAvatar}"
                                         HeightRequest="34"
@@ -45,6 +43,8 @@
                                       MoreCommandParameter="{Binding .}"   
                                       Text="{Binding Text}"
                                       IsVisible="{Binding IsTextVisible}"/>
+
+                <controls:TestLabel Mode="{Binding Mode}"/>
 
                 <StackLayout Orientation="Horizontal"
                              HeightRequest="20"

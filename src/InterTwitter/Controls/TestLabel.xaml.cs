@@ -14,6 +14,7 @@ namespace InterTwitter.Controls
     {
         public TestLabel()
         {
+            InitializeComponent();
         }
 
         public static readonly BindableProperty ModeProperty = BindableProperty.Create(

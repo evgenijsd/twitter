@@ -57,8 +57,6 @@ namespace InterTwitter.Controls
 
         private void OnSizeChanged(object sender, EventArgs e)
         {
-            Text = "fg";
-
             var label = sender as Label;
 
             var countRow = label.Height / label.FontSize;
