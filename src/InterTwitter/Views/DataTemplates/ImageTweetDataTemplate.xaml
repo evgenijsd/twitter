@@ -36,13 +36,9 @@
                        Text="{Binding UserName}" 
                        FontAttributes="Bold"/>
 
-                <controls:CustomLabel Style="{DynamicResource tstyle_i7}" 
-                                      VerticalOptions="Start"
-                                      MaxLines="5" 
-                                      LineBreakMode="TailTruncation"
-                                      IsVisible="{Binding IsTextVisible}"
-                                      Text="{Binding Text}"
-                                      MoreCommand="{Binding TestCommand}"/>
+                <controls:CustomLabel Mode="{Binding Mode}" 
+                                      OriginalText="{Binding Text}"
+                                      IsVisible="{Binding IsTextVisible}"/>
 
                 <flv:FlowListView FlowColumnCount="{Binding ColumnNumber}"
                                   RowHeight="{Binding RowHeight}"

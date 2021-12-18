@@ -35,9 +35,9 @@
                        Text="{Binding UserName}" 
                        FontAttributes="Bold"/>
 
-                <controls:TestLabel Mode="{Binding Mode}" 
-                                    FullText="{Binding Text}"
-                                    IsVisible="{Binding IsTextVisible}"/>
+                <controls:CustomLabel Mode="{Binding Mode}" 
+                                      OriginalText="{Binding Text}"
+                                      IsVisible="{Binding IsTextVisible}"/>
 
                 <StackLayout Orientation="Horizontal"
                              HeightRequest="20"
