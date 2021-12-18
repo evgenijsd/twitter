@@ -85,26 +85,30 @@ namespace InterTwitter.ViewModels
 
         private async Task InitAsync()
         {
-            _currentUser = (await _registrationService.GetByIdAsync(_autorizationService.UserId)).Result;
-            var getTweetResult = await _tweetService.GetAllTweetsAsync();
-
-            if (getTweetResult.IsSuccess)
+            var result = await _registrationService.GetByIdAsync(_autorizationService.UserId);
+            if (result.IsSuccess)
             {
-                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
+                _currentUser = result.Result;
+                var getTweetResult = await _tweetService.GetAllTweetsAsync();
 
-                foreach (var tweet in tweetViewModels)
+                if (getTweetResult.IsSuccess)
                 {
-                    var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
+                    var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
 
-                    if (tweetAuthor.IsSuccess)
+                    foreach (var tweet in tweetViewModels)
                     {
-                        tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
-                        tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
-                        tweet.UserName = tweetAuthor.Result.Name;
-                    }
-                }
+                        var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
 
-                Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
+                        if (tweetAuthor.IsSuccess)
+                        {
+                            tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
+                            tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
+                            tweet.UserName = tweetAuthor.Result.Name;
+                        }
+                    }
+
+                    Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
+                }
             }
         }
 

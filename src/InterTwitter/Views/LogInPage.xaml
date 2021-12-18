@@ -5,7 +5,12 @@
                       xmlns:controls="clr-namespace:InterTwitter.Controls"
                       xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
                       x:Class="InterTwitter.Views.LogInPage">
-    
+    <view:BaseContentPage.Resources>
+        <ResourceDictionary>
+            <xct:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </view:BaseContentPage.Resources>
+
     <view:BaseContentPage.Content>
         
         <controls:CustomGrid RowSpacing="0">
@@ -105,7 +110,7 @@
                 <StackLayout Grid.Row="3"
                              HorizontalOptions="Center"
                              Margin="0,20,0,0"
-                             IsVisible="{Binding IsUnVisibleButton}">
+                             IsVisible="{Binding Path=IsVisibleButton, Converter={StaticResource InvertedBoolConverter}}">
                     
                     <Button Text="{xct:Translate LogIn}"
                             WidthRequest="218"

@@ -5,6 +5,11 @@
                       xmlns:view="clr-namespace:InterTwitter.Views"
                       xmlns:controls="clr-namespace:InterTwitter.Controls"
                       x:Class="InterTwitter.Views.StartPage">
+    <view:BaseContentPage.Resources>
+        <ResourceDictionary>
+            <xct:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </view:BaseContentPage.Resources>
     
     <view:BaseContentPage.Content>
         
@@ -102,7 +107,7 @@
                 <StackLayout Grid.Row="3"
                              HorizontalOptions="Center"
                              Margin="0,20,0,0"
-                             IsVisible="{Binding IsUnVisibleButton}">
+                             IsVisible="{Binding Path=IsVisibleButton, Converter={StaticResource InvertedBoolConverter}}">
                     
                     <Button Text="{xct:Translate SignUp}"
                             WidthRequest="218"

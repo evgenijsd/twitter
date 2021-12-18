@@ -16,8 +16,11 @@ namespace InterTwitter.ViewModels
     public class StartPageViewModel : BaseViewModel
     {
         private readonly IRegistrationService _registrationService;
+
         private readonly IAuthorizationService _autorizationService;
+
         private readonly StartPageValidator _StartPageValidator;
+
         private bool IsAutoLogin = true;
 
         public StartPageViewModel(
@@ -99,14 +102,6 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _isVisibleButton, value);
         }
 
-        private bool _isUnVisibleButton = true;
-
-        public bool IsUnVisibleButton
-        {
-            get => _isUnVisibleButton;
-            set => SetProperty(ref _isUnVisibleButton, value);
-        }
-
         private string _email = string.Empty;
 
         public string Email
@@ -127,16 +122,6 @@ namespace InterTwitter.ViewModels
 
         #region -- Overrides --
 
-        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
-        {
-            base.OnPropertyChanged(args);
-
-            if (args.PropertyName == nameof(IsVisibleButton))
-            {
-                IsUnVisibleButton = !IsVisibleButton;
-            }
-        }
-
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             if (parameters.ContainsKey(nameof(User)))
@@ -151,14 +136,12 @@ namespace InterTwitter.ViewModels
         public override async void Initialize(INavigationParameters parameters)
         {
             var user = await _registrationService?.GetByIdAsync(UserId);
-            if (user.IsSuccess && IsAutoLogin)
+            if (user.IsSuccess)
             {
                 User = user.Result;
                 var p = new NavigationParameters { { nameof(User), User } };
                 await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", p);
             }
-
-            IsAutoLogin = true;
         }
         #endregion
 

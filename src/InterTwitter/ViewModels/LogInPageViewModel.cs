@@ -16,12 +16,19 @@ namespace InterTwitter.ViewModels
 {
     public class LogInPageViewModel : BaseViewModel
     {
-        private IRegistrationService _registrationService { get; }
-        private IAuthorizationService _autorizationService { get; }
-        private IDialogService _dialogs { get; }
-        private LogInPageValidator _LogInPageValidator { get; }
+        private readonly IRegistrationService _registrationService;
 
-        public LogInPageViewModel(INavigationService navigationService, IDialogService dialogs, IRegistrationService registrationService, IAuthorizationService autorizationService)
+        private readonly IAuthorizationService _autorizationService;
+
+        private readonly IDialogService _dialogs;
+
+        private readonly LogInPageValidator _LogInPageValidator;
+
+        public LogInPageViewModel(
+            INavigationService navigationService,
+            IDialogService dialogs,
+            IRegistrationService registrationService,
+            IAuthorizationService autorizationService)
             : base(navigationService)
         {
             _registrationService = registrationService;
@@ -33,6 +40,7 @@ namespace InterTwitter.ViewModels
         #region -- Public properties --
 
         private UserModel _user = new ();
+
         public UserModel User
         {
             get => _user;
@@ -40,6 +48,7 @@ namespace InterTwitter.ViewModels
         }
 
         private string _name = string.Empty;
+
         public string Name
         {
             get => _name;
@@ -47,6 +56,7 @@ namespace InterTwitter.ViewModels
         }
 
         private bool _isVisibleEmail = false;
+
         public bool IsVisibleEmail
         {
             get => _isVisibleEmail;
@@ -54,6 +64,7 @@ namespace InterTwitter.ViewModels
         }
 
         private bool _isWrongEmail = false;
+
         public bool IsWrongEmail
         {
             get => _isWrongEmail;
@@ -61,6 +72,7 @@ namespace InterTwitter.ViewModels
         }
 
         private string _email = string.Empty;
+
         public string Email
         {
             get => _email;
@@ -68,6 +80,7 @@ namespace InterTwitter.ViewModels
         }
 
         private string _password = string.Empty;
+
         public string Password
         {
             get => _password;
@@ -75,6 +88,7 @@ namespace InterTwitter.ViewModels
         }
 
         private bool _isVisiblePassword = false;
+
         public bool IsVisiblePassword
         {
             get => _isVisiblePassword;
@@ -82,6 +96,7 @@ namespace InterTwitter.ViewModels
         }
 
         private bool _isWrongPassword = false;
+
         public bool IsWrongPassword
         {
             get => _isWrongPassword;
@@ -89,17 +104,11 @@ namespace InterTwitter.ViewModels
         }
 
         private bool _isVisibleButton = false;
+
         public bool IsVisibleButton
         {
             get => _isVisibleButton;
             set => SetProperty(ref _isVisibleButton, value);
-        }
-
-        private bool _isUnVisibleButton = true;
-        public bool IsUnVisibleButton
-        {
-            get => _isUnVisibleButton;
-            set => SetProperty(ref _isUnVisibleButton, value);
         }
 
         private ICommand _StartCommand;
@@ -126,11 +135,6 @@ namespace InterTwitter.ViewModels
             if (args.PropertyName == nameof(Password))
             {
                 IsWrongPassword = false;
-            }
-
-            if (args.PropertyName == nameof(IsVisibleButton))
-            {
-                IsUnVisibleButton = !IsVisibleButton;
             }
         }
 

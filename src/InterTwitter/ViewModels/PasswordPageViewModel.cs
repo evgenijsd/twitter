@@ -16,7 +16,9 @@ namespace InterTwitter.ViewModels
     public class PasswordPageViewModel : BaseViewModel
     {
         private readonly IRegistrationService _registrationService;
+
         private readonly IDialogService _dialogs;
+
         private readonly PasswordPageValidator _PasswordPageValidator;
 
         public PasswordPageViewModel (
@@ -33,6 +35,7 @@ namespace InterTwitter.ViewModels
         #region -- Public properties --
 
         private UserModel _user = new ();
+
         public UserModel User
         {
             get => _user;
@@ -40,6 +43,7 @@ namespace InterTwitter.ViewModels
         }
 
         private string _password = string.Empty;
+
         public string Password
         {
             get => _password;
@@ -47,6 +51,7 @@ namespace InterTwitter.ViewModels
         }
 
         private bool _isVisiblePassword = false;
+
         public bool IsVisiblePassword
         {
             get => _isVisiblePassword;
@@ -54,6 +59,7 @@ namespace InterTwitter.ViewModels
         }
 
         private bool _isVisibleConfirmPassword = false;
+
         public bool IsVisibleConfirmPassword
         {
             get => _isVisibleConfirmPassword;
@@ -61,6 +67,7 @@ namespace InterTwitter.ViewModels
         }
 
         private bool _isWrongPassword = false;
+
         public bool IsWrongPassword
         {
             get => _isWrongPassword;
@@ -68,6 +75,7 @@ namespace InterTwitter.ViewModels
         }
 
         private bool _isWrongConfirmPassword = false;
+
         public bool IsWrongConfirmPassword
         {
             get => _isWrongConfirmPassword;
@@ -75,6 +83,7 @@ namespace InterTwitter.ViewModels
         }
 
         private string _confirmPassword = string.Empty;
+
         public string ConfirmPassword
         {
             get => _confirmPassword;
@@ -82,22 +91,19 @@ namespace InterTwitter.ViewModels
         }
 
         private bool _isVisibleButton = false;
+
         public bool IsVisibleButton
         {
             get => _isVisibleButton;
             set => SetProperty(ref _isVisibleButton, value);
         }
 
-        private bool _isUnVisibleButton = true;
-        public bool IsUnVisibleButton
-        {
-            get => _isUnVisibleButton;
-            set => SetProperty(ref _isUnVisibleButton, value);
-        }
-
         private ICommand _CreateCommand;
+
         public ICommand CreateCommand => _CreateCommand ??= SingleExecutionCommand.FromFunc(OnCreateCommandAsync);
+
         private ICommand _StartCommand;
+
         public ICommand StartCommand => _StartCommand ??= SingleExecutionCommand.FromFunc(OnStartCommandAsync);
 
         #endregion
@@ -116,11 +122,6 @@ namespace InterTwitter.ViewModels
             if (args.PropertyName == nameof(ConfirmPassword))
             {
                 IsWrongConfirmPassword = false;
-            }
-
-            if (args.PropertyName == nameof(IsVisibleButton))
-            {
-                IsUnVisibleButton = !IsVisibleButton;
             }
         }
 
