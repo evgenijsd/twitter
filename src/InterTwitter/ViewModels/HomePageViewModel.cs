@@ -4,6 +4,7 @@ using InterTwitter.Helpers;
 using InterTwitter.Models;
 using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services;
+using InterTwitter.Services.Settings;
 using InterTwitter.Services.UserService;
 using InterTwitter.Views;
 using Prism.Navigation;
@@ -20,15 +21,18 @@ namespace InterTwitter.ViewModels
     {
         private readonly ITweetService _tweetService;
         private readonly IUserService _userService;
+        private readonly ISettingsManager _settingsManager;
+
         public HomePageViewModel(
+            ISettingsManager settingsManager,
             ITweetService tweetService,
             IUserService userService,
             INavigationService navigationService)
             : base(navigationService)
         {
-           // IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource;
             _tweetService = tweetService;
             _userService = userService;
+            _settingsManager = settingsManager;
         }
 
         #region -- Public properties --
@@ -87,7 +91,14 @@ namespace InterTwitter.ViewModels
                         tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
                         tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
                         tweet.UserName = tweetAuthor.Result.Name;
-                        tweet.MoveToProfileCommand = new Command(() => NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters { { Constants.NavigationKeys.USER, user } }));
+                        if (user.Id == _settingsManager.UserId)
+                        {
+                            tweet.MoveToProfileCommand = new Command(() => NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters { { Constants.NavigationKeys.CURRENT_USER, user } }));
+                        }
+                        else
+                        {
+                            tweet.MoveToProfileCommand = new Command(() => NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters { { Constants.NavigationKeys.USER, user } }));
+                        }
                     }
                 }
 

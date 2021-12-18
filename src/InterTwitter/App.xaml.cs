@@ -1,6 +1,7 @@
 using DLToolkit.Forms.Controls;
 using InterTwitter.Droid.Services.PermissionsService;
 using InterTwitter.Models;
+using InterTwitter.Resources;
 using InterTwitter.Services;
 using InterTwitter.Services.BookmarkService;
 using InterTwitter.Services.PermissionsService;
@@ -13,6 +14,8 @@ using Prism;
 using Prism.Ioc;
 using Prism.Navigation;
 using Prism.Unity;
+using System.Globalization;
+using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Forms;
 
 namespace InterTwitter
@@ -58,6 +61,10 @@ namespace InterTwitter
 
         protected override async void OnInitialized()
         {
+            LocalizationResourceManager.Current.PropertyChanged += (sender, e) => Resource.Culture = LocalizationResourceManager.Current.CurrentCulture;
+            LocalizationResourceManager.Current.Init(Resource.ResourceManager);
+            LocalizationResourceManager.Current.CurrentCulture = new CultureInfo("en");
+
             InitializeComponent();
             Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             FlowListView.Init();

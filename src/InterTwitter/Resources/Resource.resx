@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add to Blacklist" xml:space="preserve">
+    <value>Add to Blacklist</value>
+  </data>
+  <data name="Add to Mute" xml:space="preserve">
+    <value>Add to Mute</value>
+  </data>
+  <data name="Add_" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="Alert" xml:space="preserve">
     <value>Alert</value>
   </data>
@@ -168,6 +177,12 @@
   <data name="AlertPasswordNotEqual" xml:space="preserve">
     <value>Password and confirm password do not coincide</value>
   </data>
+  <data name="AlreadyBlocked" xml:space="preserve">
+    <value>This user is already blocked</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Confirm Password</value>
   </data>
@@ -180,8 +195,20 @@
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="Email is not valid or empty" xml:space="preserve">
+    <value>Email is not valid or empty</value>
+  </data>
+  <data name="from the Blacklist" xml:space="preserve">
+    <value>from the Blacklist</value>
+  </data>
+  <data name="from the mute" xml:space="preserve">
+    <value>from the mute</value>
+  </data>
   <data name="GetYourAccount" xml:space="preserve">
     <value>Get your account</value>
+  </data>
+  <data name="Likes" xml:space="preserve">
+    <value>Likes</value>
   </data>
   <data name="LogIn" xml:space="preserve">
     <value>Log In</value>
@@ -189,11 +216,23 @@
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="Name is not valid or empty" xml:space="preserve">
+    <value>Name is not valid or empty</value>
+  </data>
+  <data name="New password is not valid or empty" xml:space="preserve">
+    <value>New password is not valid or empty</value>
+  </data>
   <data name="Next" xml:space="preserve">
     <value>Next</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
+  </data>
+  <data name="Old password is empty" xml:space="preserve">
+    <value>Old password is empty</value>
+  </data>
+  <data name="Old password is wrong" xml:space="preserve">
+    <value>Old password is wrong</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
@@ -204,13 +243,40 @@
   <data name="PleaseName" xml:space="preserve">
     <value>Please, type your name</value>
   </data>
+  <data name="Posts" xml:space="preserve">
+    <value>Posts</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="Save changes" xml:space="preserve">
+    <value>Save changes</value>
+  </data>
   <data name="SignUp" xml:space="preserve">
     <value>Sign Up</value>
+  </data>
+  <data name="This user is already blocked" xml:space="preserve">
+    <value>This user is already blocked</value>
+  </data>
+  <data name="This user is already muted" xml:space="preserve">
+    <value>This user is already muted</value>
+  </data>
+  <data name="This user will not see your posts" xml:space="preserve">
+    <value>This user will not see your posts.</value>
+  </data>
+  <data name="User can see information about you" xml:space="preserve">
+    <value>User can see information about you</value>
   </data>
   <data name="WrongEmail" xml:space="preserve">
     <value>Wrong Email</value>
   </data>
   <data name="YouNeedPassword" xml:space="preserve">
     <value>You'll need a password</value>
+  </data>
+  <data name="_to mute?" xml:space="preserve">
+    <value>to mute?</value>
+  </data>
+  <data name="_toBlacklist?" xml:space="preserve">
+    <value>to Blacklist?</value>
   </data>
 </root>

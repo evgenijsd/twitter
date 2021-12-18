@@ -3,11 +3,11 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:res="clr-namespace:InterTwitter.Helpers;assembly=InterTwitter"
        x:Class="InterTwitter.Views.Alert2View" 
+       x:Name="aframe"
        xmlns:prism="http://prismlibrary.com"
        prism:Navigation.CanNavigate="False"
-       prism:ViewModelLocator.AutowireViewModel="True"
-       prism:DialogLayout.UseMask="false"
-       WidthRequest="300" 
+       prism:ViewModelLocator.AutowireViewModel="True" 
+       prism:DialogLayout.UseMask="True" 
        CornerRadius="15">
     <StackLayout>
         <Label Text="{Binding Title}" Margin="5,10,0,0"
@@ -15,22 +15,32 @@
                Style="{DynamicResource tstyle_i5}"/>
         <Label Text="{Binding Message}"
                Margin="5,10,0,0"
-               Style="{DynamicResource tstyle_i7}" />
-        <Button Text="{Binding OkButtonText}"
-                Command="{Binding AcceptCommand}" 
-                FontSize="{DynamicResource tsize_i4}"
-                FontFamily="Ubuntu-Medium"
-                TextColor="{DynamicResource appcolor_i1}"
-                HorizontalOptions="EndAndExpand"
-                BackgroundColor="Transparent"
-                Margin="0,10,-5,-10" />
-        <Button Text="{Binding CancelButtonText}"
+               FontSize="{DynamicResource tsize_i4}"
+               FontFamily="Ubuntu-Medium"               
+               IsVisible="{Binding IsMessageVisible}"
+               TextColor="{DynamicResource appcolor_i4}"/>
+        <StackLayout 
+            Orientation="Horizontal">
+            <Button Text="{Binding CancelButtonText}"
                 Command="{Binding DeclineCommand}" 
                 FontSize="{DynamicResource tsize_i4}"
                 FontFamily="Ubuntu-Medium"
+                TextColor="{DynamicResource appcolor_i4}" 
+                TextTransform="None"
+                HorizontalOptions="EndAndExpand"
+                BackgroundColor="Transparent"
+                Margin="0,10,-42,-10" />
+            <Button Text="{Binding OkButtonText}"
+                Command="{Binding AcceptCommand}" 
+                TextTransform="None"
+                FontSize="{DynamicResource tsize_i4}"
+                FontFamily="Ubuntu-Medium"
                 TextColor="{DynamicResource appcolor_i1}"
                 HorizontalOptions="EndAndExpand"
                 BackgroundColor="Transparent"
                 Margin="0,10,-5,-10" />
+            
+        </StackLayout>
+        
     </StackLayout>
 </Frame>

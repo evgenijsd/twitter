@@ -4,16 +4,11 @@ using InterTwitter.Models;
 using InterTwitter.Services.Settings;
 using InterTwitter.Services.UserService;
 using Prism.Navigation;
-using Prism.Services;
 using Prism.Services.Dialogs;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
 {
@@ -21,13 +16,13 @@ namespace InterTwitter.ViewModels
     {
         private readonly ISettingsManager _settingsManager;
         private readonly IUserService _userService;
-        private readonly IPageDialogService _dialogService;
+        private readonly IDialogService _dialogService;
 
         private bool _isBlacklistPage;
         private bool _isMutelistPage;
         private UserModel _currentUser;
 
-        public BlacklistPageViewModel(INavigationService navigationService, ISettingsManager settingsManager, IUserService userService, IPageDialogService dialogService)
+        public BlacklistPageViewModel(INavigationService navigationService, ISettingsManager settingsManager, IUserService userService, IDialogService dialogService)
             : base(navigationService)
         {
             _settingsManager = settingsManager;
@@ -59,7 +54,7 @@ namespace InterTwitter.ViewModels
 
         public override async Task InitializeAsync(INavigationParameters parameters)
         {
-           // UsersList = new ObservableCollection<UserViewModel>(_userService.GetAllUsersAsync().Result.Result.Select(x => x.ToUserViewModel()));
+            // UsersList = new ObservableCollection<UserViewModel>(_userService.GetAllUsersAsync().Result.Result.Select(x => x.ToUserViewModel()));
             if (_isBlacklistPage = parameters.ContainsKey(Constants.NavigationKeys.BLACKLIST))
             {
                 Title = "Blacklist";
@@ -110,22 +105,38 @@ namespace InterTwitter.ViewModels
             {
                 var userViewModel = parameter as UserViewModel;
 
+                string s = string.Empty;
                 if (_isBlacklistPage)
                 {
-                    bool result = await _dialogService.DisplayAlertAsync($"Remove {userViewModel.Name} from the blacklist?", string.Empty, "Ok", "Cancel");
-                    if (result)
-                    {
-                       await _userService.RemoveFromBlacklistAsync(_currentUser.Id, userViewModel.Id);
-                       UsersList.Remove(userViewModel);
-                    }
-            }
+                    s = Resources.Resource.from_the_Blacklist;
+                }
                 else if (_isMutelistPage)
                 {
-                    bool result = await _dialogService.DisplayAlertAsync($"Remove {userViewModel.Name} from the mute?", string.Empty, "Ok", "Cancel");
+                    s = Resources.Resource.from_the_mute;
+                }
+
+                var param = new DialogParameters();
+                param.Add("title", $"{Resources.Resource.Remove} {userViewModel.Name} {s}");
+                param.Add("okButtonText", Resources.Resource.Ok);
+                param.Add("cancelButtonText", Resources.Resource.Cancel);
+
+                _dialogService.ShowDialog("Alert2View", param, CloseDialogCallback);
+
+                async void CloseDialogCallback(IDialogResult dialogResult)
+                {
+                    bool result = (bool)dialogResult?.Parameters["Accept"];
                     if (result)
                     {
-                        await _userService.RemoveFromMutelistAsync(_currentUser.Id, userViewModel.Id);
-                        UsersList.Remove(userViewModel);
+                        if (_isBlacklistPage)
+                        {
+                            await _userService.RemoveFromBlacklistAsync(_currentUser.Id, userViewModel.Id);
+                            UsersList.Remove(userViewModel);
+                        }
+                        else if (_isMutelistPage)
+                        {
+                            await _userService.RemoveFromMutelistAsync(_currentUser.Id, userViewModel.Id);
+                            UsersList.Remove(userViewModel);
+                        }
                     }
                 }
             }

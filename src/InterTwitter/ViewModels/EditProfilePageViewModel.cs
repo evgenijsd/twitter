@@ -3,9 +3,8 @@ using InterTwitter.Models;
 using InterTwitter.Services.PermissionsService;
 using InterTwitter.Services.Settings;
 using InterTwitter.Services.UserService;
-using InterTwitter.Views;
 using Prism.Navigation;
-using Prism.Services;
+using Prism.Services.Dialogs;
 using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -20,10 +19,10 @@ namespace InterTwitter.ViewModels
         private readonly IPermissionsService _permissionsService;
         private readonly ISettingsManager _settingsManager;
         private readonly IUserService _userService;
-        private readonly IPageDialogService _dialogService;
+        private readonly IDialogService _dialogService;
         private UserModel _user;
 
-        public EditProfilePageViewModel(INavigationService navigationService, IPermissionsService permissionsService, ISettingsManager settingsManager, IUserService userService, IPageDialogService dialogService)
+        public EditProfilePageViewModel(INavigationService navigationService, IPermissionsService permissionsService, ISettingsManager settingsManager, IUserService userService, IDialogService dialogService)
             : base(navigationService)
         {
             _permissionsService = permissionsService;
@@ -96,15 +95,13 @@ namespace InterTwitter.ViewModels
             UserImagePath = _user.AvatarPath;
             UserMail = _user.Email;
             UserName = _user.Name;
-           // OldPassword = user.Password;
+            // OldPassword = user.Password;
             return Task.CompletedTask;
         }
 
         #endregion
 
         #region --- Private Helpers ---
-
-        private bool isShowConfirmAlert = true;
 
         private async Task OnPickBackgroundImageAsync()
         {
@@ -156,79 +153,95 @@ namespace InterTwitter.ViewModels
         {
             bool isAllValid = true;
 
-            if (!string.IsNullOrEmpty(OldPassword) || !string.IsNullOrEmpty(NewPassword))
+            var param = new DialogParameters();
+            param.Add("title", $"{Resources.Resource.Save_changes}?");
+            param.Add("okButtonText", Resources.Resource.Ok);
+            param.Add("cancelButtonText", Resources.Resource.Cancel);
+
+            _dialogService.ShowDialog("Alert2View", param, CloseDialogCallback);
+            async void CloseDialogCallback(IDialogResult dialogResult)
             {
-                if (string.IsNullOrEmpty(OldPassword))
+                bool result = (bool)dialogResult?.Parameters["Accept"];
+                if (result)
                 {
-                    await _dialogService.DisplayAlertAsync(string.Empty, "Old password is empty", "Ok");
+                    if (!string.IsNullOrEmpty(OldPassword) || !string.IsNullOrEmpty(NewPassword))
+                    {
+                        if (string.IsNullOrEmpty(OldPassword))
+                        {
+                            var param = new DialogParameters();
+                            param.Add("message", Resources.Resource.Old_password_is_empty);
+
+                            _dialogService.ShowDialog("AlertView", param);
+                        }
+                        else if (OldPassword != _user.Password)
+                        {
+                            var param = new DialogParameters();
+                            param.Add("message", Resources.Resource.Old_password_is_wrong);
+
+                            _dialogService.ShowDialog("AlertView", param);
+                        }
+
+                        if (!string.IsNullOrEmpty(NewPassword) && Regex.IsMatch(NewPassword, Constants.RegexPatterns.PASSWORD_REGEX))
+                        {
+                            _user.Password = NewPassword;
+                        }
+                        else
+                        {
+                            var param = new DialogParameters();
+                            param.Add("message", Resources.Resource.New_password_is_not_valid_or_empty);
+
+                            _dialogService.ShowDialog("AlertView", param);
+
+                            isAllValid = false;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(UserName) && Regex.IsMatch(UserName, Constants.RegexPatterns.USERNAME_REGEX))
+                    {
+                        _user.Name = UserName;
+                    }
+                    else
+                    {
+                        var param = new DialogParameters();
+                        param.Add("message", Resources.Resource.Name_is_not_valid_or_empty);
+
+                        _dialogService.ShowDialog("AlertView", param);
+
+                        isAllValid = false;
+                    }
+
+                    if (!string.IsNullOrEmpty(UserMail) && Regex.IsMatch(UserMail, Constants.RegexPatterns.EMAIL_REGEX))
+                    {
+                        _user.Email = UserMail;
+                    }
+                    else
+                    {
+                        var param = new DialogParameters();
+                        param.Add("message", Resources.Resource.Email_is_not_valid_or_empty);
+
+                        _dialogService.ShowDialog("AlertView", param);
+                        isAllValid = false;
+                    }
+
+                    if (isAllValid)
+                    {
+                        _user.AvatarPath = UserImagePath;
+                        _user.BackgroundUserImagePath = UserBackgroundImage;
+
+                        await _userService.UpdateUserAsync(_user);
+
+                        MessagingCenter.Send(this, Constants.Messages.USER_PROFILE_CHANGED);
+                        await NavigationService.GoBackAsync();
+                    }
                 }
-                else if (OldPassword != _user.Password)
-                {
-                    await _dialogService.DisplayAlertAsync(string.Empty, "Old password is wrong", "Ok");
-                }
-
-                if (!string.IsNullOrEmpty(NewPassword) && Regex.IsMatch(NewPassword, Constants.RegexPatterns.PASSWORD_REGEX))
-                {
-                    _user.Password = NewPassword;
-                }
-                else
-                {
-                    await _dialogService.DisplayAlertAsync(string.Empty, "New password is not valid or empty", "Ok");
-                    isAllValid = false;
-                }
-            }
-
-            if (!string.IsNullOrEmpty(UserName) && Regex.IsMatch(UserName, Constants.RegexPatterns.USERNAME_REGEX))
-            {
-                _user.Name = UserName;
-            }
-            else
-            {
-                await _dialogService.DisplayAlertAsync(string.Empty, "Name is not validor empty", "Ok");
-                isAllValid = false;
-            }
-
-            if (!string.IsNullOrEmpty(UserMail) && Regex.IsMatch(UserMail, Constants.RegexPatterns.EMAIL_REGEX))
-            {
-                _user.Email = UserMail;
-            }
-            else
-            {
-                await _dialogService.DisplayAlertAsync(string.Empty, "Email is not valid or empty", "Ok");
-                isAllValid = false;
-            }
-
-            if (isAllValid)
-            {
-                if (isShowConfirmAlert)
-                {
-                    await _dialogService.DisplayAlertAsync(string.Empty, "Save changes?", "Ok", "Cancel");
-                }
-
-                _user.AvatarPath = UserImagePath;
-                _user.BackgroundUserImagePath = UserBackgroundImage;
-
-                await _userService.UpdateUserAsync(_user);
-
-                MessagingCenter.Send(this, Constants.Messages.USER_PROFILE_CHANGED);
-                await NavigationService.GoBackAsync();
             }
         }
 
         private async Task OnNavigationCommandAsync()
         {
-           if (_user.Name != UserName || _user.Email != UserMail || _user.AvatarPath != UserImagePath || _user.BackgroundUserImagePath != UserBackgroundImage || !string.IsNullOrEmpty(OldPassword) || !string.IsNullOrEmpty(NewPassword))
+            if (_user.Name != UserName || _user.Email != UserMail || _user.AvatarPath != UserImagePath || _user.BackgroundUserImagePath != UserBackgroundImage || !string.IsNullOrEmpty(OldPassword) || !string.IsNullOrEmpty(NewPassword))
             {
-                var isSave = await _dialogService.DisplayAlertAsync(string.Empty, "Save changes?", "Ok", "Cancel");
-                if (isSave)
-                {
-                    isShowConfirmAlert = false;
-                    await OnCheckCommandAsync();
-                }
-                else
-                {
-                    await NavigationService.GoBackAsync();
-                }
+                await OnCheckCommandAsync();
             }
             else
             {

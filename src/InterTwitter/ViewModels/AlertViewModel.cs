@@ -16,11 +16,17 @@ namespace InterTwitter.ViewModels
 
         #region -- Public properties --
 
+        public bool IsMessageVisible => !string.IsNullOrEmpty(Message);
+
         private string _message;
         public string Message
         {
             get => _message;
-            set => SetProperty(ref _message, value);
+            set
+            {
+                SetProperty(ref _message, value);
+                RaisePropertyChanged(nameof(IsMessageVisible));
+            }
         }
 
         private string _title;
