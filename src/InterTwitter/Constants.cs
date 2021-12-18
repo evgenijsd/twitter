@@ -14,5 +14,11 @@ namespace InterTwitter
 
             public const string TAB_CHANGE = "TabChange";
         }
+
+        public static class Navigation
+        {
+            public const string USER = nameof(USER);
+            public const string MESSAGE = nameof(MESSAGE);
+        }
     }
 }

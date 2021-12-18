@@ -37,9 +37,9 @@ namespace InterTwitter.ViewModels
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            if (parameters.ContainsKey("message"))
+            if (parameters.TryGetValue(Constants.Navigation.MESSAGE, out string message))
             {
-                Message = parameters.GetValue<string>("message");
+                Message = message;
             }
         }
 

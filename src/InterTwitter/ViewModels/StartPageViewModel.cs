@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using InterTwitter.Helpers;
 using InterTwitter.Models;
@@ -10,6 +8,7 @@ using InterTwitter.ViewModels.Validators;
 using InterTwitter.Views;
 using Prism.Navigation;
 using Xamarin.Forms;
+using InterTwitter;
 
 namespace InterTwitter.ViewModels
 {
@@ -21,7 +20,8 @@ namespace InterTwitter.ViewModels
 
         private readonly StartPageValidator _StartPageValidator;
 
-        private bool IsAutoLogin = true;
+        private int _userId = 0;
+        private UserModel _user;
 
         public StartPageViewModel(
             INavigationService navigationService,
@@ -32,27 +32,11 @@ namespace InterTwitter.ViewModels
             App.Current.UserAppTheme = OSAppTheme.Light;
             _registrationService = registrationService;
             _autorizationService = autorizationService;
-            UserId = _autorizationService.UserId;
+            _userId = _autorizationService.UserId;
             _StartPageValidator = new StartPageValidator();
         }
 
         #region -- Public properties --
-
-        private UserModel _user = new ();
-
-        public UserModel User
-        {
-            get => _user;
-            set => SetProperty(ref _user, value);
-        }
-
-        private int _userId;
-
-        public int UserId
-        {
-            get => _userId;
-            set => SetProperty(ref _userId, value);
-        }
 
         private string _name = string.Empty;
 
@@ -122,27 +106,24 @@ namespace InterTwitter.ViewModels
 
         #region -- Overrides --
 
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        public override async void OnNavigatedTo(INavigationParameters parameters)
         {
-            if (parameters.ContainsKey(nameof(User)))
+            var result = await _registrationService?.GetByIdAsync(_userId);
+            if (result.IsSuccess)
             {
-                User = parameters.GetValue<UserModel>(nameof(User));
-                Name = User.Name;
-                Email = User.Email;
-                IsAutoLogin = false;
+                _user = result.Result;
+                var parametrs = new NavigationParameters { { Constants.Navigation.USER, _user } };
+                await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", parametrs);
+            }
+
+            if (parameters.TryGetValue(Constants.Navigation.USER, out UserModel user))
+            {
+                _user = user;
+                Name = _user.Name;
+                Email = _user.Email;
             }
         }
 
-        public override async void Initialize(INavigationParameters parameters)
-        {
-            var user = await _registrationService?.GetByIdAsync(UserId);
-            if (user.IsSuccess)
-            {
-                User = user.Result;
-                var p = new NavigationParameters { { nameof(User), User } };
-                await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", p);
-            }
-        }
         #endregion
 
         #region -- Private helpers --
@@ -151,20 +132,22 @@ namespace InterTwitter.ViewModels
         {
             DependencyService.Get<IKeyboardHelper>().HideKeyboard();
 
-            User.Email = Email;
-            User.Name = Name;
-            var p = new NavigationParameters { { nameof(User), User } };
-            await NavigationService.NavigateAsync($"{nameof(LogInPage)}", p);
+            var user = _user ?? new UserModel();
+            user.Email = Email;
+            user.Name = Name;
+            var parametrs = new NavigationParameters { { Constants.Navigation.USER, user } };
+            await NavigationService.NavigateAsync($"{nameof(LogInPage)}", parametrs);
         }
 
         private async Task OnCreateCommandAsync()
         {
             DependencyService.Get<IKeyboardHelper>().HideKeyboard();
 
-            User.Email = Email;
-            User.Name = Name;
-            var p = new NavigationParameters { { nameof(User), User } };
-            await NavigationService.NavigateAsync($"{nameof(CreatePage)}", p);
+            var user = _user ?? new UserModel();
+            user.Email = Email;
+            user.Name = Name;
+            var parametrs = new NavigationParameters { { Constants.Navigation.USER, user } };
+            await NavigationService.NavigateAsync($"{nameof(CreatePage)}", parametrs);
         }
 
         #endregion

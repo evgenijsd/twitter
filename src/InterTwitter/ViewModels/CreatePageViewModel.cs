@@ -21,6 +21,8 @@ namespace InterTwitter.ViewModels
 
         private readonly CreatePageValidator _CreatePageValidator;
 
+        private UserModel _user;
+
         public CreatePageViewModel(
             INavigationService navigationService,
             IDialogService dialogs,
@@ -33,14 +35,6 @@ namespace InterTwitter.ViewModels
         }
 
         #region -- Public properties --
-
-        private UserModel _user = new ();
-
-        public UserModel User
-        {
-            get => _user;
-            set => SetProperty(ref _user, value);
-        }
 
         private string _name = string.Empty;
 
@@ -99,8 +93,11 @@ namespace InterTwitter.ViewModels
         }
 
         private ICommand _StartCommand;
+
         public ICommand StartCommand => _StartCommand ??= SingleExecutionCommand.FromFunc(OnStartCommandAsync);
+
         private ICommand _PasswordCommand;
+
         public ICommand PasswordCommand => _PasswordCommand ??= SingleExecutionCommand.FromFunc(OnPasswordCommandAsync);
 
         #endregion
@@ -124,11 +121,11 @@ namespace InterTwitter.ViewModels
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
-            if (parameters.ContainsKey("User"))
+            if (parameters.TryGetValue(Constants.Navigation.USER, out UserModel user))
             {
-                User = parameters.GetValue<UserModel>("User");
-                Name = User.Name + string.Empty;
-                Email = User.Email + string.Empty;
+                _user = user;
+                Name = _user.Name ?? string.Empty;
+                Email = _user.Email ?? string.Empty;
             }
         }
 
@@ -148,8 +145,8 @@ namespace InterTwitter.ViewModels
             var result = await _registrationService.CheckTheCorrectEmailAsync(Email);
             if (result.IsSuccess)
             {
-                var p = new DialogParameters { { "message", Resources.Resource.AlertLoginTaken } };
-                await _dialogs.ShowDialogAsync(nameof(AlertView), p);
+                var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Resources.Resource.AlertLoginTaken } };
+                await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
             }
             else
             {
@@ -158,10 +155,10 @@ namespace InterTwitter.ViewModels
                 {
                     DependencyService.Get<IKeyboardHelper>().HideKeyboard();
 
-                    User.Email = Email;
-                    User.Name = Name;
-                    var p = new NavigationParameters { { "User", User } };
-                    await NavigationService.NavigateAsync($"{nameof(PasswordPage)}", p);
+                    _user.Email = Email;
+                    _user.Name = Name;
+                    var parametrs = new NavigationParameters { { Constants.Navigation.USER, _user } };
+                    await NavigationService.NavigateAsync($"{nameof(PasswordPage)}", parametrs);
                 }
                 else
                 {
@@ -178,8 +175,8 @@ namespace InterTwitter.ViewModels
                         }
                     }
 
-                    var p = new DialogParameters { { "message", validator.Errors[0].ErrorMessage } };
-                    await _dialogs.ShowDialogAsync(nameof(AlertView), p);
+                    var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, validator.Errors[0].ErrorMessage } };
+                    await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
                 }
             }
         }

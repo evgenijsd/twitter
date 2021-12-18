@@ -24,6 +24,8 @@ namespace InterTwitter.ViewModels
 
         private readonly LogInPageValidator _LogInPageValidator;
 
+        private UserModel _user;
+
         public LogInPageViewModel(
             INavigationService navigationService,
             IDialogService dialogs,
@@ -38,14 +40,6 @@ namespace InterTwitter.ViewModels
         }
 
         #region -- Public properties --
-
-        private UserModel _user = new ();
-
-        public UserModel User
-        {
-            get => _user;
-            set => SetProperty(ref _user, value);
-        }
 
         private string _name = string.Empty;
 
@@ -140,11 +134,11 @@ namespace InterTwitter.ViewModels
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
-            if (parameters.ContainsKey(nameof(User)))
+            if (parameters.TryGetValue(Constants.Navigation.USER, out UserModel user))
             {
-                User = parameters.GetValue<UserModel>(nameof(User));
-                Email = User.Email ?? string.Empty;
-                Password = User.Password ?? string.Empty;
+                _user = user;
+                Email = _user.Email ?? string.Empty;
+                Password = _user.Password ?? string.Empty;
             }
         }
 
@@ -154,8 +148,6 @@ namespace InterTwitter.ViewModels
 
         private async Task OnStartCommandAsync()
         {
-            DependencyService.Get<IKeyboardHelper>().HideKeyboard();
-
             await NavigationService.GoBackAsync();
         }
 
@@ -171,22 +163,22 @@ namespace InterTwitter.ViewModels
                     {
                         DependencyService.Get<IKeyboardHelper>().HideKeyboard();
 
-                        User = result.Result;
-                        _autorizationService.UserId = User.Id;
-                        var p = new NavigationParameters { { nameof(User), User } };
-                        await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", p);
+                        _user = result.Result;
+                        _autorizationService.UserId = _user.Id;
+                        var parametrs = new NavigationParameters { { Constants.Navigation.USER, _user } };
+                        await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", parametrs);
                     }
                     else
                     {
-                        var p = new DialogParameters { { "message", Resources.Resource.AlertInvalidPassword } };
-                        await _dialogs.ShowDialogAsync(nameof(AlertView), p);
+                        var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Resources.Resource.AlertInvalidPassword } };
+                        await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
                         Password = string.Empty;
                     }
                 }
                 else
                 {
-                    var p = new DialogParameters { { "message", Resources.Resource.AlertInvalidLogin } };
-                    await _dialogs.ShowDialogAsync(nameof(AlertView), p);
+                    var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Resources.Resource.AlertInvalidLogin } };
+                    await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
                 }
             }
             else
@@ -204,8 +196,8 @@ namespace InterTwitter.ViewModels
                     }
                 }
 
-                var p = new DialogParameters { { "message", validator.Errors[0].ErrorMessage } };
-                await _dialogs.ShowDialogAsync(nameof(AlertView), p);
+                var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, validator.Errors[0].ErrorMessage } };
+                await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
             }
         }
 
