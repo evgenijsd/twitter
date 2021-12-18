@@ -7,7 +7,7 @@ namespace InterTwitter.Enums
     public enum EStateMode
     {
         Unknown,
-        Full,
-        Cut,
+        Original,
+        Truncated,
     }
 }

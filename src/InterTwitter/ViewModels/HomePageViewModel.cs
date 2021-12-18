@@ -80,7 +80,7 @@ namespace InterTwitter.ViewModels
                 await InitAsync();
             }
 
-            _isFirstStart = true;
+            _isFirstStart = false;
 
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_blue"] as ImageSource;
         }

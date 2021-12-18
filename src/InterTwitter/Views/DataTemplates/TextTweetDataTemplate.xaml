@@ -35,16 +35,9 @@
                        Text="{Binding UserName}" 
                        FontAttributes="Bold"/>
 
-                <controls:CustomLabel Style="{DynamicResource tstyle_i7}" 
-                                      VerticalOptions="Start"
-                                      MaxLines="5" 
-                                      LineBreakMode="TailTruncation"
-                                      MoreCommand="{Binding TestCommand}"
-                                      MoreCommandParameter="{Binding .}"   
-                                      Text="{Binding Text}"
-                                      IsVisible="{Binding IsTextVisible}"/>
-
-                <controls:TestLabel Mode="{Binding Mode}"/>
+                <controls:TestLabel Mode="{Binding Mode}" 
+                                    FullText="{Binding Text}"
+                                    IsVisible="{Binding IsTextVisible}"/>
 
                 <StackLayout Orientation="Horizontal"
                              HeightRequest="20"

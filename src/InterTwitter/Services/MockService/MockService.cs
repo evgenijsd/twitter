@@ -117,7 +117,7 @@ namespace InterTwitter.Services
                 {
                     Id = 4,
                     UserId = 4,
-                    Text = "ермин историография имеет несколько значений. Во-первых, это наука о том, как пишется история, насколько правильно применяется исторический метод и как развивается историческое познание. Во-втор.",
+                    Text = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentiumoptio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
                     Media = Enums.EAttachedMediaType.None,
                     CreationTime = DateTime.Now,
                 },

@@ -14,7 +14,7 @@ namespace InterTwitter.ViewModels.TweetViewModel
     {
         public BaseTweetViewModel()
         {
-            Mode = EStateMode.Full;
+            Mode = EStateMode.Truncated;
         }
         #region -- Public properties --
 

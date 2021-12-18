@@ -7,19 +7,44 @@
 
     <ContentView.Content>
 
-        <StackLayout>
+        <StackLayout VerticalOptions="Start">
 
             <statecontainer:StateContainer State="{Binding Mode, Source={x:Reference testLabel}}">
 
-                <statecontainer:StateCondition State="Full">
+                <statecontainer:StateCondition State="Original">
 
-                    <Label Text="Full"/>
+                    <Label x:Name="WholeText"  
+                           Style="{DynamicResource tstyle_i7}"
+                           Text="{Binding FullText, Source={x:Reference testLabel}}"/>
 
                 </statecontainer:StateCondition>
 
-                <statecontainer:StateCondition State="Cut">
+                <statecontainer:StateCondition State="Truncated">
 
-                    <Label Text="Cut"/>
+                    <Label Style="{DynamicResource tstyle_i7}" >
+                        
+                        <Label.FormattedText>
+                            
+                            <FormattedString>
+                                
+                                <Span Text="{Binding TruncatedText, Source={x:Reference testLabel}}"/>
+                                
+                                <Span Text="..."/>
+                                
+                                <Span Text="more" TextColor="{DynamicResource appcolor_i1}">
+                                    
+                                    <Span.GestureRecognizers>
+                                        
+                                        <TapGestureRecognizer Command="{Binding OpenTweetCommand, Source={x:Reference testLabel}}"/>
+                                        
+                                    </Span.GestureRecognizers>
+                                    
+                                </Span>
+                            </FormattedString>
+                     
+                        </Label.FormattedText>
+                        
+                    </Label>
 
                 </statecontainer:StateCondition>
 
