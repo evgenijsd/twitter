@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace InterTwitter
 {
@@ -18,15 +16,22 @@ namespace InterTwitter
             public const string UPDATE_HASHTAGS = "UpdateHashtags";
         }
 
-        public static class TweetsSearch
+        public static class Translation
         {
             public const string INACCURATE_REQUEST = "ForMoreAccurateSearchSnter2OrMoreCharacters";
             public const string NO_RESULTS_FOR = "NoResultsFor";
-            public const int NUMBER_OF_POPULAR_HASHTAGS = 5;
+        }
 
-            public static List<string> GetUniqueWords(string text)
+        public static class Values
+        {
+            public const int NUMBER_OF_POPULAR_HASHTAGS = 5;
+        }
+
+        public static class Methods
+        {
+            public static IEnumerable<string> GetUniqueWords(string text)
             {
-                return new List<string>(text.Split(' ').Where(x => !string.IsNullOrWhiteSpace(x)).Distinct());
+                return text.Split(' ').Where(x => !string.IsNullOrWhiteSpace(x)).Distinct();
             }
         }
 

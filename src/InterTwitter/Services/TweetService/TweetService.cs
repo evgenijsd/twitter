@@ -44,7 +44,7 @@ namespace InterTwitter.Services
             return result;
         }
 
-        public async Task<AOResult<IEnumerable<TweetModel>>> GetAllTweetsByHashtagsOrKeysAsync(List<string> keys)
+        public async Task<AOResult<IEnumerable<TweetModel>>> GetAllTweetsByHashtagsOrKeysAsync(IEnumerable<string> keys)
         {
             var result = new AOResult<IEnumerable<TweetModel>>();
 

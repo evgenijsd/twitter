@@ -37,11 +37,11 @@ namespace InterTwitter.ViewModels
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource;
             AvatarIcon = "pic_profile_small";
 
-            TestText = "#amas masd deveex maxx";
+            EditText = "#amas masd deveex maxx";
 
             QueryString = "    dev ex #am amas masd  x dev as ma ex ma        ma";
 
-            Keywords = Constants.TweetsSearch.GetUniqueWords(QueryString);
+            WordsToHighlight = Constants.Methods.GetUniqueWords(QueryString);
 
             //QueryString = "#am # amas #amas masd ma";
         }
@@ -49,17 +49,17 @@ namespace InterTwitter.ViewModels
         #region -- Public Properties --
 
         private string _testText;
-        public string TestText
+        public string EditText
         {
             get => _testText;
             set => SetProperty(ref _testText, value);
         }
 
-        private List<string> _keywords;
-        public List<string> Keywords
+        private IEnumerable<string> _wordsToHighlight;
+        public IEnumerable<string> WordsToHighlight
         {
-            get => _keywords;
-            set => SetProperty(ref _keywords, value);
+            get => _wordsToHighlight;
+            set => SetProperty(ref _wordsToHighlight, value);
         }
 
         private string _avatarIcon;
@@ -217,7 +217,7 @@ namespace InterTwitter.ViewModels
                     tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
                     tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
                     tweet.UserName = tweetAuthor.Result.Name;
-                    tweet.Keywords = Keywords;
+                    tweet.WordsToHighlight = WordsToHighlight;
                 }
             }
 
@@ -266,12 +266,12 @@ namespace InterTwitter.ViewModels
                     : queryString.Length < 2))
             {
                 TweetSearchResult = ESearchResult.NoResults;
-                NoResultsMessage = LocalizationResourceManager.Current[Constants.TweetsSearch.INACCURATE_REQUEST];
+                NoResultsMessage = LocalizationResourceManager.Current[Constants.Translation.INACCURATE_REQUEST];
             }
             else
             {
-                Keywords = Constants.TweetsSearch.GetUniqueWords(queryString);
-                var result = await _tweetService.GetAllTweetsByHashtagsOrKeysAsync(Keywords);
+                WordsToHighlight = Constants.Methods.GetUniqueWords(queryString);
+                var result = await _tweetService.GetAllTweetsByHashtagsOrKeysAsync(WordsToHighlight);
 
                 if (result.IsSuccess)
                 {
@@ -282,7 +282,7 @@ namespace InterTwitter.ViewModels
                 else
                 {
                     TweetSearchResult = ESearchResult.NoResults;
-                    NoResultsMessage = $"{LocalizationResourceManager.Current[Constants.TweetsSearch.NO_RESULTS_FOR]}\n\"{queryString}\"";
+                    NoResultsMessage = $"{LocalizationResourceManager.Current[Constants.Translation.NO_RESULTS_FOR]}\n\"{queryString}\"";
                 }
             }
         }

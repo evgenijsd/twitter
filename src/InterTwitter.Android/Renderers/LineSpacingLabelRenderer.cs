@@ -9,7 +9,7 @@ namespace InterTwitter.Droid.Renderers
 {
     public class LineSpacingLabelRenderer : LabelRenderer
     {
-        protected LineSpacingLabel LineSpacingLabel { get; private set; }
+        protected LineSpacingLabel _lineSpacingLabel;
 
         public LineSpacingLabelRenderer(Context context)
         {
@@ -21,10 +21,10 @@ namespace InterTwitter.Droid.Renderers
 
             if (e.OldElement == null)
             {
-                this.LineSpacingLabel = (LineSpacingLabel)this.Element;
+                this._lineSpacingLabel = (LineSpacingLabel)this.Element;
             }
 
-            var lineSpacing = this.LineSpacingLabel.LineSpacing;
+            var lineSpacing = this._lineSpacingLabel.LineSpacing;
 
             this.Control.SetLineSpacing(1f, lineSpacing);
 

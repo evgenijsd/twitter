@@ -58,11 +58,11 @@ namespace InterTwitter.Models.TweetViewModel
             }
         }
 
-        private List<string> _keyword;
-        public List<string> Keywords
+        private IEnumerable<string> _wordsToHighlight;
+        public IEnumerable<string> WordsToHighlight
         {
-            get => _keyword;
-            set => SetProperty(ref _keyword, value);
+            get => _wordsToHighlight;
+            set => SetProperty(ref _wordsToHighlight, value);
         }
 
         public bool IsTextVisible => !string.IsNullOrEmpty(Text);

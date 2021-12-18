@@ -41,10 +41,22 @@
                                        Text="{xct:Translate PopularTheme}"
                                        Style="{DynamicResource tstyle_i4}"/>
 
-                                <controls:KeywordHighlightingLabel Text="{Binding TestText, StringFormat='{0}'}"
-                                                                   Keywords="{Binding Keywords}"
-                                                                   Style="{DynamicResource tstyle_i5}"
-                                                                   LineSpacing="{OnPlatform Android=1.3, iOS=6.25}"/>
+                                <Label Text="Query string"/>
+
+                                <Entry Text="{Binding QueryString}"/>
+
+                                <Label Text="Input text"/>
+
+                                <Editor Text="{Binding EditText}"/>
+
+                                <Label Text="Highlighted text"/>
+                                
+                                <controls:HighlightedLabel Style="{DynamicResource tstyle_i5}"
+                                                           Text="{Binding EditText}"
+                                                           WordsToHighlight="{Binding WordsToHighlight}"
+                                                           KeywordBackgroundColor="{DynamicResource appcolor_i8}"
+                                                           HashtagTextColor="{DynamicResource appcolor_i1}"
+                                                           LineSpacing="{OnPlatform Android=1.3, iOS=6.25}"/>
 
                                 <BoxView Style="{DynamicResource SeparatorStyle}"
                                          Margin="0" />
