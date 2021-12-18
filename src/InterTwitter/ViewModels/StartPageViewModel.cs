@@ -23,6 +23,7 @@ namespace InterTwitter.ViewModels
 
         private int _userId = 0;
         private UserModel _user;
+        private bool _isAutoLogin = true;
 
         public StartPageViewModel(
             INavigationService navigationService,
@@ -112,7 +113,7 @@ namespace InterTwitter.ViewModels
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             var result = await _registrationService?.GetByIdAsync(_userId);
-            if (result.IsSuccess)
+            if (result.IsSuccess && _isAutoLogin)
             {
                 _user = result.Result;
                 var parametrs = new NavigationParameters { { Constants.Navigation.USER, _user } };
@@ -124,6 +125,7 @@ namespace InterTwitter.ViewModels
                 _user = user;
                 Name = _user.Name;
                 Email = _user.Email;
+                _isAutoLogin = false;
             }
         }
 
