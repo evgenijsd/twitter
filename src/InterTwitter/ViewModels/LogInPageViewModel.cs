@@ -24,18 +24,22 @@ namespace InterTwitter.ViewModels
 
         private readonly LogInPageValidator _LogInPageValidator;
 
+        private readonly IKeyboardHelper _keyboardHelper;
+
         private UserModel _user;
 
         public LogInPageViewModel(
             INavigationService navigationService,
             IDialogService dialogs,
             IRegistrationService registrationService,
-            IAuthorizationService autorizationService)
+            IAuthorizationService autorizationService,
+            IKeyboardHelper keyboardHelper)
             : base(navigationService)
         {
             _registrationService = registrationService;
             _autorizationService = autorizationService;
             _dialogs = dialogs;
+            _keyboardHelper = keyboardHelper;
             _LogInPageValidator = new LogInPageValidator();
         }
 
@@ -161,7 +165,7 @@ namespace InterTwitter.ViewModels
                 {
                     if (result.Result.Password == Password)
                     {
-                        DependencyService.Get<IKeyboardHelper>().HideKeyboard();
+                        _keyboardHelper.HideKeyboard();
 
                         _user = result.Result;
                         _autorizationService.UserId = _user.Id;

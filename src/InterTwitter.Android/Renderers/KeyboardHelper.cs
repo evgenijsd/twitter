@@ -1,22 +1,11 @@
 ﻿using Android.App;
 using Android.Content;
-using Android.OS;
 using Android.Runtime;
-using Android.Views;
 using Android.Views.InputMethods;
-using Android.Widget;
-using InterTwitter.Droid.Renderers;
 using InterTwitter.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Xamarin.Forms;
 
-[assembly: Dependency(typeof(KeyboardHelper))]
 namespace InterTwitter.Droid.Renderers
 {
-    [Preserve(AllMembers = true)]
     public class KeyboardHelper : IKeyboardHelper
     {
         static Context _context;

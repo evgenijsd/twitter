@@ -21,16 +21,20 @@ namespace InterTwitter.ViewModels
 
         private readonly CreatePageValidator _CreatePageValidator;
 
+        private readonly IKeyboardHelper _keyboardHelper;
+
         private UserModel _user;
 
         public CreatePageViewModel(
             INavigationService navigationService,
             IDialogService dialogs,
-            IRegistrationService registrationService)
+            IRegistrationService registrationService,
+            IKeyboardHelper keyboardHelper)
             : base(navigationService)
         {
             _registrationService = registrationService;
             _dialogs = dialogs;
+            _keyboardHelper = keyboardHelper;
             _CreatePageValidator = new CreatePageValidator();
         }
 
@@ -135,7 +139,7 @@ namespace InterTwitter.ViewModels
 
         private async Task OnStartCommandAsync()
         {
-            DependencyService.Get<IKeyboardHelper>().HideKeyboard();
+            _keyboardHelper.HideKeyboard();
 
             await NavigationService.GoBackAsync();
         }
@@ -153,7 +157,7 @@ namespace InterTwitter.ViewModels
                 var validator = _CreatePageValidator.Validate(this);
                 if (validator.IsValid)
                 {
-                    DependencyService.Get<IKeyboardHelper>().HideKeyboard();
+                    _keyboardHelper.HideKeyboard();
 
                     _user.Email = Email;
                     _user.Name = Name;

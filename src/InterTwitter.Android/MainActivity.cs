@@ -4,6 +4,7 @@ using Android.OS;
 using Android.Runtime;
 using FFImageLoading.Forms.Platform;
 using InterTwitter.Droid.Renderers;
+using InterTwitter.Helpers;
 using Prism;
 using Prism.Ioc;
 
@@ -34,14 +35,14 @@ namespace InterTwitter.Droid
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
+        #endregion
+
         public class AndroidInitializer : IPlatformInitializer
         {
             public void RegisterTypes(IContainerRegistry containerRegisty)
             {
-                
+                containerRegisty.RegisterSingleton<IKeyboardHelper, KeyboardHelper>();
             }
         }
-
-        #endregion
     }
 }

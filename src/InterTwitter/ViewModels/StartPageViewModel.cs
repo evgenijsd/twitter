@@ -1,14 +1,13 @@
-﻿using System.Threading.Tasks;
-using System.Windows.Input;
-using InterTwitter.Helpers;
+﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
 using InterTwitter.Services.Authorization;
 using InterTwitter.Services.Registration;
 using InterTwitter.ViewModels.Validators;
 using InterTwitter.Views;
 using Prism.Navigation;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
-using InterTwitter;
 
 namespace InterTwitter.ViewModels
 {
@@ -20,19 +19,23 @@ namespace InterTwitter.ViewModels
 
         private readonly StartPageValidator _StartPageValidator;
 
+        private readonly IKeyboardHelper _keyboardHelper;
+
         private int _userId = 0;
         private UserModel _user;
 
         public StartPageViewModel(
             INavigationService navigationService,
             IRegistrationService registrationService,
-            IAuthorizationService autorizationService)
+            IAuthorizationService autorizationService,
+            IKeyboardHelper keyboardHelper)
             : base(navigationService)
         {
             App.Current.UserAppTheme = OSAppTheme.Light;
             _registrationService = registrationService;
             _autorizationService = autorizationService;
             _userId = _autorizationService.UserId;
+            _keyboardHelper = keyboardHelper;
             _StartPageValidator = new StartPageValidator();
         }
 
@@ -130,7 +133,7 @@ namespace InterTwitter.ViewModels
 
         private async Task OnLogInCommandAsync()
         {
-            DependencyService.Get<IKeyboardHelper>().HideKeyboard();
+            _keyboardHelper.HideKeyboard();
 
             var user = _user ?? new UserModel();
             user.Email = Email;
@@ -141,7 +144,7 @@ namespace InterTwitter.ViewModels
 
         private async Task OnCreateCommandAsync()
         {
-            DependencyService.Get<IKeyboardHelper>().HideKeyboard();
+            _keyboardHelper.HideKeyboard();
 
             var user = _user ?? new UserModel();
             user.Email = Email;

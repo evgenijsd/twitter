@@ -21,16 +21,20 @@ namespace InterTwitter.ViewModels
 
         private readonly PasswordPageValidator _PasswordPageValidator;
 
+        private readonly IKeyboardHelper _keyboardHelper;
+
         private UserModel _user;
 
         public PasswordPageViewModel (
             INavigationService navigationService,
             IDialogService dialogs,
-            IRegistrationService registrationService)
+            IRegistrationService registrationService,
+            IKeyboardHelper keyboardHelper)
             : base(navigationService)
         {
             _registrationService = registrationService;
             _dialogs = dialogs;
+            _keyboardHelper = keyboardHelper;
             _PasswordPageValidator = new PasswordPageValidator();
         }
 
@@ -133,7 +137,7 @@ namespace InterTwitter.ViewModels
 
         private async Task OnCreateCommandAsync()
         {
-            DependencyService.Get<IKeyboardHelper>().HideKeyboard();
+            _keyboardHelper.HideKeyboard();
 
             await NavigationService.GoBackAsync();
         }
@@ -151,7 +155,7 @@ namespace InterTwitter.ViewModels
                 var result = await _registrationService.AddAsync(_user);
                 if (result.IsSuccess)
                 {
-                    DependencyService.Get<IKeyboardHelper>().HideKeyboard();
+                    _keyboardHelper.HideKeyboard();
 
                     var parametrs = new NavigationParameters { { Constants.Navigation.USER, _user } };
                     await NavigationService.NavigateAsync($"/{nameof(StartPage)}", parametrs);
