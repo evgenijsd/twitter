@@ -118,6 +118,13 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _tweetSearchResult, value);
         }
 
+        private ICommand _refreshWordsToHighlight;
+        public ICommand RefreshWordsToHighlight => _refreshWordsToHighlight ??= SingleExecutionCommand.FromFunc(() =>
+        {
+            WordsToHighlight = Constants.Methods.GetUniqueWords(QueryString);
+            return Task.CompletedTask;
+        });
+
         private ICommand _startTweetsSearchTapCommand;
         public ICommand StartTweetsSearchTapCommand => _startTweetsSearchTapCommand ??= SingleExecutionCommand.FromFunc(OnStartTweetsSearchCommandTapAsync);
 

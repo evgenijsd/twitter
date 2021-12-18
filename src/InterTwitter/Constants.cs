@@ -37,7 +37,7 @@ namespace InterTwitter
 
         public static class RegexPatterns
         {
-            public const string HASHTAG_PATTERN = @"^#[0-9a-zA-Zа-яА-Я_]{2,30}$";
+            public const string HASHTAG_PATTERN = @"^#[0-9a-zA-Zа-яА-Я_]{1,30}$";
         }
     }
 }

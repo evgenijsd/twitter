@@ -3,7 +3,7 @@ using Xamarin.Forms;
 
 namespace InterTwitter.Controls
 {
-    public class HighlightedLabel : LineSpacingLabel
+    public class HighlightedLabel : Label
     {
         #region -- Public helpers --
 

@@ -43,11 +43,21 @@
 
                                 <Label Text="Query string"/>
 
-                                <Entry Text="{Binding QueryString}"/>
+                                <Entry Text="{Binding QueryString}">
+
+                                    <Entry.Behaviors>
+
+                                        <Behaviors:EventToCommandBehavior EventName="TextChanged"
+                                                                          Command="{Binding RefreshWordsToHighlight}"/>
+
+                                    </Entry.Behaviors>
+                                    
+                                </Entry>
 
                                 <Label Text="Input text"/>
 
-                                <Editor Text="{Binding EditText}"/>
+                                <Editor Text="{Binding EditText}" 
+                                        AutoSize="TextChanges"/>
 
                                 <Label Text="Highlighted text"/>
                                 
@@ -55,8 +65,7 @@
                                                            Text="{Binding EditText}"
                                                            WordsToHighlight="{Binding WordsToHighlight}"
                                                            KeywordBackgroundColor="{DynamicResource appcolor_i8}"
-                                                           HashtagTextColor="{DynamicResource appcolor_i1}"
-                                                           LineSpacing="{OnPlatform Android=1.3, iOS=6.25}"/>
+                                                           HashtagTextColor="{DynamicResource appcolor_i1}"/>
 
                                 <BoxView Style="{DynamicResource SeparatorStyle}"
                                          Margin="0" />

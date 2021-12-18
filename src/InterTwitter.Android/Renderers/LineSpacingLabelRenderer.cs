@@ -12,6 +12,7 @@ namespace InterTwitter.Droid.Renderers
         protected LineSpacingLabel _lineSpacingLabel;
 
         public LineSpacingLabelRenderer(Context context)
+            : base(context)
         {
         }
 
