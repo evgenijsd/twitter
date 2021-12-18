@@ -1,12 +1,10 @@
 ﻿using Android.Content;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android.AppCompat;
-using Xamarin.Forms.Platform.Android;
 using Google.Android.Material.BottomNavigation;
-using Android.Views;
-using Android.Widget;
 using InterTwitter.Controls;
 using InterTwitter.Droid;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.Android;
+using Xamarin.Forms.Platform.Android.AppCompat;
 
 [assembly: ExportRenderer(typeof(CustomTabbedPage), typeof(CustomTabbedPageRenderer))]
 namespace InterTwitter.Droid

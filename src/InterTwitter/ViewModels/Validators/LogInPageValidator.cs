@@ -1,6 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using FluentValidation;
-using InterTwitter.ViewModels;
+﻿using FluentValidation;
+using System.Text.RegularExpressions;
 
 namespace InterTwitter.ViewModels.Validators
 {

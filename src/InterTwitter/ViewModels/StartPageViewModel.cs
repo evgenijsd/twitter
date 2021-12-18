@@ -2,7 +2,6 @@
 using InterTwitter.Models;
 using InterTwitter.Services.Authorization;
 using InterTwitter.Services.Registration;
-using InterTwitter.ViewModels.Validators;
 using InterTwitter.Views;
 using Prism.Navigation;
 using System.Threading.Tasks;
@@ -17,13 +16,10 @@ namespace InterTwitter.ViewModels
 
         private readonly IAuthorizationService _autorizationService;
 
-        private readonly StartPageValidator _StartPageValidator;
-
         private readonly IKeyboardHelper _keyboardHelper;
 
         private int _userId = 0;
         private UserModel _user;
-        private bool _isAutoLogin = true;
 
         public StartPageViewModel(
             INavigationService navigationService,
@@ -37,10 +33,11 @@ namespace InterTwitter.ViewModels
             _autorizationService = autorizationService;
             _userId = _autorizationService.UserId;
             _keyboardHelper = keyboardHelper;
-            _StartPageValidator = new StartPageValidator();
         }
 
         #region -- Public properties --
+
+        public static bool IsAutoLogin = true;
 
         private string _name = string.Empty;
 
@@ -113,7 +110,7 @@ namespace InterTwitter.ViewModels
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             var result = await _registrationService?.GetByIdAsync(_userId);
-            if (result.IsSuccess && _isAutoLogin)
+            if (result.IsSuccess && IsAutoLogin)
             {
                 _user = result.Result;
                 var parametrs = new NavigationParameters { { Constants.Navigation.USER, _user } };
@@ -125,7 +122,6 @@ namespace InterTwitter.ViewModels
                 _user = user;
                 Name = _user.Name;
                 Email = _user.Email;
-                _isAutoLogin = false;
             }
         }
 
@@ -140,6 +136,7 @@ namespace InterTwitter.ViewModels
             var user = _user ?? new UserModel();
             user.Email = Email;
             user.Name = Name;
+            IsAutoLogin = false;
             var parametrs = new NavigationParameters { { Constants.Navigation.USER, user } };
             await NavigationService.NavigateAsync($"{nameof(LogInPage)}", parametrs);
         }
@@ -151,6 +148,7 @@ namespace InterTwitter.ViewModels
             var user = _user ?? new UserModel();
             user.Email = Email;
             user.Name = Name;
+            IsAutoLogin = false;
             var parametrs = new NavigationParameters { { Constants.Navigation.USER, user } };
             await NavigationService.NavigateAsync($"{nameof(CreatePage)}", parametrs);
         }

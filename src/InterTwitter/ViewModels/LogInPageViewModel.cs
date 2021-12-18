@@ -5,12 +5,10 @@ using InterTwitter.Services.Registration;
 using InterTwitter.ViewModels.Validators;
 using InterTwitter.Views;
 using Prism.Navigation;
-using Prism.Services;
 using Prism.Services.Dialogs;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
 {
@@ -21,8 +19,6 @@ namespace InterTwitter.ViewModels
         private readonly IAuthorizationService _autorizationService;
 
         private readonly IDialogService _dialogs;
-
-        private readonly LogInPageValidator _LogInPageValidator;
 
         private readonly IKeyboardHelper _keyboardHelper;
 
@@ -40,7 +36,6 @@ namespace InterTwitter.ViewModels
             _autorizationService = autorizationService;
             _dialogs = dialogs;
             _keyboardHelper = keyboardHelper;
-            _LogInPageValidator = new LogInPageValidator();
         }
 
         #region -- Public properties --
@@ -157,7 +152,7 @@ namespace InterTwitter.ViewModels
 
         private async Task OnTwitterCommandAsync()
         {
-            var validator = _LogInPageValidator.Validate(this);
+            var validator = ValidatorsExtension.LogInPageValidator.Validate(this);
             if (validator.IsValid)
             {
                 var result = await _autorizationService.CheckUserAsync(Email, Password);

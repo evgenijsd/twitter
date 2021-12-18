@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace InterTwitter.Models
+﻿namespace InterTwitter.Models
 {
     public class UserModel : IEntityBase
     {

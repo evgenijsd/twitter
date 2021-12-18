@@ -1,8 +1,5 @@
-﻿using Foundation;
-using InterTwitter.Helpers;
-using InterTwitter.iOS.Renderers;
+﻿using InterTwitter.Helpers;
 using UIKit;
-using Xamarin.Forms;
 
 namespace InterTwitter.iOS.Renderers
 {

@@ -4,12 +4,10 @@ using InterTwitter.Services.Registration;
 using InterTwitter.ViewModels.Validators;
 using InterTwitter.Views;
 using Prism.Navigation;
-using Prism.Services;
 using Prism.Services.Dialogs;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
 {
@@ -18,8 +16,6 @@ namespace InterTwitter.ViewModels
         private readonly IRegistrationService _registrationService;
 
         private readonly IDialogService _dialogs;
-
-        private readonly CreatePageValidator _CreatePageValidator;
 
         private readonly IKeyboardHelper _keyboardHelper;
 
@@ -35,7 +31,6 @@ namespace InterTwitter.ViewModels
             _registrationService = registrationService;
             _dialogs = dialogs;
             _keyboardHelper = keyboardHelper;
-            _CreatePageValidator = new CreatePageValidator();
         }
 
         #region -- Public properties --
@@ -154,7 +149,7 @@ namespace InterTwitter.ViewModels
             }
             else
             {
-                var validator = _CreatePageValidator.Validate(this);
+                var validator = ValidatorsExtension.CreatePageValidator.Validate(this);
                 if (validator.IsValid)
                 {
                     _keyboardHelper.HideKeyboard();

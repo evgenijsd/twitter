@@ -1,9 +1,8 @@
-﻿using System;
+﻿using InterTwitter.Helpers.ProcessHelpers;
+using InterTwitter.Models;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using InterTwitter.Helpers.ProcessHelpers;
-using InterTwitter.Models;
-using InterTwitter.Services.Registration;
 using Xamarin.Essentials;
 
 namespace InterTwitter.Services.Authorization

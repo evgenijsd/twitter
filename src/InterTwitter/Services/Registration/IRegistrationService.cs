@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using InterTwitter.Helpers.ProcessHelpers;
+﻿using InterTwitter.Helpers.ProcessHelpers;
 using InterTwitter.Models;
+using System.Threading.Tasks;
 
 namespace InterTwitter.Services.Registration
 {
