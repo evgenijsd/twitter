@@ -2,9 +2,7 @@ using DLToolkit.Forms.Controls;
 using InterTwitter.Services;
 using InterTwitter.ViewModels;
 using InterTwitter.ViewModels.Flyout;
-using InterTwitter.ViewModels.TweetFullPage;
 using InterTwitter.Views;
-using InterTwitter.Views.TweetFullPage;
 using Prism.Ioc;
 using Prism.Unity;
 using Xamarin.Forms;
@@ -35,7 +33,6 @@ namespace InterTwitter
             containerRegistry.RegisterForNavigation<BookmarksPage, BookmarksPageViewModel>();
             containerRegistry.RegisterForNavigation<NotificationsPage, NotificationPageViewModel>();
             containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
-            containerRegistry.RegisterForNavigation<ImagesFullPage, ImagesFullPageViewModel>();
             containerRegistry.RegisterForNavigation<MainPage>();
         }
 

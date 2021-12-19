@@ -1,11 +1,7 @@
 ﻿using InterTwitter.Enums;
-using InterTwitter.Helpers;
-using InterTwitter.Views.TweetFullPage;
 using Prism.Mvvm;
-using Prism.Navigation;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace InterTwitter.ViewModels.TweetViewModel

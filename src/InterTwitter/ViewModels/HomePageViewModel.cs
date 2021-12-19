@@ -5,7 +5,6 @@ using InterTwitter.Models;
 using InterTwitter.Services;
 using InterTwitter.ViewModels.TweetViewModel;
 using InterTwitter.Views;
-using InterTwitter.Views.TweetFullPage;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;

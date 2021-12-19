@@ -1,5 +1,4 @@
-﻿using InterTwitter.Views.TweetFullPage;
-using Prism.Navigation;
+﻿using Prism.Navigation;
 using System.Threading.Tasks;
 
 namespace InterTwitter.ViewModels.TweetViewModel
