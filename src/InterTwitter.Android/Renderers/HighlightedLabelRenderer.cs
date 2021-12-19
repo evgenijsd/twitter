@@ -5,7 +5,6 @@ using Android.Widget;
 using InterTwitter.Controls.HighlightedLabel;
 using InterTwitter.Droid.Renderers;
 using System;
-using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Color = Android.Graphics.Color;
@@ -58,8 +57,6 @@ namespace InterTwitter.Droid.Renderers
                 && !string.IsNullOrEmpty(_highlightedLabel.Text)
                 && _highlightedLabel.WordsToHighlight != null)
             {
-                List<string> wordsToHighlight = new List<string>(_highlightedLabel.WordsToHighlight);
-
                 var highlightedWords = _highlightedLabel.GetHighlightedWords();
 
                 SpannableString spannableString = new SpannableString(_highlightedLabel.Text);
@@ -71,6 +68,7 @@ namespace InterTwitter.Droid.Renderers
 
                 ((TextView)Control).TextFormatted = spannableString;
             }
+
             var end = (DateTime.Now - start).Milliseconds;
         }
     

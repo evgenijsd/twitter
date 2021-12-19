@@ -54,6 +54,7 @@ namespace InterTwitter.Controls.HighlightedLabel
         {
             var keywords = new List<HighlightedWord>();
             var hashtags = new List<HighlightedWord>();
+
             string[] wordsToHighlight = WordsToHighlight.ToArray();
 
             var hashtagsInText = Text
@@ -80,7 +81,6 @@ namespace InterTwitter.Controls.HighlightedLabel
                         {
                             Position = wordPosition,
                             Length = word.Length,
-                            Text = word,
                             IsHashtag = isHashtag,
                         };
 
