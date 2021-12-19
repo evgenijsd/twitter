@@ -2,7 +2,7 @@
 using InterTwitter.Models;
 using System.Threading.Tasks;
 
-namespace InterTwitter.Services.Authorization
+namespace InterTwitter.Services
 {
     public interface IAuthorizationService
     {

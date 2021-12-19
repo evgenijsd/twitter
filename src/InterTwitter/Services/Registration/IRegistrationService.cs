@@ -2,7 +2,7 @@
 using InterTwitter.Models;
 using System.Threading.Tasks;
 
-namespace InterTwitter.Services.Registration
+namespace InterTwitter.Services
 {
     public interface IRegistrationService
     {

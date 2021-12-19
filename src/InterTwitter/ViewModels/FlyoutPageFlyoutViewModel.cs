@@ -1,5 +1,5 @@
 ﻿using InterTwitter.Helpers;
-using InterTwitter.Services.Authorization;
+using InterTwitter.Services;
 using InterTwitter.Views;
 using Prism.Navigation;
 using System;

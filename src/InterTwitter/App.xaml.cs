@@ -1,8 +1,6 @@
 ﻿using DLToolkit.Forms.Controls;
 using InterTwitter.Resources;
 using InterTwitter.Services;
-using InterTwitter.Services.Authorization;
-using InterTwitter.Services.Registration;
 using InterTwitter.ViewModels;
 using InterTwitter.ViewModels.Flyout;
 using InterTwitter.Views;

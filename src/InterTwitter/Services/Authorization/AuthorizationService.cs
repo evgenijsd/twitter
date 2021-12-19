@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 
-namespace InterTwitter.Services.Authorization
+namespace InterTwitter.Services
 {
     public class AuthorizationService : IAuthorizationService
     {

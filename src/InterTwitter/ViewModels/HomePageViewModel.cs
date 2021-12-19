@@ -4,8 +4,6 @@ using InterTwitter.Helpers;
 using InterTwitter.Models;
 using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services;
-using InterTwitter.Services.Authorization;
-using InterTwitter.Services.Registration;
 using InterTwitter.Views;
 using Prism.Navigation;
 using System.Collections.Generic;
