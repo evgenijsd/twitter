@@ -122,13 +122,6 @@ namespace InterTwitter.ViewModels.TweetViewModel
             set => SetProperty(ref _likeCommand, value);
         }
 
-        private ICommand _testCommand;
-        public ICommand TestCommand
-        {
-            get => _testCommand;
-            set => SetProperty(ref _testCommand, value);
-        }
-
         private ICommand _bookmarkCommand;
         public ICommand BookmarkCommand
         {

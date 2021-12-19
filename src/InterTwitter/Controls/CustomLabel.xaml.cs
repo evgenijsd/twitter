@@ -72,17 +72,20 @@ namespace InterTwitter.Controls
         {
             var currentText = OriginalText;
 
-            if (currentText?.Length > 131)
+            if (currentText != null)
             {
-                currentText = currentText.Replace('\n', ' ');
+                if (currentText?.Length > 110)
+                {
+                    currentText = currentText.Replace('\n', ' ');
 
-                currentText = currentText.Substring(0, 124);
+                    currentText = currentText.Substring(0, 103);
 
-                TruncatedText = currentText;
-            }
-            else
-            {
-                Mode = EStateMode.Original;
+                    TruncatedText = currentText;
+                }
+                else
+                {
+                    Mode = EStateMode.Original;
+                }
             }
         }
         #endregion
@@ -93,6 +96,43 @@ namespace InterTwitter.Controls
             Mode = EStateMode.Original;
 
             return Task.CompletedTask;
+        }
+
+        private int LatinOrCyrillic(string srcString)
+        {
+            bool isLatin = false, isCyrillic = false;
+            foreach (char item in srcString.ToLower().ToCharArray())
+            {
+                if (char.IsLetter(item))
+                {
+                    if ((int)item >= 0x61 && (int)item <= 0x7A)
+                    {
+                        isLatin = true;
+                    }
+                    else
+                    {
+                        isCyrillic = true;
+                    }
+
+                    if (isLatin && isCyrillic)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            if (isLatin && isCyrillic)
+            {
+                return 2;
+            }
+            else if (isLatin)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         #endregion

@@ -40,7 +40,7 @@ namespace InterTwitter.Controls
         protected override void OnScrolled(ItemsViewScrolledEventArgs e)
         {
             base.OnScrolled(e);
-            //if (e.VerticalOffset <= 10 && e.VerticalOffset >= 0)
+
             if (e.VerticalOffset == 0)
             {
                 IsNavigationBarVisible = true;

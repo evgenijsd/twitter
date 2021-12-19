@@ -91,6 +91,7 @@ namespace InterTwitter.Services
                 {
                     Id = 1,
                     UserId = 1,
+                    Text = "If you can't make it good, at least make it look good.",
                     Media = Enums.EAttachedMediaType.Photos,
                     MediaPaths = new List<string>
                     {
@@ -105,8 +106,7 @@ namespace InterTwitter.Services
                 {
                     Id = 3,
                     UserId = 3,
-                    Text = "Tермин историография имеет несколько значений. Во-первых, это наука о том, как пишется история, насколько правильно применяется исторический метод и как развивается историческоеермин историография имеет несколько значений. Во-первых, это наука о том, как пишется история, насколько правильно применяется исторический метод и как развивается историческое познание. Во-втор.",
-                    Media = Enums.EAttachedMediaType.Video,
+                    Text = "Историография имеет несколько значений. Во-первых, это наука о том, как пишется история, насколько правильно применяется исторический метод и как развивается историческоеермин историография имеет несколько значений",
                     MediaPaths = new List<string>
                     {
                        "https://oboi-lux.com.ua/23613-home_default/fotooboi-s-prirodoj.jpg",
@@ -117,7 +117,7 @@ namespace InterTwitter.Services
                 {
                     Id = 4,
                     UserId = 4,
-                    Text = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentiumoptio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
+                    Text = "LorenLorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iu",
                     Media = Enums.EAttachedMediaType.None,
                     CreationTime = DateTime.Now,
                 },
@@ -149,7 +149,7 @@ namespace InterTwitter.Services
                 {
                     Id = 6,
                     UserId = 6,
-                    Text = "HI there!",
+                    Text = "Everything begins with choice.",
                     Media = Enums.EAttachedMediaType.Gif,
                     MediaPaths = new List<string>
                     {
@@ -161,7 +161,7 @@ namespace InterTwitter.Services
                 {
                     Id = 2,
                     UserId = 2,
-                    Text = "onsequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
+                    Text = "Software is a great combination between artistry and engineering.",
                     Media = Enums.EAttachedMediaType.Gif,
                     MediaPaths = new List<string>
                     {

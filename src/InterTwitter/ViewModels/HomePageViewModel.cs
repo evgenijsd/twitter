@@ -39,23 +39,7 @@ namespace InterTwitter.ViewModels
         public ICommand OpenFlyoutCommandAsync => _openFlyoutCommandAsync ?? (_openFlyoutCommandAsync = SingleExecutionCommand.FromFunc(OnOpenFlyoutCommandAsync));
 
         private ICommand _addTweetCommandAsync;
-        public ICommand AddTweetCommandAsync => _addTweetCommandAsync ?? (_addTweetCommandAsync = SingleExecutionCommand.FromFunc(OnAddTweetPageAsync));
-
-        private ICommand _testCommand;
-        public ICommand TestCommand => _testCommand ?? (_testCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(TestAsync));
-
-        private Task TestAsync(BaseTweetViewModel r)
-        {
-            var index = Tweets.IndexOf(Tweets.FirstOrDefault(x => x.TweetId == r.TweetId));
-            var tweet = Tweets[index];
-
-            tweet.Text = "Hello";
-            Tweets[index] = tweet;
-
-            //var vm = Tweets[index];
-            //S(ref vm);
-            return Task.CompletedTask;
-        }
+        public ICommand AddTweetCommandAsync => _addTweetCommandAsync ?? (_addTweetCommandAsync = SingleExecutionCommand.FromFunc(OnAddTweetCommandAsync));
 
         private ObservableCollection<BaseTweetViewModel> _tweets;
         public ObservableCollection<BaseTweetViewModel> Tweets
@@ -102,21 +86,9 @@ namespace InterTwitter.ViewModels
             {
                 var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
 
-                var likeTweetCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnLikeTweetCommandAsync);
-                var openTweetCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnOpenTweetCommandAsync);
-                var bookmarkTweetCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnBookmarkTweetCommandAsync);
-                var moveToAuthorCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnMoveToAuthorCommandAsync);
-                var moveToImagesGalleryCommand = SingleExecutionCommand.FromFunc(OnMoveToImagesGallaryCommandAsync);
-                var moveToVideoGalleryCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnMoveToVideoGallaryCommandAsync);
-
                 foreach (var tweetVM in tweetViewModels)
                 {
-                    tweetVM.LikeCommand = likeTweetCommand;
-                    tweetVM.BookmarkCommand = bookmarkTweetCommand;
-                    tweetVM.MoveToImagesGalleryCommand = moveToImagesGalleryCommand;
-                    tweetVM.MoveToVideoGalleryCommand = moveToVideoGalleryCommand;
-                    tweetVM.MoveToAuthorCommand = moveToAuthorCommand;
-                    tweetVM.TestCommand = TestCommand;
+                    InsertCommands(tweetVM);
 
                     var tweetAuthor = await _tweetService.GetAuthorAsync(tweetVM.UserId);
 
@@ -139,18 +111,9 @@ namespace InterTwitter.ViewModels
             return Task.CompletedTask;
         }
 
-        private Task OnOpenTweetCommandAsync(BaseTweetViewModel vm)
-        {
-            var navParams = new NavigationParameters();
-
-            navParams.Add(TWEET, vm.ToTweetModel());
-
-            return NavigationService.NavigateAsync(nameof(ImagesFullPage), navParams);
-        }
-
         private Task OnMoveToImagesGallaryCommandAsync(object vm)
         {
-            var r = vm as BaseTweetViewModel;
+            //var r = vm as BaseTweetViewModel;
             //var navParams = new NavigationParameters();
 
             //navParams.Add(Images_Gallery, vm.ToTweetModel());
@@ -181,9 +144,24 @@ namespace InterTwitter.ViewModels
             return Task.CompletedTask;
         }
 
-        private Task OnAddTweetPageAsync()
+        private Task OnAddTweetCommandAsync()
         {
             return Task.CompletedTask;
+        }
+
+        private void InsertCommands(BaseTweetViewModel vm)
+        {
+            var likeTweetCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnLikeTweetCommandAsync);
+            var bookmarkTweetCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnBookmarkTweetCommandAsync);
+            var moveToAuthorCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnMoveToAuthorCommandAsync);
+            var moveToImagesGalleryCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnMoveToImagesGallaryCommandAsync);
+            var moveToVideoGalleryCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnMoveToVideoGallaryCommandAsync);
+
+            vm.LikeCommand = likeTweetCommand;
+            vm.BookmarkCommand = bookmarkTweetCommand;
+            vm.MoveToImagesGalleryCommand = moveToImagesGalleryCommand;
+            vm.MoveToVideoGalleryCommand = moveToVideoGalleryCommand;
+            vm.MoveToAuthorCommand = moveToAuthorCommand;
         }
 
         private Task OnOpenFlyoutCommandAsync()
@@ -193,10 +171,6 @@ namespace InterTwitter.ViewModels
             return Task.CompletedTask;
         }
 
-        private void S(ref BaseTweetViewModel vm)
-        {
-            vm.Text = "Hello";
-        }
         #endregion
     }
 }

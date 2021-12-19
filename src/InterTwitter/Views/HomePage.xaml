@@ -24,7 +24,8 @@
                                           RigthButtonImageSource="ic_add_blue"
                                           LeftButtonImageSource="pic_profile_small"
                                           IsVisible="{Binding Source={x:Reference customCollectView}, Path=IsNavigationBarVisible}"
-                                          LeftAddButtonCommand="{Binding OpenFlyoutCommandAsync}"/>
+                                          LeftAddButtonCommand="{Binding OpenFlyoutCommandAsync}"
+                                          RigthButtonCommand="{Binding AddTweetCommandAsync}"/>
 
             <controls:CustomCollectionView x:Name="customCollectView"
                                            Grid.Row="1" 
