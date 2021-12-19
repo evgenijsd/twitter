@@ -10,26 +10,30 @@ namespace InterTwitter.iOS.Renderers.Controls
 {
     class SearchEntryRenderer : EntryRenderer
     {
+        #region -- Overrides --
+
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
             base.OnElementChanged(e);
 
-            if(Control != null)
+            if (Control != null)
             {
                 Control.BorderStyle = UITextBorderStyle.None;
 
-                var uTextField = (UITextField)Control;
+                var uTextField = Control as UITextField;
 
                 uTextField.EditingDidBegin += (object sender, EventArgs eIos) =>
                 {
                     uTextField.PerformSelector(new ObjCRuntime.Selector("selectAll"), null, 0.0f);
                 };
 
-                var searchEntry = (SearchEntry)Element;
+                var searchEntry = Element as SearchEntry;
 
                 var color = UIColor.FromCGColor(searchEntry.TintColor.ToCGColor());
                 Control.TintColor = color;
             }
-        }
+        } 
+
+        #endregion
     }
 }

@@ -17,10 +17,10 @@ namespace InterTwitter.Views
 
             if (BindingContext is SearchPageViewModel viewModel)
             {
-                if (viewModel.TweetsSearchState == Enums.ESearchState.Active)
+                if (viewModel.TweetsSearchStatus == Enums.ESearchStatus.Active)
                 {
-                    viewModel.ResetSearchData();
                     isCannotGoBack = true;
+                    viewModel.ResetSearchState();
                 }
             }
 

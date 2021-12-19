@@ -10,88 +10,84 @@
 
     <ContentView.Content>
 
-        <StackLayout Spacing="0">
+        <Grid ColumnSpacing="8"
+              ColumnDefinitions="0.125*, *"
+              RowSpacing="0"
+              RowDefinitions="33"
+              Margin="10, 10, 14, 12"
+              Padding="0"
+              BackgroundColor="Transparent">
 
-            <Grid Margin="10, 10, 14, 12"
-                  Padding="0"
-                  RowSpacing="0"
-                  RowDefinitions="33"
-                  ColumnSpacing="8"
-                  ColumnDefinitions="0.125*, *"
-                  BackgroundColor="Transparent">
+            <!-- PROFILE/BACK ICON -->
+            <stateContainer:StateContainer Grid.Column="0"
+                                           Padding="2.5"
+                                           State="{Binding SearchStatus, Source={x:Reference searchBar}}">
 
-                <!-- PROFILE/BACK ICON -->
-                <stateContainer:StateContainer Grid.Column="0"
-                                               Padding="2.5"
-                                               State="{Binding SearchState, Source={x:Reference searchBar}}">
+                <stateContainer:StateContainer.Conditions>
 
-                    <stateContainer:StateContainer.Conditions>
+                    <!-- SEARCH IS NOT ACTIVE - DISPLAY AVATAR ICON -->
+                    <stateContainer:StateCondition State="NotActive">
 
-                        <!-- SEARCH IS NOT ACTIVE - DISPLAY AVATAR ICON -->
-                        <stateContainer:StateCondition State="NotActive">
+                        <Image Source="{Binding AvatarIconSource, Source={x:Reference searchBar}}">
 
-                            <Image Source="{Binding AvatarIconSource, Source={x:Reference searchBar}}">
+                            <Image.GestureRecognizers>
 
-                                <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding AvatarIconTapCommand, Source={x:Reference searchBar}}" />
 
-                                    <TapGestureRecognizer Command="{Binding AvatarIconTapCommand, Source={x:Reference searchBar}}" />
+                            </Image.GestureRecognizers>
 
-                                </Image.GestureRecognizers>
+                        </Image>
 
-                            </Image>
+                    </stateContainer:StateCondition>
 
-                        </stateContainer:StateCondition>
+                    <!-- SEARCH IS ACTIVE - DISPLAY BACK ICON -->
+                    <stateContainer:StateCondition State="Active">
 
-                        <!-- SEARCH IS ACTIVE - DISPLAY BACK ICON -->
-                        <stateContainer:StateCondition State="Active">
+                        <Image Source="{DynamicResource ic_left_gray}">
 
-                            <Image Source="{DynamicResource ic_left_gray}">
+                            <Image.GestureRecognizers>
 
-                                <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BackIconTapCommand, Source={x:Reference searchBar}}" />
 
-                                    <TapGestureRecognizer Command="{Binding BackIconTapCommand, Source={x:Reference searchBar}}" />
+                            </Image.GestureRecognizers>
 
-                                </Image.GestureRecognizers>
+                        </Image>
 
-                            </Image>
+                    </stateContainer:StateCondition>
 
-                        </stateContainer:StateCondition>
+                </stateContainer:StateContainer.Conditions>
 
-                    </stateContainer:StateContainer.Conditions>
+            </stateContainer:StateContainer>
 
-                </stateContainer:StateContainer>
+            <!-- SEARCH LINE -->
+            <Frame Grid.Column="1"
+                   Padding="13.5, 0"
+                   HasShadow="False"
+                   IsClippedToBounds="true"
+                   CornerRadius="16"
+                   BackgroundColor="{DynamicResource appcolor_i6}">
 
-                <!-- SEARCH LINE -->
-                <Frame Grid.Column="1"
-                       Padding="13.5, 0"
-                       HasShadow="False"
-                       IsClippedToBounds="true"
-                       CornerRadius="16"
-                       BackgroundColor="{DynamicResource appcolor_i6}">
+                <Frame.GestureRecognizers>
 
-                    <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SearchEdgesTapCommand, Source={x:Reference searchBar}}" />
 
-                        <TapGestureRecognizer Command="{Binding SearchEdgesTapCommand, Source={x:Reference searchBar}}" />
+                </Frame.GestureRecognizers>
 
-                    </Frame.GestureRecognizers>
+                <controls:SearchEntry Margin="0"    
+                                      BackgroundColor="Transparent"
+                                      FontSize="{DynamicResource tsize_i5}"
+                                      FontFamily="Ubuntu-Medium"
+                                      Text="{Binding QueryString, Source={x:Reference searchBar}}"
+                                      TextColor="{DynamicResource appcolor_i3}"
+                                      Placeholder="{xct:Translate Search}"
+                                      PlaceholderColor="{DynamicResource appcolor_i4}"
+                                      MaxLength="{Binding MaxLength, Source={x:Reference searchBar}}"
+                                      ReturnCommand="{Binding PressOkOnKeyboardCommand, Source={x:Reference searchBar}}"
+                                      x:Name="searchEntry"/>
 
-                    <controls:SearchEntry x:Name="searchEntry"
-                                          Margin="0"    
-                                          BackgroundColor="Transparent"
-                                          FontSize="{DynamicResource tsize_i5}"
-                                          FontFamily="Ubuntu-Medium"
-                                          Text="{Binding QueryString, Source={x:Reference searchBar}}"
-                                          TextColor="{DynamicResource appcolor_i3}"
-                                          Placeholder="{xct:Translate Search}"
-                                          PlaceholderColor="{DynamicResource appcolor_i4}"
-                                          MaxLength="{Binding MaxLength, Source={x:Reference searchBar}}"
-                                          ReturnCommand="{Binding PressOkOnKeyboardCommand, Source={x:Reference searchBar}}"/>
+            </Frame>
 
-                </Frame>
-
-            </Grid>
-
-        </StackLayout>
+        </Grid>
 
     </ContentView.Content>
 

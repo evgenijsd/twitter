@@ -16,243 +16,203 @@
 
     <ContentPage.Content>
 
-        <StackLayout Spacing="0"
-                     BackgroundColor="{DynamicResource appcolor_i2}">
+        <Grid RowDefinitions="auto" 
+              RowSpacing="0"
+              VerticalOptions="FillAndExpand">
 
-            <Grid RowDefinitions="auto" 
-                  RowSpacing="0"
-                  VerticalOptions="FillAndExpand">
+            <!-- CONTENT -->
+            <stateContainer:StateContainer Grid.Row="1"
+                                           VerticalOptions="FillAndExpand"
+                                           Padding="3, 0, 3, 0"
+                                           State="{Binding TweetsSearchStatus}">
 
-                <!-- CONTENT -->
-                <stateContainer:StateContainer Grid.Row="1"
-                                               VerticalOptions="FillAndExpand"
-                                               Padding="3, 0, 3, 0"
-                                               State="{Binding TweetsSearchState}">
+                <stateContainer:StateContainer.Conditions>
 
-                    <stateContainer:StateContainer.Conditions>
+                    <!-- SEARCH IS NOT ACTIVE - DISPLAY POPULAR THEMES -->
+                    <stateContainer:StateCondition State="NotActive">
 
-                        <!-- SEARCH IS NOT ACTIVE - DISPLAY POPULAR THEMES -->
-                        <stateContainer:StateCondition State="NotActive">
+                        <StackLayout Spacing="0"
+                                     Margin="10.5, 0">
 
-                            <StackLayout Spacing="0"
-                                         Margin="10.5, 0">
+                            <Label Margin="0, 19, 0, 10.5"
+                                   Text="{xct:Translate PopularTheme}"
+                                   Style="{DynamicResource tstyle_i4}"/>
 
-                                <Label Margin="0, 19, 0, 10.5"
-                                       Text="{xct:Translate PopularTheme}"
-                                       Style="{DynamicResource tstyle_i4}"/>
+                            <BoxView Style="{DynamicResource SeparatorStyle}"
+                                     Margin="0" />
 
-                                <!--<Label Text="Query string"/>
+                            <ListView Margin="0"
+                                      HasUnevenRows="true"
+                                      SeparatorVisibility="None"
+                                      SeparatorColor="{DynamicResource appcolor_i6}"
+                                      ItemsSource="{Binding Hashtags}"
+                                      SelectedItem="{Binding SelectedHashtag}">
 
-                                <Entry Text="{Binding QueryString}">
+                                <ListView.Behaviors>
 
-                                    <Entry.Behaviors>
+                                    <Behaviors:EventToCommandBehavior EventName="ItemTapped"
+                                                                      Command="{Binding HashtagTapCommand}"/>
 
-                                        <Behaviors:EventToCommandBehavior EventName="TextChanged"
-                                                                          Command="{Binding RefreshWordsToHighlight}"/>
+                                </ListView.Behaviors>
 
-                                    </Entry.Behaviors>
-                                    
-                                </Entry>
+                                <ListView.ItemTemplate>
 
-                                <Label Text="Input text"/>
+                                    <DataTemplate>
 
-                                <Editor Text="{Binding EditText}" 
-                                        AutoSize="TextChanges"/>
+                                        <ViewCell>
 
-                                <Label Text="Highlighted text"/>
-                                
-                                <controls:HighlightedLabel Style="{DynamicResource tstyle_i5}"
-                                                           Text="{Binding EditText}"
-                                                           WordsToHighlight="{Binding WordsToHighlight}"
-                                                           KeywordBackgroundColor="{DynamicResource appcolor_i8}"
-                                                           HashtagTextColor="{DynamicResource appcolor_i1}"/>-->
+                                            <ViewCell.View>
 
-                                <BoxView Style="{DynamicResource SeparatorStyle}"
-                                         Margin="0" />
+                                                <StackLayout Spacing="0"
+                                                             BackgroundColor="{DynamicResource appcolor_i2}">
 
-                                <ListView Margin="0"
-                                          HasUnevenRows="true"
-                                          SeparatorVisibility="None"
-                                          SeparatorColor="{DynamicResource appcolor_i6}"
-                                          ItemsSource="{Binding Hashtags}"
-                                          SelectedItem="{Binding SelectedHashtag}">
+                                                    <StackLayout Padding="0, 15, 0, 8"
+                                                                 Orientation="Horizontal">
 
-                                    <ListView.Behaviors>
+                                                        <StackLayout>
 
-                                        <Behaviors:EventToCommandBehavior EventName="ItemTapped"
-                                                                          Command="{Binding HashtagTapCommand}"/>
+                                                            <Label Margin="0, 5, 0, 2"
+                                                                   Style="{DynamicResource tstyle_i6}"
+                                                                   Text="{Binding SelectedHashtag, Text}" />
 
-                                    </ListView.Behaviors>
+                                                            <Label Style="{DynamicResource tstyle_i15}">
 
-                                    <ListView.ItemTemplate>
+                                                                <Label.FormattedText>
 
-                                        <DataTemplate>
+                                                                    <FormattedString>
 
-                                            <ViewCell>
+                                                                        <Span Text="{xct:Translate Posts}"></Span>
 
-                                                <ViewCell.View>
+                                                                        <Span Text="{Binding SelectedHashtag, TweetsCount, StringFormat=': {0}'}" />
 
-                                                    <StackLayout Spacing="0"
-                                                                 BackgroundColor="{DynamicResource appcolor_i2}">
+                                                                    </FormattedString>
 
-                                                        <StackLayout Padding="0, 15, 0, 8"
-                                                                     Orientation="Horizontal">
+                                                                </Label.FormattedText>
 
-                                                            <StackLayout>
-
-                                                                <Label Margin="0, 5, 0, 2"
-                                                                       Style="{DynamicResource tstyle_i6}"
-                                                                       Text="{Binding SelectedHashtag, Text}" />
-
-                                                                <Label Style="{DynamicResource tstyle_i15}">
-
-                                                                    <Label.FormattedText>
-
-                                                                        <FormattedString>
-
-                                                                            <Span Text="{xct:Translate Posts}"></Span>
-
-                                                                            <Span Text="{Binding SelectedHashtag, TweetsCount, StringFormat=': {0}'}" />
-
-                                                                        </FormattedString>
-
-                                                                    </Label.FormattedText>
-
-                                                                </Label>
-
-                                                            </StackLayout>
-
-                                                            <Image Margin="0, 0, 15.5, 10"
-                                                                   HorizontalOptions="EndAndExpand"
-                                                                   VerticalOptions="Center"
-                                                                   Scale="1.25"
-                                                                   Source="{DynamicResource ic_right_gray}" />
+                                                            </Label>
 
                                                         </StackLayout>
 
-                                                        <BoxView Grid.Row="1"
-                                                                 Style="{DynamicResource SeparatorStyle}" />
+                                                        <Image Margin="0, 0, 15.5, 10"
+                                                               HorizontalOptions="EndAndExpand"
+                                                               VerticalOptions="Center"
+                                                               Scale="1.25"
+                                                               Source="{DynamicResource ic_right_gray}" />
 
                                                     </StackLayout>
 
-                                                </ViewCell.View>
+                                                    <BoxView Style="{DynamicResource SeparatorStyle}" />
 
-                                            </ViewCell>
+                                                </StackLayout>
 
-                                        </DataTemplate>
+                                            </ViewCell.View>
 
-                                    </ListView.ItemTemplate>
+                                        </ViewCell>
 
-                                </ListView>
+                                    </DataTemplate>
 
-                            </StackLayout>
+                                </ListView.ItemTemplate>
 
-                        </stateContainer:StateCondition>
+                            </ListView>
 
-                        <!-- SEARCH IS ACTIVE - DISPLAY SEARCH RESULTS -->
-                        <stateContainer:StateCondition State="Active">
+                        </StackLayout>
 
-                            <stateContainer:StateContainer State="{Binding TweetSearchResult}"
-                                                           x:Name="tweetSearchResultContainer">
+                    </stateContainer:StateCondition>
 
-                                <stateContainer:StateContainer.Conditions>
+                    <!-- SEARCH IS ACTIVE - DISPLAY SEARCH RESULTS -->
+                    <stateContainer:StateCondition State="Active">
 
-                                    <!-- TWEETS FOUND - DISPLAY TWEETS -->
-                                    <stateContainer:StateCondition State="Success">
+                        <stateContainer:StateContainer State="{Binding TweetSearchResult}"
+                                                       x:Name="tweetSearchResultContainer">
 
-                                        <Grid RowDefinitions="auto"
-                                              RowSpacing="0"
-                                              HorizontalOptions="Fill"
-                                              VerticalOptions="Fill">
+                            <stateContainer:StateContainer.Conditions>
 
-                                            <controls:CustomCollectionView x:Name="customCollectView"
-                                                                           Grid.Row="1" 
-                                                                           ItemsSource="{Binding Tweets}" 
-                                                                           ItemTemplate="{StaticResource templateSelector}"/>
+                                <!-- TWEETS FOUND - DISPLAY TWEETS -->
+                                <stateContainer:StateCondition State="Success">
 
-                                        </Grid>
+                                        <controls:CustomCollectionView ItemsSource="{Binding Tweets}" 
+                                                                       ItemTemplate="{StaticResource templateSelector}"
+                                                                       x:Name="customCollectView"/>
 
-                                    </stateContainer:StateCondition>
+                                </stateContainer:StateCondition>
 
-                                    <!-- NO RESULTS FOR QUERY - DISPLAY OWL -->
-                                    <stateContainer:StateCondition State="NoResults">
+                                <!-- NO RESULTS FOR QUERY - DISPLAY OWL -->
+                                <stateContainer:StateCondition State="NoResults">
 
-                                        <StackLayout Margin="{OnPlatform Android='0, 240.3, 0, 0', iOS='0, 176.5, 0, 0'}"
-                                                     Padding="0"
-                                                     Spacing="28">
+                                    <StackLayout Margin="{OnPlatform Android='0, 240.3, 0, 0', iOS='0, 176.5, 0, 0'}"
+                                                 Padding="0"
+                                                 Spacing="28">
 
-                                            <Image Scale="1.176"
-                                                   Source="{DynamicResource pic_owl_blue_big}" />
+                                        <Image Scale="1.176"
+                                               Source="{DynamicResource pic_owl_blue_big}" />
 
-                                            <controls:LineSpacingLabel Margin="30, 0"
-                                                                       HorizontalOptions="Center"
-                                                                       HorizontalTextAlignment="Center"
-                                                                       Style="{DynamicResource tstyle_i5}"
-                                                                       LineSpacing="{OnPlatform Android=1.3, iOS=6.45}"
-                                                                       Text="{Binding NoResultsMessage}"/>
+                                        <controls:LineSpacingLabel Margin="30, 0"
+                                                                   HorizontalOptions="Center"
+                                                                   HorizontalTextAlignment="Center"
+                                                                   Style="{DynamicResource tstyle_i5}"
+                                                                   LineSpacing="{OnPlatform Android=1.3, iOS=6.45}"
+                                                                   Text="{Binding NoResultsMessage}"/>
 
-                                        </StackLayout>
+                                    </StackLayout>
 
-                                    </stateContainer:StateCondition>
+                                </stateContainer:StateCondition>
 
-                                </stateContainer:StateContainer.Conditions>
+                            </stateContainer:StateContainer.Conditions>
 
-                            </stateContainer:StateContainer>
+                        </stateContainer:StateContainer>
 
-                        </stateContainer:StateCondition>
+                    </stateContainer:StateCondition>
 
-                    </stateContainer:StateContainer.Conditions>
+                </stateContainer:StateContainer.Conditions>
 
-                </stateContainer:StateContainer>
+            </stateContainer:StateContainer>
 
-                <!-- SEARCH BAR SHADOW -->
-                <sh:Shadows Grid.Row="0"
-                            VerticalOptions="EndAndExpand"
-                            IsVisible="false"
-                            Shades="{sh:SingleShade Offset='0, 2.858',
-                                                    Opacity={OnPlatform Android=0.08, iOS=0.08},
-                                                    BlurRadius={OnPlatform Android=8, iOS=8},
-                                                    Color={StaticResource appcolor_i3}}">
+            <!-- SEARCH BAR SHADOW -->
+            <sh:Shadows Grid.Row="0"
+                        VerticalOptions="EndAndExpand"
+                        IsVisible="false"
+                        Shades="{sh:SingleShade Offset='0, 2.858',
+                                                Opacity={OnPlatform Android=0.08, iOS=0.08},
+                                                BlurRadius={OnPlatform Android=8, iOS=8},
+                                                Color={StaticResource appcolor_i3}}">
 
-                    <sh:Shadows.Triggers>
+                <sh:Shadows.Triggers>
 
-                        <DataTrigger TargetType="sh:Shadows"
-                                     Binding="{Binding Source={x:Reference tweetSearchResultContainer}, Path=State}"
-                                     Value="Success">
+                    <DataTrigger TargetType="sh:Shadows"
+                                 Binding="{Binding Source={x:Reference tweetSearchResultContainer}, Path=State}"
+                                 Value="Success">
 
-                            <Setter Property="IsVisible" Value="true"/>
+                        <Setter Property="IsVisible" Value="true"/>
 
-                        </DataTrigger>
+                    </DataTrigger>
 
-                    </sh:Shadows.Triggers>
+                </sh:Shadows.Triggers>
 
-                    <Frame IsVisible="false"
-                           HasShadow="False"/>
+                <Frame IsVisible="false"
+                       HasShadow="False"/>
 
-                </sh:Shadows>
+            </sh:Shadows>
 
-                <!-- SEARCH BAR -->
-                <StackLayout Grid.Row="0"
-                             IsVisible="true"
-                             Spacing="0">
+            <!-- SEARCH BAR -->
+            <StackLayout Grid.Row="0"
+                         Spacing="0"
+                         IsVisible="true">
 
-                    <controls:SearchBar SearchState="{Binding TweetsSearchState}"
-                                        AvatarIconSource="{Binding AvatarIcon}"
-                                        AvatarIconTapCommand="{Binding OpenFlyoutCommandAsync}"
-                                        BackIconTapCommand="{Binding BackToHashtagsTapCommand}"
-                                        PressOkOnKeyboardCommand="{Binding StartTweetsSearchTapCommand}"
-                                        BackgroundColor="{DynamicResource appcolor_i2}"
-                                        QueryString="{Binding QueryString}"
-                                        MaxLength="100"/>
+                <controls:SearchBar SearchStatus="{Binding TweetsSearchStatus}"
+                                    AvatarIconSource="{Binding AvatarIcon}"
+                                    AvatarIconTapCommand="{Binding OpenFlyoutCommandAsync}"
+                                    BackIconTapCommand="{Binding BackToHashtagsTapCommand}"
+                                    PressOkOnKeyboardCommand="{Binding StartTweetsSearchTapCommand}"
+                                    BackgroundColor="{DynamicResource appcolor_i2}"
+                                    QueryString="{Binding QueryString}"
+                                    MaxLength="100"/>
 
-                    <BoxView Style="{DynamicResource SeparatorStyle}"/>
+                <BoxView Style="{DynamicResource SeparatorStyle}"/>
 
-                </StackLayout>
+            </StackLayout>
 
-            </Grid>
-
-        </StackLayout>
+        </Grid>
 
     </ContentPage.Content>
-    
+
 </local:BaseContentPage>

@@ -4,11 +4,9 @@ using Foundation;
 using InterTwitter.Controls.HighlightedLabel;
 using InterTwitter.Droid.Renderers;
 using System;
-using System.Collections.Generic;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
-//using Color = Android.Graphics.Color;
 
 [assembly: ExportRenderer(typeof(HighlightedLabel), typeof(HighlightedLabelRenderer))]
 namespace InterTwitter.Droid.Renderers
@@ -29,7 +27,8 @@ namespace InterTwitter.Droid.Renderers
 
             if (e.OldElement == null)
             {
-                _highlightedLabel = (HighlightedLabel)Element;
+                _highlightedLabel = Element as HighlightedLabel;
+
                 _defaultBackgroundColor = _highlightedLabel.BackgroundColor.ToCGColor();
                 _defaultTextColor = _highlightedLabel.TextColor.ToCGColor();
                 _keywordBackgroundColor = _highlightedLabel.KeywordBackgroundColor.ToCGColor();
@@ -45,9 +44,7 @@ namespace InterTwitter.Droid.Renderers
 
         private void HighlightWordsInText()
         {
-            var start = DateTime.Now;
-
-            _highlightedLabel = (HighlightedLabel)Element;
+            _highlightedLabel = Element as HighlightedLabel;
 
             if (_highlightedLabel != null
                 && !string.IsNullOrEmpty(_highlightedLabel.Text)
@@ -79,10 +76,8 @@ namespace InterTwitter.Droid.Renderers
                     attributedString.AddAttributes(stringAttributes, range);
                 }
 
-                ((UILabel)Control).AttributedText = attributedString;
+                (Control as UILabel).AttributedText = attributedString;
             }
-
-            var end = (DateTime.Now - start).Milliseconds;
         }
 
         #endregion

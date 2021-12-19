@@ -44,7 +44,7 @@ namespace InterTwitter.Services
             return result;
         }
 
-        public async Task<AOResult<IEnumerable<TweetModel>>> GetAllTweetsByHashtagsOrKeysAsync(IEnumerable<string> keys)
+        public async Task<AOResult<IEnumerable<TweetModel>>> FindTweetsByKeywordsAsync(IEnumerable<string> keys)
         {
             var result = new AOResult<IEnumerable<TweetModel>>();
 
@@ -63,7 +63,7 @@ namespace InterTwitter.Services
             }
             catch (Exception ex)
             {
-                result.SetError($"{nameof(GetAllTweetsByHashtagsOrKeysAsync)}: exception", "Some issues", ex);
+                result.SetError($"{nameof(FindTweetsByKeywordsAsync)}: exception", "Some issues", ex);
             }
 
             return result;

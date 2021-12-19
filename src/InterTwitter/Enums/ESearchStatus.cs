@@ -1,6 +1,6 @@
 ﻿namespace InterTwitter.Enums
 {
-    public enum ESearchState
+    public enum ESearchStatus
     {
         NotActive,
         Active,

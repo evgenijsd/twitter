@@ -50,14 +50,14 @@ namespace InterTwitter.Controls.HighlightedLabel
 
         #region -- Public helpers --
 
-        public List<HighlightedWord> GetHighlightedWords()
+        public List<HighlightedWordInfo> GetHighlightedWords()
         {
-            var keywords = new List<HighlightedWord>();
-            var hashtags = new List<HighlightedWord>();
+            var keywords = new List<HighlightedWordInfo>();
+            var hashtags = new List<HighlightedWordInfo>();
 
             string[] wordsToHighlight = WordsToHighlight.ToArray();
 
-            var hashtagsInText = Text
+            var uniqueHashtagsInText = Text
                 .Split(' ')
                 .Where(x => Regex.IsMatch(x, Constants.RegexPatterns.HASHTAG_PATTERN))
                 .Distinct();
@@ -75,9 +75,9 @@ namespace InterTwitter.Controls.HighlightedLabel
                     {
                         positionOfNextWord = wordPosition + word.Length;
 
-                        bool isHashtag = hashtagsInText.Any(x => x.Equals(word, StringComparison.OrdinalIgnoreCase));
+                        bool isHashtag = uniqueHashtagsInText.Any(x => x.Equals(word, StringComparison.OrdinalIgnoreCase));
 
-                        HighlightedWord highlightedWord = new HighlightedWord()
+                        HighlightedWordInfo highlightedWord = new HighlightedWordInfo()
                         {
                             Position = wordPosition,
                             Length = word.Length,

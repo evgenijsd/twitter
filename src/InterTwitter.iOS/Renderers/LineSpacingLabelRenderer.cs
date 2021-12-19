@@ -16,9 +16,11 @@ namespace InterTwitter.iOS.Renderers
         {
         }
 
+        #region -- Overrides --
+
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            var lineSpacingLabel = (LineSpacingLabel)Element;
+            var lineSpacingLabel = Element as LineSpacingLabel;
 
             if (Control != null && lineSpacingLabel != null && lineSpacingLabel.Text != null)
             {
@@ -27,15 +29,17 @@ namespace InterTwitter.iOS.Renderers
                     LineSpacing = (nfloat)lineSpacingLabel.LineSpacing
                 };
 
-                var str = new NSMutableAttributedString(lineSpacingLabel.Text);
+                var text = new NSMutableAttributedString(lineSpacingLabel.Text);
                 var style = UIStringAttributeKey.ParagraphStyle;
-                var range = new NSRange(0, str.Length);
+                var range = new NSRange(0, text.Length);
 
-                str.AddAttribute(style, paragraphStyle, range);
+                text.AddAttribute(style, paragraphStyle, range);
 
-                Control.AttributedText = str;
+                Control.AttributedText = text;
                 Control.TextAlignment = (UITextAlignment)lineSpacingLabel.HorizontalTextAlignment;
             }
-        }
+        } 
+
+        #endregion
     }
 }

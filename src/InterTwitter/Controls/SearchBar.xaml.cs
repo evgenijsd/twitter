@@ -12,22 +12,22 @@ namespace InterTwitter.Controls
         {
             InitializeComponent();
 
-            SearchState = ESearchState.NotActive;
+            SearchStatus = ESearchStatus.NotActive;
         }
 
         #region --- Public properties ---
 
-        public static readonly BindableProperty SearchStateProperty = BindableProperty.Create(
-            propertyName: nameof(SearchState),
-            returnType: typeof(ESearchState),
+        public static readonly BindableProperty SearchStatusProperty = BindableProperty.Create(
+            propertyName: nameof(SearchStatus),
+            returnType: typeof(ESearchStatus),
             declaringType: typeof(SearchBar),
-            defaultValue: ESearchState.Active,
+            defaultValue: ESearchStatus.Active,
             defaultBindingMode: BindingMode.TwoWay);
 
-        public ESearchState SearchState
+        public ESearchStatus SearchStatus
         {
-            get => (ESearchState)GetValue(SearchStateProperty);
-            private set => SetValue(SearchStateProperty, value);
+            get => (ESearchStatus)GetValue(SearchStatusProperty);
+            private set => SetValue(SearchStatusProperty, value);
         }
 
         public static readonly BindableProperty QueryStringProperty = BindableProperty.Create(

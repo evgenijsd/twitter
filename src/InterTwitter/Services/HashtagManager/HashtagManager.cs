@@ -24,6 +24,21 @@ namespace InterTwitter.Services.HashtagManager
 
             try
             {
+                var allHashtags = new List<HashtagModel>(_mockService.Hashtags);
+
+                int indexOfHashtag = allHashtags.FindIndex(x => x.Text.Equals(hashtag.Text, StringComparison.OrdinalIgnoreCase));
+
+                if (indexOfHashtag > 0)
+                {
+                    allHashtags[indexOfHashtag].TweetsCount++;
+                }
+                else
+                {
+                    hashtag.TweetsCount = 1;
+                    allHashtags.Add(hashtag);
+                }
+
+                _mockService.Hashtags = allHashtags;
             }
             catch (Exception e)
             {
@@ -39,6 +54,23 @@ namespace InterTwitter.Services.HashtagManager
 
             try
             {
+                var allHashtags = new List<HashtagModel>(_mockService.Hashtags);
+
+                int indexOfHashtag = allHashtags.FindIndex(x => x.Text.Equals(hashtag.Text, StringComparison.OrdinalIgnoreCase));
+
+                if (indexOfHashtag > 0)
+                {
+                    if (allHashtags[indexOfHashtag].TweetsCount > 0)
+                    {
+                        allHashtags[indexOfHashtag].TweetsCount--;
+                    }
+                    else
+                    {
+                        allHashtags.RemoveAt(indexOfHashtag);
+                    }
+                }
+
+                _mockService.Hashtags = allHashtags;
             }
             catch (Exception e)
             {
@@ -63,10 +95,6 @@ namespace InterTwitter.Services.HashtagManager
                 if (popularHashtags is not null)
                 {
                     result.SetSuccess(popularHashtags);
-                }
-                else
-                {
-                    result.SetFailure();
                 }
             }
             catch (Exception e)

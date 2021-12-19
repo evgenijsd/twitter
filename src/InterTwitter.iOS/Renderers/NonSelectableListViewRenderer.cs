@@ -7,14 +7,18 @@ namespace InterTwitter.iOS.Renderers.Controls
 {
     class NonSelectableListViewRenderer : ListViewRenderer
     {
+        #region -- Overrides --
+
         protected override void OnElementChanged(ElementChangedEventArgs<ListView> e)
         {
             base.OnElementChanged(e);
 
-            if(Control != null)
+            if (Control != null)
             {
                 Control.DeselectRow(Control.IndexPathForSelectedRow, true);
             }
-        }
+        } 
+
+        #endregion
     }
 }

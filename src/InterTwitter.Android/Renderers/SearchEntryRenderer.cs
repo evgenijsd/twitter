@@ -30,13 +30,12 @@ namespace InterTwitter.Droid.Renderers.Controls
 
             if (e.OldElement == null)
             {
-                var editText = (EditText)Control;
+                var editText = Control as EditText;
                 editText.SetSelectAllOnFocus(true);
             }
 
-            var searchEntry = (SearchEntry)Element;
-
-             
+            var searchEntry = Element as SearchEntry;
+                         
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Q)
             {
                 Control.SetTextCursorDrawable(Resource.Drawable.my_cursor); //This API Intrduced in android 10

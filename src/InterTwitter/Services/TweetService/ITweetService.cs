@@ -11,6 +11,6 @@ namespace InterTwitter.Services
 
         Task<AOResult<UserModel>> GetAuthorAsync(int authorId);
 
-        Task<AOResult<IEnumerable<TweetModel>>> GetAllTweetsByHashtagsOrKeysAsync(IEnumerable<string> keys);
+        Task<AOResult<IEnumerable<TweetModel>>> FindTweetsByKeywordsAsync(IEnumerable<string> keys);
     }
 }

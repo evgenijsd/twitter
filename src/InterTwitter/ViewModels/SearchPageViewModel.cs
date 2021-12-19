@@ -38,27 +38,20 @@ namespace InterTwitter.ViewModels
             AvatarIcon = "pic_profile_small";
         }
 
-        #region -- Public Properties --
-
-        private string _testText;
-        public string EditText
-        {
-            get => _testText;
-            set => SetProperty(ref _testText, value);
-        }
-
-        private IEnumerable<string> _wordsToHighlight;
-        public IEnumerable<string> WordsToHighlight
-        {
-            get => _wordsToHighlight;
-            set => SetProperty(ref _wordsToHighlight, value);
-        }
+        #region -- Public properties --
 
         private string _avatarIcon;
         public string AvatarIcon
         {
             get => _avatarIcon;
             set => SetProperty(ref _avatarIcon, value);
+        }
+
+        private IEnumerable<string> _searchWords;
+        public IEnumerable<string> SearchWords
+        {
+            get => _searchWords;
+            set => SetProperty(ref _searchWords, value);
         }
 
         private string _queryString;
@@ -68,11 +61,11 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _queryString, value);
         }
 
-        private string _queryStringWithNoResults;
+        private string _noResultsMessage;
         public string NoResultsMessage
         {
-            get => _queryStringWithNoResults;
-            set => SetProperty(ref _queryStringWithNoResults, value);
+            get => _noResultsMessage;
+            set => SetProperty(ref _noResultsMessage, value);
         }
 
         private HashtagModel _selectedHashtag;
@@ -96,8 +89,8 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _tweets, value);
         }
 
-        private ESearchState _tweetsSearchState;
-        public ESearchState TweetsSearchState
+        private ESearchStatus _tweetsSearchState;
+        public ESearchStatus TweetsSearchStatus
         {
             get => _tweetsSearchState;
             set => SetProperty(ref _tweetsSearchState, value);
@@ -110,6 +103,9 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _tweetSearchResult, value);
         }
 
+        private ICommand _openFlyoutCommand;
+        public ICommand OpenFlyoutCommandAsync => _openFlyoutCommand ??= SingleExecutionCommand.FromFunc(OnOpenFlyoutCommandAsync);
+
         private ICommand _startTweetsSearchTapCommand;
         public ICommand StartTweetsSearchTapCommand => _startTweetsSearchTapCommand ??= SingleExecutionCommand.FromFunc(OnStartTweetsSearchCommandTapAsync);
 
@@ -119,26 +115,9 @@ namespace InterTwitter.ViewModels
         private ICommand _hashtagTapCommand;
         public ICommand HashtagTapCommand => _hashtagTapCommand ??= SingleExecutionCommand.FromFunc(OnHashtagTapCommandAsync);
 
-        private ICommand _openFlyoutCommand;
-        public ICommand OpenFlyoutCommandAsync => _openFlyoutCommand ??= SingleExecutionCommand.FromFunc(OnOpenFlyoutCommandAsync);
-
         #endregion
 
         #region -- Overrides --
-
-        public override async void OnNavigatedTo(INavigationParameters parameters)
-        {
-            await LoadHashtagsAsync();
-
-            base.OnNavigatedTo(parameters);
-        }
-
-        public override void OnNavigatedFrom(INavigationParameters parameters)
-        {
-            ResetSearchData();
-
-            base.OnNavigatedFrom(parameters);
-        }
 
         public override void OnAppearing()
         {
@@ -150,16 +129,30 @@ namespace InterTwitter.ViewModels
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource;
         }
 
+        public override async void OnNavigatedTo(INavigationParameters parameters)
+        {
+            await LoadHashtagsAsync();
+
+            base.OnNavigatedTo(parameters);
+        }
+
+        public override void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            ResetSearchState();
+
+            base.OnNavigatedFrom(parameters);
+        }
+
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
 
             switch (args.PropertyName)
             {
-                case nameof(TweetsSearchState):
-                    if (TweetsSearchState == ESearchState.NotActive)
+                case nameof(TweetsSearchStatus):
+                    if (TweetsSearchStatus == ESearchStatus.NotActive)
                     {
-                        ResetSearchData();
+                        ResetSearchState();
                     }
 
                     break;
@@ -168,14 +161,14 @@ namespace InterTwitter.ViewModels
 
         #endregion
 
-        #region -- Pulic helpers --
+        #region -- Public helpers --
 
-        public void ResetSearchData()
+        public void ResetSearchState()
         {
-            Tweets.Clear();
-            TweetsSearchState = ESearchState.NotActive;
             QueryString = string.Empty;
             NoResultsMessage = string.Empty;
+            TweetsSearchStatus = ESearchStatus.NotActive;
+            Tweets.Clear();
         }
 
         #endregion
@@ -184,19 +177,18 @@ namespace InterTwitter.ViewModels
 
         private async Task LoadHashtagsAsync()
         {
-            var result = await _hashtagManager.GetPopularHashtags(5);
+            var getPopularHashtagsResult = await _hashtagManager.GetPopularHashtags(Constants.Values.NUMBER_OF_POPULAR_HASHTAGS);
 
-            if (result.IsSuccess)
+            if (getPopularHashtagsResult.IsSuccess)
             {
-                Hashtags = new ObservableCollection<HashtagModel>(result.Result);
+                Hashtags = new ObservableCollection<HashtagModel>(getPopularHashtagsResult.Result);
             }
         }
 
         private async Task InitTweetsForDisplayingAsync(IEnumerable<TweetModel> tweets)
         {
             var tweetViewModels = new List<BaseTweetViewModel>(
-                tweets.Select(x => x.Media == EAttachedMediaType.Photos
-                    || x.Media == EAttachedMediaType.Gif
+                tweets.Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif
                     ? x.ToImagesTweetViewModel()
                     : x.ToBaseTweetViewModel()));
 
@@ -209,7 +201,7 @@ namespace InterTwitter.ViewModels
                     tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
                     tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
                     tweet.UserName = tweetAuthor.Result.Name;
-                    tweet.WordsToHighlight = WordsToHighlight;
+                    tweet.WordsToHighlight = SearchWords;
                 }
             }
 
@@ -225,7 +217,7 @@ namespace InterTwitter.ViewModels
 
         private Task OnStartTweetsSearchCommandTapAsync()
         {
-            TweetsSearch(QueryString);
+            FindTweets(QueryString);
 
             return Task.CompletedTask;
         }
@@ -233,23 +225,23 @@ namespace InterTwitter.ViewModels
         private Task OnHashtagTapCommandAsync()
         {
             QueryString = SelectedHashtag.Text;
-            TweetsSearch(QueryString);
+            FindTweets(QueryString);
 
             return Task.CompletedTask;
         }
 
         private Task OnBackToHashTagsCommandTapAsync()
         {
-            TweetsSearchState = ESearchState.NotActive;
+            TweetsSearchStatus = ESearchStatus.NotActive;
 
-            ResetSearchData();
+            ResetSearchState();
 
             return Task.CompletedTask;
         }
 
-        private async void TweetsSearch(string queryString)
+        private async void FindTweets(string queryString)
         {
-            TweetsSearchState = ESearchState.Active;
+            TweetsSearchStatus = ESearchStatus.Active;
 
             if (string.IsNullOrWhiteSpace(queryString)
                 || (!string.IsNullOrWhiteSpace(queryString)
@@ -262,14 +254,14 @@ namespace InterTwitter.ViewModels
             }
             else
             {
-                WordsToHighlight = Constants.Methods.GetUniqueWords(queryString);
-                var result = await _tweetService.GetAllTweetsByHashtagsOrKeysAsync(WordsToHighlight);
+                SearchWords = Constants.Methods.GetUniqueWords(queryString);
+                var getAllTweetsByKeywordsAsyncResult = await _tweetService.FindTweetsByKeywordsAsync(SearchWords);
 
-                if (result.IsSuccess)
+                if (getAllTweetsByKeywordsAsyncResult.IsSuccess)
                 {
                     TweetSearchResult = ESearchResult.Success;
 
-                    await InitTweetsForDisplayingAsync(result.Result);
+                    await InitTweetsForDisplayingAsync(getAllTweetsByKeywordsAsyncResult.Result);
                 }
                 else
                 {

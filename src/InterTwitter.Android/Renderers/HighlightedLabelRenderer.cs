@@ -1,10 +1,8 @@
 ﻿using Android.Content;
 using Android.Text;
 using Android.Text.Style;
-using Android.Widget;
 using InterTwitter.Controls.HighlightedLabel;
 using InterTwitter.Droid.Renderers;
-using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Color = Android.Graphics.Color;
@@ -33,7 +31,8 @@ namespace InterTwitter.Droid.Renderers
 
             if (e.OldElement == null)
             {
-                _highlightedLabel = (HighlightedLabel)Element;
+                _highlightedLabel = Element as HighlightedLabel;
+
                 _defaultBackgroundColor = _highlightedLabel.BackgroundColor.ToAndroid();
                 _defaultTextColor = _highlightedLabel.TextColor.ToAndroid();
                 _keywordBackgroundColor = _highlightedLabel.KeywordBackgroundColor.ToAndroid();
@@ -49,9 +48,7 @@ namespace InterTwitter.Droid.Renderers
 
         private void HighlightWordsInText()
         {
-            var start = DateTime.Now;
-
-            _highlightedLabel = (HighlightedLabel)Element;
+            _highlightedLabel = Element as HighlightedLabel;
 
             if (_highlightedLabel != null
                 && !string.IsNullOrEmpty(_highlightedLabel.Text)
@@ -66,13 +63,11 @@ namespace InterTwitter.Droid.Renderers
                     SetSpan(spannableString, item);
                 }
 
-                ((TextView)Control).TextFormatted = spannableString;
+                Control.TextFormatted = spannableString;
             }
-
-            var end = (DateTime.Now - start).Milliseconds;
         }
     
-        private void SetSpan(SpannableString spannableString, HighlightedWord highlightedWord)
+        private void SetSpan(SpannableString spannableString, HighlightedWordInfo highlightedWord)
         {
             spannableString.SetSpan(
                 new ForegroundColorSpan(highlightedWord.IsHashtag ? _hashtagTextColor : _defaultTextColor),

@@ -16,20 +16,24 @@ namespace InterTwitter.Droid.Renderers
         {
         }
 
+        #region -- Overrides --
+
         protected override void OnElementChanged(ElementChangedEventArgs<Label> e)
         {
             base.OnElementChanged(e);
 
             if (e.OldElement == null)
             {
-                this._lineSpacingLabel = (LineSpacingLabel)this.Element;
+                _lineSpacingLabel = Element as LineSpacingLabel;
             }
 
-            var lineSpacing = this._lineSpacingLabel.LineSpacing;
+            var lineSpacing = _lineSpacingLabel.LineSpacing;
 
-            this.Control.SetLineSpacing(1f, lineSpacing);
+            Control.SetLineSpacing(1f, lineSpacing);
 
-            this.UpdateLayout();
-        }
+            UpdateLayout();
+        } 
+
+        #endregion
     }
 }
