@@ -11,133 +11,148 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
+using Color = Android.Graphics.Color;
 
 [assembly: ExportRenderer(typeof(HighlightedLabel), typeof(HighlightedLabelRenderer))]
 namespace InterTwitter.Droid.Renderers
 {
     public class HighlightedLabelRenderer : LabelRenderer
     {
-        public HighlightedLabelRenderer(Context context) 
+        private HighlightedLabel _highlightedLabel;
+        private Color _defaultBackgroundColor;
+        private Color _defaultTextColor;
+        private Color _keywordBackgroundColor;
+        private Color _hashtagTextColor;
+
+        public HighlightedLabelRenderer(Context context)
             : base(context)
         {
         }
 
         #region -- Overrides --
-        
+
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
 
-            var highlightedLabel = (HighlightedLabel)Element;
-
             switch (e.PropertyName)
             {
-                case nameof(highlightedLabel.Text):
-                case nameof(highlightedLabel.WordsToHighlight):
-                    HighlightWordsInText(highlightedLabel);
+                case nameof(_highlightedLabel.Text):
+                case nameof(_highlightedLabel.WordsToHighlight):
+                    HighlightWordsInText();
                     break;
             }
+        }
+
+        protected override void OnElementChanged(ElementChangedEventArgs<Label> e)
+        {
+            base.OnElementChanged(e);
+
+            if (e.OldElement == null)
+            {
+                _highlightedLabel = (HighlightedLabel)Element;
+                _defaultBackgroundColor = _highlightedLabel.BackgroundColor.ToAndroid();
+                _defaultTextColor = _highlightedLabel.TextColor.ToAndroid();
+                _keywordBackgroundColor = _highlightedLabel.KeywordBackgroundColor.ToAndroid();
+                _hashtagTextColor = _highlightedLabel.HashtagTextColor.ToAndroid();
+            }
+
+            HighlightWordsInText();
         }
 
         #endregion
 
         #region -- Private helpers --
 
-        private void HighlightWordsInText(HighlightedLabel highlightedLabel)
+        private void HighlightWordsInText()
         {
-            string text = highlightedLabel.Text;
-            List<string> wordsToHighlight = new List<string>(highlightedLabel.WordsToHighlight);
+            DateTime start = DateTime.Now;
 
-            if (!string.IsNullOrEmpty(text) && wordsToHighlight?.Count > 0)
+            _highlightedLabel = (HighlightedLabel)Element;
+
+            if (_highlightedLabel != null 
+                && !string.IsNullOrEmpty(_highlightedLabel.Text) 
+                && _highlightedLabel.WordsToHighlight != null)
             {
-                var positionAndWords = GetPositionsAndKeyLengthsPairs(text, wordsToHighlight);
+                List<string> wordsToHighlight = new List<string>(_highlightedLabel.WordsToHighlight);
 
-                positionAndWords = positionAndWords
-                    .OrderBy(x => x.Key)
-                    .ThenByDescending(x => x.Value.Length)
-                    .ToList();
+                // слова-ключи, которые нужно выделить
+                var positionsAndKeys = new List<KeyValuePair<int, string>>();
 
-                var testForDebugging = positionAndWords.Select(x => $"{x.Value} {x.Key}").ToArray();
+                // хештеги, которые нужно выделить
+                var positionsAndTags = new List<KeyValuePair<int, string>>();
 
-                SpannableString spannableString = new SpannableString(text);
+                // все уникальные хештеги в тексте
+                var hashtagsInText = _highlightedLabel.Text
+                    .Split(' ')
+                    .Where(x => Regex.IsMatch(x, Constants.RegexPatterns.HASHTAG_PATTERN))
+                    .Distinct();
 
-                var keywordBackgroundColor = highlightedLabel.KeywordBackgroundColor.ToAndroid();
-                var hashtagTextColor = highlightedLabel.HashtagTextColor.ToAndroid();
-
-                foreach (var item in positionAndWords)
+                // ищем все вхождения для каждого слова в тексте
+                foreach (var word in wordsToHighlight)
                 {
-                    bool isHashtag = Regex.IsMatch(
-                        item.Value,
-                        Constants.RegexPatterns.HASHTAG_PATTERN,
-                        RegexOptions.IgnoreCase);
+                    int wordPosition = 0;
+                    int positionOfNextWord = 0;
 
-                    if (isHashtag)
+                    do
                     {
-                        spannableString.SetSpan(
-                            new ForegroundColorSpan(hashtagTextColor),
-                            item.Key,
-                            item.Key + item.Value.Length,
-                            SpanTypes.ExclusiveExclusive);
+                        wordPosition = _highlightedLabel.Text.IndexOf(word, positionOfNextWord, StringComparison.OrdinalIgnoreCase);
 
-                        spannableString.SetSpan(
-                            new BackgroundColorSpan(keywordBackgroundColor),
-                            item.Key,
-                            item.Key + item.Value.Length,
-                            SpanTypes.ExclusiveExclusive);
+                        if (wordPosition != -1)
+                        {
+                            positionOfNextWord = wordPosition + word.Length;
+                            var pair = new KeyValuePair<int, string>(wordPosition, word);
+
+                            // если любой из хештегов текста совпадает с словом для выделения, то добавляем его в список хештегов
+                            if (hashtagsInText.Any(x => x.Equals(pair.Value, StringComparison.OrdinalIgnoreCase)))
+                            {
+                                positionsAndTags.Add(pair);
+                            }
+                            else
+                            {
+                                positionsAndKeys.Add(pair);
+                            }
+                        }
+
                     }
-                    else
-                    {
-                        spannableString.SetSpan(
-                            new BackgroundColorSpan(keywordBackgroundColor),
-                            item.Key,
-                            item.Key + item.Value.Length,
-                            SpanTypes.ExclusiveExclusive);
-                    }
-                    
-                    ((TextView)Control).TextFormatted = spannableString;
+                    while (wordPosition != -1);
                 }
 
+                SpannableString spannableString = new SpannableString(_highlightedLabel.Text);
 
-                //spannable.SetSpan(
-                //    new BackgroundColorSpan(highlightedLabel.KeywordBackgroundColor.ToAndroid()),
-                //        0,
-                //        10,
-                //        SpanTypes.ExclusiveExclusive);
+                foreach (var item in positionsAndKeys)
+                {
+                    SetSpan(spannableString, item);
+                }
 
-                //spannable.SetSpan(
-                //    new ForegroundColorSpan(highlightedLabel.HashtagTextColor.ToAndroid()),
-                //        0,
-                //        10,
-                //        SpanTypes.ExclusiveExclusive);
-
+                foreach (var item in positionsAndTags)
+                {
+                    SetSpan(spannableString, item, true);
+                }
+                
+                ((TextView)Control).TextFormatted = spannableString;
             }
+
+            // query - 
+
+            DateTime end = DateTime.Now;
+            var time = end - start;
         }
-
-        private List<KeyValuePair<int, string>> GetPositionsAndKeyLengthsPairs(string text, List<string> wordsToHighlight)
+    
+        private void SetSpan(SpannableString spannableString, KeyValuePair<int, string> item, bool isHashtag = false)
         {
-            List<KeyValuePair<int, string>> positionsAndKeyLengths = new List<KeyValuePair<int, string>>();
+            spannableString.SetSpan(
+                new ForegroundColorSpan(isHashtag ? _hashtagTextColor : _defaultTextColor),
+                item.Key,
+                item.Key + item.Value.Length,
+                SpanTypes.ExclusiveExclusive);
 
-            foreach (var word in wordsToHighlight)
-            {
-                int wordPosition = 0;
-                int positionOfNextWord = 0;
-
-                do
-                {
-                    wordPosition = text.IndexOf(word, positionOfNextWord, StringComparison.OrdinalIgnoreCase);
-
-                    if (wordPosition != -1)
-                    {
-                        positionOfNextWord = wordPosition + word.Length;
-
-                        positionsAndKeyLengths.Add(new KeyValuePair<int, string>(wordPosition, word));
-                    }
-                }
-                while (wordPosition != -1);
-            }
-
-            return positionsAndKeyLengths;
-        } 
+            spannableString.SetSpan(
+                new BackgroundColorSpan(isHashtag ? _defaultBackgroundColor : _keywordBackgroundColor),
+                item.Key,
+                item.Key + item.Value.Length,
+                SpanTypes.ExclusiveExclusive);
+        }
 
         #endregion
     }

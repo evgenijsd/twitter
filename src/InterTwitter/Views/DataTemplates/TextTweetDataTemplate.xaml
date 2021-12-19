@@ -28,17 +28,16 @@
                        Text="{Binding UserName}" 
                        FontAttributes="Bold"/>
 
-                <!--<controls:HighlightedLabel Style="{DynamicResource tstyle_i7}"
+                <controls:HighlightedLabel Style="{DynamicResource tstyle_i7}"
                                            VerticalOptions="Start"
                                            HorizontalOptions="StartAndExpand"
                                            IsVisible="{Binding IsTextVisible}"
                                            LineBreakMode="TailTruncation"
                                            MaxLines="5" 
-                                           LineSpacing="{OnPlatform Android=1.3, iOS=6.25}"
                                            KeywordBackgroundColor="{DynamicResource appcolor_i8}"
                                            HashtagTextColor="{DynamicResource appcolor_i1}"
                                            Text="{Binding Text}"
-                                           WordsToHighlight="{Binding WordsToHighlight}"/>-->
+                                           WordsToHighlight="{Binding WordsToHighlight}"/>
 
                 <StackLayout Orientation="Horizontal"
                              HeightRequest="20"

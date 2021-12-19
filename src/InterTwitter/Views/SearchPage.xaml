@@ -41,7 +41,7 @@
                                        Text="{xct:Translate PopularTheme}"
                                        Style="{DynamicResource tstyle_i4}"/>
 
-                                <Label Text="Query string"/>
+                                <!--<Label Text="Query string"/>
 
                                 <Entry Text="{Binding QueryString}">
 
@@ -65,7 +65,7 @@
                                                            Text="{Binding EditText}"
                                                            WordsToHighlight="{Binding WordsToHighlight}"
                                                            KeywordBackgroundColor="{DynamicResource appcolor_i8}"
-                                                           HashtagTextColor="{DynamicResource appcolor_i1}"/>
+                                                           HashtagTextColor="{DynamicResource appcolor_i1}"/>-->
 
                                 <BoxView Style="{DynamicResource SeparatorStyle}"
                                          Margin="0" />

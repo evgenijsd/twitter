@@ -37,13 +37,13 @@ namespace InterTwitter.ViewModels
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource;
             AvatarIcon = "pic_profile_small";
 
-            EditText = "#amas masd deveex maxx";
+            EditText = "#amas #masd dev#eex%#qwer #maxx";
 
             QueryString = "    dev ex #am amas masd  x dev as ma ex ma        ma";
 
             WordsToHighlight = Constants.Methods.GetUniqueWords(QueryString);
 
-            //QueryString = "#am # amas #amas masd ma";
+            QueryString = "#am # amas #amas masd ma";
         }
 
         #region -- Public Properties --
