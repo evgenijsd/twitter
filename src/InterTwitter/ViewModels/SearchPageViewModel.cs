@@ -36,14 +36,6 @@ namespace InterTwitter.ViewModels
 
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource;
             AvatarIcon = "pic_profile_small";
-
-            EditText = "#amas #masd dev#eex%#qwer #maxx";
-
-            QueryString = "    dev ex #am amas masd  x dev as ma ex ma        ma";
-
-            WordsToHighlight = Constants.Methods.GetUniqueWords(QueryString);
-
-            QueryString = "#am # amas #amas masd ma";
         }
 
         #region -- Public Properties --
@@ -117,13 +109,6 @@ namespace InterTwitter.ViewModels
             get => _tweetSearchResult;
             set => SetProperty(ref _tweetSearchResult, value);
         }
-
-        private ICommand _refreshWordsToHighlight;
-        public ICommand RefreshWordsToHighlight => _refreshWordsToHighlight ??= SingleExecutionCommand.FromFunc(() =>
-        {
-            WordsToHighlight = Constants.Methods.GetUniqueWords(QueryString);
-            return Task.CompletedTask;
-        });
 
         private ICommand _startTweetsSearchTapCommand;
         public ICommand StartTweetsSearchTapCommand => _startTweetsSearchTapCommand ??= SingleExecutionCommand.FromFunc(OnStartTweetsSearchCommandTapAsync);
