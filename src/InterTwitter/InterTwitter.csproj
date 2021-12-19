@@ -56,6 +56,15 @@
     <Compile Update="Controls\CustomNavigationbar.xaml.cs">
       <DependentUpon>CustomNavigationbar.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\DataTemplates\Notification\ImageTweetDataTemplate.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DataTemplates\Notification\TextTweetDataTemplate.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DataTemplates\Notification\VideoTweetDataTemplate.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

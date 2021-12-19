@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace InterTwitter.Models.TweetViewModel
+namespace InterTwitter.Models.NotificationViewModel
 {
-    public class BaseTweetViewModel : BindableBase
+    public class BaseNotificationViewModel : BindableBase
     {
         #region -- Public properties --
         private int _tweetId;
@@ -95,16 +95,16 @@ namespace InterTwitter.Models.TweetViewModel
         }
 
         private ICommand _likeTweetCommand;
-        public ICommand LikeTweetCommand => _likeTweetCommand ?? (_likeTweetCommand = SingleExecutionCommand.FromFunc<ImagesTweetViewModel>(OnLikeAsync));
+        public ICommand LikeTweetCommand => _likeTweetCommand ?? (_likeTweetCommand = SingleExecutionCommand.FromFunc<ImagesNotificationViewModel>(OnLikeAsync));
 
         private ICommand _openTweetCommand;
-        public ICommand OpenTweetCommand => _openTweetCommand ?? (_openTweetCommand = SingleExecutionCommand.FromFunc<ImagesTweetViewModel>(OnOpenTweetAsync));
+        public ICommand OpenTweetCommand => _openTweetCommand ?? (_openTweetCommand = SingleExecutionCommand.FromFunc<ImagesNotificationViewModel>(OnOpenTweetAsync));
 
         private ICommand _markTweetCommand;
-        public ICommand MarkTweetCommand => _markTweetCommand ?? (_markTweetCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnMarkAsync));
+        public ICommand MarkTweetCommand => _markTweetCommand ?? (_markTweetCommand = SingleExecutionCommand.FromFunc<BaseNotificationViewModel>(OnMarkAsync));
 
         private ICommand _moveToProfileCommand;
-        public ICommand MoveToProfileCommand => _moveToProfileCommand ?? (_moveToProfileCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnGoToProfileAsync));
+        public ICommand MoveToProfileCommand => _moveToProfileCommand ?? (_moveToProfileCommand = SingleExecutionCommand.FromFunc<BaseNotificationViewModel>(OnGoToProfileAsync));
 
         private DateTime _CreationTime;
 
@@ -116,24 +116,24 @@ namespace InterTwitter.Models.TweetViewModel
 
         #endregion
         #region -- Private helpers --
-        private Task OnLikeAsync(BaseTweetViewModel tweet)
+        private Task OnLikeAsync(BaseNotificationViewModel tweet)
         {
             IsTweekLiked = !IsTweekLiked;
             return Task.CompletedTask;
         }
 
-        private Task OnOpenTweetAsync(BaseTweetViewModel arg)
+        private Task OnOpenTweetAsync(BaseNotificationViewModel arg)
         {
             return Task.CompletedTask;
         }
 
-        private Task OnMarkAsync(BaseTweetViewModel tweet)
+        private Task OnMarkAsync(BaseNotificationViewModel tweet)
         {
             IsBookmarked = !IsBookmarked;
             return Task.CompletedTask;
         }
 
-        private Task OnGoToProfileAsync(BaseTweetViewModel arg)
+        private Task OnGoToProfileAsync(BaseNotificationViewModel arg)
         {
             return Task.CompletedTask;
         }

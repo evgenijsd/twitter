@@ -4,6 +4,7 @@
                     xmlns:converters="clr-namespace:InterTwitter.Converters" 
                     xmlns:dataTemplatesSelector="clr-namespace:InterTwitter.Helpers" 
                     xmlns:dataTemplates="clr-namespace:InterTwitter.Views.DataTemplates"
+                    xmlns:dataNotificationTemplates="clr-namespace:InterTwitter.Views.DataTemplates.Notification"
                     x:Class="InterTwitter.Resources.Styles.DefaultResources">
 
     <!-- TEXT SIZE -->
@@ -116,5 +117,16 @@
                                                      ImageTweetDataTemplate="{StaticResource imageTweetTemplate}"
                                                      VideoTweetDataTemplate="{StaticResource videoTweetTemplate}"
                                                      TextTweetDataTemplate="{StaticResource textTweetTemplate}"/>
+
+    <!-- TweetData Templates-->
+
+    <dataNotificationTemplates:ImageTweetDataTemplate x:Key="imageNotificationTemplate" />
+    <dataNotificationTemplates:VideoTweetDataTemplate x:Key="videoNotificationTemplate" />
+    <dataNotificationTemplates:TextTweetDataTemplate x:Key="textNotificationTemplate" />
+
+    <dataTemplatesSelector:NotificationDataTemplateSelector x:Key="notificationTemplateSelector"
+                                                                        ImageNotificationDataTemplate="{StaticResource imageNotificationTemplate}"
+                                                                        VideoNotificationDataTemplate="{StaticResource videoNotificationTemplate}"
+                                                                        TextNotificationDataTemplate="{StaticResource textNotificationTemplate}" />
 
 </ResourceDictionary>

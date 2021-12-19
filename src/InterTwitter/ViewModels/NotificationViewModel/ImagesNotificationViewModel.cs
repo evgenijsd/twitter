@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace InterTwitter.Models.TweetViewModel
+namespace InterTwitter.Models.NotificationViewModel
 {
-    public class ImagesTweetViewModel : BaseTweetViewModel
+    public class ImagesNotificationViewModel : BaseNotificationViewModel
     {
         private readonly int _imagesNumber;
 
-        public ImagesTweetViewModel(int imagesNumber)
+        public ImagesNotificationViewModel(int imagesNumber)
         {
             if (imagesNumber > 0)
             {

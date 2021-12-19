@@ -13,11 +13,11 @@ namespace InterTwitter.ViewModels
             NavigationService = navigationService;
         }
 
-        protected INavigationService NavigationService { get; }
+        protected virtual INavigationService NavigationService { get; }
 
         #region -- IDestructible implementation --
 
-        public void Destroy()
+        public virtual void Destroy()
         {
         }
 

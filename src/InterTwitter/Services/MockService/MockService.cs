@@ -11,12 +11,18 @@ namespace InterTwitter.Services
             InitUsers();
 
             InitTweets();
+
+            InitBookmarks();
+
+            InitLikes();
         }
 
         #region -- IMockService implementation --
 
-        public IEnumerable<UserModel> Users { get; set; }
-        public IEnumerable<TweetModel> Tweets { get; set; }
+        public List<UserModel> Users { get; set; }
+        public List<TweetModel> Tweets { get; set; }
+        public List<Bookmark> Bookmarks { get; set; }
+        public List<LikeModel> Likes { get; set; }
 
         #endregion
 
@@ -168,6 +174,230 @@ namespace InterTwitter.Services
                         "https://thumbs.gfycat.com/PaltryWickedCrayfish-max-1mb.gif",
                     },
                     CreationTime = DateTime.Now,
+                },
+            };
+        }
+
+        private void InitLikes()
+        {
+            Likes = new List<LikeModel>
+            {
+                new LikeModel
+                {
+                    Id = 1,
+                    UserId = 1,
+                    TweetId = 1,
+                    Notification = true,
+                },
+                new LikeModel
+                {
+                    Id = 2,
+                    UserId = 1,
+                    TweetId = 2,
+                    Notification = true,
+                },
+                new LikeModel
+                {
+                    Id = 3,
+                    UserId = 1,
+                    TweetId = 3,
+                    Notification = true,
+                },
+                new LikeModel
+                {
+                    Id = 4,
+                    UserId = 1,
+                    TweetId = 4,
+                    Notification = true,
+                },
+                new LikeModel
+                {
+                    Id = 5,
+                    UserId = 1,
+                    TweetId = 5,
+                    Notification = true,
+                },
+                new LikeModel
+                {
+                    Id = 6,
+                    UserId = 2,
+                    TweetId = 1,
+                    Notification = true,
+                },
+                new LikeModel
+                {
+                    Id = 7,
+                    UserId = 2,
+                    TweetId = 2,
+                    Notification = true,
+                },
+                new LikeModel
+                {
+                    Id = 8,
+                    UserId = 2,
+                    TweetId = 3,
+                    Notification = true,
+                },
+                new LikeModel
+                {
+                    Id = 9,
+                    UserId = 2,
+                    TweetId = 4,
+                    Notification = true,
+                },
+                new LikeModel
+                {
+                    Id = 10,
+                    UserId = 2,
+                    TweetId = 5,
+                    Notification = true,
+                },
+                new LikeModel
+                {
+                    Id = 11,
+                    UserId = 3,
+                    TweetId = 1,
+                    Notification = true,
+                },
+                new LikeModel
+                {
+                    Id = 12,
+                    UserId = 3,
+                    TweetId = 2,
+                    Notification = true,
+                },
+                new LikeModel
+                {
+                    Id = 13,
+                    UserId = 3,
+                    TweetId = 3,
+                    Notification = true,
+                },
+                new LikeModel
+                {
+                    Id = 14,
+                    UserId = 3,
+                    TweetId = 4,
+                    Notification = true,
+                },
+                new LikeModel
+                {
+                    Id = 15,
+                    UserId = 3,
+                    TweetId = 5,
+                    Notification = true,
+                },
+            };
+        }
+
+        private void InitBookmarks()
+        {
+            Bookmarks = new List<Bookmark>
+            {
+                new Bookmark
+                {
+                    Id = 1,
+                    UserId = 1,
+                    TweetId = 1,
+                    Notification = true,
+                },
+                new Bookmark
+                {
+                    Id = 2,
+                    UserId = 1,
+                    TweetId = 2,
+                    Notification = true,
+                },
+                new Bookmark
+                {
+                    Id = 3,
+                    UserId = 1,
+                    TweetId = 3,
+                    Notification = true,
+                },
+                new Bookmark
+                {
+                    Id = 4,
+                    UserId = 1,
+                    TweetId = 4,
+                    Notification = true,
+                },
+                new Bookmark
+                {
+                    Id = 5,
+                    UserId = 1,
+                    TweetId = 5,
+                    Notification = true,
+                },
+                new Bookmark
+                {
+                    Id = 6,
+                    UserId = 2,
+                    TweetId = 1,
+                    Notification = true,
+                },
+                new Bookmark
+                {
+                    Id = 7,
+                    UserId = 2,
+                    TweetId = 2,
+                    Notification = true,
+                },
+                new Bookmark
+                {
+                    Id = 8,
+                    UserId = 2,
+                    TweetId = 3,
+                    Notification = true,
+                },
+                new Bookmark
+                {
+                    Id = 9,
+                    UserId = 2,
+                    TweetId = 4,
+                    Notification = true,
+                },
+                new Bookmark
+                {
+                    Id = 10,
+                    UserId = 2,
+                    TweetId = 5,
+                    Notification = true,
+                },
+                new Bookmark
+                {
+                    Id = 11,
+                    UserId = 3,
+                    TweetId = 1,
+                    Notification = true,
+                },
+                new Bookmark
+                {
+                    Id = 12,
+                    UserId = 3,
+                    TweetId = 2,
+                    Notification = true,
+                },
+                new Bookmark
+                {
+                    Id = 13,
+                    UserId = 3,
+                    TweetId = 3,
+                    Notification = true,
+                },
+                new Bookmark
+                {
+                    Id = 14,
+                    UserId = 3,
+                    TweetId = 4,
+                    Notification = true,
+                },
+                new Bookmark
+                {
+                    Id = 15,
+                    UserId = 3,
+                    TweetId = 5,
+                    Notification = true,
                 },
             };
         }

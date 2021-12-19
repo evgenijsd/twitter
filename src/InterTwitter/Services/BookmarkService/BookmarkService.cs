@@ -1,0 +1,154 @@
+﻿using InterTwitter.Helpers;
+using InterTwitter.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace InterTwitter.Services
+{
+    public class BookmarkService : IBookmarkService
+    {
+        private readonly IMockService _mockService;
+
+        public BookmarkService(IMockService mockService)
+        {
+            _mockService = mockService;
+        }
+
+        #region -- Interface implementation --
+
+        public async Task<AOResult<List<Bookmark>>> GetBookmarksAsync(int userId)
+        {
+            var result = new AOResult<List<Bookmark>>();
+
+            try
+            {
+                var bookmarks = _mockService.Bookmarks.Where(x => x.UserId == userId).ToList();
+
+                if (bookmarks != null)
+                {
+                    result.SetSuccess(bookmarks);
+                }
+                else
+                {
+                    result.SetFailure("not found any bookmark");
+                }
+            }
+            catch (Exception ex)
+            {
+                result.SetError($"{nameof(GetBookmarksAsync)}: exception", "Some issues", ex);
+            }
+
+            return result;
+        }
+
+        public async Task<AOResult> DeleteAllBookmarksAsync(int userId)
+        {
+            var result = new AOResult();
+            try
+            {
+                var bookmark = _mockService.Bookmarks.FirstOrDefault(x => x.UserId == userId);
+
+                if (bookmark != null)
+                {
+                    _mockService.Bookmarks.RemoveAll(x => x.UserId == userId);
+
+                    result.SetSuccess();
+                }
+                else
+                {
+                    result.SetFailure("not found any bookmark");
+                }
+            }
+            catch (Exception ex)
+            {
+                result.SetError($"{nameof(DeleteAllBookmarksAsync)}: exception", "Some issues", ex);
+            }
+
+            return result;
+        }
+
+        public async Task<AOResult> DeleteBoormarkAsync(int tweetId, int userId)
+        {
+            var result = new AOResult();
+            try
+            {
+                var bookmark = _mockService.Bookmarks.FirstOrDefault(x => x.UserId == userId && x.TweetId == tweetId);
+
+                if (bookmark != null)
+                {
+                    result.SetSuccess();
+                    _mockService.Bookmarks.Remove(bookmark);
+                }
+                else
+                {
+                    result.SetFailure("not found any bookmark");
+                }
+            }
+            catch (Exception ex)
+            {
+                result.SetError($"{nameof(DeleteBoormarkAsync)}: exception", "Some issues", ex);
+            }
+
+            return result;
+        }
+
+        public async Task<AOResult<int>> AddBookmarkAsync(int tweetId, int userId)
+        {
+            var result = new AOResult<int>();
+            try
+            {
+                var bookmark = new Bookmark
+                {
+                    Id = _mockService.Bookmarks.Count() + 1,
+                    TweetId = tweetId,
+                    UserId = userId,
+                    Notification = true,
+                };
+                _mockService.Bookmarks.Add(bookmark);
+                int id = _mockService.Bookmarks.Last().Id;
+                if (id > 0)
+                {
+                    result.SetSuccess(id);
+                }
+                else
+                {
+                    result.SetFailure();
+                }
+            }
+            catch (Exception ex)
+            {
+                result.SetError($"Exception: {nameof(AddBookmarkAsync)}", "Wrong result", ex);
+            }
+
+            return result;
+        }
+
+        public async Task<AOResult> AnyAsync(int tweetId, int userId)
+        {
+            var result = new AOResult();
+            try
+            {
+                var any = _mockService.Bookmarks.Any(x => x.TweetId == tweetId && x.UserId == userId);
+                if (any)
+                {
+                    result.SetSuccess();
+                }
+                else
+                {
+                    result.SetFailure();
+                }
+            }
+            catch (Exception ex)
+            {
+                result.SetError($"Exception: {nameof(AddBookmarkAsync)}", "Wrong result", ex);
+            }
+
+            return result;
+        }
+
+        #endregion
+    }
+}

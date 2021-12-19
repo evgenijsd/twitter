@@ -11,7 +11,6 @@ namespace InterTwitter.Controls
         }
 
         #region -- Public properties --
-
         public static readonly BindableProperty RightButtonImageSourceProperty = BindableProperty.Create(
             propertyName: nameof(RightButtonImageSource),
             returnType: typeof(string),
@@ -85,6 +84,5 @@ namespace InterTwitter.Controls
         }
 
         #endregion
-
     }
 }

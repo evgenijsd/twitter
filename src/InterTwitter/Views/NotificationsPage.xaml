@@ -1,25 +1,61 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<local:BaseContentPage x:Class="InterTwitter.Views.NotificationsPage"
+<local:BaseContentPage 
                        xmlns="http://xamarin.com/schemas/2014/forms"
                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+                       xmlns:controls="clr-namespace:InterTwitter.Controls"
                        xmlns:local="clr-namespace:InterTwitter.Views"
+                       xmlns:sh="http://sharpnado.com"
                        xmlns:prism="http://prismlibrary.com"
                        prism:ViewModelLocator.AutowireViewModel="True"
-                       IconImageSource="{Binding IconPath}">
+                       IconImageSource="{Binding IconPath}"
+                       x:Class="InterTwitter.Views.NotificationsPage">
 
-    <ContentPage.Content>
+    <local:BaseContentPage.Content>
 
-        <StackLayout>
+        <Grid HorizontalOptions="Fill"
+              VerticalOptions="Fill"
+              RowDefinitions="auto"
+              RowSpacing="0">
 
-            <Button Command="{Binding OpenFlyoutCommandAsync}"
-                    Text="goto flyout"
-                    VerticalOptions="Start" />
-            <Label HorizontalOptions="CenterAndExpand"
-                   Text="Welcome to Notifications!"
-                   VerticalOptions="CenterAndExpand" />
 
-        </StackLayout>
+            <controls:CustomNavigationbar Grid.Row="0"
+                                          Title="Notification"/>
 
-    </ContentPage.Content>
+            <controls:CustomCollectionNotificationView x:Name="customCollectView"
+                                                       Grid.Row="1"
+                                                       ItemsSource="{Binding Tweets}"
+                                                       ItemTemplate="{DynamicResource notificationTemplateSelector}" />
+
+            <sh:Shadows Grid.Row="1"
+                        IsVisible="{Binding Source={x:Reference customCollectView}, Path=IsAddButtonVisible}"
+                        CornerRadius="20"
+                        VerticalOptions="EndAndExpand"
+                        Shades="{sh:SingleShade Offset='0, 10',
+                                                Opacity={OnPlatform Android=0.4, iOS=0.08},
+                                                BlurRadius={OnPlatform Android=10, iOS=8},
+                                                Color={StaticResource appcolor_i3}}">
+
+                <Frame HeightRequest="52"
+                       WidthRequest="52"
+                       CornerRadius="52"
+                       VerticalOptions="End"
+                       HorizontalOptions="End"
+                       Margin="0, 0, 17, 14"
+                       Padding="-4"
+                       HasShadow="True">
+
+                    <ImageButton Source="ic_add_blue"
+                                 HorizontalOptions="Fill"
+                                 VerticalOptions="Fill"
+                                 Command="{Binding AddTweetCommandAsync}" />
+
+                </Frame>
+
+            </sh:Shadows>
+
+        </Grid>
+
+    </local:BaseContentPage.Content>
 
 </local:BaseContentPage>

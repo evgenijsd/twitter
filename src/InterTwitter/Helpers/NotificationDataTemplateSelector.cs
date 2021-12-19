@@ -4,15 +4,15 @@ using Xamarin.Forms;
 
 namespace InterTwitter.Helpers
 {
-    public class NotificationDataTemplateSelector : DataTemplateSelector
+    public class TweetDataTemplateSelector : DataTemplateSelector
     {
         #region -- Public properties
 
-        public DataTemplate VideoNotificationDataTemplate { get; set; }
+        public DataTemplate VideoTweetDataTemplate { get; set; }
 
-        public DataTemplate ImageNotificationDataTemplate { get; set; }
+        public DataTemplate ImageTweetDataTemplate { get; set; }
 
-        public DataTemplate TextNotificationDataTemplate { get; set; }
+        public DataTemplate TextTweetDataTemplate { get; set; }
 
         #endregion
 
@@ -27,13 +27,13 @@ namespace InterTwitter.Helpers
             {
                 case EAttachedMediaType.Photos:
                 case EAttachedMediaType.Gif:
-                    dataTemplate = ImageNotificationDataTemplate;
+                    dataTemplate = ImageTweetDataTemplate;
                     break;
                 case EAttachedMediaType.Video:
-                    dataTemplate = VideoNotificationDataTemplate;
+                    dataTemplate = VideoTweetDataTemplate;
                     break;
                 default:
-                    dataTemplate = TextNotificationDataTemplate;
+                    dataTemplate = TextTweetDataTemplate;
                     break;
             }
 

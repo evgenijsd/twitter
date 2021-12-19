@@ -22,6 +22,10 @@ namespace InterTwitter
             //Services
             containerRegistry.RegisterSingleton<IMockService, MockService>();
             containerRegistry.RegisterSingleton<ITweetService, TweetService>();
+            containerRegistry.RegisterInstance<IBookmarkService>(Container.Resolve<BookmarkService>());
+            containerRegistry.RegisterInstance<ILikeService>(Container.Resolve<LikeService>());
+            containerRegistry.RegisterInstance<INotificationService>(Container.Resolve<NotificationService>());
+            containerRegistry.RegisterInstance<INotificationService>(Container.Resolve<NotificationService>());
 
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
