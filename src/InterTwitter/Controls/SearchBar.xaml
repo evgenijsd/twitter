@@ -75,6 +75,7 @@
 
                 <controls:SearchEntry Margin="0"    
                                       BackgroundColor="Transparent"
+                                      HighlightColor="{DynamicResource appcolor_i8}"
                                       FontSize="{DynamicResource tsize_i5}"
                                       FontFamily="Ubuntu-Medium"
                                       Text="{Binding QueryString, Source={x:Reference searchBar}}"
@@ -83,6 +84,7 @@
                                       PlaceholderColor="{DynamicResource appcolor_i4}"
                                       MaxLength="{Binding MaxLength, Source={x:Reference searchBar}}"
                                       ReturnCommand="{Binding PressOkOnKeyboardCommand, Source={x:Reference searchBar}}"
+                                      ReturnType="Search"
                                       x:Name="searchEntry"/>
 
             </Frame>

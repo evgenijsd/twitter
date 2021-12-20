@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ForMoreAccurateSearchSnter2OrMoreCharacters" xml:space="preserve">
+  <data name="INACCURATE_REQUEST" xml:space="preserve">
     <value>For a more accurate search, enter 2 or more characters</value>
   </data>
-  <data name="NoResultsFor" xml:space="preserve">
+  <data name="NO_RESULTS_FOR" xml:space="preserve">
     <value>No results for</value>
   </data>
   <data name="PopularTheme" xml:space="preserve">

@@ -12,11 +12,13 @@ namespace InterTwitter.Droid.Renderers
 {
     public class HighlightedLabelRenderer : LabelRenderer
     {
-        private HighlightedLabel _highlightedLabel;
         private Color _defaultBackgroundColor;
         private Color _defaultTextColor;
         private Color _keywordBackgroundColor;
         private Color _hashtagTextColor;
+
+        private HighlightedLabel _customElement;
+        private HighlightedLabel CustomElement =>  _customElement ??= (Element as HighlightedLabel);
 
         public HighlightedLabelRenderer(Context context)
             : base(context)
@@ -31,12 +33,10 @@ namespace InterTwitter.Droid.Renderers
 
             if (e.OldElement == null)
             {
-                _highlightedLabel = Element as HighlightedLabel;
-
-                _defaultBackgroundColor = _highlightedLabel.BackgroundColor.ToAndroid();
-                _defaultTextColor = _highlightedLabel.TextColor.ToAndroid();
-                _keywordBackgroundColor = _highlightedLabel.KeywordBackgroundColor.ToAndroid();
-                _hashtagTextColor = _highlightedLabel.HashtagTextColor.ToAndroid();
+                _defaultBackgroundColor = CustomElement.BackgroundColor.ToAndroid();
+                _defaultTextColor = CustomElement.TextColor.ToAndroid();
+                _keywordBackgroundColor = CustomElement.KeywordBackgroundColor.ToAndroid();
+                _hashtagTextColor = CustomElement.HashtagTextColor.ToAndroid();
             }
 
             HighlightWordsInText();
@@ -48,15 +48,13 @@ namespace InterTwitter.Droid.Renderers
 
         private void HighlightWordsInText()
         {
-            _highlightedLabel = Element as HighlightedLabel;
-
-            if (_highlightedLabel != null
-                && !string.IsNullOrEmpty(_highlightedLabel.Text)
-                && _highlightedLabel.WordsToHighlight != null)
+            if (CustomElement != null
+                && !string.IsNullOrEmpty(CustomElement.Text)
+                && CustomElement.WordsToHighlight != null)
             {
-                var highlightedWords = _highlightedLabel.GetHighlightedWords();
+                var highlightedWords = CustomElement.GetHighlightedWords();
 
-                SpannableString spannableString = new SpannableString(_highlightedLabel.Text);
+                SpannableString spannableString = new SpannableString(CustomElement.Text);
 
                 foreach (var item in highlightedWords)
                 {

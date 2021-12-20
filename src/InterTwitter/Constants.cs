@@ -18,8 +18,8 @@ namespace InterTwitter
 
         public static class Translation
         {
-            public const string INACCURATE_REQUEST = "ForMoreAccurateSearchSnter2OrMoreCharacters";
-            public const string NO_RESULTS_FOR = "NoResultsFor";
+            public const string INACCURATE_REQUEST = nameof(INACCURATE_REQUEST);
+            public const string NO_RESULTS_FOR = nameof(NO_RESULTS_FOR);
         }
 
         public static class Values

@@ -20,7 +20,7 @@ namespace InterTwitter.ViewModels
     public class SearchPageViewModel : BaseTabViewModel
     {
         private readonly ITweetService _tweetService;
-        private IHashtagManager _hashtagManager;
+        private readonly IHashtagManager _hashtagManager;
 
         public SearchPageViewModel(
             INavigationService navigationService,

@@ -1,4 +1,6 @@
 ﻿using Android.Content;
+using Android.Graphics;
+using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Runtime;
 using Android.Widget;
@@ -7,6 +9,7 @@ using InterTwitter.Droid.Renderers.Controls;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
+using Color = Android.Graphics.Color;
 
 [assembly: ExportRenderer(typeof(SearchEntry), typeof(SearchEntryRenderer))]
 namespace InterTwitter.Droid.Renderers.Controls
@@ -25,7 +28,7 @@ namespace InterTwitter.Droid.Renderers.Controls
             if (Control != null)
             {
                 Control.SetPadding(0, 0, 0, 0);
-                Control.SetBackgroundColor(Android.Graphics.Color.Transparent);
+                Control.SetBackgroundColor(Color.Transparent);
             }
 
             if (e.OldElement == null)
@@ -34,17 +37,49 @@ namespace InterTwitter.Droid.Renderers.Controls
                 editText.SetSelectAllOnFocus(true);
             }
 
-            var searchEntry = Element as SearchEntry;
-                         
-            if (Build.VERSION.SdkInt >= BuildVersionCodes.Q)
+            //if (this.Control != null)
+            //{
+            //    if (e.NewElement != null)
+            //    {
+            //        //You can also change other colors
+            //        this.ChangeCursorColor(Color.Orange);
+            //    }
+            //}
+
+            //Control.SetHighlightColor((Element as SearchEntry).HighlightColor.ToAndroid());
+
+            //if (Build.VERSION.SdkInt >= BuildVersionCodes.Q)
+            //{
+            //    Control.SetTextCursorDrawable(Resource.Drawable.my_cursor);
+            //}
+            //else
+            //{
+            //    IntPtr IntPtrtextViewClass = JNIEnv.FindClass(typeof(TextView));
+            //    IntPtr mCursorDrawableResProperty = JNIEnv.GetFieldID(IntPtrtextViewClass, "my_cursor", "I");
+            //    JNIEnv.SetField(Control.Handle, mCursorDrawableResProperty, Resource.Drawable.my_cursor);
+            //}
+        }
+
+        private void ChangeCursorColor(Color color)
+        {
+            if (this.Control == null)
             {
-                Control.SetTextCursorDrawable(Resource.Drawable.my_cursor); //This API Intrduced in android 10
+                return;
             }
-            else
+
+            var cursorResource = Java.Lang.Class.FromType(typeof(TextView)).GetDeclaredField("mCursorDrawableRes");
+
+            cursorResource.Accessible = true;
+
+            int resId = cursorResource.GetInt(this.Control);
+
+            Drawable cursorDrawable = Context.GetDrawable(resId);
+
+            cursorDrawable.SetColorFilter(color, PorterDuff.Mode.SrcIn);
+
+            if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Q)
             {
-                IntPtr IntPtrtextViewClass = JNIEnv.FindClass(typeof(TextView));
-                IntPtr mCursorDrawableResProperty = JNIEnv.GetFieldID(IntPtrtextViewClass, "my_cursor", "I");
-                JNIEnv.SetField(Control.Handle, mCursorDrawableResProperty, Resource.Drawable.my_cursor);
+                this.Control.TextCursorDrawable = cursorDrawable;
             }
         }
     }

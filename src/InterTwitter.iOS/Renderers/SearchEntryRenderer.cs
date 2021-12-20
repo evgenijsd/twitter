@@ -29,10 +29,10 @@ namespace InterTwitter.iOS.Renderers.Controls
 
                 var searchEntry = Element as SearchEntry;
 
-                var color = UIColor.FromCGColor(searchEntry.TintColor.ToCGColor());
-                Control.TintColor = color;
+                var tintColor = UIColor.FromCGColor(searchEntry.HighlightColor.ToCGColor());
+                Control.TintColor = tintColor;
             }
-        } 
+        }
 
         #endregion
     }

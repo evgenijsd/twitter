@@ -9,7 +9,7 @@ namespace InterTwitter.Services.HashtagManager
 {
     public class HashtagManager : IHashtagManager
     {
-        private IMockService _mockService;
+        private readonly IMockService _mockService;
 
         public HashtagManager(IMockService mockService)
         {

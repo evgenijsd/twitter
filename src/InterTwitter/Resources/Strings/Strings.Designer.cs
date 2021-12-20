@@ -63,18 +63,18 @@ namespace InterTwitter.Resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to For a more accurate search, enter 2 or more characters.
         /// </summary>
-        internal static string ForMoreAccurateSearchSnter2OrMoreCharacters {
+        internal static string INACCURATE_REQUEST {
             get {
-                return ResourceManager.GetString("ForMoreAccurateSearchSnter2OrMoreCharacters", resourceCulture);
+                return ResourceManager.GetString("INACCURATE_REQUEST", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to No results for.
         /// </summary>
-        internal static string NoResultsFor {
+        internal static string NO_RESULTS_FOR {
             get {
-                return ResourceManager.GetString("NoResultsFor", resourceCulture);
+                return ResourceManager.GetString("NO_RESULTS_FOR", resourceCulture);
             }
         }
         
