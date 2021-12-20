@@ -49,11 +49,18 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _menuItems, value);
         }
 
-        private ObservableCollection<BindableBase> _tweets;
-        public ObservableCollection<BindableBase> Tweets
+        private ObservableCollection<BindableBase> _usertweets;
+        public ObservableCollection<BindableBase> UserTweets
         {
-            get => _tweets;
-            set => SetProperty(ref _tweets, value);
+            get => _usertweets;
+            set => SetProperty(ref _usertweets, value);
+        }
+
+        private ObservableCollection<BindableBase> _likedtweets;
+        public ObservableCollection<BindableBase> LikedTweets
+        {
+            get => _likedtweets;
+            set => SetProperty(ref _likedtweets, value);
         }
 
         private string _userMail;
@@ -183,10 +190,11 @@ namespace InterTwitter.ViewModels
                 {
                     new MenuItemViewModel
                     {
-                        Id = 0, Title = Resources.Resource.Posts,
+                        Id = 0,
+                        Title = Resources.Resource.Posts,
                         ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource,
                         TextColor = (Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
-                        ContentCollection = Tweets, // TODO: filtering
+                        ContentCollection = UserTweets, // TODO: filtering
                     },
 
                     new MenuItemViewModel
@@ -195,7 +203,7 @@ namespace InterTwitter.ViewModels
                         Title = Resources.Resource.Likes,
                         ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource,
                         TextColor = (Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
-                        ContentCollection = Tweets, // TODO: filtering
+                        ContentCollection = LikedTweets, // TODO: filtering
                     },
                 });
         }
@@ -241,7 +249,8 @@ namespace InterTwitter.ViewModels
                     }
                 }
 
-                Tweets = new ObservableCollection<BindableBase>(tweetViewModels);
+                UserTweets = new ObservableCollection<BindableBase>(tweetViewModels);
+                LikedTweets = new ObservableCollection<BindableBase>(tweetViewModels);
             }
         }
 
@@ -261,16 +270,16 @@ namespace InterTwitter.ViewModels
 
         private async Task OnAddUserToBlacklistCommandAsync()
         {
+            var param = new DialogParameters();
+
             if (_userService.IsUserBlocked(_settingsManager.UserId, _user.Id).Result.Result)
             {
-                var param = new DialogParameters();
                 param.Add("message", Resources.Resource.This_user_is_already_blocked);
 
                 _dialogService.ShowDialog("AlertView", param);
             }
             else
             {
-                var param = new DialogParameters();
                 param.Add("title", $"{Resources.Resource.Add_} {_user.Name} {Resources.Resource._toBlacklist_}");
                 param.Add("message", Resources.Resource.This_user_will_not_see_your_posts);
                 param.Add("okButtonText", Resources.Resource.Add_to_Blacklist);
@@ -294,16 +303,16 @@ namespace InterTwitter.ViewModels
 
         private async Task OnAddUserToMutelistCommandAsync()
         {
+            var param = new DialogParameters();
+
             if (_userService.IsUserMuted(_settingsManager.UserId, _user.Id).Result.Result)
             {
-                var param = new DialogParameters();
                 param.Add("message", Resources.Resource.This_user_is_already_muted);
 
                 _dialogService.ShowDialog("AlertView", param);
             }
             else
             {
-                var param = new DialogParameters();
                 param.Add("title", $"{Resources.Resource.Add_} {_user.Name} {Resources.Resource._to_mute_}");
                 param.Add("message", Resources.Resource.User_can_see_information_about_you);
                 param.Add("okButtonText", Resources.Resource.Add_to_Mute);

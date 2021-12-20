@@ -149,11 +149,16 @@ namespace InterTwitter.ViewModels
             }
         }
 
+        private bool isChanged => _user.Name != UserName || _user.Email != UserMail || _user.AvatarPath != UserImagePath || _user.BackgroundUserImagePath != UserBackgroundImage || !string.IsNullOrEmpty(OldPassword) || !string.IsNullOrEmpty(NewPassword);
         private async Task OnCheckCommandAsync()
         {
             bool isAllValid = true;
+            if (!isChanged)
+            {
+                return;
+            }
 
-            var param = new DialogParameters();
+            DialogParameters param = new DialogParameters();
             param.Add("title", $"{Resources.Resource.Save_changes}?");
             param.Add("okButtonText", Resources.Resource.Ok);
             param.Add("cancelButtonText", Resources.Resource.Cancel);
@@ -168,17 +173,13 @@ namespace InterTwitter.ViewModels
                     {
                         if (string.IsNullOrEmpty(OldPassword))
                         {
-                            var param = new DialogParameters();
                             param.Add("message", Resources.Resource.Old_password_is_empty);
-
-                            _dialogService.ShowDialog("AlertView", param);
+                            isAllValid = false;
                         }
                         else if (OldPassword != _user.Password)
                         {
-                            var param = new DialogParameters();
                             param.Add("message", Resources.Resource.Old_password_is_wrong);
-
-                            _dialogService.ShowDialog("AlertView", param);
+                            isAllValid = false;
                         }
 
                         if (!string.IsNullOrEmpty(NewPassword) && Regex.IsMatch(NewPassword, Constants.RegexPatterns.PASSWORD_REGEX))
@@ -187,11 +188,7 @@ namespace InterTwitter.ViewModels
                         }
                         else
                         {
-                            var param = new DialogParameters();
                             param.Add("message", Resources.Resource.New_password_is_not_valid_or_empty);
-
-                            _dialogService.ShowDialog("AlertView", param);
-
                             isAllValid = false;
                         }
                     }
@@ -202,11 +199,7 @@ namespace InterTwitter.ViewModels
                     }
                     else
                     {
-                        var param = new DialogParameters();
                         param.Add("message", Resources.Resource.Name_is_not_valid_or_empty);
-
-                        _dialogService.ShowDialog("AlertView", param);
-
                         isAllValid = false;
                     }
 
@@ -216,10 +209,7 @@ namespace InterTwitter.ViewModels
                     }
                     else
                     {
-                        var param = new DialogParameters();
                         param.Add("message", Resources.Resource.Email_is_not_valid_or_empty);
-
-                        _dialogService.ShowDialog("AlertView", param);
                         isAllValid = false;
                     }
 
@@ -233,13 +223,17 @@ namespace InterTwitter.ViewModels
                         MessagingCenter.Send(this, Constants.Messages.USER_PROFILE_CHANGED);
                         await NavigationService.GoBackAsync();
                     }
+                    else if (param.ContainsKey("message") && param["message"] != null)
+                    {
+                        _dialogService.ShowDialog("AlertView", param);
+                    }
                 }
             }
         }
 
         private async Task OnNavigationCommandAsync()
         {
-            if (_user.Name != UserName || _user.Email != UserMail || _user.AvatarPath != UserImagePath || _user.BackgroundUserImagePath != UserBackgroundImage || !string.IsNullOrEmpty(OldPassword) || !string.IsNullOrEmpty(NewPassword))
+            if (isChanged)
             {
                 await OnCheckCommandAsync();
             }
