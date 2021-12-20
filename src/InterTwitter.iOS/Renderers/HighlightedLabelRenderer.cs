@@ -14,10 +14,10 @@ namespace InterTwitter.Droid.Renderers
     public class HighlightedLabelRenderer : LabelRenderer
     {
         private HighlightedLabel _highlightedLabel;
-        private CGColor _defaultBackgroundColor;
-        private CGColor _defaultTextColor;
-        private CGColor _keywordBackgroundColor;
-        private CGColor _hashtagTextColor;
+        private UIColor _defaultBackgroundColor;
+        private UIColor _defaultTextColor;
+        private UIColor _keywordBackgroundColor;
+        private UIColor _hashtagTextColor;
 
         #region -- Overrides --
 
@@ -29,10 +29,10 @@ namespace InterTwitter.Droid.Renderers
             {
                 _highlightedLabel = Element as HighlightedLabel;
 
-                _defaultBackgroundColor = _highlightedLabel.BackgroundColor.ToCGColor();
-                _defaultTextColor = _highlightedLabel.TextColor.ToCGColor();
-                _keywordBackgroundColor = _highlightedLabel.KeywordBackgroundColor.ToCGColor();
-                _hashtagTextColor = _highlightedLabel.HashtagTextColor.ToCGColor();
+                _defaultBackgroundColor = _highlightedLabel.BackgroundColor.ToUIColor();
+                _defaultTextColor = _highlightedLabel.TextColor.ToUIColor();
+                _keywordBackgroundColor = _highlightedLabel.KeywordBackgroundColor.ToUIColor();
+                _hashtagTextColor = _highlightedLabel.HashtagTextColor.ToUIColor();
             }
 
             HighlightWordsInText();
@@ -54,14 +54,14 @@ namespace InterTwitter.Droid.Renderers
 
                 var attributedString = new NSMutableAttributedString(_highlightedLabel.Text);
 
-                CTStringAttributes stringAttributes = new CTStringAttributes()
+                UIStringAttributes stringAttributes = new UIStringAttributes()
                 {
                     ForegroundColor = _defaultTextColor,
                     BackgroundColor = _keywordBackgroundColor
                 };
 
                 bool isHashtagStyleSet = false;
-                
+
                 foreach (var item in highlightedWords)
                 {
                     var range = new NSRange(item.Position, item.Length);

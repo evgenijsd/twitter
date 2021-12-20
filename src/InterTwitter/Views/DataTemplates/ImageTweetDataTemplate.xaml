@@ -31,15 +31,15 @@
                        FontAttributes="Bold"/>
 
                 <highlightedlabel:HighlightedLabel Style="{DynamicResource tstyle_i7}"
-                                           VerticalOptions="Start"
-                                           HorizontalOptions="StartAndExpand"
-                                           IsVisible="{Binding IsTextVisible}"
-                                           LineBreakMode="TailTruncation"
-                                           MaxLines="5" 
-                                           KeywordBackgroundColor="{DynamicResource appcolor_i8}"
-                                           HashtagTextColor="{DynamicResource appcolor_i1}"
-                                           Text="{Binding Text}"
-                                           WordsToHighlight="{Binding WordsToHighlight}"/>
+                                                   VerticalOptions="Start"
+                                                   HorizontalOptions="StartAndExpand"
+                                                   IsVisible="{Binding IsTextVisible}"
+                                                   LineBreakMode="TailTruncation"
+                                                   MaxLines="5" 
+                                                   KeywordBackgroundColor="{DynamicResource appcolor_i8}"
+                                                   HashtagTextColor="{DynamicResource appcolor_i1}"
+                                                   Text="{Binding Text}"
+                                                   WordsToHighlight="{Binding WordsToHighlight}"/>
 
                 <flv:FlowListView FlowColumnCount="{Binding ColumnNumber}"
                                   RowHeight="{Binding RowHeight}"

@@ -212,6 +212,32 @@
 
             </StackLayout>
 
+            <!-- SEARCH BAR SHADOW -->
+            <sh:Shadows Grid.Row="1"
+                        VerticalOptions="EndAndExpand"
+                        IsVisible="false"
+                        Shades="{sh:SingleShade Offset='0, 2.858',
+                                                Opacity={OnPlatform Android=0.08, iOS=0.08},
+                                                BlurRadius={OnPlatform Android=8, iOS=8},
+                                                Color={StaticResource appcolor_i3}}">
+
+                <sh:Shadows.Triggers>
+
+                    <DataTrigger TargetType="sh:Shadows"
+                                 Binding="{Binding Source={x:Reference tweetSearchResultContainer}, Path=State}"
+                                 Value="Success">
+
+                        <Setter Property="IsVisible" Value="true"/>
+
+                    </DataTrigger>
+
+                </sh:Shadows.Triggers>
+
+                <Frame IsVisible="false"
+                       HasShadow="False"/>
+
+            </sh:Shadows>
+            
         </Grid>
 
     </ContentPage.Content>
