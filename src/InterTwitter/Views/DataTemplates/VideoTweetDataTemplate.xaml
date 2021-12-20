@@ -15,7 +15,7 @@
 
             <ffimageloading:CachedImage VerticalOptions="Start"
                                         Source="{Binding UserAvatar}"
-                                        HeightRequest="34"
+                                        HeightRequest="45"
                                         Margin="0, 0, 15, 0">
 
                 <ffimageloading:CachedImage.Transformations>
@@ -41,7 +41,6 @@
                 <Frame CornerRadius="5"
                        Padding="0"
                        HasShadow="False">
-
 
                     <Grid>
                         <ffimageloading:CachedImage Grid.Row="0" 
@@ -70,8 +69,6 @@
                         </Frame>
                     </Grid>
                         
-                  
-
                 </Frame>
 
                 <StackLayout Orientation="Horizontal"
@@ -110,6 +107,7 @@
                             </DataTrigger>
                             
                         </Label.Triggers>
+                        
                     </Label>
 
                     <ffimageloading:CachedImage Source="ic_bookmarks_gray">

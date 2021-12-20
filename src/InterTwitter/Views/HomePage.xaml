@@ -7,6 +7,7 @@
                        x:Class="InterTwitter.Views.HomePage"
                        xmlns:prism="http://prismlibrary.com" 
                        xmlns:viewmodels="clr-namespace:InterTwitter.ViewModels" 
+                       xmlns:statecontainer="clr-namespace:InterTwitter.Controls.StateContainer"
                        x:DataType="viewmodels:HomePageViewModel"
                        prism:ViewModelLocator.AutowireViewModel="True"
                        BackgroundColor="{DynamicResource appcolor_i2}"
@@ -14,54 +15,124 @@
    
     <local:BaseContentPage.Content>
 
-        <Grid HorizontalOptions="Fill"
-              VerticalOptions="Fill"
-              RowDefinitions="auto"
-              RowSpacing="0">
 
-            <controls:CustomNavigationbar Grid.Row="0"
-                                          Title="Home"
-                                          RigthButtonImageSource="ic_add_blue"
-                                          LeftButtonImageSource="pic_profile_small"
-                                          IsVisible="{Binding Source={x:Reference customCollectView}, Path=IsNavigationBarVisible}"
-                                          LeftAddButtonCommand="{Binding OpenFlyoutCommandAsync}"
-                                          RigthButtonCommand="{Binding AddTweetCommandAsync}"/>
+        <statecontainer:StateContainer State="{Binding Mode}">
 
-            <controls:CustomCollectionView x:Name="customCollectView"
-                                           Grid.Row="1" 
-                                           ItemsSource="{Binding Tweets}" 
-                                           ItemTemplate="{DynamicResource templateSelector}"/>
+            <statecontainer:StateCondition State="Original">
 
-            <sh:Shadows Grid.Row="1"
-                        IsVisible="{Binding Source={x:Reference customCollectView}, Path=IsAddButtonVisible}"
-                        CornerRadius="20"
-                        VerticalOptions="EndAndExpand"
-                        Shades="{sh:SingleShade Offset='0, 10',
-                                                Opacity={OnPlatform Android=0.4, iOS=0.08},
-                                                BlurRadius={OnPlatform Android=10, iOS=8},
-                                                Color={StaticResource appcolor_i3}}">
+                <Grid HorizontalOptions="Fill"
+                      VerticalOptions="Fill"
+                      RowDefinitions="auto"
+                      RowSpacing="0">
 
-                <Frame HeightRequest="52"
-                       WidthRequest="52"
-                       CornerRadius="52"
-                       VerticalOptions="End"
-                       HorizontalOptions="End"
-                       Margin="0, 0, 17, 14"
-                       Padding="-5"
-                       HasShadow="True">
+                    <controls:CustomNavigationbar Grid.Row="0"
+                                                  Title="Home"
+                                                  RigthButtonImageSource="ic_add_blue"
+                                                  LeftButtonImageSource="pic_profile_small"
+                                                  IsVisible="{Binding Source={x:Reference customCollectView}, Path=IsNavigationBarVisible}"
+                                                  LeftAddButtonCommand="{Binding OpenFlyoutCommandAsync}"
+                                                  RigthButtonCommand="{Binding AddTweetCommandAsync}"/>
 
-                    <ImageButton Source="ic_add_blue"
-                                 HorizontalOptions="Fill"
-                                 VerticalOptions="Fill"
-                                 BorderWidth="0"
-                                 BorderColor="Transparent"
-                                 Command="{Binding AddTweetCommandAsync}"/>
+                    <controls:CustomCollectionView x:Name="customCollectView"
+                                                   Grid.Row="1" 
+                                                   ItemsSource="{Binding Tweets}" 
+                                                   ItemTemplate="{DynamicResource templateSelector}"/>
 
-                </Frame>
+                    <sh:Shadows Grid.Row="1"
+                                IsVisible="{Binding Source={x:Reference customCollectView}, Path=IsAddButtonVisible}"
+                                CornerRadius="20"
+                                VerticalOptions="EndAndExpand"
+                                Shades="{sh:SingleShade Offset='0, 6',
+                                                        Opacity={OnPlatform Android=0.4, iOS=0.04},
+                                                        BlurRadius={OnPlatform Android=10, iOS=8},
+                                                        Color={StaticResource appcolor_i3}}">
 
-            </sh:Shadows>
+                        <Frame HeightRequest="55"
+                               WidthRequest="55"
+                               CornerRadius="55"
+                               VerticalOptions="End"
+                               HorizontalOptions="End"
+                               Margin="0, 0, 17, 14"
+                               Padding="-5"
+                               HasShadow="True">
 
-        </Grid>
+                            <ImageButton Source="ic_add_blue"
+                                         HorizontalOptions="Fill"
+                                         VerticalOptions="Fill"
+                                         BorderWidth="0"
+                                         BorderColor="Transparent"
+                                         Command="{Binding AddTweetCommandAsync}"/>
+
+                        </Frame>
+
+                    </sh:Shadows>
+
+                </Grid>
+
+            </statecontainer:StateCondition>
+
+            <statecontainer:StateCondition State="Truncated">
+
+                <StackLayout Orientation="Vertical">
+                    
+                     <controls:CustomNavigationbar 
+                                                  Title="Home"
+                                                  RigthButtonImageSource="{DynamicResource ic_add_blue}"
+                                                  LeftButtonImageSource="{DynamicResource pic_profile_small}"
+                                                  IsVisible="True"
+                                                  LeftAddButtonCommand="{Binding OpenFlyoutCommandAsync}"
+                                                  RigthButtonCommand="{Binding AddTweetCommandAsync}"/>
+
+                    <Image Margin="0, 150, 0, 17"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           Source="{DynamicResource pic_empty_state_2}"/>
+
+                    <Label Style="{DynamicResource tstyle_i5}"
+                           HorizontalOptions="Center"
+                           Text="No post in the feed."/>
+
+                    <Label Style="{DynamicResource tstyle_i5}"
+                           HorizontalOptions="Center"
+                           Text="Be The first"/>
+
+                    <sh:Shadows IsVisible="True"
+                                CornerRadius="20"
+                                VerticalOptions="EndAndExpand"
+                                Shades="{sh:SingleShade Offset='0, 6',
+                                                        Opacity={OnPlatform Android=0.4, iOS=0.04},
+                                                        BlurRadius={OnPlatform Android=10, iOS=8},
+                                                        Color={StaticResource appcolor_i3}}">
+
+                        <Frame HeightRequest="55"
+                               WidthRequest="55"
+                               CornerRadius="55"
+                               VerticalOptions="End"
+                               HorizontalOptions="End"
+                               Margin="0, 0, 17, 14"
+                               Padding="-5"
+                               HasShadow="True">
+
+                            <ImageButton Source="ic_add_blue"
+                                         HorizontalOptions="Fill"
+                                         VerticalOptions="Fill"
+                                         BorderWidth="0"
+                                         BorderColor="Transparent"
+                                         Command="{Binding AddTweetCommandAsync}"/>
+
+                        </Frame>
+
+                    </sh:Shadows>
+
+                    <BoxView HeightRequest="1"
+                             VerticalOptions="End"
+                             BackgroundColor="{StaticResource appcolor_i6}"
+                             HorizontalOptions="FillAndExpand"/>
+                </StackLayout>
+
+            </statecontainer:StateCondition>
+
+        </statecontainer:StateContainer>
 
     </local:BaseContentPage.Content>
     

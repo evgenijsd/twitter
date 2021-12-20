@@ -19,7 +19,7 @@
 
         <TabbedPage.Children>
         
-        <local:HomePage />
+        <local:HomePage/>
         <local:SearchPage />
         <local:NotificationsPage />
         <local:BookmarksPage />

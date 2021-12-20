@@ -20,7 +20,7 @@
 
                 <statecontainer:StateCondition State="Truncated">
 
-                    <Label x:Name="Cool" Style="{DynamicResource tstyle_i7}" >
+                    <Label Style="{DynamicResource tstyle_i7}" >
                         
                         <Label.FormattedText>
                             

@@ -1,12 +1,10 @@
 using InterTwitter.Enums;
 using InterTwitter.Extensions;
 using InterTwitter.Helpers;
-using InterTwitter.Models;
 using InterTwitter.Services;
 using InterTwitter.ViewModels.TweetViewModel;
 using InterTwitter.Views;
 using Prism.Navigation;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -30,9 +28,17 @@ namespace InterTwitter.ViewModels
         {
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource;
             _tweetService = tweetService;
+            Mode = EStateMode.Original;
         }
 
         #region -- Public properties --
+
+        private EStateMode _mode;
+        public EStateMode Mode
+        {
+            get => _mode;
+            set => SetProperty(ref _mode, value);
+        }
 
         private ICommand _openFlyoutCommandAsync;
         public ICommand OpenFlyoutCommandAsync => _openFlyoutCommandAsync ?? (_openFlyoutCommandAsync = SingleExecutionCommand.FromFunc(OnOpenFlyoutCommandAsync));
@@ -100,6 +106,10 @@ namespace InterTwitter.ViewModels
                 }
 
                 Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
+            }
+            else
+            {
+                Mode = EStateMode.Truncated;
             }
         }
 
