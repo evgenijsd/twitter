@@ -39,27 +39,28 @@
 
                     <sh:Shadows Grid.Row="1"
                                 IsVisible="{Binding Source={x:Reference customCollectView}, Path=IsAddButtonVisible}"
-                                CornerRadius="20"
+                                CornerRadius="25"
                                 VerticalOptions="EndAndExpand"
                                 Shades="{sh:SingleShade Offset='0, 6',
-                                                        Opacity={OnPlatform Android=0.4, iOS=0.04},
+                                                        Opacity={OnPlatform Android=0.4, iOS=0.4},
                                                         BlurRadius={OnPlatform Android=10, iOS=8},
                                                         Color={StaticResource appcolor_i3}}">
 
-                        <Frame HeightRequest="55"
-                               WidthRequest="55"
-                               CornerRadius="55"
+                        <Frame HeightRequest="{OnPlatform Android='70', iOS='80'}"
+                               WidthRequest="{OnPlatform Android='70', iOS='80'}"
+                               CornerRadius="{OnPlatform Android='33', iOS='35'}"
                                VerticalOptions="End"
                                HorizontalOptions="End"
-                               Margin="0, 0, 17, 14"
+                               Margin="{OnPlatform Android='0, 0, 18, 17', iOS='0, 0, 20, 14'}"
                                Padding="-5"
-                               HasShadow="True">
+                               BackgroundColor="Transparent"
+                               HasShadow="False"
+                               IsClippedToBounds="True">
 
                             <ImageButton Source="ic_add_blue"
-                                         HorizontalOptions="Fill"
-                                         VerticalOptions="Fill"
                                          BorderWidth="0"
                                          BorderColor="Transparent"
+                                         BackgroundColor="Transparent"
                                          Command="{Binding AddTweetCommandAsync}"/>
 
                         </Frame>
@@ -81,8 +82,10 @@
                                                    LeftAddButtonCommand="{Binding OpenFlyoutCommandAsync}"
                                                    RigthButtonCommand="{Binding AddTweetCommandAsync}"/>
 
-                    <Image Margin="{OnPlatform Android='0, 150, 0, 17', iOS='0, 200, 0, 17'}"
+                    <Image Margin="{OnPlatform Android='0, 175, 0, 14', iOS='0, 185, 0, 17'}"
                            VerticalOptions="Center"
+                           HeightRequest="{OnPlatform Android='90', iOS='95'}"
+                           WidthRequest="{OnPlatform Android='157', iOS='150'}"
                            HorizontalOptions="Center"
                            Source="{DynamicResource pic_empty_state_2}"/>
 
@@ -95,27 +98,25 @@
                            Text="Be The first"/>
 
                     <sh:Shadows IsVisible="True"
-                                CornerRadius="20"
+                                CornerRadius="25"
                                 VerticalOptions="EndAndExpand"
                                 Shades="{sh:SingleShade Offset='0, 6',
-                                                        Opacity={OnPlatform Android=0.4, iOS=0.04},
+                                                        Opacity={OnPlatform Android=0.4, iOS=0.4},
                                                         BlurRadius={OnPlatform Android=10, iOS=8},
                                                         Color={StaticResource appcolor_i3}}">
 
-                        <Frame HeightRequest="55"
-                               WidthRequest="55"
-                               CornerRadius="23"
+                        <Frame HeightRequest="{OnPlatform Android='65', iOS='80'}"
+                               WidthRequest="{OnPlatform Android='65', iOS='80'}"
+                               CornerRadius="{OnPlatform Android='30', iOS='35'}"
                                VerticalOptions="End"
                                HorizontalOptions="End"
-                               Margin="0, 0, 17, 14"
+                               Margin="{OnPlatform Android='0, 0, 18, 14', iOS='0, 0, 20, 14'}"
                                Padding="-5"
                                BackgroundColor="Transparent"
                                HasShadow="False"
                                IsClippedToBounds="True">
 
                             <ImageButton Source="ic_add_blue"
-                                         HorizontalOptions="Fill"
-                                         VerticalOptions="Fill"
                                          BorderWidth="0"
                                          BorderColor="Transparent"
                                          BackgroundColor="Transparent"
