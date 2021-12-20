@@ -80,7 +80,7 @@ namespace InterTwitter.ViewModels
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
-            int userid = 3;
+            int userid = 5;
             UserId = userid;
 
             var resultTweets = await _tweetService.GetByUserTweetsAsync(userid);
@@ -144,7 +144,6 @@ namespace InterTwitter.ViewModels
                 Tweets = new ObservableCollection<BaseNotificationViewModel>(notificationViewModels
                         .Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesNotificationViewModel() : x.ToBaseNotificationViewModel())
                         .OrderByDescending(x => x.CreationTime));
-                int i = 0;
             }
 
             #endregion

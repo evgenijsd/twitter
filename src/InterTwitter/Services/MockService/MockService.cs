@@ -144,7 +144,7 @@ namespace InterTwitter.Services
                 },
                 new TweetModel
                 {
-                    Id = 5,
+                    Id = 6,
                     UserId = 5,
                     Media = Enums.EAttachedMediaType.Photos,
                     CreationTime = DateTime.Now,
@@ -155,7 +155,7 @@ namespace InterTwitter.Services
                 },
                 new TweetModel
                 {
-                    Id = 6,
+                    Id = 7,
                     UserId = 6,
                     Text = "06 HI there!",
                     Media = Enums.EAttachedMediaType.Gif,
@@ -303,6 +303,22 @@ namespace InterTwitter.Services
                     Id = 15,
                     UserId = 3,
                     TweetId = 5,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("07.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 16,
+                    UserId = 3,
+                    TweetId = 6,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("07.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 16,
+                    UserId = 3,
+                    TweetId = 7,
                     Notification = true,
                     CreationTime = DateTime.Parse("07.03.2021 12:12:12", culture),
                 },
