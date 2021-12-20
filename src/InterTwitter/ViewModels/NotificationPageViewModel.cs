@@ -1,11 +1,10 @@
 ﻿using InterTwitter.Enums;
 using InterTwitter.Extensions;
 using InterTwitter.Helpers;
-using InterTwitter.Models.TweetViewModel;
+using InterTwitter.Models.NotificationViewModel;
 using InterTwitter.Services;
 using InterTwitter.Views;
 using Prism.Navigation;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,14 +16,20 @@ namespace InterTwitter.ViewModels
     public class NotificationPageViewModel : BaseTabViewModel
     {
         private readonly ITweetService _tweetService;
+        private readonly ILikeService _likeService;
+        private readonly IBookmarkService _bookmarkService;
 
         public NotificationPageViewModel(
             ITweetService tweetService,
-            INavigationService navigationService)
+            INavigationService navigationService,
+            ILikeService likeService,
+            IBookmarkService bookmarkService)
             : base(navigationService)
         {
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_notifications_gray"] as ImageSource;
             _tweetService = tweetService;
+            _bookmarkService = bookmarkService;
+            _likeService = likeService;
         }
 
         #region --- Public Properties ---
@@ -36,9 +41,9 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _userId, value);
         }
 
-        private ObservableCollection<BaseTweetViewModel> _tweets;
+        private ObservableCollection<BaseNotificationViewModel> _tweets;
 
-        public ObservableCollection<BaseTweetViewModel> Tweets
+        public ObservableCollection<BaseNotificationViewModel> Tweets
         {
             get => _tweets;
             set => SetProperty(ref _tweets, value);
@@ -75,30 +80,71 @@ namespace InterTwitter.ViewModels
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
-            int userid = 1;
+            int userid = 3;
             UserId = userid;
 
-            var resultTweet = await _tweetService.GetAllTweetsAsync();
-            var getTweetResult = resultTweet.Result.ToList();
+            var resultTweets = await _tweetService.GetByUserTweetsAsync(userid);
 
-            if (resultTweet.IsSuccess)
+            if (resultTweets.IsSuccess)
             {
-                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult
-                    .Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()).OrderByDescending(x => x.CreationTime));
+                var notificationViewModels = new ObservableCollection<BaseNotificationViewModel>();
 
-                foreach (var tweet in tweetViewModels)
+                var resultBookmarks = await _bookmarkService.GetNotificationsAsync(userid);
+                if (resultBookmarks.IsSuccess)
                 {
-                    var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
-
-                    if (tweetAuthor.IsSuccess)
+                    var bookmarks = resultBookmarks.Result.Where(x => resultTweets.Result.Any(y => y.Id == x.TweetId)).ToList();
+                    foreach (var b in bookmarks)
                     {
-                        tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
-                        tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
-                        tweet.UserName = tweetAuthor.Result.Name;
+                        var tweet = resultTweets.Result.FirstOrDefault(x => x.Id == b.TweetId);
+                        var user = await _tweetService.GetAuthorAsync(b.UserId);
+                        var notification = new BaseNotificationViewModel
+                        {
+                            TweetId = b.TweetId,
+                            UserId = b.UserId,
+                            CreationTime = b.CreationTime,
+                            UserAvatar = user.Result?.AvatarPath,
+                            UserName = user.Result?.Name,
+                            Text = tweet.Text,
+                            MediaPaths = tweet.MediaPaths,
+                            Media = tweet.Media,
+                            NotificationIcon = "ic_bookmarks_blue",
+                            NotificationText = "saved your post",
+                        };
+
+                        notificationViewModels.Add(notification);
                     }
                 }
 
-                Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
+                var resultLikes = await _likeService.GetNotificationsAsync(userid);
+                if (resultLikes.IsSuccess)
+                {
+                    var likes = resultLikes.Result.Where(x => resultTweets.Result.Any(y => y.Id == x.TweetId)).ToList();
+                    foreach (var l in likes)
+                    {
+                        var tweet = resultTweets.Result.FirstOrDefault(x => x.Id == l.TweetId);
+                        var user = await _tweetService.GetAuthorAsync(l.UserId);
+                        var notification = new BaseNotificationViewModel
+                        {
+                            TweetId = l.TweetId,
+                            UserId = l.UserId,
+                            CreationTime = l.CreationTime,
+                            UserAvatar = user.Result?.AvatarPath,
+                            UserName = user.Result?.Name,
+                            Text = tweet.Text,
+                            MediaPaths = tweet.MediaPaths,
+                            Media = tweet.Media,
+                            NotificationIcon = "ic_like_blue",
+                            NotificationText = "liked your post",
+                        };
+
+                        notificationViewModels.Add(notification);
+                    }
+                }
+
+                Tweets = new ObservableCollection<BaseNotificationViewModel>(notificationViewModels
+                        .Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesNotificationViewModel() : x.ToBaseNotificationViewModel())
+                        .OrderByDescending(x => x.CreationTime));
+                int i = 0;
             }
 
             #endregion

@@ -35,7 +35,7 @@ namespace InterTwitter.Models.NotificationViewModel
         #region -- Private helpers --
         private void InitImagesPositioning()
         {
-            _rowHeight = _imagesNumber < 3 ? 186 : 80;
+            _rowHeight = _imagesNumber < 7 ? 186 : 80;
 
             _rowHeight = _imagesNumber == 3 | _imagesNumber == 4 ? 89 : _rowHeight;
 

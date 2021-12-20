@@ -1,18 +1,18 @@
 ﻿using InterTwitter.Enums;
-using InterTwitter.Models.TweetViewModel;
+using InterTwitter.Models.NotificationViewModel;
 using Xamarin.Forms;
 
 namespace InterTwitter.Helpers
 {
-    public class TweetDataTemplateSelector : DataTemplateSelector
+    public class NotificationDataTemplateSelector : DataTemplateSelector
     {
         #region -- Public properties
 
-        public DataTemplate VideoTweetDataTemplate { get; set; }
+        public DataTemplate VideoNotificationDataTemplate { get; set; }
 
-        public DataTemplate ImageTweetDataTemplate { get; set; }
+        public DataTemplate ImageNotificationDataTemplate { get; set; }
 
-        public DataTemplate TextTweetDataTemplate { get; set; }
+        public DataTemplate TextNotificationDataTemplate { get; set; }
 
         #endregion
 
@@ -22,18 +22,18 @@ namespace InterTwitter.Helpers
         {
             DataTemplate dataTemplate = null;
 
-            var tweet = item as BaseTweetViewModel;
+            var tweet = item as BaseNotificationViewModel;
             switch (tweet.Media)
             {
                 case EAttachedMediaType.Photos:
                 case EAttachedMediaType.Gif:
-                    dataTemplate = ImageTweetDataTemplate;
+                    dataTemplate = ImageNotificationDataTemplate;
                     break;
                 case EAttachedMediaType.Video:
-                    dataTemplate = VideoTweetDataTemplate;
+                    dataTemplate = VideoNotificationDataTemplate;
                     break;
                 default:
-                    dataTemplate = TextTweetDataTemplate;
+                    dataTemplate = TextNotificationDataTemplate;
                     break;
             }
 

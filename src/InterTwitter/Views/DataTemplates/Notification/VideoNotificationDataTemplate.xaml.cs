@@ -4,9 +4,9 @@ using Xamarin.Forms.Xaml;
 
 namespace InterTwitter.Views.DataTemplates.Notification
 {
-    public partial class VideoTweetDataTemplate : DataTemplate
+    public partial class VideoNotificationDataTemplate : DataTemplate
     {
-        public VideoTweetDataTemplate()
+        public VideoNotificationDataTemplate()
         {
             InitializeComponent();
         }

@@ -44,6 +44,31 @@ namespace InterTwitter.Services
             return result;
         }
 
+        public async Task<AOResult<List<Bookmark>>> GetNotificationsAsync(int userId)
+        {
+            var result = new AOResult<List<Bookmark>>();
+
+            try
+            {
+                var bookmarks = _mockService.Bookmarks.Where(x => x.UserId != userId && x.Notification).ToList();
+
+                if (bookmarks != null)
+                {
+                    result.SetSuccess(bookmarks);
+                }
+                else
+                {
+                    result.SetFailure("not found any bookmark");
+                }
+            }
+            catch (Exception ex)
+            {
+                result.SetError($"{nameof(GetNotificationsAsync)}: exception", "Some issues", ex);
+            }
+
+            return result;
+        }
+
         public async Task<AOResult> DeleteAllBookmarksAsync(int userId)
         {
             var result = new AOResult();

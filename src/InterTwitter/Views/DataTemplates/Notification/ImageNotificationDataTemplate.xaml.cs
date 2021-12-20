@@ -3,9 +3,9 @@ using Xamarin.Forms;
 
 namespace InterTwitter.Views.DataTemplates.Notification
 {
-    public partial class ImageTweetDataTemplate : DataTemplate
+    public partial class ImageNotificationDataTemplate : DataTemplate
     {
-        public ImageTweetDataTemplate()
+        public ImageNotificationDataTemplate()
         {
             InitializeComponent();
         }

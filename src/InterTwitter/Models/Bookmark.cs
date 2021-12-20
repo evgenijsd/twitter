@@ -13,5 +13,7 @@ namespace InterTwitter.Models
         public int TweetId { get; set; }
 
         public bool Notification { get; set; }
+
+        public DateTime CreationTime { get; set; }
     }
 }

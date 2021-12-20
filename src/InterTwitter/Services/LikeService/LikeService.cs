@@ -43,6 +43,31 @@ namespace InterTwitter.Services
             return result;
         }
 
+        public async Task<AOResult<List<LikeModel>>> GetNotificationsAsync(int userId)
+        {
+            var result = new AOResult<List<LikeModel>>();
+
+            try
+            {
+                var likes = _mockService.Likes.Where(x => x.UserId != userId && x.Notification).ToList();
+
+                if (likes != null)
+                {
+                    result.SetSuccess(likes);
+                }
+                else
+                {
+                    result.SetFailure("not found any like");
+                }
+            }
+            catch (Exception ex)
+            {
+                result.SetError($"{nameof(GetNotificationsAsync)}: exception", "Some issues", ex);
+            }
+
+            return result;
+        }
+
         public async Task<AOResult> DeleteLikeAsync(int tweetId, int userId)
         {
             var result = new AOResult();

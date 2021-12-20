@@ -120,9 +120,9 @@
 
     <!-- TweetData Templates-->
 
-    <dataNotificationTemplates:ImageTweetDataTemplate x:Key="imageNotificationTemplate" />
-    <dataNotificationTemplates:VideoTweetDataTemplate x:Key="videoNotificationTemplate" />
-    <dataNotificationTemplates:TextTweetDataTemplate x:Key="textNotificationTemplate" />
+    <dataNotificationTemplates:ImageNotificationDataTemplate x:Key="imageNotificationTemplate" />
+    <dataNotificationTemplates:VideoNotificationDataTemplate x:Key="videoNotificationTemplate" />
+    <dataNotificationTemplates:TextNotificationDataTemplate x:Key="textNotificationTemplate" />
 
     <dataTemplatesSelector:NotificationDataTemplateSelector x:Key="notificationTemplateSelector"
                                                                         ImageNotificationDataTemplate="{StaticResource imageNotificationTemplate}"
