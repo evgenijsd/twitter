@@ -15,6 +15,8 @@ namespace InterTwitter.Controls
             SizeChanged += OnSizeChanged;
         }
 
+        #region -- Public properties --
+
         public static readonly BindableProperty ModeProperty = BindableProperty.Create(
             propertyName: nameof(Mode),
             returnType: typeof(EStateMode),
@@ -51,34 +53,24 @@ namespace InterTwitter.Controls
             set => SetValue(TruncatedTextProperty, value);
         }
 
-        public static readonly BindableProperty MoreCommandProperty = BindableProperty.Create(
-            propertyName: nameof(MoreCommand),
-            returnType: typeof(ICommand),
-            declaringType: typeof(CustomLabel),
-            defaultValue: null,
-            defaultBindingMode: BindingMode.TwoWay);
-
-        public ICommand MoreCommand
-        {
-            get => (ICommand)GetValue(MoreCommandProperty);
-            set => SetValue(MoreCommandProperty, value);
-        }
-
         private ICommand _openTweetCommand;
-        public ICommand OpenTweetCommand => _openTweetCommand ?? (_openTweetCommand = SingleExecutionCommand.FromFunc(TestAsync));
+        public ICommand OpenTweetCommand => _openTweetCommand ?? (_openTweetCommand = SingleExecutionCommand.FromFunc(OnOpenTweetCommandAsync));
+
+        #endregion
 
         #region  -- Private helpers --
+
         private void OnSizeChanged(object sender, EventArgs e)
         {
             var currentText = OriginalText;
 
             if (currentText != null)
             {
-                if (currentText?.Length > 110)
+                if (currentText?.Length > 184)
                 {
                     currentText = currentText.Replace('\n', ' ');
 
-                    currentText = currentText.Substring(0, 103);
+                    currentText = currentText.Substring(0, 177);
 
                     TruncatedText = currentText;
                 }
@@ -88,51 +80,16 @@ namespace InterTwitter.Controls
                 }
             }
         }
+
         #endregion
 
         #region -- Private helpers --
-        private Task TestAsync()
+
+        private Task OnOpenTweetCommandAsync()
         {
             Mode = EStateMode.Original;
 
             return Task.CompletedTask;
-        }
-
-        private int LatinOrCyrillic(string srcString)
-        {
-            bool isLatin = false, isCyrillic = false;
-            foreach (char item in srcString.ToLower().ToCharArray())
-            {
-                if (char.IsLetter(item))
-                {
-                    if ((int)item >= 0x61 && (int)item <= 0x7A)
-                    {
-                        isLatin = true;
-                    }
-                    else
-                    {
-                        isCyrillic = true;
-                    }
-
-                    if (isLatin && isCyrillic)
-                    {
-                        break;
-                    }
-                }
-            }
-
-            if (isLatin && isCyrillic)
-            {
-                return 2;
-            }
-            else if (isLatin)
-            {
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
         }
 
         #endregion

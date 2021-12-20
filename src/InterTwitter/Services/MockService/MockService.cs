@@ -117,7 +117,7 @@ namespace InterTwitter.Services
                 {
                     Id = 4,
                     UserId = 4,
-                    Text = "LorenLorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iu",
+                    Text = "That’s why we started Apple, we said you know, we have absolutely nothing to lose. I was 20 years old at the time, Woz was 24-25, so we have nothing to lose. We have no families, no children, no houses. Woz had an old car.",
                     Media = Enums.EAttachedMediaType.None,
                     CreationTime = DateTime.Now,
                 },
@@ -125,7 +125,7 @@ namespace InterTwitter.Services
                 {
                     Id = 5,
                     UserId = 5,
-                    Text = "Hi there!",
+                    Text = "Life is like a box of chocolates, you never know what you’re gonna get. Many of life's failures are people who did not realize how close they were to success when they gave up.",
                     Media = Enums.EAttachedMediaType.Photos,
                     CreationTime = DateTime.Now,
                     MediaPaths = new List<string>

@@ -15,7 +15,7 @@
 
             <ffimageloading:CachedImage VerticalOptions="Start"
                                         Source="{Binding UserAvatar}"
-                                        HeightRequest="45"
+                                        HeightRequest="42"
                                         Margin="0, 0, 15, 0">
 
                 <ffimageloading:CachedImage.Transformations>

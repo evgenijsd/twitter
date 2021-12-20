@@ -15,7 +15,6 @@
    
     <local:BaseContentPage.Content>
 
-
         <statecontainer:StateContainer State="{Binding Mode}">
 
             <statecontainer:StateCondition State="Original">
@@ -75,15 +74,14 @@
 
                 <StackLayout Orientation="Vertical">
                     
-                     <controls:CustomNavigationbar 
-                                                  Title="Home"
-                                                  RigthButtonImageSource="{DynamicResource ic_add_blue}"
-                                                  LeftButtonImageSource="{DynamicResource pic_profile_small}"
-                                                  IsVisible="True"
-                                                  LeftAddButtonCommand="{Binding OpenFlyoutCommandAsync}"
-                                                  RigthButtonCommand="{Binding AddTweetCommandAsync}"/>
+                     <controls:CustomNavigationbar Title="Home"
+                                                   RigthButtonImageSource="{DynamicResource ic_add_blue}"
+                                                   LeftButtonImageSource="{DynamicResource pic_profile_small}"
+                                                   IsVisible="True"
+                                                   LeftAddButtonCommand="{Binding OpenFlyoutCommandAsync}"
+                                                   RigthButtonCommand="{Binding AddTweetCommandAsync}"/>
 
-                    <Image Margin="0, 150, 0, 17"
+                    <Image Margin="{OnPlatform Android='0, 150, 0, 17', iOS='0, 200, 0, 17'}"
                            VerticalOptions="Center"
                            HorizontalOptions="Center"
                            Source="{DynamicResource pic_empty_state_2}"/>
@@ -106,18 +104,21 @@
 
                         <Frame HeightRequest="55"
                                WidthRequest="55"
-                               CornerRadius="55"
+                               CornerRadius="23"
                                VerticalOptions="End"
                                HorizontalOptions="End"
                                Margin="0, 0, 17, 14"
                                Padding="-5"
-                               HasShadow="True">
+                               BackgroundColor="Transparent"
+                               HasShadow="False"
+                               IsClippedToBounds="True">
 
                             <ImageButton Source="ic_add_blue"
                                          HorizontalOptions="Fill"
                                          VerticalOptions="Fill"
                                          BorderWidth="0"
                                          BorderColor="Transparent"
+                                         BackgroundColor="Transparent"
                                          Command="{Binding AddTweetCommandAsync}"/>
 
                         </Frame>

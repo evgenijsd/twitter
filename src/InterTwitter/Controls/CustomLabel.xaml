@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:statecontainer="clr-namespace:InterTwitter.Controls.StateContainer"
+             xmlns:statecontainer="clr-namespace:InterTwitter.Controls.StateContainer" 
              x:Class="InterTwitter.Controls.CustomLabel"
              x:Name="customLabel">
 
     <ContentView.Content>
 
-        <StackLayout VerticalOptions="Start">
+        <StackLayout x:Name="this" 
+                     VerticalOptions="Start">
 
             <statecontainer:StateContainer State="{Binding Mode, Source={x:Reference customLabel}}">
 
@@ -20,30 +21,28 @@
 
                 <statecontainer:StateCondition State="Truncated">
 
-                    <Label Style="{DynamicResource tstyle_i7}" >
-                        
+                    <Label>
+
                         <Label.FormattedText>
-                            
+
                             <FormattedString>
 
                                 <Span Text="{Binding TruncatedText, Source={x:Reference customLabel}}"/>
-                                
-                                <Span Text="..."/>
-                                
-                                <Span Text="more" 
+
+                                <Span Text="...more"
                                       TextColor="{DynamicResource appcolor_i1}">
-                                    
+
                                     <Span.GestureRecognizers>
-                                        
+
                                         <TapGestureRecognizer Command="{Binding OpenTweetCommand, Source={x:Reference customLabel}}"/>
-                                        
+
                                     </Span.GestureRecognizers>
-                                    
+
                                 </Span>
                             </FormattedString>
-                     
+
                         </Label.FormattedText>
-                        
+
                     </Label>
 
                 </statecontainer:StateCondition>

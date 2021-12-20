@@ -28,7 +28,7 @@ namespace InterTwitter.ViewModels
         {
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource;
             _tweetService = tweetService;
-            Mode = EStateMode.Original;
+            Mode = EStateMode.Truncated;
         }
 
         #region -- Public properties --
