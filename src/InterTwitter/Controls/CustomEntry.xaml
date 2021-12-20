@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms"
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      xmlns:control="clr-namespace:InterTwitter.Controls"
+      x:Class="InterTwitter.Controls.CustomEntry"
+      xmlns:Behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+      ColumnSpacing="0"
+      RowSpacing="0"
+      VerticalOptions="Start"
+      x:Name="customEntry">
+    
+    <Grid.RowDefinitions>
+        <RowDefinition Height="40" />
+        <RowDefinition Height="1" />
+    </Grid.RowDefinitions>
+    
+    <Grid Grid.Row="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+
+        <control:CustomNoBorderEntry Grid.Column="0"
+                                     Grid.Row="0"
+                                     x:Name="CustomEntryLocal"
+                                     VerticalOptions="Center"
+                                     Text="{Binding Text, Source={x:Reference customEntry}}"
+                                     TextColor="{Binding TextColor, Source={x:Reference customEntry}}"
+                                     FontFamily="{Binding FontFamily, Source={x:Reference customEntry}}"
+                                     FontSize="{DynamicResource tsize_i2}"
+                                     Placeholder="{Binding Placeholder, Source={x:Reference customEntry}}"
+                                     PlaceholderColor="{Binding PlaceholderColor, Source={x:Reference customEntry}}"
+                                     BackgroundColor="{Binding BackgroundColor, Source={x:Reference customEntry}}"
+                                     IsPassword="{Binding IsPasswordHidden, Source={x:Reference customEntry}}">
+            <control:CustomNoBorderEntry.Behaviors>
+                <Behaviors:EventToCommandBehavior Command="{Binding FocusedCommand, Source={x:Reference customEntry}}"
+                                                  EventName="Focused" />
+                <Behaviors:EventToCommandBehavior Command="{Binding UnFocusedCommand, Source={x:Reference customEntry}}"
+                                                  EventName="Unfocused" />
+            </control:CustomNoBorderEntry.Behaviors>
+        </control:CustomNoBorderEntry>
+        <ImageButton Grid.Column="1"
+                     Grid.Row="0"
+                     Margin="0,0,10,0"
+                     Source="{Binding ImageSource, Source={x:Reference customEntry}}"
+                     Command="{Binding ButtonEyeCommand, Source={x:Reference customEntry}}"
+                     IsVisible="{Binding IsButtonEyeVisible, Source={x:Reference customEntry}}"
+                     HeightRequest="30"
+                     WidthRequest="30"
+                     Aspect="AspectFit"
+                     VerticalOptions="Center"
+                     HorizontalOptions="Center"
+                     BackgroundColor="Transparent" />
+        <ImageButton Grid.Column="2"
+                     Grid.Row="0"
+                     Margin="0,0,10,0"
+                     BackgroundColor="Transparent"
+                     Source="{Binding ClearImageSource, Source={x:Reference customEntry}}"
+                     Command="{Binding ButtonClearCommand, Source={x:Reference customEntry}}"
+                     IsVisible="{Binding IsButtonClearVisible, Source={x:Reference customEntry}}"
+                     Aspect="AspectFit"
+                     VerticalOptions="Center"
+                     HorizontalOptions="Center"
+                     HeightRequest="30"
+                     WidthRequest="30" />
+
+    </Grid>
+    <BoxView Grid.Row="1"
+             Color="{DynamicResource appcolor_i6}"
+             Margin="0,0,10,0" />
+</Grid>

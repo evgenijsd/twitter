@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace InterTwitter.Models
+﻿namespace InterTwitter.Models
 {
     public interface IEntityBase
     {

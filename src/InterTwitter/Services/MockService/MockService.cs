@@ -9,14 +9,13 @@ namespace InterTwitter.Services
         public MockService()
         {
             InitUsers();
-
             InitTweets();
         }
 
         #region -- IMockService implementation --
 
-        public IEnumerable<UserModel> Users { get; set; }
-        public IEnumerable<TweetModel> Tweets { get; set; }
+        public List<UserModel> Users { get; set; }
+        public List<TweetModel> Tweets { get; set; }
 
         #endregion
 
@@ -30,8 +29,8 @@ namespace InterTwitter.Services
                 {
                     Id = 1,
                     Name = "Bill Gates",
-                    Email = "test@gmail.com",
-                    Password = "1111",
+                    Email = "aaa@aaa.aaa",
+                    Password = "1234567A",
                     AvatarPath = "https://cdn.allfamous.org/people/avatars/bill-gates-zdrr-allfamous.org.jpg",
                     BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
@@ -39,8 +38,8 @@ namespace InterTwitter.Services
                 {
                     Id = 2,
                     Name = "Kate White",
-                    Email = "test2@gmail.com",
-                    Password = "2222",
+                    Email = "bbb@bbb.bbb",
+                    Password = "1234567A",
                     AvatarPath = "https://www.iso.org/files/live/sites/isoorg/files/news/News_archive/2021/03/Ref2639/Ref2639.jpg/thumbnails/300x300",
                     BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
@@ -48,8 +47,8 @@ namespace InterTwitter.Services
                 {
                     Id = 3,
                     Name = "Sam Smith",
-                    Email = "test3@gmail.com",
-                    Password = "3333",
+                    Email = "ccc@ccc.ccc",
+                    Password = "1234567A",
                     AvatarPath = "https://i.ebayimg.com/images/g/6EIAAOSwJHlfnm3a/s-l300.jpg",
                     BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
@@ -57,8 +56,8 @@ namespace InterTwitter.Services
                 {
                     Id = 4,
                     Name = "Steve Jobs",
-                    Email = "test4@gmail.com",
-                    Password = "4444",
+                    Email = "ddd@ddd.ddd",
+                    Password = "1234567A",
                     AvatarPath = "https://www.acumarketing.com/wp-content/uploads/2011/08/steve-jobs.jpg",
                     BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
@@ -66,8 +65,8 @@ namespace InterTwitter.Services
                 {
                     Id = 5,
                     Name = "Elon musk",
-                    Email = "test5@gmail.com",
-                    Password = "4444",
+                    Email = "eee@eee.eee",
+                    Password = "1234567A",
                     AvatarPath = "https://file.liga.net/images/general/2021/09/20/thumbnail-20210920123323-9397.jpg?v=1632132620",
                     BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
@@ -75,8 +74,8 @@ namespace InterTwitter.Services
                 {
                     Id = 6,
                     Name = "Keano Reaves",
-                    Email = "test6@gmail.com",
-                    Password = "4444",
+                    Email = "fff@fff.fff",
+                    Password = "1234567A",
                     AvatarPath = "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTE5NTU2MzE2MzU1NzI0ODEx/keanu-reeves-9454211-1-402.jpg",
                     BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
@@ -103,7 +102,7 @@ namespace InterTwitter.Services
                 },
                 new TweetModel
                 {
-                    Id = 3,
+                    Id = 2,
                     UserId = 3,
                     Text = "um quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
                     Media = Enums.EAttachedMediaType.Video,
@@ -115,7 +114,7 @@ namespace InterTwitter.Services
                 },
                 new TweetModel
                 {
-                    Id = 4,
+                    Id = 3,
                     UserId = 4,
                     Text = "Only text",
                     Media = Enums.EAttachedMediaType.None,
@@ -123,7 +122,7 @@ namespace InterTwitter.Services
                 },
                 new TweetModel
                 {
-                    Id = 5,
+                    Id = 4,
                     UserId = 5,
                     Text = "Hi there!",
                     Media = Enums.EAttachedMediaType.Photos,
@@ -159,7 +158,7 @@ namespace InterTwitter.Services
                 },
                 new TweetModel
                 {
-                    Id = 2,
+                    Id = 7,
                     UserId = 2,
                     Text = "onsequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
                     Media = Enums.EAttachedMediaType.Gif,
