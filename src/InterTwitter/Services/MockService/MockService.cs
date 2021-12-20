@@ -154,7 +154,7 @@ namespace InterTwitter.Services
                 {
                     Id = 6,
                     UserId = 6,
-                    Text = "#NoNuanceNovember #AMAs HI there#workout!",
+                    Text = "#NoNuanceNovember #AMAs HI #workoutthere #workout !",
                     Media = Enums.EAttachedMediaType.Gif,
                     MediaPaths = new List<string>
                     {

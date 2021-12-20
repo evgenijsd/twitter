@@ -98,11 +98,11 @@
                                                                HorizontalOptions="EndAndExpand"
                                                                VerticalOptions="Center"
                                                                Scale="1.25"
-                                                               Source="{DynamicResource ic_right_gray}" />
+                                                               Source="{DynamicResource ic_right_gray}"/>
 
                                                     </StackLayout>
 
-                                                    <BoxView Style="{DynamicResource SeparatorStyle}" />
+                                                    <BoxView Style="{DynamicResource SeparatorStyle}"/>
 
                                                 </StackLayout>
 
@@ -212,8 +212,16 @@
 
             </StackLayout>
 
+            <BoxView  Grid.Row="1" 
+                      TranslationY="1"
+                      VerticalOptions="EndAndExpand"
+                      Margin="0"
+                      Style="{DynamicResource SeparatorStyle}"/>
+
+
             <!-- SEARCH BAR SHADOW -->
             <sh:Shadows Grid.Row="1"
+                        TranslationY="35"
                         VerticalOptions="EndAndExpand"
                         IsVisible="false"
                         Shades="{sh:SingleShade Offset='0, 2.858',
@@ -221,6 +229,7 @@
                                                 BlurRadius={OnPlatform Android=8, iOS=8},
                                                 Color={StaticResource appcolor_i3}}">
 
+                
                 <sh:Shadows.Triggers>
 
                     <DataTrigger TargetType="sh:Shadows"

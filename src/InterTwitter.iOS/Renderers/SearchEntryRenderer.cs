@@ -28,9 +28,7 @@ namespace InterTwitter.iOS.Renderers.Controls
                 };
 
                 var searchEntry = Element as SearchEntry;
-
-                var tintColor = UIColor.FromCGColor(searchEntry.HighlightColor.ToCGColor());
-                Control.TintColor = tintColor;
+                Control.TintColor = searchEntry.HighlightColor.ToUIColor();
             }
         }
 

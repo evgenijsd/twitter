@@ -75,7 +75,7 @@
 
                 <controls:SearchEntry Margin="0"    
                                       BackgroundColor="Transparent"
-                                      HighlightColor="{DynamicResource appcolor_i8}"
+                                      HighlightColor="{DynamicResource appcolor_i1}"
                                       FontSize="{DynamicResource tsize_i5}"
                                       FontFamily="Ubuntu-Medium"
                                       Text="{Binding QueryString, Source={x:Reference searchBar}}"
