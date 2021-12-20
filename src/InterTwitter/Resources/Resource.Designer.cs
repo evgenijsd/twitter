@@ -322,6 +322,15 @@ namespace InterTwitter.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No tweets found.
+        /// </summary>
+        public static string FailureUsersNotFound {
+            get {
+                return ResourceManager.GetString("FailureUsersNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to from the Blacklist.
         /// </summary>
         public static string from_the_Blacklist {

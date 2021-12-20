@@ -13,6 +13,7 @@ namespace InterTwitter.Controls
         }
 
         #region -- Public properties --
+
         public static readonly BindableProperty TextProperty = BindableProperty.Create(
             propertyName: nameof(Text),
             returnType: typeof(string),
@@ -285,7 +286,9 @@ namespace InterTwitter.Controls
         public ICommand UnFocusedCommand => _unfocusedCommand ??= SingleExecutionCommand.FromFunc(OnUnfocusedCommandAsync);
 
         #endregion
+
         #region -- Overrides --
+
         protected override void OnPropertyChanged(string propertyName)
         {
             base.OnPropertyChanged(propertyName);
@@ -350,7 +353,9 @@ namespace InterTwitter.Controls
         }
 
         #endregion
+
         #region -- Private methods --
+
         private Task OnButtonEyeCommandAsync()
         {
             if (IsPassword)
@@ -411,5 +416,6 @@ namespace InterTwitter.Controls
         }
 
         #endregion
+
     }
 }

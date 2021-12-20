@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace InterTwitter
+﻿namespace InterTwitter
 {
     public static class Constants
     {
@@ -35,6 +31,12 @@ namespace InterTwitter
             public const string MUTELIST = "NavigateToMutelist";
 
             public const string BLACKLIST = "NavigateToBlacklist";
+        }
+
+        public static class Navigation
+        {
+            public const string USER = nameof(USER);
+            public const string MESSAGE = nameof(MESSAGE);
         }
     }
 }

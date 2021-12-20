@@ -2,18 +2,18 @@
 <Grid x:Class="InterTwitter.Controls.CustomEntry"
       xmlns="http://xamarin.com/schemas/2014/forms"
       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-      xmlns:Behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
       xmlns:control="clr-namespace:InterTwitter.Controls"
+      xmlns:Behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
       x:Name="customEntry"
       ColumnSpacing="0"
       RowSpacing="0"
       VerticalOptions="Start">
-
+    
     <Grid.RowDefinitions>
         <RowDefinition Height="40" />
         <RowDefinition Height="1" />
     </Grid.RowDefinitions>
-
+    
     <Grid Grid.Row="0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -35,9 +35,9 @@
                                      TextColor="{Binding TextColor, Source={x:Reference customEntry}}"
                                      VerticalOptions="Center">
             <control:CustomNoBorderEntry.Behaviors>
-                <Behaviors:EventToCommandBehavior Command="{Binding FocusedCommand, Source={x:Reference customEntry}}" 
+                <Behaviors:EventToCommandBehavior Command="{Binding FocusedCommand, Source={x:Reference customEntry}}"
                                                   EventName="Focused" />
-                <Behaviors:EventToCommandBehavior Command="{Binding UnFocusedCommand, Source={x:Reference customEntry}}" 
+                <Behaviors:EventToCommandBehavior Command="{Binding UnFocusedCommand, Source={x:Reference customEntry}}"
                                                   EventName="Unfocused" />
             </control:CustomNoBorderEntry.Behaviors>
         </control:CustomNoBorderEntry>
@@ -69,6 +69,6 @@
 
     </Grid>
     <BoxView Grid.Row="1"
-             Margin="0,0,10,0"
-             Color="{DynamicResource appcolor_i6}" />
+             Color="{DynamicResource appcolor_i6}"
+             Margin="0,0,10,0" />
 </Grid>

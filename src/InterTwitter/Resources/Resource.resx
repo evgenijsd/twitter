@@ -195,6 +195,9 @@
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="FailureUsersNotFound" xml:space="preserve">
+    <value>No tweets found</value>
+  </data>
   <data name="Email is not valid or empty" xml:space="preserve">
     <value>Email is not valid or empty</value>
   </data>

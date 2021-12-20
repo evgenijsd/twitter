@@ -1,5 +1,6 @@
 ﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
+using InterTwitter.Services;
 using InterTwitter.Services.Settings;
 using InterTwitter.Services.UserService;
 using InterTwitter.Views;
@@ -16,12 +17,20 @@ namespace InterTwitter.ViewModels.Flyout
     {
         private readonly ISettingsManager _settingsManager;
         private readonly IUserService _userService;
+        private readonly IAuthorizationService _authorizationService;
+
         private UserModel _user;
-        public FlyoutPageFlyoutViewModel(INavigationService navigationService, ISettingsManager settingsManager, IUserService userService)
+        public FlyoutPageFlyoutViewModel(
+            INavigationService navigationService,
+            ISettingsManager settingsManager,
+            IAuthorizationService authorizationService,
+            IUserService userService)
             : base(navigationService)
         {
             _settingsManager = settingsManager;
             _userService = userService;
+
+            _authorizationService = authorizationService;
 
             MenuItems = new ObservableCollection<MenuItemViewModel>(new[]
                 {
@@ -62,7 +71,7 @@ namespace InterTwitter.ViewModels.Flyout
             Subscribe();
         }
 
-        #region --- Public Properties ---
+        #region -- Public Properties --
 
         private ObservableCollection<MenuItemViewModel> _menuItems;
         public ObservableCollection<MenuItemViewModel> MenuItems
@@ -98,7 +107,7 @@ namespace InterTwitter.ViewModels.Flyout
 
         #endregion
 
-        #region --- Overrides ---
+        #region -- Overrides --
 
         public override Task InitializeAsync(INavigationParameters parameters)
         {
@@ -111,7 +120,7 @@ namespace InterTwitter.ViewModels.Flyout
 
         #endregion
 
-        #region --- Private Helpers ---
+        #region -- Private Helpers --
 
         private void Subscribe()
         {
@@ -171,9 +180,11 @@ namespace InterTwitter.ViewModels.Flyout
             UserImagePath = user.AvatarPath;
         }
 
-        private Task OnLogoutCommandAsync()
+        private async Task OnLogoutCommandAsync()
         {
-            return Task.CompletedTask;
+            _authorizationService.UserId = 0;
+
+            await NavigationService.NavigateAsync($"/{nameof(StartPage)}");
         }
 
         private Task OnNavigateProfileCommandAsync()

@@ -1,4 +1,4 @@
-using DLToolkit.Forms.Controls;
+﻿using DLToolkit.Forms.Controls;
 using InterTwitter.Droid.Services.PermissionsService;
 using InterTwitter.Models;
 using InterTwitter.Resources;
@@ -33,6 +33,8 @@ namespace InterTwitter
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterDialog<AlertView, AlertViewModel>();
+
             //Services
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
             containerRegistry.RegisterInstance<IMockService>(Container.Resolve<MockService>());
@@ -66,9 +68,10 @@ namespace InterTwitter
             LocalizationResourceManager.Current.CurrentCulture = new CultureInfo("en");
 
             InitializeComponent();
+
             Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             FlowListView.Init();
-            await NavigationService.NavigateAsync(nameof(FlyOutPage));
+            await NavigationService.NavigateAsync($"/{nameof(StartPage)}");
         }
 
         protected override void OnStart()

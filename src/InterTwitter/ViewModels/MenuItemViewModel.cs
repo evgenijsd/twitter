@@ -14,7 +14,7 @@ namespace InterTwitter.ViewModels
             TargetType = typeof(MenuItemViewModel);
         }
 
-        #region --- Public Properties ---
+        #region -- Public Properties --
 
         private int _id;
         public int Id

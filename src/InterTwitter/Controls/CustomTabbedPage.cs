@@ -42,7 +42,7 @@ namespace InterTwitter.Controls
 
         #endregion
 
-        #region --- Private Helpers ---
+        #region -- Private Helpers --
 
         private void Subscribe()
         {
