@@ -24,7 +24,7 @@
                   RowSpacing="0">
 
                 <controls:CustomNavigationbar Grid.Row="0"
-                                              Title="Bookmarks"
+                                              Title="{xct:Translate Bookmarks}"
                                               RightButtonImageSource="{Binding ImageButtonSource}"
                                               RightUserButtonCommand="{Binding VisibleButtonCommand}" />
 
@@ -43,8 +43,8 @@
                     <Image Source="{DynamicResource pic_owl_blue_big}"
                            Aspect="AspectFit"
                            HeightRequest="90" />
-                    
-                    <Label Text="You have no bookmarks yet"
+
+                    <Label Text="{xct:Translate YouHaveNoBookmarks}"
                            Margin="0,20,0,0"
                            Style="{DynamicResource tstyle_i5}" />
                     

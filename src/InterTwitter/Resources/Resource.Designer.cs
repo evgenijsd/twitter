@@ -214,6 +214,15 @@ namespace InterTwitter.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Bookmarks.
+        /// </summary>
+        internal static string Bookmarks {
+            get {
+                return ResourceManager.GetString("Bookmarks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Confirm Password.
         /// </summary>
         internal static string ConfirmPassword {
@@ -381,6 +390,15 @@ namespace InterTwitter.Resources {
         internal static string WrongResult {
             get {
                 return ResourceManager.GetString("WrongResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на You have no bookmarks yet.
+        /// </summary>
+        internal static string YouHaveNoBookmarks {
+            get {
+                return ResourceManager.GetString("YouHaveNoBookmarks", resourceCulture);
             }
         }
         
