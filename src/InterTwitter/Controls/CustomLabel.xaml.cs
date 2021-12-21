@@ -1,6 +1,7 @@
 ﻿using InterTwitter.Enums;
 using InterTwitter.Helpers;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -16,6 +17,30 @@ namespace InterTwitter.Controls
         }
 
         #region -- Public properties --
+
+        public static readonly BindableProperty WordsToHighlightProperty = BindableProperty.Create(
+            propertyName: nameof(WordsToHighlight),
+            returnType: typeof(IEnumerable<string>),
+            declaringType: typeof(HighlightedLabel.HighlightedLabel),
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public IEnumerable<string> WordsToHighlight
+        {
+            get => (IEnumerable<string>)GetValue(WordsToHighlightProperty);
+            set => SetValue(WordsToHighlightProperty, value);
+        }
+
+        public static readonly BindableProperty KeywordBackgroundColorProperty = BindableProperty.Create(
+            propertyName: nameof(KeywordBackgroundColor),
+            returnType: typeof(Color),
+            declaringType: typeof(HighlightedLabel.HighlightedLabel),
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public Color KeywordBackgroundColor
+        {
+            get => (Color)GetValue(KeywordBackgroundColorProperty);
+            set => SetValue(KeywordBackgroundColorProperty, value);
+        }
 
         public static readonly BindableProperty ModeProperty = BindableProperty.Create(
             propertyName: nameof(Mode),

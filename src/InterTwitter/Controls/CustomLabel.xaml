@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:statecontainer="clr-namespace:InterTwitter.Controls.StateContainer" 
+             xmlns:statecontainer="clr-namespace:InterTwitter.Controls.StateContainer" xmlns:highlightedlabel="clr-namespace:InterTwitter.Controls.HighlightedLabel"
              x:Class="InterTwitter.Controls.CustomLabel"
              x:Name="customLabel">
 
@@ -14,16 +14,25 @@
 
                 <statecontainer:StateCondition State="Original">
 
-                    <Label Style="{DynamicResource tstyle_i7}"
-                           Text="{Binding OriginalText, Source={x:Reference customLabel}}"/>
+                    <highlightedlabel:HighlightedLabel Style="{DynamicResource tstyle_i7}"
+                                                       LineSpacing="{OnPlatform Android=1.3, iOS=6.45}"
+                                                       KeywordBackgroundColor="{DynamicResource appcolor_i8}"
+                                                       HashtagTextColor="{DynamicResource appcolor_i1}"
+                                                       Text="{Binding OriginalText, Source={x:Reference customLabel}}"
+                                                       WordsToHighlight="{Binding WordsToHighlight}"/>
 
                 </statecontainer:StateCondition>
 
                 <statecontainer:StateCondition State="Truncated">
 
-                    <Label Style="{DynamicResource tstyle_i7}">
+                    <highlightedlabel:HighlightedLabel Style="{DynamicResource tstyle_i7}"
+                                                       LineSpacing="{OnPlatform Android=1.3, iOS=6.45}"
+                                                       KeywordBackgroundColor="{DynamicResource appcolor_i8}"
+                                                       HashtagTextColor="{DynamicResource appcolor_i1}"
+                                                       Text="{Binding OriginalText, Source={x:Reference customLabel}}"
+                                                       WordsToHighlight="{Binding WordsToHighlight}">
 
-                        <Label.FormattedText>
+                        <highlightedlabel:HighlightedLabel.FormattedText>
 
                             <FormattedString>
 
@@ -39,11 +48,12 @@
                                     </Span.GestureRecognizers>
 
                                 </Span>
+                                
                             </FormattedString>
 
-                        </Label.FormattedText>
+                        </highlightedlabel:HighlightedLabel.FormattedText>
 
-                    </Label>
+                    </highlightedlabel:HighlightedLabel>
 
                 </statecontainer:StateCondition>
 
