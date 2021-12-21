@@ -311,14 +311,14 @@ namespace InterTwitter.Services
                 {
                     Id = 16,
                     UserId = 3,
-                    TweetId = 6,
+                    TweetId = 7,
                     Notification = true,
                     CreationTime = DateTime.Parse("07.03.2021 12:12:12", culture),
                 },
                 new LikeModel
                 {
-                    Id = 16,
-                    UserId = 3,
+                    Id = 17,
+                    UserId = 6,
                     TweetId = 7,
                     Notification = true,
                     CreationTime = DateTime.Parse("07.03.2021 12:12:12", culture),
