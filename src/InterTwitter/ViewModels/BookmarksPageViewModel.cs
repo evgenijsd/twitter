@@ -150,7 +150,8 @@ namespace InterTwitter.ViewModels
                 if (resultTweet.IsSuccess && resultBookmark.IsSuccess)
                 {
                     var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Where(x => getBookmarks.Any(y => y.TweetId == x.Id))
-                        .Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()).OrderByDescending(x => x.CreationTime));
+                        .Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel())
+                        .OrderByDescending(x => x.CreationTime));
 
                     foreach (var tweet in tweetViewModels)
                     {

@@ -232,6 +232,15 @@ namespace InterTwitter.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Delete all bookmarks.
+        /// </summary>
+        internal static string DeleteAllbookmarks {
+            get {
+                return ResourceManager.GetString("DeleteAllbookmarks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Do not match.
         /// </summary>
         internal static string DoNotMatch {
@@ -295,6 +304,15 @@ namespace InterTwitter.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на not found any bookmark.
+        /// </summary>
+        internal static string NotFoundBookmark {
+            get {
+                return ResourceManager.GetString("NotFoundBookmark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Ok.
         /// </summary>
         internal static string Ok {
@@ -340,11 +358,29 @@ namespace InterTwitter.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Some issues.
+        /// </summary>
+        internal static string SomeIssues {
+            get {
+                return ResourceManager.GetString("SomeIssues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Wrong Email.
         /// </summary>
         internal static string WrongEmail {
             get {
                 return ResourceManager.GetString("WrongEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Wrong result.
+        /// </summary>
+        internal static string WrongResult {
+            get {
+                return ResourceManager.GetString("WrongResult", resourceCulture);
             }
         }
         

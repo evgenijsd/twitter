@@ -32,12 +32,12 @@ namespace InterTwitter.Services.LikeService
                 }
                 else
                 {
-                    result.SetFailure("not found any bookmark");
+                    result.SetFailure(Resources.Resource.NotFoundBookmark);
                 }
             }
             catch (Exception ex)
             {
-                result.SetError($"{nameof(GetLikesAsync)}: exception", "Some issues", ex);
+                result.SetError($"{nameof(GetLikesAsync)}: exception", Resources.Resource.SomeIssues, ex);
             }
 
             return result;
@@ -57,12 +57,12 @@ namespace InterTwitter.Services.LikeService
                 }
                 else
                 {
-                    result.SetFailure("not found any bookmark");
+                    result.SetFailure(Resources.Resource.NotFoundBookmark);
                 }
             }
             catch (Exception ex)
             {
-                result.SetError($"{nameof(DeleteLikeAsync)}: exception", "Some issues", ex);
+                result.SetError($"{nameof(DeleteLikeAsync)}: exception", Resources.Resource.SomeIssues, ex);
             }
 
             return result;
@@ -97,7 +97,7 @@ namespace InterTwitter.Services.LikeService
             }
             catch (Exception ex)
             {
-                result.SetError($"Exception: {nameof(AddLikeAsync)}", "Wrong result", ex);
+                result.SetError($"Exception: {nameof(AddLikeAsync)}", Resources.Resource.WrongResult, ex);
             }
 
             return result;
@@ -120,7 +120,7 @@ namespace InterTwitter.Services.LikeService
             }
             catch (Exception ex)
             {
-                result.SetError($"Exception: {nameof(AnyAsync)}", "Wrong result", ex);
+                result.SetError($"Exception: {nameof(AnyAsync)}", Resources.Resource.WrongResult, ex);
             }
 
             return result;
@@ -143,7 +143,7 @@ namespace InterTwitter.Services.LikeService
             }
             catch (Exception ex)
             {
-                result.SetError($"Exception: {nameof(CountAsync)}", "Wrong result", ex);
+                result.SetError($"Exception: {nameof(CountAsync)}", Resources.Resource.WrongResult, ex);
             }
 
             return result;

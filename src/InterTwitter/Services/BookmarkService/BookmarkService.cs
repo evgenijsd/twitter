@@ -33,12 +33,12 @@ namespace InterTwitter.Services.BookmarkService
                 }
                 else
                 {
-                    result.SetFailure("not found any bookmark");
+                    result.SetFailure(Resources.Resource.NotFoundBookmark);
                 }
             }
             catch (Exception ex)
             {
-                result.SetError($"{nameof(GetBookmarksAsync)}: exception", "Some issues", ex);
+                result.SetError($"{nameof(GetBookmarksAsync)}: exception", Resources.Resource.SomeIssues, ex);
             }
 
             return result;
@@ -59,12 +59,12 @@ namespace InterTwitter.Services.BookmarkService
                 }
                 else
                 {
-                    result.SetFailure("not found any bookmark");
+                    result.SetFailure(Resources.Resource.NotFoundBookmark);
                 }
             }
             catch (Exception ex)
             {
-                result.SetError($"{nameof(DeleteAllBookmarksAsync)}: exception", "Some issues", ex);
+                result.SetError($"{nameof(DeleteAllBookmarksAsync)}: exception", Resources.Resource.SomeIssues, ex);
             }
 
             return result;
@@ -84,12 +84,12 @@ namespace InterTwitter.Services.BookmarkService
                 }
                 else
                 {
-                    result.SetFailure("not found any bookmark");
+                    result.SetFailure(Resources.Resource.NotFoundBookmark);
                 }
             }
             catch (Exception ex)
             {
-                result.SetError($"{nameof(DeleteBoormarkAsync)}: exception", "Some issues", ex);
+                result.SetError($"{nameof(DeleteBoormarkAsync)}: exception", Resources.Resource.SomeIssues, ex);
             }
 
             return result;
@@ -123,7 +123,7 @@ namespace InterTwitter.Services.BookmarkService
             }
             catch (Exception ex)
             {
-                result.SetError($"Exception: {nameof(AddBookmarkAsync)}", "Wrong result", ex);
+                result.SetError($"Exception: {nameof(AddBookmarkAsync)}", Resources.Resource.WrongResult, ex);
             }
 
             return result;
@@ -146,7 +146,7 @@ namespace InterTwitter.Services.BookmarkService
             }
             catch (Exception ex)
             {
-                result.SetError($"Exception: {nameof(AddBookmarkAsync)}", "Wrong result", ex);
+                result.SetError($"Exception: {nameof(AddBookmarkAsync)}", Resources.Resource.WrongResult, ex);
             }
 
             return result;

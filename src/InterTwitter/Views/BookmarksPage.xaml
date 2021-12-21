@@ -3,6 +3,7 @@
                       xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                       xmlns:controls="clr-namespace:InterTwitter.Controls"
+                      xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
                       xmlns:prism="http://prismlibrary.com"
                       xmlns:viewmodels="clr-namespace:InterTwitter.ViewModels"
                       x:DataType="viewmodels:BookmarksPageViewModel"
@@ -25,9 +26,7 @@
                 <controls:CustomNavigationbar Grid.Row="0"
                                               Title="Bookmarks"
                                               RightButtonImageSource="{Binding ImageButtonSource}"
-                                              RightUserButtonCommand="{Binding VisibleButtonCommand}">
-                </controls:CustomNavigationbar>
-
+                                              RightUserButtonCommand="{Binding VisibleButtonCommand}" />
 
                 <controls:CustomCollectionView x:Name="customCollectView"
                                                Grid.Row="1"
@@ -61,8 +60,8 @@
                    VerticalOptions="StartAndExpand"
                    Margin="0,13,15,0"
                    HorizontalOptions="EndAndExpand">
-                
-                <Button Text="Delete all bookmarks"
+
+                <Button Text="{xct:Translate DeleteAllbookmarks}"
                         Command="{Binding DeleteAllBookmarks}"
                         Margin="-20,-15,-20,-15"
                         BackgroundColor="{DynamicResource appcolor_i2}"
