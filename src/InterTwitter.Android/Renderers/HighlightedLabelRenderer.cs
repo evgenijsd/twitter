@@ -69,6 +69,57 @@ namespace InterTwitter.Droid.Renderers
                     SetSpan(spannableString, item);
                 }
 
+                // test
+                //CustomElement.BackgroundColor = Xamarin.Forms.Color.Violet;
+
+                //var span1 = new Span()
+                //{
+                //    Text = "first",
+                //    TextColor = Xamarin.Forms.Color.Red,
+
+                //    FontSize = 20
+                //};
+
+                //span1.GestureRecognizers.Add(new TapGestureRecognizer
+                //{
+                //    Command = new Command(i =>
+                //    {
+                //        CustomElement.BackgroundColor = Xamarin.Forms.Color.Green;
+                //    }),
+                //    NumberOfTapsRequired = 1
+                //});
+
+                //var span2 = new Span()
+                //{
+                //    Text = "second",
+                //    TextColor = Xamarin.Forms.Color.Red,
+                //    FontSize = 20
+                //};
+
+                //span2.GestureRecognizers.Add(new TapGestureRecognizer
+                //{
+                //    Command = new Command(i =>
+                //    {
+                //        CustomElement.BackgroundColor = Xamarin.Forms.Color.Orange;
+                //    }),
+                //    NumberOfTapsRequired = 1
+                //});
+
+                //SpannableFactory spannableFactory = new SpannableFactory();
+
+                //FormattedString formattedString = new FormattedString();
+                //formattedString.Spans.Add(span1);
+                //formattedString.Spans.Add(span2);
+
+                //CustomElement.FormattedText = formattedString;
+
+                //var strBuild = new SpannableStringBuilder();
+                //strBuild.Append(spannableString);
+                //strBuild.Append(CustomElement.FormattedText.ToAttributed(Font.Default, Xamarin.Forms.Color.Orange, Control));
+                //Control.TextFormatted = strBuild;
+
+                // test
+
                 Control.TextFormatted = spannableString;
             }
         }

@@ -13,7 +13,7 @@ using Xamarin.Forms.Platform.iOS;
 [assembly: ExportRenderer(typeof(HighlightedLabel), typeof(HighlightedLabelRenderer))]
 namespace InterTwitter.Droid.Renderers
 {
-    public class HighlightedLabelRenderer : LineSpacingLabelRenderer
+    public class HighlightedLabelRenderer : LabelRenderer
     {
         private HighlightedLabel _highlightedLabel;
         private UIColor _defaultBackgroundColor;
@@ -43,8 +43,6 @@ namespace InterTwitter.Droid.Renderers
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-
-            SetLineSpacing();
         }
 
         #endregion
@@ -84,6 +82,17 @@ namespace InterTwitter.Droid.Renderers
 
                     attributedString.AddAttributes(stringAttributes, range);
                 }
+
+                var paragraphStyle = new NSMutableParagraphStyle()
+                {
+                    LineSpacing = (nfloat)_highlightedLabel.LineSpacing
+                };
+
+                var style = UIStringAttributeKey.ParagraphStyle;
+
+                attributedString.AddAttribute(style, paragraphStyle, new NSRange(0, _highlightedLabel.Text.Length));
+
+                Control.TextAlignment = (UITextAlignment)_highlightedLabel.HorizontalTextAlignment;
 
                 (Control as UILabel).AttributedText = attributedString;
             }
