@@ -12,6 +12,5 @@ namespace InterTwitter.Services.LikeService
         Task<AOResult<int>> AddLikeAsync(int tweetId, int userId);
         Task<AOResult> AnyAsync(int tweetId, int userId);
         Task<AOResult<int>> CountAsync(int tweetId);
-        List<LikeModel> GetLikes();
     }
 }

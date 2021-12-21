@@ -9,111 +9,14 @@ namespace InterTwitter.Services.LikeService
 {
     public class LikeService : ILikeService
     {
-        private List<LikeModel> _likes;
+        private readonly IMockService _mockService;
 
-        public LikeService()
+        public LikeService(IMockService mockService)
         {
-            _likes = new List<LikeModel>
-            {
-                new LikeModel
-                {
-                    Id = 1,
-                    UserId = 1,
-                    TweetId = 1,
-                },
-                new LikeModel
-                {
-                    Id = 2,
-                    UserId = 1,
-                    TweetId = 2,
-                },
-                new LikeModel
-                {
-                    Id = 3,
-                    UserId = 1,
-                    TweetId = 3,
-                },
-                new LikeModel
-                {
-                    Id = 4,
-                    UserId = 1,
-                    TweetId = 4,
-                },
-                new LikeModel
-                {
-                    Id = 5,
-                    UserId = 1,
-                    TweetId = 5,
-                },
-                new LikeModel
-                {
-                    Id = 6,
-                    UserId = 2,
-                    TweetId = 1,
-                },
-                new LikeModel
-                {
-                    Id = 7,
-                    UserId = 2,
-                    TweetId = 2,
-                },
-                new LikeModel
-                {
-                    Id = 8,
-                    UserId = 2,
-                    TweetId = 3,
-                },
-                new LikeModel
-                {
-                    Id = 9,
-                    UserId = 2,
-                    TweetId = 4,
-                },
-                new LikeModel
-                {
-                    Id = 10,
-                    UserId = 2,
-                    TweetId = 5,
-                },
-                new LikeModel
-                {
-                    Id = 11,
-                    UserId = 3,
-                    TweetId = 1,
-                },
-                new LikeModel
-                {
-                    Id = 12,
-                    UserId = 3,
-                    TweetId = 2,
-                },
-                new LikeModel
-                {
-                    Id = 13,
-                    UserId = 3,
-                    TweetId = 3,
-                },
-                new LikeModel
-                {
-                    Id = 14,
-                    UserId = 3,
-                    TweetId = 4,
-                },
-                new LikeModel
-                {
-                    Id = 15,
-                    UserId = 3,
-                    TweetId = 5,
-                },
-            };
+            _mockService = mockService;
         }
 
         #region -- Public helpers --
-
-        public List<LikeModel> GetLikes()
-        {
-            return _likes;
-        }
 
         public async Task<AOResult<List<LikeModel>>> GetLikesAsync(int userId)
         {
@@ -121,11 +24,11 @@ namespace InterTwitter.Services.LikeService
 
             try
             {
-                var bookmarks = _likes.Where(x => x.UserId == userId).ToList();
+                var likes = _mockService.Likes.Where(x => x.UserId == userId).ToList();
 
-                if (bookmarks != null)
+                if (likes != null)
                 {
-                    result.SetSuccess(bookmarks);
+                    result.SetSuccess(likes);
                 }
                 else
                 {
@@ -145,12 +48,12 @@ namespace InterTwitter.Services.LikeService
             var result = new AOResult();
             try
             {
-                var like = _likes.FirstOrDefault(x => x.UserId == userId && x.TweetId == tweetId);
+                var like = _mockService.Likes.FirstOrDefault(x => x.UserId == userId && x.TweetId == tweetId);
 
                 if (like != null)
                 {
                     result.SetSuccess();
-                    _likes.Remove(like);
+                    _mockService.Likes.Remove(like);
                 }
                 else
                 {
@@ -170,19 +73,22 @@ namespace InterTwitter.Services.LikeService
             var result = new AOResult<int>();
             try
             {
-                var like = new LikeModel
+                if (!_mockService.Likes.Any(x => x.TweetId == tweetId && x.UserId == userId))
                 {
-                    Id = _likes.Count() + 1,
-                    TweetId = tweetId,
-                    UserId = userId,
-                    Notification = true,
-                };
+                    var like = new LikeModel
+                    {
+                        Id = _mockService.Likes.Count() + 1,
+                        TweetId = tweetId,
+                        UserId = userId,
+                        Notification = true,
+                    };
 
-                _likes.Add(like);
-                int id = _likes.Last().Id;
-                if (id > 0)
-                {
-                    result.SetSuccess(id);
+                    _mockService.Likes.Add(like);
+                    int id = _mockService.Likes.Last().Id;
+                    if (id > 0)
+                    {
+                        result.SetSuccess(id);
+                    }
                 }
                 else
                 {
@@ -202,7 +108,7 @@ namespace InterTwitter.Services.LikeService
             var result = new AOResult();
             try
             {
-                var any = _likes.Any(x => x.TweetId == tweetId && x.UserId == userId);
+                var any = _mockService.Likes.Any(x => x.TweetId == tweetId && x.UserId == userId);
                 if (any)
                 {
                     result.SetSuccess();
@@ -225,7 +131,7 @@ namespace InterTwitter.Services.LikeService
             var result = new AOResult<int>();
             try
             {
-                var count = _likes.Count(x => x.TweetId == tweetId);
+                var count = _mockService.Likes.Count(x => x.TweetId == tweetId);
                 if (count >= 0)
                 {
                     result.SetSuccess(count);

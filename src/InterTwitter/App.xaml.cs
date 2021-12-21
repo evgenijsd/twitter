@@ -36,7 +36,6 @@ namespace InterTwitter
             containerRegistry.RegisterInstance<IBookmarkService>(Container.Resolve<BookmarkService>());
             containerRegistry.RegisterInstance<ILikeService>(Container.Resolve<LikeService>());
 
-
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<FlyOutPage, FlyOutPageViewModel>();

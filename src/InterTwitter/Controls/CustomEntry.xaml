@@ -33,13 +33,16 @@
                                      PlaceholderColor="{Binding PlaceholderColor, Source={x:Reference customEntry}}"
                                      BackgroundColor="{Binding BackgroundColor, Source={x:Reference customEntry}}"
                                      IsPassword="{Binding IsPasswordHidden, Source={x:Reference customEntry}}">
+            
             <control:CustomNoBorderEntry.Behaviors>
                 <Behaviors:EventToCommandBehavior Command="{Binding FocusedCommand, Source={x:Reference customEntry}}"
                                                   EventName="Focused" />
                 <Behaviors:EventToCommandBehavior Command="{Binding UnFocusedCommand, Source={x:Reference customEntry}}"
                                                   EventName="Unfocused" />
             </control:CustomNoBorderEntry.Behaviors>
+            
         </control:CustomNoBorderEntry>
+        
         <ImageButton Grid.Column="1"
                      Grid.Row="0"
                      Margin="0,0,10,0"
@@ -52,6 +55,7 @@
                      VerticalOptions="Center"
                      HorizontalOptions="Center"
                      BackgroundColor="Transparent" />
+        
         <ImageButton Grid.Column="2"
                      Grid.Row="0"
                      Margin="0,0,10,0"
@@ -66,7 +70,9 @@
                      WidthRequest="30" />
 
     </Grid>
+    
     <BoxView Grid.Row="1"
              Color="{DynamicResource appcolor_i6}"
              Margin="0,0,10,0" />
+    
 </Grid>

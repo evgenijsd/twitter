@@ -20,30 +20,30 @@ namespace InterTwitter.ViewModels
     public class HomePageViewModel : BaseTabViewModel
     {
         private readonly ITweetService _tweetService;
+
         private readonly IBookmarkService _bookmarkService;
+
         private readonly ILikeService _likeService;
+
         private readonly IAuthorizationService _autorizationService;
+
         private readonly IRegistrationService _registrationService;
 
         private bool _isFirstStart = true;
         private UserModel _currentUser;
+        private int _userId;
 
         public HomePageViewModel(
             INavigationService navigationService,
             IBookmarkService bookmarkService,
             ILikeService likeService,
-            ITweetService tweetService)
-            : base(navigationService)
-        {
-            IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource;
-            _bookmarkService = bookmarkService;
-            _likeService = likeService;
             ITweetService tweetService,
-            INavigationService navigationService,
             IAuthorizationService autorizationService,
             IRegistrationService registrationService)
             : base(navigationService)
         {
+            _bookmarkService = bookmarkService;
+            _likeService = likeService;
             _tweetService = tweetService;
             _autorizationService = autorizationService;
             _registrationService = registrationService;
@@ -53,20 +53,16 @@ namespace InterTwitter.ViewModels
 
         #region -- Public properties --
 
-        private int _userId = 0;
-        public int UserId
-        {
-            get => _userId;
-            set => SetProperty(ref _userId, value);
-        }
-
         private ICommand _openFlyoutCommandAsync;
+
         public ICommand OpenFlyoutCommandAsync => _openFlyoutCommandAsync ?? (_openFlyoutCommandAsync = SingleExecutionCommand.FromFunc(OnOpenFlyoutCommandAsync));
 
         private ICommand _addTweetCommandAsync;
+
         public ICommand AddTweetCommandAsync => _addTweetCommandAsync ?? (_addTweetCommandAsync = SingleExecutionCommand.FromFunc(OnOpenAddTweetPageAsync));
 
         private ObservableCollection<BaseTweetViewModel> _tweets;
+
         public ObservableCollection<BaseTweetViewModel> Tweets
         {
             get => _tweets;
@@ -76,6 +72,7 @@ namespace InterTwitter.ViewModels
         #endregion
 
         #region -- Overrides --
+
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
@@ -107,12 +104,9 @@ namespace InterTwitter.ViewModels
 
         private async Task InitAsync()
         {
-            int userid = 1;
-            UserId = userid;
-            var getTweetResult = await _tweetService.GetAllTweetsAsync();
+            _userId = _autorizationService.UserId;
+            var result = await _registrationService.GetByIdAsync(_userId);
 
-            if (getTweetResult.IsSuccess)
-            var result = await _registrationService.GetByIdAsync(_autorizationService.UserId);
             if (result.IsSuccess)
             {
                 _currentUser = result.Result;
@@ -124,15 +118,6 @@ namespace InterTwitter.ViewModels
 
                     foreach (var tweet in tweetViewModels)
                     {
-                        tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
-                        tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
-                        tweet.UserName = tweetAuthor.Result.Name;
-                        tweet.IsBookmarked = (await _bookmarkService.AnyAsync(tweet.TweetId, UserId)).IsSuccess;
-                        tweet.IsTweetLiked = (await _likeService.AnyAsync(tweet.TweetId, UserId)).IsSuccess;
-                        var result = await _likeService.CountAsync(tweet.TweetId);
-                        if (result.IsSuccess)
-                        {
-                            tweet.LikesNumber = result.Result;
                         var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
 
                         if (tweetAuthor.IsSuccess)
@@ -140,31 +125,41 @@ namespace InterTwitter.ViewModels
                             tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
                             tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
                             tweet.UserName = tweetAuthor.Result.Name;
+
+                            tweet.IsBookmarked = (await _bookmarkService.AnyAsync(tweet.TweetId, _userId)).IsSuccess;
+                            tweet.IsTweetLiked = (await _likeService.AnyAsync(tweet.TweetId, _userId)).IsSuccess;
+
+                            var resultLike = await _likeService.CountAsync(tweet.TweetId);
+                            if (resultLike.IsSuccess)
+                            {
+                                tweet.LikesNumber = resultLike.Result;
+                            }
                         }
+
+                        Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
+
+                        MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.AddBookmark, (me) => AddBookmarkAsync(me));
+                        MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.DeleteBookmark, (me) => DeleteBookmarkAsync(me));
+                        MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.AddLike, (me) => AddLikeAsync(me));
+                        MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.DeleteLike, (me) => DeleteLikeAsync(me));
                     }
-
-                Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
-
-                MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.AddBookmark, (me) => AddBookmarkAsync(me));
-                MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.DeleteBookmark, (me) => DeleteBookmarkAsync(me));
-                MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.AddLike, (me) => AddLikeAsync(me));
-                MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.DeleteLike, (me) => DeleteLikeAsync(me));
+                }
             }
         }
 
         private async void AddBookmarkAsync(MessageEvent me)
         {
-            var result = await _bookmarkService.AddBookmarkAsync(me.UnTweetId, UserId);
+            var result = await _bookmarkService.AddBookmarkAsync(me.UnTweetId, _userId);
         }
 
         private async void DeleteBookmarkAsync(MessageEvent me)
         {
-            var result = await _bookmarkService.DeleteBoormarkAsync(me.UnTweetId, UserId);
+            var result = await _bookmarkService.DeleteBoormarkAsync(me.UnTweetId, _userId);
         }
 
         private async void AddLikeAsync(MessageEvent me)
         {
-            var resultAdd = await _likeService.AddLikeAsync(me.UnTweetId, UserId);
+            var resultAdd = await _likeService.AddLikeAsync(me.UnTweetId, _userId);
             var result = await _likeService.CountAsync(me.UnTweetId);
             if (result.IsSuccess)
             {
@@ -178,14 +173,12 @@ namespace InterTwitter.ViewModels
 
         private async void DeleteLikeAsync(MessageEvent me)
         {
-            var resultAdd = await _likeService.DeleteLikeAsync(me.UnTweetId, UserId);
+            var resultAdd = await _likeService.DeleteLikeAsync(me.UnTweetId, _userId);
             var result = await _likeService.CountAsync(me.UnTweetId);
             if (result.IsSuccess)
             {
                 var tweet = Tweets.FirstOrDefault(x => x.TweetId == me.UnTweetId);
                 tweet.LikesNumber = result.Result;
-                    Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
-                }
             }
         }
 

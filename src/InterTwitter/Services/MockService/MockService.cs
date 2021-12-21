@@ -10,13 +10,20 @@ namespace InterTwitter.Services
         public MockService()
         {
             InitUsers();
+
             InitTweets();
+
+            InitBookmarks();
+
+            InitLikes();
         }
 
         #region -- IMockService implementation --
 
         public List<UserModel> Users { get; set; }
         public List<TweetModel> Tweets { get; set; }
+        public List<Bookmark> Bookmarks { get; set; }
+        public List<LikeModel> Likes { get; set; }
 
         #endregion
 
@@ -170,6 +177,280 @@ namespace InterTwitter.Services
                         "https://thumbs.gfycat.com/PaltryWickedCrayfish-max-1mb.gif",
                     },
                     CreationTime = DateTime.Parse("01.02.2021 12:12:12", culture),
+                },
+            };
+        }
+
+        private void InitLikes()
+        {
+            var culture = CultureInfo.GetCultureInfo("ru-RU");
+
+            Likes = new List<LikeModel>
+            {
+                new LikeModel
+                {
+                    Id = 1,
+                    UserId = 1,
+                    TweetId = 1,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("02.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 2,
+                    UserId = 1,
+                    TweetId = 2,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("01.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 3,
+                    UserId = 1,
+                    TweetId = 3,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("02.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 4,
+                    UserId = 1,
+                    TweetId = 4,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("03.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 5,
+                    UserId = 1,
+                    TweetId = 5,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("04.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 6,
+                    UserId = 2,
+                    TweetId = 1,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("05.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 7,
+                    UserId = 2,
+                    TweetId = 2,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("04.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 8,
+                    UserId = 2,
+                    TweetId = 3,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("03.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 9,
+                    UserId = 2,
+                    TweetId = 4,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("02.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 10,
+                    UserId = 2,
+                    TweetId = 5,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("01.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 11,
+                    UserId = 3,
+                    TweetId = 1,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("02.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 12,
+                    UserId = 3,
+                    TweetId = 2,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("03.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 13,
+                    UserId = 3,
+                    TweetId = 3,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("04.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 14,
+                    UserId = 3,
+                    TweetId = 4,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("05.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 15,
+                    UserId = 3,
+                    TweetId = 5,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("07.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 16,
+                    UserId = 3,
+                    TweetId = 6,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("07.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 16,
+                    UserId = 3,
+                    TweetId = 7,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("07.03.2021 12:12:12", culture),
+                },
+            };
+        }
+
+        private void InitBookmarks()
+        {
+            var culture = CultureInfo.GetCultureInfo("ru-RU");
+
+            Bookmarks = new List<Bookmark>
+            {
+                new Bookmark
+                {
+                    Id = 1,
+                    UserId = 1,
+                    TweetId = 1,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("01.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 2,
+                    UserId = 1,
+                    TweetId = 2,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("10.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 3,
+                    UserId = 1,
+                    TweetId = 3,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("01.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 4,
+                    UserId = 1,
+                    TweetId = 4,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("05.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 5,
+                    UserId = 1,
+                    TweetId = 5,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("06.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 6,
+                    UserId = 2,
+                    TweetId = 1,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("07.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 7,
+                    UserId = 2,
+                    TweetId = 2,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("08.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 8,
+                    UserId = 2,
+                    TweetId = 3,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("09.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 9,
+                    UserId = 2,
+                    TweetId = 4,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("09.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 10,
+                    UserId = 2,
+                    TweetId = 5,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("08.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 11,
+                    UserId = 3,
+                    TweetId = 1,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("07.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 12,
+                    UserId = 3,
+                    TweetId = 2,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("06.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 13,
+                    UserId = 3,
+                    TweetId = 3,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("05.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 14,
+                    UserId = 3,
+                    TweetId = 4,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("04.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 15,
+                    UserId = 3,
+                    TweetId = 5,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("03.03.2021 12:12:12", culture),
                 },
             };
         }

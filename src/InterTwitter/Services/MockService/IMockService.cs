@@ -8,5 +8,9 @@ namespace InterTwitter.Services
         List<UserModel> Users { get; set; }
 
         List<TweetModel> Tweets { get; set; }
+
+        List<Bookmark> Bookmarks { get; set; }
+
+        List<LikeModel> Likes { get; set; }
     }
 }

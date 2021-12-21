@@ -10,111 +10,14 @@ namespace InterTwitter.Services.BookmarkService
 {
     public class BookmarkService : IBookmarkService
     {
-        private List<Bookmark> _bookmarks;
+        private readonly IMockService _mockService;
 
-        public BookmarkService()
+        public BookmarkService(IMockService mockService)
         {
-            _bookmarks = new List<Bookmark>
-            {
-                new Bookmark
-                {
-                    Id = 1,
-                    UserId = 1,
-                    TweetId = 1,
-                },
-                new Bookmark
-                {
-                    Id = 2,
-                    UserId = 1,
-                    TweetId = 2,
-                },
-                new Bookmark
-                {
-                    Id = 3,
-                    UserId = 1,
-                    TweetId = 3,
-                },
-                new Bookmark
-                {
-                    Id = 4,
-                    UserId = 1,
-                    TweetId = 4,
-                },
-                new Bookmark
-                {
-                    Id = 5,
-                    UserId = 1,
-                    TweetId = 5,
-                },
-                new Bookmark
-                {
-                    Id = 6,
-                    UserId = 2,
-                    TweetId = 1,
-                },
-                new Bookmark
-                {
-                    Id = 7,
-                    UserId = 2,
-                    TweetId = 2,
-                },
-                new Bookmark
-                {
-                    Id = 8,
-                    UserId = 2,
-                    TweetId = 3,
-                },
-                new Bookmark
-                {
-                    Id = 9,
-                    UserId = 2,
-                    TweetId = 4,
-                },
-                new Bookmark
-                {
-                    Id = 10,
-                    UserId = 2,
-                    TweetId = 5,
-                },
-                new Bookmark
-                {
-                    Id = 11,
-                    UserId = 3,
-                    TweetId = 1,
-                },
-                new Bookmark
-                {
-                    Id = 12,
-                    UserId = 3,
-                    TweetId = 2,
-                },
-                new Bookmark
-                {
-                    Id = 13,
-                    UserId = 3,
-                    TweetId = 3,
-                },
-                new Bookmark
-                {
-                    Id = 14,
-                    UserId = 3,
-                    TweetId = 4,
-                },
-                new Bookmark
-                {
-                    Id = 15,
-                    UserId = 3,
-                    TweetId = 5,
-                },
-            };
+            _mockService = mockService;
         }
 
         #region -- Public helpers --
-
-        public List<Bookmark> GetBookmarks()
-        {
-            return _bookmarks;
-        }
 
         public async Task<AOResult<List<Bookmark>>> GetBookmarksAsync(int userId)
         {
@@ -122,7 +25,7 @@ namespace InterTwitter.Services.BookmarkService
 
             try
             {
-                var bookmarks = _bookmarks.Where(x => x.UserId == userId).ToList();
+                var bookmarks = _mockService.Bookmarks.Where(x => x.UserId == userId).ToList();
 
                 if (bookmarks != null)
                 {
@@ -146,11 +49,11 @@ namespace InterTwitter.Services.BookmarkService
             var result = new AOResult();
             try
             {
-                var bookmark = _bookmarks.FirstOrDefault(x => x.UserId == userId);
+                var bookmark = _mockService.Bookmarks.FirstOrDefault(x => x.UserId == userId);
 
                 if (bookmark != null)
                 {
-                    _bookmarks.RemoveAll(x => x.UserId == userId);
+                    _mockService.Bookmarks.RemoveAll(x => x.UserId == userId);
 
                     result.SetSuccess();
                 }
@@ -172,12 +75,12 @@ namespace InterTwitter.Services.BookmarkService
             var result = new AOResult();
             try
             {
-                var bookmark = _bookmarks.FirstOrDefault(x => x.UserId == userId && x.TweetId == tweetId);
+                var bookmark = _mockService.Bookmarks.FirstOrDefault(x => x.UserId == userId && x.TweetId == tweetId);
 
                 if (bookmark != null)
                 {
                     result.SetSuccess();
-                    _bookmarks.Remove(bookmark);
+                    _mockService.Bookmarks.Remove(bookmark);
                 }
                 else
                 {
@@ -197,18 +100,21 @@ namespace InterTwitter.Services.BookmarkService
             var result = new AOResult<int>();
             try
             {
-                var bookmark = new Bookmark
+                if (!_mockService.Bookmarks.Any(x => x.TweetId == tweetId && x.UserId == userId))
                 {
-                    Id = _bookmarks.Count() + 1,
-                    TweetId = tweetId,
-                    UserId = userId,
-                    Notification = true,
-                };
-                _bookmarks.Add(bookmark);
-                int id = _bookmarks.Last().Id;
-                if (id > 0)
-                {
-                    result.SetSuccess(id);
+                    var bookmark = new Bookmark
+                    {
+                        Id = _mockService.Bookmarks.Count() + 1,
+                        TweetId = tweetId,
+                        UserId = userId,
+                        Notification = true,
+                    };
+                    _mockService.Bookmarks.Add(bookmark);
+                    int id = _mockService.Bookmarks.Last().Id;
+                    if (id > 0)
+                    {
+                        result.SetSuccess(id);
+                    }
                 }
                 else
                 {
@@ -228,7 +134,7 @@ namespace InterTwitter.Services.BookmarkService
             var result = new AOResult();
             try
             {
-                var any = _bookmarks.Any(x => x.TweetId == tweetId && x.UserId == userId);
+                var any = _mockService.Bookmarks.Any(x => x.TweetId == tweetId && x.UserId == userId);
                 if (any)
                 {
                     result.SetSuccess();
