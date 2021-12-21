@@ -10,7 +10,19 @@ namespace InterTwitter.Models.TweetViewModel
 {
     public class BaseTweetViewModel : BindableBase
     {
+        public BaseTweetViewModel()
+        {
+            Mode = EStateMode.Truncated;
+        }
+
         #region -- Public properties --
+
+        private EStateMode _mode;
+        public EStateMode Mode
+        {
+            get => _mode;
+            set => SetProperty(ref _mode, value);
+        }
 
         private int _tweetId;
         public int TweetId

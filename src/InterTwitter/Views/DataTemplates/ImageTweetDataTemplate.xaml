@@ -4,7 +4,7 @@
               xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
               xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
               xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
-              xmlns:highlightedlabel="clr-namespace:InterTwitter.Controls.HighlightedLabel"
+              xmlns:highlightedlabel="clr-namespace:InterTwitter.Controls.HighlightedLabel" xmlns:controls="clr-namespace:InterTwitter.Controls"
               x:Class="InterTwitter.Views.DataTemplates.ImageTweetDataTemplate">
 
     <StackLayout Spacing="0">
@@ -30,7 +30,11 @@
                        Text="{Binding UserName}" 
                        FontAttributes="Bold"/>
 
-                <highlightedlabel:HighlightedLabel Style="{DynamicResource tstyle_i7}"
+                <controls:CustomLabel Mode="{Binding Mode}" 
+                                      OriginalText="{Binding Text}"
+                                      IsVisible="{Binding IsTextVisible}"/>
+
+                <!--<highlightedlabel:HighlightedLabel Style="{DynamicResource tstyle_i7}"
                                                    VerticalOptions="Start"
                                                    HorizontalOptions="StartAndExpand"
                                                    IsVisible="{Binding IsTextVisible}"
@@ -40,7 +44,7 @@
                                                    KeywordBackgroundColor="{DynamicResource appcolor_i8}"
                                                    HashtagTextColor="{DynamicResource appcolor_i1}"
                                                    Text="{Binding Text}"
-                                                   WordsToHighlight="{Binding WordsToHighlight}"/>
+                                                   WordsToHighlight="{Binding WordsToHighlight}"/>-->
 
                 <flv:FlowListView FlowColumnCount="{Binding ColumnNumber}"
                                   RowHeight="{Binding RowHeight}"
