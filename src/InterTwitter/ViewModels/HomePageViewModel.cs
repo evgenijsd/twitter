@@ -97,26 +97,26 @@ namespace InterTwitter.ViewModels
                 {
                     var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
 
-                foreach (var tweet in tweetViewModels)
-                {
-                    UserModel user = _userService.GetUserAsync(tweet.UserId).Result.Result;
-                    var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
-
-                    if (tweetAuthor.IsSuccess)
+                    foreach (var tweet in tweetViewModels)
                     {
-                        tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
-                        tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
-                        tweet.UserName = tweetAuthor.Result.Name;
-                        if (user.Id == _settingsManager.UserId)
+                        UserModel user = _userService.GetUserAsync(tweet.UserId).Result.Result;
+                        var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
+
+                        if (tweetAuthor.IsSuccess)
                         {
-                            tweet.MoveToProfileCommand = new Command(() => NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters { { Constants.NavigationKeys.CURRENT_USER, user } }));
-                        }
-                        else
-                        {
-                            tweet.MoveToProfileCommand = new Command(() => NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters { { Constants.NavigationKeys.USER, user } }));
+                            tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
+                            tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
+                            tweet.UserName = tweetAuthor.Result.Name;
+                            if (tweetAuthor.Result.Id == _currentUser.Id)
+                            {
+                                tweet.MoveToProfileCommand = new Command(() => NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters { { Constants.NavigationKeys.CURRENT_USER, user } }));
+                            }
+                            else
+                            {
+                                tweet.MoveToProfileCommand = new Command(() => NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters { { Constants.NavigationKeys.USER, user } }));
+                            }
                         }
                     }
-                }
 
                     Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
                 }

@@ -124,7 +124,6 @@ namespace InterTwitter.Services.UserService
             return Task<AOResult<int>>.Factory.StartNew(() => result);
         }
 
-        //7777777777777777777777777777777
         public Task<AOResult<int>> AddToBlacklistAsync(int currentUserId, int userId)
         {
             var result = new AOResult<int>();

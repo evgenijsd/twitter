@@ -10,7 +10,6 @@ namespace InterTwitter.Services
         {
             InitUsers();
             InitTweets();
-
             Likes = new List<LikeModel>();
             MuteList = new List<MuteModel>();
             BlackList = new List<BlockModel>();

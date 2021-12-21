@@ -1,8 +1,6 @@
 ﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
-using InterTwitter.Models.TweetViewModel;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace InterTwitter.Services

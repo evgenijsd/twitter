@@ -1,9 +1,7 @@
 ﻿using DLToolkit.Forms.Controls;
 using InterTwitter.Droid.Services.PermissionsService;
-using InterTwitter.Models;
 using InterTwitter.Resources;
 using InterTwitter.Services;
-using InterTwitter.Services.BookmarkService;
 using InterTwitter.Services.PermissionsService;
 using InterTwitter.Services.Settings;
 using InterTwitter.Services.UserService;
@@ -12,7 +10,6 @@ using InterTwitter.ViewModels.Flyout;
 using InterTwitter.Views;
 using Prism;
 using Prism.Ioc;
-using Prism.Navigation;
 using Prism.Unity;
 using System.Globalization;
 using Xamarin.CommunityToolkit.Helpers;
@@ -22,8 +19,6 @@ namespace InterTwitter
 {
     public partial class App : PrismApplication
     {
-        public static T Resolve<T>() => Current.Container.Resolve<T>();
-
         public App(IPlatformInitializer initializer = null)
             : base(initializer)
         {
@@ -34,14 +29,16 @@ namespace InterTwitter
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterDialog<AlertView, AlertViewModel>();
+            containerRegistry.RegisterDialog<Alert2View, Alert2ViewModel>();
 
             //Services
-            containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
-            containerRegistry.RegisterInstance<IMockService>(Container.Resolve<MockService>());
-            containerRegistry.RegisterInstance<ITweetService>(Container.Resolve<TweetService>());
-            containerRegistry.RegisterInstance<IBookmarkService>(Container.Resolve<BookmarkService>());
-            containerRegistry.RegisterInstance<IPermissionsService>(Container.Resolve<PermissionsService>());
+            containerRegistry.RegisterSingleton<IMockService, MockService>();
+            containerRegistry.RegisterSingleton<ITweetService, TweetService>();
+            containerRegistry.RegisterInstance<IRegistrationService>(Container.Resolve<RegistrationService>());
+            containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
             containerRegistry.RegisterInstance<IUserService>(Container.Resolve<UserService>());
+            containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
+            containerRegistry.RegisterInstance<IPermissionsService>(Container.Resolve<PermissionsService>());
 
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
@@ -53,12 +50,12 @@ namespace InterTwitter
             containerRegistry.RegisterForNavigation<BookmarksPage, BookmarksPageViewModel>();
             containerRegistry.RegisterForNavigation<NotificationsPage, NotificationPageViewModel>();
             containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
+            containerRegistry.RegisterForNavigation<StartPage, StartPageViewModel>();
+            containerRegistry.RegisterForNavigation<CreatePage, CreatePageViewModel>();
+            containerRegistry.RegisterForNavigation<LogInPage, LogInPageViewModel>();
+            containerRegistry.RegisterForNavigation<PasswordPage, PasswordPageViewModel>();
             containerRegistry.RegisterForNavigation<EditProfilePage, EditProfilePageViewModel>();
             containerRegistry.RegisterForNavigation<BlacklistPage, BlacklistPageViewModel>();
-
-            //Dialogs
-            containerRegistry.RegisterDialog<AlertView, AlertViewModel>();
-            containerRegistry.RegisterDialog<Alert2View, AlertViewModel>();
         }
 
         protected override async void OnInitialized()

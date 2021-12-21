@@ -166,6 +166,9 @@ namespace InterTwitter.ViewModels
             _dialogService.ShowDialog("Alert2View", param, CloseDialogCallback);
             async void CloseDialogCallback(IDialogResult dialogResult)
             {
+                DialogParameters param = new DialogParameters();
+                param.Add("okButtonText", Resources.Resource.Ok);
+
                 bool result = (bool)dialogResult?.Parameters["Accept"];
                 if (result)
                 {
@@ -173,12 +176,12 @@ namespace InterTwitter.ViewModels
                     {
                         if (string.IsNullOrEmpty(OldPassword))
                         {
-                            param.Add("message", Resources.Resource.Old_password_is_empty);
+                            param.Add("title", Resources.Resource.Old_password_is_empty);
                             isAllValid = false;
                         }
                         else if (OldPassword != _user.Password)
                         {
-                            param.Add("message", Resources.Resource.Old_password_is_wrong);
+                            param.Add("title", Resources.Resource.Old_password_is_wrong);
                             isAllValid = false;
                         }
 
@@ -188,7 +191,7 @@ namespace InterTwitter.ViewModels
                         }
                         else
                         {
-                            param.Add("message", Resources.Resource.New_password_is_not_valid_or_empty);
+                            param.Add("title", Resources.Resource.New_password_is_not_valid_or_empty);
                             isAllValid = false;
                         }
                     }
@@ -199,7 +202,7 @@ namespace InterTwitter.ViewModels
                     }
                     else
                     {
-                        param.Add("message", Resources.Resource.Name_is_not_valid_or_empty);
+                        param.Add("title", Resources.Resource.Name_is_not_valid_or_empty);
                         isAllValid = false;
                     }
 
@@ -209,7 +212,7 @@ namespace InterTwitter.ViewModels
                     }
                     else
                     {
-                        param.Add("message", Resources.Resource.Email_is_not_valid_or_empty);
+                        param.Add("title", Resources.Resource.Email_is_not_valid_or_empty);
                         isAllValid = false;
                     }
 
@@ -223,9 +226,9 @@ namespace InterTwitter.ViewModels
                         MessagingCenter.Send(this, Constants.Messages.USER_PROFILE_CHANGED);
                         await NavigationService.GoBackAsync();
                     }
-                    else if (param.ContainsKey("message") && param["message"] != null)
+                    else if (param.ContainsKey("title") && param["title"] != null)
                     {
-                        _dialogService.ShowDialog("AlertView", param);
+                      _dialogService.ShowDialog("Alert2View", param);
                     }
                 }
             }

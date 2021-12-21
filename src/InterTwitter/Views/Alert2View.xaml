@@ -39,8 +39,8 @@
                 HorizontalOptions="EndAndExpand"
                 BackgroundColor="Transparent"
                 Margin="0,10,-5,-10" />
-            
+
         </StackLayout>
-        
+
     </StackLayout>
 </Frame>

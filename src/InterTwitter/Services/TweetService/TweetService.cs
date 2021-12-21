@@ -1,12 +1,7 @@
 ﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
-using InterTwitter.Models.TweetViewModel;
-using InterTwitter.Services.Settings;
-using Prism.Events;
-using Prism.Services;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 

@@ -50,7 +50,7 @@
                 <TapGestureRecognizer Tapped="OnMenuTappedHandler" Command="{Binding HamburgerMenuCommandAsync}"/>
             </cardsControls:CircleFrame.GestureRecognizers>
         </cardsControls:CircleFrame>
-        
+
         <!--Hidden menu-->
         <Frame x:Name="currentUserHiddenMenu"
                Grid.Row="0" 
@@ -128,7 +128,7 @@
             </StackLayout>
         </Frame>
         <!--Hidden menu-->
-        
+
         <!--MIDDLE SPACE-->
         <Grid Grid.Row="1" 
               ColumnDefinitions="0.4*, 0.6*"
@@ -142,7 +142,7 @@
                 <Label Style="{DynamicResource tstyle_i9}" 
                        Text="{Binding UserMail}" />
             </StackLayout>
-            
+
             <Frame Grid.Column="1"
                    x:Name="changeProfFrame"
                    Margin="0,8,16,0"
@@ -198,7 +198,7 @@
                 </Frame.GestureRecognizers>
             </Frame>
             <!--MIDDLE SPACE-->
-            
+
             <!--CONTENT Control-->
             <ContentView>
                 <cardsControls:TabsControl BindingContext="{x:Reference lists}" 
@@ -229,9 +229,9 @@
                 </cardsControls:TabsControl>
             </ContentView>
             <!--CONTENT Control-->
-            
+
         </Grid>
-        
+
         <!--User photo-->
         <cardsControls:CircleFrame Grid.Row="0"
                                    Grid.RowSpan="2"
@@ -253,7 +253,7 @@
             </cardsControls:CircleFrame>
         </cardsControls:CircleFrame>
         <!--User photo-->
-        
+
         <!--CONTENT SPACE-->
         <cards:CarouselView x:Name="lists"
                             Grid.Row="2"
@@ -280,7 +280,7 @@
 
         </cards:CarouselView>
         <!--CONTENT SPACE-->
-        
+
         <Grid.GestureRecognizers>
             <TapGestureRecognizer Tapped="OnAnywhereTappedHandler" />
         </Grid.GestureRecognizers>

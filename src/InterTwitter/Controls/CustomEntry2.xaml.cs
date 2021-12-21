@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace InterTwitter.Controls
 {
-    public partial class CustomEntry : Grid
+    public partial class CustomEntry2 : Grid
     {
-        public CustomEntry()
+        public CustomEntry2()
         {
             InitializeComponent();
         }
@@ -17,7 +17,7 @@ namespace InterTwitter.Controls
         public static readonly BindableProperty TextProperty = BindableProperty.Create(
             propertyName: nameof(Text),
             returnType: typeof(string),
-            declaringType: typeof(CustomEntry),
+            declaringType: typeof(CustomEntry2),
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -30,7 +30,7 @@ namespace InterTwitter.Controls
         public static readonly BindableProperty MaxLengthProperty = BindableProperty.Create(
             propertyName: nameof(MaxLength),
             returnType: typeof(string),
-            declaringType: typeof(CustomEntry),
+            declaringType: typeof(CustomEntry2),
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -43,7 +43,7 @@ namespace InterTwitter.Controls
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(
             propertyName: nameof(TextColor),
             returnType: typeof(Color),
-            declaringType: typeof(CustomEntry),
+            declaringType: typeof(CustomEntry2),
             defaultValue: Color.Silver,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -56,7 +56,7 @@ namespace InterTwitter.Controls
         public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(
             propertyName: nameof(FontFamily),
             returnType: typeof(string),
-            declaringType: typeof(CustomEntry),
+            declaringType: typeof(CustomEntry2),
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -69,7 +69,7 @@ namespace InterTwitter.Controls
         public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(
             propertyName: nameof(Placeholder),
             returnType: typeof(string),
-            declaringType: typeof(CustomEntry),
+            declaringType: typeof(CustomEntry2),
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -82,7 +82,7 @@ namespace InterTwitter.Controls
         public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(
             propertyName: nameof(PlaceholderColor),
             returnType: typeof(Color),
-            declaringType: typeof(CustomEntry),
+            declaringType: typeof(CustomEntry2),
             defaultValue: Color.Silver,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -95,7 +95,7 @@ namespace InterTwitter.Controls
         public static readonly BindableProperty IsPasswordProperty = BindableProperty.Create(
             propertyName: nameof(IsPassword),
             returnType: typeof(bool),
-            declaringType: typeof(CustomEntry),
+            declaringType: typeof(CustomEntry2),
             defaultValue: false,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -108,7 +108,7 @@ namespace InterTwitter.Controls
         public static readonly BindableProperty IsPasswordHiddenProperty = BindableProperty.Create(
             propertyName: nameof(IsPasswordHidden),
             returnType: typeof(bool),
-            declaringType: typeof(CustomEntry),
+            declaringType: typeof(CustomEntry2),
             defaultValue: false,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -121,7 +121,7 @@ namespace InterTwitter.Controls
         public static readonly BindableProperty IsFocusedVisibleProperty = BindableProperty.Create(
             propertyName: nameof(IsFocusedVisible),
             returnType: typeof(bool),
-            declaringType: typeof(CustomEntry),
+            declaringType: typeof(CustomEntry2),
             defaultValue: false,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -134,7 +134,7 @@ namespace InterTwitter.Controls
         public static readonly BindableProperty IsFocusedButtonProperty = BindableProperty.Create(
             propertyName: nameof(IsFocusedButton),
             returnType: typeof(bool),
-            declaringType: typeof(CustomEntry),
+            declaringType: typeof(CustomEntry2),
             defaultValue: false,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -147,7 +147,7 @@ namespace InterTwitter.Controls
         public static readonly BindableProperty IsButtonEyeVisibleProperty = BindableProperty.Create(
             propertyName: nameof(IsButtonEyeVisible),
             returnType: typeof(bool),
-            declaringType: typeof(CustomEntry),
+            declaringType: typeof(CustomEntry2),
             defaultValue: false,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -160,7 +160,7 @@ namespace InterTwitter.Controls
         public static readonly BindableProperty IsButtonClearVisibleProperty = BindableProperty.Create(
             propertyName: nameof(IsButtonClearVisible),
             returnType: typeof(bool),
-            declaringType: typeof(CustomEntry),
+            declaringType: typeof(CustomEntry2),
             defaultValue: false,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -170,10 +170,23 @@ namespace InterTwitter.Controls
             set => SetValue(IsButtonClearVisibleProperty, value);
         }
 
+        public static readonly BindableProperty IsButtonClearEnableProperty = BindableProperty.Create(
+           propertyName: nameof(IsButtonClearEnable),
+           returnType: typeof(bool),
+           declaringType: typeof(CustomEntry2),
+           defaultValue: false,
+           defaultBindingMode: BindingMode.TwoWay);
+
+        public bool IsButtonClearEnable
+        {
+            get => (bool)GetValue(IsButtonClearEnableProperty);
+            set => SetValue(IsButtonClearEnableProperty, value);
+        }
+
         public static readonly BindableProperty ClearImageSourceProperty = BindableProperty.Create(
             propertyName: nameof(ClearImageSource),
             returnType: typeof(string),
-            declaringType: typeof(CustomEntry),
+            declaringType: typeof(CustomEntry2),
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -183,10 +196,48 @@ namespace InterTwitter.Controls
             set => SetValue(ClearImageSourceProperty, value);
         }
 
+        //------------------
+        public static readonly BindableProperty IsSwapButtonsProperty = BindableProperty.Create(
+            propertyName: nameof(IsSwapButtons),
+            returnType: typeof(bool),
+            declaringType: typeof(CustomEntry2),
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public bool IsSwapButtons
+        {
+            get => (bool)GetValue(IsSwapButtonsProperty);
+            set => SetValue(IsSwapButtonsProperty, value);
+        }
+
+        public static readonly BindableProperty Eye_grid_columnProperty = BindableProperty.Create(
+           propertyName: nameof(Eye_grid_column),
+           returnType: typeof(int),
+           declaringType: typeof(CustomEntry2),
+           defaultBindingMode: BindingMode.TwoWay);
+
+        public int Eye_grid_column
+        {
+            get => (int)GetValue(Eye_grid_columnProperty);
+            set => SetValue(Eye_grid_columnProperty, value);
+        }
+
+        public static readonly BindableProperty Cross_grid_columnProperty = BindableProperty.Create(
+           propertyName: nameof(Cross_grid_column),
+           returnType: typeof(int),
+           declaringType: typeof(CustomEntry2),
+           defaultBindingMode: BindingMode.TwoWay);
+
+        public int Cross_grid_column
+        {
+            get => (int)GetValue(Cross_grid_columnProperty);
+            set => SetValue(Cross_grid_columnProperty, value);
+        }
+
+        //----------------------
         public static readonly BindableProperty EyeOnImageSourceProperty = BindableProperty.Create(
             propertyName: nameof(EyeOnImageSource),
             returnType: typeof(string),
-            declaringType: typeof(CustomEntry),
+            declaringType: typeof(CustomEntry2),
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -199,7 +250,7 @@ namespace InterTwitter.Controls
         public static readonly BindableProperty EyeOffImageSourceProperty = BindableProperty.Create(
             propertyName: nameof(EyeOffImageSource),
             returnType: typeof(string),
-            declaringType: typeof(CustomEntry),
+            declaringType: typeof(CustomEntry2),
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -212,7 +263,7 @@ namespace InterTwitter.Controls
         public static readonly BindableProperty ImageSourceProperty = BindableProperty.Create(
             propertyName: nameof(ImageSource),
             returnType: typeof(string),
-            declaringType: typeof(CustomEntry),
+            declaringType: typeof(CustomEntry2),
             defaultValue: string.Empty,
             defaultBindingMode: BindingMode.TwoWay);
 
@@ -246,6 +297,21 @@ namespace InterTwitter.Controls
             {
                 case nameof(IsPassword):
                     IsPasswordHidden = IsPassword;
+                    break;
+                case nameof(IsSwapButtons):
+                    {
+                        if (IsSwapButtons)
+                        {
+                            Eye_grid_column = 2;
+                            Cross_grid_column = 1;
+                        }
+                        else
+                        {
+                            Eye_grid_column = 1;
+                            Cross_grid_column = 2;
+                        }
+                    }
+
                     break;
                 case nameof(Text):
                 case nameof(ClearImageSource):
@@ -318,7 +384,7 @@ namespace InterTwitter.Controls
 
             IsFocusedVisible = true;
             IsFocusedButton = true;
-            CustomEntryLocal.Placeholder = string.Empty;
+            CustomEntry2Local.Placeholder = string.Empty;
 
             return Task.CompletedTask;
         }
@@ -336,7 +402,7 @@ namespace InterTwitter.Controls
             }
 
             IsFocusedButton = false;
-            CustomEntryLocal.Placeholder = Placeholder;
+            CustomEntry2Local.Placeholder = Placeholder;
 
             return Task.CompletedTask;
         }
