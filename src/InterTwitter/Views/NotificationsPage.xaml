@@ -5,7 +5,6 @@
                        xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
                        xmlns:controls="clr-namespace:InterTwitter.Controls"
                        xmlns:local="clr-namespace:InterTwitter.Views"
-                       xmlns:sh="http://sharpnado.com"
                        xmlns:prism="http://prismlibrary.com"
                        prism:ViewModelLocator.AutowireViewModel="True"
                        IconImageSource="{Binding IconPath}"
@@ -20,12 +19,29 @@
 
 
             <controls:CustomNavigationbar Grid.Row="0"
-                                          Title="Notification"/>
+                                          Title="{xct:Translate Notification}" />
 
             <controls:CustomCollectionNotificationView x:Name="customCollectView"
                                                        Grid.Row="1"
                                                        ItemsSource="{Binding Tweets}"
                                                        ItemTemplate="{DynamicResource notificationTemplateSelector}" />
+
+            <StackLayout Grid.Row="1"
+                         HorizontalOptions="CenterAndExpand"
+                         VerticalOptions="CenterAndExpand"
+                         HeightRequest="200"
+                         IsVisible="{Binding IsNotFound}"
+                         BackgroundColor="Transparent">
+
+                <Image Source="{DynamicResource pic_owl_blue_big}"
+                       Aspect="AspectFit"
+                       HeightRequest="90" />
+
+                <Label Text="{xct:Translate NotFoundNotification}"
+                       Margin="0,20,0,0"
+                       Style="{DynamicResource tstyle_i5}" />
+
+            </StackLayout>
 
         </Grid>
 

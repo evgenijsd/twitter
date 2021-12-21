@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace InterTwitter.Models.TweetViewModel
+﻿namespace InterTwitter.Models.TweetViewModel
 {
     public class ImagesTweetViewModel : BaseTweetViewModel
     {
