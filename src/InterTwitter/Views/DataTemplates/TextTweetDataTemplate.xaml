@@ -6,6 +6,7 @@
               x:Class="InterTwitter.Views.DataTemplates.TextTweetDataTemplate">
 
     <StackLayout Spacing="0">
+
         <StackLayout Padding="15, 15, 15, 0"
                      Orientation="Horizontal"
                      Spacing="0">
@@ -35,6 +36,7 @@
                        IsVisible="{Binding IsTextVisible}" />
 
                 <StackLayout Orientation="Horizontal"
+                             WidthRequest="320"
                              HeightRequest="20"
                              Padding="0">
 
