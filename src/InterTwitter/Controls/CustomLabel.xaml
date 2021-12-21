@@ -27,7 +27,8 @@
 
                             <FormattedString>
 
-                                <Span Text="{Binding TruncatedText, Source={x:Reference customLabel}}"/>
+                                <Span Style="{DynamicResource tstyle_i7}"
+                                      Text="{Binding TruncatedText, Source={x:Reference customLabel}}"/>
 
                                 <Span Text="...more"
                                       TextColor="{DynamicResource appcolor_i1}">

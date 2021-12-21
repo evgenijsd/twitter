@@ -77,18 +77,17 @@
                 </flv:FlowListView>
 
                 <StackLayout Orientation="Horizontal"
-                             HeightRequest="30"
-                             Padding="0">
+                             HeightRequest="20"
+                             Padding="0, 10, 0, 0">
 
                     <Label Style="{DynamicResource tstyle_i8}"
-                           Padding="{OnPlatform Android='0, 10, 0, 0'}"
                            Text="{Binding CreationTime,  StringFormat='{}{0:dd.MM.yyyy • HH:mm}'}"/>
 
                     <ffimageloading:CachedImage Source="ic_like_gray" 
-                                                HorizontalOptions="EndAndExpand"
-                                                Margin="{OnPlatform Android='0, 7, 0, 0'}"
+                                                HorizontalOptions="EndAndExpand">
+                                                <!--Margin="{OnPlatform Android='0, 7, 0, 0'}"
                                                 HeightRequest="{OnPlatform Android='24'}"
-                                                WidthRequest="{OnPlatform Android='24'}">
+                                                WidthRequest="{OnPlatform Android='24'}">-->
                         
                         <ffimageloading:CachedImage.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding LikeCommand}" CommandParameter="{Binding .}"/>
@@ -108,7 +107,7 @@
 
                     <Label Style="{DynamicResource tstyle_i9}"
                            Text="{Binding LikesNumber}" 
-                           Margin="{OnPlatform Android='0, 15, 15, 0'}">
+                           Margin="{OnPlatform Android='0, 1, 15, -1', iOS='0, 1, 15, -1'}">
                         
                         <Label.Triggers>
                             
@@ -120,11 +119,11 @@
                         
                     </Label>
 
-                    <ffimageloading:CachedImage Source="ic_bookmarks_gray"
-                                                HeightRequest="{OnPlatform Android='24'}"
+                    <ffimageloading:CachedImage Source="ic_bookmarks_gray">
+                                                <!--HeightRequest="{OnPlatform Android='24'}"
                                                 WidthRequest="{OnPlatform Android='24'}"
-                                                Margin="{OnPlatform Android='0, 7, 0, 0'}">
-                        
+                                                Margin="{OnPlatform Android='0, 7, 0, 0'}">-->
+
                         <ffimageloading:CachedImage.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding BookmarkCommand}" CommandParameter="{Binding .}"/>
                         </ffimageloading:CachedImage.GestureRecognizers>
