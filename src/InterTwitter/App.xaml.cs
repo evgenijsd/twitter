@@ -1,4 +1,5 @@
-using DLToolkit.Forms.Controls;
+﻿using DLToolkit.Forms.Controls;
+using InterTwitter.Resources;
 using InterTwitter.Services;
 using InterTwitter.Services.BookmarkService;
 using InterTwitter.Services.LikeService;
@@ -8,6 +9,8 @@ using InterTwitter.Views;
 using Prism;
 using Prism.Ioc;
 using Prism.Unity;
+using System.Globalization;
+using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Forms;
 
 namespace InterTwitter
@@ -23,11 +26,17 @@ namespace InterTwitter
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterDialog<AlertView, AlertViewModel>();
+
             //Services
-            containerRegistry.RegisterInstance<IMockService>(Container.Resolve<MockService>());
-            containerRegistry.RegisterInstance<ITweetService>(Container.Resolve<TweetService>());
+            containerRegistry.RegisterSingleton<IMockService, MockService>();
+            containerRegistry.RegisterSingleton<ITweetService, TweetService>();
+            containerRegistry.RegisterInstance<IRegistrationService>(Container.Resolve<RegistrationService>());
+            containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
             containerRegistry.RegisterInstance<IBookmarkService>(Container.Resolve<BookmarkService>());
             containerRegistry.RegisterInstance<ILikeService>(Container.Resolve<LikeService>());
+
+
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<FlyOutPage, FlyOutPageViewModel>();
@@ -38,16 +47,23 @@ namespace InterTwitter
             containerRegistry.RegisterForNavigation<BookmarksPage, BookmarksPageViewModel>();
             containerRegistry.RegisterForNavigation<NotificationsPage, NotificationPageViewModel>();
             containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
-            containerRegistry.RegisterForNavigation<MainPage>();
+            containerRegistry.RegisterForNavigation<StartPage, StartPageViewModel>();
+            containerRegistry.RegisterForNavigation<CreatePage, CreatePageViewModel>();
+            containerRegistry.RegisterForNavigation<LogInPage, LogInPageViewModel>();
+            containerRegistry.RegisterForNavigation<PasswordPage, PasswordPageViewModel>();
         }
 
         protected override async void OnInitialized()
         {
+            LocalizationResourceManager.Current.PropertyChanged += (sender, e) => Resource.Culture = LocalizationResourceManager.Current.CurrentCulture;
+            LocalizationResourceManager.Current.Init(Resource.ResourceManager);
+            LocalizationResourceManager.Current.CurrentCulture = new CultureInfo("en");
+
             InitializeComponent();
+
             Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             FlowListView.Init();
-            //await NavigationService.NavigateAsync($"{nameof(MainPage)}");
-            await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}");
+            await NavigationService.NavigateAsync($"/{nameof(StartPage)}");
         }
 
         protected override void OnStart()

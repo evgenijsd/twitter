@@ -1,10 +1,4 @@
-﻿using Foundation;
-using InterTwitter.iOS.Renderers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UIKit;
+﻿using InterTwitter.iOS.Renderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 

@@ -22,8 +22,11 @@ namespace InterTwitter.ViewModels
         private readonly ITweetService _tweetService;
         private readonly IBookmarkService _bookmarkService;
         private readonly ILikeService _likeService;
+        private readonly IAuthorizationService _autorizationService;
+        private readonly IRegistrationService _registrationService;
 
         private bool _isFirstStart = true;
+        private UserModel _currentUser;
 
         public HomePageViewModel(
             INavigationService navigationService,
@@ -35,7 +38,17 @@ namespace InterTwitter.ViewModels
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource;
             _bookmarkService = bookmarkService;
             _likeService = likeService;
+            ITweetService tweetService,
+            INavigationService navigationService,
+            IAuthorizationService autorizationService,
+            IRegistrationService registrationService)
+            : base(navigationService)
+        {
             _tweetService = tweetService;
+            _autorizationService = autorizationService;
+            _registrationService = registrationService;
+
+            IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource;
         }
 
         #region -- Public properties --
@@ -99,14 +112,17 @@ namespace InterTwitter.ViewModels
             var getTweetResult = await _tweetService.GetAllTweetsAsync();
 
             if (getTweetResult.IsSuccess)
+            var result = await _registrationService.GetByIdAsync(_autorizationService.UserId);
+            if (result.IsSuccess)
             {
-                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
+                _currentUser = result.Result;
+                var getTweetResult = await _tweetService.GetAllTweetsAsync();
 
-                foreach (var tweet in tweetViewModels)
+                if (getTweetResult.IsSuccess)
                 {
-                    var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
+                    var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
 
-                    if (tweetAuthor.IsSuccess)
+                    foreach (var tweet in tweetViewModels)
                     {
                         tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
                         tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
@@ -117,9 +133,15 @@ namespace InterTwitter.ViewModels
                         if (result.IsSuccess)
                         {
                             tweet.LikesNumber = result.Result;
+                        var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
+
+                        if (tweetAuthor.IsSuccess)
+                        {
+                            tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
+                            tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
+                            tweet.UserName = tweetAuthor.Result.Name;
                         }
                     }
-                }
 
                 Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
 
@@ -162,6 +184,8 @@ namespace InterTwitter.ViewModels
             {
                 var tweet = Tweets.FirstOrDefault(x => x.TweetId == me.UnTweetId);
                 tweet.LikesNumber = result.Result;
+                    Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
+                }
             }
         }
 

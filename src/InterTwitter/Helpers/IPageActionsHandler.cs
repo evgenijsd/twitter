@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace InterTwitter.Helpers
+﻿namespace InterTwitter.Helpers
 {
     public interface IPageActionsHandler
     {
