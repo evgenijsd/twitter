@@ -3,7 +3,9 @@ using CoreText;
 using Foundation;
 using InterTwitter.Controls.HighlightedLabel;
 using InterTwitter.Droid.Renderers;
+using InterTwitter.iOS.Renderers;
 using System;
+using System.ComponentModel;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -11,7 +13,7 @@ using Xamarin.Forms.Platform.iOS;
 [assembly: ExportRenderer(typeof(HighlightedLabel), typeof(HighlightedLabelRenderer))]
 namespace InterTwitter.Droid.Renderers
 {
-    public class HighlightedLabelRenderer : LabelRenderer
+    public class HighlightedLabelRenderer : LineSpacingLabelRenderer
     {
         private HighlightedLabel _highlightedLabel;
         private UIColor _defaultBackgroundColor;
@@ -36,6 +38,13 @@ namespace InterTwitter.Droid.Renderers
             }
 
             HighlightWordsInText();
+        }
+
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+
+            SetLineSpacing();
         }
 
         #endregion

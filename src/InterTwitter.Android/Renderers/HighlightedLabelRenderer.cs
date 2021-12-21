@@ -3,6 +3,7 @@ using Android.Text;
 using Android.Text.Style;
 using InterTwitter.Controls.HighlightedLabel;
 using InterTwitter.Droid.Renderers;
+using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Color = Android.Graphics.Color;
@@ -10,7 +11,7 @@ using Color = Android.Graphics.Color;
 [assembly: ExportRenderer(typeof(HighlightedLabel), typeof(HighlightedLabelRenderer))]
 namespace InterTwitter.Droid.Renderers
 {
-    public class HighlightedLabelRenderer : LabelRenderer
+    public class HighlightedLabelRenderer : LineSpacingLabelRenderer
     {
         private Color _defaultBackgroundColor;
         private Color _defaultTextColor;
@@ -40,6 +41,13 @@ namespace InterTwitter.Droid.Renderers
             }
 
             HighlightWordsInText();
+        }
+
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+
+            SetLineSpacing();
         }
 
         #endregion

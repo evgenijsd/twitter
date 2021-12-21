@@ -1,6 +1,7 @@
 ﻿using Android.Content;
 using InterTwitter.Controls;
 using InterTwitter.Droid.Renderers;
+using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -10,6 +11,7 @@ namespace InterTwitter.Droid.Renderers
     public class LineSpacingLabelRenderer : LabelRenderer
     {
         protected LineSpacingLabel _lineSpacingLabel;
+        protected LineSpacingLabel LineSpacingLabel => _lineSpacingLabel ??= (Element as LineSpacingLabel);
 
         public LineSpacingLabelRenderer(Context context)
             : base(context)
@@ -22,17 +24,31 @@ namespace InterTwitter.Droid.Renderers
         {
             base.OnElementChanged(e);
 
-            if (e.OldElement == null)
+            SetLineSpacing();
+        }
+
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+
+
+        }
+
+        #endregion
+
+        #region -- Private hepers
+
+        protected void SetLineSpacing()
+        {
+            if (LineSpacingLabel != null)
             {
-                _lineSpacingLabel = Element as LineSpacingLabel;
+                var lineSpacing = LineSpacingLabel.LineSpacing;
+
+                Control.SetLineSpacing(1f, lineSpacing);
+
+                UpdateLayout();
             }
-
-            var lineSpacing = _lineSpacingLabel.LineSpacing;
-
-            Control.SetLineSpacing(1f, lineSpacing);
-
-            UpdateLayout();
-        } 
+        }
 
         #endregion
     }

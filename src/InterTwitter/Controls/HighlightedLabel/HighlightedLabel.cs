@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace InterTwitter.Controls.HighlightedLabel
 {
-    public class HighlightedLabel : Label
+    public class HighlightedLabel : LineSpacingLabel
     {
         #region -- Public helpers --
 
@@ -79,6 +79,7 @@ namespace InterTwitter.Controls.HighlightedLabel
 
                         HighlightedWordInfo highlightedWord = new HighlightedWordInfo()
                         {
+                            Text = word,
                             Position = wordPosition,
                             Length = word.Length,
                             IsHashtag = isHashtag,

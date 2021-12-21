@@ -147,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
+    <Folder Include="Resources\drawable\" />
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
@@ -1040,11 +1041,6 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\ic_add_blue.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\my_cursor.xml">
-      <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

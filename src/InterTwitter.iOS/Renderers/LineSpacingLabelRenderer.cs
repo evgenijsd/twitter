@@ -20,6 +20,15 @@ namespace InterTwitter.iOS.Renderers
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            SetLineSpacing();
+        }
+
+        #endregion
+
+        #region -- Private helpers --
+
+        protected void SetLineSpacing()
+        {
             var lineSpacingLabel = Element as LineSpacingLabel;
 
             if (Control != null && lineSpacingLabel != null && lineSpacingLabel.Text != null)
@@ -38,7 +47,7 @@ namespace InterTwitter.iOS.Renderers
                 Control.AttributedText = text;
                 Control.TextAlignment = (UITextAlignment)lineSpacingLabel.HorizontalTextAlignment;
             }
-        } 
+        }
 
         #endregion
     }
