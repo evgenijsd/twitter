@@ -40,7 +40,7 @@ namespace InterTwitter.Droid.Renderers
                 _hashtagTextColor = CustomElement.HashtagTextColor.ToAndroid();
             }
 
-            HighlightWordsInText();
+            //HighlightWordsInText();
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)

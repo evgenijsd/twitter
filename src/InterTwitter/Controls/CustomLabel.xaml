@@ -30,9 +30,10 @@
                                                        KeywordBackgroundColor="{DynamicResource appcolor_i8}"
                                                        HashtagTextColor="{DynamicResource appcolor_i1}"
                                                        Text="{Binding OriginalText, Source={x:Reference customLabel}}"
-                                                       WordsToHighlight="{Binding WordsToHighlight}">
+                                                       WordsToHighlight="{Binding WordsToHighlight}"
+                                                       MoreCommand="{Binding OpenTweetCommand, Source={x:Reference customLabel}}">
 
-                        <highlightedlabel:HighlightedLabel.FormattedText>
+                        <!--<highlightedlabel:HighlightedLabel.FormattedText>
 
                             <FormattedString>
 
@@ -51,7 +52,7 @@
                                 
                             </FormattedString>
 
-                        </highlightedlabel:HighlightedLabel.FormattedText>
+                        </highlightedlabel:HighlightedLabel.FormattedText>-->
 
                     </highlightedlabel:HighlightedLabel>
 
