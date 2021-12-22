@@ -153,7 +153,7 @@ namespace InterTwitter.ViewModels.Flyout
         {
             _authorizationService.UserId = 0;
 
-            await NavigationService.NavigateAsync($"/{nameof(StartPage)}");
+            await NavigationService.NavigateAsync($"/{nameof(LogInPage)}");
         }
 
         private Task OnChangeProfileCommandAsync()

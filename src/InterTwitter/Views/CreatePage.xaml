@@ -36,16 +36,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="40" />
                     </Grid.ColumnDefinitions>
-                    
-                    <ImageButton Grid.Column="0"
-                                 Command="{Binding StartCommand}"
-                                 Source="{DynamicResource ic_left_gray}"
-                                 HeightRequest="70"
-                                 Margin="0,10,0,0"
-                                 Aspect="AspectFit"
-                                 VerticalOptions="StartAndExpand"
-                                 BackgroundColor="Transparent" />
-                    
+
                     <Image Source="{DynamicResource pic_owl_blue_small}"
                            Grid.Column="1"
                            HorizontalOptions="CenterAndExpand"
@@ -80,8 +71,8 @@
                                       TextColor="{DynamicResource appcolor_i3}"
                                       IsVisible="true"
                                       IsFocusedVisible="{Binding IsVisibleName}"
-                                      IsFocusedButton="{Binding IsVisibleButton}"
-                                      Placeholder="{xct:Translate Name}" />
+                                      IsFocusedButton="{Binding IsFocusedName}"
+                                      Placeholder="{xct:Translate Name}"/>
                 
                 <Label Grid.Row="1"
                        Text="{xct:Translate PleaseName}"
@@ -120,7 +111,7 @@
                              Margin="0,20,0,0"
                              IsVisible="{Binding Path=IsVisibleButton, Converter={StaticResource InvertedBoolConverter}}">
                     
-                    <Button Text="{xct:Translate Next}"
+                    <Button Text="{Binding ButtonText}"
                             WidthRequest="218"
                             CornerRadius="25"
                             HeightRequest="50"
@@ -130,7 +121,18 @@
                             FontSize="{DynamicResource tsize_i3}"
                             FontFamily="Ubuntu-Regular"
                             TextColor="{DynamicResource appcolor_i2}" />
-                    
+
+                    <Button Command="{Binding LogInCommand}"
+                            WidthRequest="218"
+                            Margin="0,20,0,0"
+                            Text="{xct:Translate LogIn}"
+                            FontAttributes="Bold"
+                            FontSize="{DynamicResource tsize_i3}"
+                            FontFamily="Ubuntu-Regular"
+                            TextColor="{DynamicResource appcolor_i1}"
+                            BackgroundColor="Transparent"
+                            BorderColor="Transparent" />
+
                 </StackLayout>
                 
             </Grid>
@@ -144,7 +146,7 @@
                     <TapGestureRecognizer Command="{Binding PasswordCommand}" />
                 </StackLayout.GestureRecognizers>
                 
-                <Label Text="{xct:Translate Next}"
+                <Label Text="{Binding ButtonText}"
                        VerticalOptions="CenterAndExpand"
                        FontAttributes="Bold"
                        FontSize="{DynamicResource tsize_i3}"

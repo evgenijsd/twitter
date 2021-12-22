@@ -90,9 +90,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
-    <Compile Update="Views\StartPage.xaml.cs">
-      <DependentUpon>StartPage.xaml</DependentUpon>
-    </Compile>
     <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Resources\Resource %28копировать%29.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

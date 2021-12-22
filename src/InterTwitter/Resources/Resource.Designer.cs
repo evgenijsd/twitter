@@ -304,7 +304,7 @@ namespace InterTwitter.Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Next.
+        ///   Ищет локализованную строку, похожую на    Next   .
         /// </summary>
         internal static string Next {
             get {

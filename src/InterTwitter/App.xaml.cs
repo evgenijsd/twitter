@@ -46,7 +46,6 @@ namespace InterTwitter
             containerRegistry.RegisterForNavigation<BookmarksPage, BookmarksPageViewModel>();
             containerRegistry.RegisterForNavigation<NotificationsPage, NotificationPageViewModel>();
             containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
-            containerRegistry.RegisterForNavigation<StartPage, StartPageViewModel>();
             containerRegistry.RegisterForNavigation<CreatePage, CreatePageViewModel>();
             containerRegistry.RegisterForNavigation<LogInPage, LogInPageViewModel>();
             containerRegistry.RegisterForNavigation<PasswordPage, PasswordPageViewModel>();
@@ -59,10 +58,11 @@ namespace InterTwitter
             LocalizationResourceManager.Current.CurrentCulture = new CultureInfo("en");
 
             InitializeComponent();
+            App.Current.UserAppTheme = OSAppTheme.Light;
 
             Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             FlowListView.Init();
-            await NavigationService.NavigateAsync($"/{nameof(StartPage)}");
+            await NavigationService.NavigateAsync($"/{nameof(LogInPage)}");
         }
 
         protected override void OnStart()

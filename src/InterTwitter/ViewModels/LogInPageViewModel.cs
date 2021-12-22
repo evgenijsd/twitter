@@ -21,8 +21,6 @@ namespace InterTwitter.ViewModels
 
         private readonly IKeyboardHelper _keyboardHelper;
 
-        private UserModel _user;
-
         public LogInPageViewModel(
             INavigationService navigationService,
             IDialogService dialogs,
@@ -103,9 +101,9 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _isVisibleButton, value);
         }
 
-        private ICommand _StartCommand;
+        private ICommand _CreateCommand;
 
-        public ICommand StartCommand => _StartCommand ??= SingleExecutionCommand.FromFunc(OnStartCommandAsync);
+        public ICommand CreateCommand => _CreateCommand ??= SingleExecutionCommand.FromFunc(OnCreateCommandAsync);
 
         private ICommand _TwitterCommand;
 
@@ -130,13 +128,14 @@ namespace InterTwitter.ViewModels
             }
         }
 
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        public override async void OnNavigatedTo(INavigationParameters parameters)
         {
-            if (parameters.TryGetValue(Constants.Navigation.USER, out UserModel user))
+            var result = await _registrationService?.GetByIdAsync(_autorizationService.UserId);
+            if (result.IsSuccess)
             {
-                _user = user;
-                Email = _user.Email ?? string.Empty;
-                Password = _user.Password ?? string.Empty;
+                var user = result.Result;
+                var parametrs = new NavigationParameters { { Constants.Navigation.USER, user } };
+                await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", parametrs);
             }
         }
 
@@ -144,9 +143,11 @@ namespace InterTwitter.ViewModels
 
         #region -- Private helpers --
 
-        private async Task OnStartCommandAsync()
+        private async Task OnCreateCommandAsync()
         {
-            await NavigationService.GoBackAsync();
+            _keyboardHelper.HideKeyboard();
+
+            await NavigationService.NavigateAsync($"/{nameof(CreatePage)}");
         }
 
         private async Task OnTwitterCommandAsync()
@@ -157,24 +158,17 @@ namespace InterTwitter.ViewModels
                 var result = await _autorizationService.CheckUserAsync(Email, Password);
                 if (result.IsSuccess)
                 {
-                    if (result.Result.Password == Password)
-                    {
-                        _keyboardHelper.HideKeyboard();
+                    _keyboardHelper.HideKeyboard();
 
-                        _user = result.Result;
-                        _autorizationService.UserId = _user.Id;
-                        var parametrs = new NavigationParameters { { Constants.Navigation.USER, _user } };
-                        await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", parametrs);
-                    }
-                    else
-                    {
-                        var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Resources.Resource.AlertInvalidPassword } };
-                        await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
-                        Password = string.Empty;
-                    }
+                    var user = result.Result;
+                    _autorizationService.UserId = user.Id;
+                    var parametrs = new NavigationParameters { { Constants.Navigation.USER, user } };
+                    await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", parametrs);
                 }
                 else
                 {
+                    _keyboardHelper.HideKeyboard();
+
                     var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Resources.Resource.AlertInvalidLogin } };
                     await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
                 }
@@ -193,9 +187,6 @@ namespace InterTwitter.ViewModels
                         IsWrongEmail = true;
                     }
                 }
-
-                var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, validator.Errors[0].ErrorMessage } };
-                await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
             }
         }
 

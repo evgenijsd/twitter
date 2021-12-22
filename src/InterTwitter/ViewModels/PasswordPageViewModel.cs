@@ -17,6 +17,8 @@ namespace InterTwitter.ViewModels
 
         private readonly IDialogService _dialogs;
 
+        private readonly IAuthorizationService _autorizationService;
+
         private readonly IKeyboardHelper _keyboardHelper;
 
         private UserModel _user;
@@ -25,10 +27,12 @@ namespace InterTwitter.ViewModels
             INavigationService navigationService,
             IDialogService dialogs,
             IRegistrationService registrationService,
+            IAuthorizationService autorizationService,
             IKeyboardHelper keyboardHelper)
             : base(navigationService)
         {
             _registrationService = registrationService;
+            _autorizationService = autorizationService;
             _dialogs = dialogs;
             _keyboardHelper = keyboardHelper;
         }
@@ -95,9 +99,9 @@ namespace InterTwitter.ViewModels
 
         public ICommand CreateCommand => _CreateCommand ??= SingleExecutionCommand.FromFunc(OnCreateCommandAsync);
 
-        private ICommand _StartCommand;
+        private ICommand _TwitterCommand;
 
-        public ICommand StartCommand => _StartCommand ??= SingleExecutionCommand.FromFunc(OnStartCommandAsync);
+        public ICommand TwitterCommand => _TwitterCommand ??= SingleExecutionCommand.FromFunc(OnTwitterCommandAsync);
 
         #endregion
 
@@ -134,17 +138,16 @@ namespace InterTwitter.ViewModels
         {
             _keyboardHelper.HideKeyboard();
 
-            await NavigationService.GoBackAsync();
+            var parametrs = new NavigationParameters { { Constants.Navigation.USER, _user } };
+            await NavigationService.GoBackAsync(parametrs);
         }
 
-        private async Task OnStartCommandAsync()
+        private async Task OnTwitterCommandAsync()
         {
             var validator = ValidatorsExtension.PasswordPageValidator.Validate(this);
             if (validator.IsValid)
             {
                 _user.Password = Password;
-                Password = string.Empty;
-                ConfirmPassword = string.Empty;
                 _user.AvatarPath = "pic_profile_big";
                 _user.BackgroundUserImagePath = "pic_profile_big";
                 var result = await _registrationService.AddAsync(_user);
@@ -152,11 +155,14 @@ namespace InterTwitter.ViewModels
                 {
                     _keyboardHelper.HideKeyboard();
 
+                    _autorizationService.UserId = _user.Id;
                     var parametrs = new NavigationParameters { { Constants.Navigation.USER, _user } };
-                    await NavigationService.NavigateAsync($"/{nameof(StartPage)}", parametrs);
+                    await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", parametrs);
                 }
                 else
                 {
+                    _keyboardHelper.HideKeyboard();
+
                     var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Resources.Resource.AlertDatabase } };
                     await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
                 }
@@ -175,9 +181,6 @@ namespace InterTwitter.ViewModels
                         IsWrongConfirmPassword = true;
                     }
                 }
-
-                var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, validator.Errors[0].ErrorMessage } };
-                await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
             }
         }
 

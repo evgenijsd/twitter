@@ -123,7 +123,7 @@
                             FontFamily="Ubuntu-Regular"
                             TextColor="{DynamicResource appcolor_i2}" />
                     
-                    <Button Command="{Binding StartCommand}"
+                    <Button Command="{Binding CreateCommand}"
                             WidthRequest="218"
                             CornerRadius="25"
                             HeightRequest="50"
