@@ -189,7 +189,7 @@ namespace InterTwitter.ViewModels.Flyout
 
         private Task OnNavigateProfileCommandAsync()
         {
-            NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters { { Constants.NavigationKeys.CURRENT_USER, _user } });
+            NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters { { Constants.Navigation.CURRENT_USER, _user } });
             MessagingCenter.Send(this, Constants.Messages.OPEN_SIDEBAR, false);
             return Task.CompletedTask;
         }

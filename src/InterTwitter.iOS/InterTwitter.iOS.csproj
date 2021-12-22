@@ -117,7 +117,7 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\KeyboardHelper.cs" />
     <Compile Include="Renderers\NoBounceRenderer.cs" />
-    <Compile Include="Services\PermissionsService\PermissionsService.cs" />
+    <Compile Include="Services\Permission\PermissionService.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />

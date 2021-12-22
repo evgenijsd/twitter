@@ -7,6 +7,7 @@ namespace InterTwitter.Views
         public AlertView()
         {
             InitializeComponent();
+            aframe.WidthRequest = Prism.PrismApplicationBase.Current.MainPage.Width - 84;
         }
     }
 }

@@ -88,9 +88,9 @@ namespace InterTwitter.ViewModels
         private async Task InitAsync()
         {
             var result = await _registrationService.GetByIdAsync(_autorizationService.UserId);
-            if (result.IsSuccess)
+            if (/*result.IsSuccess*/ true)
             {
-                _currentUser = result.Result;
+                // _currentUser = result.Result;
                 var getTweetResult = await _tweetService.GetAllTweetsAsync();
 
                 if (getTweetResult.IsSuccess)
@@ -107,13 +107,13 @@ namespace InterTwitter.ViewModels
                             tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
                             tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
                             tweet.UserName = tweetAuthor.Result.Name;
-                            if (tweetAuthor.Result.Id == _currentUser.Id)
+                            if (tweetAuthor.Result.Id == _settingsManager.UserId/*_currentUser.Id*/)
                             {
-                                tweet.MoveToProfileCommand = new Command(() => NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters { { Constants.NavigationKeys.CURRENT_USER, user } }));
+                                tweet.MoveToProfileCommand = new Command(() => NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters { { Constants.Navigation.CURRENT_USER, user } }));
                             }
                             else
                             {
-                                tweet.MoveToProfileCommand = new Command(() => NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters { { Constants.NavigationKeys.USER, user } }));
+                                tweet.MoveToProfileCommand = new Command(() => NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters { { Constants.Navigation.USER, user } }));
                             }
                         }
                     }

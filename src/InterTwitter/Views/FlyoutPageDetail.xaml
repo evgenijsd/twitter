@@ -9,8 +9,10 @@
                            xmlns:behaviors="clr-namespace:InterTwitter.Behaviors"
                            Title="Detail"
                            android:TabbedPage.IsSwipePagingEnabled="False"
-                           android:TabbedPage.ToolbarPlacement="Bottom"
+                           android:TabbedPage.ToolbarPlacement="Bottom" 
                            prism:ViewModelLocator.AutowireViewModel="True"
+                           BarBackgroundColor="{DynamicResource appcolor_i2}" 
+                           SelectedTabColor="{DynamicResource appcolor_i1}" 
                            SelectedTabType="{Binding SelectedTabType}">
     
     <TabbedPage.Behaviors>

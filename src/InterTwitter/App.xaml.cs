@@ -29,7 +29,6 @@ namespace InterTwitter
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterDialog<AlertView, AlertViewModel>();
-            containerRegistry.RegisterDialog<Alert2View, Alert2ViewModel>();
 
             //Services
             containerRegistry.RegisterSingleton<IMockService, MockService>();
@@ -38,7 +37,7 @@ namespace InterTwitter
             containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
             containerRegistry.RegisterInstance<IUserService>(Container.Resolve<UserService>());
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
-            containerRegistry.RegisterInstance<IPermissionsService>(Container.Resolve<PermissionsService>());
+            containerRegistry.RegisterInstance<IPermissionService>(Container.Resolve<PermissionService>());
 
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
@@ -68,7 +67,8 @@ namespace InterTwitter
 
             Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             FlowListView.Init();
-            await NavigationService.NavigateAsync($"/{nameof(StartPage)}");
+
+            await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}");
         }
 
         protected override void OnStart()

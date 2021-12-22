@@ -10,6 +10,7 @@ namespace InterTwitter.Services.UserService
     public class UserService : IUserService
     {
         private readonly IMockService _mockService;
+
         public UserService(IMockService mockService)
         {
             _mockService = mockService;

@@ -3,6 +3,7 @@ using InterTwitter.Models;
 using InterTwitter.Services.PermissionsService;
 using InterTwitter.Services.Settings;
 using InterTwitter.Services.UserService;
+using InterTwitter.Views;
 using Prism.Navigation;
 using Prism.Services.Dialogs;
 using System;
@@ -16,13 +17,13 @@ namespace InterTwitter.ViewModels
 {
     public class EditProfilePageViewModel : BaseViewModel
     {
-        private readonly IPermissionsService _permissionsService;
+        private readonly IPermissionService _permissionsService;
         private readonly ISettingsManager _settingsManager;
         private readonly IUserService _userService;
         private readonly IDialogService _dialogService;
         private UserModel _user;
 
-        public EditProfilePageViewModel(INavigationService navigationService, IPermissionsService permissionsService, ISettingsManager settingsManager, IUserService userService, IDialogService dialogService)
+        public EditProfilePageViewModel(INavigationService navigationService, IPermissionService permissionsService, ISettingsManager settingsManager, IUserService userService, IDialogService dialogService)
             : base(navigationService)
         {
             _permissionsService = permissionsService;
@@ -77,7 +78,7 @@ namespace InterTwitter.ViewModels
 
         public ICommand NavigationCommandAsync => SingleExecutionCommand.FromFunc(OnNavigationCommandAsync);
 
-        public ICommand CheckCommandAsync => SingleExecutionCommand.FromFunc(OnCheckCommandAsync);
+        public ICommand CheckCommandAsync => SingleExecutionCommand.FromFunc(() => OnCheckCommandAsync());
 
         public ICommand PickBackgroundImageAsync => SingleExecutionCommand.FromFunc(OnPickBackgroundImageAsync);
 
@@ -150,7 +151,7 @@ namespace InterTwitter.ViewModels
         }
 
         private bool isChanged => _user.Name != UserName || _user.Email != UserMail || _user.AvatarPath != UserImagePath || _user.BackgroundUserImagePath != UserBackgroundImage || !string.IsNullOrEmpty(OldPassword) || !string.IsNullOrEmpty(NewPassword);
-        private async Task OnCheckCommandAsync()
+        private async Task OnCheckCommandAsync(bool isIndirectCall = false)
         {
             bool isAllValid = true;
             if (!isChanged)
@@ -163,7 +164,7 @@ namespace InterTwitter.ViewModels
             param.Add("okButtonText", Resources.Resource.Ok);
             param.Add("cancelButtonText", Resources.Resource.Cancel);
 
-            _dialogService.ShowDialog("Alert2View", param, CloseDialogCallback);
+            _dialogService.ShowDialog(nameof(AlertView), param, CloseDialogCallback);
             async void CloseDialogCallback(IDialogResult dialogResult)
             {
                 DialogParameters param = new DialogParameters();
@@ -228,8 +229,12 @@ namespace InterTwitter.ViewModels
                     }
                     else if (param.ContainsKey("title") && param["title"] != null)
                     {
-                      _dialogService.ShowDialog("Alert2View", param);
+                      _dialogService.ShowDialog(nameof(AlertView), param);
                     }
+                }
+                else if (isIndirectCall)
+                {
+                    await NavigationService.GoBackAsync();
                 }
             }
         }
@@ -238,7 +243,7 @@ namespace InterTwitter.ViewModels
         {
             if (isChanged)
             {
-                await OnCheckCommandAsync();
+                await OnCheckCommandAsync(true);
             }
             else
             {

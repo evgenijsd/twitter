@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using InterTwitter.Views;
 
 namespace InterTwitter.ViewModels
 {
@@ -55,17 +56,17 @@ namespace InterTwitter.ViewModels
         public override async Task InitializeAsync(INavigationParameters parameters)
         {
             // UsersList = new ObservableCollection<UserViewModel>(_userService.GetAllUsersAsync().Result.Result.Select(x => x.ToUserViewModel()));
-            if (_isBlacklistPage = parameters.ContainsKey(Constants.NavigationKeys.BLACKLIST))
+            if (_isBlacklistPage = parameters.ContainsKey(Constants.Navigation.BLACKLIST))
             {
                 Title = "Blacklist";
-                _currentUser = parameters[Constants.NavigationKeys.BLACKLIST] as UserModel;
+                _currentUser = parameters[Constants.Navigation.BLACKLIST] as UserModel;
 
                 await InitBlacklistAsync();
             }
-            else if (_isMutelistPage = parameters.ContainsKey(Constants.NavigationKeys.MUTELIST))
+            else if (_isMutelistPage = parameters.ContainsKey(Constants.Navigation.MUTELIST))
             {
                 Title = "Mute";
-                _currentUser = parameters[Constants.NavigationKeys.MUTELIST] as UserModel;
+                _currentUser = parameters[Constants.Navigation.MUTELIST] as UserModel;
 
                 await InitMutelistAsync();
             }
@@ -120,7 +121,7 @@ namespace InterTwitter.ViewModels
                 param.Add("okButtonText", Resources.Resource.Ok);
                 param.Add("cancelButtonText", Resources.Resource.Cancel);
 
-                _dialogService.ShowDialog("Alert2View", param, CloseDialogCallback);
+                _dialogService.ShowDialog(nameof(AlertView), param, CloseDialogCallback);
 
                 async void CloseDialogCallback(IDialogResult dialogResult)
                 {

@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Xamarin.Essentials;
 
-namespace InterTwitter.Services.PermissionsService
+namespace InterTwitter.Droid.Services.Permission
 {
-    public interface IPermissionsService
+    interface IPermissionService
     {
         Task<PermissionStatus> CheckStatusAsync<T>()
             where T : Permissions.BasePermission, new();

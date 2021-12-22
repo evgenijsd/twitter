@@ -6,7 +6,7 @@ using Xamarin.Essentials;
 
 namespace InterTwitter.iOS.Services.PermissionsService
 {
-    public class PermissionsService : IPermissionsService
+    public class PermissionService : IPermissionService
     {
         public Task<PermissionStatus> CheckStatusAsync<T>()
             where T : Permissions.BasePermission, new()

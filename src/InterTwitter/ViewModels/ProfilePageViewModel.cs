@@ -144,13 +144,13 @@ namespace InterTwitter.ViewModels
             => SingleExecutionCommand.FromFunc(OnRemoveUserFromMuteCommandAsync);
 
         public ICommand NavigationToEditCommandAsync => SingleExecutionCommand.FromFunc(
-            () => NavigationService.NavigateAsync(nameof(EditProfilePage), new NavigationParameters { { Constants.NavigationKeys.CURRENT_USER, _user } }));
+            () => NavigationService.NavigateAsync(nameof(EditProfilePage), new NavigationParameters { { Constants.Navigation.CURRENT_USER, _user } }));
 
         public ICommand NavigationToBlacklistCommandAsync => SingleExecutionCommand.FromFunc(
-            () => NavigationService.NavigateAsync(nameof(BlacklistPage), new NavigationParameters { { Constants.NavigationKeys.BLACKLIST, _user } }));
+            () => NavigationService.NavigateAsync(nameof(BlacklistPage), new NavigationParameters { { Constants.Navigation.BLACKLIST, _user } }));
 
         public ICommand NavigationToMutelistCommandAsync => SingleExecutionCommand.FromFunc(
-            () => NavigationService.NavigateAsync(nameof(BlacklistPage), new NavigationParameters { { Constants.NavigationKeys.MUTELIST, _user } }));
+            () => NavigationService.NavigateAsync(nameof(BlacklistPage), new NavigationParameters { { Constants.Navigation.MUTELIST, _user } }));
 
         #endregion
 
@@ -158,15 +158,15 @@ namespace InterTwitter.ViewModels
 
         public async override Task InitializeAsync(INavigationParameters parameters)
         {
-            if (parameters.ContainsKey(Constants.NavigationKeys.CURRENT_USER))
+            if (parameters.ContainsKey(Constants.Navigation.CURRENT_USER))
             {
-                _user = parameters[Constants.NavigationKeys.CURRENT_USER] as UserModel;
+                _user = parameters[Constants.Navigation.CURRENT_USER] as UserModel;
                 _isCurrentUser = true;
                 IsChangeProfileButtonVisible = true;
             }
-            else if (parameters.ContainsKey(Constants.NavigationKeys.USER))
+            else if (parameters.ContainsKey(Constants.Navigation.USER))
             {
-                _user = parameters[Constants.NavigationKeys.USER] as UserModel;
+                _user = parameters[Constants.Navigation.USER] as UserModel;
                 _isCurrentUser = false;
                 IsChangeProfileButtonVisible = false;
 
@@ -285,7 +285,7 @@ namespace InterTwitter.ViewModels
                 param.Add("okButtonText", Resources.Resource.Add_to_Blacklist);
                 param.Add("cancelButtonText", Resources.Resource.Cancel);
 
-                _dialogService.ShowDialog("Alert2View", param, CloseDialogCallback);
+                _dialogService.ShowDialog(nameof(AlertView), param, CloseDialogCallback);
             }
 
             void CloseDialogCallback(IDialogResult dialogResult)
@@ -318,7 +318,7 @@ namespace InterTwitter.ViewModels
                 param.Add("okButtonText", Resources.Resource.Add_to_Mute);
                 param.Add("cancelButtonText", Resources.Resource.Cancel);
 
-                _dialogService.ShowDialog("Alert2View", param, CloseDialogCallback);
+                _dialogService.ShowDialog(nameof(AlertView), param, CloseDialogCallback);
             }
 
             void CloseDialogCallback(IDialogResult dialogResult)
@@ -341,7 +341,7 @@ namespace InterTwitter.ViewModels
             param.Add("okButtonText", Resources.Resource.Remove);
             param.Add("cancelButtonText", Resources.Resource.Cancel);
 
-            _dialogService.ShowDialog("Alert2View", param, CloseDialogCallback);
+            _dialogService.ShowDialog(nameof(AlertView), param, CloseDialogCallback);
 
             void CloseDialogCallback(IDialogResult dialogResult)
             {
@@ -361,7 +361,7 @@ namespace InterTwitter.ViewModels
             param.Add("okButtonText", Resources.Resource.Remove);
             param.Add("cancelButtonText", Resources.Resource.Cancel);
 
-            _dialogService.ShowDialog("Alert2View", param, CloseDialogCallback);
+            _dialogService.ShowDialog(nameof(AlertView), param, CloseDialogCallback);
 
             void CloseDialogCallback(IDialogResult dialogResult)
             {
