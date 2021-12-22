@@ -71,28 +71,118 @@ namespace InterTwitter.Controls.HighlightedLabel
                     if (!string.IsNullOrEmpty(this.Text) && this.WordsToHighlight?.Count() > 0)
                     {
                         DateTime start = DateTime.Now;
-                        var tokens = Constants.Methods.GetUniqueWords(this.Text);
 
-                        var positionsAndKeyLenghths = GetPositionsAndKeyLengthsPairs(new List<string>(this.WordsToHighlight));
+                        var foundKeysInfo = GetInfoAboutKeyFound(new List<string>(this.WordsToHighlight));
 
-                        positionsAndKeyLenghths = positionsAndKeyLenghths
-                            .OrderBy(x => x.Key)
-                            .ThenByDescending(x => x.Value.Length)
+                        var debug_foundKeysInfo = foundKeysInfo.Select(x => $"{x.Position} {x.Text}").ToArray();
+
+                        foundKeysInfo = foundKeysInfo
+                            .OrderBy(x => x.Position)
+                            .ThenByDescending(x => x.Text.Length)
                             .ToList();
 
-                        var strings = positionsAndKeyLenghths.Select(x => $"{x.Value} {x.Key}").ToArray();
+                        debug_foundKeysInfo = foundKeysInfo.Select(x =>
+                            $" {(x.IsHashtag ? "tag" : "word")} " +
+                            $"{x.Position} {x.Length} {x.Text}").ToArray();
 
-                        FormattedString formattedString = GetKeywordsMergedWithSimpleText(positionsAndKeyLenghths);
+                        string str = string.Empty;
 
-                        MergeWithRestOfSimpleText(positionsAndKeyLenghths.Last(), formattedString);
-
-                        if (MoreCommand != null)
+                        try
                         {
-                            formattedString.Spans.Add(GetCommandSpan("...more"));
+                            for (int i = 0; i < foundKeysInfo.Count - 1; i++)
+                            {
+                                var foundKey = foundKeysInfo[i];
+                                int endOfFoundKey = foundKey.Position + foundKey.Length - 1;
+
+                                for (int k = i + 1; k < foundKeysInfo.Count; k++)
+                                {
+                                    var comparedKey = foundKeysInfo[k];
+                                    int endOfComparedKey = comparedKey.Position + comparedKey.Length - 1;
+
+                                    if (endOfFoundKey >= comparedKey.Position)
+                                    {
+                                        if (endOfFoundKey < endOfComparedKey)
+                                        {
+                                            int offset = Math.Abs((comparedKey.Position + comparedKey.Length) - (foundKey.Position + foundKey.Length));
+                                            string cuttedKeyText = comparedKey.Text.Substring(comparedKey.Length - offset);
+
+                                            var cuttedKey = new HighlightedWordInfo()
+                                            {
+                                                Position = endOfFoundKey + 1,
+                                                Text = cuttedKeyText,
+                                                Length = cuttedKeyText.Length,
+                                            };
+
+                                            foundKeysInfo.RemoveAt(k);
+                                            foundKeysInfo.Insert(k, cuttedKey);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            string msg = e.Message;
                         }
 
-                        this.FormattedText = formattedString;
+                        str = str;
+                        debug_foundKeysInfo = foundKeysInfo.Select(x =>
+                           $" {(x.IsHashtag ? "tag" : "word")} " +
+                           $"{x.Position} {x.Length} {x.Text}").ToArray();
 
+                        str = string.Empty;
+
+                        try
+                        {
+                            for (int i = 0; i < foundKeysInfo.Count - 1; i++)
+                            {
+                                var foundKey = foundKeysInfo[i];
+                                int endOfFoundKey = foundKey.Position + foundKey.Length - 1;
+
+                                for (int k = i + 1; k < foundKeysInfo.Count;)
+                                {
+                                    var comparedKey = foundKeysInfo[k];
+                                    int endOfComparedKey = comparedKey.Position + comparedKey.Length - 1;
+
+                                    if (endOfFoundKey >= comparedKey.Position)
+                                    {
+                                        if (endOfFoundKey >= endOfComparedKey)
+                                        {
+                                            str += comparedKey.Text + "|";
+                                            foundKeysInfo.RemoveAt(k);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            string msg = e.Message;
+                        }
+
+                        str = str;
+                         debug_foundKeysInfo = foundKeysInfo.Select(x =>
+                            $" {(x.IsHashtag ? "tag" : "word")} " +
+                            $"{x.Position} {x.Length} {x.Text}").ToArray();
+
+                        FormattedString formattedString = GetKeуsMergedWithSimpleText(foundKeysInfo);
+
+                        MergeWithRestOfSimpleText(foundKeysInfo.Last(), formattedString);
+
+                        // добавляем команду
+                        //if (MoreCommand != null)
+                        //{
+                        //    formattedString.Spans.Add(GetCommandSpan("...more"));
+                        //}
+                        this.FormattedText = formattedString;
                     }
 
                     break;
@@ -101,83 +191,152 @@ namespace InterTwitter.Controls.HighlightedLabel
 
         #region -- Private helpers --
 
-        private List<KeyValuePair<int, string>> GetPositionsAndKeyLengthsPairs(List<string> keywords)
+        private List<HighlightedWordInfo> GetInfoAboutKeyFound(List<string> keys)
         {
-            List<KeyValuePair<int, string>> positionsAndKeyLengths = new List<KeyValuePair<int, string>>();
-
-            foreach (var keyword in keywords)
-            {
-                int keywordPosition = -1;
-                int positionOfNextKeyword = 0;
-
-                do
+            // получаем все слова текста и их длину
+            var words = Text
+                .Split(' ')
+                .Select(x => new HighlightedWordInfo()
                 {
-                    keywordPosition = this.Text.IndexOf(keyword, positionOfNextKeyword, StringComparison.OrdinalIgnoreCase);
+                    //IsHashtag = Regex.IsMatch(x, Constants.RegexPatterns.HASHTAG_PATTERN),
+                    Text = x,
+                    Length = x.Length,
+                }).ToArray();
 
-                    if (keywordPosition != -1)
-                    {
-                        positionOfNextKeyword = keywordPosition + keyword.Length;
-
-                        positionsAndKeyLengths.Add(new KeyValuePair<int, string>(keywordPosition, keyword));
-                    }
-                }
-                while (keywordPosition != -1);
+            // узнаем позиции всех слов в тексте
+            int nextWordPosition = 0;
+            for (int i = 0; i < words.Count(); i++)
+            {
+                words[i].Position = Text.IndexOf(words[i].Text, nextWordPosition);
+                nextWordPosition = words[i].Position + words[i].Length;
             }
 
-            return positionsAndKeyLengths;
+            var debugWords = words.Select(x => $"{x.Text} {x.Position}").ToArray();
+            var debugKeys = keys.Select(x => $"{x}").ToArray();
+
+            // инфа о найденных ключах
+            var foundKeysInfo = new List<HighlightedWordInfo>();
+
+            // ищем ключ во всех словах
+            for (int keyIndex = 0; keyIndex < keys.Count(); keyIndex++)
+            {
+                for (int wordIndex = 0; wordIndex < words.Length; wordIndex++)
+                {
+                    bool isKeyAHashtag = Regex.IsMatch(keys[keyIndex], Constants.RegexPatterns.HASHTAG_PATTERN);
+
+                    // если слово - тег, то проверяем на полное совпадение
+                    if (isKeyAHashtag && words[wordIndex].Text.Equals(keys[keyIndex], StringComparison.OrdinalIgnoreCase))
+                    {
+                        foundKeysInfo.Add(new HighlightedWordInfo()
+                        {
+                            Text = keys[keyIndex],
+                            Length = keys[keyIndex].Length,
+                            Position = words[wordIndex].Position,
+                            IsHashtag = true,
+                        });
+                    }
+                    else if (!isKeyAHashtag)
+                    {
+                        int keywPosition = -1;
+                        int nextKeyPosition = 0;
+
+                        do
+                        {
+                            keywPosition = words[wordIndex].Text.IndexOf(keys[keyIndex], nextKeyPosition, StringComparison.OrdinalIgnoreCase);
+
+                            if (keywPosition != -1)
+                            {
+                                nextKeyPosition = keywPosition + keys[keyIndex].Length;
+
+                                foundKeysInfo.Add(
+                                    new HighlightedWordInfo()
+                                    {
+                                        Text = keys[keyIndex],
+                                        Length = keys[keyIndex].Length,
+                                        Position = words[wordIndex].Position + keywPosition,
+                                    });
+                            }
+                        }
+                        while (keywPosition != -1);
+                    }
+                }
+            }
+
+            //foreach (var keyword in keywords)
+            //{
+            //    int keywordPosition = -1;
+            //    int positionOfNextKeyword = 0;
+
+            //    do
+            //    {
+            //        // сделать корректный распознаватель тегов
+            //        bool isHashtag = Regex.IsMatch(keyword, Constants.RegexPatterns.HASHTAG_PATTERN);
+
+            //        keywordPosition = this.Text.IndexOf(keyword, positionOfNextKeyword, StringComparison.OrdinalIgnoreCase);
+
+            //        // если ключевое слово - хештег, то ищем по-другому
+            //        if (isHashtag)
+            //        {
+            //        }
+
+            //        if (keywordPosition != -1)
+            //        {
+            //            positionOfNextKeyword = keywordPosition + keyword.Length;
+
+            //            positionsAndKeyLengths.Add(new KeyValuePair<int, string>(keywordPosition, keyword));
+            //        }
+            //    }
+            //    while (keywordPosition != -1);
+            //}
+            return foundKeysInfo;
         }
 
-        private FormattedString GetKeywordsMergedWithSimpleText(List<KeyValuePair<int, string>> positionsAndKeys)
+        private FormattedString GetKeуsMergedWithSimpleText(List<HighlightedWordInfo> foundKeysInfo)
         {
             FormattedString formattedString = new FormattedString();
             int previousKeywordPosition = 0;
 
-            foreach (var posAndKey in positionsAndKeys)
+            foreach (var key in foundKeysInfo)
             {
                 // вставка спана с простым текстом между текущим и предыдущим ключем
-                if (posAndKey.Key - previousKeywordPosition > 0)
+                if (key.Position - previousKeywordPosition > 0)
                 {
-                    string textBetweetnKeys = Text.Substring(previousKeywordPosition, posAndKey.Key - previousKeywordPosition);
+                    string textBetweetnKeys = Text.Substring(previousKeywordPosition, key.Position - previousKeywordPosition);
                     formattedString.Spans.Add(new Span
                     {
                         Text = textBetweetnKeys,
                     });
                 }
 
-                formattedString.Spans.Add(GetKeywordSpan(this.Text.Substring(posAndKey.Key, posAndKey.Value.Length)));
+                formattedString.Spans.Add(GetKeywordSpan(key));
 
-                previousKeywordPosition = posAndKey.Key + posAndKey.Value.Length;
+                previousKeywordPosition = key.Position + key.Text.Length;
             }
 
             return formattedString;
         }
 
-        private void MergeWithRestOfSimpleText(KeyValuePair<int, string> lastPairKeywordAndPosition, FormattedString formattedString)
+        private void MergeWithRestOfSimpleText(HighlightedWordInfo lastKey, FormattedString formattedString)
         {
-            if (lastPairKeywordAndPosition.Key < this.Text.Length)
+            if (lastKey.Position < this.Text.Length)
             {
                 Span lastSpan = new Span
                 {
-                    Text = this.Text.Substring(lastPairKeywordAndPosition.Key + lastPairKeywordAndPosition.Value.Length),
+                    Text = this.Text.Substring(lastKey.Position + lastKey.Text.Length),
                 };
 
                 formattedString.Spans.Add(lastSpan);
             }
         }
 
-        private Span GetKeywordSpan(string keyword)
+        private Span GetKeywordSpan(HighlightedWordInfo keyword)
         {
             Span keySpan = new Span()
             {
-                Text = keyword,
+                Text = keyword.Text,
             };
 
-            bool isHashtag = Regex.IsMatch(
-                keyword,
-                Constants.RegexPatterns.HASHTAG_PATTERN,
-                RegexOptions.IgnoreCase);
-
-            if (isHashtag)
+            if (keyword.IsHashtag)
             {
                 keySpan.ForegroundColor = HashtagTextColor;
             }
