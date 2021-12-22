@@ -87,6 +87,30 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _confirmPassword, value);
         }
 
+        private bool _isFocusedPassword = false;
+
+        public bool IsFocusedPassword
+        {
+            get => _isFocusedPassword;
+            set => SetProperty(ref _isFocusedPassword, value);
+        }
+
+        private bool _isFocusedConfirmPassword = false;
+
+        public bool IsFocusedConfirmPassword
+        {
+            get => _isFocusedConfirmPassword;
+            set => SetProperty(ref _isFocusedConfirmPassword, value);
+        }
+
+        private string _buttonText = Resources.Resource.Next;
+
+        public string ButtonText
+        {
+            get => _buttonText;
+            set => SetProperty(ref _buttonText, value);
+        }
+
         private bool _isVisibleButton = false;
 
         public bool IsVisibleButton
@@ -107,9 +131,44 @@ namespace InterTwitter.ViewModels
 
         #region -- Overrides --
 
-        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        protected override async void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
+
+            if (args.PropertyName == nameof(IsFocusedPassword))
+            {
+                if (IsFocusedPassword)
+                {
+                    await Task.Delay(500);
+                    IsVisibleButton = true;
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(Password))
+                    {
+                        ButtonText = Resources.Resource.Confirm;
+                    }
+                    else
+                    {
+                        ButtonText = Resources.Resource.Next;
+                    }
+
+                    IsVisibleButton = false;
+                }
+            }
+
+            if (args.PropertyName == nameof(IsFocusedConfirmPassword))
+            {
+                if (IsFocusedConfirmPassword)
+                {
+                    await Task.Delay(200);
+                    IsVisibleButton = true;
+                }
+                else
+                {
+                    IsVisibleButton = false;
+                }
+            }
 
             if (args.PropertyName == nameof(Password))
             {

@@ -171,6 +171,9 @@
   <data name="Bookmarks" xml:space="preserve">
     <value>Bookmarks</value>
   </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Confirm Password</value>
   </data>
@@ -199,7 +202,7 @@
     <value>Name</value>
   </data>
   <data name="Next" xml:space="preserve">
-    <value>   Next   </value>
+    <value>     Next     </value>
   </data>
   <data name="NotFoundBookmark" xml:space="preserve">
     <value>not found any bookmark</value>

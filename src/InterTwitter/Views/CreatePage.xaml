@@ -61,7 +61,7 @@
                        FontSize="{DynamicResource tsize_i4}"
                        IsVisible="{Binding IsVisibleName}"
                        Style="{DynamicResource tstyle_i2}" />
-                
+
                 <controls:CustomEntry Grid.Row="1"
                                       Margin="20,18,20,0"
                                       Text="{Binding Name}"
@@ -69,11 +69,10 @@
                                       FontFamily="Ubuntu-Regular"
                                       PlaceholderColor="{DynamicResource appcolor_i4}"
                                       TextColor="{DynamicResource appcolor_i3}"
-                                      IsVisible="true"
                                       IsFocusedVisible="{Binding IsVisibleName}"
                                       IsFocusedButton="{Binding IsFocusedName}"
-                                      Placeholder="{xct:Translate Name}"/>
-                
+                                      Placeholder="{xct:Translate Name}" />
+
                 <Label Grid.Row="1"
                        Text="{xct:Translate PleaseName}"
                        Margin="20,65,0,0"
@@ -92,7 +91,7 @@
                                       Text="{Binding Email}"
                                       Margin="20,18,20,0"
                                       IsFocusedVisible="{Binding IsVisibleEmail}"
-                                      IsFocusedButton="{Binding IsVisibleButton}"
+                                      IsFocusedButton="{Binding IsFocusedEmail}"
                                       Placeholder="{xct:Translate Email}"
                                       ClearImageSource="{DynamicResource ic_clear_gray}"
                                       FontFamily="Ubuntu-Regular"

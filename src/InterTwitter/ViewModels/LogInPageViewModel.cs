@@ -53,6 +53,22 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _isVisibleEmail, value);
         }
 
+        private bool _isFocusedEmail = false;
+
+        public bool IsFocusedEmail
+        {
+            get => _isFocusedEmail;
+            set => SetProperty(ref _isFocusedEmail, value);
+        }
+
+        private bool _isFocusedPassword = false;
+
+        public bool IsFocusedPassword
+        {
+            get => _isFocusedPassword;
+            set => SetProperty(ref _isFocusedPassword, value);
+        }
+
         private bool _isWrongEmail = false;
 
         public bool IsWrongEmail
@@ -113,9 +129,23 @@ namespace InterTwitter.ViewModels
 
         #region -- Overrides --
 
-        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        protected override async void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
+
+            if (args.PropertyName == nameof(IsFocusedEmail) || args.PropertyName == nameof(IsFocusedPassword))
+            {
+                if (IsFocusedEmail || IsFocusedPassword)
+                {
+                    await Task.Delay(200);
+
+                    IsVisibleButton = true;
+                }
+                else
+                {
+                    IsVisibleButton = false;
+                }
+            }
 
             if (args.PropertyName == nameof(Email))
             {

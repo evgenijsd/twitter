@@ -223,6 +223,15 @@ namespace InterTwitter.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Confirm.
+        /// </summary>
+        internal static string Confirm {
+            get {
+                return ResourceManager.GetString("Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Confirm Password.
         /// </summary>
         internal static string ConfirmPassword {
@@ -304,7 +313,7 @@ namespace InterTwitter.Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на    Next   .
+        ///   Ищет локализованную строку, похожую на      Next     .
         /// </summary>
         internal static string Next {
             get {

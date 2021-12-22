@@ -99,12 +99,12 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _isFocusedName, value);
         }
 
-        private bool _isSaveFocusName;
+        private bool _isFocusedEmail = false;
 
-        public bool IsSaveFocusName
+        public bool IsFocusedEmail
         {
-            get => _isSaveFocusName;
-            set => SetProperty(ref _isSaveFocusName, value);
+            get => _isFocusedEmail;
+            set => SetProperty(ref _isFocusedEmail, value);
         }
 
         private string _buttonText = Resources.Resource.Next;
@@ -127,7 +127,7 @@ namespace InterTwitter.ViewModels
 
         #region -- Overrides --
 
-        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        protected override async void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
 
@@ -135,6 +135,7 @@ namespace InterTwitter.ViewModels
             {
                 if (IsFocusedName)
                 {
+                    await Task.Delay(100);
                     IsVisibleButton = true;
                 }
                 else
@@ -148,6 +149,19 @@ namespace InterTwitter.ViewModels
                         ButtonText = Resources.Resource.Next;
                     }
 
+                    IsVisibleButton = false;
+                }
+            }
+
+            if (args.PropertyName == nameof(IsFocusedEmail))
+            {
+                if (IsFocusedEmail)
+                {
+                    await Task.Delay(200);
+                    IsVisibleButton = true;
+                }
+                else
+                {
                     IsVisibleButton = false;
                 }
             }
@@ -221,8 +235,6 @@ namespace InterTwitter.ViewModels
                             IsWrongEmail = true;
                         }
                     }
-
-                    IsSaveFocusName = true;
                 }
             }
         }

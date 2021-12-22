@@ -65,7 +65,7 @@
                                       Margin="20,18,20,0"
                                       Text="{Binding Email}"
                                       IsFocusedVisible="{Binding IsVisibleEmail}"
-                                      IsFocusedButton="{Binding IsVisibleButton}"
+                                      IsFocusedButton="{Binding IsFocusedEmail}"
                                       Placeholder="{xct:Translate Email}"
                                       ClearImageSource="{DynamicResource ic_clear_gray}"
                                       FontFamily="Ubuntu-Regular"
@@ -96,7 +96,7 @@
                                       PlaceholderColor="{DynamicResource appcolor_i4}"
                                       TextColor="{DynamicResource appcolor_i3}"
                                       IsFocusedVisible="{Binding IsVisiblePassword}"
-                                      IsFocusedButton="{Binding IsVisibleButton}"
+                                      IsFocusedButton="{Binding IsFocusedPassword}"
                                       IsPassword="True"
                                       Placeholder="{xct:Translate Password}" />
                 
