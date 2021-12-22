@@ -250,15 +250,6 @@ namespace InterTwitter.Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на No tweets found.
-        /// </summary>
-        internal static string FailureUsersNotFound {
-            get {
-                return ResourceManager.GetString("FailureUsersNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Get your account.
         /// </summary>
         internal static string GetYourAccount {
@@ -295,6 +286,24 @@ namespace InterTwitter.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на not found any bookmark.
+        /// </summary>
+        internal static string NotFoundBookmark {
+            get {
+                return ResourceManager.GetString("NotFoundBookmark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на not found any like.
+        /// </summary>
+        internal static string NotFoundLike {
+            get {
+                return ResourceManager.GetString("NotFoundLike", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Not found notification.
         /// </summary>
         internal static string NotFoundNotification {
@@ -309,6 +318,15 @@ namespace InterTwitter.Resources {
         internal static string Notification {
             get {
                 return ResourceManager.GetString("Notification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на No tweets found.
+        /// </summary>
+        internal static string NoTweets {
+            get {
+                return ResourceManager.GetString("NoTweets", resourceCulture);
             }
         }
         

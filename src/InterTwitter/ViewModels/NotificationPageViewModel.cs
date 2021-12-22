@@ -17,32 +17,24 @@ namespace InterTwitter.ViewModels
 {
     public class NotificationPageViewModel : BaseTabViewModel
     {
-        private readonly ITweetService _tweetService;
+        private readonly INotificationService _notificationService;
 
         private readonly IAuthorizationService _autorizationService;
 
         private readonly IRegistrationService _registrationService;
 
-        private readonly ILikeService _likeService;
-
-        private readonly IBookmarkService _bookmarkService;
-
         private UserModel _currentUser;
         private int _userId;
 
         public NotificationPageViewModel(
-            ITweetService tweetService,
+            INotificationService notificationService,
             INavigationService navigationService,
-            ILikeService likeService,
-            IBookmarkService bookmarkService,
             IAuthorizationService autorizationService,
             IRegistrationService registrationService)
             : base(navigationService)
         {
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_notifications_gray"] as ImageSource;
-            _tweetService = tweetService;
-            _bookmarkService = bookmarkService;
-            _likeService = likeService;
+            _notificationService = notificationService;
             _autorizationService = autorizationService;
             _registrationService = registrationService;
         }
@@ -112,67 +104,14 @@ namespace InterTwitter.ViewModels
             if (result.IsSuccess)
             {
                 _currentUser = result.Result;
-                var resultTweets = await _tweetService.GetByUserTweetsAsync(_userId);
 
-                if (resultTweets.IsSuccess)
+                var resultNotification = await _notificationService.GetNotificationsAsync(_userId);
+
+                if (resultNotification.IsSuccess)
                 {
-                    var notificationViewModels = new ObservableCollection<BaseNotificationViewModel>();
-
-                    var resultBookmarks = await _bookmarkService.GetNotificationsAsync(_userId);
-                    if (resultBookmarks.IsSuccess)
-                    {
-                        var bookmarks = resultBookmarks.Result.Where(x => resultTweets.Result.Any(y => y.Id == x.TweetId)).ToList();
-                        foreach (var b in bookmarks)
-                        {
-                            var tweet = resultTweets.Result.FirstOrDefault(x => x.Id == b.TweetId);
-                            var user = await _tweetService.GetAuthorAsync(b.UserId);
-                            var notification = new BaseNotificationViewModel
-                            {
-                                TweetId = b.TweetId,
-                                UserId = b.UserId,
-                                CreationTime = b.CreationTime,
-                                UserAvatar = user.Result?.AvatarPath,
-                                UserName = user.Result?.Name,
-                                Text = tweet.Text,
-                                MediaPaths = tweet.MediaPaths,
-                                Media = tweet.Media,
-                                NotificationIcon = "ic_bookmarks_blue",
-                                NotificationText = "saved your post",
-                            };
-
-                            notificationViewModels.Add(notification);
-                        }
-                    }
-
-                    var resultLikes = await _likeService.GetNotificationsAsync(_userId);
-                    if (resultLikes.IsSuccess)
-                    {
-                        var likes = resultLikes.Result.Where(x => resultTweets.Result.Any(y => y.Id == x.TweetId)).ToList();
-                        foreach (var l in likes)
-                        {
-                            var tweet = resultTweets.Result.FirstOrDefault(x => x.Id == l.TweetId);
-                            var user = await _tweetService.GetAuthorAsync(l.UserId);
-                            var notification = new BaseNotificationViewModel
-                            {
-                                TweetId = l.TweetId,
-                                UserId = l.UserId,
-                                CreationTime = l.CreationTime,
-                                UserAvatar = user.Result?.AvatarPath,
-                                UserName = user.Result?.Name,
-                                Text = tweet.Text,
-                                MediaPaths = tweet.MediaPaths,
-                                Media = tweet.Media,
-                                NotificationIcon = "ic_like_blue",
-                                NotificationText = "liked your post",
-                            };
-
-                            notificationViewModels.Add(notification);
-                        }
-                    }
-
-                    Tweets = new ObservableCollection<BaseNotificationViewModel>(notificationViewModels
+                    Tweets = new ObservableCollection<BaseNotificationViewModel>(resultNotification.Result
                             .Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesNotificationViewModel() : x.ToBaseNotificationViewModel())
-                            .OrderByDescending(x => x.CreationTime));
+                                                .OrderByDescending(x => x.CreationTime));
                 }
             }
 

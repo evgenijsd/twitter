@@ -180,9 +180,6 @@
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
-  <data name="FailureUsersNotFound" xml:space="preserve">
-    <value>No tweets found</value>
-  </data>
   <data name="GetYourAccount" xml:space="preserve">
     <value>Get your account</value>
   </data>
@@ -195,11 +192,20 @@
   <data name="Next" xml:space="preserve">
     <value>Next</value>
   </data>
+  <data name="NotFoundBookmark" xml:space="preserve">
+    <value>not found any bookmark</value>
+  </data>
+  <data name="NotFoundLike" xml:space="preserve">
+    <value>not found any like</value>
+  </data>
   <data name="NotFoundNotification" xml:space="preserve">
     <value>Not found notification</value>
   </data>
   <data name="Notification" xml:space="preserve">
     <value>Notification</value>
+  </data>
+  <data name="NoTweets" xml:space="preserve">
+    <value>No tweets found</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>

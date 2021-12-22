@@ -10,6 +10,7 @@ namespace InterTwitter.Services
         public MockService()
         {
             InitUsers();
+
             InitTweets();
 
             InitBookmarks();
