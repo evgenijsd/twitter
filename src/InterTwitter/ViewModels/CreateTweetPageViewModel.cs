@@ -1,11 +1,14 @@
 ﻿using InterTwitter.Enums;
 using InterTwitter.Helpers;
+using InterTwitter.Models;
+using InterTwitter.Services;
 using InterTwitter.Services.PermissionsService;
 using InterTwitter.Services.VideoService;
 using Prism.Navigation;
 using Prism.Services;
 using SkiaSharp;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -25,16 +28,20 @@ namespace InterTwitter.ViewModels
 
         private IVideoService _videoService;
 
+        private ITweetService _tweetService;
+
         public CreateTweetPageViewModel(
             INavigationService navigationService,
             IPermissionsService permissionsService,
             IPageDialogService pageDialogService,
-            IVideoService videoService)
+            IVideoService videoService,
+            ITweetService tweetService)
             : base(navigationService)
         {
             _permissionsService = permissionsService;
             _pageDialogService = pageDialogService;
             _videoService = videoService;
+            _tweetService = tweetService;
 
             _listAttachedMedia = new ObservableCollection<MiniCardViewModel>();
         }
@@ -125,8 +132,8 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _isRunnigActivityIndicator, value);
         }
 
-        private ETypeAttachedMedia _typeAttachedMedia;
-        public ETypeAttachedMedia TypeAttachedMedia
+        private EAttachedMediaType _typeAttachedMedia = EAttachedMediaType.None;
+        public EAttachedMediaType TypeAttachedMedia
         {
             get => _typeAttachedMedia;
             set => SetProperty(ref _typeAttachedMedia, value);
@@ -203,7 +210,24 @@ namespace InterTwitter.ViewModels
 
         private async Task OnPostTweetCommandAsync()
         {
-            await _pageDialogService.DisplayAlertAsync("Alert", "Заглушка, как будет готов TweetService, UserService, Language", "Ok");
+            var list = new List<string>();
+
+            foreach (var card in _listAttachedMedia)
+            {
+                list.Add(card.PathFile);
+            }
+
+            var newTweet = new TweetModel()
+            {
+                UserId = 1,
+                Text = Text,
+                Media = _typeAttachedMedia,
+                MediaPaths = list,
+                CreationTime = DateTime.Now,
+            };
+
+            await _tweetService.AddTweetAsync(newTweet);
+            await _navigationService.GoBackAsync();
         }
 
         private async Task OnDeleteAttachedPhotoCommandAsync(object obj)
@@ -254,7 +278,7 @@ namespace InterTwitter.ViewModels
                             {
                                 ListAttachedMedia.Add(new MiniCardViewModel()
                                 {
-                                    PathImage = openFile.FullPath,
+                                    PathFile = openFile.FullPath,
                                     PathActionImage = "ic_clear_filled_blue.png",
                                     ActionCommand = DeleteAttachedPhotoCommand,
                                 });
@@ -263,7 +287,7 @@ namespace InterTwitter.ViewModels
                                 CanUseButtonUploadGif = false;
                                 CanUseButtonUploadVideo = false;
 
-                                TypeAttachedMedia = ETypeAttachedMedia.Photos;
+                                TypeAttachedMedia = EAttachedMediaType.Photos;
 
                                 CanUseButtonPost = canPostTweet();
                             }
@@ -312,7 +336,7 @@ namespace InterTwitter.ViewModels
                             {
                                 ListAttachedMedia.Add(new MiniCardViewModel()
                                 {
-                                    PathImage = openFile.FullPath,
+                                    PathFile = openFile.FullPath,
                                     PathActionImage = "ic_clear_filled_blue.png",
                                     ActionCommand = DeleteAttachedGifCommand,
                                 });
@@ -321,7 +345,7 @@ namespace InterTwitter.ViewModels
                                 CanUseButtonUploadGif = false;
                                 CanUseButtonUploadVideo = false;
 
-                                TypeAttachedMedia = ETypeAttachedMedia.Gif;
+                                TypeAttachedMedia = EAttachedMediaType.Gif;
 
                                 CanUseButtonPost = canPostTweet();
                             }
@@ -400,19 +424,19 @@ namespace InterTwitter.ViewModels
 
                             ListAttachedMedia.Add(new MiniCardViewModel()
                             {
-                                PathImage = pathFile,
+                                PathFile = pathThumb,
                             });
 
                             ListAttachedMedia.Add(new MiniCardViewModel()
                             {
-                                PathImage = pathThumb,
+                                PathFile = pathFile,
                             });
 
                             CanUseButtonUploadPhotos = false;
                             CanUseButtonUploadGif = false;
                             CanUseButtonUploadVideo = false;
 
-                            TypeAttachedMedia = ETypeAttachedMedia.Video;
+                            TypeAttachedMedia = EAttachedMediaType.Video;
 
                             CanUseButtonPost = canPostTweet();
                         }
@@ -444,18 +468,22 @@ namespace InterTwitter.ViewModels
             CanUseButtonUploadGif = true;
             CanUseButtonUploadVideo = true;
 
-            TypeAttachedMedia = ETypeAttachedMedia.None;
+            TypeAttachedMedia = EAttachedMediaType.None;
 
             CanUseButtonPost = canPostTweet();
         }
 
         private bool canPostTweet()
         {
-            bool result = ListAttachedMedia.Count > 0;
+            bool result;
 
             if (!string.IsNullOrEmpty(Text))
             {
-                result |= Text.Length > 0 && Text.Length < 250;
+                result = (ListAttachedMedia.Count > 0 || Text.Length > 0) && Text.Length < 250;
+            }
+            else
+            {
+                result = ListAttachedMedia.Count > 0;
             }
 
             return result;

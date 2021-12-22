@@ -10,5 +10,7 @@ namespace InterTwitter.Services
         Task<AOResult<IEnumerable<TweetModel>>> GetAllTweetsAsync();
 
         Task<AOResult<UserModel>> GetAuthorAsync(int authorId);
+
+        Task<AOResult<bool>> AddTweetAsync(TweetModel tweet);
     }
 }

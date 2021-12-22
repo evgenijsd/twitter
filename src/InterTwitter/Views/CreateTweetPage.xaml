@@ -5,8 +5,10 @@
                       xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
                       xmlns:controls="clr-namespace:InterTwitter.Controls"
                       xmlns:statecontainer="clr-namespace:InterTwitter.Controls.StateContainer"
+                      xmlns:viewModels="clr-namespace:InterTwitter.ViewModels"
                       xmlns:view="clr-namespace:InterTwitter.Views"
-                      x:Class="InterTwitter.Views.CreateTweetPage">
+                      x:Class="InterTwitter.Views.CreateTweetPage"
+                      x:DataType="viewModels:CreateTweetPageViewModel">
 
     <view:BaseContentPage.Content>
 
@@ -97,7 +99,7 @@
 
                                     <BindableLayout.ItemTemplate>
 
-                                        <DataTemplate>
+                                        <DataTemplate x:DataType="viewModels:MiniCardViewModel">
 
                                             <Grid Style="{DynamicResource grid_i2}">
 
@@ -116,7 +118,7 @@
                                                 <Frame Grid.Row="0"
                                                        Style="{DynamicResource frame_i2}">
                                                     
-                                                    <ffimageloading:CachedImage Source="{Binding PathImage}"
+                                                    <ffimageloading:CachedImage Source="{Binding PathFile}"
                                                                                 Aspect="AspectFill"/>
                                                     
                                                 </Frame>
@@ -148,7 +150,7 @@
 
                                     <BindableLayout.ItemTemplate>
 
-                                        <DataTemplate>
+                                        <DataTemplate x:DataType="viewModels:MiniCardViewModel">
 
                                             <Grid Style="{DynamicResource grid_i2}">
 
@@ -169,7 +171,7 @@
                                                 <Frame Grid.Row="0"
                                                        Style="{DynamicResource frame_i2}">
                                                     
-                                                    <ffimageloading:CachedImage Source="{Binding PathImage}"
+                                                    <ffimageloading:CachedImage Source="{Binding PathFile}"
                                                                                 Aspect="AspectFill"/>
 
                                                 </Frame>

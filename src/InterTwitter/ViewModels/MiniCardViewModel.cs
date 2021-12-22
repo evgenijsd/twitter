@@ -5,11 +5,11 @@ namespace InterTwitter.ViewModels
 {
     public class MiniCardViewModel : BindableBase
     {
-        private string _pathImage;
-        public string PathImage
+        private string _pathFile;
+        public string PathFile
         {
-            get => _pathImage;
-            set => SetProperty(ref _pathImage, value);
+            get => _pathFile;
+            set => SetProperty(ref _pathFile, value);
         }
 
         private string _pathActionImage;

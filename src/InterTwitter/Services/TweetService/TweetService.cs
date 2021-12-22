@@ -2,6 +2,7 @@
 using InterTwitter.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -64,6 +65,24 @@ namespace InterTwitter.Services
             catch (Exception ex)
             {
                 result.SetError($"{nameof(GetAuthorAsync)}: exception", "Some issues", ex);
+            }
+
+            return Task.FromResult(result);
+        }
+
+        public Task<AOResult<bool>> AddTweetAsync(TweetModel tweet)
+        {
+            var result = new AOResult<bool>();
+
+            try
+            {
+                ((List<TweetModel>)_mockService.Tweets).Add(tweet);
+
+                result.SetSuccess(true);
+            }
+            catch (Exception ex)
+            {
+                result.SetError($"{nameof(GetAllTweetsAsync)}: exception", "Some issues", ex);
             }
 
             return Task.FromResult(result);
