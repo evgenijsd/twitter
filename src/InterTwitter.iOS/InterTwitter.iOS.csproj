@@ -115,7 +115,6 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="Renderers\HighlightedLabelRenderer.cs" />
     <Compile Include="Renderers\LineSpacingLabelRenderer.cs" />
     <Compile Include="Renderers\NonSelectableListViewRenderer.cs" />
     <Compile Include="Renderers\SearchEntryRenderer.cs" />

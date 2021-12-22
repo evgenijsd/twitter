@@ -16,12 +16,6 @@ namespace InterTwitter
             public const string UPDATE_HASHTAGS = "UpdateHashtags";
         }
 
-        public static class Translation
-        {
-            public const string INACCURATE_REQUEST = nameof(INACCURATE_REQUEST);
-            public const string NO_RESULTS_FOR = nameof(NO_RESULTS_FOR);
-        }
-
         public static class Values
         {
             public const int NUMBER_OF_POPULAR_HASHTAGS = 5;

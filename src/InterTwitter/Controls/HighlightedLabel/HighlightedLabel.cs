@@ -177,12 +177,15 @@ namespace InterTwitter.Controls.HighlightedLabel
 
                         MergeWithRestOfSimpleText(foundKeysInfo.Last(), formattedString);
 
-                        // добавляем команду
-                        //if (MoreCommand != null)
-                        //{
-                        //    formattedString.Spans.Add(GetCommandSpan("...more"));
-                        //}
+                        //добавляем команду
+                        if (MoreCommand != null)
+                        {
+                            formattedString.Spans.Add(GetCommandSpan("...more"));
+                        }
+
                         this.FormattedText = formattedString;
+
+                        TimeSpan timeSpan = DateTime.Now - start;
                     }
 
                     break;
@@ -262,32 +265,6 @@ namespace InterTwitter.Controls.HighlightedLabel
                 }
             }
 
-            //foreach (var keyword in keywords)
-            //{
-            //    int keywordPosition = -1;
-            //    int positionOfNextKeyword = 0;
-
-            //    do
-            //    {
-            //        // сделать корректный распознаватель тегов
-            //        bool isHashtag = Regex.IsMatch(keyword, Constants.RegexPatterns.HASHTAG_PATTERN);
-
-            //        keywordPosition = this.Text.IndexOf(keyword, positionOfNextKeyword, StringComparison.OrdinalIgnoreCase);
-
-            //        // если ключевое слово - хештег, то ищем по-другому
-            //        if (isHashtag)
-            //        {
-            //        }
-
-            //        if (keywordPosition != -1)
-            //        {
-            //            positionOfNextKeyword = keywordPosition + keyword.Length;
-
-            //            positionsAndKeyLengths.Add(new KeyValuePair<int, string>(keywordPosition, keyword));
-            //        }
-            //    }
-            //    while (keywordPosition != -1);
-            //}
             return foundKeysInfo;
         }
 
@@ -358,66 +335,14 @@ namespace InterTwitter.Controls.HighlightedLabel
             };
             commandSpan.GestureRecognizers.Add(new TapGestureRecognizer()
             {
-                Command = MoreCommand,
+                Command = new Command(() =>
+                {
+                    BackgroundColor = Color.Red;
+                }),
                 NumberOfTapsRequired = 1,
             });
 
             return commandSpan;
-        }
-
-        #endregion
-
-        #region -- Public helpers --
-
-        public List<HighlightedWordInfo> GetHighlightedWords()
-        {
-            var keywords = new List<HighlightedWordInfo>();
-            var hashtags = new List<HighlightedWordInfo>();
-
-            string[] wordsToHighlight = WordsToHighlight.ToArray();
-
-            var uniqueHashtagsInText = Text
-                .Split(' ')
-                .Where(x => Regex.IsMatch(x, Constants.RegexPatterns.HASHTAG_PATTERN))
-                .Distinct();
-
-            foreach (var word in wordsToHighlight)
-            {
-                int wordPosition = 0;
-                int positionOfNextWord = 0;
-
-                do
-                {
-                    wordPosition = Text.IndexOf(word, positionOfNextWord, StringComparison.OrdinalIgnoreCase);
-
-                    if (wordPosition != -1)
-                    {
-                        positionOfNextWord = wordPosition + word.Length;
-
-                        bool isHashtag = uniqueHashtagsInText.Any(x => x.Equals(word, StringComparison.OrdinalIgnoreCase));
-
-                        HighlightedWordInfo highlightedWord = new HighlightedWordInfo()
-                        {
-                            Text = word,
-                            Position = wordPosition,
-                            Length = word.Length,
-                            IsHashtag = isHashtag,
-                        };
-
-                        if (isHashtag)
-                        {
-                            hashtags.Add(highlightedWord);
-                        }
-                        else
-                        {
-                            keywords.Add(highlightedWord);
-                        }
-                    }
-                }
-                while (wordPosition != -1);
-            }
-
-            return keywords.Union(hashtags).ToList();
         }
 
         #endregion

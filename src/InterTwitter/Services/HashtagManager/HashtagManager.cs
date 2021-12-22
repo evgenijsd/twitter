@@ -18,63 +18,69 @@ namespace InterTwitter.Services.HashtagManager
 
         #region -- IHashtagManager implementation --
 
-        public async Task<AOResult<bool>> IncreaseHashtagPopularityByOne(HashtagModel hashtag)
+        public async Task<AOResult> IncreaseHashtagPopularityByOne(HashtagModel hashtag)
         {
-            var result = new AOResult<bool>();
+            var result = new AOResult();
 
             try
             {
                 var allHashtags = new List<HashtagModel>(_mockService.Hashtags);
 
-                int indexOfHashtag = allHashtags.FindIndex(x => x.Text.Equals(hashtag.Text, StringComparison.OrdinalIgnoreCase));
-
-                if (indexOfHashtag > 0)
+                if (allHashtags != null)
                 {
-                    allHashtags[indexOfHashtag].TweetsCount++;
-                }
-                else
-                {
-                    hashtag.TweetsCount = 1;
-                    allHashtags.Add(hashtag);
-                }
+                    int indexOfHashtag = allHashtags.FindIndex(x => x.Text.Equals(hashtag.Text, StringComparison.OrdinalIgnoreCase));
 
-                _mockService.Hashtags = allHashtags;
+                    if (indexOfHashtag > 0)
+                    {
+                        allHashtags[indexOfHashtag].TweetsCount++;
+                    }
+                    else
+                    {
+                        hashtag.TweetsCount = 1;
+                        allHashtags.Add(hashtag);
+                    }
+
+                    _mockService.Hashtags = allHashtags;
+                }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                result.SetError($"Caller: {nameof(HashtagManager)}.{nameof(IncreaseHashtagPopularityByOne)}", e.Message, e);
+                result.SetError($"{nameof(IncreaseHashtagPopularityByOne)} : exception", "Something went wrong", ex);
             }
 
             return result;
         }
 
-        public async Task<AOResult<bool>> DecreaseHashtagPopularityByOne(HashtagModel hashtag)
+        public async Task<AOResult> DecreaseHashtagPopularityByOne(HashtagModel hashtag)
         {
-            var result = new AOResult<bool>();
+            var result = new AOResult();
 
             try
             {
                 var allHashtags = new List<HashtagModel>(_mockService.Hashtags);
 
-                int indexOfHashtag = allHashtags.FindIndex(x => x.Text.Equals(hashtag.Text, StringComparison.OrdinalIgnoreCase));
-
-                if (indexOfHashtag > 0)
+                if (allHashtags != null)
                 {
-                    if (allHashtags[indexOfHashtag].TweetsCount > 0)
-                    {
-                        allHashtags[indexOfHashtag].TweetsCount--;
-                    }
-                    else
-                    {
-                        allHashtags.RemoveAt(indexOfHashtag);
-                    }
-                }
+                    int indexOfHashtag = allHashtags.FindIndex(x => x.Text.Equals(hashtag.Text, StringComparison.OrdinalIgnoreCase));
 
-                _mockService.Hashtags = allHashtags;
+                    if (indexOfHashtag > 0)
+                    {
+                        if (allHashtags[indexOfHashtag].TweetsCount > 0)
+                        {
+                            allHashtags[indexOfHashtag].TweetsCount--;
+                        }
+                        else
+                        {
+                            allHashtags.RemoveAt(indexOfHashtag);
+                        }
+                    }
+
+                    _mockService.Hashtags = allHashtags;
+                }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                result.SetError($"Caller: {nameof(HashtagManager)}.{nameof(DecreaseHashtagPopularityByOne)}", e.Message, e);
+                result.SetError($"{nameof(DecreaseHashtagPopularityByOne)} : exception", "Something went wrong", ex);
             }
 
             return result;
@@ -86,9 +92,9 @@ namespace InterTwitter.Services.HashtagManager
 
             try
             {
-                var hashtags = _mockService.Hashtags;
+                var allHashtags = _mockService.Hashtags;
 
-                var popularHashtags = hashtags
+                var popularHashtags = allHashtags
                     ?.OrderByDescending(x => x.TweetsCount)
                     ?.Take(numbersOfHashtags);
 
@@ -97,9 +103,9 @@ namespace InterTwitter.Services.HashtagManager
                     result.SetSuccess(popularHashtags);
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                result.SetError($"Caller: {nameof(HashtagManager)}.{nameof(GetPopularHashtags)}", e.Message, e);
+                result.SetError($"{nameof(GetPopularHashtags)} : exception", "Something went wrong", ex);
             }
 
             return result;

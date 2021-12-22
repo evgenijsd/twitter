@@ -250,7 +250,7 @@ namespace InterTwitter.ViewModels
                     : queryString.Length < 2))
             {
                 TweetSearchResult = ESearchResult.NoResults;
-                NoResultsMessage = LocalizationResourceManager.Current[Constants.Translation.INACCURATE_REQUEST];
+                NoResultsMessage = LocalizationResourceManager.Current["InaccurateRequest"];
             }
             else
             {
@@ -266,7 +266,7 @@ namespace InterTwitter.ViewModels
                 else
                 {
                     TweetSearchResult = ESearchResult.NoResults;
-                    NoResultsMessage = $"{LocalizationResourceManager.Current[Constants.Translation.NO_RESULTS_FOR]}\n\"{queryString}\"";
+                    NoResultsMessage = $"{LocalizationResourceManager.Current["NoResultsFor"]}\n\"{queryString}\"";
                 }
             }
         }
