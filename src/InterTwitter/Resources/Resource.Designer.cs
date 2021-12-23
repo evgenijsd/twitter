@@ -61,47 +61,29 @@ namespace InterTwitter.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to to mute?.
-        /// </summary>
-        public static string _to_mute_ {
-            get {
-                return ResourceManager.GetString("_to mute?", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to to Blacklist?.
-        /// </summary>
-        public static string _toBlacklist_ {
-            get {
-                return ResourceManager.GetString("_toBlacklist?", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
-        public static string Add_ {
+        public static string Add {
             get {
-                return ResourceManager.GetString("Add_", resourceCulture);
+                return ResourceManager.GetString("Add", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Add to Blacklist.
         /// </summary>
-        public static string Add_to_Blacklist {
+        public static string AddToBlacklist {
             get {
-                return ResourceManager.GetString("Add to Blacklist", resourceCulture);
+                return ResourceManager.GetString("AddToBlacklist", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Add to Mute.
         /// </summary>
-        public static string Add_to_Mute {
+        public static string AddToMute {
             get {
-                return ResourceManager.GetString("Add to Mute", resourceCulture);
+                return ResourceManager.GetString("AddToMute", resourceCulture);
             }
         }
         
@@ -288,9 +270,9 @@ namespace InterTwitter.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Change profile.
         /// </summary>
-        public static string Change_profile {
+        public static string ChangeProfile {
             get {
-                return ResourceManager.GetString("Change profile", resourceCulture);
+                return ResourceManager.GetString("ChangeProfile", resourceCulture);
             }
         }
         
@@ -333,9 +315,9 @@ namespace InterTwitter.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Email is not valid or empty.
         /// </summary>
-        public static string Email_is_not_valid_or_empty {
+        public static string EmailIsNotValid {
             get {
-                return ResourceManager.GetString("Email is not valid or empty", resourceCulture);
+                return ResourceManager.GetString("EmailIsNotValid", resourceCulture);
             }
         }
         
@@ -351,18 +333,18 @@ namespace InterTwitter.Resources {
         /// <summary>
         ///   Looks up a localized string similar to from the Blacklist.
         /// </summary>
-        public static string from_the_Blacklist {
+        public static string FromTheBlacklist {
             get {
-                return ResourceManager.GetString("from the Blacklist", resourceCulture);
+                return ResourceManager.GetString("FromTheBlacklist", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to from the mute.
         /// </summary>
-        public static string from_the_mute {
+        public static string FromTheMute {
             get {
-                return ResourceManager.GetString("from the mute", resourceCulture);
+                return ResourceManager.GetString("FromTheMute", resourceCulture);
             }
         }
         
@@ -414,9 +396,9 @@ namespace InterTwitter.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Muted profiles.
         /// </summary>
-        public static string Muted_profiles {
+        public static string MutedProfiles {
             get {
-                return ResourceManager.GetString("Muted profiles", resourceCulture);
+                return ResourceManager.GetString("MutedProfiles", resourceCulture);
             }
         }
         
@@ -432,18 +414,18 @@ namespace InterTwitter.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Name is not valid or empty.
         /// </summary>
-        public static string Name_is_not_valid_or_empty {
+        public static string NameIsNotValid {
             get {
-                return ResourceManager.GetString("Name is not valid or empty", resourceCulture);
+                return ResourceManager.GetString("NameIsNotValid", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to New password is not valid or empty.
         /// </summary>
-        public static string New_password_is_not_valid_or_empty {
+        public static string NewPasswordIsNotValid {
             get {
-                return ResourceManager.GetString("New password is not valid or empty", resourceCulture);
+                return ResourceManager.GetString("NewPasswordIsNotValid", resourceCulture);
             }
         }
         
@@ -468,18 +450,18 @@ namespace InterTwitter.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Old password is empty.
         /// </summary>
-        public static string Old_password_is_empty {
+        public static string OldPassEmpty {
             get {
-                return ResourceManager.GetString("Old password is empty", resourceCulture);
+                return ResourceManager.GetString("OldPassEmpty", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Old password is wrong.
         /// </summary>
-        public static string Old_password_is_wrong {
+        public static string OldPassWrong {
             get {
-                return ResourceManager.GetString("Old password is wrong", resourceCulture);
+                return ResourceManager.GetString("OldPassWrong", resourceCulture);
             }
         }
         
@@ -522,9 +504,9 @@ namespace InterTwitter.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Profile in Blacklist.
         /// </summary>
-        public static string Profile_in_Blacklist {
+        public static string ProfileInBlacklist {
             get {
-                return ResourceManager.GetString("Profile in Blacklist", resourceCulture);
+                return ResourceManager.GetString("ProfileInBlacklist", resourceCulture);
             }
         }
         
@@ -540,9 +522,9 @@ namespace InterTwitter.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Save changes.
         /// </summary>
-        public static string Save_changes {
+        public static string SaveChanges {
             get {
-                return ResourceManager.GetString("Save changes", resourceCulture);
+                return ResourceManager.GetString("SaveChanges", resourceCulture);
             }
         }
         
@@ -565,38 +547,56 @@ namespace InterTwitter.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to to Blacklist.
+        /// </summary>
+        public static string ToBlacklist {
+            get {
+                return ResourceManager.GetString("ToBlacklist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to to mute.
+        /// </summary>
+        public static string ToMute {
+            get {
+                return ResourceManager.GetString("ToMute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This user is already blocked.
         /// </summary>
-        public static string This_user_is_already_blocked {
+        public static string UserBlocked {
             get {
-                return ResourceManager.GetString("This user is already blocked", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This user is already muted.
-        /// </summary>
-        public static string This_user_is_already_muted {
-            get {
-                return ResourceManager.GetString("This user is already muted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This user will not see your posts..
-        /// </summary>
-        public static string This_user_will_not_see_your_posts {
-            get {
-                return ResourceManager.GetString("This user will not see your posts", resourceCulture);
+                return ResourceManager.GetString("UserBlocked", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to User can see information about you.
         /// </summary>
-        public static string User_can_see_information_about_you {
+        public static string UserCanSeeInfo {
             get {
-                return ResourceManager.GetString("User can see information about you", resourceCulture);
+                return ResourceManager.GetString("UserCanSeeInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This user is already muted.
+        /// </summary>
+        public static string UserMuted {
+            get {
+                return ResourceManager.GetString("UserMuted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This user will not see your posts..
+        /// </summary>
+        public static string UserNotSeeYouPost {
+            get {
+                return ResourceManager.GetString("UserNotSeeYouPost", resourceCulture);
             }
         }
         

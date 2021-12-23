@@ -117,13 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add to Blacklist" xml:space="preserve">
+  <data name="AddToBlacklist" xml:space="preserve">
     <value>Add to Blacklist</value>
   </data>
-  <data name="Add to Mute" xml:space="preserve">
+  <data name="AddToMute" xml:space="preserve">
     <value>Add to Mute</value>
   </data>
-  <data name="Add_" xml:space="preserve">
+  <data name="Add" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="Alert" xml:space="preserve">
@@ -198,13 +198,13 @@
   <data name="FailureUsersNotFound" xml:space="preserve">
     <value>No tweets found</value>
   </data>
-  <data name="Email is not valid or empty" xml:space="preserve">
+  <data name="EmailIsNotValid" xml:space="preserve">
     <value>Email is not valid or empty</value>
   </data>
-  <data name="from the Blacklist" xml:space="preserve">
+  <data name="FromTheBlacklist" xml:space="preserve">
     <value>from the Blacklist</value>
   </data>
-  <data name="from the mute" xml:space="preserve">
+  <data name="FromTheMute" xml:space="preserve">
     <value>from the mute</value>
   </data>
   <data name="GetYourAccount" xml:space="preserve">
@@ -219,10 +219,10 @@
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
-  <data name="Name is not valid or empty" xml:space="preserve">
+  <data name="NameIsNotValid" xml:space="preserve">
     <value>Name is not valid or empty</value>
   </data>
-  <data name="New password is not valid or empty" xml:space="preserve">
+  <data name="NewPasswordIsNotValid" xml:space="preserve">
     <value>New password is not valid or empty</value>
   </data>
   <data name="Next" xml:space="preserve">
@@ -231,10 +231,10 @@
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
-  <data name="Old password is empty" xml:space="preserve">
+  <data name="OldPassEmpty" xml:space="preserve">
     <value>Old password is empty</value>
   </data>
-  <data name="Old password is wrong" xml:space="preserve">
+  <data name="OldPassWrong" xml:space="preserve">
     <value>Old password is wrong</value>
   </data>
   <data name="Password" xml:space="preserve">
@@ -252,22 +252,22 @@
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
   </data>
-  <data name="Save changes" xml:space="preserve">
+  <data name="SaveChanges" xml:space="preserve">
     <value>Save changes</value>
   </data>
   <data name="SignUp" xml:space="preserve">
     <value>Sign Up</value>
   </data>
-  <data name="This user is already blocked" xml:space="preserve">
+  <data name="UserBlocked" xml:space="preserve">
     <value>This user is already blocked</value>
   </data>
-  <data name="This user is already muted" xml:space="preserve">
+  <data name="UserMuted" xml:space="preserve">
     <value>This user is already muted</value>
   </data>
-  <data name="This user will not see your posts" xml:space="preserve">
+  <data name="UserNotSeeYouPost" xml:space="preserve">
     <value>This user will not see your posts.</value>
   </data>
-  <data name="User can see information about you" xml:space="preserve">
+  <data name="UserCanSeeInfo" xml:space="preserve">
     <value>User can see information about you</value>
   </data>
   <data name="WrongEmail" xml:space="preserve">
@@ -276,11 +276,11 @@
   <data name="YouNeedPassword" xml:space="preserve">
     <value>You'll need a password</value>
   </data>
-  <data name="_to mute?" xml:space="preserve">
-    <value>to mute?</value>
+  <data name="ToMute" xml:space="preserve">
+    <value>to mute</value>
   </data>
-  <data name="_toBlacklist?" xml:space="preserve">
-    <value>to Blacklist?</value>
+  <data name="ToBlacklist" xml:space="preserve">
+    <value>to Blacklist</value>
   </data>
   <data name="Blacklist" xml:space="preserve">
     <value>Blacklist</value>
@@ -288,16 +288,16 @@
   <data name="Mute" xml:space="preserve">
     <value>Mute</value>
   </data>
-  <data name="Change profile" xml:space="preserve">
+  <data name="ChangeProfile" xml:space="preserve">
     <value>Change profile</value>
   </data>
   <data name="Muted" xml:space="preserve">
     <value>Muted</value>
   </data>
-  <data name="Muted profiles" xml:space="preserve">
+  <data name="MutedProfiles" xml:space="preserve">
     <value>Muted profiles</value>
   </data>
-  <data name="Profile in Blacklist" xml:space="preserve">
+  <data name="ProfileInBlacklist" xml:space="preserve">
     <value>Profile in Blacklist</value>
   </data>
   <data name="Share" xml:space="preserve">

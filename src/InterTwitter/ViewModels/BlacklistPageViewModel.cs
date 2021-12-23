@@ -111,11 +111,11 @@ namespace InterTwitter.ViewModels
                 string partOfMessage = string.Empty;
                 if (_isBlacklistPage)
                 {
-                    partOfMessage = Resources.Resource.from_the_Blacklist;
+                    partOfMessage = Resources.Resource.FromTheBlacklist;
                 }
                 else if (_isMutelistPage)
                 {
-                    partOfMessage = Resources.Resource.from_the_mute;
+                    partOfMessage = Resources.Resource.FromTheMute;
                 }
 
                 var param = new DialogParameters();

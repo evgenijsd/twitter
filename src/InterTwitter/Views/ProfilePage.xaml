@@ -74,14 +74,14 @@
                 </Label>
                 <Label Style="{DynamicResource tstyle_i9}" 
                        TextColor="{DynamicResource appcolor_i3}" 
-                       Text="{xct:Translate Change_profile}">
+                       Text="{xct:Translate ChangeProfile}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding NavigationToEditCommandAsync}" 
                                               Tapped="OnAnywhereTappedHandler"/>
                     </Label.GestureRecognizers>
                 </Label>
                 <Label Style="{DynamicResource tstyle_i9}" TextColor="{DynamicResource appcolor_i3}" 
-                       Text="{xct:Translate Muted_profiles}">
+                       Text="{xct:Translate MutedProfiles}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding NavigationToMutelistCommandAsync}" 
                                               Tapped="OnAnywhereTappedHandler"/>
@@ -121,7 +121,7 @@
                     </Label.GestureRecognizers>
                 </Label>
                 <Label Style="{DynamicResource tstyle_i9}" TextColor="{DynamicResource appcolor_i3}" 
-                       Text="{xct:Translate Add_to_blacklist}">
+                       Text="{xct:Translate AddToBlacklist}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding AddUserToBlacklistCommandAsync}" Tapped="OnAnywhereTappedHandler"/>
                     </Label.GestureRecognizers>
@@ -155,7 +155,7 @@
                    IsVisible="{Binding IsChangeProfileButtonVisible}"
                    VerticalOptions="Start">
                 <Label Style="{DynamicResource tstyle_i8}" 
-                       Text="{xct:Translate Change_Profile}" 
+                       Text="{xct:Translate ChangeProfile}" 
                        x:Name="changeProfLabel"/>
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding NavigationToEditCommandAsync}" Tapped="OnChangeProfTapHandler"/>
@@ -174,7 +174,7 @@
                    VerticalOptions="Start">
                 <Label Style="{DynamicResource tstyle_i8}"
                        TextColor="{DynamicResource appcolor_i7}"
-                       Text="{xct:Translate Profile_in_Blacklist}" 
+                       Text="{xct:Translate ProfileInBlacklist}" 
                        x:Name="blacklistLabel"/>
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding RemoveUserFromBlacklistCommandAsync}"/>

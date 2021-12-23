@@ -293,15 +293,15 @@ namespace InterTwitter.ViewModels
             {
                 if (isUserBlockedResponse.Result)
                 {
-                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Resource.This_user_is_already_blocked);
+                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Resource.UserBlocked);
 
                     _dialogService.ShowDialog(nameof(AlertView), param);
                 }
                 else
                 {
-                    param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Resource.Add_} {_user.Name} {Resources.Resource._toBlacklist_}");
-                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Resource.This_user_will_not_see_your_posts);
-                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Add_to_Blacklist);
+                    param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Resource.Add} {_user.Name} {Resources.Resource.ToBlacklist}?");
+                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Resource.UserNotSeeYouPost);
+                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.AddToBlacklist);
                     param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Resource.Cancel);
 
                     _dialogService.ShowDialog(nameof(AlertView), param, CloseDialogCallback);
@@ -329,15 +329,15 @@ namespace InterTwitter.ViewModels
             {
                 if (isUserMutedResponse.Result)
                 {
-                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Resource.This_user_is_already_muted);
+                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Resource.UserMuted);
 
                     _dialogService.ShowDialog(nameof(AlertView), param);
                 }
                 else
                 {
-                    param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Resource.Add_} {_user.Name} {Resources.Resource._to_mute_}");
-                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Resource.User_can_see_information_about_you);
-                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Add_to_Mute);
+                    param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Resource.Add} {_user.Name} {Resources.Resource.ToMute}?");
+                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Resource.UserCanSeeInfo);
+                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.AddToMute);
                     param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Resource.Cancel);
 
                     _dialogService.ShowDialog(nameof(AlertView), param, CloseDialogCallback);
@@ -360,7 +360,7 @@ namespace InterTwitter.ViewModels
         private Task OnRemoveUserFromBlacklistCommandAsync()
         {
             var param = new DialogParameters();
-            param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Resource.Remove} {_user.Name} {Resources.Resource.from_the_Blacklist}?");
+            param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Resource.Remove} {_user.Name} {Resources.Resource.FromTheBlacklist}?");
             param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Remove);
             param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Resource.Cancel);
 
@@ -381,7 +381,7 @@ namespace InterTwitter.ViewModels
         private Task OnRemoveUserFromMuteCommandAsync()
         {
             var param = new DialogParameters();
-            param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Resource.Remove} {_user.Name} {Resources.Resource.from_the_mute}?");
+            param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Resource.Remove} {_user.Name} {Resources.Resource.FromTheMute}?");
             param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Remove);
             param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Resource.Cancel);
 
