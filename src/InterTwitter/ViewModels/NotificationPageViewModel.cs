@@ -37,6 +37,7 @@ namespace InterTwitter.ViewModels
         {
             MessagingCenter.Send(this, Constants.Messages.OPEN_SIDEBAR, true);
             MessagingCenter.Send(this, Constants.Messages.TAB_CHANGE, typeof(NotificationsPage));
+
             return Task.CompletedTask;
         }
 
