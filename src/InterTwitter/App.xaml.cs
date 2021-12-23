@@ -35,8 +35,8 @@ namespace InterTwitter
             containerRegistry.RegisterSingleton<ITweetService, TweetService>();
             containerRegistry.RegisterInstance<IRegistrationService>(Container.Resolve<RegistrationService>());
             containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
-            containerRegistry.RegisterInstance<IUserService>(Container.Resolve<UserService>());
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
+            containerRegistry.RegisterInstance<IUserService>(Container.Resolve<UserService>());
             containerRegistry.RegisterInstance<IPermissionService>(Container.Resolve<PermissionService>());
 
             // Navigation
@@ -68,7 +68,7 @@ namespace InterTwitter
             Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             FlowListView.Init();
 
-            await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}");
+            await NavigationService.NavigateAsync($"/{nameof(StartPage)}");
         }
 
         protected override void OnStart()

@@ -169,8 +169,8 @@ namespace InterTwitter.ViewModels
                     else
                     {
                         DialogParameters param = new DialogParameters();
-                        param.Add("title", Resources.Resource.AlertInvalidPassword);
-                        param.Add("okButtonText", Resources.Resource.Ok);
+                        param.Add(Constants.DialogParameterKeys.TITLE, Resources.Resource.AlertInvalidPassword);
+                        param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
                         await _dialogs.ShowDialogAsync(nameof(AlertView), param);
 
                         Password = string.Empty;
@@ -179,8 +179,8 @@ namespace InterTwitter.ViewModels
                 else
                 {
                     DialogParameters param = new DialogParameters();
-                    param.Add("title", Resources.Resource.AlertInvalidLogin);
-                    param.Add("okButtonText", Resources.Resource.Ok);
+                    param.Add(Constants.DialogParameterKeys.TITLE, Resources.Resource.AlertInvalidLogin);
+                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
                     await _dialogs.ShowDialogAsync(nameof(AlertView), param);
                 }
             }
@@ -200,8 +200,8 @@ namespace InterTwitter.ViewModels
                 }
 
                 DialogParameters param = new DialogParameters();
-                param.Add("title", validator.Errors[0].ErrorMessage);
-                param.Add("okButtonText", Resources.Resource.Ok);
+                param.Add(Constants.DialogParameterKeys.TITLE, validator.Errors[0].ErrorMessage);
+                param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
                 await _dialogs.ShowDialogAsync(nameof(AlertView), param);
             }
         }

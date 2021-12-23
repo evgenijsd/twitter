@@ -101,9 +101,14 @@ namespace InterTwitter.ViewModels.Flyout
             set => SetProperty(ref _userImagePath, value);
         }
 
-        public ICommand LogoutCommandAsync => SingleExecutionCommand.FromFunc(OnLogoutCommandAsync);
-        public ICommand NavigateEditProfileCommandAsync => SingleExecutionCommand.FromFunc(OnNavigateEditProfileCommandAsync);
-        public ICommand NavigateProfileCommandAsync => SingleExecutionCommand.FromFunc(OnNavigateProfileCommandAsync);
+        private ICommand _logoutCommandAsync;
+        public ICommand LogoutCommandAsync => _logoutCommandAsync ??= SingleExecutionCommand.FromFunc(OnLogoutCommandAsync);
+
+        private ICommand _navigateEditProfileCommandAsync;
+        public ICommand NavigateEditProfileCommandAsync => _navigateEditProfileCommandAsync ??= SingleExecutionCommand.FromFunc(OnNavigateEditProfileCommandAsync);
+
+        private ICommand _navigateProfileCommandAsync;
+        public ICommand NavigateProfileCommandAsync => _navigateProfileCommandAsync ??= SingleExecutionCommand.FromFunc(OnNavigateProfileCommandAsync);
 
         #endregion
 
@@ -163,21 +168,24 @@ namespace InterTwitter.ViewModels.Flyout
             }
         }
 
-        private void OnItemTapCommand(object param)
+        private async void OnItemTapCommand(object param)
         {
             var menuItem = param as MenuItemViewModel;
             MessagingCenter.Send(this, Constants.Messages.OPEN_SIDEBAR, false);
             MessagingCenter.Send(this, Constants.Messages.TAB_SELECTED, menuItem.Id);
-            NavigationService.NavigateAsync(nameof(menuItem.TargetType));
+            await NavigationService.NavigateAsync(nameof(menuItem.TargetType));
         }
 
         private async void UpdateAsync(object sender)
         {
-            await Task.Delay(1);
-            var user = _userService.GetUserAsync(_settingsManager.UserId).Result.Result;
-            ProfileName = user.Name;
-            ProfileEmail = user.Email;
-            UserImagePath = user.AvatarPath;
+            var userResponse = await _userService.GetUserAsync(_settingsManager.UserId);
+            if (userResponse.IsSuccess)
+            {
+                var user = userResponse.Result;
+                ProfileName = user.Name;
+                ProfileEmail = user.Email;
+                UserImagePath = user.AvatarPath;
+            }
         }
 
         private async Task OnLogoutCommandAsync()
@@ -187,18 +195,18 @@ namespace InterTwitter.ViewModels.Flyout
             await NavigationService.NavigateAsync($"/{nameof(StartPage)}");
         }
 
-        private Task OnNavigateProfileCommandAsync()
+        private async Task OnNavigateProfileCommandAsync()
         {
-            NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters { { Constants.Navigation.CURRENT_USER, _user } });
+            var param = new NavigationParameters();
+            param.Add(Constants.Navigation.CURRENT_USER, _user);
+            await NavigationService.NavigateAsync(nameof(ProfilePage), param);
             MessagingCenter.Send(this, Constants.Messages.OPEN_SIDEBAR, false);
-            return Task.CompletedTask;
         }
 
-        private Task OnNavigateEditProfileCommandAsync()
+        private async Task OnNavigateEditProfileCommandAsync()
         {
-            NavigationService.NavigateAsync(nameof(EditProfilePage));
+            await NavigationService.NavigateAsync(nameof(EditProfilePage));
             MessagingCenter.Send(this, Constants.Messages.OPEN_SIDEBAR, false);
-            return Task.CompletedTask;
         }
 
         #endregion

@@ -144,11 +144,9 @@ namespace InterTwitter.ViewModels
             var result = await _registrationService.CheckTheCorrectEmailAsync(Email);
             if (result.IsSuccess)
             {
-                //var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Resources.Resource.AlertLoginTaken } };
-                //await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
                 DialogParameters param = new DialogParameters();
-                param.Add("title", Resources.Resource.AlertLoginTaken);
-                param.Add("okButtonText", Resources.Resource.Ok);
+                param.Add(Constants.DialogParameterKeys.TITLE, Resources.Resource.AlertLoginTaken);
+                param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
                 await _dialogs.ShowDialogAsync(nameof(AlertView), param);
             }
             else
@@ -178,11 +176,9 @@ namespace InterTwitter.ViewModels
                         }
                     }
 
-                    //var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, validator.Errors[0].ErrorMessage } };
-                    //await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
                     DialogParameters param = new DialogParameters();
-                    param.Add("title", validator.Errors[0].ErrorMessage);
-                    param.Add("okButtonText", Resources.Resource.Ok);
+                    param.Add(Constants.DialogParameterKeys.TITLE, validator.Errors[0].ErrorMessage);
+                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
                     await _dialogs.ShowDialogAsync(nameof(AlertView), param);
                 }
             }

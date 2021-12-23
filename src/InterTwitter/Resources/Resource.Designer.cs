@@ -268,11 +268,29 @@ namespace InterTwitter.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Blacklist.
+        /// </summary>
+        public static string Blacklist {
+            get {
+                return ResourceManager.GetString("Blacklist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change profile.
+        /// </summary>
+        public static string Change_profile {
+            get {
+                return ResourceManager.GetString("Change profile", resourceCulture);
             }
         }
         
@@ -376,6 +394,33 @@ namespace InterTwitter.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mute.
+        /// </summary>
+        public static string Mute {
+            get {
+                return ResourceManager.GetString("Mute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Muted.
+        /// </summary>
+        public static string Muted {
+            get {
+                return ResourceManager.GetString("Muted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Muted profiles.
+        /// </summary>
+        public static string Muted_profiles {
+            get {
+                return ResourceManager.GetString("Muted profiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string Name {
@@ -475,6 +520,15 @@ namespace InterTwitter.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Profile in Blacklist.
+        /// </summary>
+        public static string Profile_in_Blacklist {
+            get {
+                return ResourceManager.GetString("Profile in Blacklist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove.
         /// </summary>
         public static string Remove {
@@ -489,6 +543,15 @@ namespace InterTwitter.Resources {
         public static string Save_changes {
             get {
                 return ResourceManager.GetString("Save changes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Share.
+        /// </summary>
+        public static string Share {
+            get {
+                return ResourceManager.GetString("Share", resourceCulture);
             }
         }
         

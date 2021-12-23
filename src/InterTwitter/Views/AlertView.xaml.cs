@@ -1,4 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace InterTwitter.Views
 {
@@ -7,7 +9,19 @@ namespace InterTwitter.Views
         public AlertView()
         {
             InitializeComponent();
-            aframe.WidthRequest = Prism.PrismApplicationBase.Current.MainPage.Width - 84;
+            alertView.WidthRequest = Prism.PrismApplicationBase.Current.MainPage.Width - 84;
+            cancelButton.Clicked += OnCancelButtonClicked;
+            okButton.Clicked += OnOkButtonClicked;
+        }
+
+        private void OnOkButtonClicked(object sender, EventArgs e)
+        {
+            okButton.IsEnabled = false;
+        }
+
+        private void OnCancelButtonClicked(object sender, EventArgs e)
+        {
+            cancelButton.IsEnabled = false;
         }
     }
 }

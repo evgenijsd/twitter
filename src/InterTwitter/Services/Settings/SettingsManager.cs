@@ -7,7 +7,7 @@ namespace InterTwitter.Services.Settings
         #region -- ISettings implementation --
         public int UserId
         {
-            get => Preferences.Get(nameof(UserId), 1);
+            get => Preferences.Get(nameof(UserId), default(int));
             set => Preferences.Set(nameof(UserId), value);
         }
 

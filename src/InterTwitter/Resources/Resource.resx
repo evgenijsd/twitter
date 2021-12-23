@@ -282,4 +282,25 @@
   <data name="_toBlacklist?" xml:space="preserve">
     <value>to Blacklist?</value>
   </data>
+  <data name="Blacklist" xml:space="preserve">
+    <value>Blacklist</value>
+  </data>
+  <data name="Mute" xml:space="preserve">
+    <value>Mute</value>
+  </data>
+  <data name="Change profile" xml:space="preserve">
+    <value>Change profile</value>
+  </data>
+  <data name="Muted" xml:space="preserve">
+    <value>Muted</value>
+  </data>
+  <data name="Muted profiles" xml:space="preserve">
+    <value>Muted profiles</value>
+  </data>
+  <data name="Profile in Blacklist" xml:space="preserve">
+    <value>Profile in Blacklist</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>Share</value>
+  </data>
 </root>

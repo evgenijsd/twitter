@@ -4,7 +4,8 @@
                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                        xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
                        xmlns:cardsControls="clr-namespace:PanCardView.Controls;assembly=PanCardView"
-                       xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                       xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+                       xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
                        xmlns:fftranform="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
                        xmlns:behaviors="clr-namespace:InterTwitter.Behaviors"
                        xmlns:local="clr-namespace:InterTwitter.Views" 
@@ -65,7 +66,7 @@
             <StackLayout  x:Name="currentUserMenuStack">
                 <Label Style="{DynamicResource tstyle_i9}" 
                        TextColor="{DynamicResource appcolor_i3}" 
-                       Text="Share">
+                       Text="{xct:Translate Share}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ShareCommandAsync}" 
                                               Tapped="OnAnywhereTappedHandler"/>
@@ -73,21 +74,21 @@
                 </Label>
                 <Label Style="{DynamicResource tstyle_i9}" 
                        TextColor="{DynamicResource appcolor_i3}" 
-                       Text="Change profile">
+                       Text="{xct:Translate Change_profile}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding NavigationToEditCommandAsync}" 
                                               Tapped="OnAnywhereTappedHandler"/>
                     </Label.GestureRecognizers>
                 </Label>
                 <Label Style="{DynamicResource tstyle_i9}" TextColor="{DynamicResource appcolor_i3}" 
-                       Text="Muted profiles">
+                       Text="{xct:Translate Muted_profiles}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding NavigationToMutelistCommandAsync}" 
                                               Tapped="OnAnywhereTappedHandler"/>
                     </Label.GestureRecognizers>
                 </Label>
                 <Label Style="{DynamicResource tstyle_i9}" TextColor="{DynamicResource appcolor_i3}" 
-                       Text="Blacklist">
+                       Text="{xct:Translate Blacklist}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding NavigationToBlacklistCommandAsync}" 
                                               Tapped="OnAnywhereTappedHandler"/>
@@ -108,19 +109,19 @@
                VerticalOptions="Start">
             <StackLayout  x:Name="menuStack">
                 <Label Style="{DynamicResource tstyle_i9}" TextColor="{DynamicResource appcolor_i3}" 
-                       Text="Share">
+                       Text="{xct:Translate Share}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ShareCommandAsync}" Tapped="OnAnywhereTappedHandler"/>
                     </Label.GestureRecognizers>
                 </Label>
                 <Label Style="{DynamicResource tstyle_i9}" TextColor="{DynamicResource appcolor_i3}" 
-                       Text="Mute">
+                       Text="{xct:Translate Mute}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding AddUserToMuteListCommandAsync}" Tapped="OnAnywhereTappedHandler"/>
                     </Label.GestureRecognizers>
                 </Label>
                 <Label Style="{DynamicResource tstyle_i9}" TextColor="{DynamicResource appcolor_i3}" 
-                       Text="Add to blacklist">
+                       Text="{xct:Translate Add_to_blacklist}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding AddUserToBlacklistCommandAsync}" Tapped="OnAnywhereTappedHandler"/>
                     </Label.GestureRecognizers>
@@ -154,7 +155,7 @@
                    IsVisible="{Binding IsChangeProfileButtonVisible}"
                    VerticalOptions="Start">
                 <Label Style="{DynamicResource tstyle_i8}" 
-                       Text="Change Profile" 
+                       Text="{xct:Translate Change_Profile}" 
                        x:Name="changeProfLabel"/>
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding NavigationToEditCommandAsync}" Tapped="OnChangeProfTapHandler"/>
@@ -173,7 +174,7 @@
                    VerticalOptions="Start">
                 <Label Style="{DynamicResource tstyle_i8}"
                        TextColor="{DynamicResource appcolor_i7}"
-                       Text="Profile in Blacklist" 
+                       Text="{xct:Translate Profile_in_Blacklist}" 
                        x:Name="blacklistLabel"/>
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding RemoveUserFromBlacklistCommandAsync}"/>
@@ -191,7 +192,7 @@
                    IsVisible="{Binding IsMuteButtonVisible}"
                    VerticalOptions="Start">
                 <Label Style="{DynamicResource tstyle_i8}"
-                       Text="Muted" 
+                       Text="{xct:Translate Muted}" 
                        x:Name="muteLabel"/>
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding RemoveUserFromMuteListCommandAsync}"/>

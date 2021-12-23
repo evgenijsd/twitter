@@ -31,7 +31,12 @@ namespace InterTwitter.ViewModels
         private bool _isUserBlocked;
         private bool _isUserMuted;
 
-        public ProfilePageViewModel(INavigationService navigationService, ISettingsManager settingsManager, IUserService userService, ITweetService tweetService, IDialogService dialogService1)
+        public ProfilePageViewModel(
+            INavigationService navigationService,
+            ISettingsManager settingsManager,
+            IUserService userService,
+            ITweetService tweetService,
+            IDialogService dialogService1)
             : base(navigationService)
         {
             _settingsManager = settingsManager;
@@ -49,11 +54,11 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _menuItems, value);
         }
 
-        private ObservableCollection<BindableBase> _usertweets;
+        private ObservableCollection<BindableBase> _userTweets;
         public ObservableCollection<BindableBase> UserTweets
         {
-            get => _usertweets;
-            set => SetProperty(ref _usertweets, value);
+            get => _userTweets;
+            set => SetProperty(ref _userTweets, value);
         }
 
         private ObservableCollection<BindableBase> _likedtweets;
@@ -126,30 +131,39 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _isMuteButtonVisible, value);
         }
 
-        public ICommand NavgationCommandAsync => SingleExecutionCommand.FromFunc(NavigationService.GoBackAsync);
+        private ICommand _navgationCommandAsync;
+        public ICommand NavgationCommandAsync => _navgationCommandAsync ??= SingleExecutionCommand.FromFunc(NavigationService.GoBackAsync);
 
+        private ICommand _hamburgerMenuCommandAsync;
         public ICommand HamburgerMenuCommandAsync
-            => SingleExecutionCommand.FromFunc(OnHamburgerMenuCommand);
+            => _hamburgerMenuCommandAsync ??= SingleExecutionCommand.FromFunc(OnHamburgerMenuCommand);
 
+        private ICommand _addUserToBlacklistCommandAsync;
         public ICommand AddUserToBlacklistCommandAsync
-            => SingleExecutionCommand.FromFunc(OnAddUserToBlacklistCommandAsync);
+            => _addUserToBlacklistCommandAsync ??= SingleExecutionCommand.FromFunc(OnAddUserToBlacklistCommandAsync);
 
+        private ICommand _addUserToMuteListCommandAsync;
         public ICommand AddUserToMuteListCommandAsync
-            => SingleExecutionCommand.FromFunc(OnAddUserToMutelistCommandAsync);
+            => _addUserToMuteListCommandAsync ??= SingleExecutionCommand.FromFunc(OnAddUserToMutelistCommandAsync);
 
+        private ICommand _removeUserFromBlacklistCommandAsync;
         public ICommand RemoveUserFromBlacklistCommandAsync
-            => SingleExecutionCommand.FromFunc(OnRemoveUserFromBlacklistCommandAsync);
+            => _removeUserFromBlacklistCommandAsync ??= SingleExecutionCommand.FromFunc(OnRemoveUserFromBlacklistCommandAsync);
 
+        private ICommand _removeUserFromMuteListCommandAsync;
         public ICommand RemoveUserFromMuteListCommandAsync
-            => SingleExecutionCommand.FromFunc(OnRemoveUserFromMuteCommandAsync);
+            => _removeUserFromMuteListCommandAsync ??= SingleExecutionCommand.FromFunc(OnRemoveUserFromMuteCommandAsync);
 
-        public ICommand NavigationToEditCommandAsync => SingleExecutionCommand.FromFunc(
+        private ICommand _navigationToEditCommandAsync;
+        public ICommand NavigationToEditCommandAsync => _navigationToEditCommandAsync ??= SingleExecutionCommand.FromFunc(
             () => NavigationService.NavigateAsync(nameof(EditProfilePage), new NavigationParameters { { Constants.Navigation.CURRENT_USER, _user } }));
 
-        public ICommand NavigationToBlacklistCommandAsync => SingleExecutionCommand.FromFunc(
+        private ICommand _navigationToBlacklistCommandAsync;
+        public ICommand NavigationToBlacklistCommandAsync => _navigationToBlacklistCommandAsync ??= SingleExecutionCommand.FromFunc(
             () => NavigationService.NavigateAsync(nameof(BlacklistPage), new NavigationParameters { { Constants.Navigation.BLACKLIST, _user } }));
 
-        public ICommand NavigationToMutelistCommandAsync => SingleExecutionCommand.FromFunc(
+        private ICommand _navigationToMutelistCommandAsync;
+        public ICommand NavigationToMutelistCommandAsync => _navigationToMutelistCommandAsync ??= SingleExecutionCommand.FromFunc(
             () => NavigationService.NavigateAsync(nameof(BlacklistPage), new NavigationParameters { { Constants.Navigation.MUTELIST, _user } }));
 
         #endregion
@@ -170,8 +184,8 @@ namespace InterTwitter.ViewModels
                 _isCurrentUser = false;
                 IsChangeProfileButtonVisible = false;
 
-                _isUserMuted = _userService.IsUserMuted(_settingsManager.UserId, _user.Id).Result.Result;
-                _isUserBlocked = _userService.IsUserBlocked(_settingsManager.UserId, _user.Id).Result.Result;
+                _isUserMuted = _userService.CheckIfUserIsMutedAsync(_user.Id).Result.Result;
+                _isUserBlocked = _userService.CheckIfUserIsBlockedAsync(_user.Id).Result.Result;
 
                 IsBlacklistButtonVisible = _isUserBlocked;
                 IsMuteButtonVisible = _isUserMuted;
@@ -185,27 +199,6 @@ namespace InterTwitter.ViewModels
             Subscribe();
 
             await InitAsync();
-
-            MenuItems = new List<MenuItemViewModel>(new[]
-                {
-                    new MenuItemViewModel
-                    {
-                        Id = 0,
-                        Title = Resources.Resource.Posts,
-                        ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource,
-                        TextColor = (Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
-                        ContentCollection = UserTweets, // TODO: filtering
-                    },
-
-                    new MenuItemViewModel
-                    {
-                        Id = 1,
-                        Title = Resources.Resource.Likes,
-                        ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource,
-                        TextColor = (Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
-                        ContentCollection = LikedTweets, // TODO: filtering
-                    },
-                });
         }
 
         #endregion
@@ -219,13 +212,15 @@ namespace InterTwitter.ViewModels
 
         private async void UpdateAsync(object sender)
         {
-            await Task.Delay(1);
-            _user = _userService.GetUserAsync(_settingsManager.UserId).Result.Result;
-
-            UserBackgroundImage = _user.BackgroundUserImagePath;
-            UserImagePath = _user.AvatarPath;
-            UserMail = _user.Email;
-            UserName = _user.Name;
+            var userResponse = await _userService.GetUserAsync(_settingsManager.UserId);
+            if (userResponse.IsSuccess)
+            {
+                _user = userResponse.Result;
+                UserBackgroundImage = _user.BackgroundUserImagePath;
+                UserImagePath = _user.AvatarPath;
+                UserMail = _user.Email;
+                UserName = _user.Name;
+            }
         }
 
         private async Task InitAsync()
@@ -235,7 +230,8 @@ namespace InterTwitter.ViewModels
             if (getTweetResult.IsSuccess)
             {
                 var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.
-                    Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
+                    Select(x => x.Media == EAttachedMediaType.Photos ||
+                    x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
 
                 foreach (var tweet in tweetViewModels)
                 {
@@ -252,6 +248,27 @@ namespace InterTwitter.ViewModels
                 UserTweets = new ObservableCollection<BindableBase>(tweetViewModels);
                 LikedTweets = new ObservableCollection<BindableBase>(tweetViewModels);
             }
+
+            MenuItems = new List<MenuItemViewModel>(new[]
+                {
+                    new MenuItemViewModel
+                    {
+                        Id = 0,
+                        Title = Resources.Resource.Posts,
+                        ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource,
+                        TextColor = (Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
+                        ContentCollection = UserTweets,
+                    },
+
+                    new MenuItemViewModel
+                    {
+                        Id = 1,
+                        Title = Resources.Resource.Likes,
+                        ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource,
+                        TextColor = (Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
+                        ContentCollection = LikedTweets,
+                    },
+                });
         }
 
         private Task OnHamburgerMenuCommand()
@@ -271,30 +288,33 @@ namespace InterTwitter.ViewModels
         private async Task OnAddUserToBlacklistCommandAsync()
         {
             var param = new DialogParameters();
-
-            if (_userService.IsUserBlocked(_settingsManager.UserId, _user.Id).Result.Result)
+            var isUserBlockedResponse = await _userService.CheckIfUserIsBlockedAsync(_user.Id);
+            if (isUserBlockedResponse.IsSuccess)
             {
-                param.Add("message", Resources.Resource.This_user_is_already_blocked);
+                if (isUserBlockedResponse.Result)
+                {
+                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Resource.This_user_is_already_blocked);
 
-                _dialogService.ShowDialog("AlertView", param);
-            }
-            else
-            {
-                param.Add("title", $"{Resources.Resource.Add_} {_user.Name} {Resources.Resource._toBlacklist_}");
-                param.Add("message", Resources.Resource.This_user_will_not_see_your_posts);
-                param.Add("okButtonText", Resources.Resource.Add_to_Blacklist);
-                param.Add("cancelButtonText", Resources.Resource.Cancel);
+                    _dialogService.ShowDialog(nameof(AlertView), param);
+                }
+                else
+                {
+                    param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Resource.Add_} {_user.Name} {Resources.Resource._toBlacklist_}");
+                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Resource.This_user_will_not_see_your_posts);
+                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Add_to_Blacklist);
+                    param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Resource.Cancel);
 
-                _dialogService.ShowDialog(nameof(AlertView), param, CloseDialogCallback);
+                    _dialogService.ShowDialog(nameof(AlertView), param, CloseDialogCallback);
+                }
             }
 
             void CloseDialogCallback(IDialogResult dialogResult)
             {
-                bool result = (bool)dialogResult?.Parameters["Accept"];
+                bool result = (bool)dialogResult?.Parameters[Constants.DialogParameterKeys.ACCEPT];
                 if (result)
                 {
-                    int remId = _userService.RemoveFromMutelistAsync(_settingsManager.UserId, _user.Id).Result.Result;
-                    int remId2 = _userService.AddToBlacklistAsync(_settingsManager.UserId, _user.Id).Result.Result;
+                    _userService.RemoveFromMutelistAsync(_user.Id);
+                    _userService.AddToBlacklistAsync(_user.Id);
                     IsBlacklistButtonVisible = true;
                     IsMuteButtonVisible = false;
                 }
@@ -304,71 +324,76 @@ namespace InterTwitter.ViewModels
         private async Task OnAddUserToMutelistCommandAsync()
         {
             var param = new DialogParameters();
-
-            if (_userService.IsUserMuted(_settingsManager.UserId, _user.Id).Result.Result)
+            var isUserMutedResponse = await _userService.CheckIfUserIsBlockedAsync(_user.Id);
+            if (isUserMutedResponse.IsSuccess)
             {
-                param.Add("message", Resources.Resource.This_user_is_already_muted);
+                if (isUserMutedResponse.Result)
+                {
+                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Resource.This_user_is_already_muted);
 
-                _dialogService.ShowDialog("AlertView", param);
-            }
-            else
-            {
-                param.Add("title", $"{Resources.Resource.Add_} {_user.Name} {Resources.Resource._to_mute_}");
-                param.Add("message", Resources.Resource.User_can_see_information_about_you);
-                param.Add("okButtonText", Resources.Resource.Add_to_Mute);
-                param.Add("cancelButtonText", Resources.Resource.Cancel);
+                    _dialogService.ShowDialog(nameof(AlertView), param);
+                }
+                else
+                {
+                    param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Resource.Add_} {_user.Name} {Resources.Resource._to_mute_}");
+                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Resource.User_can_see_information_about_you);
+                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Add_to_Mute);
+                    param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Resource.Cancel);
 
-                _dialogService.ShowDialog(nameof(AlertView), param, CloseDialogCallback);
+                    _dialogService.ShowDialog(nameof(AlertView), param, CloseDialogCallback);
+                }
             }
 
             void CloseDialogCallback(IDialogResult dialogResult)
             {
-                bool result = (bool)dialogResult?.Parameters["Accept"];
+                bool result = (bool)dialogResult?.Parameters[Constants.DialogParameterKeys.ACCEPT];
                 if (result)
                 {
-                    int remId = _userService.RemoveFromBlacklistAsync(_settingsManager.UserId, _user.Id).Result.Result;
-                    int remId2 = _userService.AddToMuteListAsync(_settingsManager.UserId, _user.Id).Result.Result;
+                    _userService.RemoveFromBlacklistAsync(_user.Id);
+                    _userService.AddToMuteListAsync(_user.Id);
                     IsBlacklistButtonVisible = false;
                     IsMuteButtonVisible = true;
                 }
             }
         }
 
-        private async Task OnRemoveUserFromBlacklistCommandAsync()
+        private Task OnRemoveUserFromBlacklistCommandAsync()
         {
             var param = new DialogParameters();
-            param.Add("title", $"{Resources.Resource.Remove} {_user.Name} {Resources.Resource.from_the_Blacklist}?");
-            param.Add("okButtonText", Resources.Resource.Remove);
-            param.Add("cancelButtonText", Resources.Resource.Cancel);
+            param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Resource.Remove} {_user.Name} {Resources.Resource.from_the_Blacklist}?");
+            param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Remove);
+            param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Resource.Cancel);
 
             _dialogService.ShowDialog(nameof(AlertView), param, CloseDialogCallback);
+            return Task.CompletedTask;
 
             void CloseDialogCallback(IDialogResult dialogResult)
             {
-                bool result = (bool)dialogResult?.Parameters["Accept"];
+                bool result = (bool)dialogResult?.Parameters[Constants.DialogParameterKeys.ACCEPT];
                 if (result)
                 {
-                    int res = _userService.RemoveFromBlacklistAsync(_settingsManager.UserId, _user.Id).Result.Result;
+                    _userService.RemoveFromBlacklistAsync(_user.Id);
                     IsBlacklistButtonVisible = false;
                 }
             }
         }
 
-        private async Task OnRemoveUserFromMuteCommandAsync()
+        private Task OnRemoveUserFromMuteCommandAsync()
         {
             var param = new DialogParameters();
-            param.Add("title", $"{Resources.Resource.Remove} {_user.Name} {Resources.Resource.from_the_mute}?");
-            param.Add("okButtonText", Resources.Resource.Remove);
-            param.Add("cancelButtonText", Resources.Resource.Cancel);
+            param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Resource.Remove} {_user.Name} {Resources.Resource.from_the_mute}?");
+            param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Remove);
+            param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Resource.Cancel);
 
             _dialogService.ShowDialog(nameof(AlertView), param, CloseDialogCallback);
+            return Task.CompletedTask;
 
             void CloseDialogCallback(IDialogResult dialogResult)
             {
-                bool result = (bool)dialogResult?.Parameters["Accept"];
+                bool result = (bool)dialogResult?.Parameters[Constants.DialogParameterKeys.ACCEPT];
                 if (result)
                 {
-                    int res = _userService.RemoveFromMutelistAsync(_settingsManager.UserId, _user.Id).Result.Result;
+                    _userService.RemoveFromMutelistAsync(_user.Id);
                     IsMuteButtonVisible = false;
                 }
             }

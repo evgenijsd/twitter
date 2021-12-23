@@ -11,28 +11,28 @@ namespace InterTwitter.Services.UserService
     {
         Task<AOResult<UserModel>> GetUserAsync(int id);
 
-        Task<AOResult<List<UserModel>>> GetAllUsersAsync();
+        Task<AOResult<IEnumerable<UserModel>>> GetAllUsersAsync();
 
-        Task<AOResult<int>> InsertUserAsync(UserModel user);
+        Task<AOResult> InsertUserAsync(UserModel user);
 
-        Task<AOResult<int>> DeleteUserAsync(UserModel user);
+        Task<AOResult> DeleteUserAsync(UserModel user);
 
-        Task<AOResult<int>> UpdateUserAsync(UserModel user);
+        Task<AOResult> UpdateUserAsync(UserModel user);
 
-        Task<AOResult<int>> AddToBlacklistAsync(int currentUserId, int userId);
+        Task<AOResult> AddToBlacklistAsync(int userId);
 
-        Task<AOResult<int>> AddToMuteListAsync(int currentUserId, int userId);
+        Task<AOResult> AddToMuteListAsync(int userId);
 
-        Task<AOResult<int>> RemoveFromBlacklistAsync(int currentUserId, int userId);
+        Task<AOResult> RemoveFromBlacklistAsync(int userId);
 
-        Task<AOResult<int>> RemoveFromMutelistAsync(int currentUserId, int userId);
+        Task<AOResult> RemoveFromMutelistAsync(int userId);
 
-        Task<AOResult<bool>> IsUserMuted(int currentUserId, int userId);
+        Task<AOResult<bool>> CheckIfUserIsMutedAsync(int userId);
 
-        Task<AOResult<bool>> IsUserBlocked(int currentUserId, int userId);
+        Task<AOResult<bool>> CheckIfUserIsBlockedAsync(int userId);
 
-        Task<AOResult<List<UserModel>>> GetAllMutedUsersAsync(int currentUserId);
+        Task<AOResult<IEnumerable<UserModel>>> GetAllMutedUsersAsync();
 
-        Task<AOResult<List<UserModel>>> GetAllBlockedUsersAsync(int currentUserId);
+        Task<AOResult<IEnumerable<UserModel>>> GetAllBlockedUsersAsync();
     }
 }

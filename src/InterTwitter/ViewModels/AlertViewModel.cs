@@ -10,8 +10,8 @@ namespace InterTwitter.ViewModels
         public AlertViewModel()
         {
             CloseCommand = new DelegateCommand(() => RequestClose(null));
-            AcceptCommand = new DelegateCommand(() => RequestClose(new DialogParameters() { { "Accept", true } }));
-            DeclineCommand = new DelegateCommand(() => RequestClose(new DialogParameters() { { "Accept", false } }));
+            AcceptCommand = new DelegateCommand(() => RequestClose(new DialogParameters() { { Constants.DialogParameterKeys.ACCEPT, true } }));
+            DeclineCommand = new DelegateCommand(() => RequestClose(new DialogParameters() { { Constants.DialogParameterKeys.ACCEPT, false } }));
         }
 
         #region -- Public properties --
@@ -54,11 +54,11 @@ namespace InterTwitter.ViewModels
         public DelegateCommand AcceptCommand { get; }
         public DelegateCommand DeclineCommand { get; }
 
-        public event Action<IDialogParameters> RequestClose;
-
         #endregion
 
         #region -- Interface implementation --
+
+        public event Action<IDialogParameters> RequestClose;
 
         public bool CanCloseDialog() => true;
 
@@ -68,24 +68,24 @@ namespace InterTwitter.ViewModels
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            if (parameters.ContainsKey("message"))
+            if (parameters.ContainsKey(Constants.DialogParameterKeys.MESSAGE))
             {
-                Message = parameters.GetValue<string>("message");
+                Message = parameters.GetValue<string>(Constants.DialogParameterKeys.MESSAGE);
             }
 
-            if (parameters.ContainsKey("title"))
+            if (parameters.ContainsKey(Constants.DialogParameterKeys.TITLE))
             {
-                Title = parameters.GetValue<string>("title");
+                Title = parameters.GetValue<string>(Constants.DialogParameterKeys.TITLE);
             }
 
-            if (parameters.ContainsKey("okButtonText"))
+            if (parameters.ContainsKey(Constants.DialogParameterKeys.OK_BUTTON_TEXT))
             {
-                OkButtonText = parameters.GetValue<string>("okButtonText");
+                OkButtonText = parameters.GetValue<string>(Constants.DialogParameterKeys.OK_BUTTON_TEXT);
             }
 
-            if (parameters.ContainsKey("cancelButtonText"))
+            if (parameters.ContainsKey(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT))
             {
-                CancelButtonText = parameters.GetValue<string>("cancelButtonText");
+                CancelButtonText = parameters.GetValue<string>(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT);
             }
         }
 

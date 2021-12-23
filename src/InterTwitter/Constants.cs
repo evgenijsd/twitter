@@ -25,5 +25,14 @@
             public const string USER = nameof(USER);
             public const string MESSAGE = nameof(MESSAGE);
         }
+
+        public static class DialogParameterKeys
+        {
+            public const string MESSAGE = nameof(MESSAGE);
+            public const string TITLE = nameof(TITLE);
+            public const string OK_BUTTON_TEXT = nameof(OK_BUTTON_TEXT);
+            public const string CANCEL_BUTTON_TEXT = nameof(CANCEL_BUTTON_TEXT);
+            public const string ACCEPT = nameof(ACCEPT);
+        }
     }
 }

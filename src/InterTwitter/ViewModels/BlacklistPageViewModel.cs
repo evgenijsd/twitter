@@ -55,17 +55,16 @@ namespace InterTwitter.ViewModels
 
         public override async Task InitializeAsync(INavigationParameters parameters)
         {
-            // UsersList = new ObservableCollection<UserViewModel>(_userService.GetAllUsersAsync().Result.Result.Select(x => x.ToUserViewModel()));
             if (_isBlacklistPage = parameters.ContainsKey(Constants.Navigation.BLACKLIST))
             {
-                Title = "Blacklist";
+                Title = Resources.Resource.Blacklist;
                 _currentUser = parameters[Constants.Navigation.BLACKLIST] as UserModel;
 
                 await InitBlacklistAsync();
             }
             else if (_isMutelistPage = parameters.ContainsKey(Constants.Navigation.MUTELIST))
             {
-                Title = "Mute";
+                Title = Resources.Resource.Mute;
                 _currentUser = parameters[Constants.Navigation.MUTELIST] as UserModel;
 
                 await InitMutelistAsync();
@@ -79,20 +78,23 @@ namespace InterTwitter.ViewModels
         private async Task InitBlacklistAsync()
         {
             UsersList = new ObservableCollection<UserViewModel>();
-            var list = _userService.GetAllBlockedUsersAsync(_currentUser.Id).Result.Result;
-            foreach (var userModel in list)
+            var blockedUsersResponse = await _userService.GetAllBlockedUsersAsync();
+            if (blockedUsersResponse.IsSuccess)
             {
-                var userViewModel = userModel.ToUserViewModel();
-                userViewModel.RemoveCommand = SingleExecutionCommand.FromFunc(OnRemoveCommand);
-                UsersList.Add(userViewModel);
+                foreach (var userModel in blockedUsersResponse.Result)
+                {
+                    var userViewModel = userModel.ToUserViewModel();
+                    userViewModel.RemoveCommand = SingleExecutionCommand.FromFunc(OnRemoveCommand);
+                    UsersList.Add(userViewModel);
+                }
             }
         }
 
         private async Task InitMutelistAsync()
         {
             UsersList = new ObservableCollection<UserViewModel>();
-            var list = _userService.GetAllMutedUsersAsync(_currentUser.Id).Result.Result;
-            foreach (var userModel in list)
+            var mutedUsersResponse = await _userService.GetAllMutedUsersAsync();
+            foreach (var userModel in mutedUsersResponse.Result)
             {
                 var userViewModel = userModel.ToUserViewModel();
                 userViewModel.RemoveCommand = SingleExecutionCommand.FromFunc(OnRemoveCommand);
@@ -100,47 +102,49 @@ namespace InterTwitter.ViewModels
             }
         }
 
-        private async Task OnRemoveCommand(object parameter)
+        private Task OnRemoveCommand(object parameter)
         {
-            if (parameter != null)
+            if (parameter is UserViewModel userViewModel)
             {
-                var userViewModel = parameter as UserViewModel;
+                userViewModel = parameter as UserViewModel;
 
-                string s = string.Empty;
+                string partOfMessage = string.Empty;
                 if (_isBlacklistPage)
                 {
-                    s = Resources.Resource.from_the_Blacklist;
+                    partOfMessage = Resources.Resource.from_the_Blacklist;
                 }
                 else if (_isMutelistPage)
                 {
-                    s = Resources.Resource.from_the_mute;
+                    partOfMessage = Resources.Resource.from_the_mute;
                 }
 
                 var param = new DialogParameters();
-                param.Add("title", $"{Resources.Resource.Remove} {userViewModel.Name} {s}");
-                param.Add("okButtonText", Resources.Resource.Ok);
-                param.Add("cancelButtonText", Resources.Resource.Cancel);
+                param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Resource.Remove} {userViewModel.Name} {partOfMessage}");
+                param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
+                param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Resource.Cancel);
 
                 _dialogService.ShowDialog(nameof(AlertView), param, CloseDialogCallback);
 
                 async void CloseDialogCallback(IDialogResult dialogResult)
                 {
-                    bool result = (bool)dialogResult?.Parameters["Accept"];
+                    bool result = (bool)dialogResult?.Parameters[Constants.DialogParameterKeys.ACCEPT];
                     if (result)
                     {
                         if (_isBlacklistPage)
                         {
-                            await _userService.RemoveFromBlacklistAsync(_currentUser.Id, userViewModel.Id);
+                            await _userService.RemoveFromBlacklistAsync(userViewModel.Id);
                             UsersList.Remove(userViewModel);
                         }
                         else if (_isMutelistPage)
                         {
-                            await _userService.RemoveFromMutelistAsync(_currentUser.Id, userViewModel.Id);
+                            await _userService.RemoveFromMutelistAsync(userViewModel.Id);
                             UsersList.Remove(userViewModel);
                         }
                     }
                 }
             }
+
+            return Task.CompletedTask;
         }
 
         #endregion

@@ -25,7 +25,6 @@ namespace InterTwitter.ViewModels
         private readonly IAuthorizationService _autorizationService;
         private readonly IRegistrationService _registrationService;
 
-        private bool _isFirstStart = true;
         private UserModel _currentUser;
 
         public HomePageViewModel(
@@ -66,19 +65,19 @@ namespace InterTwitter.ViewModels
         #endregion
 
         #region -- Overrides --
-        public override async Task InitializeAsync(INavigationParameters parameters)
+        public override Task InitializeAsync(INavigationParameters parameters)
         {
-            await InitAsync();
+            return InitAsync();
         }
 
         public override void OnAppearing()
         {
-            IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_blue"] as ImageSource;
+            IconPath = App.Current.Resources["ic_home_blue"] as ImageSource;
         }
 
         public override void OnDisappearing()
         {
-            IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource;
+            IconPath = App.Current.Resources["ic_home_gray"] as ImageSource;
         }
 
         #endregion
@@ -88,9 +87,9 @@ namespace InterTwitter.ViewModels
         private async Task InitAsync()
         {
             var result = await _registrationService.GetByIdAsync(_autorizationService.UserId);
-            if (/*result.IsSuccess*/ true)
+            if (result.IsSuccess)
             {
-                // _currentUser = result.Result;
+                _currentUser = result.Result;
                 var getTweetResult = await _tweetService.GetAllTweetsAsync();
 
                 if (getTweetResult.IsSuccess)
@@ -99,7 +98,7 @@ namespace InterTwitter.ViewModels
 
                     foreach (var tweet in tweetViewModels)
                     {
-                        UserModel user = _userService.GetUserAsync(tweet.UserId).Result.Result;
+                        var user = await _userService.GetUserAsync(tweet.UserId);
                         var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
 
                         if (tweetAuthor.IsSuccess)
@@ -107,13 +106,17 @@ namespace InterTwitter.ViewModels
                             tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
                             tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
                             tweet.UserName = tweetAuthor.Result.Name;
-                            if (tweetAuthor.Result.Id == _settingsManager.UserId/*_currentUser.Id*/)
+                            if (tweetAuthor.Result.Id == _currentUser.Id)
                             {
-                                tweet.MoveToProfileCommand = new Command(() => NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters { { Constants.Navigation.CURRENT_USER, user } }));
+                                tweet.MoveToProfileCommand = new Command(() =>
+                                NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
+                                { { Constants.Navigation.CURRENT_USER, user.Result } }));
                             }
                             else
                             {
-                                tweet.MoveToProfileCommand = new Command(() => NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters { { Constants.Navigation.USER, user } }));
+                                tweet.MoveToProfileCommand = new Command(() =>
+                                NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
+                                { { Constants.Navigation.USER, user.Result } }));
                             }
                         }
                     }

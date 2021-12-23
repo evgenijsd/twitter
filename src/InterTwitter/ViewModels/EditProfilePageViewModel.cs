@@ -23,7 +23,12 @@ namespace InterTwitter.ViewModels
         private readonly IDialogService _dialogService;
         private UserModel _user;
 
-        public EditProfilePageViewModel(INavigationService navigationService, IPermissionService permissionsService, ISettingsManager settingsManager, IUserService userService, IDialogService dialogService)
+        public EditProfilePageViewModel(
+            INavigationService navigationService,
+            IPermissionService permissionsService,
+            ISettingsManager settingsManager,
+            IUserService userService,
+            IDialogService dialogService)
             : base(navigationService)
         {
             _permissionsService = permissionsService;
@@ -76,13 +81,17 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _userImagePath, value);
         }
 
-        public ICommand NavigationCommandAsync => SingleExecutionCommand.FromFunc(OnNavigationCommandAsync);
+        private ICommand _navigationCommandAsync;
+        public ICommand NavigationCommandAsync => _navigationCommandAsync ??= SingleExecutionCommand.FromFunc(OnNavigationCommandAsync);
 
-        public ICommand CheckCommandAsync => SingleExecutionCommand.FromFunc(() => OnCheckCommandAsync());
+        private ICommand _checkCommandAsync;
+        public ICommand CheckCommandAsync => _checkCommandAsync ??= SingleExecutionCommand.FromFunc(() => OnCheckCommandAsync());
 
-        public ICommand PickBackgroundImageAsync => SingleExecutionCommand.FromFunc(OnPickBackgroundImageAsync);
+        private ICommand _pickBackgroundImageAsync;
+        public ICommand PickBackgroundImageAsync => _pickBackgroundImageAsync ??= SingleExecutionCommand.FromFunc(OnPickBackgroundImageAsync);
 
-        public ICommand PickUserImageAsync => SingleExecutionCommand.FromFunc(OnPickUserImageAsync);
+        private ICommand _pickUserImageAsync;
+        public ICommand PickUserImageAsync => _pickUserImageAsync ??= SingleExecutionCommand.FromFunc(OnPickUserImageAsync);
 
         #endregion
 
@@ -90,13 +99,17 @@ namespace InterTwitter.ViewModels
 
         public override Task InitializeAsync(INavigationParameters parameters)
         {
-            _user = _userService.GetUserAsync(_settingsManager.UserId).Result.Result;
+            var userResponse = _userService.GetUserAsync(_settingsManager.UserId).Result;
+            if (userResponse.IsSuccess)
+            {
+                _user = userResponse.Result;
+                UserBackgroundImage = _user.BackgroundUserImagePath;
+                UserImagePath = _user.AvatarPath;
+                UserMail = _user.Email;
+                UserName = _user.Name;
+                // OldPassword = user.Password;
+            }
 
-            UserBackgroundImage = _user.BackgroundUserImagePath;
-            UserImagePath = _user.AvatarPath;
-            UserMail = _user.Email;
-            UserName = _user.Name;
-            // OldPassword = user.Password;
             return Task.CompletedTask;
         }
 
@@ -150,27 +163,30 @@ namespace InterTwitter.ViewModels
             }
         }
 
-        private bool isChanged => _user.Name != UserName || _user.Email != UserMail || _user.AvatarPath != UserImagePath || _user.BackgroundUserImagePath != UserBackgroundImage || !string.IsNullOrEmpty(OldPassword) || !string.IsNullOrEmpty(NewPassword);
-        private async Task OnCheckCommandAsync(bool isIndirectCall = false)
+        private bool IsChanged => _user.Name != UserName || _user.Email != UserMail ||
+            _user.AvatarPath != UserImagePath || _user.BackgroundUserImagePath != UserBackgroundImage ||
+            !string.IsNullOrEmpty(OldPassword) || !string.IsNullOrEmpty(NewPassword);
+
+        private Task OnCheckCommandAsync(bool isIndirectCall = false)
         {
             bool isAllValid = true;
-            if (!isChanged)
+            if (!IsChanged)
             {
-                return;
+                return Task.CompletedTask;
             }
 
-            DialogParameters param = new DialogParameters();
-            param.Add("title", $"{Resources.Resource.Save_changes}?");
-            param.Add("okButtonText", Resources.Resource.Ok);
-            param.Add("cancelButtonText", Resources.Resource.Cancel);
+            var param = new DialogParameters();
+            param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Resource.Save_changes}?");
+            param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
+            param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Resource.Cancel);
 
             _dialogService.ShowDialog(nameof(AlertView), param, CloseDialogCallback);
             async void CloseDialogCallback(IDialogResult dialogResult)
             {
-                DialogParameters param = new DialogParameters();
-                param.Add("okButtonText", Resources.Resource.Ok);
+                var param = new DialogParameters();
+                param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
 
-                bool result = (bool)dialogResult?.Parameters["Accept"];
+                bool result = (bool)dialogResult?.Parameters[Constants.DialogParameterKeys.ACCEPT];
                 if (result)
                 {
                     if (!string.IsNullOrEmpty(OldPassword) || !string.IsNullOrEmpty(NewPassword))
@@ -237,11 +253,13 @@ namespace InterTwitter.ViewModels
                     await NavigationService.GoBackAsync();
                 }
             }
+
+            return Task.CompletedTask;
         }
 
         private async Task OnNavigationCommandAsync()
         {
-            if (isChanged)
+            if (IsChanged)
             {
                 await OnCheckCommandAsync(true);
             }
