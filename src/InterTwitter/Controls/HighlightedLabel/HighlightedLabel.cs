@@ -62,6 +62,8 @@ namespace InterTwitter.Controls.HighlightedLabel
 
         #endregion
 
+        #region -- Overrides --
+
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
@@ -169,9 +171,9 @@ namespace InterTwitter.Controls.HighlightedLabel
                         }
 
                         str = str;
-                         debug_foundKeysInfo = foundKeysInfo.Select(x =>
-                            $" {(x.IsHashtag ? "tag" : "word")} " +
-                            $"{x.Position} {x.Length} {x.Text}").ToArray();
+                        debug_foundKeysInfo = foundKeysInfo.Select(x =>
+                           $" {(x.IsHashtag ? "tag" : "word")} " +
+                           $"{x.Position} {x.Length} {x.Text}").ToArray();
 
                         FormattedString formattedString = GetKeуsMergedWithSimpleText(foundKeysInfo);
 
@@ -191,6 +193,8 @@ namespace InterTwitter.Controls.HighlightedLabel
                     break;
             }
         }
+
+        #endregion
 
         #region -- Private helpers --
 
@@ -310,7 +314,7 @@ namespace InterTwitter.Controls.HighlightedLabel
         {
             Span keySpan = new Span()
             {
-                Text = keyword.Text,
+                Text = this.Text.Substring(keyword.Position, keyword.Length),
             };
 
             if (keyword.IsHashtag)

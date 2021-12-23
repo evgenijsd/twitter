@@ -83,6 +83,7 @@
                                       Placeholder="{xct:Translate Search}"
                                       PlaceholderColor="{DynamicResource appcolor_i4}"
                                       MaxLength="{Binding MaxLength, Source={x:Reference searchBar}}"
+                                      ClearButtonVisibility="WhileEditing"
                                       ReturnCommand="{Binding PressOkOnKeyboardCommand, Source={x:Reference searchBar}}"
                                       ReturnType="Search"
                                       x:Name="searchEntry"/>
