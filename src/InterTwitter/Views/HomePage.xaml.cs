@@ -1,3 +1,6 @@
+using System.Linq;
+using Xamarin.Forms;
+
 namespace InterTwitter.Views
 {
     public partial class HomePage : BaseContentPage

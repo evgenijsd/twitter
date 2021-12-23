@@ -26,8 +26,8 @@
 
                     <controls:CustomNavigationbar Grid.Row="0"
                                                   Title="Home"
-                                                  RigthButtonImageSource="ic_add_blue"
-                                                  LeftButtonImageSource="pic_profile_small"
+                                                  RigthButtonImageSource="{DynamicResource ic_add_white}"
+                                                  LeftButtonImageSource="{DynamicResource pic_profile_small}"
                                                   IsVisible="{Binding Source={x:Reference customCollectView}, Path=IsNavigationBarVisible}"
                                                   LeftAddButtonCommand="{Binding OpenFlyoutCommandAsync}"
                                                   RigthButtonCommand="{Binding AddTweetCommandAsync}"/>
@@ -35,7 +35,16 @@
                     <controls:CustomCollectionView x:Name="customCollectView"
                                                    Grid.Row="1" 
                                                    ItemsSource="{Binding Tweets}" 
-                                                   ItemTemplate="{DynamicResource templateSelector}"/>
+                                                   ItemTemplate="{DynamicResource templateSelector}">
+                        
+                        <controls:CustomCollectionView.Footer>
+
+                            <StackLayout BackgroundColor="{DynamicResource appcolor_i2}"
+                                         HeightRequest="80"/>
+
+                        </controls:CustomCollectionView.Footer>
+                        
+                    </controls:CustomCollectionView>
 
                     <sh:Shadows Grid.Row="1"
                                 IsVisible="{Binding Source={x:Reference customCollectView}, Path=IsAddButtonVisible}"
@@ -71,7 +80,7 @@
 
             </statecontainer:StateCondition>
 
-            <statecontainer:StateCondition State="Truncated">
+            <statecontainer:StateCondition State="WithoutTweet">
 
                 <StackLayout Orientation="Vertical">
                     

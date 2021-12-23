@@ -8,6 +8,6 @@ namespace InterTwitter.Enums
     {
         Unknown,
         Original,
-        Truncated,
+        WithoutTweet,
     }
 }

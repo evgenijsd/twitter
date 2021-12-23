@@ -10,7 +10,7 @@ namespace InterTwitter.ViewModels.TweetViewModel
     {
         public BaseTweetViewModel()
         {
-            Mode = EStateMode.Truncated;
+            Mode = EStateMode.WithoutTweet;
         }
         #region -- Public properties --
 

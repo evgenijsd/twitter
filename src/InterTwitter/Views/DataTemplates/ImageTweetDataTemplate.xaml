@@ -36,19 +36,21 @@
                        Text="{Binding UserName}" 
                        FontAttributes="Bold"/>
 
-                <controls:CustomLabel Mode="{Binding Mode}" 
-                                      OriginalText="{Binding Text}"
-                                      IsVisible="{Binding IsTextVisible}"/>
+                <controls:UnfoldingLabel OriginalText="{Binding Text}"
+                                         IsVisible="{Binding IsTextVisible}"/>
 
                 <flv:FlowListView FlowColumnCount="{Binding ColumnNumber}"
                                   RowHeight="{Binding RowHeight}"
+                                  BackgroundColor="{DynamicResource appcolor_i2}"
                                   HasUnevenRows="False"
                                   HorizontalScrollBarVisibility="Never"
                                   VerticalScrollBarVisibility="Never"
                                   SeparatorVisibility="None"
                                   FlowColumnExpand="First"
+                                  IsTabStop="False"
                                   VerticalOptions="Start"
-                                  FlowItemsSource="{Binding MediaPaths}">
+                                  FlowItemsSource="{Binding MediaPaths}"
+                                  Scrolled="FlowListView_Scrolled">
                     
                     <flv:FlowListView.FlowColumnTemplate>
 
@@ -62,6 +64,7 @@
 
                                 <ffimageloading:CachedImage Aspect="AspectFill" 
                                                             Source="{Binding .}">
+                                    
                                     <ffimageloading:CachedImage.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=BindingContext.MoveToImagesGalleryCommand}" CommandParameter="{Binding Source={x:Reference this}, Path=BindingContext}"/> 
                                     </ffimageloading:CachedImage.GestureRecognizers>

@@ -105,7 +105,14 @@
     
     <!-- CONVERTERS -->
     <converters:ListToFirstConverter x:Key="listToFirstConverter"/>
-    
+
+    <!-- HACK STYLE FOR IOS -->
+    <Style x:Key="tstyle_i16" TargetType="Label">
+        <!-- Body 2/ 14px/ System/Black -->
+        <Setter Property="TextColor" Value="{DynamicResource appcolor_i3}"/>
+        <Setter Property="FontSize" Value="{DynamicResource tsize_i4}"/>
+    </Style>
+
     <!-- TweetData Templates-->
 
     <dataTemplates:ImageTweetDataTemplate x:Key="imageTweetTemplate"/>

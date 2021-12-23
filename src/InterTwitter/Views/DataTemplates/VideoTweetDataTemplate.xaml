@@ -34,9 +34,8 @@
                        Text="{Binding UserName}" 
                        FontAttributes="Bold"/>
 
-                <controls:CustomLabel Mode="{Binding Mode}" 
-                                      OriginalText="{Binding Text}"
-                                      IsVisible="{Binding IsTextVisible}"/>
+                <controls:UnfoldingLabel OriginalText="{Binding Text}"
+                                         IsVisible="{Binding IsTextVisible}"/>
 
                 <Frame CornerRadius="5"
                        Padding="0"

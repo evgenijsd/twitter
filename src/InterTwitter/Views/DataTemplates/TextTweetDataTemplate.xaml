@@ -35,9 +35,8 @@
                        Text="{Binding UserName}" 
                        FontAttributes="Bold"/>
 
-                <controls:CustomLabel Mode="{Binding Mode}" 
-                                      OriginalText="{Binding Text}"
-                                      IsVisible="{Binding IsTextVisible}"/>
+                <controls:UnfoldingLabel OriginalText="{Binding Text}"
+                                         IsVisible="{Binding IsTextVisible}"/>
 
                 <StackLayout Orientation="Horizontal"
                              HeightRequest="20"

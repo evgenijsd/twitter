@@ -109,7 +109,7 @@ namespace InterTwitter.ViewModels
             }
             else
             {
-                Mode = EStateMode.Truncated;
+                Mode = EStateMode.WithoutTweet;
             }
         }
 
