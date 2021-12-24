@@ -32,7 +32,7 @@ namespace InterTwitter.ViewModels
             });
         }
 
-        #region --- Public Properties ---
+        #region -- Public Properties --
 
         private ObservableCollection<MenuItemViewModel> _menuItems;
         public ObservableCollection<MenuItemViewModel> MenuItems

@@ -12,5 +12,11 @@
 
             public const string MEDIA = "Media";
         }
+
+        public static class Navigation
+        {
+            public const string USER = nameof(USER);
+            public const string MESSAGE = nameof(MESSAGE);
+        }
     }
 }

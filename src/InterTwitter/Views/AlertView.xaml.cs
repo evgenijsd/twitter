@@ -2,9 +2,9 @@
 
 namespace InterTwitter.Views
 {
-    public partial class MainPage : ContentPage
+    public partial class AlertView : Frame
     {
-        public MainPage()
+        public AlertView()
         {
             InitializeComponent();
         }

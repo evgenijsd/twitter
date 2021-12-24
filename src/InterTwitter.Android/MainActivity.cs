@@ -7,15 +7,19 @@ using InterTwitter.Droid.Services.PermissionsService;
 using InterTwitter.Droid.Services.VideoService;
 using InterTwitter.Services.PermissionsService;
 using InterTwitter.Services.VideoService;
+using InterTwitter.Droid.Renderers;
+using InterTwitter.Helpers;
 using Prism;
 using Prism.Ioc;
 using Prism.Unity;
 
 namespace InterTwitter.Droid
 {
-    [Activity(Label = "InterTwitter", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
+    [Activity(Label = "@string/ApplicationName", Icon = "@mipmap/launcher_foreground", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
+        #region -- Overrides --
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -25,9 +29,11 @@ namespace InterTwitter.Droid
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
             CachedImageRenderer.Init(true); 
             CachedImageRenderer.InitImageViewHandler();
+            KeyboardHelper.Init(this);
 
             LoadApplication(new App(new AndroidInitializer()));
         }
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -39,9 +45,12 @@ namespace InterTwitter.Droid
         {
             public void RegisterTypes(IContainerRegistry containerRegistry)
             {
-                containerRegistry.RegisterInstance<IPermissionsService>(PrismApplication.Current.Container.Resolve<PermissionsService>());
-                containerRegistry.RegisterInstance<IVideoService>(PrismApplication.Current.Container.Resolve<VideoService>());
+                containerRegistry.RegisterSingleton<IPermissionsService, PermissionsService>();
+                containerRegistry.RegisterSingleton<IVideoService, VideoService>();
+                containerRegistry.RegisterSingleton<IKeyboardHelper, KeyboardHelper>();
             }
         }
+
+        #endregion
     }
 }
