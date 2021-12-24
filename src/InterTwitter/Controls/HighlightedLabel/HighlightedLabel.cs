@@ -89,15 +89,9 @@ namespace InterTwitter.Controls.HighlightedLabel
         {
             base.OnPropertyChanged(propertyName);
 
-            switch (propertyName)
+            if (propertyName == OriginalTextProperty.PropertyName && !string.IsNullOrEmpty(OriginalText))
             {
-                case nameof(OriginalText):
-                    if (!string.IsNullOrEmpty(OriginalText))
-                    {
-                        SetText(OriginalText);
-                    }
-
-                    break;
+                SetText(OriginalText);
             }
         }
 
@@ -107,6 +101,8 @@ namespace InterTwitter.Controls.HighlightedLabel
 
         private void SetText(string originalText)
         {
+            (this.FormattedText, this.Text) = (null, null);
+
             if (originalText?.Length > 184)
             {
                 // режем текст
@@ -115,7 +111,16 @@ namespace InterTwitter.Controls.HighlightedLabel
                 FormattedString formattedString = GetFormattedText(truncatedText);
 
                 // создаем спан-команду
-                Span tapCommandSpan = GetTapCommandSpan("...more");
+                Span tapCommandSpan = new Span
+                {
+                    Text = "...more",
+                };
+
+                tapCommandSpan.SetDynamicResource(TextColorProperty, "appcolor_i1");
+
+                TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
+                tapCommandSpan.GestureRecognizers.Add(tapGestureRecognizer);
+                tapGestureRecognizer.Command = OpenTweetCommand;
 
                 // добавляем спан-команду к обрезанному и подсвеченному тексту
                 formattedString.Spans.Add(tapCommandSpan);
@@ -139,8 +144,8 @@ namespace InterTwitter.Controls.HighlightedLabel
                 formattedString = GetHighlightedFormattedString(text);
             }
 
-            // если ключей нет, просто создаем спан с обрезанным текстом
-            else
+            // если искомых ключей нет, просто создаем спан с обрезанным текстом
+            if (formattedString == null || formattedString.Spans.Count == 0)
             {
                 formattedString = new FormattedString();
 
@@ -157,7 +162,7 @@ namespace InterTwitter.Controls.HighlightedLabel
 
         private Task OnOpenTweetCommandAsync()
         {
-            this.FormattedText = GetFormattedText(OriginalText);
+            FormattedText = GetFormattedText(OriginalText);
 
             return Task.CompletedTask;
         }
@@ -179,11 +184,14 @@ namespace InterTwitter.Controls.HighlightedLabel
             {
                 var infoAboutKeysFound = GetInfoAboutKeysFound(text, KeysToHighlight.ToArray());
 
-                TrimIntersectingKeys(infoAboutKeysFound);
+                if (infoAboutKeysFound?.Count > 0)
+                {
+                    TrimIntersectingKeys(infoAboutKeysFound);
 
-                DeleteAllSubKeys(infoAboutKeysFound);
+                    DeleteAllSubKeys(infoAboutKeysFound);
 
-                formattedString = GetKeуsMergedWithSimpleText(text, infoAboutKeysFound.ToArray());
+                    formattedString = GetKeуsMergedWithSimpleText(text, infoAboutKeysFound.ToArray());
+                }
             }
 
             return formattedString;
@@ -358,22 +366,6 @@ namespace InterTwitter.Controls.HighlightedLabel
             }
 
             return keySpan;
-        }
-
-        private Span GetTapCommandSpan(string text)
-        {
-            Span commandSpan = new Span
-            {
-                Text = text,
-            };
-
-            commandSpan.SetDynamicResource(TextColorProperty, "appcolor_i1");
-
-            TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
-            commandSpan.GestureRecognizers.Add(tapGestureRecognizer);
-            tapGestureRecognizer.Command = OpenTweetCommand;
-
-            return commandSpan;
         }
 
         #endregion

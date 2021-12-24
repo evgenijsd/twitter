@@ -28,30 +28,18 @@
                     <!-- SEARCH IS NOT ACTIVE - DISPLAY AVATAR ICON -->
                     <stateContainer:StateCondition State="NotActive">
 
-                        <Image Source="{Binding AvatarIconSource, Source={x:Reference searchBar}}">
-
-                            <Image.GestureRecognizers>
-
-                                <TapGestureRecognizer Command="{Binding AvatarIconTapCommand, Source={x:Reference searchBar}}" />
-
-                            </Image.GestureRecognizers>
-
-                        </Image>
+                        <ImageButton BackgroundColor="Transparent"
+                                     Source="{Binding AvatarIconSource, Source={x:Reference searchBar}}"
+                                     Command="{Binding AvatarIconTapCommand, Source={x:Reference searchBar}}"/>
 
                     </stateContainer:StateCondition>
 
                     <!-- SEARCH IS ACTIVE - DISPLAY BACK ICON -->
                     <stateContainer:StateCondition State="Active">
 
-                        <Image Source="{DynamicResource ic_left_gray}">
-
-                            <Image.GestureRecognizers>
-
-                                <TapGestureRecognizer Command="{Binding BackIconTapCommand, Source={x:Reference searchBar}}" />
-
-                            </Image.GestureRecognizers>
-
-                        </Image>
+                        <ImageButton BackgroundColor="Transparent"
+                                     Source="{DynamicResource ic_left_gray}"
+                                     Command="{Binding BackIconTapCommand, Source={x:Reference searchBar}}"/>
 
                     </stateContainer:StateCondition>
 

@@ -206,6 +206,7 @@ namespace InterTwitter.ViewModels
                 }
             }
 
+            SearchWords = null;
             Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
         }
 
@@ -251,7 +252,7 @@ namespace InterTwitter.ViewModels
                     .Where(x => x.Length > 1);
             }
 
-            if (SearchWords?.Count() == 0)
+            if (SearchWords == null || SearchWords.Count() == 0)
             {
                 TweetSearchResult = ESearchResult.NoResults;
                 NoResultsMessage = LocalizationResourceManager.Current["InaccurateRequest"];
