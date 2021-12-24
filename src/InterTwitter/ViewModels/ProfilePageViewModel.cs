@@ -293,6 +293,7 @@ namespace InterTwitter.ViewModels
             {
                 if (isUserBlockedResponse.Result)
                 {
+                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
                     param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Resource.UserBlocked);
 
                     _dialogService.ShowDialog(nameof(AlertView), param);
@@ -324,11 +325,12 @@ namespace InterTwitter.ViewModels
         private async Task OnAddUserToMutelistCommandAsync()
         {
             var param = new DialogParameters();
-            var isUserMutedResponse = await _userService.CheckIfUserIsBlockedAsync(_user.Id);
+            var isUserMutedResponse = await _userService.CheckIfUserIsMutedAsync(_user.Id);
             if (isUserMutedResponse.IsSuccess)
             {
                 if (isUserMutedResponse.Result)
                 {
+                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
                     param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Resource.UserMuted);
 
                     _dialogService.ShowDialog(nameof(AlertView), param);
