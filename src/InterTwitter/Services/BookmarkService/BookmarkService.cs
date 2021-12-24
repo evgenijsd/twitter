@@ -1,12 +1,11 @@
 ﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
-using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace InterTwitter.Services.BookmarkService
+namespace InterTwitter.Services
 {
     public class BookmarkService : IBookmarkService
     {
@@ -17,7 +16,7 @@ namespace InterTwitter.Services.BookmarkService
             _mockService = mockService;
         }
 
-        #region -- Public helpers --
+        #region -- Interface implementation --
 
         public async Task<AOResult<List<Bookmark>>> GetBookmarksAsync(int userId)
         {
@@ -39,6 +38,31 @@ namespace InterTwitter.Services.BookmarkService
             catch (Exception ex)
             {
                 result.SetError($"{nameof(GetBookmarksAsync)}: exception", Resources.Resource.SomeIssues, ex);
+            }
+
+            return result;
+        }
+
+        public async Task<AOResult<List<Bookmark>>> GetNotificationsAsync(int userId)
+        {
+            var result = new AOResult<List<Bookmark>>();
+
+            try
+            {
+                var bookmarks = _mockService.Bookmarks.Where(x => x.UserId != userId && x.Notification).ToList();
+
+                if (bookmarks != null)
+                {
+                    result.SetSuccess(bookmarks);
+                }
+                else
+                {
+                    result.SetFailure(Resources.Resource.NotFoundBookmark);
+                }
+            }
+            catch (Exception ex)
+            {
+                result.SetError($"{nameof(GetNotificationsAsync)}: exception", Resources.Resource.SomeIssues, ex);
             }
 
             return result;

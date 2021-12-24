@@ -124,8 +124,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Helpers\ProcessHelpers\" />
-    <Folder Include="Enums\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -155,6 +153,15 @@
     </Compile>
     <Compile Update="Views\BookmarksPage.xaml.cs">
       <DependentUpon>BookmarksPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DataTemplates\Notification\ImageNotificationDataTemplate.xaml.cs">
+      <DependentUpon>ImageNotificationDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DataTemplates\Notification\TextNotificationDataTemplate.xaml.cs">
+      <DependentUpon>TextNotificationDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DataTemplates\Notification\VideoNotificationDataTemplate.xaml.cs">
+      <DependentUpon>VideoNotificationDataTemplate.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 

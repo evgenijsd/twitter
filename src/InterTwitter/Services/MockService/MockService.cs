@@ -101,6 +101,7 @@ namespace InterTwitter.Services
                     Id = 1,
                     UserId = 1,
                     Media = Enums.EAttachedMediaType.Photos,
+                    Text = "01 um quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
                     MediaPaths = new List<string>
                     {
                         "https://oboi-lux.com.ua/23613-home_default/fotooboi-s-prirodoj.jpg",
@@ -114,7 +115,7 @@ namespace InterTwitter.Services
                 {
                     Id = 2,
                     UserId = 3,
-                    Text = "um quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
+                    Text = "03 um quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
                     Media = Enums.EAttachedMediaType.Video,
                     MediaPaths = new List<string>
                     {
@@ -126,7 +127,7 @@ namespace InterTwitter.Services
                 {
                     Id = 3,
                     UserId = 4,
-                    Text = "Only text",
+                    Text = "04 Only text",
                     Media = Enums.EAttachedMediaType.None,
                     CreationTime = DateTime.Parse("01.04.2020 15:12:12", culture),
                 },
@@ -134,7 +135,7 @@ namespace InterTwitter.Services
                 {
                     Id = 4,
                     UserId = 5,
-                    Text = "Hi there!",
+                    Text = "05 Hi there!",
                     Media = Enums.EAttachedMediaType.Photos,
                     CreationTime = DateTime.Parse("01.05.2021 12:00:12", culture),
                     MediaPaths = new List<string>
@@ -158,7 +159,7 @@ namespace InterTwitter.Services
                 {
                     Id = 6,
                     UserId = 6,
-                    Text = "HI there!",
+                    Text = "06 HI there!",
                     Media = Enums.EAttachedMediaType.Gif,
                     MediaPaths = new List<string>
                     {
@@ -170,7 +171,7 @@ namespace InterTwitter.Services
                 {
                     Id = 7,
                     UserId = 2,
-                    Text = "onsequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
+                    Text = "02 onsequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
                     Media = Enums.EAttachedMediaType.Gif,
                     MediaPaths = new List<string>
                     {

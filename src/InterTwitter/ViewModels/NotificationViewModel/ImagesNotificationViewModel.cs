@@ -1,10 +1,12 @@
-﻿namespace InterTwitter.Models.TweetViewModel
+﻿using System;
+
+namespace InterTwitter.Models.NotificationViewModel
 {
-    public class ImagesTweetViewModel : BaseTweetViewModel
+    public class ImagesNotificationViewModel : BaseNotificationViewModel
     {
         private readonly int _imagesNumber;
 
-        public ImagesTweetViewModel(int imagesNumber)
+        public ImagesNotificationViewModel(int imagesNumber)
         {
             if (imagesNumber > 0)
             {
@@ -33,7 +35,7 @@
         #region -- Private helpers --
         private void InitImagesPositioning()
         {
-            _rowHeight = _imagesNumber < 3 ? 186 : 80;
+            _rowHeight = _imagesNumber < 7 ? 186 : 80;
 
             _rowHeight = _imagesNumber == 3 | _imagesNumber == 4 ? 89 : _rowHeight;
 

@@ -2,7 +2,6 @@
 using InterTwitter.Models;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,18 +19,18 @@ namespace InterTwitter.Services
 
         #region -- ITweetService implementation --
 
-        public async Task<AOResult<IEnumerable<TweetModel>>> GetAllTweetsAsync()
+        public async Task<AOResult<List<TweetModel>>> GetAllTweetsAsync()
         {
             await Task.Delay(50);
 
-            var result = new AOResult<IEnumerable<TweetModel>>();
+            var result = new AOResult<List<TweetModel>>();
             try
             {
                 var tweets = _mockService.Tweets;
 
                 if (tweets != null)
                 {
-                    result.SetSuccess(tweets.OrderByDescending(x => x.CreationTime));
+                    result.SetSuccess(tweets.OrderByDescending(x => x.CreationTime).ToList());
                 }
                 else
                 {
@@ -41,6 +40,30 @@ namespace InterTwitter.Services
             catch (Exception ex)
             {
                 result.SetError($"{nameof(GetAllTweetsAsync)}: exception", "Some issues", ex);
+            }
+
+            return result;
+        }
+
+        public async Task<AOResult<List<TweetModel>>> GetByUserTweetsAsync(int userid)
+        {
+            var result = new AOResult<List<TweetModel>>();
+            try
+            {
+                var tweets = _mockService.Tweets.Where(x => x.UserId == userid);
+
+                if (tweets != null)
+                {
+                    result.SetSuccess(tweets.OrderByDescending(x => x.CreationTime).ToList());
+                }
+                else
+                {
+                    result.SetFailure("No tweets found");
+                }
+            }
+            catch (Exception ex)
+            {
+                result.SetError($"{nameof(GetByUserTweetsAsync)}: exception", "Some issues", ex);
             }
 
             return result;

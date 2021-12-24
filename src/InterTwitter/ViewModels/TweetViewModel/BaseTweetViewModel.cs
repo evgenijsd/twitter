@@ -12,7 +12,6 @@ namespace InterTwitter.Models.TweetViewModel
     public class BaseTweetViewModel : BindableBase
     {
         #region -- Public properties --
-
         private int _tweetId;
         public int TweetId
         {
@@ -117,9 +116,7 @@ namespace InterTwitter.Models.TweetViewModel
         }
 
         #endregion
-
         #region -- Private helpers --
-
         private Task OnLikeAsync(BaseTweetViewModel tweet)
         {
             IsTweetLiked = !IsTweetLiked;

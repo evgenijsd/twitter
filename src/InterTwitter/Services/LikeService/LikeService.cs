@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace InterTwitter.Services.LikeService
+namespace InterTwitter.Services
 {
     public class LikeService : ILikeService
     {
@@ -16,7 +16,7 @@ namespace InterTwitter.Services.LikeService
             _mockService = mockService;
         }
 
-        #region -- Public helpers --
+        #region -- Interface implementation --
 
         public async Task<AOResult<List<LikeModel>>> GetLikesAsync(int userId)
         {
@@ -43,6 +43,31 @@ namespace InterTwitter.Services.LikeService
             return result;
         }
 
+        public async Task<AOResult<List<LikeModel>>> GetNotificationsAsync(int userId)
+        {
+            var result = new AOResult<List<LikeModel>>();
+
+            try
+            {
+                var likes = _mockService.Likes.Where(x => x.UserId != userId && x.Notification).ToList();
+
+                if (likes != null)
+                {
+                    result.SetSuccess(likes);
+                }
+                else
+                {
+                    result.SetFailure(Resources.Resource.NotFoundLike);
+                }
+            }
+            catch (Exception ex)
+            {
+                result.SetError($"{nameof(GetNotificationsAsync)}: exception", Resources.Resource.SomeIssues, ex);
+            }
+
+            return result;
+        }
+
         public async Task<AOResult> DeleteLikeAsync(int tweetId, int userId)
         {
             var result = new AOResult();
@@ -57,7 +82,7 @@ namespace InterTwitter.Services.LikeService
                 }
                 else
                 {
-                    result.SetFailure(Resources.Resource.NotFoundBookmark);
+                    result.SetFailure(Resources.Resource.NotFoundLike);
                 }
             }
             catch (Exception ex)
