@@ -20,6 +20,9 @@ namespace InterTwitter.ViewModels
         private readonly IKeyboardHelper _keyboardHelper;
 
         private UserModel _user;
+        private double _maxHeight;
+        private bool _isSaveFocusedName;
+        private bool _isSaveFocusedEmail;
 
         public CreatePageViewModel(
             INavigationService navigationService,
@@ -115,6 +118,30 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _buttonText, value);
         }
 
+        private double _currentHeight;
+
+        public double CurrentHeight
+        {
+            get => _currentHeight;
+            set => SetProperty(ref _currentHeight, value);
+        }
+
+        private bool _isEntryNameFocused;
+
+        public bool IsEntryNameFocused
+        {
+            get => _isEntryNameFocused;
+            set => SetProperty(ref _isEntryNameFocused, value);
+        }
+
+        private bool _isEntryEmailFocused;
+
+        public bool IsEntryEmailFocused
+        {
+            get => _isEntryEmailFocused;
+            set => SetProperty(ref _isEntryEmailFocused, value);
+        }
+
         private ICommand _LogInCommand;
 
         public ICommand LogInCommand => _LogInCommand ??= SingleExecutionCommand.FromFunc(OnLogInCommandAsync);
@@ -133,23 +160,39 @@ namespace InterTwitter.ViewModels
 
             if (args.PropertyName == nameof(IsFocusedName))
             {
-                if (IsFocusedName)
+                if (!string.IsNullOrEmpty(Name))
                 {
-                    await Task.Delay(100);
+                    ButtonText = Resources.Resource.SignUp;
+                }
+                else
+                {
+                    ButtonText = Resources.Resource.Next;
+                }
+            }
+
+            if (args.PropertyName == nameof(CurrentHeight))
+            {
+                if (_maxHeight < CurrentHeight)
+                {
+                    _maxHeight = CurrentHeight;
+                }
+
+                if (_maxHeight > CurrentHeight && (IsFocusedEmail || IsFocusedName))
+                {
                     IsVisibleButton = true;
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(Name))
-                    {
-                        ButtonText = Resources.Resource.SignUp;
-                    }
-                    else
-                    {
-                        ButtonText = Resources.Resource.Next;
-                    }
-
                     IsVisibleButton = false;
+                }
+            }
+
+            if (args.PropertyName == nameof(IsFocusedName))
+            {
+                if (IsFocusedName)
+                {
+                    _isSaveFocusedName = true;
+                    _isSaveFocusedEmail = false;
                 }
             }
 
@@ -157,12 +200,8 @@ namespace InterTwitter.ViewModels
             {
                 if (IsFocusedEmail)
                 {
-                    await Task.Delay(200);
-                    IsVisibleButton = true;
-                }
-                else
-                {
-                    IsVisibleButton = false;
+                    _isSaveFocusedName = false;
+                    _isSaveFocusedEmail = true;
                 }
             }
 
@@ -234,6 +273,16 @@ namespace InterTwitter.ViewModels
                         {
                             IsWrongEmail = true;
                         }
+                    }
+
+                    if (_isSaveFocusedName)
+                    {
+                        IsEntryNameFocused = true;
+                    }
+
+                    if (_isSaveFocusedEmail)
+                    {
+                        IsEntryEmailFocused = true;
                     }
                 }
             }

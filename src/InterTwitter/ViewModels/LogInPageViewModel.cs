@@ -8,6 +8,7 @@ using Prism.Services.Dialogs;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
 {
@@ -20,6 +21,10 @@ namespace InterTwitter.ViewModels
         private readonly IDialogService _dialogs;
 
         private readonly IKeyboardHelper _keyboardHelper;
+
+        private double _maxHeight;
+        private bool _isSaveFocusedEmail;
+        private bool _isSaveFocusedPassword;
 
         public LogInPageViewModel(
             INavigationService navigationService,
@@ -117,6 +122,30 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _isVisibleButton, value);
         }
 
+        private double _currentHeight;
+
+        public double CurrentHeight
+        {
+            get => _currentHeight;
+            set => SetProperty(ref _currentHeight, value);
+        }
+
+        private bool _isEntryEmailFocused;
+
+        public bool IsEntryEmailFocused
+        {
+            get => _isEntryEmailFocused;
+            set => SetProperty(ref _isEntryEmailFocused, value);
+        }
+
+        private bool _isEntryPasswordFocused;
+
+        public bool IsEntryPasswordFocused
+        {
+            get => _isEntryPasswordFocused;
+            set => SetProperty(ref _isEntryPasswordFocused, value);
+        }
+
         private ICommand _CreateCommand;
 
         public ICommand CreateCommand => _CreateCommand ??= SingleExecutionCommand.FromFunc(OnCreateCommandAsync);
@@ -129,21 +158,42 @@ namespace InterTwitter.ViewModels
 
         #region -- Overrides --
 
-        protected override async void OnPropertyChanged(PropertyChangedEventArgs args)
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
 
-            if (args.PropertyName == nameof(IsFocusedEmail) || args.PropertyName == nameof(IsFocusedPassword))
+            if (args.PropertyName == nameof(CurrentHeight))
             {
-                if (IsFocusedEmail || IsFocusedPassword)
+                if (_maxHeight < CurrentHeight)
                 {
-                    await Task.Delay(200);
+                    _maxHeight = CurrentHeight;
+                }
 
+                if (_maxHeight > CurrentHeight && (IsFocusedEmail || IsFocusedPassword))
+                {
                     IsVisibleButton = true;
                 }
                 else
                 {
                     IsVisibleButton = false;
+                }
+            }
+
+            if (args.PropertyName == nameof(IsFocusedEmail))
+            {
+                if (IsFocusedEmail)
+                {
+                    _isSaveFocusedEmail = true;
+                    _isSaveFocusedPassword = false;
+                }
+            }
+
+            if (args.PropertyName == nameof(IsFocusedPassword))
+            {
+                if (IsFocusedPassword)
+                {
+                    _isSaveFocusedEmail = false;
+                    _isSaveFocusedPassword = true;
                 }
             }
 
@@ -216,6 +266,16 @@ namespace InterTwitter.ViewModels
                     {
                         IsWrongEmail = true;
                     }
+                }
+
+                if (_isSaveFocusedEmail)
+                {
+                    IsEntryEmailFocused = true;
+                }
+
+                if (_isSaveFocusedPassword)
+                {
+                    IsEntryPasswordFocused = true;
                 }
             }
         }

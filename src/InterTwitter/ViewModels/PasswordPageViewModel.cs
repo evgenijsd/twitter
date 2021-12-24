@@ -22,6 +22,9 @@ namespace InterTwitter.ViewModels
         private readonly IKeyboardHelper _keyboardHelper;
 
         private UserModel _user;
+        private double _maxHeight;
+        private bool _isSaveFocusedPassword;
+        private bool _isSaveFocusedConfirmPassword;
 
         public PasswordPageViewModel (
             INavigationService navigationService,
@@ -119,6 +122,30 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _isVisibleButton, value);
         }
 
+        private double _currentHeight;
+
+        public double CurrentHeight
+        {
+            get => _currentHeight;
+            set => SetProperty(ref _currentHeight, value);
+        }
+
+        private bool _isEntryPasswordFocused;
+
+        public bool IsEntryPasswordFocused
+        {
+            get => _isEntryPasswordFocused;
+            set => SetProperty(ref _isEntryPasswordFocused, value);
+        }
+
+        private bool _isEntryConfirmPasswordFocused;
+
+        public bool IsEntryConfirmPasswordFocused
+        {
+            get => _isEntryConfirmPasswordFocused;
+            set => SetProperty(ref _isEntryConfirmPasswordFocused, value);
+        }
+
         private ICommand _CreateCommand;
 
         public ICommand CreateCommand => _CreateCommand ??= SingleExecutionCommand.FromFunc(OnCreateCommandAsync);
@@ -137,23 +164,39 @@ namespace InterTwitter.ViewModels
 
             if (args.PropertyName == nameof(IsFocusedPassword))
             {
-                if (IsFocusedPassword)
+                if (!string.IsNullOrEmpty(Password))
                 {
-                    await Task.Delay(500);
+                    ButtonText = Resources.Resource.Confirm;
+                }
+                else
+                {
+                    ButtonText = Resources.Resource.Next;
+                }
+            }
+
+            if (args.PropertyName == nameof(CurrentHeight))
+            {
+                if (_maxHeight < CurrentHeight)
+                {
+                    _maxHeight = CurrentHeight;
+                }
+
+                if (_maxHeight > CurrentHeight && (IsFocusedPassword || IsFocusedConfirmPassword))
+                {
                     IsVisibleButton = true;
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(Password))
-                    {
-                        ButtonText = Resources.Resource.Confirm;
-                    }
-                    else
-                    {
-                        ButtonText = Resources.Resource.Next;
-                    }
-
                     IsVisibleButton = false;
+                }
+            }
+
+            if (args.PropertyName == nameof(IsFocusedPassword))
+            {
+                if (IsFocusedPassword)
+                {
+                    _isSaveFocusedPassword = true;
+                    _isSaveFocusedConfirmPassword = false;
                 }
             }
 
@@ -161,12 +204,8 @@ namespace InterTwitter.ViewModels
             {
                 if (IsFocusedConfirmPassword)
                 {
-                    await Task.Delay(200);
-                    IsVisibleButton = true;
-                }
-                else
-                {
-                    IsVisibleButton = false;
+                    _isSaveFocusedPassword = false;
+                    _isSaveFocusedConfirmPassword = true;
                 }
             }
 
@@ -239,6 +278,16 @@ namespace InterTwitter.ViewModels
                     {
                         IsWrongConfirmPassword = true;
                     }
+                }
+
+                if (_isSaveFocusedPassword)
+                {
+                    IsEntryPasswordFocused = true;
+                }
+
+                if (_isSaveFocusedConfirmPassword)
+                {
+                    IsEntryConfirmPasswordFocused = true;
                 }
             }
         }

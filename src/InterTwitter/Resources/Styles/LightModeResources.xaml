@@ -79,5 +79,5 @@
     <ImageSource x:Key="pic_profile_big">pic_profile_big</ImageSource>
     <ImageSource x:Key="pic_profile_small">pic_profile_small</ImageSource>
     <ImageSource x:Key="pic_empty_state_2">pic_empty_state_2</ImageSource>
-    
+
 </ResourceDictionary>

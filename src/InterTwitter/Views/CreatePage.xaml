@@ -14,7 +14,9 @@
     
     <view:BaseContentPage.Content>
         
-        <controls:CustomGrid RowSpacing="0">
+        <controls:CustomGrid RowSpacing="0"
+                             Height="{Binding CurrentHeight}">
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
@@ -71,6 +73,7 @@
                                       TextColor="{DynamicResource appcolor_i3}"
                                       IsFocusedVisible="{Binding IsVisibleName}"
                                       IsFocusedButton="{Binding IsFocusedName}"
+                                      IsEntryFocused="{Binding IsEntryNameFocused}"
                                       Placeholder="{xct:Translate Name}" />
 
                 <Label Grid.Row="1"
@@ -92,6 +95,7 @@
                                       Margin="20,18,20,0"
                                       IsFocusedVisible="{Binding IsVisibleEmail}"
                                       IsFocusedButton="{Binding IsFocusedEmail}"
+                                      IsEntryFocused="{Binding IsEntryEmailFocused}"
                                       Placeholder="{xct:Translate Email}"
                                       ClearImageSource="{DynamicResource ic_clear_gray}"
                                       FontFamily="Ubuntu-Regular"

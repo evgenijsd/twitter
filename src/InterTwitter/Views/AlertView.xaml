@@ -2,9 +2,24 @@
 <Frame xmlns="http://xamarin.com/schemas/2014/forms"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-       WidthRequest="300"
+       xmlns:prism="http://prismlibrary.com"
+       prism:DialogLayout.MaskStyle="{StaticResource ColorStyle}"
+       prism:DialogLayout.RelativeWidthRequest="0.85"
+       BackgroundColor="White"
        CornerRadius="15"
        x:Class="InterTwitter.Views.AlertView">
+    
+    <Frame.Resources>
+        <ResourceDictionary>
+            <Style TargetType="BoxView"
+                   x:Key="ColorStyle">
+                <Setter Property="BackgroundColor"
+                        Value="#02060E" />
+                <Setter Property="Opacity"
+                        Value="0.6" />
+            </Style>
+        </ResourceDictionary>
+    </Frame.Resources>
     
     <StackLayout>
         

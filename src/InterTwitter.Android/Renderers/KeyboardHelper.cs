@@ -24,5 +24,16 @@ namespace InterTwitter.Droid.Renderers
                 activity.Window.DecorView.ClearFocus();
             }
         }
+
+        public void ShowKeyboard()
+        {
+            var inputMethodManager = _context?.GetSystemService(Context.InputMethodService) as InputMethodManager;
+
+            if (inputMethodManager != null && _context is Activity activity)
+            {
+                var token = activity.CurrentFocus?.WindowToken;
+                inputMethodManager.ToggleSoftInput(ShowFlags.Forced, HideSoftInputFlags.ImplicitOnly);
+            }
+        }
     }
 }
