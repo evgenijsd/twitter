@@ -6,15 +6,20 @@ using System.Threading.Tasks;
 
 namespace InterTwitter.Droid
 {
-    [Activity(Theme = "@style/MyTheme.Splash", MainLauncher = true, NoHistory = true)]
+    [Activity(
+        Theme = "@style/LaunchTheme", 
+        MainLauncher = true, 
+        NoHistory = true)]
     public class SplashActivity : AppCompatActivity
     {
-        public override void OnCreate(Bundle savedInstanceState, PersistableBundle persistentState)
+        protected override void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(savedInstanceState, persistentState);
+            base.OnCreate(savedInstanceState);
+
+            StartActivity(typeof(MainActivity));
         }
 
-        protected override void OnResume()
+        /*protected override void OnResume()
         {
             base.OnResume();
             Task startupWork = new Task(() => { SimulateStartup(); });
@@ -23,10 +28,9 @@ namespace InterTwitter.Droid
 
         public override void OnBackPressed() { }
 
-        async void SimulateStartup()
+        void SimulateStartup()
         {
-            await Task.Delay(700); 
             StartActivity(new Intent(Application.Context, typeof(MainActivity)));
-        }
+        }*/
     }
 }
