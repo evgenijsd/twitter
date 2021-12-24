@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace InterTwitter.Services.HashtagManager
+namespace InterTwitter.Services.Hashtag
 {
-    public class HashtagManager : IHashtagManager
+    public class HashtagService : IHashtagService
     {
         private readonly IMockService _mockService;
 
-        public HashtagManager(IMockService mockService)
+        public HashtagService(IMockService mockService)
         {
             _mockService = mockService;
         }

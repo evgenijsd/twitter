@@ -1,7 +1,7 @@
 using DLToolkit.Forms.Controls;
 using InterTwitter.Resources.Strings;
 using InterTwitter.Services;
-using InterTwitter.Services.HashtagManager;
+using InterTwitter.Services.Hashtag;
 using InterTwitter.Services.SettingsManager;
 using InterTwitter.ViewModels;
 using InterTwitter.ViewModels.Flyout;
@@ -27,7 +27,7 @@ namespace InterTwitter
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
             containerRegistry.RegisterInstance<IMockService>(Container.Resolve<MockService>());
             containerRegistry.RegisterInstance<ITweetService>(Container.Resolve<TweetService>());
-            containerRegistry.RegisterInstance<IHashtagManager>(Container.Resolve<HashtagManager>());
+            containerRegistry.RegisterInstance<IHashtagService>(Container.Resolve<HashtagService>());
 
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();

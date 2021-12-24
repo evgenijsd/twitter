@@ -52,13 +52,16 @@ namespace InterTwitter.Services
             {
                 var allTweets = _mockService.Tweets;
 
-                var foundTweets = allTweets.Where(tweet => keys
-                     .Any(key => tweet.Text?
-                    .IndexOf(key, StringComparison.OrdinalIgnoreCase) > -1));
-
-                if (foundTweets?.FirstOrDefault() != null)
+                if (allTweets != null)
                 {
-                    result.SetSuccess(foundTweets.OrderByDescending(x => x.CreationTime));
+                    var foundTweets = allTweets.Where(tweet => keys
+                        .Any(key => tweet.Text?
+                        .IndexOf(key, StringComparison.OrdinalIgnoreCase) > -1));
+
+                    if (foundTweets?.FirstOrDefault() != null)
+                    {
+                        result.SetSuccess(foundTweets.OrderByDescending(x => x.CreationTime));
+                    }
                 }
             }
             catch (Exception ex)

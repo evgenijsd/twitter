@@ -222,7 +222,6 @@
 
             <!-- TABBED BAR SHADOW -->
             <sh:Shadows Grid.Row="1"
-                        ios:Page.UseSafeArea="true"
                         TranslationY="35"
                         VerticalOptions="EndAndExpand"
                         IsVisible="false"
@@ -237,7 +236,7 @@
                                  Binding="{Binding Source={x:Reference tweetSearchResultContainer}, Path=State}"
                                  Value="Success">
 
-                        <Setter Property="IsVisible" Value="true"/>
+                        <Setter Property="IsVisible" Value="{OnPlatform Android=true, iOS=false}"/>
 
                     </DataTrigger>
 

@@ -3,9 +3,9 @@ using InterTwitter.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace InterTwitter.Services.HashtagManager
+namespace InterTwitter.Services.Hashtag
 {
-    public interface IHashtagManager
+    public interface IHashtagService
     {
         Task<AOResult> IncreaseHashtagPopularityByOne(HashtagModel hashtag);
 

@@ -1,6 +1,6 @@
 ﻿namespace InterTwitter.Controls.HighlightedLabel
 {
-    public struct HighlightedWordInfo
+    public struct KeyInfo
     {
         public string Text { get; set; }
 

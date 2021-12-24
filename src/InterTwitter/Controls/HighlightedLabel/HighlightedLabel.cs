@@ -1,8 +1,10 @@
-﻿using System;
+﻿using InterTwitter.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -10,18 +12,23 @@ namespace InterTwitter.Controls.HighlightedLabel
 {
     public class HighlightedLabel : LineSpacingLabel
     {
+        public HighlightedLabel()
+        {
+            SetStyle();
+        }
+
         #region -- Public helpers --
 
-        public static readonly BindableProperty WordsToHighlightProperty = BindableProperty.Create(
-            propertyName: nameof(WordsToHighlight),
+        public static readonly BindableProperty KeysToHighlightProperty = BindableProperty.Create(
+            propertyName: nameof(KeysToHighlight),
             returnType: typeof(IEnumerable<string>),
             declaringType: typeof(HighlightedLabel),
             defaultBindingMode: BindingMode.TwoWay);
 
-        public IEnumerable<string> WordsToHighlight
+        public IEnumerable<string> KeysToHighlight
         {
-            get => (IEnumerable<string>)GetValue(WordsToHighlightProperty);
-            set => SetValue(WordsToHighlightProperty, value);
+            get => (IEnumerable<string>)GetValue(KeysToHighlightProperty);
+            set => SetValue(KeysToHighlightProperty, value);
         }
 
         public static readonly BindableProperty MoreCommandProperty = BindableProperty.Create(
@@ -60,6 +67,20 @@ namespace InterTwitter.Controls.HighlightedLabel
             set => SetValue(HashtagTextColorProperty, value);
         }
 
+        public static readonly BindableProperty OriginalTextProperty = BindableProperty.Create(
+            propertyName: nameof(OriginalText),
+            returnType: typeof(string),
+            declaringType: typeof(UnfoldingLabel),
+            defaultBindingMode: BindingMode.TwoWay);
+        public string OriginalText
+        {
+            get => (string)GetValue(OriginalTextProperty);
+            set => SetValue(OriginalTextProperty, value);
+        }
+
+        private ICommand _openTweetCommand;
+        public ICommand OpenTweetCommand => _openTweetCommand ?? (_openTweetCommand = SingleExecutionCommand.FromFunc(OnOpenTweetCommandAsync));
+
         #endregion
 
         #region -- Overrides --
@@ -67,127 +88,13 @@ namespace InterTwitter.Controls.HighlightedLabel
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
+
             switch (propertyName)
             {
-                case nameof(this.WordsToHighlight):
-                    if (!string.IsNullOrEmpty(this.Text) && this.WordsToHighlight?.Count() > 0)
+                case nameof(OriginalText):
+                    if (!string.IsNullOrEmpty(OriginalText))
                     {
-                        DateTime start = DateTime.Now;
-
-                        var foundKeysInfo = GetInfoAboutKeyFound(new List<string>(this.WordsToHighlight));
-
-                        var debug_foundKeysInfo = foundKeysInfo.Select(x => $"{x.Position} {x.Text}").ToArray();
-
-                        foundKeysInfo = foundKeysInfo
-                            .OrderBy(x => x.Position)
-                            .ThenByDescending(x => x.Text.Length)
-                            .ToList();
-
-                        debug_foundKeysInfo = foundKeysInfo.Select(x =>
-                            $" {(x.IsHashtag ? "tag" : "word")} " +
-                            $"{x.Position} {x.Length} {x.Text}").ToArray();
-
-                        string str = string.Empty;
-
-                        try
-                        {
-                            for (int i = 0; i < foundKeysInfo.Count - 1; i++)
-                            {
-                                var foundKey = foundKeysInfo[i];
-                                int endOfFoundKey = foundKey.Position + foundKey.Length - 1;
-
-                                for (int k = i + 1; k < foundKeysInfo.Count; k++)
-                                {
-                                    var comparedKey = foundKeysInfo[k];
-                                    int endOfComparedKey = comparedKey.Position + comparedKey.Length - 1;
-
-                                    if (endOfFoundKey >= comparedKey.Position)
-                                    {
-                                        if (endOfFoundKey < endOfComparedKey)
-                                        {
-                                            int offset = Math.Abs((comparedKey.Position + comparedKey.Length) - (foundKey.Position + foundKey.Length));
-                                            string cuttedKeyText = comparedKey.Text.Substring(comparedKey.Length - offset);
-
-                                            var cuttedKey = new HighlightedWordInfo()
-                                            {
-                                                Position = endOfFoundKey + 1,
-                                                Text = cuttedKeyText,
-                                                Length = cuttedKeyText.Length,
-                                            };
-
-                                            foundKeysInfo.RemoveAt(k);
-                                            foundKeysInfo.Insert(k, cuttedKey);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            string msg = e.Message;
-                        }
-
-                        str = str;
-                        debug_foundKeysInfo = foundKeysInfo.Select(x =>
-                           $" {(x.IsHashtag ? "tag" : "word")} " +
-                           $"{x.Position} {x.Length} {x.Text}").ToArray();
-
-                        str = string.Empty;
-
-                        try
-                        {
-                            for (int i = 0; i < foundKeysInfo.Count - 1; i++)
-                            {
-                                var foundKey = foundKeysInfo[i];
-                                int endOfFoundKey = foundKey.Position + foundKey.Length - 1;
-
-                                for (int k = i + 1; k < foundKeysInfo.Count;)
-                                {
-                                    var comparedKey = foundKeysInfo[k];
-                                    int endOfComparedKey = comparedKey.Position + comparedKey.Length - 1;
-
-                                    if (endOfFoundKey >= comparedKey.Position)
-                                    {
-                                        if (endOfFoundKey >= endOfComparedKey)
-                                        {
-                                            str += comparedKey.Text + "|";
-                                            foundKeysInfo.RemoveAt(k);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            string msg = e.Message;
-                        }
-
-                        str = str;
-                        debug_foundKeysInfo = foundKeysInfo.Select(x =>
-                           $" {(x.IsHashtag ? "tag" : "word")} " +
-                           $"{x.Position} {x.Length} {x.Text}").ToArray();
-
-                        FormattedString formattedString = GetKeуsMergedWithSimpleText(foundKeysInfo);
-
-                        MergeWithRestOfSimpleText(foundKeysInfo.Last(), formattedString);
-
-                        //добавляем команду
-                        if (MoreCommand != null)
-                        {
-                            formattedString.Spans.Add(GetCommandSpan("...more"));
-                        }
-
-                        this.FormattedText = formattedString;
-
-                        TimeSpan timeSpan = DateTime.Now - start;
+                        SetText(OriginalText);
                     }
 
                     break;
@@ -198,123 +105,246 @@ namespace InterTwitter.Controls.HighlightedLabel
 
         #region -- Private helpers --
 
-        private List<HighlightedWordInfo> GetInfoAboutKeyFound(List<string> keys)
+        private void SetText(string originalText)
         {
-            // получаем все слова текста и их длину
-            var words = Text
-                .Split(' ')
-                .Select(x => new HighlightedWordInfo()
-                {
-                    //IsHashtag = Regex.IsMatch(x, Constants.RegexPatterns.HASHTAG_PATTERN),
-                    Text = x,
-                    Length = x.Length,
-                }).ToArray();
-
-            // узнаем позиции всех слов в тексте
-            int nextWordPosition = 0;
-            for (int i = 0; i < words.Count(); i++)
+            if (originalText?.Length > 184)
             {
-                words[i].Position = Text.IndexOf(words[i].Text, nextWordPosition);
+                // режем текст
+                string truncatedText = originalText.Replace('\n', ' ').Substring(0, 177);
+
+                FormattedString formattedString = GetFormattedText(truncatedText);
+
+                // создаем спан-команду
+                Span tapCommandSpan = GetTapCommandSpan("...more");
+
+                // добавляем спан-команду к обрезанному и подсвеченному тексту
+                formattedString.Spans.Add(tapCommandSpan);
+
+                this.FormattedText = formattedString;
+            }
+            else
+            {
+                this.FormattedText = GetFormattedText(originalText);
+            }
+        }
+
+        private FormattedString GetFormattedText(string text)
+        {
+            FormattedString formattedString = null;
+
+            // если есть ключи, то их нужно подсветить
+            if (KeysToHighlight?.Count() > 0)
+            {
+                // подсвечиваем обрезанный текст
+                formattedString = GetHighlightedFormattedString(text);
+            }
+
+            // если ключей нет, просто создаем спан с обрезанным текстом
+            else
+            {
+                formattedString = new FormattedString();
+
+                Span textSpan = new Span
+                {
+                    Text = text,
+                };
+
+                formattedString.Spans.Add(textSpan);
+            }
+
+            return formattedString;
+        }
+
+        private Task OnOpenTweetCommandAsync()
+        {
+            this.FormattedText = GetFormattedText(OriginalText);
+
+            return Task.CompletedTask;
+        }
+
+        private void SetStyle()
+        {
+            var style = Device.RuntimePlatform == Device.Android
+                ? "tstyle_i7"
+                : "tstyle_i16";
+
+            SetDynamicResource(StyleProperty, style);
+        }
+
+        private FormattedString GetHighlightedFormattedString(string text)
+        {
+            FormattedString formattedString = new FormattedString();
+
+            if (KeysToHighlight?.Count() > 0)
+            {
+                var infoAboutKeysFound = GetInfoAboutKeysFound(text, KeysToHighlight.ToArray());
+
+                TrimIntersectingKeys(infoAboutKeysFound);
+
+                DeleteAllSubKeys(infoAboutKeysFound);
+
+                formattedString = GetKeуsMergedWithSimpleText(text, infoAboutKeysFound.ToArray());
+            }
+
+            return formattedString;
+        }
+
+        private List<KeyInfo> GetInfoAboutKeysFound(string text, string[] keys)
+        {
+            var words = text.Split(' ').Select(x => new KeyInfo()
+            {
+                Text = x,
+                Length = x.Length,
+            }).ToArray();
+
+            for (int i = 0, nextWordPosition = 0; i < words.Length; i++)
+            {
+                words[i].Position = text.IndexOf(words[i].Text, nextWordPosition);
                 nextWordPosition = words[i].Position + words[i].Length;
             }
 
-            var debugWords = words.Select(x => $"{x.Text} {x.Position}").ToArray();
-            var debugKeys = keys.Select(x => $"{x}").ToArray();
+            var foundKeysInfo = new List<KeyInfo>();
 
-            // инфа о найденных ключах
-            var foundKeysInfo = new List<HighlightedWordInfo>();
-
-            // ищем ключ во всех словах
-            for (int keyIndex = 0; keyIndex < keys.Count(); keyIndex++)
+            for (int keyIndex = 0; keyIndex < keys.Length; keyIndex++)
             {
                 for (int wordIndex = 0; wordIndex < words.Length; wordIndex++)
                 {
-                    bool isKeyAHashtag = Regex.IsMatch(keys[keyIndex], Constants.RegexPatterns.HASHTAG_PATTERN);
+                    int keywPosition = 0;
+                    int nextKeyPosition = 0;
 
-                    // если слово - тег, то проверяем на полное совпадение
-                    if (isKeyAHashtag && words[wordIndex].Text.Equals(keys[keyIndex], StringComparison.OrdinalIgnoreCase))
+                    do
                     {
-                        foundKeysInfo.Add(new HighlightedWordInfo()
+                        keywPosition = words[wordIndex].Text.IndexOf(keys[keyIndex], nextKeyPosition, StringComparison.OrdinalIgnoreCase);
+
+                        if (keywPosition != -1)
                         {
-                            Text = keys[keyIndex],
-                            Length = keys[keyIndex].Length,
-                            Position = words[wordIndex].Position,
-                            IsHashtag = true,
-                        });
-                    }
-                    else if (!isKeyAHashtag)
-                    {
-                        int keywPosition = -1;
-                        int nextKeyPosition = 0;
+                            nextKeyPosition = keywPosition + keys[keyIndex].Length;
 
-                        do
-                        {
-                            keywPosition = words[wordIndex].Text.IndexOf(keys[keyIndex], nextKeyPosition, StringComparison.OrdinalIgnoreCase);
+                            bool isKeyAHashtag =
+                                Regex.IsMatch(keys[keyIndex], Constants.RegexPatterns.HASHTAG_PATTERN) &&
+                                words[wordIndex].Text.Equals(keys[keyIndex], StringComparison.OrdinalIgnoreCase);
 
-                            if (keywPosition != -1)
-                            {
-                                nextKeyPosition = keywPosition + keys[keyIndex].Length;
-
-                                foundKeysInfo.Add(
-                                    new HighlightedWordInfo()
-                                    {
-                                        Text = keys[keyIndex],
-                                        Length = keys[keyIndex].Length,
-                                        Position = words[wordIndex].Position + keywPosition,
-                                    });
-                            }
+                            foundKeysInfo.Add(
+                                new KeyInfo()
+                                {
+                                    Text = keys[keyIndex],
+                                    Length = keys[keyIndex].Length,
+                                    Position = words[wordIndex].Position + keywPosition,
+                                    IsHashtag = isKeyAHashtag,
+                                });
                         }
-                        while (keywPosition != -1);
                     }
+                    while (keywPosition != -1);
                 }
             }
+
+            foundKeysInfo = foundKeysInfo
+                .OrderBy(x => x.Position)
+                .ThenByDescending(x => x.Text.Length)
+                .ToList();
 
             return foundKeysInfo;
         }
 
-        private FormattedString GetKeуsMergedWithSimpleText(List<HighlightedWordInfo> foundKeysInfo)
+        private void TrimIntersectingKeys(List<KeyInfo> foundKeysInfo)
+        {
+            for (int i = 0; i < foundKeysInfo.Count - 1; i++)
+            {
+                var foundKey = foundKeysInfo[i];
+                int endOfFoundKey = foundKey.Position + foundKey.Length - 1;
+                bool isKeysIntersect = true;
+
+                for (int k = i + 1; isKeysIntersect && k < foundKeysInfo.Count; k++)
+                {
+                    var comparedKey = foundKeysInfo[k];
+                    int endOfComparedKey = comparedKey.Position + comparedKey.Length - 1;
+                    isKeysIntersect = endOfFoundKey >= comparedKey.Position;
+
+                    if (isKeysIntersect && endOfFoundKey < endOfComparedKey)
+                    {
+                        int lengthOfCutPart = Math.Abs((comparedKey.Position + comparedKey.Length) - (foundKey.Position + foundKey.Length));
+
+                        string cuttedKeyText = comparedKey.Text.Substring(comparedKey.Length - lengthOfCutPart);
+
+                        var cuttedKey = new KeyInfo()
+                        {
+                            Text = cuttedKeyText,
+                            Position = endOfFoundKey + 1,
+                            Length = cuttedKeyText.Length,
+                        };
+
+                        foundKeysInfo.RemoveAt(k);
+                        foundKeysInfo.Insert(k, cuttedKey);
+                    }
+                }
+            }
+        }
+
+        private void DeleteAllSubKeys(List<KeyInfo> foundKeysInfo)
+        {
+            for (int i = 0; i < foundKeysInfo.Count - 1; i++)
+            {
+                var foundKey = foundKeysInfo[i];
+                int endOfFoundKey = foundKey.Position + foundKey.Length - 1;
+                bool isFoundKeyContainsComparedKey = true;
+
+                for (int k = i + 1; isFoundKeyContainsComparedKey && k < foundKeysInfo.Count;)
+                {
+                    var comparedKey = foundKeysInfo[k];
+                    int endOfComparedKey = comparedKey.Position + comparedKey.Length - 1;
+
+                    isFoundKeyContainsComparedKey = endOfFoundKey >= comparedKey.Position;
+
+                    if (isFoundKeyContainsComparedKey && endOfFoundKey >= endOfComparedKey)
+                    {
+                        foundKeysInfo.RemoveAt(k);
+                    }
+                }
+            }
+        }
+
+        private FormattedString GetKeуsMergedWithSimpleText(string text, KeyInfo[] foundKeysInfo)
         {
             FormattedString formattedString = new FormattedString();
-            int previousKeywordPosition = 0;
+            int previousKeyPosition = 0;
 
             foreach (var key in foundKeysInfo)
             {
-                // вставка спана с простым текстом между текущим и предыдущим ключем
-                if (key.Position - previousKeywordPosition > 0)
+                if (key.Position - previousKeyPosition > 0)
                 {
-                    string textBetweetnKeys = Text.Substring(previousKeywordPosition, key.Position - previousKeywordPosition);
+                    string textBetweetnKeys = text.Substring(previousKeyPosition, key.Position - previousKeyPosition);
+
                     formattedString.Spans.Add(new Span
                     {
                         Text = textBetweetnKeys,
                     });
                 }
 
-                formattedString.Spans.Add(GetKeywordSpan(key));
+                formattedString.Spans.Add(GetKeySpan(text, key));
 
-                previousKeywordPosition = key.Position + key.Text.Length;
+                previousKeyPosition = key.Position + key.Text.Length;
+            }
+
+            var lastKey = foundKeysInfo.Last();
+
+            if (lastKey.Position < text.Length)
+            {
+                Span lastSpan = new Span
+                {
+                    Text = text.Substring(lastKey.Position + lastKey.Text.Length),
+                };
+
+                formattedString.Spans.Add(lastSpan);
             }
 
             return formattedString;
         }
 
-        private void MergeWithRestOfSimpleText(HighlightedWordInfo lastKey, FormattedString formattedString)
-        {
-            if (lastKey.Position < this.Text.Length)
-            {
-                Span lastSpan = new Span
-                {
-                    Text = this.Text.Substring(lastKey.Position + lastKey.Text.Length),
-                };
-
-                formattedString.Spans.Add(lastSpan);
-            }
-        }
-
-        private Span GetKeywordSpan(HighlightedWordInfo keyword)
+        private Span GetKeySpan(string text, KeyInfo keyword)
         {
             Span keySpan = new Span()
             {
-                Text = this.Text.Substring(keyword.Position, keyword.Length),
+                Text = text.Substring(keyword.Position, keyword.Length),
             };
 
             if (keyword.IsHashtag)
@@ -330,21 +360,18 @@ namespace InterTwitter.Controls.HighlightedLabel
             return keySpan;
         }
 
-        private Span GetCommandSpan(string text)
+        private Span GetTapCommandSpan(string text)
         {
-            Span commandSpan = new Span()
+            Span commandSpan = new Span
             {
                 Text = text,
-                TextColor = HashtagTextColor,
             };
-            commandSpan.GestureRecognizers.Add(new TapGestureRecognizer()
-            {
-                Command = new Command(() =>
-                {
-                    BackgroundColor = Color.Red;
-                }),
-                NumberOfTapsRequired = 1,
-            });
+
+            commandSpan.SetDynamicResource(TextColorProperty, "appcolor_i1");
+
+            TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
+            commandSpan.GestureRecognizers.Add(tapGestureRecognizer);
+            tapGestureRecognizer.Command = OpenTweetCommand;
 
             return commandSpan;
         }

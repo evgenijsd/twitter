@@ -4,12 +4,13 @@ using InterTwitter.Helpers;
 using InterTwitter.Models;
 using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services;
-using InterTwitter.Services.HashtagManager;
+using InterTwitter.Services.Hashtag;
 using Prism.Navigation;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.CommunityToolkit.Helpers;
@@ -20,16 +21,16 @@ namespace InterTwitter.ViewModels
     public class SearchPageViewModel : BaseTabViewModel
     {
         private readonly ITweetService _tweetService;
-        private readonly IHashtagManager _hashtagManager;
+        private readonly IHashtagService _hashtagService;
 
         public SearchPageViewModel(
             INavigationService navigationService,
             ITweetService tweetService,
-            IHashtagManager hashtagManager)
+            IHashtagService hashtagManager)
             : base(navigationService)
         {
             _tweetService = tweetService;
-            _hashtagManager = hashtagManager;
+            _hashtagService = hashtagManager;
 
             Tweets = new ObservableCollection<BaseTweetViewModel>();
             Hashtags = new ObservableCollection<HashtagModel>();
@@ -177,7 +178,7 @@ namespace InterTwitter.ViewModels
 
         private async Task LoadHashtagsAsync()
         {
-            var getPopularHashtagsResult = await _hashtagManager.GetPopularHashtags(Constants.Values.NUMBER_OF_POPULAR_HASHTAGS);
+            var getPopularHashtagsResult = await _hashtagService.GetPopularHashtags(Constants.Values.NUMBER_OF_POPULAR_HASHTAGS);
 
             if (getPopularHashtagsResult.IsSuccess)
             {
@@ -201,7 +202,7 @@ namespace InterTwitter.ViewModels
                     tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
                     tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
                     tweet.UserName = tweetAuthor.Result.Name;
-                    tweet.WordsToHighlight = SearchWords;
+                    tweet.KeysToHighlight = SearchWords;
                 }
             }
 
@@ -225,6 +226,7 @@ namespace InterTwitter.ViewModels
         private Task OnHashtagTapCommandAsync()
         {
             QueryString = SelectedHashtag.Text;
+
             FindTweets(QueryString);
 
             return Task.CompletedTask;
@@ -243,18 +245,19 @@ namespace InterTwitter.ViewModels
         {
             TweetsSearchStatus = ESearchStatus.Active;
 
-            if (string.IsNullOrWhiteSpace(queryString)
-                || (!string.IsNullOrWhiteSpace(queryString)
-                && queryString.FirstOrDefault() == '#'
-                    ? queryString.Length < 3
-                    : queryString.Length < 2))
+            if (!string.IsNullOrWhiteSpace(queryString))
+            {
+                SearchWords = Constants.Methods.GetUniqueWords(queryString)
+                    .Where(x => x.Length > 1);
+            }
+
+            if (SearchWords?.Count() == 0)
             {
                 TweetSearchResult = ESearchResult.NoResults;
                 NoResultsMessage = LocalizationResourceManager.Current["InaccurateRequest"];
             }
             else
             {
-                SearchWords = Constants.Methods.GetUniqueWords(queryString);
                 var getAllTweetsByKeywordsAsyncResult = await _tweetService.FindTweetsByKeywordsAsync(SearchWords);
 
                 if (getAllTweetsByKeywordsAsyncResult.IsSuccess)
