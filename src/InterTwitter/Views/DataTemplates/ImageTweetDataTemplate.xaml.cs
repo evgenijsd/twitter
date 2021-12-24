@@ -16,9 +16,9 @@ namespace InterTwitter.Views.DataTemplates
         {
             var flow = sender as FlowListView;
 
-            var first = ((List<string>)flow.FlowItemsSource).LastOrDefault();
+            var firstItem = ((List<string>)flow.FlowItemsSource).FirstOrDefault();
 
-            flow.FlowScrollTo(first, ScrollToPosition.Start, false);
+            flow.FlowScrollTo(firstItem, ScrollToPosition.Start, false);
         }
     }
 }

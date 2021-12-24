@@ -37,6 +37,7 @@
                        FontAttributes="Bold"/>
 
                 <controls:UnfoldingLabel OriginalText="{Binding Text}"
+                                         LineSpacing="{OnPlatform Android=1.3, iOS=6.45}"
                                          IsVisible="{Binding IsTextVisible}"/>
 
                 <flv:FlowListView FlowColumnCount="{Binding ColumnNumber}"
@@ -64,11 +65,11 @@
 
                                 <ffimageloading:CachedImage Aspect="AspectFill" 
                                                             Source="{Binding .}">
-                                    
+
                                     <ffimageloading:CachedImage.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=BindingContext.MoveToImagesGalleryCommand}" CommandParameter="{Binding Source={x:Reference this}, Path=BindingContext}"/> 
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=BindingContext.MoveToImagesGalleryCommand}" CommandParameter="{Binding Source={x:Reference this}, Path=BindingContext}"/>
                                     </ffimageloading:CachedImage.GestureRecognizers>
-                                    
+
                                 </ffimageloading:CachedImage>
 
                             </Frame>

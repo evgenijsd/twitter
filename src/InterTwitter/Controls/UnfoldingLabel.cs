@@ -9,7 +9,7 @@ using Xamarin.Forms;
 
 namespace InterTwitter.Controls
 {
-    public class UnfoldingLabel : Label
+    public class UnfoldingLabel : LineSpacingLabel
     {
         public UnfoldingLabel()
         {

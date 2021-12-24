@@ -12,8 +12,8 @@
 
                 <ImageButton Source="{Binding LeftButtonImageSource, Source={x:Reference customNavigationbar}}" 
                              HorizontalOptions="StartAndExpand"
-                             WidthRequest="{OnPlatform Android='28', iOS='35'}"
-                             HeightRequest="{OnPlatform Android='28', iOS='35'}"
+                             WidthRequest="{OnPlatform Android='25', iOS='30'}"
+                             HeightRequest="{OnPlatform Android='25', iOS='30'}"
                              Margin="14, 0, 0, 0"
                              BackgroundColor="Transparent"
                              Command="{Binding LeftAddButtonCommand, Source={x:Reference customNavigationbar}}"/>
@@ -25,8 +25,8 @@
 
                 <ImageButton Source="{Binding RigthButtonImageSource, Source={x:Reference customNavigationbar}}"
                              HorizontalOptions="EndAndExpand"
-                             WidthRequest="{OnPlatform Android='28', iOS='35'}"
-                             HeightRequest="{OnPlatform Android='28', iOS='35'}"
+                             WidthRequest="{OnPlatform Android='25', iOS='30'}"
+                             HeightRequest="{OnPlatform Android='25', iOS='30'}"
                              Margin="0, 0, 14, 0"
                              BackgroundColor="Transparent"
                              Command="{Binding RigthButtonCommand, Source={x:Reference customNavigationbar}}"/> 

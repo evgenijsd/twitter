@@ -169,6 +169,31 @@ namespace InterTwitter.Services
                     },
                     CreationTime = DateTime.Now,
                 },
+                new TweetModel
+                {
+                    Id = 8,
+                    UserId = 5,
+                    Text = "Life is like a box of chocolates, you never know what you’re gonna get. Many of life's failures are people who did not realize how close they were to success when they gave up.",
+                    Media = Enums.EAttachedMediaType.Photos,
+                    CreationTime = DateTime.Now,
+                    MediaPaths = new List<string>
+                    {
+                       "https://akm-img-a-in.tosshub.com/indiatoday/images/story/202110/Elon-Musk_1200x768.png?WgPbwF44wHXitAAL7xu8BNhZXQXIPBbV&size=770:433",
+                       "https://i.pinimg.com/550x/23/b4/b1/23b4b13e9019667ca68d0897e154a755.jpg",
+                    },
+                },
+                new TweetModel
+                {
+                    Id = 7,
+                    UserId = 2,
+                    Text = "Software is a great combination between artistry and engineering.",
+                    Media = Enums.EAttachedMediaType.Gif,
+                    MediaPaths = new List<string>
+                    {
+                        "https://thumbs.gfycat.com/PaltryWickedCrayfish-max-1mb.gif",
+                    },
+                    CreationTime = DateTime.Now,
+                },
             };
         }
 

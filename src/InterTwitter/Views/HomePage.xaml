@@ -55,19 +55,20 @@
                                                         BlurRadius={OnPlatform Android=10, iOS=8},
                                                         Color={StaticResource appcolor_i3}}">
 
-                        <Frame HeightRequest="{OnPlatform Android='70', iOS='80'}"
-                               WidthRequest="{OnPlatform Android='70', iOS='80'}"
-                               CornerRadius="{OnPlatform Android='33', iOS='35'}"
+                        <Frame HeightRequest="{OnPlatform Android='70', iOS='70'}"
+                               WidthRequest="{OnPlatform Android='70', iOS='70'}"
+                               CornerRadius="{OnPlatform Android='33', iOS='30'}"
                                VerticalOptions="End"
                                HorizontalOptions="End"
-                               Margin="{OnPlatform Android='0, 0, 18, 17', iOS='0, 0, 20, 14'}"
+                               Margin="{OnPlatform Android='0, 0, 18, 17', iOS='0, 0, 16, 14'}"
                                Padding="-5"
-                               BackgroundColor="Transparent"
+                               BackgroundColor="{DynamicResource appcolor_i1}"
                                HasShadow="False"
                                IsClippedToBounds="True">
 
-                            <ImageButton Source="ic_add_blue"
+                            <ImageButton Source="{DynamicResource ic_add_blue_small}"
                                          BorderWidth="0"
+                                         Scale="0.6"
                                          BorderColor="Transparent"
                                          BackgroundColor="Transparent"
                                          Command="{Binding AddTweetCommandAsync}"/>

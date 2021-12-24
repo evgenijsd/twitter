@@ -36,6 +36,7 @@
                        FontAttributes="Bold"/>
 
                 <controls:UnfoldingLabel OriginalText="{Binding Text}"
+                                         LineSpacing="{OnPlatform Android=1.3, iOS=6.45}"
                                          IsVisible="{Binding IsTextVisible}"/>
 
                 <StackLayout Orientation="Horizontal"

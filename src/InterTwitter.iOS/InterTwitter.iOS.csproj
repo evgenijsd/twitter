@@ -112,6 +112,7 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Renderers\LineSpacingLabelRenderer.cs" />
     <Compile Include="Renderers\NoBounceFlowListViewRenderer.cs" />
     <Compile Include="Renderers\NoBounceRenderer.cs" />
     <None Include="Entitlements.plist" />
