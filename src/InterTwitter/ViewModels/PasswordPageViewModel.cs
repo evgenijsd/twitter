@@ -183,6 +183,7 @@ namespace InterTwitter.ViewModels
 
                 if (_maxHeight > CurrentHeight && (IsFocusedPassword || IsFocusedConfirmPassword))
                 {
+                    await Task.Delay(300);
                     IsVisibleButton = true;
                 }
                 else
@@ -197,6 +198,7 @@ namespace InterTwitter.ViewModels
                 {
                     _isSaveFocusedPassword = true;
                     _isSaveFocusedConfirmPassword = false;
+                    _maxHeight = CurrentHeight;
                 }
             }
 
@@ -206,6 +208,7 @@ namespace InterTwitter.ViewModels
                 {
                     _isSaveFocusedPassword = false;
                     _isSaveFocusedConfirmPassword = true;
+                    _maxHeight = CurrentHeight;
                 }
             }
 

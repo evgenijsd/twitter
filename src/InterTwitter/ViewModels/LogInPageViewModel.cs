@@ -158,7 +158,7 @@ namespace InterTwitter.ViewModels
 
         #region -- Overrides --
 
-        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        protected override async void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
 
@@ -171,6 +171,7 @@ namespace InterTwitter.ViewModels
 
                 if (_maxHeight > CurrentHeight && (IsFocusedEmail || IsFocusedPassword))
                 {
+                    await Task.Delay(300);
                     IsVisibleButton = true;
                 }
                 else
@@ -185,6 +186,7 @@ namespace InterTwitter.ViewModels
                 {
                     _isSaveFocusedEmail = true;
                     _isSaveFocusedPassword = false;
+                    _maxHeight = CurrentHeight;
                 }
             }
 
@@ -194,6 +196,7 @@ namespace InterTwitter.ViewModels
                 {
                     _isSaveFocusedEmail = false;
                     _isSaveFocusedPassword = true;
+                    _maxHeight = CurrentHeight;
                 }
             }
 
@@ -210,6 +213,7 @@ namespace InterTwitter.ViewModels
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
+            _maxHeight = CurrentHeight;
             var result = await _registrationService?.GetByIdAsync(_autorizationService.UserId);
             if (result.IsSuccess)
             {

@@ -179,6 +179,7 @@ namespace InterTwitter.ViewModels
 
                 if (_maxHeight > CurrentHeight && (IsFocusedEmail || IsFocusedName))
                 {
+                    await Task.Delay(300);
                     IsVisibleButton = true;
                 }
                 else
@@ -193,6 +194,7 @@ namespace InterTwitter.ViewModels
                 {
                     _isSaveFocusedName = true;
                     _isSaveFocusedEmail = false;
+                    _maxHeight = CurrentHeight;
                 }
             }
 
@@ -202,6 +204,7 @@ namespace InterTwitter.ViewModels
                 {
                     _isSaveFocusedName = false;
                     _isSaveFocusedEmail = true;
+                    _maxHeight = CurrentHeight;
                 }
             }
 
