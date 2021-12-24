@@ -479,7 +479,7 @@ namespace InterTwitter.ViewModels
 
             if (!string.IsNullOrEmpty(Text))
             {
-                result = (ListAttachedMedia.Count > 0 || Text.Length > 0) && Text.Length < 250;
+                result = (ListAttachedMedia.Count > 0 || Text.Length > 0) && Text.Length <= 250;
             }
             else
             {

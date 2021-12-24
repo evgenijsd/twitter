@@ -182,7 +182,7 @@
     <Style x:Key="grid_i2" TargetType="Grid">
         <Setter Property="HeightRequest" Value="65"/>
         <Setter Property="WidthRequest" Value="45"/>
-        <Setter Property="Margin" Value="0, 0, 16, 0"/>
+        <Setter Property="Margin" Value="{OnPlatform Android='0, 0, 17, 0', iOS='0, 0, 16, 0'}"/>
     </Style>
     <Style x:Key="frame_i2" TargetType="Frame">
         <Setter Property="BackgroundColor" Value="Silver"/>

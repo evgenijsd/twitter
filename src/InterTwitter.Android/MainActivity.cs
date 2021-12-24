@@ -9,15 +9,13 @@ using InterTwitter.Services.PermissionsService;
 using InterTwitter.Services.VideoService;
 using Prism;
 using Prism.Ioc;
+using Prism.Unity;
 
 namespace InterTwitter.Droid
 {
     [Activity(Label = "InterTwitter", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-        private static IPermissionsService _permissionsService = new PermissionsService();
-        private static IVideoService _videoService = new VideoService();
-
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -41,8 +39,8 @@ namespace InterTwitter.Droid
         {
             public void RegisterTypes(IContainerRegistry containerRegistry)
             {
-                containerRegistry.RegisterInstance(_permissionsService);
-                containerRegistry.RegisterInstance(_videoService);
+                containerRegistry.RegisterInstance<IPermissionsService>(PrismApplication.Current.Container.Resolve<PermissionsService>());
+                containerRegistry.RegisterInstance<IVideoService>(PrismApplication.Current.Container.Resolve<VideoService>());
             }
         }
     }
