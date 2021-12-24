@@ -21,11 +21,10 @@ namespace InterTwitter.Services
 
         public async Task<AOResult<IEnumerable<TweetModel>>> GetAllTweetsAsync()
         {
-            await Task.Delay(50);
             var result = new AOResult<IEnumerable<TweetModel>>();
             try
             {
-                var tweets = _mockService.Tweets;
+                var tweets = await _mockService.GetAllTweetsAsync();
 
                 if (tweets != null)
                 {
@@ -44,13 +43,13 @@ namespace InterTwitter.Services
             return result;
         }
 
-        public Task<AOResult<UserModel>> GetAuthorAsync(int authorId)
+        public async Task<AOResult<UserModel>> GetAuthorAsync(int authorId)
         {
             var result = new AOResult<UserModel>();
 
             try
             {
-                var author = _mockService.Users?.Where(x => x.Id == authorId)?.FirstOrDefault();
+                var author = await _mockService?.GetTweetAuthorAsync(authorId);
                 if (author != null)
                 {
                     result.SetSuccess(author);
@@ -65,7 +64,7 @@ namespace InterTwitter.Services
                 result.SetError($"{nameof(GetAuthorAsync)}: exception", "Some issues", ex);
             }
 
-            return Task.FromResult(result);
+            return result;
         }
 
         #endregion

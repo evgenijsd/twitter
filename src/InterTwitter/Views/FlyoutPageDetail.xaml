@@ -11,7 +11,7 @@
                            android:TabbedPage.IsSwipePagingEnabled="False"
                            android:TabbedPage.ToolbarPlacement="Bottom"
                            prism:ViewModelLocator.AutowireViewModel="True"
-                           SelectedTabType="{Binding SelectedTabType}">
+                           SelectedTabType="{Binding F}">
     
     <TabbedPage.Behaviors>
         <behaviors:TabbedPageNavigationBehavior/>

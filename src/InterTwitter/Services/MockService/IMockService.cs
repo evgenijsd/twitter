@@ -1,12 +1,15 @@
 ﻿using InterTwitter.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace InterTwitter.Services
 {
     public interface IMockService
     {
-        IEnumerable<UserModel> Users { get; set; }
+        Task<IEnumerable<TweetModel>> GetAllTweetsAsync();
 
-        IEnumerable<TweetModel> Tweets { get; set; }
+        Task<UserModel> GetTweetAuthorAsync(int id);
+
+        Task AddTweetAsync(TweetModel tm);
     }
 }
