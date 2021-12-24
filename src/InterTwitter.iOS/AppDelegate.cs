@@ -6,7 +6,6 @@ using InterTwitter.Services.PermissionsService;
 using InterTwitter.Services.VideoService;
 using Prism;
 using Prism.Ioc;
-using Prism.Unity;
 using InterTwitter.Helpers;
 using InterTwitter.iOS.Renderers;
 using UIKit;

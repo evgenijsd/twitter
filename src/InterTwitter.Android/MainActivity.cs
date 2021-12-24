@@ -11,7 +11,6 @@ using InterTwitter.Droid.Renderers;
 using InterTwitter.Helpers;
 using Prism;
 using Prism.Ioc;
-using Prism.Unity;
 
 namespace InterTwitter.Droid
 {

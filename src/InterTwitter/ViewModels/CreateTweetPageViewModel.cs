@@ -30,18 +30,28 @@ namespace InterTwitter.ViewModels
 
         private ITweetService _tweetService;
 
+        private IAuthorizationService _authorizationService;
+
+        private IRegistrationService _registrationService;
+
+        private int _userId;
+
         public CreateTweetPageViewModel(
             INavigationService navigationService,
             IPermissionsService permissionsService,
             IPageDialogService pageDialogService,
             IVideoService videoService,
-            ITweetService tweetService)
+            ITweetService tweetService,
+            IAuthorizationService authorizationService,
+            IRegistrationService registrationService)
             : base(navigationService)
         {
             _permissionsService = permissionsService;
             _pageDialogService = pageDialogService;
             _videoService = videoService;
             _tweetService = tweetService;
+            _authorizationService = authorizationService;
+            _registrationService = registrationService;
 
             _listAttachedMedia = new ObservableCollection<MiniCardViewModel>();
         }
@@ -146,6 +156,13 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _listAttachedMedia, value);
         }
 
+        private string _avatarPath = "pic_profile_small.png";
+        public string AvatarPath
+        {
+            get => _avatarPath;
+            set => SetProperty(ref _avatarPath, value);
+        }
+
         private ICommand _goBackCommand;
         public ICommand GoBackCommand => _goBackCommand = SingleExecutionCommand.FromFunc(OnGoBackCommandAsync);
 
@@ -169,6 +186,21 @@ namespace InterTwitter.ViewModels
 
         private ICommand _addVideoCommand;
         public ICommand AddVideoCommand => _addVideoCommand = SingleExecutionCommand.FromFunc(OnAddVideoAsync);
+
+        #endregion
+
+        #region -- IInitializeAsync implementation --
+
+        public async override Task InitializeAsync(INavigationParameters parameters)
+        {
+            _userId = _authorizationService.UserId;
+            var userModel = await _registrationService.GetByIdAsync(_userId);
+
+            if (userModel.IsSuccess)
+            {
+                AvatarPath = userModel.Result.AvatarPath;
+            }
+        }
 
         #endregion
 
@@ -219,7 +251,7 @@ namespace InterTwitter.ViewModels
 
             var newTweet = new TweetModel()
             {
-                UserId = 1,
+                UserId = _userId,
                 Text = Text,
                 Media = _typeAttachedMedia,
                 MediaPaths = list,

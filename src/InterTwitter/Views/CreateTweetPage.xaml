@@ -70,7 +70,7 @@
 
                     <Frame Style="{DynamicResource frame_i1}">
 
-                        <ffimageloading:CachedImage Source="pic_profile_small.png"
+                        <ffimageloading:CachedImage Source="{Binding AvatarPath}"
                                                     Aspect="AspectFit"/>
 
                     </Frame>
