@@ -12,9 +12,9 @@ namespace InterTwitter.Droid
 {
     [Activity(
         Label = "@string/ApplicationName", 
-        Icon = "@mipmap/icon_owl", 
+        Icon = "@mipmap/icon_owl",
         LaunchMode = LaunchMode.SingleTask, 
-        Theme = "@style/MainTheme", 
+        Theme = "@style/MainTheme",
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize, 
         ScreenOrientation = ScreenOrientation.Portrait)]
 
@@ -51,5 +51,7 @@ namespace InterTwitter.Droid
                 containerRegisty.RegisterSingleton<IKeyboardHelper, KeyboardHelper>();
             }
         }
+
+
     }
 }

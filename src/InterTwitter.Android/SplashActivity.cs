@@ -12,25 +12,11 @@ namespace InterTwitter.Droid
         NoHistory = true)]
     public class SplashActivity : AppCompatActivity
     {
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override void OnResume()
         {
-            base.OnCreate(savedInstanceState);
+            base.OnResume();
 
             StartActivity(typeof(MainActivity));
         }
-
-        /*protected override void OnResume()
-        {
-            base.OnResume();
-            Task startupWork = new Task(() => { SimulateStartup(); });
-            startupWork.Start();
-        }
-
-        public override void OnBackPressed() { }
-
-        void SimulateStartup()
-        {
-            StartActivity(new Intent(Application.Context, typeof(MainActivity)));
-        }*/
     }
 }
