@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace InterTwitter.ViewModels.Flyout
+namespace InterTwitter.ViewModels
 {
     public class FlyoutPageFlyoutViewModel : BaseViewModel
     {

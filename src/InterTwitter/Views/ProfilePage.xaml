@@ -7,6 +7,7 @@
                        xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
                        xmlns:fftranform="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
                        xmlns:local="clr-namespace:InterTwitter.Views"
+                       xmlns:localmodel="clr-namespace:InterTwitter.ViewModels"
                        BackgroundColor="{DynamicResource appcolor_i2}">
 
 

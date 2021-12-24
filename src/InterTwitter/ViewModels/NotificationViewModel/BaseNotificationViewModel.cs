@@ -98,18 +98,6 @@ namespace InterTwitter.Models.NotificationViewModel
             set => SetProperty(ref _notificationText, value);
         }
 
-        private ICommand _openTweetCommand;
-
-        public ICommand OpenTweetCommand => _openTweetCommand ?? (_openTweetCommand = SingleExecutionCommand.FromFunc<ImagesNotificationViewModel>(OnOpenTweetAsync));
-
-        #endregion
-        #region -- Private helpers --
-
-        private Task OnOpenTweetAsync(BaseNotificationViewModel arg)
-        {
-            return Task.CompletedTask;
-        }
-
         #endregion
     }
 }

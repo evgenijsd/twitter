@@ -1,4 +1,4 @@
-﻿using InterTwitter.ViewModels.Flyout;
+﻿using InterTwitter.ViewModels;
 using System;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;

@@ -2,7 +2,6 @@
 using InterTwitter.Resources;
 using InterTwitter.Services;
 using InterTwitter.ViewModels;
-using InterTwitter.ViewModels.Flyout;
 using InterTwitter.Views;
 using Prism;
 using Prism.Ioc;

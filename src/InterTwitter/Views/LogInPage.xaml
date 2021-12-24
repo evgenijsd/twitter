@@ -2,6 +2,8 @@
 <view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                       xmlns:view="clr-namespace:InterTwitter.Views"
+                      xmlns:local="clr-namespace:InterTwitter.ViewModels"
+                      x:DataType="local:LogInPageViewModel"
                       xmlns:controls="clr-namespace:InterTwitter.Controls"
                       xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
                       x:Class="InterTwitter.Views.LogInPage">
@@ -63,7 +65,7 @@
                        Style="{DynamicResource tstyle_i2}"
                        FontSize="{DynamicResource tsize_i4}" />
 
-                <controls:CustomEntry Grid.Row="1" x:Name="l_view"
+                <controls:CustomEntry Grid.Row="1" 
                                       Margin="20,18,20,0"
                                       Text="{Binding Email}"
                                       IsFocusedVisible="{Binding IsVisibleEmail}"

@@ -1,10 +1,5 @@
-﻿using InterTwitter.Models;
-using InterTwitter.Models.NotificationViewModel;
-using InterTwitter.ViewModels.NotificationViewModel;
-using System;
-using System.Collections.Generic;
+﻿using InterTwitter.Models.NotificationViewModel;
 using System.Linq;
-using System.Text;
 
 namespace InterTwitter.Extensions
 {

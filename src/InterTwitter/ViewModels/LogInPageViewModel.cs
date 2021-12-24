@@ -1,5 +1,4 @@
 ﻿using InterTwitter.Helpers;
-using InterTwitter.Models;
 using InterTwitter.Services;
 using InterTwitter.ViewModels.Validators;
 using InterTwitter.Views;
@@ -8,7 +7,6 @@ using Prism.Services.Dialogs;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
 {
