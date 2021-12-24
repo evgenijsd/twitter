@@ -162,7 +162,15 @@ namespace InterTwitter.Controls.HighlightedLabel
 
         private Task OnOpenTweetCommandAsync()
         {
-            FormattedText = GetFormattedText(OriginalText);
+            if (Device.RuntimePlatform != Device.iOS)
+            {
+                this.FormattedText = GetFormattedText(OriginalText);
+            }
+            else
+            {
+                this.FormattedText = GetFormattedText(OriginalText);
+                this.Text = OriginalText; // working T-T
+            }
 
             return Task.CompletedTask;
         }
