@@ -1,4 +1,5 @@
 ﻿using InterTwitter.Helpers;
+using InterTwitter.Services;
 using InterTwitter.Views;
 using Prism.Navigation;
 using System;
@@ -12,9 +13,15 @@ namespace InterTwitter.ViewModels.Flyout
 {
     public class FlyoutPageFlyoutViewModel : BaseViewModel
     {
-        public FlyoutPageFlyoutViewModel(INavigationService navigationService)
+        private readonly IAuthorizationService _authorizationService;
+
+        public FlyoutPageFlyoutViewModel(
+            INavigationService navigationService,
+            IAuthorizationService authorizationService)
             : base(navigationService)
         {
+            _authorizationService = authorizationService;
+
             MenuItems = new ObservableCollection<MenuItemViewModel>(new[]
                 {
                     new MenuItemViewModel
@@ -54,7 +61,7 @@ namespace InterTwitter.ViewModels.Flyout
             Subscribe();
         }
 
-        #region --- Public Properties ---
+        #region -- Public Properties --
 
         private ObservableCollection<MenuItemViewModel> _menuItems;
         public ObservableCollection<MenuItemViewModel> MenuItems
@@ -83,7 +90,7 @@ namespace InterTwitter.ViewModels.Flyout
 
         #endregion
 
-        #region --- Overrides ---
+        #region -- Overrides --
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
@@ -92,7 +99,7 @@ namespace InterTwitter.ViewModels.Flyout
 
         #endregion
 
-        #region --- Private Helpers ---
+        #region -- Private Helpers --
 
         private void Subscribe()
         {
@@ -142,9 +149,11 @@ namespace InterTwitter.ViewModels.Flyout
             NavigationService.NavigateAsync(nameof(menuItem.TargetType));
         }
 
-        private Task OnLogoutCommandAsync()
+        private async Task OnLogoutCommandAsync()
         {
-            return Task.CompletedTask;
+            _authorizationService.UserId = 0;
+
+            await NavigationService.NavigateAsync($"/{nameof(StartPage)}");
         }
 
         private Task OnChangeProfileCommandAsync()

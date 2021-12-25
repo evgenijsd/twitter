@@ -117,11 +117,101 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Alert" xml:space="preserve">
+    <value>Alert</value>
+  </data>
+  <data name="AlertDatabase" xml:space="preserve">
+    <value>Database failure</value>
+  </data>
+  <data name="AlertDataIncorrect" xml:space="preserve">
+    <value>The data is incorrectly filled</value>
+  </data>
+  <data name="AlertEmailEmpty" xml:space="preserve">
+    <value>Email is empty</value>
+  </data>
+  <data name="AlertEmailInvalid" xml:space="preserve">
+    <value>Email does not match the format</value>
+  </data>
+  <data name="AlertEmailNoA" xml:space="preserve">
+    <value>In Email there is no symbol @</value>
+  </data>
+  <data name="AlertInvalidLogin" xml:space="preserve">
+    <value>Invalid login!</value>
+  </data>
+  <data name="AlertInvalidPassword" xml:space="preserve">
+    <value>Invalid password!</value>
+  </data>
+  <data name="AlertLoginNotExist" xml:space="preserve">
+    <value>This login does not exist</value>
+  </data>
+  <data name="AlertLoginTaken" xml:space="preserve">
+    <value>This login is already taken</value>
+  </data>
+  <data name="AlertNameEmpty" xml:space="preserve">
+    <value>Name is empty</value>
+  </data>
+  <data name="AlertNameLength" xml:space="preserve">
+    <value>The name cannot be shorter 2 character</value>
+  </data>
+  <data name="AlertNameLetter" xml:space="preserve">
+    <value>Name includes only letters</value>
+  </data>
+  <data name="AlertPasswordEmpty" xml:space="preserve">
+    <value>Password is empty</value>
+  </data>
+  <data name="AlertPasswordLength" xml:space="preserve">
+    <value>Password less than 6 characters</value>
+  </data>
+  <data name="AlertPasswordLetterDigit" xml:space="preserve">
+    <value>The password must contain a big letter and digit</value>
+  </data>
+  <data name="AlertPasswordNotEqual" xml:space="preserve">
+    <value>Password and confirm password do not coincide</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirm Password</value>
+  </data>
+  <data name="CreateYourAccount" xml:space="preserve">
+    <value>Create your account</value>
+  </data>
+  <data name="DoNotMatch" xml:space="preserve">
+    <value>Do not match</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="FailureUsersNotFound" xml:space="preserve">
+    <value>No tweets found</value>
+  </data>
+  <data name="GetYourAccount" xml:space="preserve">
+    <value>Get your account</value>
+  </data>
   <data name="InaccurateRequest" xml:space="preserve">
     <value>For a more accurate search, enter 2 or more characters</value>
   </data>
+  <data name="LogIn" xml:space="preserve">
+    <value>Log In</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
   <data name="NoResultsFor" xml:space="preserve">
     <value>No results for</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PasswordIncorrect" xml:space="preserve">
+    <value>The password is incorrect</value>
+  </data>
+  <data name="PleaseName" xml:space="preserve">
+    <value>Please, type your name</value>
   </data>
   <data name="PopularTheme" xml:space="preserve">
     <value>Popular theme</value>
@@ -131,5 +221,14 @@
   </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="SignUp" xml:space="preserve">
+    <value>Sign Up</value>
+  </data>
+  <data name="WrongEmail" xml:space="preserve">
+    <value>Wrong Email</value>
+  </data>
+  <data name="YouNeedPassword" xml:space="preserve">
+    <value>You'll need a password</value>
   </data>
 </root>

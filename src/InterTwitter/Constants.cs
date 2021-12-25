@@ -33,5 +33,11 @@ namespace InterTwitter
         {
             public const string HASHTAG_PATTERN = @"^\#[0-9a-zA-Zа-яА-Я_]{1,30}$";
         }
+
+        public static class Navigation
+        {
+            public const string USER = nameof(USER);
+            public const string MESSAGE = nameof(MESSAGE);
+        }
     }
 }

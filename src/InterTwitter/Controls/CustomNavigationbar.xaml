@@ -23,7 +23,7 @@
                        HorizontalOptions="Center"
                        Margin="0, 10, 0, -10"/>
 
-                <ImageButton Source="{Binding LeftButtonImageSource, Source={x:Reference customNavigationbar}}"
+                <ImageButton Source="{Binding RightButtonImageSource, Source={x:Reference customNavigationbar}}"
                          HorizontalOptions="EndAndExpand"
                          WidthRequest="24"
                          HeightRequest="24"

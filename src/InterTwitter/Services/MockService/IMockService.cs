@@ -5,7 +5,7 @@ namespace InterTwitter.Services
 {
     public interface IMockService
     {
-        IEnumerable<UserModel> Users { get; set; }
+        List<UserModel> Users { get; set; }
 
         IEnumerable<TweetModel> Tweets { get; set; }
 

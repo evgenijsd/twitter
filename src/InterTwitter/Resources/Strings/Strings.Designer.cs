@@ -61,6 +61,213 @@ namespace InterTwitter.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alert.
+        /// </summary>
+        internal static string Alert {
+            get {
+                return ResourceManager.GetString("Alert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database failure.
+        /// </summary>
+        internal static string AlertDatabase {
+            get {
+                return ResourceManager.GetString("AlertDatabase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The data is incorrectly filled.
+        /// </summary>
+        internal static string AlertDataIncorrect {
+            get {
+                return ResourceManager.GetString("AlertDataIncorrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email is empty.
+        /// </summary>
+        internal static string AlertEmailEmpty {
+            get {
+                return ResourceManager.GetString("AlertEmailEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email does not match the format.
+        /// </summary>
+        internal static string AlertEmailInvalid {
+            get {
+                return ResourceManager.GetString("AlertEmailInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In Email there is no symbol @.
+        /// </summary>
+        internal static string AlertEmailNoA {
+            get {
+                return ResourceManager.GetString("AlertEmailNoA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid login!.
+        /// </summary>
+        internal static string AlertInvalidLogin {
+            get {
+                return ResourceManager.GetString("AlertInvalidLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid password!.
+        /// </summary>
+        internal static string AlertInvalidPassword {
+            get {
+                return ResourceManager.GetString("AlertInvalidPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This login does not exist.
+        /// </summary>
+        internal static string AlertLoginNotExist {
+            get {
+                return ResourceManager.GetString("AlertLoginNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This login is already taken.
+        /// </summary>
+        internal static string AlertLoginTaken {
+            get {
+                return ResourceManager.GetString("AlertLoginTaken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name is empty.
+        /// </summary>
+        internal static string AlertNameEmpty {
+            get {
+                return ResourceManager.GetString("AlertNameEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name cannot be shorter 2 character.
+        /// </summary>
+        internal static string AlertNameLength {
+            get {
+                return ResourceManager.GetString("AlertNameLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name includes only letters.
+        /// </summary>
+        internal static string AlertNameLetter {
+            get {
+                return ResourceManager.GetString("AlertNameLetter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password is empty.
+        /// </summary>
+        internal static string AlertPasswordEmpty {
+            get {
+                return ResourceManager.GetString("AlertPasswordEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password less than 6 characters.
+        /// </summary>
+        internal static string AlertPasswordLength {
+            get {
+                return ResourceManager.GetString("AlertPasswordLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The password must contain a big letter and digit.
+        /// </summary>
+        internal static string AlertPasswordLetterDigit {
+            get {
+                return ResourceManager.GetString("AlertPasswordLetterDigit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password and confirm password do not coincide.
+        /// </summary>
+        internal static string AlertPasswordNotEqual {
+            get {
+                return ResourceManager.GetString("AlertPasswordNotEqual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Password.
+        /// </summary>
+        internal static string ConfirmPassword {
+            get {
+                return ResourceManager.GetString("ConfirmPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create your account.
+        /// </summary>
+        internal static string CreateYourAccount {
+            get {
+                return ResourceManager.GetString("CreateYourAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do not match.
+        /// </summary>
+        internal static string DoNotMatch {
+            get {
+                return ResourceManager.GetString("DoNotMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        internal static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No tweets found.
+        /// </summary>
+        internal static string FailureUsersNotFound {
+            get {
+                return ResourceManager.GetString("FailureUsersNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get your account.
+        /// </summary>
+        internal static string GetYourAccount {
+            get {
+                return ResourceManager.GetString("GetYourAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to For a more accurate search, enter 2 or more characters.
         /// </summary>
         internal static string InaccurateRequest {
@@ -70,11 +277,74 @@ namespace InterTwitter.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Log In.
+        /// </summary>
+        internal static string LogIn {
+            get {
+                return ResourceManager.GetString("LogIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next.
+        /// </summary>
+        internal static string Next {
+            get {
+                return ResourceManager.GetString("Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No results for.
         /// </summary>
         internal static string NoResultsFor {
             get {
                 return ResourceManager.GetString("NoResultsFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        internal static string Ok {
+            get {
+                return ResourceManager.GetString("Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        internal static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The password is incorrect.
+        /// </summary>
+        internal static string PasswordIncorrect {
+            get {
+                return ResourceManager.GetString("PasswordIncorrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please, type your name.
+        /// </summary>
+        internal static string PleaseName {
+            get {
+                return ResourceManager.GetString("PleaseName", resourceCulture);
             }
         }
         
@@ -102,6 +372,33 @@ namespace InterTwitter.Resources.Strings {
         internal static string Search {
             get {
                 return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign Up.
+        /// </summary>
+        internal static string SignUp {
+            get {
+                return ResourceManager.GetString("SignUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wrong Email.
+        /// </summary>
+        internal static string WrongEmail {
+            get {
+                return ResourceManager.GetString("WrongEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You&apos;ll need a password.
+        /// </summary>
+        internal static string YouNeedPassword {
+            get {
+                return ResourceManager.GetString("YouNeedPassword", resourceCulture);
             }
         }
     }

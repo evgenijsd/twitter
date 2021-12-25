@@ -12,7 +12,7 @@ namespace InterTwitter.ViewModels
             Subscribe();
         }
 
-        #region --- Public Properties ---
+        #region -- Public Properties --
 
         private bool _isPresented;
         public bool IsPresented
@@ -23,7 +23,7 @@ namespace InterTwitter.ViewModels
 
         #endregion
 
-        #region --- Private Helpers ---
+        #region -- Private Helpers --
 
         private void Subscribe()
         {

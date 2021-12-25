@@ -1,7 +1,5 @@
 ﻿using Prism.Mvvm;
 using Prism.Navigation;
-using System;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace InterTwitter.ViewModels
@@ -17,7 +15,7 @@ namespace InterTwitter.ViewModels
 
         #region -- IDestructible implementation --
 
-        public void Destroy()
+        public virtual void Destroy()
         {
         }
 
