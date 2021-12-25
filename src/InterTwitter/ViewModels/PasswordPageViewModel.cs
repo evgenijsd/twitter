@@ -1,5 +1,6 @@
 ﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
+using InterTwitter.Resources.Strings;
 using InterTwitter.Services;
 using InterTwitter.ViewModels.Validators;
 using InterTwitter.Views;
@@ -157,7 +158,7 @@ namespace InterTwitter.ViewModels
                 }
                 else
                 {
-                    var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Resources.Resource.AlertDatabase } };
+                    var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertDatabase } };
                     await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
                 }
             }

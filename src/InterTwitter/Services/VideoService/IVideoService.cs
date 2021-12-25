@@ -4,8 +4,8 @@ namespace InterTwitter.Services.VideoService
 {
     public interface IVideoService
     {
-        double VideoLength(string url);
+        double TryVideoLength(string url);
 
-        Stream GenerateThumbImage(string url, long usecond);
+        Stream TryGenerateThumbImage(string url, long usecond);
     }
 }

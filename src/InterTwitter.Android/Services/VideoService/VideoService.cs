@@ -8,25 +8,41 @@ namespace InterTwitter.Droid.Services.VideoService
 {
     public class VideoService : IVideoService
     {
-        public double VideoLength(string url)
+        public double TryVideoLength(string url)
         {
-            MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-            retriever.SetDataSource(url);
+            double result;
 
-            var length = retriever.ExtractMetadata(MetadataKey.Duration);
+            try
+            {
+                MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+                retriever.SetDataSource(url);
 
-            return Convert.ToDouble(length) / 1000;
+                var length = retriever.ExtractMetadata(MetadataKey.Duration);
+                result = Convert.ToDouble(length) / 1000;
+            }
+            catch(Exception e)
+            {
+                result = -1;
+            }
+
+            return result;
         }
 
-        public System.IO.Stream GenerateThumbImage(string url, long usecond)
+        public System.IO.Stream TryGenerateThumbImage(string url, long usecond)
         {
-            MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-            retriever.SetDataSource(url);
-
-            Bitmap bitmap = retriever.GetFrameAtTime(usecond);
-
             MemoryStream stream = new MemoryStream();
-            bitmap.Compress(Bitmap.CompressFormat.Png, 0, stream);
+
+            try
+            {
+                MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+                retriever.SetDataSource(url);
+
+                Bitmap bitmap = retriever.GetFrameAtTime(usecond);
+                bitmap.Compress(Bitmap.CompressFormat.Png, 0, stream);
+            }
+            catch (Exception e)
+            {
+            }
 
             return stream;
         }

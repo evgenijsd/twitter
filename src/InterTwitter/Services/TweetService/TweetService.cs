@@ -1,8 +1,10 @@
 ﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
+using InterTwitter.Services.Hashtag;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace InterTwitter.Services
@@ -11,10 +13,14 @@ namespace InterTwitter.Services
     {
         private readonly IMockService _mockService;
 
+        private readonly IHashtagService _hashtagService;
+
         public TweetService(
-            IMockService mockService)
+            IMockService mockService,
+            IHashtagService hashtagService)
         {
             _mockService = mockService;
+            _hashtagService = hashtagService;
         }
 
         #region -- ITweetService implementation --
@@ -76,6 +82,16 @@ namespace InterTwitter.Services
             try
             {
                 ((List<TweetModel>)_mockService.Tweets).Add(tweet);
+
+                var allHashtags = Constants.Methods.GetUniqueWords(tweet.Text).Where(x => Regex.IsMatch(x, Constants.RegexPatterns.HASHTAG_PATTERN));
+
+                foreach (var tag in allHashtags)
+                {
+                    _hashtagService.IncreaseHashtagPopularityByOne(new HashtagModel()
+                    {
+                        Text = tag,
+                    });
+                }
 
                 result.SetSuccess(true);
             }

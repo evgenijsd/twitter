@@ -82,16 +82,15 @@
     <Folder Include="Behaviors\" />
     <Folder Include="Converters\" />
     <Folder Include="Extensions\" />
-    <Folder Include="Models\" />
     <Folder Include="Resources\Fonts\" />
     <Folder Include="Helpers\ProcessHelpers\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Resources\Resource.Designer.cs">
+    <Compile Update="Resources\Strings\Strings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Resource.resx</DependentUpon>
+      <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Update="Views\StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
@@ -107,9 +106,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Resources\Resource.resx">
+    <EmbeddedResource Update="Resources\Strings\Strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\CreateTweetPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -134,7 +133,6 @@
   <ItemGroup>
     <None Remove="Helpers\ProcessHelpers\" />
     <Folder Include="Enums\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using InterTwitter.Resources.Strings;
 using System.Text.RegularExpressions;
 
 namespace InterTwitter.ViewModels.Validators
@@ -11,15 +12,15 @@ namespace InterTwitter.ViewModels.Validators
         public LogInPageValidator()
         {
             RuleFor(x => x.Email)
-                .NotEmpty().WithMessage(Resources.Resource.AlertEmailEmpty)
-                .Must(x => x.Contains("@")).WithMessage(Resources.Resource.AlertEmailNoA)
+                .NotEmpty().WithMessage(Strings.AlertEmailEmpty)
+                .Must(x => x.Contains("@")).WithMessage(Strings.AlertEmailNoA)
                 .Must(x => Regex.IsMatch(x, VALID_EMAIL))
-                           .WithMessage(Resources.Resource.AlertEmailInvalid);
+                           .WithMessage(Strings.AlertEmailInvalid);
             RuleFor(x => x.Password)
-                .NotEmpty().WithMessage(Resources.Resource.AlertPasswordEmpty)
-                .MinimumLength(6).WithMessage(Resources.Resource.AlertPasswordLength)
+                .NotEmpty().WithMessage(Strings.AlertPasswordEmpty)
+                .MinimumLength(6).WithMessage(Strings.AlertPasswordLength)
                 .Must(x => Regex.IsMatch(x, VALID_PASSWORD))
-                           .WithMessage(Resources.Resource.AlertPasswordLetterDigit);
+                           .WithMessage(Strings.AlertPasswordLetterDigit);
         }
     }
 }

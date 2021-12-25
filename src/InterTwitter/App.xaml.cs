@@ -1,6 +1,7 @@
 ﻿using DLToolkit.Forms.Controls;
-using InterTwitter.Resources;
+using InterTwitter.Resources.Strings;
 using InterTwitter.Services;
+using InterTwitter.Services.Hashtag;
 using InterTwitter.ViewModels;
 using InterTwitter.ViewModels.Flyout;
 using InterTwitter.Views;
@@ -29,8 +30,9 @@ namespace InterTwitter
             //Services
             containerRegistry.RegisterSingleton<IMockService, MockService>();
             containerRegistry.RegisterSingleton<ITweetService, TweetService>();
-            containerRegistry.RegisterInstance<IRegistrationService>(Container.Resolve<RegistrationService>());
-            containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
+            containerRegistry.RegisterSingleton<IHashtagService, HashtagService>();
+            containerRegistry.RegisterSingleton<IRegistrationService, RegistrationService>();
+            containerRegistry.RegisterSingleton<IAuthorizationService, AuthorizationService>();
 
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
@@ -51,8 +53,8 @@ namespace InterTwitter
 
         protected override async void OnInitialized()
         {
-            LocalizationResourceManager.Current.PropertyChanged += (sender, e) => Resource.Culture = LocalizationResourceManager.Current.CurrentCulture;
-            LocalizationResourceManager.Current.Init(Resource.ResourceManager);
+            LocalizationResourceManager.Current.PropertyChanged += (sender, e) => Strings.Culture = LocalizationResourceManager.Current.CurrentCulture;
+            LocalizationResourceManager.Current.Init(Strings.ResourceManager);
             LocalizationResourceManager.Current.CurrentCulture = new CultureInfo("en");
 
             InitializeComponent();

@@ -1,11 +1,15 @@
 ﻿using InterTwitter.Enums;
 using InterTwitter.Helpers;
 using InterTwitter.Models;
+using InterTwitter.Resources.Strings;
 using InterTwitter.Services;
+using InterTwitter.Services.Hashtag;
 using InterTwitter.Services.PermissionsService;
 using InterTwitter.Services.VideoService;
+using InterTwitter.Views;
 using Prism.Navigation;
 using Prism.Services;
+using Prism.Services.Dialogs;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
@@ -34,6 +38,8 @@ namespace InterTwitter.ViewModels
 
         private IRegistrationService _registrationService;
 
+        private IDialogService _dialogService;
+
         private int _userId;
 
         public CreateTweetPageViewModel(
@@ -43,7 +49,8 @@ namespace InterTwitter.ViewModels
             IVideoService videoService,
             ITweetService tweetService,
             IAuthorizationService authorizationService,
-            IRegistrationService registrationService)
+            IRegistrationService registrationService,
+            IDialogService dialogService)
             : base(navigationService)
         {
             _permissionsService = permissionsService;
@@ -52,6 +59,7 @@ namespace InterTwitter.ViewModels
             _tweetService = tweetService;
             _authorizationService = authorizationService;
             _registrationService = registrationService;
+            _dialogService = dialogService;
 
             _listAttachedMedia = new ObservableCollection<MiniCardViewModel>();
         }
@@ -227,7 +235,7 @@ namespace InterTwitter.ViewModels
         {
             if ((!string.IsNullOrEmpty(Text) && Text.Length > 0) || ListAttachedMedia.Count > 0)
             {
-                var confirm = await _pageDialogService.DisplayAlertAsync("Confirm", "Do you want to come back?", "Ok", "Cancel");
+                var confirm = await _pageDialogService.DisplayAlertAsync(Strings.Confirm, Strings.ConfirmComeBack, Strings.Ok, Strings.Cancel);
 
                 if (confirm)
                 {
@@ -268,7 +276,7 @@ namespace InterTwitter.ViewModels
 
             ListAttachedMedia.Remove(item);
 
-            CanUseButtonUploadPhotos = ListAttachedMedia.Count < 6;
+            CanUseButtonUploadPhotos = ListAttachedMedia.Count < Constants.Limits.MAX_COUNT_ATTACHED_PHOTOS;
 
             if (ListAttachedMedia.Count == 0)
             {
@@ -306,7 +314,7 @@ namespace InterTwitter.ViewModels
 
                         if (fileInf.Exists)
                         {
-                            if (fileInf.Length <= 5 * 1024 * 1024)
+                            if (fileInf.Length <= Constants.Limits.MAX_SIZE_ATTACHED_PHOTO)
                             {
                                 ListAttachedMedia.Add(new MiniCardViewModel()
                                 {
@@ -315,7 +323,7 @@ namespace InterTwitter.ViewModels
                                     ActionCommand = DeleteAttachedPhotoCommand,
                                 });
 
-                                CanUseButtonUploadPhotos = ListAttachedMedia.Count < 6;
+                                CanUseButtonUploadPhotos = ListAttachedMedia.Count < Constants.Limits.MAX_COUNT_ATTACHED_PHOTOS;
                                 CanUseButtonUploadGif = false;
                                 CanUseButtonUploadVideo = false;
 
@@ -325,22 +333,26 @@ namespace InterTwitter.ViewModels
                             }
                             else
                             {
-                                await _pageDialogService.DisplayAlertAsync("Error", "The size of the photo should not exceed 5 MB", "Ok");
+                                var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertLimitSizePhoto } };
+                                await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
                             }
                         }
                         else
                         {
-                            await _pageDialogService.DisplayAlertAsync("Error", "File does not exist", "Ok");
+                            var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertFileNotExist } };
+                            await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
                         }
                     }
                     else
                     {
-                        await _pageDialogService.DisplayAlertAsync("Error", "Only picture", "Ok");
+                        var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertOnlyPicture } };
+                        await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
                     }
                 }
                 else
                 {
-                    await _pageDialogService.DisplayAlertAsync("Alert", "This app needs access to photos gallery for picking photos and videos.", "Ok");
+                    var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertNeedAccessPhotosGallery } };
+                    await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
                 }
             }
             catch (Exception e)
@@ -364,7 +376,7 @@ namespace InterTwitter.ViewModels
 
                         if (fileInf.Exists)
                         {
-                            if (fileInf.Length <= 5 * 1024 * 1024)
+                            if (fileInf.Length <= Constants.Limits.MAX_SIZE_ATTACHED_PHOTO)
                             {
                                 ListAttachedMedia.Add(new MiniCardViewModel()
                                 {
@@ -383,22 +395,26 @@ namespace InterTwitter.ViewModels
                             }
                             else
                             {
-                                await _pageDialogService.DisplayAlertAsync("Error", "The size of the gif should not exceed 5 MB", "Ok");
+                                var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertLimitSizeGif } };
+                                await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
                             }
                         }
                         else
                         {
-                            await _pageDialogService.DisplayAlertAsync("Error", "File does not exist", "Ok");
+                            var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertFileNotExist } };
+                            await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
                         }
                     }
                     else
                     {
-                        await _pageDialogService.DisplayAlertAsync("Error", "Only gif", "Ok");
+                        var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertOnlyGif } };
+                        await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
                     }
                 }
                 else
                 {
-                    await _pageDialogService.DisplayAlertAsync("Alert", "This app needs access to photos gallery for picking photos and videos.", "Ok");
+                    var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertNeedAccessPhotosGallery } };
+                    await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
                 }
             }
             catch (Exception e)
@@ -422,25 +438,26 @@ namespace InterTwitter.ViewModels
 
                     if (fileInf.Exists)
                     {
-                        if (fileInf.Length <= 15 * 1024 * 1024)
+                        if (fileInf.Length <= Constants.Limits.MAX_SIZE_ATTACHED_VIDEO)
                         {
-                            var videoLenght = _videoService.VideoLength(pathFile);
+                            var videoLenght = _videoService.TryVideoLength(pathFile);
 
-                            if (videoLenght > 180)
+                            if (videoLenght > Constants.Limits.MAX_LENGTH_VIDEO)
                             {
                                 IsRunnigActivityIndicator = true;
 
                                 string fileName = DateTime.Now.ToString("yyyyMMddhhmmss") + (Device.RuntimePlatform == Device.iOS ? ".MOV" : ".mp4");
                                 string outputPath = Path.Combine(FileSystem.AppDataDirectory, fileName);
 
-                                if (await VideoTrimmerService.Instance.TrimAsync(0, 180 * 1000, pathFile, outputPath))
+                                if (await VideoTrimmerService.Instance.TrimAsync(0, Constants.Limits.MAX_LENGTH_VIDEO * 1000, pathFile, outputPath))
                                 {
                                     pathFile = outputPath;
                                     IsRunnigActivityIndicator = false;
                                 }
                                 else
                                 {
-                                    await _pageDialogService.DisplayAlertAsync("Error", "Video Trimming failed", "Ok");
+                                    var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertVideoTrimmingFailed } };
+                                    await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
                                     IsRunnigActivityIndicator = false;
                                 }
                             }
@@ -450,7 +467,7 @@ namespace InterTwitter.ViewModels
 
                             using (var source = new System.IO.FileStream(pathThumb, System.IO.FileMode.OpenOrCreate))
                             {
-                                Stream image = _videoService.GenerateThumbImage(pathFile, (long)(videoLenght / 2));
+                                Stream image = _videoService.TryGenerateThumbImage(pathFile, (long)(videoLenght / 2));
                                 image.CopyTo(source);
                             }
 
@@ -474,17 +491,20 @@ namespace InterTwitter.ViewModels
                         }
                         else
                         {
-                            await _pageDialogService.DisplayAlertAsync("Error", "The size of the video should not exceed 15 MB", "Ok");
+                            var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertLimitSizeVideo } };
+                            await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
                         }
                     }
                     else
                     {
-                        await _pageDialogService.DisplayAlertAsync("Error", "File does not exist", "Ok");
+                        var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertFileNotExist } };
+                        await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
                     }
                 }
                 else
                 {
-                    await _pageDialogService.DisplayAlertAsync("Alert", "This app needs access to photos gallery for picking photos and videos.", "Ok");
+                    var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertNeedAccessPhotosGallery } };
+                    await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
                 }
             }
             catch (Exception e)
@@ -511,7 +531,7 @@ namespace InterTwitter.ViewModels
 
             if (!string.IsNullOrEmpty(Text))
             {
-                result = (ListAttachedMedia.Count > 0 || Text.Length > 0) && Text.Length <= 250;
+                result = (ListAttachedMedia.Count > 0 || Text.Length > 0) && Text.Length <= Constants.Limits.MAX_LENGTH_TEXT;
             }
             else
             {
@@ -525,13 +545,13 @@ namespace InterTwitter.ViewModels
         {
             var value = Text.Length;
 
-            if (value > 250)
+            if (value > Constants.Limits.MAX_LENGTH_TEXT)
             {
                 CircleProgressBarTextColor = Color.Red;
                 CircleProgressBarFontScale = 0.7f;
                 CircleProgressBarProgressLineColor = Color.Red;
 
-                CircleProgressBarText = (250 - value).ToString();
+                CircleProgressBarText = (Constants.Limits.MAX_LENGTH_TEXT - value).ToString();
             }
             else
             {
@@ -539,7 +559,7 @@ namespace InterTwitter.ViewModels
                 CircleProgressBarProgressLineColor = Color.Blue;
             }
 
-            if (value == 300)
+            if (value == Constants.Limits.MAX_LENGTH_TEXT + 50)
             {
                 CircleProgressBarText = ":D";
                 CircleProgressBarFontScale = 1;

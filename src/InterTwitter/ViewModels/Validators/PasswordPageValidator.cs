@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using InterTwitter.Resources.Strings;
 using System.Text.RegularExpressions;
 
 namespace InterTwitter.ViewModels.Validators
@@ -10,12 +11,12 @@ namespace InterTwitter.ViewModels.Validators
         public PasswordPageValidator()
         {
             RuleFor(x => x.Password)
-                .NotEmpty().WithMessage(Resources.Resource.AlertPasswordEmpty)
-                .MinimumLength(6).WithMessage(Resources.Resource.AlertPasswordLength)
+                .NotEmpty().WithMessage(Strings.AlertPasswordEmpty)
+                .MinimumLength(6).WithMessage(Strings.AlertPasswordLength)
                 .Must(x => Regex.IsMatch(x, VALID_PASSWORD))
-                                 .WithMessage(Resources.Resource.AlertPasswordLetterDigit);
+                                 .WithMessage(Strings.AlertPasswordLetterDigit);
             RuleFor(x => x.ConfirmPassword)
-                .Equal(x => x.Password).WithMessage(Resources.Resource.AlertPasswordNotEqual);
+                .Equal(x => x.Password).WithMessage(Strings.AlertPasswordNotEqual);
         }
     }
 }

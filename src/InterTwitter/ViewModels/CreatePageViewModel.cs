@@ -1,5 +1,6 @@
 ﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
+using InterTwitter.Resources.Strings;
 using InterTwitter.Services;
 using InterTwitter.ViewModels.Validators;
 using InterTwitter.Views;
@@ -144,7 +145,7 @@ namespace InterTwitter.ViewModels
             var result = await _registrationService.CheckTheCorrectEmailAsync(Email);
             if (result.IsSuccess)
             {
-                var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Resources.Resource.AlertLoginTaken } };
+                var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertLoginTaken } };
                 await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
             }
             else

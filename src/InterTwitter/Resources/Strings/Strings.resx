@@ -135,11 +135,23 @@
   <data name="AlertEmailNoA" xml:space="preserve">
     <value>In Email there is no symbol @</value>
   </data>
+  <data name="AlertFileNotExist" xml:space="preserve">
+    <value>File does not exist</value>
+  </data>
   <data name="AlertInvalidLogin" xml:space="preserve">
     <value>Invalid login!</value>
   </data>
   <data name="AlertInvalidPassword" xml:space="preserve">
     <value>Invalid password!</value>
+  </data>
+  <data name="AlertLimitSizeGif" xml:space="preserve">
+    <value>The size of the gif should not exceed 5 MB</value>
+  </data>
+  <data name="AlertLimitSizePhoto" xml:space="preserve">
+    <value>The size of the photo should not exceed 5 MB</value>
+  </data>
+  <data name="AlertLimitSizeVideo" xml:space="preserve">
+    <value>The size of the video should not exceed 15 MB</value>
   </data>
   <data name="AlertLoginNotExist" xml:space="preserve">
     <value>This login does not exist</value>
@@ -156,6 +168,15 @@
   <data name="AlertNameLetter" xml:space="preserve">
     <value>Name includes only letters</value>
   </data>
+  <data name="AlertNeedAccessPhotosGallery" xml:space="preserve">
+    <value>This app needs access to photos gallery for picking photos and videos.</value>
+  </data>
+  <data name="AlertOnlyGif" xml:space="preserve">
+    <value>Only gif</value>
+  </data>
+  <data name="AlertOnlyPicture" xml:space="preserve">
+    <value>Only picture</value>
+  </data>
   <data name="AlertPasswordEmpty" xml:space="preserve">
     <value>Password is empty</value>
   </data>
@@ -167,6 +188,18 @@
   </data>
   <data name="AlertPasswordNotEqual" xml:space="preserve">
     <value>Password and confirm password do not coincide</value>
+  </data>
+  <data name="AlertVideoTrimmingFailed" xml:space="preserve">
+    <value>Video Trimming failed</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="ConfirmComeBack" xml:space="preserve">
+    <value>Do you want to come back?</value>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Confirm Password</value>

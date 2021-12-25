@@ -7,6 +7,8 @@ namespace InterTwitter.Services
     {
         List<UserModel> Users { get; set; }
 
-        List<TweetModel> Tweets { get; set; }
+        IEnumerable<TweetModel> Tweets { get; set; }
+
+        IEnumerable<HashtagModel> Hashtags { get; set; }
     }
 }

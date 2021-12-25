@@ -11,26 +11,46 @@ namespace InterTwitter.iOS.Services.VideoService
 {
     public class VideoService : IVideoService
     {
-        public double VideoLength(string url)
+        public double TryVideoLength(string url)
         {
-            AVAsset avasset = AVAsset.FromUrl((new Foundation.NSUrl(url, false)));
-            var length = avasset.Duration.Seconds.ToString();
+            double result;
 
-            return Convert.ToDouble(length);
+            try
+            {
+                AVAsset avasset = AVAsset.FromUrl((new Foundation.NSUrl(url, false)));
+                var length = avasset.Duration.Seconds.ToString();
+                result = Convert.ToDouble(length);
+            }
+            catch (Exception e)
+            {
+                result = -1;
+            }
+
+            return result;
         }
 
-        public Stream GenerateThumbImage(string url, long usecond)
+        public Stream TryGenerateThumbImage(string url, long usecond)
         {
-            AVAsset avasset = AVAsset.FromUrl((new Foundation.NSUrl(url, false)));
+            Stream stream = null;
 
-            AVAssetImageGenerator imageGenerator = new AVAssetImageGenerator(avasset);
-            imageGenerator.AppliesPreferredTrackTransform = true;
+            try
+            {
+                AVAsset avasset = AVAsset.FromUrl((new Foundation.NSUrl(url, false)));
 
-            CMTime actualTime;
-            NSError error;
-            CGImage cgImage = imageGenerator.CopyCGImageAtTime(new CMTime(usecond, 1000000), out actualTime, out error);
+                AVAssetImageGenerator imageGenerator = new AVAssetImageGenerator(avasset);
+                imageGenerator.AppliesPreferredTrackTransform = true;
 
-            return new UIImage(cgImage).AsPNG().AsStream();
+                CMTime actualTime;
+                NSError error;
+                CGImage cgImage = imageGenerator.CopyCGImageAtTime(new CMTime(usecond, 1000000), out actualTime, out error);
+
+                stream = new UIImage(cgImage).AsPNG().AsStream();
+            }
+            catch (Exception e)
+            {
+            }
+
+            return stream;
         }
     }
 }

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace InterTwitter.Resources {
+namespace InterTwitter.Resources.Strings {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace InterTwitter.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resource {
+    internal class Strings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resource() {
+        internal Strings() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace InterTwitter.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("InterTwitter.Resources.Resource", typeof(Resource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("InterTwitter.Resources.Strings.Strings", typeof(Strings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -115,6 +115,15 @@ namespace InterTwitter.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на File does not exist.
+        /// </summary>
+        internal static string AlertFileNotExist {
+            get {
+                return ResourceManager.GetString("AlertFileNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Invalid login!.
         /// </summary>
         internal static string AlertInvalidLogin {
@@ -129,6 +138,33 @@ namespace InterTwitter.Resources {
         internal static string AlertInvalidPassword {
             get {
                 return ResourceManager.GetString("AlertInvalidPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на The size of the gif should not exceed 5 MB.
+        /// </summary>
+        internal static string AlertLimitSizeGif {
+            get {
+                return ResourceManager.GetString("AlertLimitSizeGif", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на The size of the photo should not exceed 5 MB.
+        /// </summary>
+        internal static string AlertLimitSizePhoto {
+            get {
+                return ResourceManager.GetString("AlertLimitSizePhoto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на The size of the video should not exceed 15 MB.
+        /// </summary>
+        internal static string AlertLimitSizeVideo {
+            get {
+                return ResourceManager.GetString("AlertLimitSizeVideo", resourceCulture);
             }
         }
         
@@ -178,6 +214,33 @@ namespace InterTwitter.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на This app needs access to photos gallery for picking photos and videos..
+        /// </summary>
+        internal static string AlertNeedAccessPhotosGallery {
+            get {
+                return ResourceManager.GetString("AlertNeedAccessPhotosGallery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Only gif.
+        /// </summary>
+        internal static string AlertOnlyGif {
+            get {
+                return ResourceManager.GetString("AlertOnlyGif", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Only picture.
+        /// </summary>
+        internal static string AlertOnlyPicture {
+            get {
+                return ResourceManager.GetString("AlertOnlyPicture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Password is empty.
         /// </summary>
         internal static string AlertPasswordEmpty {
@@ -210,6 +273,42 @@ namespace InterTwitter.Resources {
         internal static string AlertPasswordNotEqual {
             get {
                 return ResourceManager.GetString("AlertPasswordNotEqual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Video Trimming failed.
+        /// </summary>
+        internal static string AlertVideoTrimmingFailed {
+            get {
+                return ResourceManager.GetString("AlertVideoTrimmingFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Cancel.
+        /// </summary>
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Confirm.
+        /// </summary>
+        internal static string Confirm {
+            get {
+                return ResourceManager.GetString("Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do you want to come back?.
+        /// </summary>
+        internal static string ConfirmComeBack {
+            get {
+                return ResourceManager.GetString("ConfirmComeBack", resourceCulture);
             }
         }
         
