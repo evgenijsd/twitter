@@ -20,21 +20,18 @@ namespace InterTwitter.ViewModels
         private readonly IPermissionService _permissionsService;
         private readonly ISettingsManager _settingsManager;
         private readonly IUserService _userService;
-        private readonly IDialogService _dialogService;
         private UserModel _user;
 
         public EditProfilePageViewModel(
             INavigationService navigationService,
             IPermissionService permissionsService,
             ISettingsManager settingsManager,
-            IUserService userService,
-            IDialogService dialogService)
+            IUserService userService)
             : base(navigationService)
         {
             _permissionsService = permissionsService;
             _settingsManager = settingsManager;
             _userService = userService;
-            _dialogService = dialogService;
         }
 
         #region --- Public Properties ---

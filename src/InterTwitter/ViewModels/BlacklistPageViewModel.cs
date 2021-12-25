@@ -84,11 +84,14 @@ namespace InterTwitter.ViewModels
         {
             UsersList = new ObservableCollection<UserViewModel>();
             var mutedUsersResponse = await _userService.GetAllMutedUsersAsync();
-            foreach (var userModel in mutedUsersResponse.Result)
+            if (mutedUsersResponse.IsSuccess)
             {
-                var userViewModel = userModel.ToUserViewModel();
-                userViewModel.RemoveCommand = SingleExecutionCommand.FromFunc(OnRemoveCommand);
-                UsersList.Add(userViewModel);
+                foreach (var userModel in mutedUsersResponse.Result)
+                {
+                    var userViewModel = userModel.ToUserViewModel();
+                    userViewModel.RemoveCommand = SingleExecutionCommand.FromFunc(OnRemoveCommand);
+                    UsersList.Add(userViewModel);
+                }
             }
         }
 

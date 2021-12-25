@@ -15,21 +15,17 @@ namespace InterTwitter.ViewModels
     {
         private readonly IRegistrationService _registrationService;
 
-        private readonly IDialogService _dialogs;
-
         private readonly IKeyboardHelper _keyboardHelper;
 
         private UserModel _user;
 
         public PasswordPageViewModel (
             INavigationService navigationService,
-            IDialogService dialogs,
             IRegistrationService registrationService,
             IKeyboardHelper keyboardHelper)
             : base(navigationService)
         {
             _registrationService = registrationService;
-            _dialogs = dialogs;
             _keyboardHelper = keyboardHelper;
         }
 
@@ -155,13 +151,6 @@ namespace InterTwitter.ViewModels
                     var parametrs = new NavigationParameters { { Constants.Navigation.USER, _user } };
                     await NavigationService.NavigateAsync($"/{nameof(StartPage)}", parametrs);
                 }
-                else
-                {
-                    DialogParameters param = new DialogParameters();
-                    param.Add(Constants.DialogParameterKeys.TITLE, Resources.Resource.AlertDatabase);
-                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
-                    await _dialogs.ShowDialogAsync(nameof(AlertView), param);
-                }
             }
             else
             {
@@ -177,11 +166,6 @@ namespace InterTwitter.ViewModels
                         IsWrongConfirmPassword = true;
                     }
                 }
-
-                DialogParameters param = new DialogParameters();
-                param.Add(Constants.DialogParameterKeys.TITLE, validator.Errors[0].ErrorMessage);
-                param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
-                await _dialogs.ShowDialogAsync(nameof(AlertView), param);
             }
         }
 

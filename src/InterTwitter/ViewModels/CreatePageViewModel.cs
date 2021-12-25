@@ -15,21 +15,17 @@ namespace InterTwitter.ViewModels
     {
         private readonly IRegistrationService _registrationService;
 
-        private readonly IDialogService _dialogs;
-
         private readonly IKeyboardHelper _keyboardHelper;
 
         private UserModel _user;
 
         public CreatePageViewModel(
             INavigationService navigationService,
-            IDialogService dialogs,
             IRegistrationService registrationService,
             IKeyboardHelper keyboardHelper)
             : base(navigationService)
         {
             _registrationService = registrationService;
-            _dialogs = dialogs;
             _keyboardHelper = keyboardHelper;
         }
 
@@ -142,14 +138,7 @@ namespace InterTwitter.ViewModels
         private async Task OnPasswordCommandAsync()
         {
             var result = await _registrationService.CheckTheCorrectEmailAsync(Email);
-            if (result.IsSuccess)
-            {
-                DialogParameters param = new DialogParameters();
-                param.Add(Constants.DialogParameterKeys.TITLE, Resources.Resource.AlertLoginTaken);
-                param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
-                await _dialogs.ShowDialogAsync(nameof(AlertView), param);
-            }
-            else
+            if (!result.IsSuccess)
             {
                 var validator = ValidatorsExtension.CreatePageValidator.Validate(this);
                 if (validator.IsValid)
@@ -175,11 +164,6 @@ namespace InterTwitter.ViewModels
                             IsWrongEmail = true;
                         }
                     }
-
-                    DialogParameters param = new DialogParameters();
-                    param.Add(Constants.DialogParameterKeys.TITLE, validator.Errors[0].ErrorMessage);
-                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
-                    await _dialogs.ShowDialogAsync(nameof(AlertView), param);
                 }
             }
         }

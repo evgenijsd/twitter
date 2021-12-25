@@ -24,7 +24,6 @@ namespace InterTwitter.ViewModels
         private readonly ISettingsManager _settingsManager;
         private readonly IUserService _userService;
         private readonly ITweetService _tweetService;
-        private readonly IDialogService _dialogService;
 
         private UserModel _user;
         private bool _isCurrentUser;
@@ -35,14 +34,12 @@ namespace InterTwitter.ViewModels
             INavigationService navigationService,
             ISettingsManager settingsManager,
             IUserService userService,
-            ITweetService tweetService,
-            IDialogService dialogService1)
+            ITweetService tweetService)
             : base(navigationService)
         {
             _settingsManager = settingsManager;
             _userService = userService;
             _tweetService = tweetService;
-            _dialogService = dialogService1;
         }
 
         #region --- Public Properties ---

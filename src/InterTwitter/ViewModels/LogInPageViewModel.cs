@@ -17,15 +17,12 @@ namespace InterTwitter.ViewModels
 
         private readonly IAuthorizationService _autorizationService;
 
-        private readonly IDialogService _dialogs;
-
         private readonly IKeyboardHelper _keyboardHelper;
 
         private UserModel _user;
 
         public LogInPageViewModel(
             INavigationService navigationService,
-            IDialogService dialogs,
             IRegistrationService registrationService,
             IAuthorizationService autorizationService,
             IKeyboardHelper keyboardHelper)
@@ -33,7 +30,6 @@ namespace InterTwitter.ViewModels
         {
             _registrationService = registrationService;
             _autorizationService = autorizationService;
-            _dialogs = dialogs;
             _keyboardHelper = keyboardHelper;
         }
 
@@ -168,20 +164,8 @@ namespace InterTwitter.ViewModels
                     }
                     else
                     {
-                        DialogParameters param = new DialogParameters();
-                        param.Add(Constants.DialogParameterKeys.TITLE, Resources.Resource.AlertInvalidPassword);
-                        param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
-                        await _dialogs.ShowDialogAsync(nameof(AlertView), param);
-
                         Password = string.Empty;
                     }
-                }
-                else
-                {
-                    DialogParameters param = new DialogParameters();
-                    param.Add(Constants.DialogParameterKeys.TITLE, Resources.Resource.AlertInvalidLogin);
-                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
-                    await _dialogs.ShowDialogAsync(nameof(AlertView), param);
                 }
             }
             else
@@ -198,11 +182,6 @@ namespace InterTwitter.ViewModels
                         IsWrongEmail = true;
                     }
                 }
-
-                DialogParameters param = new DialogParameters();
-                param.Add(Constants.DialogParameterKeys.TITLE, validator.Errors[0].ErrorMessage);
-                param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
-                await _dialogs.ShowDialogAsync(nameof(AlertView), param);
             }
         }
 
