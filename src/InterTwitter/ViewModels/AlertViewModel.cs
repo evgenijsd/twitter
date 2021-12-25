@@ -5,10 +5,12 @@ using System;
 
 namespace InterTwitter.ViewModels
 {
-    public class AlertViewModel : BindableBase, IDialogAware
+    public class AlertViewModel : BindableBase
     {
-        public AlertViewModel()
+        public AlertViewModel(DialogParameters param, Action<IDialogParameters> requestClose)
         {
+            SetupParameters(param);
+            RequestClose = requestClose;
             CloseCommand = new DelegateCommand(() => RequestClose(null));
             AcceptCommand = new DelegateCommand(() => RequestClose(new DialogParameters() { { Constants.DialogParameterKeys.ACCEPT, true } }));
             DeclineCommand = new DelegateCommand(() => RequestClose(new DialogParameters() { { Constants.DialogParameterKeys.ACCEPT, false } }));
@@ -56,17 +58,9 @@ namespace InterTwitter.ViewModels
 
         #endregion
 
-        #region -- Interface implementation --
+        public Action<IDialogParameters> RequestClose;
 
-        public event Action<IDialogParameters> RequestClose;
-
-        public bool CanCloseDialog() => true;
-
-        public void OnDialogClosed()
-        {
-        }
-
-        public void OnDialogOpened(IDialogParameters parameters)
+        private void SetupParameters(IDialogParameters parameters)
         {
             if (parameters.ContainsKey(Constants.DialogParameterKeys.MESSAGE))
             {
@@ -88,7 +82,5 @@ namespace InterTwitter.ViewModels
                 CancelButtonText = parameters.GetValue<string>(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT);
             }
         }
-
-        #endregion
     }
 }

@@ -1,12 +1,9 @@
 ﻿using InterTwitter.Helpers;
 using InterTwitter.Extensions;
-using InterTwitter.Models;
-using InterTwitter.Services.Settings;
 using InterTwitter.Services.UserService;
 using Prism.Navigation;
 using Prism.Services.Dialogs;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using InterTwitter.Views;
@@ -15,20 +12,17 @@ namespace InterTwitter.ViewModels
 {
     public class BlacklistPageViewModel : BaseViewModel
     {
-        private readonly ISettingsManager _settingsManager;
         private readonly IUserService _userService;
-        private readonly IDialogService _dialogService;
 
         private bool _isBlacklistPage;
         private bool _isMutelistPage;
-        private UserModel _currentUser;
 
-        public BlacklistPageViewModel(INavigationService navigationService, ISettingsManager settingsManager, IUserService userService, IDialogService dialogService)
+        public BlacklistPageViewModel(
+            INavigationService navigationService,
+            IUserService userService)
             : base(navigationService)
         {
-            _settingsManager = settingsManager;
             _userService = userService;
-            _dialogService = dialogService;
         }
 
         #region -- Public Properties --
@@ -58,15 +52,11 @@ namespace InterTwitter.ViewModels
             if (_isBlacklistPage = parameters.ContainsKey(Constants.Navigation.BLACKLIST))
             {
                 Title = Resources.Resource.Blacklist;
-                _currentUser = parameters[Constants.Navigation.BLACKLIST] as UserModel;
-
                 await InitBlacklistAsync();
             }
             else if (_isMutelistPage = parameters.ContainsKey(Constants.Navigation.MUTELIST))
             {
                 Title = Resources.Resource.Mute;
-                _currentUser = parameters[Constants.Navigation.MUTELIST] as UserModel;
-
                 await InitMutelistAsync();
             }
         }
@@ -102,11 +92,11 @@ namespace InterTwitter.ViewModels
             }
         }
 
-        private Task OnRemoveCommand(object parameter)
+        private async Task OnRemoveCommand(object parameter)
         {
             if (parameter is UserViewModel userViewModel)
             {
-                userViewModel = parameter as UserViewModel;
+                _removingUser = parameter as UserViewModel;
 
                 string partOfMessage = string.Empty;
                 if (_isBlacklistPage)
@@ -123,28 +113,29 @@ namespace InterTwitter.ViewModels
                 param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
                 param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Resource.Cancel);
 
-                _dialogService.ShowDialog(nameof(AlertView), param, CloseDialogCallback);
+                await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(param, CloseDialogCallback));
+            }
+        }
 
-                async void CloseDialogCallback(IDialogResult dialogResult)
+        private UserViewModel _removingUser;
+        private async void CloseDialogCallback(IDialogParameters dialogResult)
+        {
+            bool result = (bool)dialogResult?[Constants.DialogParameterKeys.ACCEPT];
+            if (result)
+            {
+                if (_isBlacklistPage)
                 {
-                    bool result = (bool)dialogResult?.Parameters[Constants.DialogParameterKeys.ACCEPT];
-                    if (result)
-                    {
-                        if (_isBlacklistPage)
-                        {
-                            await _userService.RemoveFromBlacklistAsync(userViewModel.Id);
-                            UsersList.Remove(userViewModel);
-                        }
-                        else if (_isMutelistPage)
-                        {
-                            await _userService.RemoveFromMutelistAsync(userViewModel.Id);
-                            UsersList.Remove(userViewModel);
-                        }
-                    }
+                    await _userService.RemoveFromBlacklistAsync(_removingUser.Id);
+                    UsersList.Remove(_removingUser);
+                }
+                else if (_isMutelistPage)
+                {
+                    await _userService.RemoveFromMutelistAsync(_removingUser.Id);
+                    UsersList.Remove(_removingUser);
                 }
             }
 
-            return Task.CompletedTask;
+            await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
         }
 
         #endregion

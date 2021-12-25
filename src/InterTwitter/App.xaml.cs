@@ -10,6 +10,7 @@ using InterTwitter.ViewModels.Flyout;
 using InterTwitter.Views;
 using Prism;
 using Prism.Ioc;
+using Prism.Plugin.Popups;
 using Prism.Unity;
 using System.Globalization;
 using Xamarin.CommunityToolkit.Helpers;
@@ -28,6 +29,8 @@ namespace InterTwitter
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterPopupNavigationService();
+            containerRegistry.RegisterPopupDialogService();
             containerRegistry.RegisterDialog<AlertView, AlertViewModel>();
 
             //Services
@@ -77,10 +80,12 @@ namespace InterTwitter
 
         protected override void OnSleep()
         {
+            this.PopupPluginOnSleep();
         }
 
         protected override void OnResume()
         {
+            this.PopupPluginOnResume();
         }
 
         #endregion

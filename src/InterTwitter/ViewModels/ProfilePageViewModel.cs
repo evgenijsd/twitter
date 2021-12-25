@@ -296,7 +296,8 @@ namespace InterTwitter.ViewModels
                     param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
                     param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Resource.UserBlocked);
 
-                    _dialogService.ShowDialog(nameof(AlertView), param);
+                    dialogs = EDialogs.AddToBlock;
+                    await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(param, CloseDialogCallback));
                 }
                 else
                 {
@@ -305,19 +306,8 @@ namespace InterTwitter.ViewModels
                     param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.AddToBlacklist);
                     param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Resource.Cancel);
 
-                    _dialogService.ShowDialog(nameof(AlertView), param, CloseDialogCallback);
-                }
-            }
-
-            void CloseDialogCallback(IDialogResult dialogResult)
-            {
-                bool result = (bool)dialogResult?.Parameters[Constants.DialogParameterKeys.ACCEPT];
-                if (result)
-                {
-                    _userService.RemoveFromMutelistAsync(_user.Id);
-                    _userService.AddToBlacklistAsync(_user.Id);
-                    IsBlacklistButtonVisible = true;
-                    IsMuteButtonVisible = false;
+                    dialogs = EDialogs.AddToBlock;
+                    await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(param, CloseDialogCallback));
                 }
             }
         }
@@ -333,7 +323,8 @@ namespace InterTwitter.ViewModels
                     param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
                     param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Resource.UserMuted);
 
-                    _dialogService.ShowDialog(nameof(AlertView), param);
+                    dialogs = EDialogs.AddToMute;
+                    await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(param, CloseDialogCallback));
                 }
                 else
                 {
@@ -342,64 +333,108 @@ namespace InterTwitter.ViewModels
                     param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.AddToMute);
                     param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Resource.Cancel);
 
-                    _dialogService.ShowDialog(nameof(AlertView), param, CloseDialogCallback);
-                }
-            }
-
-            void CloseDialogCallback(IDialogResult dialogResult)
-            {
-                bool result = (bool)dialogResult?.Parameters[Constants.DialogParameterKeys.ACCEPT];
-                if (result)
-                {
-                    _userService.RemoveFromBlacklistAsync(_user.Id);
-                    _userService.AddToMuteListAsync(_user.Id);
-                    IsBlacklistButtonVisible = false;
-                    IsMuteButtonVisible = true;
+                    dialogs = EDialogs.AddToMute;
+                    await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(param, CloseDialogCallback));
                 }
             }
         }
 
-        private Task OnRemoveUserFromBlacklistCommandAsync()
+        private async Task OnRemoveUserFromBlacklistCommandAsync()
         {
             var param = new DialogParameters();
             param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Resource.Remove} {_user.Name} {Resources.Resource.FromTheBlacklist}?");
             param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Remove);
             param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Resource.Cancel);
 
-            _dialogService.ShowDialog(nameof(AlertView), param, CloseDialogCallback);
-            return Task.CompletedTask;
-
-            void CloseDialogCallback(IDialogResult dialogResult)
-            {
-                bool result = (bool)dialogResult?.Parameters[Constants.DialogParameterKeys.ACCEPT];
-                if (result)
-                {
-                    _userService.RemoveFromBlacklistAsync(_user.Id);
-                    IsBlacklistButtonVisible = false;
-                }
-            }
+            dialogs = EDialogs.RemoveFromBlock;
+            await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(param, CloseDialogCallback));
         }
 
-        private Task OnRemoveUserFromMuteCommandAsync()
+        private async Task OnRemoveUserFromMuteCommandAsync()
         {
             var param = new DialogParameters();
             param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Resource.Remove} {_user.Name} {Resources.Resource.FromTheMute}?");
             param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Remove);
             param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Resource.Cancel);
 
-            _dialogService.ShowDialog(nameof(AlertView), param, CloseDialogCallback);
-            return Task.CompletedTask;
+            dialogs = EDialogs.RemoveFromMute;
+            await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(param, CloseDialogCallback));
+        }
 
-            void CloseDialogCallback(IDialogResult dialogResult)
+        private void CloseDialogCallback(IDialogParameters dialogResult)
+        {
+            switch (dialogs)
             {
-                bool result = (bool)dialogResult?.Parameters[Constants.DialogParameterKeys.ACCEPT];
-                if (result)
-                {
-                    _userService.RemoveFromMutelistAsync(_user.Id);
-                    IsMuteButtonVisible = false;
-                }
+                case EDialogs.RemoveFromMute:
+                    {
+                        bool result = (bool)dialogResult?[Constants.DialogParameterKeys.ACCEPT];
+                        if (result)
+                        {
+                            _userService.RemoveFromMutelistAsync(_user.Id);
+                            IsMuteButtonVisible = false;
+                        }
+
+                        Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+                    }
+
+                    break;
+                case EDialogs.RemoveFromBlock:
+                    {
+                        bool result = (bool)dialogResult?[Constants.DialogParameterKeys.ACCEPT];
+                        if (result)
+                        {
+                            _userService.RemoveFromBlacklistAsync(_user.Id);
+                            IsBlacklistButtonVisible = false;
+                        }
+
+                        Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+                    }
+
+                    break;
+                case EDialogs.AddToBlock:
+                    {
+                        bool result = (bool)dialogResult?[Constants.DialogParameterKeys.ACCEPT];
+                        if (result)
+                        {
+                            _userService.RemoveFromMutelistAsync(_user.Id);
+                            _userService.AddToBlacklistAsync(_user.Id);
+                            IsBlacklistButtonVisible = true;
+                            IsMuteButtonVisible = false;
+                        }
+
+                        Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+                    }
+
+                    break;
+                case EDialogs.AddToMute:
+                    {
+                        bool result = (bool)dialogResult?[Constants.DialogParameterKeys.ACCEPT];
+                        if (result)
+                        {
+                            _userService.RemoveFromBlacklistAsync(_user.Id);
+                            _userService.AddToMuteListAsync(_user.Id);
+                            IsBlacklistButtonVisible = false;
+                            IsMuteButtonVisible = true;
+                        }
+
+                        Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+                    }
+
+                    break;
+                default:
+                    break;
             }
         }
+
+        public enum EDialogs
+        {
+            RemoveFromMute,
+            RemoveFromBlock,
+            AddToMute,
+            AddToBlock,
+        }
+
+        private EDialogs dialogs;
 
         #endregion
 

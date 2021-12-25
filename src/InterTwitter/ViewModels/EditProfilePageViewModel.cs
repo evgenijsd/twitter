@@ -163,16 +163,15 @@ namespace InterTwitter.ViewModels
             }
         }
 
-        private bool IsChanged => _user.Name != UserName || _user.Email != UserMail ||
+        private bool IsProfileChanged => _user.Name != UserName || _user.Email != UserMail ||
             _user.AvatarPath != UserImagePath || _user.BackgroundUserImagePath != UserBackgroundImage ||
             !string.IsNullOrEmpty(OldPassword) || !string.IsNullOrEmpty(NewPassword);
 
-        private Task OnCheckCommandAsync(bool isIndirectCall = false)
+        private async Task OnCheckCommandAsync()
         {
-            bool isAllValid = true;
-            if (!IsChanged)
+            if (!IsProfileChanged)
             {
-                return Task.CompletedTask;
+                return;
             }
 
             var param = new DialogParameters();
@@ -180,88 +179,103 @@ namespace InterTwitter.ViewModels
             param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
             param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Resource.Cancel);
 
-            _dialogService.ShowDialog(nameof(AlertView), param, CloseDialogCallback);
-            async void CloseDialogCallback(IDialogResult dialogResult)
-            {
-                var param = new DialogParameters();
-                param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
-
-                bool result = (bool)dialogResult?.Parameters[Constants.DialogParameterKeys.ACCEPT];
-                if (result)
-                {
-                    if (!string.IsNullOrEmpty(OldPassword) || !string.IsNullOrEmpty(NewPassword))
-                    {
-                        if (string.IsNullOrEmpty(OldPassword))
-                        {
-                            param.Add("title", Resources.Resource.OldPassEmpty);
-                            isAllValid = false;
-                        }
-                        else if (OldPassword != _user.Password)
-                        {
-                            param.Add("title", Resources.Resource.OldPassWrong);
-                            isAllValid = false;
-                        }
-
-                        if (!string.IsNullOrEmpty(NewPassword) && Regex.IsMatch(NewPassword, Constants.RegexPatterns.PASSWORD_REGEX))
-                        {
-                            _user.Password = NewPassword;
-                        }
-                        else
-                        {
-                            param.Add("title", Resources.Resource.NewPasswordIsNotValid);
-                            isAllValid = false;
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(UserName) && Regex.IsMatch(UserName, Constants.RegexPatterns.USERNAME_REGEX))
-                    {
-                        _user.Name = UserName;
-                    }
-                    else
-                    {
-                        param.Add("title", Resources.Resource.NameIsNotValid);
-                        isAllValid = false;
-                    }
-
-                    if (!string.IsNullOrEmpty(UserMail) && Regex.IsMatch(UserMail, Constants.RegexPatterns.EMAIL_REGEX))
-                    {
-                        _user.Email = UserMail;
-                    }
-                    else
-                    {
-                        param.Add("title", Resources.Resource.EmailIsNotValid);
-                        isAllValid = false;
-                    }
-
-                    if (isAllValid)
-                    {
-                        _user.AvatarPath = UserImagePath;
-                        _user.BackgroundUserImagePath = UserBackgroundImage;
-
-                        await _userService.UpdateUserAsync(_user);
-
-                        MessagingCenter.Send(this, Constants.Messages.USER_PROFILE_CHANGED);
-                        await NavigationService.GoBackAsync();
-                    }
-                    else if (param.ContainsKey("title") && param["title"] != null)
-                    {
-                      _dialogService.ShowDialog(nameof(AlertView), param);
-                    }
-                }
-                else if (isIndirectCall)
-                {
-                    await NavigationService.GoBackAsync();
-                }
-            }
-
-            return Task.CompletedTask;
+            await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(param, CloseDialogCallback));
         }
 
+        private async void CloseDialogCallback(IDialogParameters dialogResult)
+        {
+            bool isAllValid = true;
+            var param = new DialogParameters();
+            param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
+
+            bool result = (bool)dialogResult?[Constants.DialogParameterKeys.ACCEPT];
+            if (result)
+            {
+                if (!string.IsNullOrEmpty(OldPassword) || !string.IsNullOrEmpty(NewPassword))
+                {
+                    if (string.IsNullOrEmpty(OldPassword))
+                    {
+                        param.Add(Constants.DialogParameterKeys.TITLE, Resources.Resource.OldPassEmpty);
+                        isAllValid = false;
+                    }
+                    else if (OldPassword != _user.Password)
+                    {
+                        param.Add(Constants.DialogParameterKeys.TITLE, Resources.Resource.OldPassWrong);
+                        isAllValid = false;
+                    }
+
+                    if (!string.IsNullOrEmpty(NewPassword) && Regex.IsMatch(NewPassword, Constants.RegexPatterns.PASSWORD_REGEX))
+                    {
+                        _user.Password = NewPassword;
+                    }
+                    else
+                    {
+                        param.Add(Constants.DialogParameterKeys.TITLE, Resources.Resource.NewPasswordIsNotValid);
+                        isAllValid = false;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(UserName) && Regex.IsMatch(UserName, Constants.RegexPatterns.USERNAME_REGEX))
+                {
+                    _user.Name = UserName;
+                }
+                else
+                {
+                    param.Add(Constants.DialogParameterKeys.TITLE, Resources.Resource.NameIsNotValid);
+                    isAllValid = false;
+                }
+
+                if (!string.IsNullOrEmpty(UserMail) && Regex.IsMatch(UserMail, Constants.RegexPatterns.EMAIL_REGEX))
+                {
+                    _user.Email = UserMail;
+                }
+                else
+                {
+                    param.Add(Constants.DialogParameterKeys.TITLE, Resources.Resource.EmailIsNotValid);
+                    isAllValid = false;
+                }
+
+                if (isAllValid)
+                {
+                    await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+                    _user.AvatarPath = UserImagePath;
+                    _user.BackgroundUserImagePath = UserBackgroundImage;
+
+                    await _userService.UpdateUserAsync(_user);
+
+                    MessagingCenter.Send(this, Constants.Messages.USER_PROFILE_CHANGED);
+                    await NavigationService.GoBackAsync();
+                }
+                else if (param.ContainsKey(Constants.DialogParameterKeys.TITLE) && param[Constants.DialogParameterKeys.TITLE] != null)
+                {
+                    await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+                    await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(param, Callback));
+                    return;
+                }
+            }
+            else if (!_isIndirectCall)
+            {
+                await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+            }
+            else
+            {
+                await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+                await NavigationService.GoBackAsync();
+            }
+        }
+
+        private async void Callback(IDialogParameters dialogResult)
+        {
+            await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+        }
+
+        private bool _isIndirectCall;
         private async Task OnNavigationCommandAsync()
         {
-            if (IsChanged)
+            if (IsProfileChanged)
             {
-                await OnCheckCommandAsync(true);
+                _isIndirectCall = true;
+                await OnCheckCommandAsync();
             }
             else
             {
