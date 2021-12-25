@@ -132,7 +132,7 @@
                                 <!-- TWEETS FOUND - DISPLAY TWEETS -->
                                 <stateContainer:StateCondition State="Success">
 
-                                        <controls:CustomCollectionView ItemsSource="{Binding Tweets}" 
+                                        <controls:CustomCollectionView ItemsSource="{Binding FoundTweets}" 
                                                                        ItemTemplate="{StaticResource templateSelector}"
                                                                        x:Name="customCollectView"/>
 

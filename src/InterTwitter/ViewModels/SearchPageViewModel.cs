@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.CommunityToolkit.Helpers;
@@ -32,7 +31,7 @@ namespace InterTwitter.ViewModels
             _tweetService = tweetService;
             _hashtagService = hashtagManager;
 
-            Tweets = new ObservableCollection<BaseTweetViewModel>();
+            FoundTweets = new ObservableCollection<BaseTweetViewModel>();
             Hashtags = new ObservableCollection<HashtagModel>();
 
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource;
@@ -83,18 +82,18 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _hashtags, value);
         }
 
-        private ObservableCollection<BaseTweetViewModel> _tweets;
-        public ObservableCollection<BaseTweetViewModel> Tweets
+        private ObservableCollection<BaseTweetViewModel> _foundTweets;
+        public ObservableCollection<BaseTweetViewModel> FoundTweets
         {
-            get => _tweets;
-            set => SetProperty(ref _tweets, value);
+            get => _foundTweets;
+            set => SetProperty(ref _foundTweets, value);
         }
 
-        private ESearchStatus _tweetsSearchState;
+        private ESearchStatus _tweetsSearchStatus;
         public ESearchStatus TweetsSearchStatus
         {
-            get => _tweetsSearchState;
-            set => SetProperty(ref _tweetsSearchState, value);
+            get => _tweetsSearchStatus;
+            set => SetProperty(ref _tweetsSearchStatus, value);
         }
 
         private ESearchResult _tweetSearchResult;
@@ -108,10 +107,10 @@ namespace InterTwitter.ViewModels
         public ICommand OpenFlyoutCommandAsync => _openFlyoutCommand ??= SingleExecutionCommand.FromFunc(OnOpenFlyoutCommandAsync);
 
         private ICommand _startTweetsSearchTapCommand;
-        public ICommand StartTweetsSearchTapCommand => _startTweetsSearchTapCommand ??= SingleExecutionCommand.FromFunc(OnStartTweetsSearchCommandTapAsync);
+        public ICommand StartTweetsSearchTapCommand => _startTweetsSearchTapCommand ??= SingleExecutionCommand.FromFunc(OnStartTweetsSearchTapCommandAsync);
 
         private ICommand _backToHashtagsTapCommand;
-        public ICommand BackToHashtagsTapCommand => _backToHashtagsTapCommand ??= SingleExecutionCommand.FromFunc(OnBackToHashTagsCommandTapAsync);
+        public ICommand BackToHashtagsTapCommand => _backToHashtagsTapCommand ??= SingleExecutionCommand.FromFunc(OnBackToHashtagsTapCommandAsync);
 
         private ICommand _hashtagTapCommand;
         public ICommand HashtagTapCommand => _hashtagTapCommand ??= SingleExecutionCommand.FromFunc(OnHashtagTapCommandAsync);
@@ -169,7 +168,7 @@ namespace InterTwitter.ViewModels
             QueryString = string.Empty;
             NoResultsMessage = string.Empty;
             TweetsSearchStatus = ESearchStatus.NotActive;
-            Tweets.Clear();
+            FoundTweets.Clear();
         }
 
         #endregion
@@ -207,7 +206,7 @@ namespace InterTwitter.ViewModels
             }
 
             SearchWords = null;
-            Tweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
+            FoundTweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
         }
 
         private Task OnOpenFlyoutCommandAsync()
@@ -217,7 +216,7 @@ namespace InterTwitter.ViewModels
             return Task.CompletedTask;
         }
 
-        private Task OnStartTweetsSearchCommandTapAsync()
+        private Task OnStartTweetsSearchTapCommandAsync()
         {
             FindTweets(QueryString);
 
@@ -233,7 +232,7 @@ namespace InterTwitter.ViewModels
             return Task.CompletedTask;
         }
 
-        private Task OnBackToHashTagsCommandTapAsync()
+        private Task OnBackToHashtagsTapCommandAsync()
         {
             TweetsSearchStatus = ESearchStatus.NotActive;
 

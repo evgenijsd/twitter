@@ -1,7 +1,6 @@
 ﻿using Android.Content;
 using InterTwitter.Controls;
 using InterTwitter.Droid.Renderers;
-using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -25,13 +24,6 @@ namespace InterTwitter.Droid.Renderers
             base.OnElementChanged(e);
 
             SetLineSpacing();
-        }
-
-        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            base.OnElementPropertyChanged(sender, e);
-
-
         }
 
         #endregion

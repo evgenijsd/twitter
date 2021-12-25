@@ -31,28 +31,16 @@ namespace InterTwitter.Controls.HighlightedLabel
             set => SetValue(KeysToHighlightProperty, value);
         }
 
-        public static readonly BindableProperty MoreCommandProperty = BindableProperty.Create(
-            propertyName: nameof(MoreCommand),
-            returnType: typeof(ICommand),
-            declaringType: typeof(HighlightedLabel),
-            defaultBindingMode: BindingMode.TwoWay);
-
-        public ICommand MoreCommand
-        {
-            get => (ICommand)GetValue(MoreCommandProperty);
-            set => SetValue(MoreCommandProperty, value);
-        }
-
-        public static readonly BindableProperty KeywordBackgroundColorProperty = BindableProperty.Create(
-            propertyName: nameof(KeywordBackgroundColor),
+        public static readonly BindableProperty KeyBackgroundColorProperty = BindableProperty.Create(
+            propertyName: nameof(KeyBackgroundColor),
             returnType: typeof(Color),
             declaringType: typeof(HighlightedLabel),
             defaultBindingMode: BindingMode.TwoWay);
 
-        public Color KeywordBackgroundColor
+        public Color KeyBackgroundColor
         {
-            get => (Color)GetValue(KeywordBackgroundColorProperty);
-            set => SetValue(KeywordBackgroundColorProperty, value);
+            get => (Color)GetValue(KeyBackgroundColorProperty);
+            set => SetValue(KeyBackgroundColorProperty, value);
         }
 
         public static readonly BindableProperty HashtagTextColorProperty = BindableProperty.Create(
@@ -70,16 +58,17 @@ namespace InterTwitter.Controls.HighlightedLabel
         public static readonly BindableProperty OriginalTextProperty = BindableProperty.Create(
             propertyName: nameof(OriginalText),
             returnType: typeof(string),
-            declaringType: typeof(UnfoldingLabel),
+            declaringType: typeof(HighlightedLabel),
             defaultBindingMode: BindingMode.TwoWay);
+
         public string OriginalText
         {
             get => (string)GetValue(OriginalTextProperty);
             set => SetValue(OriginalTextProperty, value);
         }
 
-        private ICommand _openTweetCommand;
-        public ICommand OpenTweetCommand => _openTweetCommand ?? (_openTweetCommand = SingleExecutionCommand.FromFunc(OnOpenTweetCommandAsync));
+        private ICommand _unfoldingText;
+        public ICommand UnfoldingTextCommand => _unfoldingText ?? (_unfoldingText = SingleExecutionCommand.FromFunc(OnUnfoldingTextCommandAsync));
 
         #endregion
 
@@ -105,31 +94,28 @@ namespace InterTwitter.Controls.HighlightedLabel
 
             if (originalText?.Length > 184)
             {
-                // режем текст
                 string truncatedText = originalText.Replace('\n', ' ').Substring(0, 177);
 
                 FormattedString formattedString = GetFormattedText(truncatedText);
 
-                // создаем спан-команду
-                Span tapCommandSpan = new Span
+                Span unfoldingTextSpan = new Span
                 {
                     Text = "...more",
                 };
 
-                tapCommandSpan.SetDynamicResource(TextColorProperty, "appcolor_i1");
+                unfoldingTextSpan.SetDynamicResource(TextColorProperty, "appcolor_i1");
 
                 TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
-                tapCommandSpan.GestureRecognizers.Add(tapGestureRecognizer);
-                tapGestureRecognizer.Command = OpenTweetCommand;
+                unfoldingTextSpan.GestureRecognizers.Add(tapGestureRecognizer);
+                tapGestureRecognizer.Command = UnfoldingTextCommand;
 
-                // добавляем спан-команду к обрезанному и подсвеченному тексту
-                formattedString.Spans.Add(tapCommandSpan);
+                formattedString.Spans.Add(unfoldingTextSpan);
 
-                this.FormattedText = formattedString;
+                FormattedText = formattedString;
             }
             else
             {
-                this.FormattedText = GetFormattedText(originalText);
+                FormattedText = GetFormattedText(originalText);
             }
         }
 
@@ -137,14 +123,11 @@ namespace InterTwitter.Controls.HighlightedLabel
         {
             FormattedString formattedString = null;
 
-            // если есть ключи, то их нужно подсветить
             if (KeysToHighlight?.Count() > 0)
             {
-                // подсвечиваем обрезанный текст
                 formattedString = GetHighlightedFormattedString(text);
             }
 
-            // если искомых ключей нет, просто создаем спан с обрезанным текстом
             if (formattedString == null || formattedString.Spans.Count == 0)
             {
                 formattedString = new FormattedString();
@@ -160,7 +143,7 @@ namespace InterTwitter.Controls.HighlightedLabel
             return formattedString;
         }
 
-        private Task OnOpenTweetCommandAsync()
+        private Task OnUnfoldingTextCommandAsync()
         {
             if (Device.RuntimePlatform != Device.iOS)
             {
@@ -168,8 +151,7 @@ namespace InterTwitter.Controls.HighlightedLabel
             }
             else
             {
-                this.FormattedText = GetFormattedText(OriginalText);
-                this.Text = OriginalText; // working T-T
+                this.Text = OriginalText;
             }
 
             return Task.CompletedTask;
@@ -188,18 +170,15 @@ namespace InterTwitter.Controls.HighlightedLabel
         {
             FormattedString formattedString = new FormattedString();
 
-            if (KeysToHighlight?.Count() > 0)
+            var infoAboutKeysFound = GetInfoAboutKeysFound(text, KeysToHighlight.ToArray());
+
+            if (infoAboutKeysFound?.Count > 0)
             {
-                var infoAboutKeysFound = GetInfoAboutKeysFound(text, KeysToHighlight.ToArray());
+                TrimIntersectingKeys(infoAboutKeysFound);
 
-                if (infoAboutKeysFound?.Count > 0)
-                {
-                    TrimIntersectingKeys(infoAboutKeysFound);
+                DeleteAllSubKeys(infoAboutKeysFound);
 
-                    DeleteAllSubKeys(infoAboutKeysFound);
-
-                    formattedString = GetKeуsMergedWithSimpleText(text, infoAboutKeysFound.ToArray());
-                }
+                formattedString = GetKeуsMergedWithSimpleText(text, infoAboutKeysFound.ToArray());
             }
 
             return formattedString;
@@ -370,7 +349,7 @@ namespace InterTwitter.Controls.HighlightedLabel
             else
             {
                 keySpan.ForegroundColor = this.TextColor;
-                keySpan.BackgroundColor = KeywordBackgroundColor;
+                keySpan.BackgroundColor = KeyBackgroundColor;
             }
 
             return keySpan;
