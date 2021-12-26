@@ -1,48 +1,56 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<Frame xmlns="http://xamarin.com/schemas/2014/forms"
-       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       xmlns:viewmodels="clr-namespace:InterTwitter.ViewModels"
-       x:DataType="viewmodels:AlertViewModel"
-       xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-       xmlns:prism="http://prismlibrary.com"
-       prism:DialogLayout.MaskStyle="{StaticResource ColorStyle}"
-       prism:DialogLayout.RelativeWidthRequest="0.85"
-       BackgroundColor="White"
-       CornerRadius="15"
-       x:Class="InterTwitter.Views.AlertView">
+<rg:PopupPage xmlns="http://xamarin.com/schemas/2014/forms" 
+              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              x:Class="InterTwitter.Views.AlertView"
+              xmlns:rg="http://rotorgames.com">
+
+    <Frame x:Name="frame" 
+           HorizontalOptions="Center" 
+           VerticalOptions="Center"
+           CornerRadius="15">
+
+        <StackLayout>
+
+            <Label Text="{Binding Title}" 
+                   Margin="5,10,0,0"
+                   HorizontalOptions="StartAndExpand"
+                   Style="{DynamicResource tstyle_i5}"/>
+
+            <Label Text="{Binding Message}"
+                   Margin="5,10,0,0"
+                   FontSize="{DynamicResource tsize_i4}"
+                   FontFamily="Ubuntu-Medium"               
+                   IsVisible="{Binding IsMessageVisible}"
+                   TextColor="{DynamicResource appcolor_i4}"/>
+
+            <StackLayout Orientation="Horizontal">
+
+                <Button x:Name="cancelButton" 
+                        Text="{Binding CancelButtonText}"
+                        Command="{Binding DeclineCommand}" 
+                        FontSize="{DynamicResource tsize_i4}"
+                        FontFamily="Ubuntu-Medium"
+                        TextColor="{DynamicResource appcolor_i4}" 
+                        TextTransform="None"
+                        HorizontalOptions="EndAndExpand"
+                        BackgroundColor="Transparent"
+                        Margin="0,10,-42,-10" />
+
+                <Button x:Name="okButton" 
+                        Text="{Binding OkButtonText}"
+                        Command="{Binding AcceptCommand}" 
+                        TextTransform="None"
+                        FontSize="{DynamicResource tsize_i4}"
+                        FontFamily="Ubuntu-Medium"
+                        TextColor="{DynamicResource appcolor_i1}"
+                        HorizontalOptions="EndAndExpand"
+                        BackgroundColor="Transparent"
+                        Margin="0,10,-5,-10" />
+
+            </StackLayout>
+            
+        </StackLayout>
+        
+    </Frame>
     
-    <Frame.Resources>
-        <ResourceDictionary>
-            <Style TargetType="BoxView"
-                   x:Key="ColorStyle">
-                <Setter Property="BackgroundColor"
-                        Value="#02060E" />
-                <Setter Property="Opacity"
-                        Value="0.6" />
-            </Style>
-        </ResourceDictionary>
-    </Frame.Resources>
-    
-    <StackLayout>
-        
-        <Label Text="{xct:Translate Alert}"
-               Margin="5,10,0,0"
-               HorizontalOptions="StartAndExpand"
-               Style="{DynamicResource tstyle_i5}" />
-        
-        <Label Text="{Binding Message}"
-               Margin="5,10,0,0"
-               Style="{DynamicResource tstyle_i7}" />
-        
-        <Button Text="{xct:Translate Ok}"
-                Command="{Binding CloseCommand}"
-                FontSize="{DynamicResource tsize_i4}"
-                FontFamily="Ubuntu-Medium"
-                TextColor="{DynamicResource appcolor_i1}"
-                HorizontalOptions="EndAndExpand"
-                BackgroundColor="Transparent"
-                Margin="0,10,-5,-10" />
-        
-    </StackLayout>
-    
-</Frame>
+</rg:PopupPage>

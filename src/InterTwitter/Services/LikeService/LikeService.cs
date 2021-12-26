@@ -1,5 +1,6 @@
 ﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
+using InterTwitter.Resources.Strings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,12 +33,12 @@ namespace InterTwitter.Services
                 }
                 else
                 {
-                    result.SetFailure(Resources.Resource.NotFoundBookmark);
+                    result.SetFailure(Strings.NotFoundBookmark);
                 }
             }
             catch (Exception ex)
             {
-                result.SetError($"{nameof(GetLikesAsync)}: exception", Resources.Resource.SomeIssues, ex);
+                result.SetError($"{nameof(GetLikesAsync)}: exception", Strings.SomeIssues, ex);
             }
 
             return result;
@@ -57,12 +58,12 @@ namespace InterTwitter.Services
                 }
                 else
                 {
-                    result.SetFailure(Resources.Resource.NotFoundLike);
+                    result.SetFailure(Strings.NotFoundLike);
                 }
             }
             catch (Exception ex)
             {
-                result.SetError($"{nameof(GetNotificationsAsync)}: exception", Resources.Resource.SomeIssues, ex);
+                result.SetError($"{nameof(GetNotificationsAsync)}: exception", Strings.SomeIssues, ex);
             }
 
             return result;
@@ -82,12 +83,12 @@ namespace InterTwitter.Services
                 }
                 else
                 {
-                    result.SetFailure(Resources.Resource.NotFoundLike);
+                    result.SetFailure(Strings.NotFoundLike);
                 }
             }
             catch (Exception ex)
             {
-                result.SetError($"{nameof(DeleteLikeAsync)}: exception", Resources.Resource.SomeIssues, ex);
+                result.SetError($"{nameof(DeleteLikeAsync)}: exception", Strings.SomeIssues, ex);
             }
 
             return result;
@@ -122,7 +123,7 @@ namespace InterTwitter.Services
             }
             catch (Exception ex)
             {
-                result.SetError($"Exception: {nameof(AddLikeAsync)}", Resources.Resource.WrongResult, ex);
+                result.SetError($"Exception: {nameof(AddLikeAsync)}", Strings.WrongResult, ex);
             }
 
             return result;
@@ -145,7 +146,7 @@ namespace InterTwitter.Services
             }
             catch (Exception ex)
             {
-                result.SetError($"Exception: {nameof(AnyAsync)}", Resources.Resource.WrongResult, ex);
+                result.SetError($"Exception: {nameof(AnyAsync)}", Strings.WrongResult, ex);
             }
 
             return result;
@@ -168,7 +169,7 @@ namespace InterTwitter.Services
             }
             catch (Exception ex)
             {
-                result.SetError($"Exception: {nameof(CountAsync)}", Resources.Resource.WrongResult, ex);
+                result.SetError($"Exception: {nameof(CountAsync)}", Strings.WrongResult, ex);
             }
 
             return result;

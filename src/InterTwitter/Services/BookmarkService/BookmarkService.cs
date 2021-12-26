@@ -1,5 +1,6 @@
 ﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
+using InterTwitter.Resources.Strings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,12 +33,12 @@ namespace InterTwitter.Services
                 }
                 else
                 {
-                    result.SetFailure(Resources.Resource.NotFoundBookmark);
+                    result.SetFailure(Strings.NotFoundBookmark);
                 }
             }
             catch (Exception ex)
             {
-                result.SetError($"{nameof(GetBookmarksAsync)}: exception", Resources.Resource.SomeIssues, ex);
+                result.SetError($"{nameof(GetBookmarksAsync)}: exception", Strings.SomeIssues, ex);
             }
 
             return result;
@@ -57,12 +58,12 @@ namespace InterTwitter.Services
                 }
                 else
                 {
-                    result.SetFailure(Resources.Resource.NotFoundBookmark);
+                    result.SetFailure(Strings.NotFoundBookmark);
                 }
             }
             catch (Exception ex)
             {
-                result.SetError($"{nameof(GetNotificationsAsync)}: exception", Resources.Resource.SomeIssues, ex);
+                result.SetError($"{nameof(GetNotificationsAsync)}: exception", Strings.SomeIssues, ex);
             }
 
             return result;
@@ -77,18 +78,22 @@ namespace InterTwitter.Services
 
                 if (bookmark != null)
                 {
-                    _mockService.Bookmarks.RemoveAll(x => x.UserId == userId);
+                    var bookmarksList = _mockService.Bookmarks.ToList();
+
+                    bookmarksList.RemoveAll(x => x.UserId == userId);
+
+                    _mockService.Bookmarks = bookmarksList;
 
                     result.SetSuccess();
                 }
                 else
                 {
-                    result.SetFailure(Resources.Resource.NotFoundBookmark);
+                    result.SetFailure(Strings.NotFoundBookmark);
                 }
             }
             catch (Exception ex)
             {
-                result.SetError($"{nameof(DeleteAllBookmarksAsync)}: exception", Resources.Resource.SomeIssues, ex);
+                result.SetError($"{nameof(DeleteAllBookmarksAsync)}: exception", Strings.SomeIssues, ex);
             }
 
             return result;
@@ -108,12 +113,12 @@ namespace InterTwitter.Services
                 }
                 else
                 {
-                    result.SetFailure(Resources.Resource.NotFoundBookmark);
+                    result.SetFailure(Strings.NotFoundBookmark);
                 }
             }
             catch (Exception ex)
             {
-                result.SetError($"{nameof(DeleteBoormarkAsync)}: exception", Resources.Resource.SomeIssues, ex);
+                result.SetError($"{nameof(DeleteBoormarkAsync)}: exception", Strings.SomeIssues, ex);
             }
 
             return result;
@@ -147,7 +152,7 @@ namespace InterTwitter.Services
             }
             catch (Exception ex)
             {
-                result.SetError($"Exception: {nameof(AddBookmarkAsync)}", Resources.Resource.WrongResult, ex);
+                result.SetError($"Exception: {nameof(AddBookmarkAsync)}", Strings.WrongResult, ex);
             }
 
             return result;
@@ -170,7 +175,7 @@ namespace InterTwitter.Services
             }
             catch (Exception ex)
             {
-                result.SetError($"Exception: {nameof(AddBookmarkAsync)}", Resources.Resource.WrongResult, ex);
+                result.SetError($"Exception: {nameof(AddBookmarkAsync)}", Strings.WrongResult, ex);
             }
 
             return result;

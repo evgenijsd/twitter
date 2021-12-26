@@ -2,6 +2,7 @@
 using InterTwitter.Helpers;
 using InterTwitter.Models;
 using InterTwitter.Models.NotificationViewModel;
+using InterTwitter.Resources.Strings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,17 +59,17 @@ namespace InterTwitter.Services
                     }
                     else
                     {
-                        result.SetFailure(Resources.Resource.NotFoundNotification);
+                        result.SetFailure(Strings.NotFoundNotification);
                     }
                 }
                 else
                 {
-                    result.SetFailure(Resources.Resource.NoTweets);
+                    result.SetFailure(Strings.NoTweets);
                 }
             }
             catch (Exception ex)
             {
-                result.SetError($"{nameof(GetNotificationsAsync)}: exception", Resources.Resource.SomeIssues, ex);
+                result.SetError($"{nameof(GetNotificationsAsync)}: exception", Strings.SomeIssues, ex);
             }
 
             return result;
@@ -115,13 +116,13 @@ namespace InterTwitter.Services
                     }
                     else
                     {
-                        result.SetFailure(Resources.Resource.NotFoundNotification);
+                        result.SetFailure(Strings.NotFoundNotification);
                     }
                 }
             }
             catch (Exception ex)
             {
-                result.SetError($"{nameof(GetNotificationsAsync)}: exception", Resources.Resource.SomeIssues, ex);
+                result.SetError($"{nameof(GetNotificationsAsync)}: exception", Strings.SomeIssues, ex);
             }
 
             return result;
@@ -164,13 +165,13 @@ namespace InterTwitter.Services
                     }
                     else
                     {
-                        result.SetFailure(Resources.Resource.NotFoundNotification);
+                        result.SetFailure(Strings.NotFoundNotification);
                     }
                 }
             }
             catch (Exception ex)
             {
-                result.SetError($"{nameof(GetNotificationsAsync)}: exception", Resources.Resource.SomeIssues, ex);
+                result.SetError($"{nameof(GetNotificationsAsync)}: exception", Strings.SomeIssues, ex);
             }
 
             return result;

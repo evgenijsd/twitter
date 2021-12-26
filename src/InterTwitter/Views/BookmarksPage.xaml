@@ -6,10 +6,15 @@
                       xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
                       xmlns:prism="http://prismlibrary.com"
                       xmlns:viewmodels="clr-namespace:InterTwitter.ViewModels"
+                      xmlns:behaviors="clr-namespace:InterTwitter.Behaviors"
                       x:DataType="viewmodels:BookmarksPageViewModel"
                       prism:ViewModelLocator.AutowireViewModel="True"
                       IconImageSource="{Binding IconPath}"
                       x:Class="InterTwitter.Views.BookmarksPage">
+
+    <ContentPage.Behaviors>
+        <behaviors:TabPageBehavior/>
+    </ContentPage.Behaviors>
     
     <view:BaseContentPage.Content>
 

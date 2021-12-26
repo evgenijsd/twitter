@@ -1,5 +1,6 @@
 ﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
+using InterTwitter.Resources.Strings;
 using InterTwitter.Services;
 using InterTwitter.ViewModels.Validators;
 using InterTwitter.Views;
@@ -15,9 +16,9 @@ namespace InterTwitter.ViewModels
     {
         private readonly IRegistrationService _registrationService;
 
-        private readonly IDialogService _dialogs;
+        private readonly IDialogService _dialogService;
 
-        private readonly ISettingsManager _settingsManager;
+        private readonly IAuthorizationService _authorizationService;
 
         private readonly IKeyboardHelper _keyboardHelper;
 
@@ -28,15 +29,15 @@ namespace InterTwitter.ViewModels
 
         public PasswordPageViewModel (
             INavigationService navigationService,
-            IDialogService dialogs,
+            IDialogService dialogService,
             IRegistrationService registrationService,
-            ISettingsManager settingsManager,
+            IAuthorizationService authorizationService,
             IKeyboardHelper keyboardHelper)
             : base(navigationService)
         {
+            _dialogService = dialogService;
             _registrationService = registrationService;
-            _settingsManager = settingsManager;
-            _dialogs = dialogs;
+            _authorizationService = authorizationService;
             _keyboardHelper = keyboardHelper;
         }
 
@@ -106,7 +107,7 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _isFocusedConfirmPassword, value);
         }
 
-        private string _buttonText = Resources.Resource.Next;
+        private string _buttonText = Strings.Next;
 
         public string ButtonText
         {
@@ -166,11 +167,11 @@ namespace InterTwitter.ViewModels
             {
                 if (!string.IsNullOrEmpty(Password))
                 {
-                    ButtonText = Resources.Resource.Confirm;
+                    ButtonText = Strings.Confirm;
                 }
                 else
                 {
-                    ButtonText = Resources.Resource.Next;
+                    ButtonText = Strings.Next;
                 }
             }
 
@@ -251,21 +252,20 @@ namespace InterTwitter.ViewModels
                 _user.Password = Password;
                 _user.AvatarPath = "pic_profile_big";
                 _user.BackgroundUserImagePath = "pic_profile_big";
+
+                _keyboardHelper.HideKeyboard();
+
                 var result = await _registrationService.AddAsync(_user);
                 if (result.IsSuccess)
                 {
-                    _keyboardHelper.HideKeyboard();
-
-                    _settingsManager.UserId = _user.Id;
+                    _authorizationService.UserId = _user.Id;
                     var parametrs = new NavigationParameters { { Constants.Navigation.USER, _user } };
                     await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", parametrs);
                 }
                 else
                 {
-                    _keyboardHelper.HideKeyboard();
-
-                    var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Resources.Resource.AlertDatabase } };
-                    await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
+                    var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertDatabase } };
+                    await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
                 }
             }
             else

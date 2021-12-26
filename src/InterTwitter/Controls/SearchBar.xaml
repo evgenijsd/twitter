@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:controls="clr-namespace:InterTwitter.Controls"
+             xmlns:stateContainer="clr-namespace:InterTwitter.Controls.StateContainer"
+             x:DataType="controls:SearchBar"
+             x:Class="InterTwitter.Controls.SearchBar"
+             x:Name="searchBar">
+
+    <ContentView.Content>
+
+        <Grid ColumnSpacing="8"
+              ColumnDefinitions="0.125*, *"
+              RowSpacing="0"
+              RowDefinitions="33"
+              Margin="10, 10, 14, 12"
+              Padding="0"
+              BackgroundColor="Transparent">
+
+            <!-- PROFILE/BACK ICON -->
+            <stateContainer:StateContainer Grid.Column="0"
+                                           Padding="2.5"
+                                           State="{Binding SearchStatus, Source={x:Reference searchBar}}">
+
+                <stateContainer:StateContainer.Conditions>
+
+                    <!-- SEARCH IS NOT ACTIVE - DISPLAY AVATAR ICON -->
+                    <stateContainer:StateCondition State="NotActive">
+
+                        <ImageButton BackgroundColor="Transparent"
+                                     Source="{Binding AvatarIconSource, Source={x:Reference searchBar}}"
+                                     Command="{Binding AvatarIconTapCommand, Source={x:Reference searchBar}}"/>
+
+                    </stateContainer:StateCondition>
+
+                    <!-- SEARCH IS ACTIVE - DISPLAY BACK ICON -->
+                    <stateContainer:StateCondition State="Active">
+
+                        <ImageButton BackgroundColor="Transparent"
+                                     Source="{DynamicResource ic_left_gray}"
+                                     Command="{Binding BackIconTapCommand, Source={x:Reference searchBar}}"/>
+
+                    </stateContainer:StateCondition>
+
+                </stateContainer:StateContainer.Conditions>
+
+            </stateContainer:StateContainer>
+
+            <!-- SEARCH LINE -->
+            <Frame Grid.Column="1"
+                   Padding="13.5, 0"
+                   HasShadow="False"
+                   IsClippedToBounds="true"
+                   CornerRadius="16"
+                   BackgroundColor="{DynamicResource appcolor_i6}">
+
+                <Frame.GestureRecognizers>
+
+                    <TapGestureRecognizer Command="{Binding SearchEdgesTapCommand, Source={x:Reference searchBar}}" />
+
+                </Frame.GestureRecognizers>
+
+                <controls:SearchEntry Margin="0"    
+                                      BackgroundColor="Transparent"
+                                      HighlightColor="{DynamicResource appcolor_i1}"
+                                      FontSize="{DynamicResource tsize_i5}"
+                                      FontFamily="Ubuntu-Medium"
+                                      Text="{Binding QueryString, Source={x:Reference searchBar}}"
+                                      TextColor="{DynamicResource appcolor_i3}"
+                                      Placeholder="{xct:Translate Search}"
+                                      PlaceholderColor="{DynamicResource appcolor_i4}"
+                                      MaxLength="{Binding MaxLength, Source={x:Reference searchBar}}"
+                                      ClearButtonVisibility="WhileEditing"
+                                      ReturnCommand="{Binding PressOkOnKeyboardCommand, Source={x:Reference searchBar}}"
+                                      ReturnType="Search"
+                                      x:Name="searchEntry"/>
+
+            </Frame>
+
+        </Grid>
+
+    </ContentView.Content>
+
+</ContentView>

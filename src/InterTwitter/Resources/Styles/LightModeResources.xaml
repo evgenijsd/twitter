@@ -17,6 +17,8 @@
     <Color x:Key="appcolor_i6">#DEDFE1</Color><!-- Light Gray -->
     
     <Color x:Key="appcolor_i7">#F44336</Color><!-- Error -->
+
+    <Color x:Key="appcolor_i8">#C7D6F7</Color><!-- Keyword highlighting -->
     
 
     <!-- IMAGES -->

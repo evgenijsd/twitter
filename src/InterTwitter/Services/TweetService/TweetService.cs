@@ -19,11 +19,9 @@ namespace InterTwitter.Services
 
         #region -- ITweetService implementation --
 
-        public async Task<AOResult<List<TweetModel>>> GetAllTweetsAsync()
+        public Task<AOResult<IEnumerable<TweetModel>>> GetAllTweetsAsync()
         {
-            await Task.Delay(50);
-
-            var result = new AOResult<List<TweetModel>>();
+            var result = new AOResult<IEnumerable<TweetModel>>();
             try
             {
                 var tweets = _mockService.Tweets;
@@ -42,12 +40,13 @@ namespace InterTwitter.Services
                 result.SetError($"{nameof(GetAllTweetsAsync)}: exception", "Some issues", ex);
             }
 
-            return result;
+            return Task.FromResult(result);
         }
 
-        public async Task<AOResult<List<TweetModel>>> GetByUserTweetsAsync(int userid)
+        public Task<AOResult<List<TweetModel>>> GetByUserTweetsAsync(int userid)
         {
             var result = new AOResult<List<TweetModel>>();
+
             try
             {
                 var tweets = _mockService.Tweets.Where(x => x.UserId == userid);
@@ -66,10 +65,38 @@ namespace InterTwitter.Services
                 result.SetError($"{nameof(GetByUserTweetsAsync)}: exception", "Some issues", ex);
             }
 
-            return result;
+            return Task.FromResult(result);
         }
 
-        public async Task<AOResult<UserModel>> GetAuthorAsync(int authorId)
+        public Task<AOResult<IEnumerable<TweetModel>>> FindTweetsByKeywordsAsync(IEnumerable<string> keys)
+        {
+            var result = new AOResult<IEnumerable<TweetModel>>();
+
+            try
+            {
+                var allTweets = _mockService.Tweets;
+
+                if (allTweets != null)
+                {
+                    var foundTweets = allTweets.Where(tweet => keys
+                        .Any(key => tweet.Text?
+                        .IndexOf(key, StringComparison.OrdinalIgnoreCase) > -1));
+
+                    if (foundTweets?.FirstOrDefault() != null)
+                    {
+                        result.SetSuccess(foundTweets.OrderByDescending(x => x.CreationTime));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.SetError($"{nameof(FindTweetsByKeywordsAsync)}: exception", "Some issues", ex);
+            }
+
+            return Task.FromResult(result);
+        }
+
+        public Task<AOResult<UserModel>> GetAuthorAsync(int authorId)
         {
             var result = new AOResult<UserModel>();
 
@@ -90,7 +117,7 @@ namespace InterTwitter.Services
                 result.SetError($"{nameof(GetAuthorAsync)}: exception", "Some issues", ex);
             }
 
-            return result;
+            return Task.FromResult(result);
         }
 
         #endregion

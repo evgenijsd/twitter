@@ -1,5 +1,6 @@
 ﻿using InterTwitter.Helpers.ProcessHelpers;
 using InterTwitter.Models;
+using InterTwitter.Resources.Strings;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,7 +35,7 @@ namespace InterTwitter.Services
             }
             catch (Exception ex)
             {
-                result.SetError($"Exception: {nameof(CheckTheCorrectEmailAsync)}", Resources.Resource.AlertDatabase, ex);
+                result.SetError($"Exception: {nameof(CheckTheCorrectEmailAsync)}", Strings.AlertDatabase, ex);
             }
 
             return result;
@@ -57,7 +58,7 @@ namespace InterTwitter.Services
             }
             catch (Exception ex)
             {
-                result.SetError($"Exception: {nameof(GetByIdAsync)}", Resources.Resource.AlertDatabase, ex);
+                result.SetError($"Exception: {nameof(GetByIdAsync)}", Strings.AlertDatabase, ex);
             }
 
             return result;
@@ -82,7 +83,7 @@ namespace InterTwitter.Services
             }
             catch (Exception ex)
             {
-                result.SetError($"Exception: {nameof(AddAsync)}", Resources.Resource.AlertDatabase, ex);
+                result.SetError($"Exception: {nameof(AddAsync)}", Strings.AlertDatabase, ex);
             }
 
             return result;

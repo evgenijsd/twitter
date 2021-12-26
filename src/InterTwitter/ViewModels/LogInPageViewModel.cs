@@ -1,5 +1,8 @@
 ﻿using InterTwitter.Helpers;
+using InterTwitter.Models;
+using InterTwitter.Resources.Strings;
 using InterTwitter.Services;
+using InterTwitter.Services.Settings;
 using InterTwitter.ViewModels.Validators;
 using InterTwitter.Views;
 using Prism.Navigation;
@@ -13,32 +16,29 @@ namespace InterTwitter.ViewModels
     public class LogInPageViewModel : BaseViewModel
     {
         private readonly IRegistrationService _registrationService;
-
         private readonly ISettingsManager _settingsManager;
-
         private readonly IAuthorizationService _authorizationService;
-
-        private readonly IDialogService _dialogs;
-
+        private readonly IDialogService _dialogService;
         private readonly IKeyboardHelper _keyboardHelper;
 
+        private UserModel _user;
         private double _maxHeight;
         private bool _isSaveFocusedEmail;
         private bool _isSaveFocusedPassword;
 
         public LogInPageViewModel(
             INavigationService navigationService,
-            IDialogService dialogs,
+            IDialogService dialogService,
             IRegistrationService registrationService,
             IAuthorizationService authorizationService,
             ISettingsManager settingsManager,
             IKeyboardHelper keyboardHelper)
             : base(navigationService)
         {
+            _dialogService = dialogService;
             _registrationService = registrationService;
             _authorizationService = authorizationService;
             _settingsManager = settingsManager;
-            _dialogs = dialogs;
             _keyboardHelper = keyboardHelper;
         }
 
@@ -241,22 +241,29 @@ namespace InterTwitter.ViewModels
             var validator = ValidatorsExtension.LogInPageValidator.Validate(this);
             if (validator.IsValid)
             {
+                _keyboardHelper.HideKeyboard();
+
                 var result = await _authorizationService.CheckUserAsync(Email, Password);
                 if (result.IsSuccess)
                 {
-                    _keyboardHelper.HideKeyboard();
-
-                    var user = result.Result;
-                    _settingsManager.UserId = user.Id;
-                    var parametrs = new NavigationParameters { { Constants.Navigation.USER, user } };
-                    await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", parametrs);
+                    if (result.Result.Password == Password)
+                    {
+                        _user = result.Result;
+                        _authorizationService.UserId = _user.Id;
+                        var parametrs = new NavigationParameters { { Constants.Navigation.USER, _user } };
+                        await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", parametrs);
+                    }
+                    else
+                    {
+                        var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertInvalidPassword } };
+                        await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
+                        Password = string.Empty;
+                    }
                 }
                 else
                 {
-                    _keyboardHelper.HideKeyboard();
-
-                    var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Resources.Resource.AlertInvalidLogin } };
-                    await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
+                    var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertInvalidLogin } };
+                    await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
                 }
             }
             else

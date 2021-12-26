@@ -1,5 +1,6 @@
 ﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
+using InterTwitter.Resources.Strings;
 using InterTwitter.Services;
 using InterTwitter.ViewModels.Validators;
 using InterTwitter.Views;
@@ -15,7 +16,7 @@ namespace InterTwitter.ViewModels
     {
         private readonly IRegistrationService _registrationService;
 
-        private readonly IDialogService _dialogs;
+        private readonly IDialogService _dialogService;
 
         private readonly IKeyboardHelper _keyboardHelper;
 
@@ -26,13 +27,13 @@ namespace InterTwitter.ViewModels
 
         public CreatePageViewModel(
             INavigationService navigationService,
-            IDialogService dialogs,
+            IDialogService dialogService,
             IRegistrationService registrationService,
             IKeyboardHelper keyboardHelper)
             : base(navigationService)
         {
+            _dialogService = dialogService;
             _registrationService = registrationService;
-            _dialogs = dialogs;
             _keyboardHelper = keyboardHelper;
         }
 
@@ -110,7 +111,7 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _isFocusedEmail, value);
         }
 
-        private string _buttonText = Resources.Resource.Next;
+        private string _buttonText = Strings.Next;
 
         public string ButtonText
         {
@@ -162,11 +163,11 @@ namespace InterTwitter.ViewModels
             {
                 if (!string.IsNullOrEmpty(Name))
                 {
-                    ButtonText = Resources.Resource.SignUp;
+                    ButtonText = Strings.SignUp;
                 }
                 else
                 {
-                    ButtonText = Resources.Resource.Next;
+                    ButtonText = Strings.Next;
                 }
             }
 
@@ -243,12 +244,13 @@ namespace InterTwitter.ViewModels
         private async Task OnPasswordCommandAsync()
         {
             var result = await _registrationService.CheckTheCorrectEmailAsync(Email);
+
             if (result.IsSuccess)
             {
                 _keyboardHelper.HideKeyboard();
 
-                var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Resources.Resource.AlertLoginTaken } };
-                await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
+                var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertLoginTaken } };
+                await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
             }
             else
             {
