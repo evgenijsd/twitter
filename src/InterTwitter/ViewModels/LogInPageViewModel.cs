@@ -16,9 +16,9 @@ namespace InterTwitter.ViewModels
     {
         private readonly IRegistrationService _registrationService;
 
-        private readonly IAuthorizationService _autorizationService;
+        private readonly IDialogService _dialogService;
 
-        private readonly IDialogService _dialogs;
+        private readonly IAuthorizationService _autorizationService;
 
         private readonly IKeyboardHelper _keyboardHelper;
 
@@ -26,15 +26,15 @@ namespace InterTwitter.ViewModels
 
         public LogInPageViewModel(
             INavigationService navigationService,
-            IDialogService dialogs,
+            IDialogService dialogService,
             IRegistrationService registrationService,
             IAuthorizationService autorizationService,
             IKeyboardHelper keyboardHelper)
             : base(navigationService)
         {
+            _dialogService = dialogService;
             _registrationService = registrationService;
             _autorizationService = autorizationService;
-            _dialogs = dialogs;
             _keyboardHelper = keyboardHelper;
         }
 
@@ -170,14 +170,14 @@ namespace InterTwitter.ViewModels
                     else
                     {
                         var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertInvalidPassword } };
-                        await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
+                        await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
                         Password = string.Empty;
                     }
                 }
                 else
                 {
                     var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertInvalidLogin } };
-                    await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
+                    await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
                 }
             }
             else
@@ -194,9 +194,6 @@ namespace InterTwitter.ViewModels
                         IsWrongEmail = true;
                     }
                 }
-
-                var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, validator.Errors[0].ErrorMessage } };
-                await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
             }
         }
 

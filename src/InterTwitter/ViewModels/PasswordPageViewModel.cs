@@ -16,7 +16,7 @@ namespace InterTwitter.ViewModels
     {
         private readonly IRegistrationService _registrationService;
 
-        private readonly IDialogService _dialogs;
+        private readonly IDialogService _dialogService;
 
         private readonly IKeyboardHelper _keyboardHelper;
 
@@ -24,13 +24,13 @@ namespace InterTwitter.ViewModels
 
         public PasswordPageViewModel (
             INavigationService navigationService,
-            IDialogService dialogs,
+            IDialogService dialogService,
             IRegistrationService registrationService,
             IKeyboardHelper keyboardHelper)
             : base(navigationService)
         {
+            _dialogService = dialogService;
             _registrationService = registrationService;
-            _dialogs = dialogs;
             _keyboardHelper = keyboardHelper;
         }
 
@@ -159,7 +159,7 @@ namespace InterTwitter.ViewModels
                 else
                 {
                     var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertDatabase } };
-                    await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
+                    await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
                 }
             }
             else
@@ -176,9 +176,6 @@ namespace InterTwitter.ViewModels
                         IsWrongConfirmPassword = true;
                     }
                 }
-
-                var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, validator.Errors[0].ErrorMessage } };
-                await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
             }
         }
 

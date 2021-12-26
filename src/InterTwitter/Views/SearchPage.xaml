@@ -9,12 +9,16 @@
                        xmlns:viewmodels="clr-namespace:InterTwitter.ViewModels"
                        xmlns:local="clr-namespace:InterTwitter.Views"
                        xmlns:Behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
-                       xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                       xmlns:behaviors="clr-namespace:InterTwitter.Behaviors"
                        prism:ViewModelLocator.AutowireViewModel="True"
                        IconImageSource="{Binding IconPath}"
                        BackgroundColor="{DynamicResource appcolor_i2}"
                        x:DataType="viewmodels:SearchPageViewModel"
                        x:Class="InterTwitter.Views.SearchPage">
+
+    <ContentPage.Behaviors>
+        <behaviors:TabPageBehavior/>
+    </ContentPage.Behaviors>
 
     <ContentPage.Content>
 

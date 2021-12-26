@@ -4,6 +4,8 @@ using InterTwitter.Helpers;
 using InterTwitter.Models;
 using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services;
+using InterTwitter.Services.Settings;
+using InterTwitter.Services.UserService;
 using InterTwitter.Views;
 using Prism.Navigation;
 using System.Collections.Generic;
@@ -18,17 +20,20 @@ namespace InterTwitter.ViewModels
     public class HomePageViewModel : BaseTabViewModel
     {
         private readonly ITweetService _tweetService;
+        private readonly IUserService _userService;
+        private readonly ISettingsManager _settingsManager;
         private readonly IAuthorizationService _autorizationService;
         private readonly IRegistrationService _registrationService;
 
-        private bool _isFirstStart = true;
         private UserModel _currentUser;
 
         public HomePageViewModel(
+            ISettingsManager settingsManager,
             ITweetService tweetService,
-            INavigationService navigationService,
             IAuthorizationService autorizationService,
-            IRegistrationService registrationService)
+            IRegistrationService registrationService,
+            IUserService userService,
+            INavigationService navigationService)
             : base(navigationService)
         {
             _tweetService = tweetService;
@@ -36,6 +41,9 @@ namespace InterTwitter.ViewModels
             _registrationService = registrationService;
 
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource;
+            _tweetService = tweetService;
+            _userService = userService;
+            _settingsManager = settingsManager;
         }
 
         #region -- Public properties --
@@ -57,24 +65,19 @@ namespace InterTwitter.ViewModels
         #endregion
 
         #region -- Overrides --
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        public override Task InitializeAsync(INavigationParameters parameters)
         {
-            base.OnNavigatedTo(parameters);
+            return InitAsync();
         }
 
-        public override async void OnAppearing()
+        public override void OnAppearing()
         {
-            if (_isFirstStart)
-            {
-                await InitAsync();
-            }
-
-            IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_blue"] as ImageSource;
+            IconPath = App.Current.Resources["ic_home_blue"] as ImageSource;
         }
 
         public override void OnDisappearing()
         {
-            IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource;
+            IconPath = App.Current.Resources["ic_home_gray"] as ImageSource;
         }
 
         #endregion
@@ -95,6 +98,7 @@ namespace InterTwitter.ViewModels
 
                     foreach (var tweet in tweetViewModels)
                     {
+                        var user = await _userService.GetUserAsync(tweet.UserId);
                         var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
 
                         if (tweetAuthor.IsSuccess)
@@ -102,6 +106,18 @@ namespace InterTwitter.ViewModels
                             tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
                             tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
                             tweet.UserName = tweetAuthor.Result.Name;
+                            if (tweetAuthor.Result.Id == _currentUser.Id)
+                            {
+                                tweet.MoveToProfileCommand = new Command(() =>
+                                NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
+                                { { Constants.Navigation.CURRENT_USER, user.Result } }));
+                            }
+                            else
+                            {
+                                tweet.MoveToProfileCommand = new Command(() =>
+                                NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
+                                { { Constants.Navigation.USER, user.Result } }));
+                            }
                         }
                     }
 

@@ -11,15 +11,24 @@ namespace InterTwitter.Services
             InitUsers();
             InitTweets();
             InitHashtags();
+            Likes = new List<LikeModel>();
+            MuteList = new List<MuteModel>();
+            BlackList = new List<BlockModel>();
         }
 
         #region -- IMockService implementation --
 
-        public List<UserModel> Users { get; set; }
+        public IList<UserModel> Users { get; set; }
 
-        public IEnumerable<TweetModel> Tweets { get; set; }
+        public IList<TweetModel> Tweets { get; set; }
 
-        public IEnumerable<HashtagModel> Hashtags { get; set; }
+        public IList<HashtagModel> Hashtags { get; set; }
+
+        public IList<LikeModel> Likes { get; set; }
+
+        public IList<BlockModel> BlackList { get; set; }
+
+        public IList<MuteModel> MuteList { get; set; }
 
         #endregion
 

@@ -1,6 +1,9 @@
 ﻿using InterTwitter.Enums;
 using InterTwitter.Helpers;
+using InterTwitter.Services.UserService;
+using InterTwitter.Views;
 using Prism.Mvvm;
+using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -123,8 +126,14 @@ namespace InterTwitter.Models.TweetViewModel
         private ICommand _markTweetCommand;
         public ICommand MarkTweetCommand => _markTweetCommand ?? (_markTweetCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnMarkAsync));
 
+        //private ICommand _moveToProfileCommand;
+        //public ICommand MoveToProfileCommand => _moveToProfileCommand ?? (_moveToProfileCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnGoToProfileAsync));
         private ICommand _moveToProfileCommand;
-        public ICommand MoveToProfileCommand => _moveToProfileCommand ?? (_moveToProfileCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnGoToProfileAsync));
+        public ICommand MoveToProfileCommand
+        {
+            get => _moveToProfileCommand;
+            set => SetProperty(ref _moveToProfileCommand, value);
+        }
 
         private DateTime _CreationTime;
         public DateTime CreationTime
@@ -159,5 +168,6 @@ namespace InterTwitter.Models.TweetViewModel
         }
 
         #endregion
+
     }
 }

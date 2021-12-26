@@ -1,15 +1,18 @@
 using DLToolkit.Forms.Controls;
 using InterTwitter.Resources.Strings;
-using InterTwitter.Services;
 using InterTwitter.Services.Hashtag;
-using InterTwitter.Services.SettingsManager;
+using InterTwitter.Services.Settings;
+using InterTwitter.Droid.Services.PermissionsService;
+using InterTwitter.Services;
+using InterTwitter.Services.PermissionsService;
+using InterTwitter.Services.UserService;
 using InterTwitter.ViewModels;
 using InterTwitter.ViewModels.Flyout;
 using InterTwitter.Views;
 using Prism;
 using Prism.Ioc;
+using Prism.Plugin.Popups;
 using Prism.Unity;
-using System.Globalization;
 using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Forms;
 
@@ -26,14 +29,19 @@ namespace InterTwitter
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            // Services
-            containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
-            containerRegistry.RegisterInstance<IMockService>(Container.Resolve<MockService>());
-            containerRegistry.RegisterInstance<ITweetService>(Container.Resolve<TweetService>());
-            containerRegistry.RegisterInstance<IHashtagService>(Container.Resolve<HashtagService>());
-            containerRegistry.RegisterInstance<IRegistrationService>(Container.Resolve<RegistrationService>());
-            containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
+            containerRegistry.RegisterPopupNavigationService();
+            containerRegistry.RegisterPopupDialogService();
             containerRegistry.RegisterDialog<AlertView, AlertViewModel>();
+
+            //Services
+            containerRegistry.RegisterSingleton<ISettingsManager, SettingsManager>();
+            containerRegistry.RegisterSingleton<IMockService, MockService>();
+            containerRegistry.RegisterSingleton<ITweetService, TweetService>();
+            containerRegistry.RegisterSingleton<IHashtagService, HashtagService>();
+            containerRegistry.RegisterSingleton<IRegistrationService, RegistrationService>();
+            containerRegistry.RegisterSingleton<IAuthorizationService, AuthorizationService>();
+            containerRegistry.RegisterSingleton<IUserService, UserService>();
+            containerRegistry.RegisterSingleton<IPermissionService, PermissionService>();
 
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
@@ -49,6 +57,8 @@ namespace InterTwitter
             containerRegistry.RegisterForNavigation<CreatePage, CreatePageViewModel>();
             containerRegistry.RegisterForNavigation<LogInPage, LogInPageViewModel>();
             containerRegistry.RegisterForNavigation<PasswordPage, PasswordPageViewModel>();
+            containerRegistry.RegisterForNavigation<EditProfilePage, EditProfilePageViewModel>();
+            containerRegistry.RegisterForNavigation<BlacklistPage, BlacklistPageViewModel>();
         }
 
         protected override async void OnInitialized()
@@ -68,10 +78,12 @@ namespace InterTwitter
 
         protected override void OnSleep()
         {
+            this.PopupPluginOnSleep();
         }
 
         protected override void OnResume()
         {
+            this.PopupPluginOnResume();
         }
 
         #endregion
