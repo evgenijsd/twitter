@@ -35,18 +35,7 @@
 
                         <StackLayout Spacing="0"
                                      Margin="10.5, 0">
-
-                            <Label Style="{DynamicResource tstyle_i7}" 
-                                   Text="Share">
-
-                                <Label.GestureRecognizers>
-
-                                    <TapGestureRecognizer Command="{Binding ShareUserProfileTapCommand}"/>
-
-                                </Label.GestureRecognizers>
-
-                            </Label>
-
+       
                             <Label Margin="0, 19, 0, 10.5"
                                    Text="{xct:Translate PopularTheme}"
                                    Style="{DynamicResource tstyle_i4}"/>

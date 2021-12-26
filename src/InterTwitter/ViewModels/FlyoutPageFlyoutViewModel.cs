@@ -1,4 +1,5 @@
 ﻿using InterTwitter.Helpers;
+using InterTwitter.Models;
 using InterTwitter.Services;
 using InterTwitter.Views;
 using Prism.Navigation;
@@ -14,13 +15,16 @@ namespace InterTwitter.ViewModels.Flyout
     public class FlyoutPageFlyoutViewModel : BaseViewModel
     {
         private readonly IAuthorizationService _authorizationService;
+        private readonly IRegistrationService _registrationService;
 
         public FlyoutPageFlyoutViewModel(
             INavigationService navigationService,
+            IRegistrationService registrationService,
             IAuthorizationService authorizationService)
             : base(navigationService)
         {
             _authorizationService = authorizationService;
+            _registrationService = registrationService;
 
             MenuItems = new ObservableCollection<MenuItemViewModel>(new[]
                 {
@@ -107,6 +111,7 @@ namespace InterTwitter.ViewModels.Flyout
             MessagingCenter.Subscribe<BookmarksPageViewModel, Type>(this, Constants.Messages.TAB_CHANGE, ChangeVisualState);
             MessagingCenter.Subscribe<NotificationPageViewModel, Type>(this, Constants.Messages.TAB_CHANGE, ChangeVisualState);
             MessagingCenter.Subscribe<FlyoutPageDetailViewModel, Type>(this, Constants.Messages.TAB_CHANGE, ChangeVisualState);
+            MessagingCenter.Subscribe<App, int>(this, Constants.Messages.OPEN_PROFILE_PAGE, OnOpenProfileCommandAsync);
         }
 
         private void ChangeVisualState(object sender, Type selectedTabType)
@@ -167,7 +172,22 @@ namespace InterTwitter.ViewModels.Flyout
             await NavigationService.NavigateAsync($"{nameof(ProfilePage)}");
         }
 
-        #endregion
+        private async void OnOpenProfileCommandAsync(App arg1, int userId)
+        {
+            if (userId > 0)
+            {
+                var getByIdAsyncAOResult = await _registrationService.GetByIdAsync(userId);
 
+                if (getByIdAsyncAOResult.IsSuccess)
+                {
+                    NavigationParameters keyValuePairs = new NavigationParameters();
+                    keyValuePairs.Add(Constants.Navigation.USER, getByIdAsyncAOResult.Result);
+
+                    await NavigationService.NavigateAsync($"{nameof(ProfilePage)}", keyValuePairs);
+                }
+            }
+        }
+
+        #endregion
     }
 }

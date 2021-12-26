@@ -11,6 +11,21 @@ using Prism.Ioc;
 namespace InterTwitter.Droid
 {
     [Activity(Label = "@string/ApplicationName", Icon = "@mipmap/launcher_foreground", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize, ScreenOrientation = ScreenOrientation.Portrait)]
+   
+    [IntentFilter(new[] { Android.Content.Intent.ActionView },
+                  DataScheme = "https",
+                  DataHost = "intertwitter.com",
+                  DataPathPrefix = "/userId",
+                  AutoVerify = true,
+                  Categories = new[] { Android.Content.Intent.CategoryDefault, Android.Content.Intent.CategoryBrowsable })]
+   
+    [IntentFilter(new[] { Android.Content.Intent.ActionView },
+                  DataScheme = "http",
+                  DataHost = "intertwitter.com",
+                  AutoVerify = true,
+                  DataPathPrefix = "/userId",
+                  Categories = new[] { Android.Content.Intent.CategoryDefault, Android.Content.Intent.CategoryBrowsable })]
+   
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         #region -- Overrides --

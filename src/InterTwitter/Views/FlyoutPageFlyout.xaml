@@ -27,7 +27,7 @@
 
             <ffimageloading:CachedImage Margin="10"
                                         Aspect="AspectFit"
-                                        Source="/storage/emulated/0/Android/data/com.companyname.intertwitter/cache/2203693cc04e0be7f4f024d5f9499e13/e0cab0b6dba249caafd32246e169aa86/IMG_20200914_072110_479.jpg">
+                                        Source="/storage/emulated/0/Android/data/com.companyname.intertwitter/cache/2203693cc04e0be7f4f024d5f9499e13/56d28d0c811a4bffb026e5e098b10abe/IMG_20200914_072110_479.jpg">
                 <ffimageloading:CachedImage.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding OpenProfileCommandAsync}" />
                 </ffimageloading:CachedImage.GestureRecognizers>

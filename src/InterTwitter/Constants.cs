@@ -13,12 +13,15 @@ namespace InterTwitter
 
             public const string TAB_CHANGE = "TabChange";
 
-            public const string UPDATE_HASHTAGS = "UpdateHashtags";
+            public const string OPEN_PROFILE_PAGE = nameof(OPEN_PROFILE_PAGE);
         }
 
         public static class Values
         {
             public const int NUMBER_OF_POPULAR_HASHTAGS = 5;
+            public const string HOST = "intertwitter.com";
+            public const string APP_USER_LINK = "https://intertwitter.com/";
+            public const string APP_USER_LINK_ID = "userId";
         }
 
         public static class Methods
@@ -38,6 +41,7 @@ namespace InterTwitter
         {
             public const string USER = nameof(USER);
             public const string MESSAGE = nameof(MESSAGE);
+            public const string USER_ID = nameof(USER_ID);
         }
     }
 }

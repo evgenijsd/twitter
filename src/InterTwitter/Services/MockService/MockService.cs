@@ -35,7 +35,7 @@ namespace InterTwitter.Services
                     Name = "Bill Gates",
                     Email = "aaa@aaa.aaa",
                     Password = "1234567A",
-                    AvatarPath = "Zm_mLe8whTY.jpg",
+                    AvatarPath = "https://avatars.mds.yandex.net/i?id=9124e8d6c175c189503fa5d7883c515d-5859422-images-thumbs&n=13",
                     BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
                 new UserModel
@@ -44,7 +44,7 @@ namespace InterTwitter.Services
                     Name = "Kate White",
                     Email = "bbb@bbb.bbb",
                     Password = "1234567A",
-                    AvatarPath = "/storage/emulated/0/Android/data/com.companyname.intertwitter/cache/2203693cc04e0be7f4f024d5f9499e13/e0cab0b6dba249caafd32246e169aa86/IMG_20200914_072110_479.jpg",
+                    AvatarPath = "https://s1.1zoom.ru/b4344/471/Owls_Birds_Glance_537043_2560x1440.jpg",
                     BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
                 new UserModel

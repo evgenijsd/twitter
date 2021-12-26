@@ -10,6 +10,7 @@ using InterTwitter.Views;
 using Prism;
 using Prism.Ioc;
 using Prism.Unity;
+using System;
 using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Forms;
 
@@ -23,6 +24,35 @@ namespace InterTwitter
         }
 
         #region -- Overrides --
+
+        protected override void OnAppLinkRequestReceived(Uri uri)
+        {
+            if (uri.Host.EndsWith(Constants.Values.HOST, StringComparison.OrdinalIgnoreCase))
+            {
+                if (uri.Segments != null && uri.Segments.Length == 3)
+                {
+                    var action = uri.Segments[1].Replace("/", string.Empty);
+                    var msg = uri.Segments[2];
+
+                    switch (action)
+                    {
+                        case Constants.Values.APP_USER_LINK_ID:
+                            if (!string.IsNullOrEmpty(msg))
+                            {
+                                if (int.TryParse(msg, out int userId))
+                                {
+                                    MessagingCenter.Send(this, Constants.Messages.OPEN_PROFILE_PAGE, userId);
+                                }
+                            }
+
+                            break;
+                        default:
+                            Xamarin.Forms.Device.OpenUri(uri);
+                            break;
+                    }
+                }
+            }
+        }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {

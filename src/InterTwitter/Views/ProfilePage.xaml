@@ -56,8 +56,18 @@
                IsVisible="false"
                VerticalOptions="Start">
             <StackLayout Spacing="28">
+                
                 <Label Style="{DynamicResource tstyle_i7}" 
-                       Text="Share" />
+                       Text="Share">
+
+                    <Label.GestureRecognizers>
+
+                        <TapGestureRecognizer Command="{Binding ShareUserProfileTapCommand}"/>
+
+                    </Label.GestureRecognizers>
+
+                </Label>
+                
                 <Label Style="{DynamicResource tstyle_i7}" 
                        Text="Change profile" />
                 <Label Style="{DynamicResource tstyle_i7}" 
@@ -73,10 +83,13 @@
                          Margin="16,0,0,0"
                          HorizontalOptions="Start"
                          VerticalOptions="Center">
+                
                 <Label Style="{DynamicResource tstyle_i14}" 
-                       Text="Jaylon Kenter" />
+                       Text="{Binding ProfileName}" />
+                
                 <Label Style="{DynamicResource tstyle_i9}" 
-                       Text="JKenter@gmail.com" />
+                       Text="{Binding ProfileEmail}" />
+                
             </StackLayout>
             <Frame Grid.Column="1"
                    Margin="0,8,0,0"
@@ -133,7 +146,7 @@
                                        Size="65"
                                        VerticalOptions="Center">
                 <ffimage:CachedImage Aspect="AspectFill" 
-                                     Source="/storage/emulated/0/Android/data/com.companyname.intertwitter/cache/2203693cc04e0be7f4f024d5f9499e13/e0cab0b6dba249caafd32246e169aa86/IMG_20200914_072110_479.jpg">
+                                     Source="{Binding AvatarIcon}">
                     <ffimage:CachedImage.Transformations>
                         <fftranform:CircleTransformation />
                     </ffimage:CachedImage.Transformations>
