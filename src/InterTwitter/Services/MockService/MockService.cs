@@ -320,7 +320,7 @@ namespace InterTwitter.Services
                 {
                     Id = 17,
                     UserId = 6,
-                    TweetId = 7,
+                    TweetId = 1,
                     Notification = true,
                     CreationTime = DateTime.Parse("07.03.2021 12:12:12", culture),
                 },

@@ -14,7 +14,9 @@ namespace InterTwitter.ViewModels
     {
         private readonly IRegistrationService _registrationService;
 
-        private readonly IAuthorizationService _autorizationService;
+        private readonly ISettingsManager _settingsManager;
+
+        private readonly IAuthorizationService _authorizationService;
 
         private readonly IDialogService _dialogs;
 
@@ -28,12 +30,14 @@ namespace InterTwitter.ViewModels
             INavigationService navigationService,
             IDialogService dialogs,
             IRegistrationService registrationService,
-            IAuthorizationService autorizationService,
+            IAuthorizationService authorizationService,
+            ISettingsManager settingsManager,
             IKeyboardHelper keyboardHelper)
             : base(navigationService)
         {
             _registrationService = registrationService;
-            _autorizationService = autorizationService;
+            _authorizationService = authorizationService;
+            _settingsManager = settingsManager;
             _dialogs = dialogs;
             _keyboardHelper = keyboardHelper;
         }
@@ -212,7 +216,7 @@ namespace InterTwitter.ViewModels
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             _maxHeight = CurrentHeight;
-            var result = await _registrationService?.GetByIdAsync(_autorizationService.UserId);
+            var result = await _registrationService?.GetByIdAsync(_settingsManager.UserId);
             if (result.IsSuccess)
             {
                 var user = result.Result;
@@ -237,13 +241,13 @@ namespace InterTwitter.ViewModels
             var validator = ValidatorsExtension.LogInPageValidator.Validate(this);
             if (validator.IsValid)
             {
-                var result = await _autorizationService.CheckUserAsync(Email, Password);
+                var result = await _authorizationService.CheckUserAsync(Email, Password);
                 if (result.IsSuccess)
                 {
                     _keyboardHelper.HideKeyboard();
 
                     var user = result.Result;
-                    _autorizationService.UserId = user.Id;
+                    _settingsManager.UserId = user.Id;
                     var parametrs = new NavigationParameters { { Constants.Navigation.USER, user } };
                     await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", parametrs);
                 }

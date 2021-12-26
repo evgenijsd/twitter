@@ -13,14 +13,14 @@ namespace InterTwitter.ViewModels
 {
     public class FlyoutPageFlyoutViewModel : BaseViewModel
     {
-        private readonly IAuthorizationService _authorizationService;
+        private readonly ISettingsManager _settingsManager;
 
         public FlyoutPageFlyoutViewModel(
             INavigationService navigationService,
-            IAuthorizationService authorizationService)
+            ISettingsManager settingsManager)
             : base(navigationService)
         {
-            _authorizationService = authorizationService;
+            _settingsManager = settingsManager;
 
             MenuItems = new ObservableCollection<MenuItemViewModel>(new[]
                 {
@@ -151,7 +151,7 @@ namespace InterTwitter.ViewModels
 
         private async Task OnLogoutCommandAsync()
         {
-            _authorizationService.UserId = 0;
+            _settingsManager.UserId = 0;
 
             await NavigationService.NavigateAsync($"/{nameof(LogInPage)}");
         }

@@ -17,7 +17,7 @@ namespace InterTwitter.ViewModels
 
         private readonly IDialogService _dialogs;
 
-        private readonly IAuthorizationService _autorizationService;
+        private readonly ISettingsManager _settingsManager;
 
         private readonly IKeyboardHelper _keyboardHelper;
 
@@ -30,12 +30,12 @@ namespace InterTwitter.ViewModels
             INavigationService navigationService,
             IDialogService dialogs,
             IRegistrationService registrationService,
-            IAuthorizationService autorizationService,
+            ISettingsManager settingsManager,
             IKeyboardHelper keyboardHelper)
             : base(navigationService)
         {
             _registrationService = registrationService;
-            _autorizationService = autorizationService;
+            _settingsManager = settingsManager;
             _dialogs = dialogs;
             _keyboardHelper = keyboardHelper;
         }
@@ -256,7 +256,7 @@ namespace InterTwitter.ViewModels
                 {
                     _keyboardHelper.HideKeyboard();
 
-                    _autorizationService.UserId = _user.Id;
+                    _settingsManager.UserId = _user.Id;
                     var parametrs = new NavigationParameters { { Constants.Navigation.USER, _user } };
                     await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", parametrs);
                 }

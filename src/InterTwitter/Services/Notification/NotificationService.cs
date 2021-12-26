@@ -1,5 +1,6 @@
 ﻿using InterTwitter.Enums;
 using InterTwitter.Helpers;
+using InterTwitter.Models;
 using InterTwitter.Models.NotificationViewModel;
 using System;
 using System.Collections.Generic;
@@ -33,18 +34,63 @@ namespace InterTwitter.Services
         {
             var result = new AOResult<List<BaseNotificationViewModel>>();
 
-            var resultTweets = await _tweetService.GetByUserTweetsAsync(userId);
-            if (resultTweets.IsSuccess)
+            try
             {
-                var notificationViewModels = new List<BaseNotificationViewModel>();
+                var resultTweets = await _tweetService.GetByUserTweetsAsync(userId);
+                if (resultTweets.IsSuccess)
+                {
+                    var notificationViewModels = new List<BaseNotificationViewModel>();
 
+                    var resultBookmarks = await GetBookmarkNotificationsAsync(resultTweets.Result, userId);
+                    var resultLikes = await GetLikeNotificationsAsync(resultTweets.Result, userId);
+                    if (resultBookmarks.IsSuccess && resultLikes.IsSuccess)
+                    {
+                        notificationViewModels = resultBookmarks.Result.Concat(resultLikes.Result).ToList();
+                    }
+                    else
+                    {
+                        notificationViewModels = resultBookmarks.Result ?? resultLikes.Result;
+                    }
+
+                    if (notificationViewModels != null)
+                    {
+                        result.SetSuccess(notificationViewModels);
+                    }
+                    else
+                    {
+                        result.SetFailure(Resources.Resource.NotFoundNotification);
+                    }
+                }
+                else
+                {
+                    result.SetFailure(Resources.Resource.NoTweets);
+                }
+            }
+            catch (Exception ex)
+            {
+                result.SetError($"{nameof(GetNotificationsAsync)}: exception", Resources.Resource.SomeIssues, ex);
+            }
+
+            return result;
+        }
+
+        #endregion
+
+        #region -- Private helpers --
+
+        private async Task<AOResult<List<BaseNotificationViewModel>>> GetBookmarkNotificationsAsync(List<TweetModel> tweets, int userId)
+        {
+            var result = new AOResult<List<BaseNotificationViewModel>>();
+            try
+            {
                 var resultBookmarks = await _bookmarkService.GetNotificationsAsync(userId);
                 if (resultBookmarks.IsSuccess)
                 {
-                    var bookmarks = resultBookmarks.Result.Where(x => resultTweets.Result.Any(y => y.Id == x.TweetId)).ToList();
+                    var notificationViewModels = new List<BaseNotificationViewModel>();
+                    var bookmarks = resultBookmarks.Result.Where(x => tweets.Any(y => y.Id == x.TweetId)).ToList();
                     foreach (var b in bookmarks)
                     {
-                        var tweet = resultTweets.Result.FirstOrDefault(x => x.Id == b.TweetId);
+                        var tweet = tweets.FirstOrDefault(x => x.Id == b.TweetId);
                         var user = await _tweetService.GetAuthorAsync(b.UserId);
                         var notification = new BaseNotificationViewModel
                         {
@@ -62,15 +108,38 @@ namespace InterTwitter.Services
 
                         notificationViewModels.Add(notification);
                     }
-                }
 
+                    if (notificationViewModels != null)
+                    {
+                        result.SetSuccess(notificationViewModels);
+                    }
+                    else
+                    {
+                        result.SetFailure(Resources.Resource.NotFoundNotification);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.SetError($"{nameof(GetNotificationsAsync)}: exception", Resources.Resource.SomeIssues, ex);
+            }
+
+            return result;
+        }
+
+        private async Task<AOResult<List<BaseNotificationViewModel>>> GetLikeNotificationsAsync(List<TweetModel> tweets, int userId)
+        {
+            var result = new AOResult<List<BaseNotificationViewModel>>();
+            try
+            {
                 var resultLikes = await _likeService.GetNotificationsAsync(userId);
+                var notificationViewModels = new List<BaseNotificationViewModel>();
                 if (resultLikes.IsSuccess)
                 {
-                    var likes = resultLikes.Result.Where(x => resultTweets.Result.Any(y => y.Id == x.TweetId)).ToList();
+                    var likes = resultLikes.Result.Where(x => tweets.Any(y => y.Id == x.TweetId)).ToList();
                     foreach (var l in likes)
                     {
-                        var tweet = resultTweets.Result.FirstOrDefault(x => x.Id == l.TweetId);
+                        var tweet = tweets.FirstOrDefault(x => x.Id == l.TweetId);
                         var user = await _tweetService.GetAuthorAsync(l.UserId);
                         var notification = new BaseNotificationViewModel
                         {
@@ -88,20 +157,20 @@ namespace InterTwitter.Services
 
                         notificationViewModels.Add(notification);
                     }
-                }
 
-                if (notificationViewModels != null)
-                {
-                    result.SetSuccess(notificationViewModels);
-                }
-                else
-                {
-                    result.SetFailure(Resources.Resource.NotFoundNotification);
+                    if (notificationViewModels != null)
+                    {
+                        result.SetSuccess(notificationViewModels);
+                    }
+                    else
+                    {
+                        result.SetFailure(Resources.Resource.NotFoundNotification);
+                    }
                 }
             }
-            else
+            catch (Exception ex)
             {
-                result.SetFailure(Resources.Resource.NoTweets);
+                result.SetError($"{nameof(GetNotificationsAsync)}: exception", Resources.Resource.SomeIssues, ex);
             }
 
             return result;

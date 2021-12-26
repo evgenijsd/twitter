@@ -20,7 +20,7 @@ namespace InterTwitter.ViewModels
     {
         private readonly ITweetService _tweetService;
 
-        private readonly IAuthorizationService _autorizationService;
+        private readonly ISettingsManager _settingsManager;
 
         private readonly IRegistrationService _registrationService;
 
@@ -36,14 +36,14 @@ namespace InterTwitter.ViewModels
             ITweetService tweetService,
             ILikeService likeService,
             IBookmarkService bookmarkService,
-            IAuthorizationService autorizationService,
+            ISettingsManager settingsManager,
             IRegistrationService registrationService)
             : base(navigationService)
         {
             _tweetService = tweetService;
             _likeService = likeService;
             _bookmarkService = bookmarkService;
-            _autorizationService = autorizationService;
+            _settingsManager = settingsManager;
             _registrationService = registrationService;
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_bookmarks_gray"] as ImageSource;
         }
@@ -133,7 +133,7 @@ namespace InterTwitter.ViewModels
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
-            _userId = _autorizationService.UserId;
+            _userId = _settingsManager.UserId;
             var result = await _registrationService.GetByIdAsync(_userId);
 
             if (result.IsSuccess)

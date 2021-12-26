@@ -23,7 +23,7 @@ namespace InterTwitter.ViewModels
 
         private readonly ILikeService _likeService;
 
-        private readonly IAuthorizationService _autorizationService;
+        private readonly ISettingsManager _settingsManager;
 
         private readonly IRegistrationService _registrationService;
 
@@ -36,14 +36,14 @@ namespace InterTwitter.ViewModels
             IBookmarkService bookmarkService,
             ILikeService likeService,
             ITweetService tweetService,
-            IAuthorizationService autorizationService,
+            ISettingsManager settingsManager,
             IRegistrationService registrationService)
             : base(navigationService)
         {
             _bookmarkService = bookmarkService;
             _likeService = likeService;
             _tweetService = tweetService;
-            _autorizationService = autorizationService;
+            _settingsManager = settingsManager;
             _registrationService = registrationService;
 
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource;
@@ -102,7 +102,7 @@ namespace InterTwitter.ViewModels
 
         private async Task InitAsync()
         {
-            _userId = _autorizationService.UserId;
+            _userId = _settingsManager.UserId;
             var result = await _registrationService.GetByIdAsync(_userId);
 
             if (result.IsSuccess)

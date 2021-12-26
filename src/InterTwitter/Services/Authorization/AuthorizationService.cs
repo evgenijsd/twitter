@@ -16,16 +16,6 @@ namespace InterTwitter.Services
             _mockService = mockService;
         }
 
-        #region -- Public properties --
-
-        public int UserId
-        {
-            get => Preferences.Get(nameof(UserId), 0);
-            set => Preferences.Set(nameof(UserId), value);
-        }
-
-        #endregion
-
         #region -- Public helpers --
 
         public async Task<AOResult<UserModel>> CheckUserAsync(string email, string password)
