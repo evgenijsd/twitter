@@ -421,6 +421,15 @@ namespace InterTwitter.Resources.Strings {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Start writing.
+        /// </summary>
+        internal static string PlaceholderEditor {
+            get {
+                return ResourceManager.GetString("PlaceholderEditor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Please, type your name.
         /// </summary>
         internal static string PleaseName {
@@ -430,11 +439,29 @@ namespace InterTwitter.Resources.Strings {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Post.
+        /// </summary>
+        internal static string Post {
+            get {
+                return ResourceManager.GetString("Post", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Sign Up.
         /// </summary>
         internal static string SignUp {
             get {
                 return ResourceManager.GetString("SignUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Video.
+        /// </summary>
+        internal static string Video {
+            get {
+                return ResourceManager.GetString("Video", resourceCulture);
             }
         }
         

@@ -237,11 +237,20 @@
   <data name="PasswordIncorrect" xml:space="preserve">
     <value>The password is incorrect</value>
   </data>
+  <data name="PlaceholderEditor" xml:space="preserve">
+    <value>Start writing</value>
+  </data>
   <data name="PleaseName" xml:space="preserve">
     <value>Please, type your name</value>
   </data>
+  <data name="Post" xml:space="preserve">
+    <value>Post</value>
+  </data>
   <data name="SignUp" xml:space="preserve">
     <value>Sign Up</value>
+  </data>
+  <data name="Video" xml:space="preserve">
+    <value>Video</value>
   </data>
   <data name="WrongEmail" xml:space="preserve">
     <value>Wrong Email</value>

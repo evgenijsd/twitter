@@ -2,7 +2,9 @@
 <view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                       xmlns:sh="http://sharpnado.com"
+                      xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
                       xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                      xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
                       xmlns:controls="clr-namespace:InterTwitter.Controls"
                       xmlns:statecontainer="clr-namespace:InterTwitter.Controls.StateContainer"
                       xmlns:viewModels="clr-namespace:InterTwitter.ViewModels"
@@ -38,7 +40,7 @@
 
                         <Button Style="{DynamicResource button_i1}"
                                 BackgroundColor="{DynamicResource appcolor_i1}"
-                                Text="Post"
+                                Text="{xct:Translate Post}"
                                 Command="{Binding PostTweetCommand}"/>
 
                     </statecontainer:StateCondition>
@@ -47,7 +49,7 @@
 
                         <Button Style="{DynamicResource button_i1}"
                                 BackgroundColor="{DynamicResource appcolor_i4}"
-                                Text="Post"/>
+                                Text="{xct:Translate Post}"/>
 
                     </statecontainer:StateCondition>
 
@@ -71,7 +73,13 @@
                     <Frame Style="{DynamicResource frame_i1}">
 
                         <ffimageloading:CachedImage Source="{Binding AvatarPath}"
-                                                    Aspect="AspectFit"/>
+                                                    Aspect="AspectFit">
+
+                            <ffimageloading:CachedImage.Transformations>
+                                <fftransformations:CircleTransformation/>
+                            </ffimageloading:CachedImage.Transformations>
+                            
+                        </ffimageloading:CachedImage>
 
                     </Frame>
 
@@ -84,7 +92,7 @@
                     <StackLayout BackgroundColor="{DynamicResource appcolor_i2}">
 
                         <controls:CustomEditor Text="{Binding Text}"
-                                               Placeholder="Start writing"
+                                               Placeholder="{xct:Translate PlaceholderEditor}"
                                                CorrectLength="250"
                                                MaxLength="300"
                                                Style="{DynamicResource customEditor_i1}"/>
@@ -203,7 +211,7 @@
                                     <Image Source="{DynamicResource ic_video_blue}"
                                            Style="{DynamicResource image_i1}"/>
 
-                                    <Label Text="Video"
+                                    <Label Text="{xct:Translate Video}"
                                            Style="{DynamicResource label_i1}"/>
 
                                     <ImageButton Source="{DynamicResource ic_clear_filled_blue}"
