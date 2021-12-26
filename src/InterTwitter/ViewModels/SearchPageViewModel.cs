@@ -5,14 +5,19 @@ using InterTwitter.Models;
 using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services;
 using InterTwitter.Services.Hashtag;
+using InterTwitter.Services.SettingsManager;
+using InterTwitter.Services.Share;
 using Prism.Navigation;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.CommunityToolkit.Helpers;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
@@ -21,15 +26,26 @@ namespace InterTwitter.ViewModels
     {
         private readonly ITweetService _tweetService;
         private readonly IHashtagService _hashtagService;
+        private readonly IRegistrationService _registrationService;
+        private readonly IAuthorizationService _authorizationService;
+
+        // temp
+        private readonly IShareService _shareService;
 
         public SearchPageViewModel(
             INavigationService navigationService,
             ITweetService tweetService,
-            IHashtagService hashtagManager)
+            IHashtagService hashtagManager,
+            IShareService shareService,
+            IRegistrationService registrationService,
+            IAuthorizationService authorizationService)
             : base(navigationService)
         {
             _tweetService = tweetService;
             _hashtagService = hashtagManager;
+            _shareService = shareService;
+            _registrationService = registrationService;
+            _authorizationService = authorizationService;
 
             FoundTweets = new ObservableCollection<BaseTweetViewModel>();
             Hashtags = new ObservableCollection<HashtagModel>();
@@ -115,6 +131,10 @@ namespace InterTwitter.ViewModels
         private ICommand _hashtagTapCommand;
         public ICommand HashtagTapCommand => _hashtagTapCommand ??= SingleExecutionCommand.FromFunc(OnHashtagTapCommandAsync);
 
+        // temp
+        public ICommand _shareUserProfileTapCommand;
+        public ICommand ShareUserProfileTapCommand => _shareUserProfileTapCommand ??= SingleExecutionCommand.FromFunc(OnShareUserProfileTapCommandAsync);
+
         #endregion
 
         #region -- Overrides --
@@ -174,6 +194,24 @@ namespace InterTwitter.ViewModels
         #endregion
 
         #region -- Private helpers --
+
+        private async Task OnShareUserProfileTapCommandAsync()
+        {
+            //await _shareService.ShareRequestAsync("hello from InterTwitter!");
+            //await _shareService.ShareTextRequest("hello from InterTwitter!", "awesome title");
+            //var image = await MediaPicker.PickPhotoAsync();
+            //var file = new ShareFile(image);
+            //await _shareService.ShareFileAsync("Girl", file);
+            //var image = await MediaPicker.PickPhotoAsync();
+            var aOResult = await _registrationService.GetByIdAsync(_authorizationService.UserId);
+
+            if (aOResult.IsSuccess)
+            {
+                var user = aOResult.Result.ToVcfUser();
+                var vcfUser = VcfFileHelper.CreateFileAsync(user);
+                await _shareService.ShareFileAsync("Girl", new ShareFile(await vcfUser));
+            }
+        }
 
         private async Task LoadHashtagsAsync()
         {

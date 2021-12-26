@@ -3,13 +3,13 @@ using InterTwitter.Resources.Strings;
 using InterTwitter.Services;
 using InterTwitter.Services.Hashtag;
 using InterTwitter.Services.SettingsManager;
+using InterTwitter.Services.Share;
 using InterTwitter.ViewModels;
 using InterTwitter.ViewModels.Flyout;
 using InterTwitter.Views;
 using Prism;
 using Prism.Ioc;
 using Prism.Unity;
-using System.Globalization;
 using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Forms;
 
@@ -33,6 +33,7 @@ namespace InterTwitter
             containerRegistry.RegisterInstance<IHashtagService>(Container.Resolve<HashtagService>());
             containerRegistry.RegisterInstance<IRegistrationService>(Container.Resolve<RegistrationService>());
             containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
+            containerRegistry.RegisterInstance<IShareService>(Container.Resolve<ShareService>());
             containerRegistry.RegisterDialog<AlertView, AlertViewModel>();
 
             // Navigation

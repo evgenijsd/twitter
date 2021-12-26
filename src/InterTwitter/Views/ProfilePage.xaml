@@ -133,7 +133,7 @@
                                        Size="65"
                                        VerticalOptions="Center">
                 <ffimage:CachedImage Aspect="AspectFill" 
-                                     Source="https://picsum.photos/500/500?image=290">
+                                     Source="/storage/emulated/0/Android/data/com.companyname.intertwitter/cache/2203693cc04e0be7f4f024d5f9499e13/e0cab0b6dba249caafd32246e169aa86/IMG_20200914_072110_479.jpg">
                     <ffimage:CachedImage.Transformations>
                         <fftranform:CircleTransformation />
                     </ffimage:CachedImage.Transformations>

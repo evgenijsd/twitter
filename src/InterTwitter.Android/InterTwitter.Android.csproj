@@ -160,7 +160,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
-    <Folder Include="Resources\drawable\" />
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
