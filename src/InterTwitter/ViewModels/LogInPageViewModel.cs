@@ -1,5 +1,6 @@
 ﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
+using InterTwitter.Resources.Strings;
 using InterTwitter.Services;
 using InterTwitter.ViewModels.Validators;
 using InterTwitter.Views;
@@ -15,6 +16,8 @@ namespace InterTwitter.ViewModels
     {
         private readonly IRegistrationService _registrationService;
 
+        private readonly IDialogService _dialogService;
+
         private readonly IAuthorizationService _autorizationService;
 
         private readonly IKeyboardHelper _keyboardHelper;
@@ -23,11 +26,13 @@ namespace InterTwitter.ViewModels
 
         public LogInPageViewModel(
             INavigationService navigationService,
+            IDialogService dialogService,
             IRegistrationService registrationService,
             IAuthorizationService autorizationService,
             IKeyboardHelper keyboardHelper)
             : base(navigationService)
         {
+            _dialogService = dialogService;
             _registrationService = registrationService;
             _autorizationService = autorizationService;
             _keyboardHelper = keyboardHelper;
@@ -164,8 +169,15 @@ namespace InterTwitter.ViewModels
                     }
                     else
                     {
+                        var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertInvalidPassword } };
+                        await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
                         Password = string.Empty;
                     }
+                }
+                else
+                {
+                    var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertInvalidLogin } };
+                    await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
                 }
             }
             else

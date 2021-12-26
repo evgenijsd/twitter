@@ -4,7 +4,8 @@ namespace InterTwitter.Services.Settings
 {
     public class SettingsManager : ISettingsManager
     {
-        #region -- ISettings implementation --
+        #region -- ISettingsManager implementation --
+
         public int UserId
         {
             get => Preferences.Get(nameof(UserId), default(int));

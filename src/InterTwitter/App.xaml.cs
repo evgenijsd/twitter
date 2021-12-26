@@ -1,9 +1,10 @@
-﻿using DLToolkit.Forms.Controls;
+using DLToolkit.Forms.Controls;
+using InterTwitter.Resources.Strings;
+using InterTwitter.Services.Hashtag;
+using InterTwitter.Services.Settings;
 using InterTwitter.Droid.Services.PermissionsService;
-using InterTwitter.Resources;
 using InterTwitter.Services;
 using InterTwitter.Services.PermissionsService;
-using InterTwitter.Services.Settings;
 using InterTwitter.Services.UserService;
 using InterTwitter.ViewModels;
 using InterTwitter.ViewModels.Flyout;
@@ -12,7 +13,6 @@ using Prism;
 using Prism.Ioc;
 using Prism.Plugin.Popups;
 using Prism.Unity;
-using System.Globalization;
 using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Forms;
 
@@ -34,13 +34,14 @@ namespace InterTwitter
             containerRegistry.RegisterDialog<AlertView, AlertViewModel>();
 
             //Services
+            containerRegistry.RegisterSingleton<ISettingsManager, SettingsManager>();
             containerRegistry.RegisterSingleton<IMockService, MockService>();
             containerRegistry.RegisterSingleton<ITweetService, TweetService>();
-            containerRegistry.RegisterInstance<IRegistrationService>(Container.Resolve<RegistrationService>());
-            containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
-            containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
-            containerRegistry.RegisterInstance<IUserService>(Container.Resolve<UserService>());
-            containerRegistry.RegisterInstance<IPermissionService>(Container.Resolve<PermissionService>());
+            containerRegistry.RegisterSingleton<IHashtagService, HashtagService>();
+            containerRegistry.RegisterSingleton<IRegistrationService, RegistrationService>();
+            containerRegistry.RegisterSingleton<IAuthorizationService, AuthorizationService>();
+            containerRegistry.RegisterSingleton<IUserService, UserService>();
+            containerRegistry.RegisterSingleton<IPermissionService, PermissionService>();
 
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
@@ -62,14 +63,11 @@ namespace InterTwitter
 
         protected override async void OnInitialized()
         {
-            LocalizationResourceManager.Current.PropertyChanged += (sender, e) => Resource.Culture = LocalizationResourceManager.Current.CurrentCulture;
-            LocalizationResourceManager.Current.Init(Resource.ResourceManager);
-            LocalizationResourceManager.Current.CurrentCulture = new CultureInfo("en");
-
             InitializeComponent();
 
-            Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             FlowListView.Init();
+            Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
+            LocalizationResourceManager.Current.Init(Strings.ResourceManager);
 
             await NavigationService.NavigateAsync($"/{nameof(StartPage)}");
         }
@@ -89,6 +87,5 @@ namespace InterTwitter
         }
 
         #endregion
-
     }
 }

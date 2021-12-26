@@ -10,6 +10,7 @@ namespace InterTwitter.Services
         {
             InitUsers();
             InitTweets();
+            InitHashtags();
             Likes = new List<LikeModel>();
             MuteList = new List<MuteModel>();
             BlackList = new List<BlockModel>();
@@ -17,11 +18,17 @@ namespace InterTwitter.Services
 
         #region -- IMockService implementation --
 
-        public List<UserModel> Users { get; set; }
-        public List<LikeModel> Likes { get; set; }
-        public List<BlockModel> BlackList { get; set; }
-        public List<MuteModel> MuteList { get; set; }
-        public List<TweetModel> Tweets { get; set; }
+        public IList<UserModel> Users { get; set; }
+
+        public IList<TweetModel> Tweets { get; set; }
+
+        public IList<HashtagModel> Hashtags { get; set; }
+
+        public IList<LikeModel> Likes { get; set; }
+
+        public IList<BlockModel> BlackList { get; set; }
+
+        public IList<MuteModel> MuteList { get; set; }
 
         #endregion
 
@@ -110,7 +117,7 @@ namespace InterTwitter.Services
                 {
                     Id = 2,
                     UserId = 3,
-                    Text = "um quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
+                    Text = "#NoNuanceNovember um quisquam eius #AMAs sed odit fugiat iusto fuga #blockchain praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
                     Media = Enums.EAttachedMediaType.Video,
                     MediaPaths = new List<string>
                     {
@@ -122,7 +129,7 @@ namespace InterTwitter.Services
                 {
                     Id = 3,
                     UserId = 4,
-                    Text = "Only text",
+                    Text = "#AMAs Only #NoNuanceNovember text #coffeeTime",
                     Media = Enums.EAttachedMediaType.None,
                     CreationTime = DateTime.Now,
                 },
@@ -130,7 +137,7 @@ namespace InterTwitter.Services
                 {
                     Id = 4,
                     UserId = 5,
-                    Text = "Hi there!",
+                    Text = " #teaTime Hi #blockchain there! ",
                     Media = Enums.EAttachedMediaType.Photos,
                     CreationTime = DateTime.Now,
                     MediaPaths = new List<string>
@@ -154,7 +161,7 @@ namespace InterTwitter.Services
                 {
                     Id = 6,
                     UserId = 6,
-                    Text = "HI there!",
+                    Text = "#workout #NoNuanceNovember #workout #AMAs #workouthello HI#workout there#workout!",
                     Media = Enums.EAttachedMediaType.Gif,
                     MediaPaths = new List<string>
                     {
@@ -166,13 +173,86 @@ namespace InterTwitter.Services
                 {
                     Id = 7,
                     UserId = 2,
-                    Text = "onsequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
+                    Text = "#AMAs onsequuntur #cats voluptatum laborum #coffeeTime numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
                     Media = Enums.EAttachedMediaType.Gif,
                     MediaPaths = new List<string>
                     {
                         "https://thumbs.gfycat.com/PaltryWickedCrayfish-max-1mb.gif",
                     },
                     CreationTime = DateTime.Now,
+                },
+                new TweetModel
+                {
+                    Id = 2,
+                    UserId = 2,
+                    Text = "#amas masd",
+                    Media = Enums.EAttachedMediaType.Gif,
+                    MediaPaths = new List<string>
+                    {
+                        "https://thumbs.gfycat.com/PaltryWickedCrayfish-max-1mb.gif",
+                    },
+                    CreationTime = DateTime.Now,
+                },
+                new TweetModel
+                {
+                    Id = 3,
+                    UserId = 3,
+                    //Text = "#AMAs masd # masda as ama",
+                    Media = Enums.EAttachedMediaType.Gif,
+                    MediaPaths = new List<string>
+                    {
+                        "https://thumbs.gfycat.com/PaltryWickedCrayfish-max-1mb.gif",
+                    },
+                    CreationTime = DateTime.Now,
+                },
+            };
+        }
+
+        private void InitHashtags()
+        {
+            Hashtags = new List<HashtagModel>
+            {
+                new HashtagModel()
+                {
+                    Id = 1,
+                    Text = "#blockchain",
+                    TweetsCount = 2,
+                },
+                new HashtagModel()
+                {
+                    Id = 2,
+                    Text = "#AMAs",
+                    TweetsCount = 4,
+                },
+                new HashtagModel()
+                {
+                    Id = 3,
+                    Text = "#NoNuanceNovember",
+                    TweetsCount = 3,
+                },
+                new HashtagModel()
+                {
+                    Id = 4,
+                    Text = "#coffeeTime",
+                    TweetsCount = 2,
+                },
+                new HashtagModel()
+                {
+                    Id = 5,
+                    Text = "#teaTime",
+                    TweetsCount = 1,
+                },
+                new HashtagModel()
+                {
+                    Id = 6,
+                    Text = "#workout",
+                    TweetsCount = 1,
+                },
+                new HashtagModel()
+                {
+                    Id = 7,
+                    Text = "#cats",
+                    TweetsCount = 1,
                 },
             };
         }

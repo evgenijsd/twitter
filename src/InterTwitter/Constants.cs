@@ -1,4 +1,7 @@
-﻿namespace InterTwitter
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace InterTwitter
 {
     public static class Constants
     {
@@ -8,10 +11,25 @@
             public const string OPEN_SIDEBAR = nameof(OPEN_SIDEBAR);
             public const string TAB_CHANGE = nameof(TAB_CHANGE);
             public const string USER_PROFILE_CHANGED = nameof(USER_PROFILE_CHANGED);
+            public const string UPDATE_HASHTAGS = "UpdateHashtags";
+        }
+
+        public static class Values
+        {
+            public const int NUMBER_OF_POPULAR_HASHTAGS = 5;
+        }
+
+        public static class Methods
+        {
+            public static IEnumerable<string> GetUniqueWords(string text)
+            {
+                return text.Split(' ').Where(x => !string.IsNullOrWhiteSpace(x)).Distinct();
+            }
         }
 
         public static class RegexPatterns
         {
+            public const string HASHTAG_PATTERN = @"^\#[0-9a-zA-Zа-яА-Я_]{1,30}$";
             public const string USERNAME_REGEX = @"^[A-Za-z ]{1,}$";
             public const string EMAIL_REGEX = @"^[\w\.]+@([\w-]+\.)+[\w-]{1,}$";
             public const string PASSWORD_REGEX = @"^(?=.*\d)(?=.*[A-ZА-ЯЁ]).{6,}$";

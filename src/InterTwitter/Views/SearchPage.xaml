@@ -1,28 +1,257 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<local:BaseContentPage x:Class="InterTwitter.Views.SearchPage"
-                       xmlns="http://xamarin.com/schemas/2014/forms"
+<local:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:prism="http://prismlibrary.com"
                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:sh="http://sharpnado.com"
+                       xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+                       xmlns:controls="clr-namespace:InterTwitter.Controls"
+                       xmlns:stateContainer="clr-namespace:InterTwitter.Controls.StateContainer"
+                       xmlns:viewmodels="clr-namespace:InterTwitter.ViewModels"
                        xmlns:local="clr-namespace:InterTwitter.Views"
-                       xmlns:prism="http://prismlibrary.com" 
+                       xmlns:Behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
                        xmlns:behaviors="clr-namespace:InterTwitter.Behaviors"
                        prism:ViewModelLocator.AutowireViewModel="True"
-                       IconImageSource="{Binding IconPath}">
+                       IconImageSource="{Binding IconPath}"
+                       BackgroundColor="{DynamicResource appcolor_i2}"
+                       x:DataType="viewmodels:SearchPageViewModel"
+                       x:Class="InterTwitter.Views.SearchPage">
+
     <ContentPage.Behaviors>
         <behaviors:TabPageBehavior/>
     </ContentPage.Behaviors>
 
     <ContentPage.Content>
 
-        <StackLayout>
+        <Grid RowDefinitions="auto" 
+              RowSpacing="0"
+              VerticalOptions="FillAndExpand">
 
-            <Button Command="{Binding OpenFlyoutCommandAsync}"
-                    Text="goto flyout"
-                    VerticalOptions="Start" />
-            <Label HorizontalOptions="CenterAndExpand"
-                   Text="Welcome to Search!"
-                   VerticalOptions="CenterAndExpand" />
+            <!-- CONTENT -->
+            <stateContainer:StateContainer Grid.Row="1"
+                                           VerticalOptions="FillAndExpand"
+                                           Padding="3, 0, 3, 0"
+                                           State="{Binding TweetsSearchStatus}">
 
-        </StackLayout>
+                <stateContainer:StateContainer.Conditions>
+
+                    <!-- SEARCH IS NOT ACTIVE - DISPLAY POPULAR THEMES -->
+                    <stateContainer:StateCondition State="NotActive">
+
+                        <StackLayout Spacing="0"
+                                     Margin="10.5, 0">
+
+                            <Label Margin="0, 19, 0, 10.5"
+                                   Text="{xct:Translate PopularTheme}"
+                                   Style="{DynamicResource tstyle_i4}"/>
+                            
+                            <BoxView Style="{DynamicResource SeparatorStyle}"
+                                     Margin="0" />
+
+                            <ListView Margin="0"
+                                      HasUnevenRows="true"
+                                      SeparatorVisibility="None"
+                                      SeparatorColor="{DynamicResource appcolor_i6}"
+                                      ItemsSource="{Binding Hashtags}"
+                                      SelectedItem="{Binding SelectedHashtag}">
+
+                                <ListView.Behaviors>
+
+                                    <Behaviors:EventToCommandBehavior EventName="ItemTapped"
+                                                                      Command="{Binding HashtagTapCommand}"/>
+
+                                </ListView.Behaviors>
+
+                                <ListView.ItemTemplate>
+
+                                    <DataTemplate>
+
+                                        <ViewCell>
+
+                                            <ViewCell.View>
+
+                                                <StackLayout Spacing="0"
+                                                             BackgroundColor="{DynamicResource appcolor_i2}">
+
+                                                    <StackLayout Padding="0, 15, 0, 8"
+                                                                 Orientation="Horizontal">
+
+                                                        <StackLayout>
+
+                                                            <Label Margin="0, 5, 0, 2"
+                                                                   Style="{DynamicResource tstyle_i6}"
+                                                                   Text="{Binding SelectedHashtag, Text}" />
+
+                                                            <Label Style="{DynamicResource tstyle_i15}">
+
+                                                                <Label.FormattedText>
+
+                                                                    <FormattedString>
+
+                                                                        <Span Text="{xct:Translate Posts}"></Span>
+
+                                                                        <Span Text="{Binding SelectedHashtag, TweetsCount, StringFormat=': {0}'}" />
+
+                                                                    </FormattedString>
+
+                                                                </Label.FormattedText>
+
+                                                            </Label>
+
+                                                        </StackLayout>
+
+                                                        <Image Margin="0, 0, 15.5, 10"
+                                                               HorizontalOptions="EndAndExpand"
+                                                               VerticalOptions="Center"
+                                                               Scale="1.25"
+                                                               Source="{DynamicResource ic_right_gray}"/>
+
+                                                    </StackLayout>
+
+                                                    <BoxView Style="{DynamicResource SeparatorStyle}"/>
+
+                                                </StackLayout>
+
+                                            </ViewCell.View>
+
+                                        </ViewCell>
+
+                                    </DataTemplate>
+
+                                </ListView.ItemTemplate>
+
+                            </ListView>
+
+                        </StackLayout>
+
+                    </stateContainer:StateCondition>
+
+                    <!-- SEARCH IS ACTIVE - DISPLAY SEARCH RESULTS -->
+                    <stateContainer:StateCondition State="Active">
+
+                        <stateContainer:StateContainer State="{Binding TweetSearchResult}"
+                                                       x:Name="tweetSearchResultContainer">
+
+                            <stateContainer:StateContainer.Conditions>
+
+                                <!-- TWEETS FOUND - DISPLAY TWEETS -->
+                                <stateContainer:StateCondition State="Success">
+
+                                        <controls:CustomCollectionView ItemsSource="{Binding FoundTweets}" 
+                                                                       ItemTemplate="{StaticResource templateSelector}"
+                                                                       x:Name="customCollectView"/>
+
+                                </stateContainer:StateCondition>
+
+                                <!-- NO RESULTS FOR QUERY - DISPLAY OWL -->
+                                <stateContainer:StateCondition State="NoResults">
+
+                                    <StackLayout Margin="{OnPlatform Android='0, 240.3, 0, 0', iOS='0, 176.5, 0, 0'}"
+                                                 Padding="0"
+                                                 Spacing="28">
+
+                                        <Image Scale="1.176"
+                                               Source="{DynamicResource pic_owl_blue_big}" />
+
+                                        <controls:LineSpacingLabel Margin="30, 0"
+                                                                   HorizontalOptions="Center"
+                                                                   HorizontalTextAlignment="Center"
+                                                                   Style="{DynamicResource tstyle_i5}"
+                                                                   LineSpacing="{OnPlatform Android=1.3, iOS=6.45}"
+                                                                   Text="{Binding NoResultsMessage}"/>
+
+                                    </StackLayout>
+
+                                </stateContainer:StateCondition>
+
+                            </stateContainer:StateContainer.Conditions>
+
+                        </stateContainer:StateContainer>
+
+                    </stateContainer:StateCondition>
+
+                </stateContainer:StateContainer.Conditions>
+
+            </stateContainer:StateContainer>
+
+            <!-- SEARCH BAR SHADOW -->
+            <sh:Shadows Grid.Row="0"
+                        VerticalOptions="EndAndExpand"
+                        IsVisible="false"
+                        Shades="{sh:SingleShade Offset='0, 2.858',
+                                                Opacity=0.08,
+                                                BlurRadius=8,
+                                                Color={StaticResource appcolor_i3}}">
+
+                <sh:Shadows.Triggers>
+
+                    <DataTrigger TargetType="sh:Shadows"
+                                 Binding="{Binding Source={x:Reference tweetSearchResultContainer}, Path=State}"
+                                 Value="Success">
+
+                        <Setter Property="IsVisible" Value="true"/>
+
+                    </DataTrigger>
+
+                </sh:Shadows.Triggers>
+
+                <Frame IsVisible="false"
+                       HasShadow="False"/>
+
+            </sh:Shadows>
+
+            <!-- SEARCH BAR -->
+            <StackLayout Grid.Row="0"
+                         Spacing="0"
+                         IsVisible="true">
+
+                <controls:SearchBar SearchStatus="{Binding TweetsSearchStatus}"
+                                    AvatarIconSource="{Binding AvatarIcon}"
+                                    AvatarIconTapCommand="{Binding OpenFlyoutCommandAsync}"
+                                    BackIconTapCommand="{Binding BackToHashtagsTapCommand}"
+                                    PressOkOnKeyboardCommand="{Binding StartTweetsSearchTapCommand}"
+                                    BackgroundColor="{DynamicResource appcolor_i2}"
+                                    QueryString="{Binding QueryString}"
+                                    MaxLength="100"/>
+
+                <BoxView Style="{DynamicResource SeparatorStyle}"/>
+
+            </StackLayout>
+
+            <BoxView  Grid.Row="1" 
+                      TranslationY="1"
+                      VerticalOptions="EndAndExpand"
+                      Margin="0"
+                      Style="{DynamicResource SeparatorStyle}"/>
+
+
+            <!-- TABBED BAR SHADOW -->
+            <sh:Shadows Grid.Row="1"
+                        TranslationY="35"
+                        VerticalOptions="EndAndExpand"
+                        IsVisible="false"
+                        Shades="{sh:SingleShade Offset='0, 2.858',
+                                                Opacity=0.08,
+                                                BlurRadius=8,
+                                                Color={StaticResource appcolor_i3}}">
+
+                <sh:Shadows.Triggers>
+
+                    <DataTrigger TargetType="sh:Shadows"
+                                 Binding="{Binding Source={x:Reference tweetSearchResultContainer}, Path=State}"
+                                 Value="Success">
+
+                        <Setter Property="IsVisible" Value="{OnPlatform Android=true, iOS=false}"/>
+
+                    </DataTrigger>
+
+                </sh:Shadows.Triggers>
+
+                <Frame IsVisible="false"
+                       HasShadow="False"/>
+
+            </sh:Shadows>
+            
+        </Grid>
 
     </ContentPage.Content>
 

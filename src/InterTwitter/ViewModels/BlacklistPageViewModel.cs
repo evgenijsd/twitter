@@ -51,12 +51,12 @@ namespace InterTwitter.ViewModels
         {
             if (_isBlacklistPage = parameters.ContainsKey(Constants.Navigation.BLACKLIST))
             {
-                Title = Resources.Resource.Blacklist;
+                Title = Resources.Strings.Strings.Blacklist;
                 await InitBlacklistAsync();
             }
             else if (_isMutelistPage = parameters.ContainsKey(Constants.Navigation.MUTELIST))
             {
-                Title = Resources.Resource.Mute;
+                Title = Resources.Strings.Strings.Mute;
                 await InitMutelistAsync();
             }
         }
@@ -104,17 +104,17 @@ namespace InterTwitter.ViewModels
                 string partOfMessage = string.Empty;
                 if (_isBlacklistPage)
                 {
-                    partOfMessage = Resources.Resource.FromTheBlacklist;
+                    partOfMessage = Resources.Strings.Strings.FromTheBlacklist;
                 }
                 else if (_isMutelistPage)
                 {
-                    partOfMessage = Resources.Resource.FromTheMute;
+                    partOfMessage = Resources.Strings.Strings.FromTheMute;
                 }
 
                 var param = new DialogParameters();
-                param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Resource.Remove} {userViewModel.Name} {partOfMessage}");
-                param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
-                param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Resource.Cancel);
+                param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Strings.Strings.Remove} {userViewModel.Name} {partOfMessage}");
+                param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Strings.Strings.Ok);
+                param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Strings.Strings.Cancel);
 
                 await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(param, CloseDialogCallback));
             }

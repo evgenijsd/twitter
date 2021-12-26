@@ -13,7 +13,19 @@ namespace InterTwitter.Models.TweetViewModel
 {
     public class BaseTweetViewModel : BindableBase
     {
+        public BaseTweetViewModel()
+        {
+            Mode = EStateMode.Truncated;
+        }
+
         #region -- Public properties --
+
+        private EStateMode _mode;
+        public EStateMode Mode
+        {
+            get => _mode;
+            set => SetProperty(ref _mode, value);
+        }
 
         private int _tweetId;
         public int TweetId
@@ -59,6 +71,13 @@ namespace InterTwitter.Models.TweetViewModel
                 SetProperty(ref _text, value);
                 RaisePropertyChanged(nameof(IsTextVisible));
             }
+        }
+
+        private IEnumerable<string> _keysToHighlight;
+        public IEnumerable<string> KeysToHighlight
+        {
+            get => _keysToHighlight;
+            set => SetProperty(ref _keysToHighlight, value);
         }
 
         public bool IsTextVisible => !string.IsNullOrEmpty(Text);
@@ -117,13 +136,11 @@ namespace InterTwitter.Models.TweetViewModel
         }
 
         private DateTime _CreationTime;
-
         public DateTime CreationTime
         {
             get => _CreationTime;
             set => SetProperty(ref _CreationTime, value);
         }
-
         #endregion
 
         #region -- Private helpers --

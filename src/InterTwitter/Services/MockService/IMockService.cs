@@ -5,14 +5,16 @@ namespace InterTwitter.Services
 {
     public interface IMockService
     {
-        List<UserModel> Users { get; set; }
+        IList<UserModel> Users { get; set; }
 
-        List<TweetModel> Tweets { get; set; }
+        IList<TweetModel> Tweets { get; set; }
 
-        List<MuteModel> MuteList { get; set; }
+        IList<HashtagModel> Hashtags { get; set; }
 
-        List<BlockModel> BlackList { get; set; }
+        IList<MuteModel> MuteList { get; set; }
 
-        List<LikeModel> Likes { get; set; }
+        IList<BlockModel> BlackList { get; set; }
+
+        IList<LikeModel> Likes { get; set; }
     }
 }

@@ -36,7 +36,7 @@ namespace InterTwitter.Services.UserService
                 result.SetError($"{nameof(DeleteUserAsync)} : exception", "Something went wrong", ex);
             }
 
-            return Task<AOResult>.FromResult(result);
+            return Task.FromResult(result);
         }
 
         public Task<AOResult<IEnumerable<UserModel>>> GetAllUsersAsync()
@@ -59,7 +59,7 @@ namespace InterTwitter.Services.UserService
                 result.SetError($"{nameof(GetAllUsersAsync)} : exception", "Something went wrong", ex);
             }
 
-            return Task<AOResult<IEnumerable<UserModel>>>.FromResult(result);
+            return Task.FromResult(result);
         }
 
         public Task<AOResult<UserModel>> GetUserAsync(int id)
@@ -108,7 +108,7 @@ namespace InterTwitter.Services.UserService
                 result.SetError($"{nameof(InsertUserAsync)} : exception", "Something went wrong", ex);
             }
 
-            return Task<AOResult>.FromResult(result);
+            return Task.FromResult(result);
         }
 
         public Task<AOResult> UpdateUserAsync(UserModel user)
@@ -119,7 +119,7 @@ namespace InterTwitter.Services.UserService
                 var oldUser = _mockService.Users?.FirstOrDefault(x => x.Id == user.Id);
                 _mockService.Users?.Remove(oldUser);
                 _mockService.Users?.Add(user);
-                _mockService.Users.Sort((x1, x2) => x1.Id.CompareTo(x2.Id));
+                _mockService.Users = _mockService.Users.OrderBy(x => x.Id).ToList();
                 result.SetSuccess();
             }
             catch (Exception ex)
@@ -127,7 +127,7 @@ namespace InterTwitter.Services.UserService
                 result.SetError($"{nameof(UpdateUserAsync)} : exception", "Something went wrong", ex);
             }
 
-            return Task<AOResult>.FromResult(result);
+            return Task.FromResult(result);
         }
 
         public Task<AOResult> AddToBlacklistAsync(int userId)
@@ -155,7 +155,7 @@ namespace InterTwitter.Services.UserService
                 result.SetError($"{nameof(AddToBlacklistAsync)} : exception", "Something went wrong", ex);
             }
 
-            return Task<AOResult>.FromResult(result);
+            return Task.FromResult(result);
         }
 
         public Task<AOResult> AddToMuteListAsync(int userId)
@@ -182,7 +182,7 @@ namespace InterTwitter.Services.UserService
                 result.SetError($"{nameof(AddToMuteListAsync)} : exception", "Something went wrong", ex);
             }
 
-            return Task<AOResult>.FromResult(result);
+            return Task.FromResult(result);
         }
 
         public Task<AOResult<bool>> CheckIfUserIsBlockedAsync(int userId)
@@ -204,7 +204,7 @@ namespace InterTwitter.Services.UserService
                 result.SetError($"{nameof(CheckIfUserIsBlockedAsync)} : exception", "Something went wrong", ex);
             }
 
-            return Task<AOResult<bool>>.FromResult(result);
+            return Task.FromResult(result);
         }
 
         public Task<AOResult<bool>> CheckIfUserIsMutedAsync(int userId)
@@ -226,7 +226,7 @@ namespace InterTwitter.Services.UserService
                 result.SetError($"{nameof(CheckIfUserIsMutedAsync)} : exception", "Something went wrong", ex);
             }
 
-            return Task<AOResult<bool>>.FromResult(result);
+            return Task.FromResult(result);
         }
 
         public Task<AOResult> RemoveFromBlacklistAsync(int userId)
@@ -250,7 +250,7 @@ namespace InterTwitter.Services.UserService
                 result.SetError($"{nameof(RemoveFromBlacklistAsync)} : exception", "Something went wrong", ex);
             }
 
-            return Task<AOResult>.FromResult(result);
+            return Task.FromResult(result);
         }
 
         public Task<AOResult> RemoveFromMutelistAsync(int userId)
@@ -274,7 +274,7 @@ namespace InterTwitter.Services.UserService
                 result.SetError($"{nameof(RemoveFromMutelistAsync)} : exception", "Something went wrong", ex);
             }
 
-            return Task<AOResult>.FromResult(result);
+            return Task.FromResult(result);
         }
 
         public Task<AOResult<IEnumerable<UserModel>>> GetAllMutedUsersAsync()
@@ -300,7 +300,7 @@ namespace InterTwitter.Services.UserService
                 result.SetError($"{nameof(GetAllMutedUsersAsync)} : exception", "Something went wrong", ex);
             }
 
-            return Task<AOResult<IEnumerable<UserModel>>>.FromResult(result);
+            return Task.FromResult(result);
         }
 
         public Task<AOResult<IEnumerable<UserModel>>> GetAllBlockedUsersAsync()
@@ -326,7 +326,7 @@ namespace InterTwitter.Services.UserService
                 result.SetError($"{nameof(GetAllBlockedUsersAsync)} : exception", "Something went wrong", ex);
             }
 
-            return Task<AOResult<IEnumerable<UserModel>>>.FromResult(result);
+            return Task.FromResult(result);
         }
 
         #endregion

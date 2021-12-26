@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-                    xmlns:converters="clr-namespace:InterTwitter.Converters" 
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:controls="clr-namespace:InterTwitter.Controls"
+                    xmlns:converters="clr-namespace:InterTwitter.Converters"
+                    xmlns:views="clr-namespace:InterTwitter.Views"
                     xmlns:dataTemplatesSelector="clr-namespace:InterTwitter.Helpers" 
                     xmlns:dataTemplates="clr-namespace:InterTwitter.Views.DataTemplates"
                     x:Class="InterTwitter.Resources.Styles.DefaultResources">
@@ -102,10 +104,7 @@
     <Style x:Key="tstyle_i15" TargetType="Label" BasedOn="{StaticResource Content_i8}"><!-- Caption 2/ 10px/ Dark Gray-->
         <Setter Property="TextColor" Value="{DynamicResource appcolor_i4}"/>
     </Style>
-    
-    <!-- CONVERTERS -->
-    <converters:ListToFirstConverter x:Key="listToFirstConverter"/>
-    
+
     <!-- TweetData Templates-->
 
     <dataTemplates:ImageTweetDataTemplate x:Key="imageTweetTemplate"/>
@@ -116,5 +115,26 @@
                                                      ImageTweetDataTemplate="{StaticResource imageTweetTemplate}"
                                                      VideoTweetDataTemplate="{StaticResource videoTweetTemplate}"
                                                      TextTweetDataTemplate="{StaticResource textTweetTemplate}"/>
+
+    <!-- BOXVIEW SEPARATORS STYLES -->
+    <Style x:Key="SeparatorStyle" TargetType="BoxView" > <!-- Light Gray --> 
+        <Setter Property="HeightRequest"     Value="1"/>
+        <Setter Property="Color" Value="{DynamicResource appcolor_i6}"></Setter>
+    </Style>
+
+    <!-- PAGE STYLES -->
+    <Style x:Key="pstyle_i1" TargetType="views:BaseContentPage">
+        <Setter Property="BackgroundColor" Value="{DynamicResource appcolor_i2}" />
+    </Style>
+
+    <!-- HACK STYLE FOR IOS -->
+    <Style x:Key="tstyle_i16" TargetType="Label">
+        <!-- Body 2/ 14px/ System/Black -->
+        <Setter Property="TextColor" Value="{DynamicResource appcolor_i3}"/>
+        <Setter Property="FontSize" Value="{DynamicResource tsize_i4}"/>
+    </Style>
+
+    <!-- CONVERTERS -->
+    <converters:ListToFirstConverter x:Key="listToFirstConverter"/>
 
 </ResourceDictionary>

@@ -21,11 +21,15 @@ namespace InterTwitter.ViewModels
 
         #endregion
 
-        #region -- IInitialize, IInitializeAsync implementation --
+        #region -- IInitialize implementation --
 
         public virtual void Initialize(INavigationParameters parameters)
         {
         }
+
+        #endregion
+
+        #region -- IInitializeAsync implementation --
 
         public virtual Task InitializeAsync(INavigationParameters parameters)
         {

@@ -251,7 +251,7 @@ namespace InterTwitter.ViewModels
                     new MenuItemViewModel
                     {
                         Id = 0,
-                        Title = Resources.Resource.Posts,
+                        Title = Resources.Strings.Strings.Posts,
                         ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource,
                         TextColor = (Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
                         ContentCollection = UserTweets,
@@ -260,7 +260,7 @@ namespace InterTwitter.ViewModels
                     new MenuItemViewModel
                     {
                         Id = 1,
-                        Title = Resources.Resource.Likes,
+                        Title = Resources.Strings.Strings.Likes,
                         ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource,
                         TextColor = (Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
                         ContentCollection = LikedTweets,
@@ -290,18 +290,18 @@ namespace InterTwitter.ViewModels
             {
                 if (isUserBlockedResponse.Result)
                 {
-                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
-                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Resource.UserBlocked);
+                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Strings.Strings.Ok);
+                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Strings.Strings.UserBlocked);
 
                     dialogs = EDialogs.AddToBlock;
                     await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(param, CloseDialogCallback));
                 }
                 else
                 {
-                    param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Resource.Add} {_user.Name} {Resources.Resource.ToBlacklist}?");
-                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Resource.UserNotSeeYouPost);
-                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.AddToBlacklist);
-                    param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Resource.Cancel);
+                    param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Strings.Strings.Add} {_user.Name} {Resources.Strings.Strings.ToBlacklist}?");
+                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Strings.Strings.UserNotSeeYouPost);
+                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Strings.Strings.AddToBlacklist);
+                    param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Strings.Strings.Cancel);
 
                     dialogs = EDialogs.AddToBlock;
                     await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(param, CloseDialogCallback));
@@ -317,18 +317,18 @@ namespace InterTwitter.ViewModels
             {
                 if (isUserMutedResponse.Result)
                 {
-                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Ok);
-                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Resource.UserMuted);
+                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Strings.Strings.Ok);
+                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Strings.Strings.UserMuted);
 
                     dialogs = EDialogs.AddToMute;
                     await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(param, CloseDialogCallback));
                 }
                 else
                 {
-                    param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Resource.Add} {_user.Name} {Resources.Resource.ToMute}?");
-                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Resource.UserCanSeeInfo);
-                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.AddToMute);
-                    param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Resource.Cancel);
+                    param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Strings.Strings.Add} {_user.Name} {Resources.Strings.Strings.ToMute}?");
+                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Strings.Strings.UserCanSeeInfo);
+                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Strings.Strings.AddToMute);
+                    param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Strings.Strings.Cancel);
 
                     dialogs = EDialogs.AddToMute;
                     await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(param, CloseDialogCallback));
@@ -339,9 +339,9 @@ namespace InterTwitter.ViewModels
         private async Task OnRemoveUserFromBlacklistCommandAsync()
         {
             var param = new DialogParameters();
-            param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Resource.Remove} {_user.Name} {Resources.Resource.FromTheBlacklist}?");
-            param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Remove);
-            param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Resource.Cancel);
+            param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Strings.Strings.Remove} {_user.Name} {Resources.Strings.Strings.FromTheBlacklist}?");
+            param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Strings.Strings.Remove);
+            param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Strings.Strings.Cancel);
 
             dialogs = EDialogs.RemoveFromBlock;
             await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(param, CloseDialogCallback));
@@ -350,9 +350,9 @@ namespace InterTwitter.ViewModels
         private async Task OnRemoveUserFromMuteCommandAsync()
         {
             var param = new DialogParameters();
-            param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Resource.Remove} {_user.Name} {Resources.Resource.FromTheMute}?");
-            param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Resource.Remove);
-            param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Resource.Cancel);
+            param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Strings.Strings.Remove} {_user.Name} {Resources.Strings.Strings.FromTheMute}?");
+            param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Strings.Strings.Remove);
+            param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Strings.Strings.Cancel);
 
             dialogs = EDialogs.RemoveFromMute;
             await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(param, CloseDialogCallback));

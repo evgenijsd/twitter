@@ -3,109 +3,85 @@
               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
               xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
-              xmlns:highlightedlabel="clr-namespace:InterTwitter.Controls.HighlightedLabel"
-              x:Class="InterTwitter.Views.DataTemplates.VideoTweetDataTemplate">
-    
+              x:Class="InterTwitter.Views.DataTemplates.GifTweetDataTemplate">
     <StackLayout Spacing="0">
-        
         <StackLayout Padding="15, 15, 15, 0"
-                     Orientation="Horizontal"
-                     Spacing="0">
+                 Orientation="Horizontal"
+                 Spacing="0">
 
             <ffimageloading:CachedImage VerticalOptions="Start"
-                                        Source="{Binding UserAvatar}"
+                                        Source="{Binding UserModel.AvatarPath}"
                                         HeightRequest="34"
                                         Margin="0, 0, 15, 0">
 
                 <ffimageloading:CachedImage.Transformations>
                     <fftransformations:CircleTransformation/>
                 </ffimageloading:CachedImage.Transformations>
-                <ffimageloading:CachedImage.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding MoveToProfileCommand}"/>
-                </ffimageloading:CachedImage.GestureRecognizers>
 
             </ffimageloading:CachedImage>
 
             <StackLayout VerticalOptions="Start">
 
-                <Label Style="{DynamicResource tstyle_i6}"
-                       Text="{Binding UserName}" 
+                <Label Style="{StaticResource tstyle_i6}"
+                       Text="{Binding UserModel.UserName}" 
                        FontAttributes="Bold"/>
 
-                <highlightedlabel:HighlightedLabel LineSpacing="{OnPlatform Android=1.3, iOS=6.45}"
-                                                   KeyBackgroundColor="{DynamicResource appcolor_i8}"
-                                                   HashtagTextColor="{DynamicResource appcolor_i1}"
-                                                   KeysToHighlight="{Binding KeysToHighlight}"
-                                                   OriginalText="{Binding Text}"/>
+                <Label Style="{StaticResource tstyle_i7}" 
+                       VerticalOptions="Start"
+                       MaxLines="5" 
+                       LineBreakMode="TailTruncation"
+                       Text="{Binding TweetModel.Text}"/>
 
-                <Frame CornerRadius="5"
-                       Padding="0"
-                       HasShadow="False">
-
-                    <WebView Source="{Binding MediaPaths, Converter={StaticResource listToFirstConverter}}"
-                             WidthRequest="240"
-                             HeightRequest="180"/>
-
-                </Frame>
+                <ffimageloading:CachedImage Source="{Binding TweetModel.MediaPaths}"
+                                            Aspect="AspectFill"/>
 
                 <StackLayout Orientation="Horizontal"
                              HeightRequest="20"
                              Padding="0">
 
-                    <Label Style="{DynamicResource tstyle_i8}"
-                           Text="{Binding CreationTime,  StringFormat='{}{0:dd.MM.yyyy • HH:mm}'}"/>
+                    <Label Style="{StaticResource tstyle_i8}"
+                           Text="{Binding TweetModel.CreationTime,  StringFormat='{}{0:dd.MM.yyyy • HH:mm}'}"/>
 
                     <ffimageloading:CachedImage Source="ic_like_gray" HorizontalOptions="EndAndExpand">
-                        
                         <ffimageloading:CachedImage.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding LikeTweetCommand}"/>
                         </ffimageloading:CachedImage.GestureRecognizers>
-                        
                         <ffimageloading:CachedImage.Triggers>
-                            <DataTrigger Binding="{Binding IsTweetLiked}"
+                            <DataTrigger Binding="{Binding IsTweekLiked}"
                                          TargetType="ffimageloading:CachedImage"
                                          Value="true">
                                 <Setter Property="Source" Value="ic_like_blue"/>
                             </DataTrigger>
                         </ffimageloading:CachedImage.Triggers>
-                        
                     </ffimageloading:CachedImage>
 
-                    <Label Style="{DynamicResource tstyle_i9}"
-                           Text="{Binding LikesNumber}" 
-                           Margin="0, 1, 15, -1" >
-                        
+                    <Label Text="{Binding LikesNumber}" Margin="0,0,15,0" Style="{StaticResource tstyle_i9}">
                         <Label.Triggers>
                             <DataTrigger TargetType="Label" Binding="{Binding IsWeetLiked}" Value="true">
-                                <Setter Property="TextColor" Value="{DynamicResource appcolor_i1}"/>
+                                <Setter Property="TextColor" Value="{StaticResource appcolor_i1}"/>
                             </DataTrigger>
                         </Label.Triggers>
                     </Label>
 
                     <ffimageloading:CachedImage Source="ic_bookmarks_gray">
-                        
                         <ffimageloading:CachedImage.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding MarkTweetCommand}"/>
                         </ffimageloading:CachedImage.GestureRecognizers>
-                        
                         <ffimageloading:CachedImage.Triggers>
                             <DataTrigger TargetType="ffimageloading:CachedImage" Binding="{Binding IsBookmarked}" Value="true">
                                 <Setter Property="Source" Value="ic_bookmarks_blue"/>
                             </DataTrigger>
                         </ffimageloading:CachedImage.Triggers>
-                        
                     </ffimageloading:CachedImage>
 
                 </StackLayout>
 
             </StackLayout>
-            
         </StackLayout>
 
         <BoxView HeightRequest="1"
                  Margin="0, 16, 0, 0"
-                 BackgroundColor="{DynamicResource appcolor_i6}"/>
+                 BackgroundColor="{StaticResource appcolor_i6}"/>
 
     </StackLayout>
-    
 </DataTemplate>

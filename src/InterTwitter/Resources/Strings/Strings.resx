@@ -210,6 +210,9 @@
   <data name="GetYourAccount" xml:space="preserve">
     <value>Get your account</value>
   </data>
+  <data name="InaccurateRequest" xml:space="preserve">
+    <value>For a more accurate search, enter 2 or more characters</value>
+  </data>
   <data name="Likes" xml:space="preserve">
     <value>Likes</value>
   </data>
@@ -228,6 +231,9 @@
   <data name="Next" xml:space="preserve">
     <value>Next</value>
   </data>
+  <data name="NoResultsFor" xml:space="preserve">
+    <value>No results for</value>
+  </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
@@ -245,6 +251,12 @@
   </data>
   <data name="PleaseName" xml:space="preserve">
     <value>Please, type your name</value>
+  </data>
+  <data name="PopularTheme" xml:space="preserve">
+    <value>Popular theme</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
   </data>
   <data name="Posts" xml:space="preserve">
     <value>Posts</value>
