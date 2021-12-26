@@ -15,21 +15,17 @@ namespace InterTwitter.ViewModels
     {
         private readonly IRegistrationService _registrationService;
 
-        private readonly IDialogService _dialogs;
-
         private readonly IKeyboardHelper _keyboardHelper;
 
         private UserModel _user;
 
         public CreatePageViewModel(
             INavigationService navigationService,
-            IDialogService dialogs,
             IRegistrationService registrationService,
             IKeyboardHelper keyboardHelper)
             : base(navigationService)
         {
             _registrationService = registrationService;
-            _dialogs = dialogs;
             _keyboardHelper = keyboardHelper;
         }
 
@@ -142,12 +138,7 @@ namespace InterTwitter.ViewModels
         private async Task OnPasswordCommandAsync()
         {
             var result = await _registrationService.CheckTheCorrectEmailAsync(Email);
-            if (result.IsSuccess)
-            {
-                var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Resources.Resource.AlertLoginTaken } };
-                await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
-            }
-            else
+            if (!result.IsSuccess)
             {
                 var validator = ValidatorsExtension.CreatePageValidator.Validate(this);
                 if (validator.IsValid)
@@ -173,9 +164,6 @@ namespace InterTwitter.ViewModels
                             IsWrongEmail = true;
                         }
                     }
-
-                    var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, validator.Errors[0].ErrorMessage } };
-                    await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
                 }
             }
         }

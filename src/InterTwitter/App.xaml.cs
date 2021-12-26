@@ -1,11 +1,16 @@
 ﻿using DLToolkit.Forms.Controls;
+using InterTwitter.Droid.Services.PermissionsService;
 using InterTwitter.Resources;
 using InterTwitter.Services;
+using InterTwitter.Services.PermissionsService;
+using InterTwitter.Services.Settings;
+using InterTwitter.Services.UserService;
 using InterTwitter.ViewModels;
 using InterTwitter.ViewModels.Flyout;
 using InterTwitter.Views;
 using Prism;
 using Prism.Ioc;
+using Prism.Plugin.Popups;
 using Prism.Unity;
 using System.Globalization;
 using Xamarin.CommunityToolkit.Helpers;
@@ -24,6 +29,8 @@ namespace InterTwitter
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterPopupNavigationService();
+            containerRegistry.RegisterPopupDialogService();
             containerRegistry.RegisterDialog<AlertView, AlertViewModel>();
 
             //Services
@@ -31,6 +38,9 @@ namespace InterTwitter
             containerRegistry.RegisterSingleton<ITweetService, TweetService>();
             containerRegistry.RegisterInstance<IRegistrationService>(Container.Resolve<RegistrationService>());
             containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
+            containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
+            containerRegistry.RegisterInstance<IUserService>(Container.Resolve<UserService>());
+            containerRegistry.RegisterInstance<IPermissionService>(Container.Resolve<PermissionService>());
 
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
@@ -46,6 +56,8 @@ namespace InterTwitter
             containerRegistry.RegisterForNavigation<CreatePage, CreatePageViewModel>();
             containerRegistry.RegisterForNavigation<LogInPage, LogInPageViewModel>();
             containerRegistry.RegisterForNavigation<PasswordPage, PasswordPageViewModel>();
+            containerRegistry.RegisterForNavigation<EditProfilePage, EditProfilePageViewModel>();
+            containerRegistry.RegisterForNavigation<BlacklistPage, BlacklistPageViewModel>();
         }
 
         protected override async void OnInitialized()
@@ -58,6 +70,7 @@ namespace InterTwitter
 
             Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             FlowListView.Init();
+
             await NavigationService.NavigateAsync($"/{nameof(StartPage)}");
         }
 
@@ -67,10 +80,12 @@ namespace InterTwitter
 
         protected override void OnSleep()
         {
+            this.PopupPluginOnSleep();
         }
 
         protected override void OnResume()
         {
+            this.PopupPluginOnResume();
         }
 
         #endregion

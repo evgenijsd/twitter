@@ -7,10 +7,15 @@
                        x:Class="InterTwitter.Views.HomePage"
                        xmlns:prism="http://prismlibrary.com" 
                        xmlns:viewmodels="clr-namespace:InterTwitter.ViewModels" 
+                       xmlns:behaviors="clr-namespace:InterTwitter.Behaviors"
                        x:DataType="viewmodels:HomePageViewModel"
                        prism:ViewModelLocator.AutowireViewModel="True"
                        IconImageSource="{Binding IconPath}">
-   
+    
+    <ContentPage.Behaviors>
+        <behaviors:TabPageBehavior/>
+    </ContentPage.Behaviors>
+    
     <local:BaseContentPage.Content>
 
         <Grid HorizontalOptions="Fill"

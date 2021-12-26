@@ -60,6 +60,7 @@
   <ItemGroup>
     <PackageReference Include="CardsView" Version="2.8.0" />
     <PackageReference Include="DLToolkit.Forms.Controls.FlowListView" Version="2.0.11" />
+    <PackageReference Include="Prism.Plugin.Popups" Version="8.0.76" />
     <PackageReference Include="Prism.Unity.Forms" Version="8.1.97" />
     <PackageReference Include="Sharpnado.Shadows" Version="1.2.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
@@ -76,9 +77,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Behaviors\" />
     <Folder Include="Converters\" />
-    <Folder Include="Extensions\" />
     <Folder Include="Resources\Fonts\" />
     <Folder Include="Helpers\ProcessHelpers\" />
   </ItemGroup>
@@ -104,13 +103,19 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Resources\Resource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\AlertView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\BlacklistPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\CreatePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\EditProfilePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\LogInPage.xaml">
@@ -127,7 +132,6 @@
   <ItemGroup>
     <None Remove="Helpers\ProcessHelpers\" />
     <Folder Include="Enums\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>

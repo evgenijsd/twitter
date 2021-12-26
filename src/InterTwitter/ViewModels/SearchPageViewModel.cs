@@ -12,7 +12,7 @@ namespace InterTwitter.ViewModels
         public SearchPageViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            IconPath = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource;
+            IconPath = App.Current.Resources["ic_search_gray"] as ImageSource;
         }
 
         #region -- Public Properties --

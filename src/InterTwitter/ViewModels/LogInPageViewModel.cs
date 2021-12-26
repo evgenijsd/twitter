@@ -17,15 +17,12 @@ namespace InterTwitter.ViewModels
 
         private readonly IAuthorizationService _autorizationService;
 
-        private readonly IDialogService _dialogs;
-
         private readonly IKeyboardHelper _keyboardHelper;
 
         private UserModel _user;
 
         public LogInPageViewModel(
             INavigationService navigationService,
-            IDialogService dialogs,
             IRegistrationService registrationService,
             IAuthorizationService autorizationService,
             IKeyboardHelper keyboardHelper)
@@ -33,7 +30,6 @@ namespace InterTwitter.ViewModels
         {
             _registrationService = registrationService;
             _autorizationService = autorizationService;
-            _dialogs = dialogs;
             _keyboardHelper = keyboardHelper;
         }
 
@@ -168,15 +164,8 @@ namespace InterTwitter.ViewModels
                     }
                     else
                     {
-                        var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Resources.Resource.AlertInvalidPassword } };
-                        await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
                         Password = string.Empty;
                     }
-                }
-                else
-                {
-                    var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Resources.Resource.AlertInvalidLogin } };
-                    await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
                 }
             }
             else
@@ -193,9 +182,6 @@ namespace InterTwitter.ViewModels
                         IsWrongEmail = true;
                     }
                 }
-
-                var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, validator.Errors[0].ErrorMessage } };
-                await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
             }
         }
 
