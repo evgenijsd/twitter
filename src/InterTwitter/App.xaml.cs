@@ -7,7 +7,6 @@ using InterTwitter.Services;
 using InterTwitter.Services.PermissionsService;
 using InterTwitter.Services.UserService;
 using InterTwitter.ViewModels;
-using InterTwitter.ViewModels.Flyout;
 using InterTwitter.Views;
 using Prism;
 using Prism.Ioc;
@@ -42,6 +41,9 @@ namespace InterTwitter
             containerRegistry.RegisterSingleton<IAuthorizationService, AuthorizationService>();
             containerRegistry.RegisterSingleton<IUserService, UserService>();
             containerRegistry.RegisterSingleton<IPermissionService, PermissionService>();
+            containerRegistry.RegisterSingleton<IBookmarkService, BookmarkService>();
+            containerRegistry.RegisterSingleton<ILikeService, LikeService>();
+            containerRegistry.RegisterSingleton<INotificationService, NotificationService>();
 
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
@@ -53,7 +55,6 @@ namespace InterTwitter
             containerRegistry.RegisterForNavigation<BookmarksPage, BookmarksPageViewModel>();
             containerRegistry.RegisterForNavigation<NotificationsPage, NotificationPageViewModel>();
             containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
-            containerRegistry.RegisterForNavigation<StartPage, StartPageViewModel>();
             containerRegistry.RegisterForNavigation<CreatePage, CreatePageViewModel>();
             containerRegistry.RegisterForNavigation<LogInPage, LogInPageViewModel>();
             containerRegistry.RegisterForNavigation<PasswordPage, PasswordPageViewModel>();
@@ -64,12 +65,13 @@ namespace InterTwitter
         protected override async void OnInitialized()
         {
             InitializeComponent();
+            App.Current.UserAppTheme = OSAppTheme.Light;
 
             FlowListView.Init();
             Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             LocalizationResourceManager.Current.Init(Strings.ResourceManager);
 
-            await NavigationService.NavigateAsync($"/{nameof(StartPage)}");
+            await NavigationService.NavigateAsync($"/{nameof(LogInPage)}");
         }
 
         protected override void OnStart()

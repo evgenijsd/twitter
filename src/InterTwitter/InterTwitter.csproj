@@ -23,13 +23,13 @@
     <DebugType></DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Dev|AnyCPU' ">
-    <IntermediateOutputPath>obj\Release\netstandard2.0\netstandard2.0\netstandard2.0\netstandard2.0\netstandard2.0\netstandard2.0\netstandard2.0\netstandard2.0</IntermediateOutputPath>
+    <IntermediateOutputPath>obj\Release\netstandard2.0\netstandard2.0\netstandard2.0\netstandard2.0\netstandard2.0\netstandard2.0\netstandard2.0\netstandard2.0\netstandard2.0</IntermediateOutputPath>
     <DebugType></DebugType>
     <Optimize>true</Optimize>
     <DefineConstants>TRACE;DEV;NETSTANDARD;NETSTANDARD2_0;</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Stage|AnyCPU' ">
-    <IntermediateOutputPath>obj\Release\netstandard2.0\netstandard2.0\netstandard2.0\netstandard2.0\netstandard2.0\netstandard2.0\netstandard2.0\netstandard2.0</IntermediateOutputPath>
+    <IntermediateOutputPath>obj\Release\netstandard2.0\netstandard2.0\netstandard2.0\netstandard2.0\netstandard2.0\netstandard2.0\netstandard2.0\netstandard2.0\netstandard2.0</IntermediateOutputPath>
     <DebugType></DebugType>
     <Optimize>true</Optimize>
     <DefineConstants>TRACE;STAGE;NETSTANDARD;NETSTANDARD2_0;</DefineConstants>
@@ -94,20 +94,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\StartPage.xaml.cs">
-      <DependentUpon>StartPage.xaml</DependentUpon>
-    </Compile>
-    <!-- <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Resources\Resource %28копировать%29.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resource.en.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Resources\Resource.en.Designer.cs">
-      <DependentUpon>Resource.en.resx</DependentUpon>
-    </Compile> -->
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Update="Views\AlertView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -126,10 +112,6 @@
     <EmbeddedResource Update="Views\PasswordPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <!-- <EmbeddedResource Condition=" '$(EnableDefaultEmbeddedResourceItems)' == 'true' " Update="Resources\Resource %28копировать%29.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.en.Designer.cs</LastGenOutput>
-    </EmbeddedResource> -->
   </ItemGroup>
   <ItemGroup>
     <None Remove="Helpers\ProcessHelpers\" />
@@ -161,6 +143,18 @@
     <Compile Update="Controls\CustomNavigationbar.xaml.cs">
       <DependentUpon>CustomNavigationbar.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\BookmarksPage.xaml.cs">
+      <DependentUpon>BookmarksPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DataTemplates\Notification\ImageNotificationDataTemplate.xaml.cs">
+      <DependentUpon>ImageNotificationDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DataTemplates\Notification\TextNotificationDataTemplate.xaml.cs">
+      <DependentUpon>TextNotificationDataTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DataTemplates\Notification\VideoNotificationDataTemplate.xaml.cs">
+      <DependentUpon>VideoNotificationDataTemplate.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -179,7 +173,7 @@
     <EmbeddedResource Update="Views\DataTemplates\VideoTweetDataTemplate.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\HomePage.xaml">
+    <EmbeddedResource Update="Views\BookmarksPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\NotificationsPage.xaml">

@@ -15,6 +15,8 @@ namespace InterTwitter.Services
 
         IList<BlockModel> BlackList { get; set; }
 
+        IList<Bookmark> Bookmarks { get; set; }
+
         IList<LikeModel> Likes { get; set; }
     }
 }

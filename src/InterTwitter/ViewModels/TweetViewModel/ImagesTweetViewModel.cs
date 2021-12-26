@@ -15,7 +15,6 @@
         }
 
         #region -- Public properties --
-
         private int _rowHeight;
         public int RowHeight
         {
@@ -31,9 +30,7 @@
         }
 
         #endregion
-
         #region -- Private helpers --
-
         private void InitImagesPositioning()
         {
             _rowHeight = _imagesNumber < 3 ? 186 : 80;

@@ -92,6 +92,19 @@ namespace InterTwitter.Controls
             set => SetValue(PlaceholderColorProperty, value);
         }
 
+        public static readonly BindableProperty IsEntryFocusedProperty = BindableProperty.Create(
+            propertyName: nameof(IsEntryFocused),
+            returnType: typeof(bool),
+            declaringType: typeof(CustomEntry),
+            defaultValue: false,
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public bool IsEntryFocused
+        {
+            get => (bool)GetValue(IsEntryFocusedProperty);
+            set => SetValue(IsEntryFocusedProperty, value);
+        }
+
         public static readonly BindableProperty IsPasswordProperty = BindableProperty.Create(
             propertyName: nameof(IsPassword),
             returnType: typeof(bool),
@@ -289,7 +302,7 @@ namespace InterTwitter.Controls
 
         #region -- Overrides --
 
-        protected override void OnPropertyChanged(string propertyName)
+        protected override async void OnPropertyChanged(string propertyName)
         {
             base.OnPropertyChanged(propertyName);
 
@@ -349,6 +362,16 @@ namespace InterTwitter.Controls
                     }
 
                     break;
+            }
+
+            if (propertyName == nameof(IsEntryFocused))
+            {
+                if (IsEntryFocused)
+                {
+                    await Task.Delay(200);
+                    CustomEntryLocal.Focus();
+                    IsEntryFocused = false;
+                }
             }
         }
 

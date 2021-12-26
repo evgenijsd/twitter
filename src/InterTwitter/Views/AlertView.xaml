@@ -10,39 +10,45 @@
            CornerRadius="15">
 
         <StackLayout>
-            <Label Text="{Binding Title}" Margin="5,10,0,0"
-               HorizontalOptions="StartAndExpand"
-               Style="{DynamicResource tstyle_i5}"/>
+
+            <Label Text="{Binding Title}" 
+                   Margin="5,10,0,0"
+                   HorizontalOptions="StartAndExpand"
+                   Style="{DynamicResource tstyle_i5}"/>
+
             <Label Text="{Binding Message}"
-               Margin="5,10,0,0"
-               FontSize="{DynamicResource tsize_i4}"
-               FontFamily="Ubuntu-Medium"               
-               IsVisible="{Binding IsMessageVisible}"
-               TextColor="{DynamicResource appcolor_i4}"/>
+                   Margin="5,10,0,0"
+                   FontSize="{DynamicResource tsize_i4}"
+                   FontFamily="Ubuntu-Medium"               
+                   IsVisible="{Binding IsMessageVisible}"
+                   TextColor="{DynamicResource appcolor_i4}"/>
 
             <StackLayout Orientation="Horizontal">
+
                 <Button x:Name="cancelButton" 
-                    Text="{Binding CancelButtonText}"
-                    Command="{Binding DeclineCommand}" 
-                    FontSize="{DynamicResource tsize_i4}"
-                    FontFamily="Ubuntu-Medium"
-                    TextColor="{DynamicResource appcolor_i4}" 
-                    TextTransform="None"
-                    HorizontalOptions="EndAndExpand"
-                    BackgroundColor="Transparent"
-                    Margin="0,10,-42,-10" />
+                        Text="{Binding CancelButtonText}"
+                        Command="{Binding DeclineCommand}" 
+                        FontSize="{DynamicResource tsize_i4}"
+                        FontFamily="Ubuntu-Medium"
+                        TextColor="{DynamicResource appcolor_i4}" 
+                        TextTransform="None"
+                        HorizontalOptions="EndAndExpand"
+                        BackgroundColor="Transparent"
+                        Margin="0,10,-42,-10" />
+
                 <Button x:Name="okButton" 
-                    Text="{Binding OkButtonText}"
-                    Command="{Binding AcceptCommand}" 
-                    TextTransform="None"
-                    FontSize="{DynamicResource tsize_i4}"
-                    FontFamily="Ubuntu-Medium"
-                    TextColor="{DynamicResource appcolor_i1}"
-                    HorizontalOptions="EndAndExpand"
-                    BackgroundColor="Transparent"
-                    Margin="0,10,-5,-10" />
+                        Text="{Binding OkButtonText}"
+                        Command="{Binding AcceptCommand}" 
+                        TextTransform="None"
+                        FontSize="{DynamicResource tsize_i4}"
+                        FontFamily="Ubuntu-Medium"
+                        TextColor="{DynamicResource appcolor_i1}"
+                        HorizontalOptions="EndAndExpand"
+                        BackgroundColor="Transparent"
+                        Margin="0,10,-5,-10" />
 
             </StackLayout>
+            
         </StackLayout>
         
     </Frame>

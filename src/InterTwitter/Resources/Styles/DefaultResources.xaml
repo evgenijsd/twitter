@@ -6,6 +6,7 @@
                     xmlns:views="clr-namespace:InterTwitter.Views"
                     xmlns:dataTemplatesSelector="clr-namespace:InterTwitter.Helpers" 
                     xmlns:dataTemplates="clr-namespace:InterTwitter.Views.DataTemplates"
+                    xmlns:dataNotificationTemplates="clr-namespace:InterTwitter.Views.DataTemplates.Notification"
                     x:Class="InterTwitter.Resources.Styles.DefaultResources">
 
     <!-- TEXT SIZE -->
@@ -115,6 +116,16 @@
                                                      ImageTweetDataTemplate="{StaticResource imageTweetTemplate}"
                                                      VideoTweetDataTemplate="{StaticResource videoTweetTemplate}"
                                                      TextTweetDataTemplate="{StaticResource textTweetTemplate}"/>
+
+    <!-- TweetData Templates-->
+    <dataNotificationTemplates:ImageNotificationDataTemplate x:Key="imageNotificationTemplate" />
+    <dataNotificationTemplates:VideoNotificationDataTemplate x:Key="videoNotificationTemplate" />
+    <dataNotificationTemplates:TextNotificationDataTemplate x:Key="textNotificationTemplate" />
+
+    <dataTemplatesSelector:NotificationDataTemplateSelector x:Key="notificationTemplateSelector"
+                                                                        ImageNotificationDataTemplate="{StaticResource imageNotificationTemplate}"
+                                                                        VideoNotificationDataTemplate="{StaticResource videoNotificationTemplate}"
+                                                                        TextNotificationDataTemplate="{StaticResource textNotificationTemplate}" />
 
     <!-- BOXVIEW SEPARATORS STYLES -->
     <Style x:Key="SeparatorStyle" TargetType="BoxView" > <!-- Light Gray --> 

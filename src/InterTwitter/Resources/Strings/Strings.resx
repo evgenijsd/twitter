@@ -177,6 +177,12 @@
   <data name="AlertPasswordNotEqual" xml:space="preserve">
     <value>Password and confirm password do not coincide</value>
   </data>
+  <data name="Bookmarks" xml:space="preserve">
+    <value>Bookmarks</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
   <data name="AlreadyBlocked" xml:space="preserve">
     <value>This user is already blocked</value>
   </data>
@@ -188,6 +194,9 @@
   </data>
   <data name="CreateYourAccount" xml:space="preserve">
     <value>Create your account</value>
+  </data>
+  <data name="DeleteAllbookmarks" xml:space="preserve">
+    <value>Delete all bookmarks</value>
   </data>
   <data name="DoNotMatch" xml:space="preserve">
     <value>Do not match</value>
@@ -229,7 +238,25 @@
     <value>New password is not valid or empty</value>
   </data>
   <data name="Next" xml:space="preserve">
-    <value>Next</value>
+    <value>     Next     </value>
+  </data>
+  <data name="NotFoundBookmark" xml:space="preserve">
+    <value>not found any bookmark</value>
+  </data>
+  <data name="NotFoundBookmark" xml:space="preserve">
+    <value>not found any bookmark</value>
+  </data>
+  <data name="NotFoundLike" xml:space="preserve">
+    <value>not found any like</value>
+  </data>
+  <data name="NotFoundNotification" xml:space="preserve">
+    <value>Not found notification</value>
+  </data>
+  <data name="Notification" xml:space="preserve">
+    <value>Notification</value>
+  </data>
+  <data name="NoTweets" xml:space="preserve">
+    <value>No tweets found</value>
   </data>
   <data name="NoResultsFor" xml:space="preserve">
     <value>No results for</value>
@@ -270,6 +297,9 @@
   <data name="SignUp" xml:space="preserve">
     <value>Sign Up</value>
   </data>
+  <data name="SomeIssues" xml:space="preserve">
+    <value>Some issues</value>
+  </data>
   <data name="UserBlocked" xml:space="preserve">
     <value>This user is already blocked</value>
   </data>
@@ -284,6 +314,12 @@
   </data>
   <data name="WrongEmail" xml:space="preserve">
     <value>Wrong Email</value>
+  </data>
+  <data name="WrongResult" xml:space="preserve">
+    <value>Wrong result</value>
+  </data>
+  <data name="YouHaveNoBookmarks" xml:space="preserve">
+    <value>You have no bookmarks yet</value>
   </data>
   <data name="YouNeedPassword" xml:space="preserve">
     <value>You'll need a password</value>

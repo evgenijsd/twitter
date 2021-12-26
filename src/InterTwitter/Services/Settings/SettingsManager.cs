@@ -13,6 +13,5 @@ namespace InterTwitter.Services.Settings
         }
 
         #endregion
-
     }
 }

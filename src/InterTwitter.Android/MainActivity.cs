@@ -11,7 +11,14 @@ using Prism.Plugin.Popups;
 
 namespace InterTwitter.Droid
 {
-    [Activity(Label = "@string/ApplicationName", Icon = "@mipmap/launcher_foreground", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize, ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(
+        Label = "@string/ApplicationName", 
+        Icon = "@mipmap/icon_owl",
+        LaunchMode = LaunchMode.SingleTask, 
+        Theme = "@style/MainTheme",
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize, 
+        ScreenOrientation = ScreenOrientation.Portrait)]
+
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         #region -- Overrides --
@@ -46,5 +53,7 @@ namespace InterTwitter.Droid
                 containerRegisty.RegisterSingleton<IKeyboardHelper, KeyboardHelper>();
             }
         }
+
+
     }
 }

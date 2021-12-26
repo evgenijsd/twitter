@@ -1,4 +1,6 @@
-﻿namespace InterTwitter.Models
+﻿using System;
+
+namespace InterTwitter.Models
 {
     public class LikeModel : IEntityBase
     {
@@ -6,8 +8,10 @@
 
         public int UserId { get; set; }
 
-        public int PostId { get; set; }
+        public int TweetId { get; set; }
 
         public bool Notification { get; set; }
+
+        public DateTime CreationTime { get; set; }
     }
 }

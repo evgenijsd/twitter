@@ -1,5 +1,6 @@
 ﻿using InterTwitter.Helpers.ProcessHelpers;
 using InterTwitter.Models;
+using InterTwitter.Services.Settings;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,18 +11,22 @@ namespace InterTwitter.Services
     public class AuthorizationService : IAuthorizationService
     {
         private readonly IMockService _mockService;
+        private readonly ISettingsManager _settingsManager;
 
-        public AuthorizationService(IMockService mockService)
+        public AuthorizationService(
+            IMockService mockService,
+            ISettingsManager settingsManager)
         {
             _mockService = mockService;
+            _settingsManager = settingsManager;
         }
 
         #region -- Public properties --
 
         public int UserId
         {
-            get => Preferences.Get(nameof(UserId), 0);
-            set => Preferences.Set(nameof(UserId), value);
+            get => _settingsManager.UserId;
+            set => _settingsManager.UserId = value;
         }
 
         #endregion
@@ -34,7 +39,7 @@ namespace InterTwitter.Services
 
             try
             {
-                var user = _mockService.Users?.FirstOrDefault(x => x.Email.ToLower() == email.ToLower());
+                var user = _mockService.Users?.FirstOrDefault(x => x.Email.ToLower() == email.ToLower() && x.Password == password);
                 if (user != null)
                 {
                     result.SetSuccess(user);

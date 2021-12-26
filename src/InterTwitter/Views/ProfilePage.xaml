@@ -1,105 +1,127 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<local:BaseContentPage
-    x:Class="InterTwitter.Views.ProfilePage"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:behaviors="clr-namespace:InterTwitter.Behaviors"
-    xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
-    xmlns:cardsControls="clr-namespace:PanCardView.Controls;assembly=PanCardView"
-    xmlns:controls="clr-namespace:InterTwitter.Controls"
-    xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-    xmlns:fftranform="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
-    xmlns:local="clr-namespace:InterTwitter.Views"
-    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-    BackgroundColor="{DynamicResource appcolor_i2}">
+<local:BaseContentPage x:Class="InterTwitter.Views.ProfilePage"
+                       xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
+                       xmlns:cardsControls="clr-namespace:PanCardView.Controls;assembly=PanCardView"
+                       xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                       xmlns:fftranform="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+                       xmlns:local="clr-namespace:InterTwitter.Views"
+                       xmlns:localmodel="clr-namespace:InterTwitter.ViewModels"
+                       xmlns:controls="clr-namespace:InterTwitter.Controls"
+                       xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+                       BackgroundColor="{DynamicResource appcolor_i2}">
 
-    <ContentPage.Behaviors>
-        <behaviors:TabPageBehavior />
-    </ContentPage.Behaviors>
+    <Grid RowDefinitions="0.278*, 0.198*, 0.524*" 
+          RowSpacing="0">
 
+        <Image Grid.Row="0"
+               Aspect="AspectFill"
+               Source="https://picsum.photos/500/500?image=122" />
 
-    <Grid RowDefinitions="0.278*, 0.250*, 0.472*" RowSpacing="0">
-
-        <Image
-            Grid.Row="0"
-            Aspect="AspectFill"
-            Source="{Binding UserBackgroundImage}" />
-
-        <cardsControls:CircleFrame
-            Grid.Row="0"
-            Margin="16,16,0,0"
-            BackgroundColor="#9902060E"
-            HeightRequest="32"
-            HorizontalOptions="Start"
-            VerticalOptions="Start"
-            WidthRequest="32">
-            <Image Scale="0.8" Source="{DynamicResource ic_left_white}" />
+        <cardsControls:CircleFrame Grid.Row="0"
+                                   Margin="16,16,0,0"
+                                   BackgroundColor="#9902060E"
+                                   HeightRequest="32"
+                                   HorizontalOptions="Start"
+                                   VerticalOptions="Start"
+                                   WidthRequest="32">
+            <Image Scale="0.8" 
+                   Source="ic_left_white" />
             <cardsControls:CircleFrame.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding NavgationCommandAsync}" />
             </cardsControls:CircleFrame.GestureRecognizers>
         </cardsControls:CircleFrame>
 
-        <cardsControls:CircleFrame
-            Grid.Row="0"
-            Margin="0,16,16,0"
-            BackgroundColor="#9902060E"
-            HeightRequest="32"
-            HorizontalOptions="End"
-            VerticalOptions="Start"
-            WidthRequest="32">
-            <Image Scale="0.8" Source="{DynamicResource ic_hidden_menu_white_small}" />
+        <cardsControls:CircleFrame Grid.Row="0"
+                                   Margin="0,16,16,0"
+                                   BackgroundColor="#9902060E"
+                                   HeightRequest="32"
+                                   HorizontalOptions="End"
+                                   VerticalOptions="Start"
+                                   WidthRequest="32">
+            <Image Scale="0.8" 
+                   Source="{DynamicResource ic_hidden_menu_white_small}" />
+
             <cardsControls:CircleFrame.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding HamburgerMenuCommandAsync}" Tapped="OnMenuTappedHandler" />
+            
+                <TapGestureRecognizer Command="{Binding HamburgerMenuCommandAsync}" 
+                                      Tapped="OnMenuTappedHandler" />
+            
             </cardsControls:CircleFrame.GestureRecognizers>
+
         </cardsControls:CircleFrame>
 
         <!--  Hidden menu  -->
-        <Frame
-            x:Name="currentUserHiddenMenu"
-            Grid.Row="0"
-            Grid.RowSpan="2"
-            Margin="0,16,6,0"
-            Padding="16,21,64,21"
-            CornerRadius="6"
-            HasShadow="True"
-            HorizontalOptions="End"
-            IsVisible="{Binding IsCurrentUserMenuVisible, Mode=TwoWay}"
-            VerticalOptions="Start">
+        <Frame x:Name="currentUserHiddenMenu"
+               Grid.Row="0"
+               Grid.RowSpan="2"
+               Margin="0,16,6,0"
+               Padding="16,21,64,21"
+               CornerRadius="6"
+               HasShadow="True"
+               HorizontalOptions="End"
+               IsVisible="{Binding IsCurrentUserMenuVisible, Mode=TwoWay}"
+               VerticalOptions="Start">
+
             <StackLayout x:Name="currentUserMenuStack">
-                <Label
-                    Style="{DynamicResource tstyle_i9}"
-                    Text="{xct:Translate Share}"
-                    TextColor="{DynamicResource appcolor_i3}">
+
+                <Label Style="{DynamicResource tstyle_i9}"
+                       Text="{xct:Translate Share}"
+                       TextColor="{DynamicResource appcolor_i3}">
+
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ShareCommandAsync}" Tapped="OnAnywhereTappedHandler" />
+
+                        <TapGestureRecognizer Command="{Binding ShareCommandAsync}" 
+                                              Tapped="OnAnywhereTappedHandler" />
+                    
                     </Label.GestureRecognizers>
                 </Label>
-                <Label
-                    Style="{DynamicResource tstyle_i9}"
-                    Text="{xct:Translate ChangeProfile}"
-                    TextColor="{DynamicResource appcolor_i3}">
+
+                <Label Style="{DynamicResource tstyle_i9}"
+                       Text="{xct:Translate ChangeProfile}"
+                       TextColor="{DynamicResource appcolor_i3}">
+
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavigationToEditCommandAsync}" Tapped="OnAnywhereTappedHandler" />
+                    
+                        <TapGestureRecognizer Command="{Binding NavigationToEditCommandAsync}" 
+                                              Tapped="OnAnywhereTappedHandler" />
+                    
                     </Label.GestureRecognizers>
+
                 </Label>
-                <Label
-                    Style="{DynamicResource tstyle_i9}"
-                    Text="{xct:Translate MutedProfiles}"
-                    TextColor="{DynamicResource appcolor_i3}">
+
+                <Label Style="{DynamicResource tstyle_i9}"
+                       Text="{xct:Translate MutedProfiles}"
+                       TextColor="{DynamicResource appcolor_i3}">
+
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavigationToMutelistCommandAsync}" Tapped="OnAnywhereTappedHandler" />
+
+                        <TapGestureRecognizer Command="{Binding NavigationToMutelistCommandAsync}" 
+                                              Tapped="OnAnywhereTappedHandler" />
+                    
                     </Label.GestureRecognizers>
+
                 </Label>
-                <Label
-                    Style="{DynamicResource tstyle_i9}"
-                    Text="{xct:Translate Blacklist}"
-                    TextColor="{DynamicResource appcolor_i3}">
+
+                <Label Style="{DynamicResource tstyle_i9}"
+                       Text="{xct:Translate Blacklist}"
+                       TextColor="{DynamicResource appcolor_i3}">
+
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavigationToBlacklistCommandAsync}" Tapped="OnAnywhereTappedHandler" />
+
+                        <TapGestureRecognizer Command="{Binding NavigationToBlacklistCommandAsync}" 
+                                              Tapped="OnAnywhereTappedHandler" />
+                    
                     </Label.GestureRecognizers>
+                    
                 </Label>
+
             </StackLayout>
+
         </Frame>
+
+        <!-- !!!!!!!!!FIX LAYOUT AS ABOVE!!!!!!!!!!-->
 
         <Frame
             x:Name="userHiddenMenu"

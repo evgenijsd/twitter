@@ -1,5 +1,4 @@
-﻿using InterTwitter.ViewModels.Flyout;
-using Prism.Navigation;
+﻿using Prism.Navigation;
 using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels

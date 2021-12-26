@@ -5,18 +5,17 @@ using AndroidX.AppCompat.App;
 
 namespace InterTwitter.Droid
 {
-    [Activity(Theme = "@style/MyTheme.Splash", MainLauncher = true, NoHistory = true )]
+    [Activity(
+        Theme = "@style/LaunchTheme", 
+        MainLauncher = true, 
+        NoHistory = true)]
     public class SplashActivity : AppCompatActivity
     {
-        public override void OnCreate(Bundle savedInstanceState, PersistableBundle persistentState)
-        {
-            base.OnCreate(savedInstanceState, persistentState);
-        }
-
         protected override void OnResume()
         {
             base.OnResume();
-            StartActivity(new Intent(Application.Context, typeof(MainActivity)));
+
+            StartActivity(typeof(MainActivity));
         }
     }
 }

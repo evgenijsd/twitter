@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace InterTwitter.ViewModels.Flyout
+namespace InterTwitter.ViewModels
 {
     public class FlyoutPageFlyoutViewModel : BaseTabViewModel
     {
@@ -20,6 +20,7 @@ namespace InterTwitter.ViewModels.Flyout
         private readonly IAuthorizationService _authorizationService;
 
         private UserModel _user;
+
         public FlyoutPageFlyoutViewModel(
             INavigationService navigationService,
             ISettingsManager settingsManager,
@@ -29,7 +30,6 @@ namespace InterTwitter.ViewModels.Flyout
         {
             _settingsManager = settingsManager;
             _userService = userService;
-
             _authorizationService = authorizationService;
 
             MenuItems = new ObservableCollection<MenuItemViewModel>(new[]
@@ -190,9 +190,9 @@ namespace InterTwitter.ViewModels.Flyout
 
         private async Task OnLogoutCommandAsync()
         {
-            _authorizationService.UserId = 0;
+            _settingsManager.UserId = 0;
 
-            await NavigationService.NavigateAsync($"/{nameof(StartPage)}");
+            await NavigationService.NavigateAsync($"/{nameof(LogInPage)}");
         }
 
         private async Task OnNavigateProfileCommandAsync()
