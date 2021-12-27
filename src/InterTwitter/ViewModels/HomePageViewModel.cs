@@ -71,10 +71,10 @@ namespace InterTwitter.ViewModels
             return InitAsync();
         }
 
-        public override void OnAppearing()
+        public override async void OnAppearing()
         {
             IconPath = App.Current.Resources["ic_home_blue"] as ImageSource;
-            InitAsync();
+            await InitAsync();
         }
 
         public override void OnDisappearing()
