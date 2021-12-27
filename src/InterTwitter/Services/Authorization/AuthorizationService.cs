@@ -1,5 +1,6 @@
 ﻿using InterTwitter.Helpers.ProcessHelpers;
 using InterTwitter.Models;
+using InterTwitter.Services.Settings;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,11 +11,25 @@ namespace InterTwitter.Services
     public class AuthorizationService : IAuthorizationService
     {
         private readonly IMockService _mockService;
+        private readonly ISettingsManager _settingsManager;
 
-        public AuthorizationService(IMockService mockService)
+        public AuthorizationService(
+            IMockService mockService,
+            ISettingsManager settingsManager)
         {
             _mockService = mockService;
+            _settingsManager = settingsManager;
         }
+
+        #region -- Public properties --
+
+        public int UserId
+        {
+            get => _settingsManager.UserId;
+            set => _settingsManager.UserId = value;
+        }
+
+        #endregion
 
         #region -- Public helpers --
 

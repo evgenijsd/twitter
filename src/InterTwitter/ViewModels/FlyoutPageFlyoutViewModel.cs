@@ -1,26 +1,36 @@
 ﻿using InterTwitter.Helpers;
+using InterTwitter.Models;
 using InterTwitter.Services;
+using InterTwitter.Services.Settings;
+using InterTwitter.Services.UserService;
 using InterTwitter.Views;
 using Prism.Navigation;
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
 {
-    public class FlyoutPageFlyoutViewModel : BaseViewModel
+    public class FlyoutPageFlyoutViewModel : BaseTabViewModel
     {
         private readonly ISettingsManager _settingsManager;
+        private readonly IUserService _userService;
+        private readonly IAuthorizationService _authorizationService;
+
+        private UserModel _user;
 
         public FlyoutPageFlyoutViewModel(
             INavigationService navigationService,
-            ISettingsManager settingsManager)
+            ISettingsManager settingsManager,
+            IAuthorizationService authorizationService,
+            IUserService userService)
             : base(navigationService)
         {
             _settingsManager = settingsManager;
+            _userService = userService;
+            _authorizationService = authorizationService;
 
             MenuItems = new ObservableCollection<MenuItemViewModel>(new[]
                 {
@@ -70,31 +80,47 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _menuItems, value);
         }
 
-        private string _profileName = "Gianna Press";
+        private string _profileName;
         public string ProfileName
         {
             get => _profileName;
             set => SetProperty(ref _profileName, value);
         }
 
-        private string _profileEmail = "gianap@gmail.com";
+        private string _profileEmail;
         public string ProfileEmail
         {
             get => _profileEmail;
             set => SetProperty(ref _profileEmail, value);
         }
 
-        public ICommand LogoutCommandAsync => SingleExecutionCommand.FromFunc(OnLogoutCommandAsync);
-        public ICommand ChangeProfileCommandAsync => SingleExecutionCommand.FromFunc(OnChangeProfileCommandAsync);
-        public ICommand OpenProfileCommandAsync => SingleExecutionCommand.FromFunc(OnOpenProfileCommandAsync);
+        private string _userImagePath;
+        public string UserImagePath
+        {
+            get => _userImagePath;
+            set => SetProperty(ref _userImagePath, value);
+        }
+
+        private ICommand _logoutCommandAsync;
+        public ICommand LogoutCommandAsync => _logoutCommandAsync ??= SingleExecutionCommand.FromFunc(OnLogoutCommandAsync);
+
+        private ICommand _navigateEditProfileCommandAsync;
+        public ICommand NavigateEditProfileCommandAsync => _navigateEditProfileCommandAsync ??= SingleExecutionCommand.FromFunc(OnNavigateEditProfileCommandAsync);
+
+        private ICommand _navigateProfileCommandAsync;
+        public ICommand NavigateProfileCommandAsync => _navigateProfileCommandAsync ??= SingleExecutionCommand.FromFunc(OnNavigateProfileCommandAsync);
 
         #endregion
 
         #region -- Overrides --
 
-        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        public override Task InitializeAsync(INavigationParameters parameters)
         {
-            base.OnPropertyChanged(args);
+            _user = _userService.GetUserAsync(_settingsManager.UserId).Result.Result;
+            ProfileName = _user.Name;
+            ProfileEmail = _user.Email;
+            UserImagePath = _user.AvatarPath;
+            return base.InitializeAsync(parameters);
         }
 
         #endregion
@@ -107,6 +133,7 @@ namespace InterTwitter.ViewModels
             MessagingCenter.Subscribe<BookmarksPageViewModel, Type>(this, Constants.Messages.TAB_CHANGE, ChangeVisualState);
             MessagingCenter.Subscribe<NotificationPageViewModel, Type>(this, Constants.Messages.TAB_CHANGE, ChangeVisualState);
             MessagingCenter.Subscribe<FlyoutPageDetailViewModel, Type>(this, Constants.Messages.TAB_CHANGE, ChangeVisualState);
+            MessagingCenter.Subscribe<EditProfilePageViewModel>(this, Constants.Messages.USER_PROFILE_CHANGED, UpdateAsync);
         }
 
         private void ChangeVisualState(object sender, Type selectedTabType)
@@ -141,12 +168,24 @@ namespace InterTwitter.ViewModels
             }
         }
 
-        private void OnItemTapCommand(object param)
+        private async void OnItemTapCommand(object param)
         {
             var menuItem = param as MenuItemViewModel;
             MessagingCenter.Send(this, Constants.Messages.OPEN_SIDEBAR, false);
             MessagingCenter.Send(this, Constants.Messages.TAB_SELECTED, menuItem.Id);
-            NavigationService.NavigateAsync(nameof(menuItem.TargetType));
+            await NavigationService.NavigateAsync(nameof(menuItem.TargetType));
+        }
+
+        private async void UpdateAsync(object sender)
+        {
+            var userResponse = await _userService.GetUserAsync(_settingsManager.UserId);
+            if (userResponse.IsSuccess)
+            {
+                var user = userResponse.Result;
+                ProfileName = user.Name;
+                ProfileEmail = user.Email;
+                UserImagePath = user.AvatarPath;
+            }
         }
 
         private async Task OnLogoutCommandAsync()
@@ -156,15 +195,18 @@ namespace InterTwitter.ViewModels
             await NavigationService.NavigateAsync($"/{nameof(LogInPage)}");
         }
 
-        private Task OnChangeProfileCommandAsync()
+        private async Task OnNavigateProfileCommandAsync()
         {
-            return Task.CompletedTask;
+            var param = new NavigationParameters();
+            param.Add(Constants.Navigation.CURRENT_USER, _user);
+            await NavigationService.NavigateAsync(nameof(ProfilePage), param);
+            MessagingCenter.Send(this, Constants.Messages.OPEN_SIDEBAR, false);
         }
 
-        private async Task OnOpenProfileCommandAsync()
+        private async Task OnNavigateEditProfileCommandAsync()
         {
-           // MessagingCenter.Send(this, "OpenSidebar", false);
-            await NavigationService.NavigateAsync($"{nameof(ProfilePage)}");
+            await NavigationService.NavigateAsync(nameof(EditProfilePage));
+            MessagingCenter.Send(this, Constants.Messages.OPEN_SIDEBAR, false);
         }
 
         #endregion

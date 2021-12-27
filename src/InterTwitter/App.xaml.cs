@@ -1,12 +1,17 @@
-﻿using DLToolkit.Forms.Controls;
-using InterTwitter.Resources;
+using DLToolkit.Forms.Controls;
+using InterTwitter.Resources.Strings;
+using InterTwitter.Services.Hashtag;
+using InterTwitter.Services.Settings;
+using InterTwitter.Droid.Services.PermissionsService;
 using InterTwitter.Services;
+using InterTwitter.Services.PermissionsService;
+using InterTwitter.Services.UserService;
 using InterTwitter.ViewModels;
 using InterTwitter.Views;
 using Prism;
 using Prism.Ioc;
+using Prism.Plugin.Popups;
 using Prism.Unity;
-using System.Globalization;
 using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Forms;
 
@@ -23,17 +28,22 @@ namespace InterTwitter
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterPopupNavigationService();
+            containerRegistry.RegisterPopupDialogService();
             containerRegistry.RegisterDialog<AlertView, AlertViewModel>();
 
             //Services
+            containerRegistry.RegisterSingleton<ISettingsManager, SettingsManager>();
             containerRegistry.RegisterSingleton<IMockService, MockService>();
             containerRegistry.RegisterSingleton<ITweetService, TweetService>();
-            containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
-            containerRegistry.RegisterInstance<IRegistrationService>(Container.Resolve<RegistrationService>());
-            containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
-            containerRegistry.RegisterInstance<IBookmarkService>(Container.Resolve<BookmarkService>());
-            containerRegistry.RegisterInstance<ILikeService>(Container.Resolve<LikeService>());
-            containerRegistry.RegisterInstance<INotificationService>(Container.Resolve<NotificationService>());
+            containerRegistry.RegisterSingleton<IHashtagService, HashtagService>();
+            containerRegistry.RegisterSingleton<IRegistrationService, RegistrationService>();
+            containerRegistry.RegisterSingleton<IAuthorizationService, AuthorizationService>();
+            containerRegistry.RegisterSingleton<IUserService, UserService>();
+            containerRegistry.RegisterSingleton<IPermissionService, PermissionService>();
+            containerRegistry.RegisterSingleton<IBookmarkService, BookmarkService>();
+            containerRegistry.RegisterSingleton<ILikeService, LikeService>();
+            containerRegistry.RegisterSingleton<INotificationService, NotificationService>();
 
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
@@ -48,19 +58,19 @@ namespace InterTwitter
             containerRegistry.RegisterForNavigation<CreatePage, CreatePageViewModel>();
             containerRegistry.RegisterForNavigation<LogInPage, LogInPageViewModel>();
             containerRegistry.RegisterForNavigation<PasswordPage, PasswordPageViewModel>();
+            containerRegistry.RegisterForNavigation<EditProfilePage, EditProfilePageViewModel>();
+            containerRegistry.RegisterForNavigation<BlacklistPage, BlacklistPageViewModel>();
         }
 
         protected override async void OnInitialized()
         {
-            LocalizationResourceManager.Current.PropertyChanged += (sender, e) => Resource.Culture = LocalizationResourceManager.Current.CurrentCulture;
-            LocalizationResourceManager.Current.Init(Resource.ResourceManager);
-            LocalizationResourceManager.Current.CurrentCulture = new CultureInfo("en");
-
             InitializeComponent();
             App.Current.UserAppTheme = OSAppTheme.Light;
 
-            Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             FlowListView.Init();
+            Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
+            LocalizationResourceManager.Current.Init(Strings.ResourceManager);
+
             await NavigationService.NavigateAsync($"/{nameof(LogInPage)}");
         }
 
@@ -70,13 +80,14 @@ namespace InterTwitter
 
         protected override void OnSleep()
         {
+            this.PopupPluginOnSleep();
         }
 
         protected override void OnResume()
         {
+            this.PopupPluginOnResume();
         }
 
         #endregion
-
     }
 }

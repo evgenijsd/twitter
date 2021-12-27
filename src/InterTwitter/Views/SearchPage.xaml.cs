@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using InterTwitter.ViewModels;
 
 namespace InterTwitter.Views
 {
@@ -15,5 +8,25 @@ namespace InterTwitter.Views
         {
             InitializeComponent();
         }
+
+        #region -- Overrides --
+
+        protected override bool OnBackButtonPressed()
+        {
+            bool isCannotGoBack = false;
+
+            if (BindingContext is SearchPageViewModel viewModel)
+            {
+                if (viewModel.TweetsSearchStatus == Enums.ESearchStatus.Active)
+                {
+                    isCannotGoBack = true;
+                    viewModel.ResetSearchState();
+                }
+            }
+
+            return isCannotGoBack;
+        }
+
+        #endregion
     }
 }

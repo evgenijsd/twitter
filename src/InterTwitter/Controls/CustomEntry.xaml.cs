@@ -235,6 +235,57 @@ namespace InterTwitter.Controls
             set => SetValue(ImageSourceProperty, value);
         }
 
+        public static readonly BindableProperty IsSwapButtonsProperty = BindableProperty.Create(
+           propertyName: nameof(IsSwapButtons),
+           returnType: typeof(bool),
+           declaringType: typeof(CustomEntry),
+           defaultBindingMode: BindingMode.TwoWay);
+
+        public bool IsSwapButtons
+        {
+            get => (bool)GetValue(IsSwapButtonsProperty);
+            set => SetValue(IsSwapButtonsProperty, value);
+        }
+
+        public static readonly BindableProperty Eye_grid_columnProperty = BindableProperty.Create(
+           propertyName: nameof(Eye_grid_column),
+           returnType: typeof(int),
+           declaringType: typeof(CustomEntry),
+           defaultValue: 1,
+           defaultBindingMode: BindingMode.TwoWay);
+
+        public int Eye_grid_column
+        {
+            get => (int)GetValue(Eye_grid_columnProperty);
+            set => SetValue(Eye_grid_columnProperty, value);
+        }
+
+        public static readonly BindableProperty Cross_grid_columnProperty = BindableProperty.Create(
+           propertyName: nameof(Cross_grid_column),
+           returnType: typeof(int),
+           declaringType: typeof(CustomEntry),
+           defaultValue: 2,
+           defaultBindingMode: BindingMode.TwoWay);
+
+        public int Cross_grid_column
+        {
+            get => (int)GetValue(Cross_grid_columnProperty);
+            set => SetValue(Cross_grid_columnProperty, value);
+        }
+
+        public static readonly BindableProperty IsButtonClearEnableProperty = BindableProperty.Create(
+          propertyName: nameof(IsButtonClearEnable),
+          returnType: typeof(bool),
+          declaringType: typeof(CustomEntry),
+          defaultValue: false,
+          defaultBindingMode: BindingMode.TwoWay);
+
+        public bool IsButtonClearEnable
+        {
+            get => (bool)GetValue(IsButtonClearEnableProperty);
+            set => SetValue(IsButtonClearEnableProperty, value);
+        }
+
         private ICommand _buttonEyeCommand;
         public ICommand ButtonEyeCommand => _buttonEyeCommand ??= SingleExecutionCommand.FromFunc(OnButtonEyeCommandAsync);
 
@@ -259,6 +310,21 @@ namespace InterTwitter.Controls
             {
                 case nameof(IsPassword):
                     IsPasswordHidden = IsPassword;
+                    break;
+                case nameof(IsSwapButtons):
+                    {
+                        if (IsSwapButtons)
+                        {
+                            Eye_grid_column = 2;
+                            Cross_grid_column = 1;
+                        }
+                        else
+                        {
+                            Eye_grid_column = 1;
+                            Cross_grid_column = 2;
+                        }
+                    }
+
                     break;
                 case nameof(Text):
                 case nameof(ClearImageSource):

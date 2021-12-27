@@ -3,12 +3,12 @@
               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
               xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
-              xmlns:controls="clr-namespace:InterTwitter.Controls"
+              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+              xmlns:highlightedlabel="clr-namespace:InterTwitter.Controls.HighlightedLabel"
               x:Class="InterTwitter.Views.DataTemplates.ImageTweetDataTemplate">
 
     <StackLayout Spacing="0">
-        
+
         <StackLayout Padding="15, 15, 15, 0"
                      Orientation="Horizontal"
                      Spacing="0">
@@ -21,6 +21,9 @@
                 <ffimageloading:CachedImage.Transformations>
                     <fftransformations:CircleTransformation />
                 </ffimageloading:CachedImage.Transformations>
+                <ffimageloading:CachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding MoveToProfileCommand}"/>
+                </ffimageloading:CachedImage.GestureRecognizers>
 
             </ffimageloading:CachedImage>
 
@@ -30,12 +33,11 @@
                        Text="{Binding UserName}" 
                        FontAttributes="Bold"/>
 
-                <controls:CustomLabel Style="{DynamicResource tstyle_i7}" 
-                                      VerticalOptions="Start"
-                                      MaxLines="5" 
-                                      LineBreakMode="TailTruncation"
-                                      IsVisible="{Binding IsTextVisible}"
-                                      Text="{Binding Text}"/>
+                <highlightedlabel:HighlightedLabel LineSpacing="{OnPlatform Android=1.3, iOS=6.45}"
+                                                   KeyBackgroundColor="{DynamicResource appcolor_i8}"
+                                                   HashtagTextColor="{DynamicResource appcolor_i1}"
+                                                   KeysToHighlight="{Binding KeysToHighlight}"
+                                                   OriginalText="{Binding Text}"/>
 
                 <flv:FlowListView FlowColumnCount="{Binding ColumnNumber}"
                                   RowHeight="{Binding RowHeight}"
@@ -48,7 +50,7 @@
                                   FlowItemsSource="{Binding MediaPaths}">
 
                     <flv:FlowListView.FlowColumnTemplate>
-                        
+
                         <DataTemplate>
                             <Frame Margin="2"
                                    Padding="0"
@@ -61,7 +63,7 @@
 
                             </Frame>
                         </DataTemplate>
-                        
+
                     </flv:FlowListView.FlowColumnTemplate>
 
                 </flv:FlowListView>
@@ -88,19 +90,19 @@
                                         Value="ic_like_blue" />
                             </DataTrigger>
                         </ffimageloading:CachedImage.Triggers>
-                        
+
                     </ffimageloading:CachedImage>
 
                     <Label Style="{DynamicResource tstyle_i9}"
                            Text="{Binding LikesNumber}" 
                            Margin="0, 1, 15, -1">
-                        
+
                         <Label.Triggers>
                             <DataTrigger TargetType="Label" Binding="{Binding IsTweetLiked}" Value="true">
                                 <Setter Property="TextColor" Value="{DynamicResource appcolor_i1}"/>
                             </DataTrigger>
                         </Label.Triggers>
-                        
+
                     </Label>
 
                     <ffimageloading:CachedImage Source="ic_bookmarks_gray">
@@ -123,7 +125,7 @@
                 </StackLayout>
 
             </StackLayout>
-            
+
         </StackLayout>
 
         <BoxView HeightRequest="1"
@@ -131,5 +133,5 @@
                  BackgroundColor="{DynamicResource appcolor_i6}"/>
 
     </StackLayout>
-    
+
 </DataTemplate>
