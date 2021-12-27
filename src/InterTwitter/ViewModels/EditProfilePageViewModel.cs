@@ -1,5 +1,6 @@
 ﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
+using InterTwitter.Resources.Strings;
 using InterTwitter.Services;
 using InterTwitter.Views;
 using Prism.Navigation;
@@ -170,9 +171,9 @@ namespace InterTwitter.ViewModels
             }
 
             var param = new DialogParameters();
-            param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Strings.Strings.SaveChanges}?");
-            param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Strings.Strings.Ok);
-            param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Strings.Strings.Cancel);
+            param.Add(Constants.DialogParameterKeys.TITLE, $"{Strings.SaveChanges}?");
+            param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Strings.Ok);
+            param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Strings.Cancel);
 
             await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(param, CloseDialogCallback));
         }
@@ -181,7 +182,7 @@ namespace InterTwitter.ViewModels
         {
             bool isAllValid = true;
             var param = new DialogParameters();
-            param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Strings.Strings.Ok);
+            param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Strings.Ok);
 
             bool result = (bool)dialogResult?[Constants.DialogParameterKeys.ACCEPT];
             if (result)
@@ -190,12 +191,12 @@ namespace InterTwitter.ViewModels
                 {
                     if (string.IsNullOrEmpty(OldPassword))
                     {
-                        param.Add(Constants.DialogParameterKeys.TITLE, Resources.Strings.Strings.OldPassEmpty);
+                        param.Add(Constants.DialogParameterKeys.TITLE, Strings.OldPassEmpty);
                         isAllValid = false;
                     }
                     else if (OldPassword != _user.Password)
                     {
-                        param.Add(Constants.DialogParameterKeys.TITLE, Resources.Strings.Strings.OldPassWrong);
+                        param.Add(Constants.DialogParameterKeys.TITLE, Strings.OldPassWrong);
                         isAllValid = false;
                     }
 
@@ -205,7 +206,7 @@ namespace InterTwitter.ViewModels
                     }
                     else
                     {
-                        param.Add(Constants.DialogParameterKeys.TITLE, Resources.Strings.Strings.NewPasswordIsNotValid);
+                        param.Add(Constants.DialogParameterKeys.TITLE, Strings.NewPasswordIsNotValid);
                         isAllValid = false;
                     }
                 }
@@ -216,7 +217,7 @@ namespace InterTwitter.ViewModels
                 }
                 else
                 {
-                    param.Add(Constants.DialogParameterKeys.TITLE, Resources.Strings.Strings.NameIsNotValid);
+                    param.Add(Constants.DialogParameterKeys.TITLE, Strings.NameIsNotValid);
                     isAllValid = false;
                 }
 
@@ -226,7 +227,7 @@ namespace InterTwitter.ViewModels
                 }
                 else
                 {
-                    param.Add(Constants.DialogParameterKeys.TITLE, Resources.Strings.Strings.EmailIsNotValid);
+                    param.Add(Constants.DialogParameterKeys.TITLE, Strings.EmailIsNotValid);
                     isAllValid = false;
                 }
 

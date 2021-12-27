@@ -265,7 +265,7 @@ namespace InterTwitter.ViewModels
                 else
                 {
                     var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertDatabase } };
-                    await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
+                    await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(parametrs, CloseDialogCallback));
                 }
             }
             else
@@ -293,6 +293,11 @@ namespace InterTwitter.ViewModels
                     IsEntryConfirmPasswordFocused = true;
                 }
             }
+        }
+
+        private async void CloseDialogCallback(IDialogParameters dialogResult)
+        {
+            await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
         }
 
         #endregion

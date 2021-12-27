@@ -250,7 +250,7 @@ namespace InterTwitter.ViewModels
                 _keyboardHelper.HideKeyboard();
 
                 var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertLoginTaken } };
-                await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
+                await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(parametrs, CloseDialogCallback));
             }
             else
             {
@@ -291,6 +291,11 @@ namespace InterTwitter.ViewModels
                     }
                 }
             }
+        }
+
+        private async void CloseDialogCallback(IDialogParameters dialogResult)
+        {
+            await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
         }
 
         #endregion

@@ -3,6 +3,7 @@ using InterTwitter.Extensions;
 using InterTwitter.Helpers;
 using InterTwitter.Models;
 using InterTwitter.Models.TweetViewModel;
+using InterTwitter.Resources.Strings;
 using InterTwitter.Services;
 using InterTwitter.Views;
 using Prism.Mvvm;
@@ -249,7 +250,7 @@ namespace InterTwitter.ViewModels
                     new MenuItemViewModel
                     {
                         Id = 0,
-                        Title = Resources.Strings.Strings.Posts,
+                        Title = Strings.Posts,
                         ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource,
                         TextColor = (Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
                         ContentCollection = UserTweets,
@@ -258,7 +259,7 @@ namespace InterTwitter.ViewModels
                     new MenuItemViewModel
                     {
                         Id = 1,
-                        Title = Resources.Strings.Strings.Likes,
+                        Title = Strings.Likes,
                         ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource,
                         TextColor = (Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
                         ContentCollection = LikedTweets,
@@ -288,18 +289,18 @@ namespace InterTwitter.ViewModels
             {
                 if (isUserBlockedResponse.Result)
                 {
-                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Strings.Strings.Ok);
-                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Strings.Strings.UserBlocked);
+                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Strings.Ok);
+                    param.Add(Constants.DialogParameterKeys.MESSAGE, Strings.UserBlocked);
 
                     dialogs = EDialogs.AddToBlock;
                     await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(param, CloseDialogCallback));
                 }
                 else
                 {
-                    param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Strings.Strings.Add} {_user.Name} {Resources.Strings.Strings.ToBlacklist}?");
-                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Strings.Strings.UserNotSeeYouPost);
-                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Strings.Strings.AddToBlacklist);
-                    param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Strings.Strings.Cancel);
+                    param.Add(Constants.DialogParameterKeys.TITLE, $"{Strings.Add} {_user.Name} {Strings.ToBlacklist}?");
+                    param.Add(Constants.DialogParameterKeys.MESSAGE, Strings.UserNotSeeYouPost);
+                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Strings.AddToBlacklist);
+                    param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Strings.Cancel);
 
                     dialogs = EDialogs.AddToBlock;
                     await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(param, CloseDialogCallback));

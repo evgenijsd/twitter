@@ -255,14 +255,14 @@ namespace InterTwitter.ViewModels
                     else
                     {
                         var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertInvalidPassword } };
-                        await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
+                        await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(parametrs, CloseDialogCallback));
                         Password = string.Empty;
                     }
                 }
                 else
                 {
                     var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertInvalidLogin } };
-                    await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
+                    await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(parametrs, CloseDialogCallback));
                 }
             }
             else
@@ -292,6 +292,11 @@ namespace InterTwitter.ViewModels
             }
         }
 
-        #endregion
-    }
+        private async void CloseDialogCallback(IDialogParameters dialogResult)
+        {
+            await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+        }
+
+            #endregion
+        }
 }
