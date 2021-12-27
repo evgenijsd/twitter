@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<rg:PopupPage xmlns:rg="http://rotorgames.com" 
+              xmlns="http://xamarin.com/schemas/2014/forms" 
+              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              x:Class="InterTwitter.Views.NoInternetView">
+
+    <Frame x:Name="frame" 
+           HorizontalOptions="CenterAndExpand" 
+           VerticalOptions="End"
+           HeightRequest="50"
+           BackgroundColor="{DynamicResource appcolor_i4}"
+           CornerRadius="5"
+           Padding="0"
+           Margin="5, 0, 5, 15">
+        
+        <StackLayout>
+            
+            <Label Text="{Binding Title}" 
+                   Margin="10, 15, 0, 0"
+                   VerticalOptions="End"
+                   HorizontalOptions="Start"
+                   Style="{DynamicResource tstyle_i10}"/>
+            
+        </StackLayout>
+
+    </Frame>
+    
+</rg:PopupPage>

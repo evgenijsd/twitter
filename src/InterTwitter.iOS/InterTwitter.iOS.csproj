@@ -112,9 +112,10 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Renderers\CustomTabbedPageRenderer.cs" />
     <Compile Include="Renderers\LineSpacingLabelRenderer.cs" />
     <Compile Include="Renderers\NoBounceFlowListViewRenderer.cs" />
-    <Compile Include="Renderers\NoBounceRenderer.cs" />
+    <Compile Include="Renderers\NoBounceCollectionViewRenderer.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -178,8 +179,14 @@
     <PackageReference Include="DLToolkit.Forms.Controls.FlowListView">
       <Version>2.0.11</Version>
     </PackageReference>
+    <PackageReference Include="Prism.Plugin.Popups">
+      <Version>8.0.76</Version>
+    </PackageReference>
     <PackageReference Include="Prism.Unity.Forms">
       <Version>8.1.97</Version>
+    </PackageReference>
+    <PackageReference Include="Rg.Plugins.Popup">
+      <Version>2.0.0.14</Version>
     </PackageReference>
     <PackageReference Include="Sharpnado.Shadows">
       <Version>1.2.0</Version>

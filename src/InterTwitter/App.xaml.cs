@@ -4,6 +4,7 @@ using InterTwitter.ViewModels;
 using InterTwitter.ViewModels.Flyout;
 using InterTwitter.Views;
 using Prism.Ioc;
+using Prism.Plugin.Popups;
 using Prism.Unity;
 using Xamarin.Forms;
 
@@ -19,6 +20,11 @@ namespace InterTwitter
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterPopupNavigationService();
+            containerRegistry.RegisterPopupDialogService();
+            containerRegistry.RegisterDialog<AlertView, AlertViewModel>();
+            containerRegistry.RegisterDialog<NoInternetView, AlertViewModel>();
+
             //Services
             containerRegistry.RegisterSingleton<IMockService, MockService>();
             containerRegistry.RegisterSingleton<ITweetService, TweetService>();
@@ -41,7 +47,7 @@ namespace InterTwitter
             InitializeComponent();
             Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             FlowListView.Init();
-            await NavigationService.NavigateAsync(nameof(FlyOutPage));
+            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(FlyOutPage)}");
         }
 
         protected override void OnStart()

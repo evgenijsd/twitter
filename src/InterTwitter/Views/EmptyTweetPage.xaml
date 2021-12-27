@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseContentPage  xmlns:views="clr-namespace:InterTwitter.Views" 
+                        xmlns="http://xamarin.com/schemas/2014/forms"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+                        xmlns:controls="clr-namespace:InterTwitter.Controls" 
+                        xmlns:sh="http://sharpnado.com"
+                        x:Class="InterTwitter.Views.EmptyTweetPage"
+                        BackgroundColor="{DynamicResource appcolor_i2}">
+    
+    <views:BaseContentPage.Content>
+        
+        <StackLayout Orientation="Vertical">
+            
+            <controls:CustomNavigationbar Title="Home"
+                                          RigthButtonImageSource="{DynamicResource ic_add_blue}"
+                                          LeftButtonImageSource="{DynamicResource pic_profile_small}"
+                                          IsVisible="{Binding Source={x:Reference customCollectView}, Path=IsNavigationBarVisible}"
+                                          LeftAddButtonCommand="{Binding OpenFlyoutCommandAsync}"
+                                          RigthButtonCommand="{Binding AddTweetCommandAsync}"/>
+            
+            <Image VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   Margin="0, 72.5"
+                   Source="{DynamicResource pic_empty_state_2}"/>
+
+            <Label Style="{DynamicResource tstyle_i5}"
+                   HorizontalOptions="Center"
+                   Text="No post in the feed."/>
+
+            <Label Style="{DynamicResource tstyle_i5}"
+                   HorizontalOptions="Center"
+                   Text="Be The first"/>
+            
+            <sh:Shadows IsVisible="{Binding Source={x:Reference customCollectView}, Path=IsAddButtonVisible}"
+                        CornerRadius="20"
+                        VerticalOptions="EndAndExpand"
+                        Shades="{sh:SingleShade Offset='0, 10',
+                                                Opacity={OnPlatform Android=0.4, iOS=0.08},
+                                                BlurRadius={OnPlatform Android=10, iOS=8},
+                                                Color={StaticResource appcolor_i3}}">
+
+                <Frame HeightRequest="52"
+                       WidthRequest="52"
+                       CornerRadius="52"
+                       VerticalOptions="End"
+                       HorizontalOptions="End"
+                       Margin="0, 0, 17, 14"
+                       Padding="-5"
+                       HasShadow="True">
+
+                    <ImageButton Source="ic_add_blue"
+                                 HorizontalOptions="Fill"
+                                 VerticalOptions="Fill"
+                                 BorderWidth="0"
+                                 BorderColor="Transparent"
+                                 Command="{Binding AddTweetCommandAsync}"/>
+
+                </Frame>
+
+            </sh:Shadows>
+
+        </StackLayout>
+
+    </views:BaseContentPage.Content>
+    
+</views:BaseContentPage>

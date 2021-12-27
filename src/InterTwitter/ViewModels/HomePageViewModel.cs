@@ -5,11 +5,14 @@ using InterTwitter.Services;
 using InterTwitter.ViewModels.TweetViewModel;
 using InterTwitter.Views;
 using Prism.Navigation;
+using Prism.Services.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using static InterTwitter.Constants.Navigation;
 
@@ -29,6 +32,7 @@ namespace InterTwitter.ViewModels
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource;
             _tweetService = tweetService;
             Mode = EStateMode.Original;
+            Connectivity.ConnectivityChanged += Current_ConnectivityChanged;
         }
 
         #region -- Public properties --
@@ -64,6 +68,8 @@ namespace InterTwitter.ViewModels
 
         public override async void OnAppearing()
         {
+            CheckConnectionAsync();
+
             if (_isFirstStart)
             {
                 await InitAsync();
@@ -171,6 +177,32 @@ namespace InterTwitter.ViewModels
             vm.MoveToImagesGalleryCommand = moveToImagesGalleryCommand;
             vm.MoveToVideoGalleryCommand = moveToVideoGalleryCommand;
             vm.MoveToAuthorCommand = moveToAuthorCommand;
+        }
+
+        private async void Current_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
+        {
+            await CheckConnectionAsync();
+        }
+
+        private async Task CheckConnectionAsync()
+        {
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                var param = new DialogParameters();
+
+                string partOfMessage = Resources.Resource.NoNetwork;
+
+                param.Add(Constants.DialogParameterKeys.TITLE, $"{partOfMessage}");
+
+                await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new NoInternetView(param, CloseDialogCallback));
+            }
+        }
+
+        private async void CloseDialogCallback(IDialogParameters dialogResult)
+        {
+            bool result = (bool)dialogResult?[Constants.DialogParameterKeys.ACCEPT];
+
+            await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
         }
 
         private Task OnOpenFlyoutCommandAsync()

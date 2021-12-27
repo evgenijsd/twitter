@@ -11,6 +11,8 @@ using Android.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using InterTwitter.Views;
+using InterTwitter.ViewModels;
 
 [assembly: ExportRenderer(typeof(CustomTabbedPage), typeof(CustomTabbedPageRenderer))]
 namespace InterTwitter.Droid
@@ -46,6 +48,7 @@ namespace InterTwitter.Droid
             if (Element is CustomTabbedPage)
             {
                 var mainTabPage = Element as CustomTabbedPage;
+                _tabbedPage.CurrentPage.Navigation.PopToRootAsync();
             }
         }
 
