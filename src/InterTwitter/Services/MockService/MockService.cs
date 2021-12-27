@@ -2,46 +2,206 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace InterTwitter.Services
 {
     public class MockService : IMockService
     {
+        private readonly TaskCompletionSource<bool> _initCompletionSource = new TaskCompletionSource<bool>();
+
+        private IList<UserModel> _users;
+        private IList<TweetModel> _tweets;
+        private IList<Bookmark> _bookmarks;
+        private IList<LikeModel> _likes;
+        private IList<HashtagModel> _hashtags;
+        private IList<BlockModel> _blackList;
+        private IList<MuteModel> _muteList;
+
+        private Dictionary<Type, object> _base;
+
         public MockService()
         {
-            MuteList = new List<MuteModel>();
-            BlackList = new List<BlockModel>();
-
-            InitUsers();
-            InitTweets();
-            InitBookmarks();
-            InitLikes();
-            InitHashtags();
+            Task.Run(InitMocksAsync);
         }
 
         #region -- IMockService implementation --
 
-        public IList<UserModel> Users { get; set; }
+        public async Task<int> AddAsync<T>(T entity)
+            where T : IEntityBase, new()
+        {
+            await _initCompletionSource.Task;
 
-        public IList<TweetModel> Tweets { get; set; }
+            int id = GetBase<T>().Max(x => x.Id) + 1;
+            entity.Id = id;
+            GetBase<T>().Add(entity);
 
-        public IList<HashtagModel> Hashtags { get; set; }
+            return id;
+        }
 
-        public IList<LikeModel> Likes { get; set; }
+        public async Task<IEnumerable<T>> GetAllAsync<T>()
+            where T : IEntityBase, new()
+        {
+            await _initCompletionSource.Task;
 
-        public IList<BlockModel> BlackList { get; set; }
+            return GetBase<T>();
+        }
 
-        public IList<Bookmark> Bookmarks { get; set; }
+        public async Task<T> GetByIdAsync<T>(int id)
+            where T : IEntityBase, new()
+        {
+            await _initCompletionSource.Task;
 
-        public IList<MuteModel> MuteList { get; set; }
+            return GetBase<T>().FirstOrDefault(x => x.Id == id);
+        }
+
+        public async Task<bool> RemoveAsync<T>(T entity)
+            where T : IEntityBase, new()
+        {
+            await _initCompletionSource.Task;
+
+            var entityDelete = GetBase<T>().FirstOrDefault(x => x.Id == entity.Id);
+
+            return GetBase<T>().Remove(entityDelete);
+        }
+
+        public async Task<int> RemoveAllAsync<T>(Predicate<T> predicate)
+            where T : IEntityBase, new()
+        {
+            await _initCompletionSource.Task;
+
+            return GetBase<T>().RemoveAll(predicate);
+        }
+
+        public async Task<T> UpdateAsync<T>(T entity)
+            where T : IEntityBase, new()
+        {
+            await _initCompletionSource.Task;
+
+            var entityUpdate = GetBase<T>().FirstOrDefault(x => x.Id == entity.Id);
+            entityUpdate = entity;
+
+            return entityUpdate;
+        }
+
+        public async Task<T> FindAsync<T>(Func<T, bool> expression)
+            where T : IEntityBase, new()
+        {
+            await _initCompletionSource.Task;
+
+            return GetBase<T>().FirstOrDefault<T>(expression);
+        }
+
+        public async Task<bool> AnyAsync<T>(Func<T, bool> expression)
+            where T : IEntityBase, new()
+        {
+            await _initCompletionSource.Task;
+
+            return GetBase<T>().Any<T>(expression);
+        }
+
+        public async Task<IEnumerable<T>> GetAsync<T>(Func<T, bool> expression)
+            where T : IEntityBase, new()
+        {
+            await _initCompletionSource.Task;
+
+            return GetBase<T>().Where<T>(expression);
+        }
 
         #endregion
 
         #region -- Private helpers --
 
-        private void InitUsers()
+        private List<T> GetBase<T>()
         {
-            Users = new List<UserModel>
+            return (List<T>)_base[typeof(T)];
+        }
+
+        private async Task InitMocksAsync()
+        {
+            _base = new Dictionary<Type, object>();
+
+            await Task.WhenAll(
+                InitUsersAsync(),
+                InitTweetsAsync(),
+                InitBookmarks(),
+                InitLikes(),
+                InitHashtags(),
+                InitBlackList(),
+                InitMuteList());
+
+            _initCompletionSource.TrySetResult(true);
+        }
+
+        private Task InitBlackList() => Task.Run(() =>
+        {
+            _blackList = new List<BlockModel>();
+
+            _base.Add(typeof(BlockModel), _blackList);
+        });
+
+        private Task InitMuteList() => Task.Run(() =>
+        {
+            _muteList = new List<MuteModel>();
+
+            _base.Add(typeof(MuteModel), _muteList);
+        });
+
+        private Task InitHashtags() => Task.Run(() =>
+        {
+            _hashtags = new List<HashtagModel>
+            {
+                new HashtagModel()
+                {
+                    Id = 1,
+                    Text = "#blockchain",
+                    TweetsCount = 2,
+                },
+                new HashtagModel()
+                {
+                    Id = 2,
+                    Text = "#AMAs",
+                    TweetsCount = 4,
+                },
+                new HashtagModel()
+                {
+                    Id = 3,
+                    Text = "#NoNuanceNovember",
+                    TweetsCount = 3,
+                },
+                new HashtagModel()
+                {
+                    Id = 4,
+                    Text = "#coffeeTime",
+                    TweetsCount = 2,
+                },
+                new HashtagModel()
+                {
+                    Id = 5,
+                    Text = "#teaTime",
+                    TweetsCount = 1,
+                },
+                new HashtagModel()
+                {
+                    Id = 6,
+                    Text = "#workout",
+                    TweetsCount = 1,
+                },
+                new HashtagModel()
+                {
+                    Id = 7,
+                    Text = "#cats",
+                    TweetsCount = 1,
+                },
+            };
+
+            _base.Add(typeof(HashtagModel), _hashtags);
+        });
+
+        private Task InitUsersAsync() => Task.Run(() =>
+        {
+            _users = new List<UserModel>
             {
                 new UserModel
                 {
@@ -98,13 +258,15 @@ namespace InterTwitter.Services
                     BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
             };
-        }
 
-        private void InitTweets()
+            _base.Add(typeof(UserModel), _users);
+        });
+
+        private Task InitTweetsAsync() => Task.Run(() =>
         {
             var culture = CultureInfo.GetCultureInfo("ru-RU");
 
-            Tweets = new List<TweetModel>
+            _tweets = new List<TweetModel>
             {
                 new TweetModel
                 {
@@ -191,7 +353,7 @@ namespace InterTwitter.Services
                 },
                 new TweetModel
                 {
-                    Id = 2,
+                    Id = 8,
                     UserId = 2,
                     Text = "#amas masd",
                     Media = Enums.EAttachedMediaType.Gif,
@@ -199,11 +361,11 @@ namespace InterTwitter.Services
                     {
                         "https://thumbs.gfycat.com/PaltryWickedCrayfish-max-1mb.gif",
                     },
-                    CreationTime = DateTime.Now,
+                    CreationTime = DateTime.Parse("01.02.2021 13:12:12", culture),
                 },
                 new TweetModel
                 {
-                    Id = 3,
+                    Id = 9,
                     UserId = 3,
                     //Text = "#AMAs masd # masda as ama",
                     Media = Enums.EAttachedMediaType.Gif,
@@ -214,13 +376,15 @@ namespace InterTwitter.Services
                     CreationTime = DateTime.Parse("01.02.2021 12:12:12", culture),
                 },
             };
-        }
 
-        private void InitLikes()
+            _base.Add(typeof(TweetModel), _tweets);
+        });
+
+        private Task InitLikes() => Task.Run(() =>
         {
             var culture = CultureInfo.GetCultureInfo("ru-RU");
 
-            Likes = new List<LikeModel>
+            _likes = new List<LikeModel>
             {
                 new LikeModel
                 {
@@ -359,13 +523,15 @@ namespace InterTwitter.Services
                     CreationTime = DateTime.Parse("07.03.2021 12:12:12", culture),
                 },
             };
-        }
 
-        private void InitBookmarks()
+            _base.Add(typeof(LikeModel), _likes);
+        });
+
+        private Task InitBookmarks() => Task.Run(() =>
         {
             var culture = CultureInfo.GetCultureInfo("ru-RU");
 
-            Bookmarks = new List<Bookmark>
+            _bookmarks = new List<Bookmark>
             {
                 new Bookmark
                 {
@@ -488,56 +654,9 @@ namespace InterTwitter.Services
                     CreationTime = DateTime.Parse("03.03.2021 12:12:12", culture),
                 },
             };
-        }
 
-        private void InitHashtags()
-        {
-            Hashtags = new List<HashtagModel>
-            {
-                new HashtagModel()
-                {
-                    Id = 1,
-                    Text = "#blockchain",
-                    TweetsCount = 2,
-                },
-                new HashtagModel()
-                {
-                    Id = 2,
-                    Text = "#AMAs",
-                    TweetsCount = 4,
-                },
-                new HashtagModel()
-                {
-                    Id = 3,
-                    Text = "#NoNuanceNovember",
-                    TweetsCount = 3,
-                },
-                new HashtagModel()
-                {
-                    Id = 4,
-                    Text = "#coffeeTime",
-                    TweetsCount = 2,
-                },
-                new HashtagModel()
-                {
-                    Id = 5,
-                    Text = "#teaTime",
-                    TweetsCount = 1,
-                },
-                new HashtagModel()
-                {
-                    Id = 6,
-                    Text = "#workout",
-                    TweetsCount = 1,
-                },
-                new HashtagModel()
-                {
-                    Id = 7,
-                    Text = "#cats",
-                    TweetsCount = 1,
-                },
-            };
-        }
+            _base.Add(typeof(Bookmark), _bookmarks);
+        });
 
         #endregion
     }

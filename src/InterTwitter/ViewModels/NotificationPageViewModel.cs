@@ -19,7 +19,7 @@ namespace InterTwitter.ViewModels
     {
         private readonly INotificationService _notificationService;
 
-        private readonly IAuthorizationService _authorizationService;
+        private readonly ISettingsManager _settingsManager;
 
         private readonly IRegistrationService _registrationService;
 
@@ -29,13 +29,13 @@ namespace InterTwitter.ViewModels
         public NotificationPageViewModel(
             INotificationService notificationService,
             INavigationService navigationService,
-            IAuthorizationService authorizationService,
+            ISettingsManager settingsManager,
             IRegistrationService registrationService)
             : base(navigationService)
         {
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_notifications_gray"] as ImageSource;
             _notificationService = notificationService;
-            _authorizationService = authorizationService;
+            _settingsManager = settingsManager;
             _registrationService = registrationService;
         }
 
@@ -99,7 +99,7 @@ namespace InterTwitter.ViewModels
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
-            _userId = _authorizationService.UserId;
+            _userId = _settingsManager.UserId;
             var result = await _registrationService.GetByIdAsync(_userId);
 
             if (result.IsSuccess)
