@@ -14,7 +14,7 @@ namespace InterTwitter.Droid
     [Activity(
         Label = "@string/ApplicationName", 
         Icon = "@mipmap/icon_owl",
-        LaunchMode = LaunchMode.SingleTask, 
+        LaunchMode = LaunchMode.SingleTop, 
         Theme = "@style/MainTheme",
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize, 
         ScreenOrientation = ScreenOrientation.Portrait)]
@@ -47,6 +47,7 @@ namespace InterTwitter.Droid
             CachedImageRenderer.Init(true);
             CachedImageRenderer.InitImageViewHandler();
             KeyboardHelper.Init(this);
+
 
             LoadApplication(new App(new AndroidInitializer()));
         }

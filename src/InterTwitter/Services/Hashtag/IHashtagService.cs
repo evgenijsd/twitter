@@ -8,9 +8,9 @@ namespace InterTwitter.Services.Hashtag
 {
     public interface IHashtagService
     {
-        Task<AOResult> IncreaseHashtagPopularityByOne(HashtagModel hashtag);
+        Task<AOResult> IncrementHashtagPopularity(string hashtag);
 
-        Task<AOResult> DecreaseHashtagPopularityByOne(HashtagModel hashtag);
+        Task<AOResult> DecrementHashtagPopularity(string hashtag);
 
         Task<AOResult<IEnumerable<HashtagModel>>> GetPopularHashtags(int hashtagsNumber);
     }

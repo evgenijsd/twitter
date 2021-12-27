@@ -83,25 +83,18 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _menuItems, value);
         }
 
-        private string _profileIcon = "https://avatars.mds.yandex.net/i?id=9124e8d6c175c189503fa5d7883c515d-5859422-images-thumbs&n=13";
-        public string ProfileIcon
+        private string _userMail;
+        public string UserMail
         {
-            get => _profileIcon;
-            set => SetProperty(ref _profileIcon, value);
+            get => _userMail;
+            set => SetProperty(ref _userMail, value);
         }
 
-        private string _profileName = "Gianna Press";
-        public string ProfileName
+        private string _userName;
+        public string UserName
         {
-            get => _profileName;
-            set => SetProperty(ref _profileName, value);
-        }
-
-        private string _profileEmail;
-        public string ProfileEmail
-        {
-            get => _profileEmail;
-            set => SetProperty(ref _profileEmail, value);
+            get => _userName;
+            set => SetProperty(ref _userName, value);
         }
 
         private string _userImagePath;
@@ -109,6 +102,13 @@ namespace InterTwitter.ViewModels
         {
             get => _userImagePath;
             set => SetProperty(ref _userImagePath, value);
+        }
+
+        private string _userBackgroundImage;
+        public string UserBackgroundImage
+        {
+            get => _userBackgroundImage;
+            set => SetProperty(ref _userBackgroundImage, value);
         }
 
         private ICommand _logoutCommandAsync;
@@ -127,9 +127,11 @@ namespace InterTwitter.ViewModels
         public override Task InitializeAsync(INavigationParameters parameters)
         {
             _user = _userService.GetUserAsync(_settingsManager.UserId).Result.Result;
-            ProfileName = _user.Name;
-            ProfileEmail = _user.Email;
+            UserName = _user.Name;
+            UserMail = _user.Email;
             UserImagePath = _user.AvatarPath;
+            UserBackgroundImage = _user.BackgroundUserImagePath;
+
             return base.InitializeAsync(parameters);
         }
 
@@ -193,8 +195,8 @@ namespace InterTwitter.ViewModels
             if (userResponse.IsSuccess)
             {
                 var user = userResponse.Result;
-                ProfileName = user.Name;
-                ProfileEmail = user.Email;
+                UserName = user.Name;
+                UserMail = user.Email;
                 UserImagePath = user.AvatarPath;
             }
         }
@@ -231,7 +233,7 @@ namespace InterTwitter.ViewModels
                     NavigationParameters keyValuePairs = new NavigationParameters();
                     keyValuePairs.Add(Constants.Navigation.USER, aOResult.Result);
 
-                    await NavigationService.NavigateAsync($"{nameof(ProfilePage)}", keyValuePairs);
+                    await NavigationService.NavigateAsync($"{nameof(ProfilePage)}", keyValuePairs, useModalNavigation: false);
                 }
             }
         }

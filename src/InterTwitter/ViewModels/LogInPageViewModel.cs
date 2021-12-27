@@ -10,6 +10,7 @@ using Prism.Services.Dialogs;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
 {
@@ -251,7 +252,7 @@ namespace InterTwitter.ViewModels
                         _user = result.Result;
                         _authorizationService.UserId = _user.Id;
                         var parametrs = new NavigationParameters { { Constants.Navigation.USER, _user } };
-                        await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", parametrs);
+                        await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(FlyOutPage)}", parametrs);
                     }
                     else
                     {

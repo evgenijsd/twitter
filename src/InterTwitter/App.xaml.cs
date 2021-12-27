@@ -16,6 +16,7 @@ using Prism.Unity;
 using System;
 using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Forms;
+using System.Linq;
 
 namespace InterTwitter
 {
@@ -44,6 +45,14 @@ namespace InterTwitter
                             {
                                 if (int.TryParse(msg, out int userId))
                                 {
+                                    var navigation = MainPage.Navigation;
+                                    var lastPage = navigation.NavigationStack.LastOrDefault();
+
+                                    if (lastPage is ProfilePage page)
+                                    {
+                                        navigation.RemovePage(page);
+                                    }
+
                                     MessagingCenter.Send(this, Constants.Messages.OPEN_PROFILE_PAGE, userId);
                                 }
                             }
@@ -110,7 +119,7 @@ namespace InterTwitter
             Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             LocalizationResourceManager.Current.Init(Strings.ResourceManager);
 
-            await NavigationService.NavigateAsync($"/{nameof(LogInPage)}");
+            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(LogInPage)}");
         }
 
         protected override void OnStart()

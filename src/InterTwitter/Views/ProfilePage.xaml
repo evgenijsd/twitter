@@ -17,7 +17,7 @@
 
         <Image Grid.Row="0"
                Aspect="AspectFill"
-               Source="https://picsum.photos/500/500?image=122" />
+               Source="{Binding UserBackgroundImage}" />
 
         <cardsControls:CircleFrame Grid.Row="0"
                                    Margin="16,16,0,0"
@@ -72,7 +72,7 @@
 
                     <Label.GestureRecognizers>
 
-                        <TapGestureRecognizer Command="{Binding ShareCommandAsync}" 
+                        <TapGestureRecognizer Command="{Binding ShareUserProfileTapCommand}" 
                                               Tapped="OnAnywhereTappedHandler" />
                     
                     </Label.GestureRecognizers>

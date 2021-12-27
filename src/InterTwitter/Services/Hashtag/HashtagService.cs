@@ -18,7 +18,7 @@ namespace InterTwitter.Services.Hashtag
 
         #region -- IHashtagManager implementation --
 
-        public async Task<AOResult> IncreaseHashtagPopularityByOne(HashtagModel hashtag)
+        public async Task<AOResult> IncrementHashtagPopularity(string hashtag)
         {
             var result = new AOResult();
 
@@ -28,16 +28,23 @@ namespace InterTwitter.Services.Hashtag
 
                 if (allHashtags != null)
                 {
-                    int indexOfHashtag = allHashtags.FindIndex(x => x.Text.Equals(hashtag.Text, StringComparison.OrdinalIgnoreCase));
+                    int indexOfHashtag = allHashtags.FindIndex(x => x.Text.Equals(hashtag, StringComparison.OrdinalIgnoreCase));
 
                     if (indexOfHashtag > 0)
                     {
                         allHashtags[indexOfHashtag].TweetsCount++;
+                        result.SetSuccess();
                     }
                     else
                     {
-                        hashtag.TweetsCount = 1;
-                        allHashtags.Add(hashtag);
+                        HashtagModel hashtagModel = new HashtagModel()
+                        {
+                            Text = hashtag,
+                            TweetsCount = 1,
+                        };
+
+                        allHashtags.Add(hashtagModel);
+                        result.SetSuccess();
                     }
 
                     _mockService.Hashtags = allHashtags;
@@ -45,13 +52,13 @@ namespace InterTwitter.Services.Hashtag
             }
             catch (Exception ex)
             {
-                result.SetError($"{nameof(IncreaseHashtagPopularityByOne)} : exception", "Something went wrong", ex);
+                result.SetError($"{nameof(IncrementHashtagPopularity)} : exception", "Something went wrong", ex);
             }
 
             return result;
         }
 
-        public async Task<AOResult> DecreaseHashtagPopularityByOne(HashtagModel hashtag)
+        public async Task<AOResult> DecrementHashtagPopularity(string hashtag)
         {
             var result = new AOResult();
 
@@ -61,17 +68,19 @@ namespace InterTwitter.Services.Hashtag
 
                 if (allHashtags != null)
                 {
-                    int indexOfHashtag = allHashtags.FindIndex(x => x.Text.Equals(hashtag.Text, StringComparison.OrdinalIgnoreCase));
+                    int indexOfHashtag = allHashtags.FindIndex(x => x.Text.Equals(hashtag, StringComparison.OrdinalIgnoreCase));
 
                     if (indexOfHashtag > 0)
                     {
                         if (allHashtags[indexOfHashtag].TweetsCount > 0)
                         {
                             allHashtags[indexOfHashtag].TweetsCount--;
+                            result.SetSuccess();
                         }
                         else
                         {
                             allHashtags.RemoveAt(indexOfHashtag);
+                            result.SetSuccess();
                         }
                     }
 
@@ -80,7 +89,7 @@ namespace InterTwitter.Services.Hashtag
             }
             catch (Exception ex)
             {
-                result.SetError($"{nameof(DecreaseHashtagPopularityByOne)} : exception", "Something went wrong", ex);
+                result.SetError($"{nameof(DecrementHashtagPopularity)} : exception", "Something went wrong", ex);
             }
 
             return result;
@@ -101,6 +110,10 @@ namespace InterTwitter.Services.Hashtag
                 if (popularHashtags is not null)
                 {
                     result.SetSuccess(popularHashtags);
+                }
+                else
+                {
+                    result.SetFailure();
                 }
             }
             catch (Exception ex)
