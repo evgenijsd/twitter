@@ -22,7 +22,7 @@ namespace InterTwitter.Services
             var result = new AOResult();
             try
             {
-                var user = _mockService.Users.FirstOrDefault(x => x.Email.ToLower() == email.ToLower());
+                var user = await _mockService.FindAsync<UserModel>(x => x.Email.ToLower() == email.ToLower());
                 if (user != null)
                 {
                     result.SetSuccess();
@@ -45,7 +45,7 @@ namespace InterTwitter.Services
             var result = new AOResult<UserModel>();
             try
             {
-                var user = _mockService.Users.FirstOrDefault(x => x.Id == id);
+                var user = await _mockService.GetByIdAsync<UserModel>(id);
                 if (user != null)
                 {
                     result.SetSuccess(user);
@@ -68,9 +68,7 @@ namespace InterTwitter.Services
             var result = new AOResult<int>();
             try
             {
-                user.Id = (int)_mockService.Users?.Count() + 1;
-                _mockService.Users?.Add(user);
-                int id = (int)_mockService.Users?.Last().Id;
+                int id = await _mockService.AddAsync<UserModel>(user);
                 if (id > 0)
                 {
                     result.SetSuccess(id);

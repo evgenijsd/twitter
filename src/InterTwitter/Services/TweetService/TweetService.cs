@@ -26,7 +26,7 @@ namespace InterTwitter.Services
             var result = new AOResult<List<TweetModel>>();
             try
             {
-                var tweets = _mockService.Tweets;
+                var tweets = await _mockService.GetAllAsync<TweetModel>();
 
                 if (tweets != null)
                 {
@@ -50,7 +50,7 @@ namespace InterTwitter.Services
             var result = new AOResult<List<TweetModel>>();
             try
             {
-                var tweets = _mockService.Tweets.Where(x => x.UserId == userid);
+                var tweets = await _mockService.GetAsync<TweetModel>(x => x.UserId == userid);
 
                 if (tweets != null)
                 {
@@ -75,7 +75,7 @@ namespace InterTwitter.Services
 
             try
             {
-                var author = _mockService.Users?.Where(x => x.Id == authorId)?.FirstOrDefault();
+                var author = await _mockService.FindAsync<UserModel>(x => x.Id == authorId);
                 if (author != null)
                 {
                     result.SetSuccess(author);

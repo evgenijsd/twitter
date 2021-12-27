@@ -24,7 +24,7 @@ namespace InterTwitter.Services
 
             try
             {
-                var user = _mockService.Users?.FirstOrDefault(x => x.Email.ToLower() == email.ToLower() && x.Password == password);
+                var user = await _mockService.FindAsync<UserModel>(x => x.Email.ToLower() == email.ToLower() && x.Password == password);
                 if (user != null)
                 {
                     result.SetSuccess(user);

@@ -2,36 +2,140 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace InterTwitter.Services
 {
     public class MockService : IMockService
     {
+        private readonly TaskCompletionSource<bool> _initCompletionSource = new TaskCompletionSource<bool>();
+
+        private IList<UserModel> _users;
+        private IList<TweetModel> _tweets;
+        private IList<Bookmark> _bookmarks;
+        private IList<LikeModel> _likes;
+
+        private Dictionary<Type, object> _base;
+
         public MockService()
         {
-            InitUsers();
-
-            InitTweets();
-
-            InitBookmarks();
-
-            InitLikes();
+            Task.Run(InitMocksAsync);
         }
 
         #region -- IMockService implementation --
 
-        public List<UserModel> Users { get; set; }
-        public List<TweetModel> Tweets { get; set; }
-        public List<Bookmark> Bookmarks { get; set; }
-        public List<LikeModel> Likes { get; set; }
+        public async Task<int> AddAsync<T>(T entity)
+            where T : IEntityBase, new()
+        {
+            await _initCompletionSource.Task;
+
+            int id = GetBase<T>().Max(x => x.Id) + 1;
+            entity.Id = id;
+            GetBase<T>().Add(entity);
+
+            return id;
+        }
+
+        public async Task<IEnumerable<T>> GetAllAsync<T>()
+            where T : IEntityBase, new()
+        {
+            await _initCompletionSource.Task;
+
+            return GetBase<T>();
+        }
+
+        public async Task<T> GetByIdAsync<T>(int id)
+            where T : IEntityBase, new()
+        {
+            await _initCompletionSource.Task;
+
+            return GetBase<T>().FirstOrDefault(x => x.Id == id);
+        }
+
+        public async Task<bool> RemoveAsync<T>(T entity)
+            where T : IEntityBase, new()
+        {
+            await _initCompletionSource.Task;
+
+            var entityDelete = GetBase<T>().FirstOrDefault(x => x.Id == entity.Id);
+
+            return GetBase<T>().Remove(entityDelete);
+        }
+
+        public async Task<int> RemoveAllAsync<T>(Predicate<T> predicate)
+            where T : IEntityBase, new()
+        {
+            await _initCompletionSource.Task;
+
+            return GetBase<T>().RemoveAll(predicate);
+        }
+
+        public async Task<T> UpdateAsync<T>(T entity)
+            where T : IEntityBase, new()
+        {
+            await _initCompletionSource.Task;
+
+            var entityUpdate = GetBase<T>().FirstOrDefault(x => x.Id == entity.Id);
+            entityUpdate = entity;
+
+            return entityUpdate;
+        }
+
+        public async Task<T> FindAsync<T>(Func<T, bool> expression)
+            where T : IEntityBase, new()
+        {
+            await _initCompletionSource.Task;
+
+            return GetBase<T>().FirstOrDefault<T>(expression);
+        }
+
+        public async Task<bool> AnyAsync<T>(Func<T, bool> expression)
+            where T : IEntityBase, new()
+        {
+            await _initCompletionSource.Task;
+
+            return GetBase<T>().Any<T>(expression);
+        }
+
+        public async Task<IEnumerable<T>> GetAsync<T>(Func<T, bool> expression)
+            where T : IEntityBase, new()
+        {
+            await _initCompletionSource.Task;
+
+            return GetBase<T>().Where<T>(expression);
+        }
 
         #endregion
 
         #region -- Private helpers --
 
-        private void InitUsers()
+        private List<T> GetBase<T>()
         {
-            Users = new List<UserModel>
+            return (List<T>)_base[typeof(T)];
+        }
+
+        private async Task InitMocksAsync()
+        {
+            await Task.WhenAll(
+                InitUsersAsync(),
+                InitTweetsAsync(),
+                InitBookmarks(),
+                InitLikes());
+
+            _base = new Dictionary<Type, object>();
+            _base.Add(typeof(UserModel), _users);
+            _base.Add(typeof(TweetModel), _tweets);
+            _base.Add(typeof(Bookmark), _bookmarks);
+            _base.Add(typeof(LikeModel), _likes);
+
+            _initCompletionSource.TrySetResult(true);
+        }
+
+        private Task InitUsersAsync() => Task.Run(() =>
+        {
+            _users = new List<UserModel>
             {
                 new UserModel
                 {
@@ -88,13 +192,13 @@ namespace InterTwitter.Services
                     BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
             };
-        }
+        });
 
-        private void InitTweets()
+        private Task InitTweetsAsync() => Task.Run(() =>
         {
             var culture = CultureInfo.GetCultureInfo("ru-RU");
 
-            Tweets = new List<TweetModel>
+            _tweets = new List<TweetModel>
             {
                 new TweetModel
                 {
@@ -180,13 +284,13 @@ namespace InterTwitter.Services
                     CreationTime = DateTime.Parse("01.02.2021 12:12:12", culture),
                 },
             };
-        }
+        });
 
-        private void InitLikes()
+        private Task InitLikes() => Task.Run(() =>
         {
             var culture = CultureInfo.GetCultureInfo("ru-RU");
 
-            Likes = new List<LikeModel>
+            _likes = new List<LikeModel>
             {
                 new LikeModel
                 {
@@ -325,13 +429,13 @@ namespace InterTwitter.Services
                     CreationTime = DateTime.Parse("07.03.2021 12:12:12", culture),
                 },
             };
-        }
+        });
 
-        private void InitBookmarks()
+        private Task InitBookmarks() => Task.Run(() =>
         {
             var culture = CultureInfo.GetCultureInfo("ru-RU");
 
-            Bookmarks = new List<Bookmark>
+            _bookmarks = new List<Bookmark>
             {
                 new Bookmark
                 {
@@ -454,7 +558,7 @@ namespace InterTwitter.Services
                     CreationTime = DateTime.Parse("03.03.2021 12:12:12", culture),
                 },
             };
-        }
+        });
 
         #endregion
     }
