@@ -2,6 +2,7 @@
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V7.App;
 using FFImageLoading.Forms.Platform;
 using InterTwitter.Droid.Renderers;
 using InterTwitter.Helpers;
@@ -41,13 +42,14 @@ namespace InterTwitter.Droid
         {
             base.OnCreate(savedInstanceState);
 
+            AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightNo;
+
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Rg.Plugins.Popup.Popup.Init(this);
             CachedImageRenderer.Init(true);
             CachedImageRenderer.InitImageViewHandler();
             KeyboardHelper.Init(this);
-
 
             LoadApplication(new App(new AndroidInitializer()));
         }
