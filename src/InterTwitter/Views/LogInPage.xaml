@@ -2,6 +2,8 @@
 <view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                       xmlns:view="clr-namespace:InterTwitter.Views"
+                      xmlns:local="clr-namespace:InterTwitter.ViewModels"
+                      x:DataType="local:LogInPageViewModel"
                       xmlns:controls="clr-namespace:InterTwitter.Controls"
                       xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
                       x:Class="InterTwitter.Views.LogInPage">
@@ -13,7 +15,9 @@
 
     <view:BaseContentPage.Content>
         
-        <controls:CustomGrid RowSpacing="0">
+        <controls:CustomGrid RowSpacing="0"
+                             Height="{Binding CurrentHeight}">
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
@@ -27,7 +31,7 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                
+
                 <Grid Grid.Row="0"
                       ColumnSpacing="0">
                     <Grid.ColumnDefinitions>
@@ -35,7 +39,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="40" />
                     </Grid.ColumnDefinitions>
-                    
+
                     <Image Source="{DynamicResource pic_owl_blue_small}"
                            Grid.Column="1"
                            HorizontalOptions="CenterAndExpand"
@@ -44,14 +48,14 @@
                            Margin="0,25,0,0"
                            HeightRequest="45"
                            WidthRequest="50" />
-                    
+
                     <Label Text="{xct:Translate GetYourAccount}"
                            Grid.Column="1"
                            FontSize="{DynamicResource tsize_i1}"
                            Margin="0,85,0,0"
                            HorizontalOptions="CenterAndExpand"
                            Style="{DynamicResource tstyle_i1}" />
-                    
+
                 </Grid>
 
                 <Label Grid.Row="1"
@@ -60,18 +64,19 @@
                        IsVisible="{Binding IsVisibleEmail}"
                        Style="{DynamicResource tstyle_i2}"
                        FontSize="{DynamicResource tsize_i4}" />
-                
-                <controls:CustomEntry Grid.Row="1"
+
+                <controls:CustomEntry Grid.Row="1" 
                                       Margin="20,18,20,0"
                                       Text="{Binding Email}"
                                       IsFocusedVisible="{Binding IsVisibleEmail}"
-                                      IsFocusedButton="{Binding IsVisibleButton}"
+                                      IsFocusedButton="{Binding IsFocusedEmail}"
+                                      IsEntryFocused="{Binding IsEntryEmailFocused}"
                                       Placeholder="{xct:Translate Email}"
                                       ClearImageSource="{DynamicResource ic_clear_gray}"
                                       FontFamily="Ubuntu-Regular"
                                       PlaceholderColor="{DynamicResource appcolor_i4}"
                                       TextColor="{DynamicResource appcolor_i3}" />
-                
+
                 <Label Grid.Row="1"
                        Text="{xct:Translate WrongEmail}"
                        Margin="20,65,0,0"
@@ -96,7 +101,8 @@
                                       PlaceholderColor="{DynamicResource appcolor_i4}"
                                       TextColor="{DynamicResource appcolor_i3}"
                                       IsFocusedVisible="{Binding IsVisiblePassword}"
-                                      IsFocusedButton="{Binding IsVisibleButton}"
+                                      IsFocusedButton="{Binding IsFocusedPassword}"
+                                      IsEntryFocused="{Binding IsEntryPasswordFocused}"
                                       IsPassword="True"
                                       Placeholder="{xct:Translate Password}" />
                 
@@ -123,7 +129,7 @@
                             FontFamily="Ubuntu-Regular"
                             TextColor="{DynamicResource appcolor_i2}" />
                     
-                    <Button Command="{Binding StartCommand}"
+                    <Button Command="{Binding CreateCommand}"
                             WidthRequest="218"
                             CornerRadius="25"
                             HeightRequest="50"
@@ -155,7 +161,7 @@
                        FontSize="{DynamicResource tsize_i3}"
                        FontFamily="Ubuntu-Regular"
                        TextColor="{DynamicResource appcolor_i2}"
-                       HorizontalOptions="Center" />
+                       HorizontalOptions="Center"/>
                 
             </StackLayout>
 

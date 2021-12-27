@@ -1,65 +1,73 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <local:BaseContentPage x:Class="InterTwitter.Views.FlyoutPageFlyout"
                        xmlns="http://xamarin.com/schemas/2014/forms"
-                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
                        xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
                        xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
                        xmlns:local="clr-namespace:InterTwitter.Views"
-                       xmlns:prism="http://prismlibrary.com"
+                       xmlns:prism="http://prismlibrary.com"                
+                       xmlns:behaviors="clr-namespace:InterTwitter.Behaviors"
                        Title="Flyout"
                        prism:ViewModelLocator.AutowireViewModel="True"
                        BackgroundColor="{DynamicResource appcolor_i2}">
 
+    <ContentPage.Behaviors>
+        <behaviors:TabPageBehavior/>
+    </ContentPage.Behaviors>
+
     <Grid RowSpacing="0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="100" />
-            <RowDefinition Height="240" />
-            <RowDefinition Height="2" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="0.13*" />
+            <RowDefinition Height="0.384*" />
+            <RowDefinition Height="0.001*" />
+            <RowDefinition Height="0.397*" />
         </Grid.RowDefinitions>
 
-        <Grid Padding="5,10" 
+        <Grid Margin="-16,20,0,0"
               VerticalOptions="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <ffimageloading:CachedImage Margin="10"
+            <ffimageloading:CachedImage Margin="0" 
+                                        WidthRequest="32" 
+                                        HeightRequest="32"
                                         Aspect="AspectFit"
-                                        Source="{Binding ProfileIcon}">
+                                        Source="{Binding UserImagePath}">
                 <ffimageloading:CachedImage.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding OpenProfileCommandAsync}" />
+                    <TapGestureRecognizer Command="{Binding NavigateProfileCommandAsync}" />
                 </ffimageloading:CachedImage.GestureRecognizers>
                 <ffimageloading:CachedImage.Transformations>
                     <fftransformations:CircleTransformation />
                 </ffimageloading:CachedImage.Transformations>
             </ffimageloading:CachedImage>
-            
-            <StackLayout Grid.Column="1" 
+
+            <StackLayout Grid.Column="1" Margin="-12,0,0,0"
                          VerticalOptions="Center">
                 <Label Style="{DynamicResource tstyle_i14}" 
-                       Text="{Binding ProfileName}" />
+                       Text="{Binding UserName}" />
                 <Label Style="{DynamicResource Content_i7}" 
-                       Text="{Binding ProfileEmail}" />
+                       Text="{Binding UserMail}" />
             </StackLayout>
         </Grid>
 
         <ListView x:Name="menuItems"
-                  Grid.Row="1"
-                  HasUnevenRows="true"
+                  Grid.Row="1" 
+                  Margin="0,16,0,0"
+                  HasUnevenRows="true" 
                   ItemsSource="{Binding MenuItems}"
                   SeparatorVisibility="None">
 
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Padding="20,12"
-                                     Orientation="Horizontal"
+                        <StackLayout Padding="20,16"
+                                     Orientation="Horizontal" 
                                      Spacing="20">
-                            <Image HeightRequest="35"
+                            <Image HeightRequest="24"
                                    Source="{Binding ImageSource}"
-                                   WidthRequest="35" />
+                                   WidthRequest="24" />
                             <Label Style="{DynamicResource BaseContent_i2}"
                                    Text="{Binding Title}"
                                    TextColor="{Binding TextColor}"
@@ -89,9 +97,9 @@
             <StackLayout Orientation="Horizontal"
                          Spacing="20"
                          VerticalOptions="Start">
-                <Image HeightRequest="35"
+                <Image HeightRequest="24"
                        Source="{DynamicResource ic_setting_gray}"
-                       WidthRequest="35" />
+                       WidthRequest="24" />
                 <Label x:Name="settingsLabel"
                        FontSize="{DynamicResource tsize_i5}"
                        Style="{DynamicResource BaseContent_i2}"
@@ -100,7 +108,7 @@
                        VerticalOptions="Center" />
 
                 <StackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ChangeProfileCommandAsync}" 
+                    <TapGestureRecognizer Command="{Binding NavigateEditProfileCommandAsync}" 
                                           Tapped="SettingsTappedHandler" />
                 </StackLayout.GestureRecognizers>
 
@@ -111,9 +119,9 @@
                          Spacing="20"
                          VerticalOptions="End">
                 <Image x:Name="logoutImage"
-                       HeightRequest="35"
+                       HeightRequest="24"
                        Source="{DynamicResource ic_logout_blue}"
-                       WidthRequest="35" />
+                       WidthRequest="24" />
                 <Label x:Name="logoutLabel"
                        FontSize="{DynamicResource tsize_i5}"
                        Style="{DynamicResource BaseContent_i2}"
@@ -127,9 +135,6 @@
                 </StackLayout.GestureRecognizers>
 
             </StackLayout>
-
         </Grid>
-
     </Grid>
-
 </local:BaseContentPage>

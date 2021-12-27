@@ -1,31 +1,56 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<Frame xmlns="http://xamarin.com/schemas/2014/forms"
-       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-       WidthRequest="300"
-       CornerRadius="15"
-       x:Class="InterTwitter.Views.AlertView">
+<rg:PopupPage xmlns="http://xamarin.com/schemas/2014/forms" 
+              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              x:Class="InterTwitter.Views.AlertView"
+              xmlns:rg="http://rotorgames.com">
+
+    <Frame x:Name="frame" 
+           HorizontalOptions="Center" 
+           VerticalOptions="Center"
+           CornerRadius="15">
+
+        <StackLayout>
+
+            <Label Text="{Binding Title}" 
+                   Margin="5,10,0,0"
+                   HorizontalOptions="StartAndExpand"
+                   Style="{DynamicResource tstyle_i5}"/>
+
+            <Label Text="{Binding Message}"
+                   Margin="5,10,0,0"
+                   FontSize="{DynamicResource tsize_i4}"
+                   FontFamily="Ubuntu-Medium"               
+                   IsVisible="{Binding IsMessageVisible}"
+                   TextColor="{DynamicResource appcolor_i4}"/>
+
+            <StackLayout Orientation="Horizontal">
+
+                <Button x:Name="cancelButton" 
+                        Text="{Binding CancelButtonText}"
+                        Command="{Binding DeclineCommand}" 
+                        FontSize="{DynamicResource tsize_i4}"
+                        FontFamily="Ubuntu-Medium"
+                        TextColor="{DynamicResource appcolor_i4}" 
+                        TextTransform="None"
+                        HorizontalOptions="EndAndExpand"
+                        BackgroundColor="Transparent"
+                        Margin="0,10,-42,-10" />
+
+                <Button x:Name="okButton" 
+                        Text="{Binding OkButtonText}"
+                        Command="{Binding AcceptCommand}" 
+                        TextTransform="None"
+                        FontSize="{DynamicResource tsize_i4}"
+                        FontFamily="Ubuntu-Medium"
+                        TextColor="{DynamicResource appcolor_i1}"
+                        HorizontalOptions="EndAndExpand"
+                        BackgroundColor="Transparent"
+                        Margin="0,10,-5,-10" />
+
+            </StackLayout>
+            
+        </StackLayout>
+        
+    </Frame>
     
-    <StackLayout>
-        
-        <Label Text="{xct:Translate Alert}"
-               Margin="5,10,0,0"
-               HorizontalOptions="StartAndExpand"
-               Style="{DynamicResource tstyle_i5}" />
-        
-        <Label Text="{Binding Message}"
-               Margin="5,10,0,0"
-               Style="{DynamicResource tstyle_i7}" />
-        
-        <Button Text="{xct:Translate Ok}"
-                Command="{Binding CloseCommand}"
-                FontSize="{DynamicResource tsize_i4}"
-                FontFamily="Ubuntu-Medium"
-                TextColor="{DynamicResource appcolor_i1}"
-                HorizontalOptions="EndAndExpand"
-                BackgroundColor="Transparent"
-                Margin="0,10,-5,-10" />
-        
-    </StackLayout>
-    
-</Frame>
+</rg:PopupPage>

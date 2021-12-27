@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel;
 using Xamarin.Forms;
 
-namespace InterTwitter.ViewModels.Flyout
+namespace InterTwitter.ViewModels
 {
     public class FlyoutPageDetailViewModel : BaseViewModel
     {

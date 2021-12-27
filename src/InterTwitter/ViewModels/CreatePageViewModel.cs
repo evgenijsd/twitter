@@ -16,21 +16,24 @@ namespace InterTwitter.ViewModels
     {
         private readonly IRegistrationService _registrationService;
 
-        private readonly IDialogService _dialogs;
+        private readonly IDialogService _dialogService;
 
         private readonly IKeyboardHelper _keyboardHelper;
 
         private UserModel _user;
+        private double _maxHeight;
+        private bool _isSaveFocusedName;
+        private bool _isSaveFocusedEmail;
 
         public CreatePageViewModel(
             INavigationService navigationService,
-            IDialogService dialogs,
+            IDialogService dialogService,
             IRegistrationService registrationService,
             IKeyboardHelper keyboardHelper)
             : base(navigationService)
         {
+            _dialogService = dialogService;
             _registrationService = registrationService;
-            _dialogs = dialogs;
             _keyboardHelper = keyboardHelper;
         }
 
@@ -92,9 +95,57 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _isVisibleButton, value);
         }
 
-        private ICommand _StartCommand;
+        private bool _isFocusedName = false;
 
-        public ICommand StartCommand => _StartCommand ??= SingleExecutionCommand.FromFunc(OnStartCommandAsync);
+        public bool IsFocusedName
+        {
+            get => _isFocusedName;
+            set => SetProperty(ref _isFocusedName, value);
+        }
+
+        private bool _isFocusedEmail = false;
+
+        public bool IsFocusedEmail
+        {
+            get => _isFocusedEmail;
+            set => SetProperty(ref _isFocusedEmail, value);
+        }
+
+        private string _buttonText = Strings.Next;
+
+        public string ButtonText
+        {
+            get => _buttonText;
+            set => SetProperty(ref _buttonText, value);
+        }
+
+        private double _currentHeight;
+
+        public double CurrentHeight
+        {
+            get => _currentHeight;
+            set => SetProperty(ref _currentHeight, value);
+        }
+
+        private bool _isEntryNameFocused;
+
+        public bool IsEntryNameFocused
+        {
+            get => _isEntryNameFocused;
+            set => SetProperty(ref _isEntryNameFocused, value);
+        }
+
+        private bool _isEntryEmailFocused;
+
+        public bool IsEntryEmailFocused
+        {
+            get => _isEntryEmailFocused;
+            set => SetProperty(ref _isEntryEmailFocused, value);
+        }
+
+        private ICommand _LogInCommand;
+
+        public ICommand LogInCommand => _LogInCommand ??= SingleExecutionCommand.FromFunc(OnLogInCommandAsync);
 
         private ICommand _PasswordCommand;
 
@@ -104,9 +155,59 @@ namespace InterTwitter.ViewModels
 
         #region -- Overrides --
 
-        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        protected override async void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
+
+            if (args.PropertyName == nameof(IsFocusedName))
+            {
+                if (!string.IsNullOrEmpty(Name))
+                {
+                    ButtonText = Strings.SignUp;
+                }
+                else
+                {
+                    ButtonText = Strings.Next;
+                }
+            }
+
+            if (args.PropertyName == nameof(CurrentHeight))
+            {
+                if (_maxHeight < CurrentHeight)
+                {
+                    _maxHeight = CurrentHeight;
+                }
+
+                if (_maxHeight > CurrentHeight && (IsFocusedEmail || IsFocusedName))
+                {
+                    await Task.Delay(300);
+                    IsVisibleButton = true;
+                }
+                else
+                {
+                    IsVisibleButton = false;
+                }
+            }
+
+            if (args.PropertyName == nameof(IsFocusedName))
+            {
+                if (IsFocusedName)
+                {
+                    _isSaveFocusedName = true;
+                    _isSaveFocusedEmail = false;
+                    _maxHeight = CurrentHeight;
+                }
+            }
+
+            if (args.PropertyName == nameof(IsFocusedEmail))
+            {
+                if (IsFocusedEmail)
+                {
+                    _isSaveFocusedName = false;
+                    _isSaveFocusedEmail = true;
+                    _maxHeight = CurrentHeight;
+                }
+            }
 
             if (args.PropertyName == nameof(Name))
             {
@@ -124,8 +225,8 @@ namespace InterTwitter.ViewModels
             if (parameters.TryGetValue(Constants.Navigation.USER, out UserModel user))
             {
                 _user = user;
-                Name = _user.Name ?? string.Empty;
-                Email = _user.Email ?? string.Empty;
+                Name = _user.Name;
+                Email = _user.Email;
             }
         }
 
@@ -133,20 +234,23 @@ namespace InterTwitter.ViewModels
 
         #region -- Private helpers --
 
-        private async Task OnStartCommandAsync()
+        private async Task OnLogInCommandAsync()
         {
             _keyboardHelper.HideKeyboard();
 
-            await NavigationService.GoBackAsync();
+            await NavigationService.NavigateAsync($"/{nameof(LogInPage)}");
         }
 
         private async Task OnPasswordCommandAsync()
         {
             var result = await _registrationService.CheckTheCorrectEmailAsync(Email);
+
             if (result.IsSuccess)
             {
+                _keyboardHelper.HideKeyboard();
+
                 var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertLoginTaken } };
-                await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
+                await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
             }
             else
             {
@@ -155,6 +259,7 @@ namespace InterTwitter.ViewModels
                 {
                     _keyboardHelper.HideKeyboard();
 
+                    _user = new UserModel();
                     _user.Email = Email;
                     _user.Name = Name;
                     var parametrs = new NavigationParameters { { Constants.Navigation.USER, _user } };
@@ -175,8 +280,15 @@ namespace InterTwitter.ViewModels
                         }
                     }
 
-                    var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, validator.Errors[0].ErrorMessage } };
-                    await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
+                    if (_isSaveFocusedName)
+                    {
+                        IsEntryNameFocused = true;
+                    }
+
+                    if (_isSaveFocusedEmail)
+                    {
+                        IsEntryEmailFocused = true;
+                    }
                 }
             }
         }

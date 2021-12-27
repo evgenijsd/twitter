@@ -1,6 +1,7 @@
 ﻿using InterTwitter.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace InterTwitter.Services
 {
@@ -8,18 +9,31 @@ namespace InterTwitter.Services
     {
         public MockService()
         {
+            MuteList = new List<MuteModel>();
+            BlackList = new List<BlockModel>();
+
             InitUsers();
             InitTweets();
+            InitBookmarks();
+            InitLikes();
             InitHashtags();
         }
 
         #region -- IMockService implementation --
 
-        public List<UserModel> Users { get; set; }
+        public IList<UserModel> Users { get; set; }
 
-        public IEnumerable<TweetModel> Tweets { get; set; }
+        public IList<TweetModel> Tweets { get; set; }
 
-        public IEnumerable<HashtagModel> Hashtags { get; set; }
+        public IList<HashtagModel> Hashtags { get; set; }
+
+        public IList<LikeModel> Likes { get; set; }
+
+        public IList<BlockModel> BlackList { get; set; }
+
+        public IList<Bookmark> Bookmarks { get; set; }
+
+        public IList<MuteModel> MuteList { get; set; }
 
         #endregion
 
@@ -88,6 +102,8 @@ namespace InterTwitter.Services
 
         private void InitTweets()
         {
+            var culture = CultureInfo.GetCultureInfo("ru-RU");
+
             Tweets = new List<TweetModel>
             {
                 new TweetModel
@@ -95,6 +111,7 @@ namespace InterTwitter.Services
                     Id = 1,
                     UserId = 1,
                     Media = Enums.EAttachedMediaType.Photos,
+                    Text = "01 um quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam",
                     MediaPaths = new List<string>
                     {
                         "https://oboi-lux.com.ua/23613-home_default/fotooboi-s-prirodoj.jpg",
@@ -102,7 +119,7 @@ namespace InterTwitter.Services
                         "https://oboi-lux.com.ua/23595-home_default/fotooboi-s-prirodoj.jpg",
                         "http://intpicture.com/wp-content/uploads/2011/07/Nature-64-034-Copy-300x300.jpg",
                     },
-                    CreationTime = DateTime.Now,
+                    CreationTime = DateTime.Parse("01.01.2020 12:12:12", culture),
                 },
                 new TweetModel
                 {
@@ -114,7 +131,7 @@ namespace InterTwitter.Services
                     {
                        "https://www.youtube.com/embed/_hGuLM4Y-xM",
                     },
-                    CreationTime = DateTime.Now,
+                    CreationTime = DateTime.Parse("01.03.2020 13:12:12", culture),
                 },
                 new TweetModel
                 {
@@ -122,7 +139,7 @@ namespace InterTwitter.Services
                     UserId = 4,
                     Text = "#AMAs Only #NoNuanceNovember text #coffeeTime",
                     Media = Enums.EAttachedMediaType.None,
-                    CreationTime = DateTime.Now,
+                    CreationTime = DateTime.Parse("01.04.2020 15:12:12", culture),
                 },
                 new TweetModel
                 {
@@ -130,7 +147,7 @@ namespace InterTwitter.Services
                     UserId = 5,
                     Text = " #teaTime Hi #blockchain there! ",
                     Media = Enums.EAttachedMediaType.Photos,
-                    CreationTime = DateTime.Now,
+                    CreationTime = DateTime.Parse("01.05.2021 12:00:12", culture),
                     MediaPaths = new List<string>
                     {
                        "https://akm-img-a-in.tosshub.com/indiatoday/images/story/202110/Elon-Musk_1200x768.png?WgPbwF44wHXitAAL7xu8BNhZXQXIPBbV&size=770:433",
@@ -142,7 +159,7 @@ namespace InterTwitter.Services
                     Id = 5,
                     UserId = 5,
                     Media = Enums.EAttachedMediaType.Photos,
-                    CreationTime = DateTime.Now,
+                    CreationTime = DateTime.Parse("01.11.2020 12:00:12", culture),
                     MediaPaths = new List<string>
                     {
                        "https://i.pinimg.com/474x/f7/f7/73/f7f7733f9e3409f0ef433f3074525790.jpg",
@@ -158,7 +175,7 @@ namespace InterTwitter.Services
                     {
                         "https://javasea.ru/uploads/posts/2013-12/1387635240_matrica.gif",
                     },
-                    CreationTime = DateTime.Now,
+                    CreationTime = DateTime.Parse("01.01.2021 12:12:12", culture),
                 },
                 new TweetModel
                 {
@@ -194,7 +211,281 @@ namespace InterTwitter.Services
                     {
                         "https://thumbs.gfycat.com/PaltryWickedCrayfish-max-1mb.gif",
                     },
-                    CreationTime = DateTime.Now,
+                    CreationTime = DateTime.Parse("01.02.2021 12:12:12", culture),
+                },
+            };
+        }
+
+        private void InitLikes()
+        {
+            var culture = CultureInfo.GetCultureInfo("ru-RU");
+
+            Likes = new List<LikeModel>
+            {
+                new LikeModel
+                {
+                    Id = 1,
+                    UserId = 1,
+                    TweetId = 1,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("02.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 2,
+                    UserId = 1,
+                    TweetId = 2,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("01.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 3,
+                    UserId = 1,
+                    TweetId = 3,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("02.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 4,
+                    UserId = 1,
+                    TweetId = 4,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("03.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 5,
+                    UserId = 1,
+                    TweetId = 5,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("04.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 6,
+                    UserId = 2,
+                    TweetId = 1,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("05.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 7,
+                    UserId = 2,
+                    TweetId = 2,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("04.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 8,
+                    UserId = 2,
+                    TweetId = 3,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("03.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 9,
+                    UserId = 2,
+                    TweetId = 4,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("02.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 10,
+                    UserId = 2,
+                    TweetId = 5,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("01.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 11,
+                    UserId = 3,
+                    TweetId = 1,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("02.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 12,
+                    UserId = 3,
+                    TweetId = 2,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("03.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 13,
+                    UserId = 3,
+                    TweetId = 3,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("04.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 14,
+                    UserId = 3,
+                    TweetId = 4,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("05.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 15,
+                    UserId = 3,
+                    TweetId = 5,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("07.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 16,
+                    UserId = 3,
+                    TweetId = 7,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("07.03.2021 12:12:12", culture),
+                },
+                new LikeModel
+                {
+                    Id = 17,
+                    UserId = 6,
+                    TweetId = 1,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("07.03.2021 12:12:12", culture),
+                },
+            };
+        }
+
+        private void InitBookmarks()
+        {
+            var culture = CultureInfo.GetCultureInfo("ru-RU");
+
+            Bookmarks = new List<Bookmark>
+            {
+                new Bookmark
+                {
+                    Id = 1,
+                    UserId = 1,
+                    TweetId = 1,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("01.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 2,
+                    UserId = 1,
+                    TweetId = 2,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("10.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 3,
+                    UserId = 1,
+                    TweetId = 3,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("01.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 4,
+                    UserId = 1,
+                    TweetId = 4,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("05.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 5,
+                    UserId = 1,
+                    TweetId = 5,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("06.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 6,
+                    UserId = 2,
+                    TweetId = 1,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("07.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 7,
+                    UserId = 2,
+                    TweetId = 2,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("08.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 8,
+                    UserId = 2,
+                    TweetId = 3,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("09.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 9,
+                    UserId = 2,
+                    TweetId = 4,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("09.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 10,
+                    UserId = 2,
+                    TweetId = 5,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("08.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 11,
+                    UserId = 3,
+                    TweetId = 1,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("07.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 12,
+                    UserId = 3,
+                    TweetId = 2,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("06.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 13,
+                    UserId = 3,
+                    TweetId = 3,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("05.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 14,
+                    UserId = 3,
+                    TweetId = 4,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("04.03.2021 12:12:12", culture),
+                },
+                new Bookmark
+                {
+                    Id = 15,
+                    UserId = 3,
+                    TweetId = 5,
+                    Notification = true,
+                    CreationTime = DateTime.Parse("03.03.2021 12:12:12", culture),
                 },
             };
         }

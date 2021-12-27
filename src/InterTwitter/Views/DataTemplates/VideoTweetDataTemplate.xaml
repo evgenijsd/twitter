@@ -18,8 +18,11 @@
                                         Margin="0, 0, 15, 0">
 
                 <ffimageloading:CachedImage.Transformations>
-                    <fftransformations:CircleTransformation/>
+                    <fftransformations:CircleTransformation />
                 </ffimageloading:CachedImage.Transformations>
+                <ffimageloading:CachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding MoveToProfileCommand}"/>
+                </ffimageloading:CachedImage.GestureRecognizers>
 
             </ffimageloading:CachedImage>
 
@@ -55,14 +58,15 @@
                     <ffimageloading:CachedImage Source="ic_like_gray" HorizontalOptions="EndAndExpand">
                         
                         <ffimageloading:CachedImage.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding LikeTweetCommand}"/>
+                            <TapGestureRecognizer Command="{Binding LikeTweetCommand}" />
                         </ffimageloading:CachedImage.GestureRecognizers>
                         
                         <ffimageloading:CachedImage.Triggers>
                             <DataTrigger Binding="{Binding IsTweetLiked}"
                                          TargetType="ffimageloading:CachedImage"
                                          Value="true">
-                                <Setter Property="Source" Value="ic_like_blue"/>
+                                <Setter Property="Source"
+                                        Value="ic_like_blue" />
                             </DataTrigger>
                         </ffimageloading:CachedImage.Triggers>
                         
@@ -80,17 +84,20 @@
                     </Label>
 
                     <ffimageloading:CachedImage Source="ic_bookmarks_gray">
-                        
+
                         <ffimageloading:CachedImage.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding MarkTweetCommand}"/>
+                            <TapGestureRecognizer Command="{Binding MarkTweetCommand}" />
                         </ffimageloading:CachedImage.GestureRecognizers>
-                        
+
                         <ffimageloading:CachedImage.Triggers>
-                            <DataTrigger TargetType="ffimageloading:CachedImage" Binding="{Binding IsBookmarked}" Value="true">
-                                <Setter Property="Source" Value="ic_bookmarks_blue"/>
+                            <DataTrigger TargetType="ffimageloading:CachedImage"
+                                         Binding="{Binding IsBookmarked}"
+                                         Value="true">
+                                <Setter Property="Source"
+                                        Value="ic_bookmarks_blue" />
                             </DataTrigger>
                         </ffimageloading:CachedImage.Triggers>
-                        
+
                     </ffimageloading:CachedImage>
 
                 </StackLayout>

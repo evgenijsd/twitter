@@ -19,9 +19,8 @@ namespace InterTwitter.Services
 
         #region -- ITweetService implementation --
 
-        public async Task<AOResult<IEnumerable<TweetModel>>> GetAllTweetsAsync()
+        public Task<AOResult<IEnumerable<TweetModel>>> GetAllTweetsAsync()
         {
-            await Task.Delay(50);
             var result = new AOResult<IEnumerable<TweetModel>>();
             try
             {
@@ -29,7 +28,7 @@ namespace InterTwitter.Services
 
                 if (tweets != null)
                 {
-                    result.SetSuccess(tweets.OrderByDescending(x => x.CreationTime));
+                    result.SetSuccess(tweets.OrderByDescending(x => x.CreationTime).ToList());
                 }
                 else
                 {
@@ -41,10 +40,35 @@ namespace InterTwitter.Services
                 result.SetError($"{nameof(GetAllTweetsAsync)}: exception", "Some issues", ex);
             }
 
-            return result;
+            return Task.FromResult(result);
         }
 
-        public async Task<AOResult<IEnumerable<TweetModel>>> FindTweetsByKeywordsAsync(IEnumerable<string> keys)
+        public Task<AOResult<List<TweetModel>>> GetByUserTweetsAsync(int userid)
+        {
+            var result = new AOResult<List<TweetModel>>();
+
+            try
+            {
+                var tweets = _mockService.Tweets.Where(x => x.UserId == userid);
+
+                if (tweets != null)
+                {
+                    result.SetSuccess(tweets.OrderByDescending(x => x.CreationTime).ToList());
+                }
+                else
+                {
+                    result.SetFailure("No tweets found");
+                }
+            }
+            catch (Exception ex)
+            {
+                result.SetError($"{nameof(GetByUserTweetsAsync)}: exception", "Some issues", ex);
+            }
+
+            return Task.FromResult(result);
+        }
+
+        public Task<AOResult<IEnumerable<TweetModel>>> FindTweetsByKeywordsAsync(IEnumerable<string> keys)
         {
             var result = new AOResult<IEnumerable<TweetModel>>();
 
@@ -69,7 +93,7 @@ namespace InterTwitter.Services
                 result.SetError($"{nameof(FindTweetsByKeywordsAsync)}: exception", "Some issues", ex);
             }
 
-            return result;
+            return Task.FromResult(result);
         }
 
         public Task<AOResult<UserModel>> GetAuthorAsync(int authorId)

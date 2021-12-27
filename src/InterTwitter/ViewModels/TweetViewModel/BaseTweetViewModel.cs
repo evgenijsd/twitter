@@ -1,10 +1,14 @@
 ﻿using InterTwitter.Enums;
 using InterTwitter.Helpers;
+using InterTwitter.Services.UserService;
+using InterTwitter.Views;
 using Prism.Mvvm;
+using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace InterTwitter.Models.TweetViewModel
 {
@@ -101,7 +105,7 @@ namespace InterTwitter.Models.TweetViewModel
         }
 
         private bool _IsTweetLiked;
-        public bool IsTweekLiked
+        public bool IsTweetLiked
         {
             get => _IsTweetLiked;
             set => SetProperty(ref _IsTweetLiked, value);
@@ -123,8 +127,14 @@ namespace InterTwitter.Models.TweetViewModel
         private ICommand _markTweetCommand;
         public ICommand MarkTweetCommand => _markTweetCommand ?? (_markTweetCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnMarkAsync));
 
+        //private ICommand _moveToProfileCommand;
+        //public ICommand MoveToProfileCommand => _moveToProfileCommand ?? (_moveToProfileCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnGoToProfileAsync));
         private ICommand _moveToProfileCommand;
-        public ICommand MoveToProfileCommand => _moveToProfileCommand ?? (_moveToProfileCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnGoToProfileAsync));
+        public ICommand MoveToProfileCommand
+        {
+            get => _moveToProfileCommand;
+            set => SetProperty(ref _moveToProfileCommand, value);
+        }
 
         private DateTime _CreationTime;
         public DateTime CreationTime
@@ -133,12 +143,19 @@ namespace InterTwitter.Models.TweetViewModel
             set => SetProperty(ref _CreationTime, value);
         }
         #endregion
-
         #region -- Private helpers --
-
         private Task OnLikeAsync(BaseTweetViewModel tweet)
         {
-            IsTweekLiked = !IsTweekLiked;
+            IsTweetLiked = !IsTweetLiked;
+            if (IsTweetLiked)
+            {
+                MessagingCenter.Send<MessageEvent>(new MessageEvent(TweetId), MessageEvent.AddLike);
+            }
+            else
+            {
+                MessagingCenter.Send<MessageEvent>(new MessageEvent(TweetId), MessageEvent.DeleteLike);
+            }
+
             return Task.CompletedTask;
         }
 
@@ -147,9 +164,18 @@ namespace InterTwitter.Models.TweetViewModel
             return Task.CompletedTask;
         }
 
-        private Task OnMarkAsync(BaseTweetViewModel tweet)
+        private Task OnMarkAsync(BaseTweetViewModel arg)
         {
             IsBookmarked = !IsBookmarked;
+            if (IsBookmarked)
+            {
+                MessagingCenter.Send<MessageEvent>(new MessageEvent(TweetId), MessageEvent.AddBookmark);
+            }
+            else
+            {
+                MessagingCenter.Send<MessageEvent>(new MessageEvent(TweetId), MessageEvent.DeleteBookmark);
+            }
+
             return Task.CompletedTask;
         }
 
@@ -159,5 +185,6 @@ namespace InterTwitter.Models.TweetViewModel
         }
 
         #endregion
+
     }
 }

@@ -16,21 +16,28 @@ namespace InterTwitter.ViewModels
     {
         private readonly IRegistrationService _registrationService;
 
-        private readonly IDialogService _dialogs;
+        private readonly IDialogService _dialogService;
+
+        private readonly IAuthorizationService _authorizationService;
 
         private readonly IKeyboardHelper _keyboardHelper;
 
         private UserModel _user;
+        private double _maxHeight;
+        private bool _isSaveFocusedPassword;
+        private bool _isSaveFocusedConfirmPassword;
 
         public PasswordPageViewModel (
             INavigationService navigationService,
-            IDialogService dialogs,
+            IDialogService dialogService,
             IRegistrationService registrationService,
+            IAuthorizationService authorizationService,
             IKeyboardHelper keyboardHelper)
             : base(navigationService)
         {
+            _dialogService = dialogService;
             _registrationService = registrationService;
-            _dialogs = dialogs;
+            _authorizationService = authorizationService;
             _keyboardHelper = keyboardHelper;
         }
 
@@ -84,6 +91,30 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _confirmPassword, value);
         }
 
+        private bool _isFocusedPassword = false;
+
+        public bool IsFocusedPassword
+        {
+            get => _isFocusedPassword;
+            set => SetProperty(ref _isFocusedPassword, value);
+        }
+
+        private bool _isFocusedConfirmPassword = false;
+
+        public bool IsFocusedConfirmPassword
+        {
+            get => _isFocusedConfirmPassword;
+            set => SetProperty(ref _isFocusedConfirmPassword, value);
+        }
+
+        private string _buttonText = Strings.Next;
+
+        public string ButtonText
+        {
+            get => _buttonText;
+            set => SetProperty(ref _buttonText, value);
+        }
+
         private bool _isVisibleButton = false;
 
         public bool IsVisibleButton
@@ -92,21 +123,95 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _isVisibleButton, value);
         }
 
+        private double _currentHeight;
+
+        public double CurrentHeight
+        {
+            get => _currentHeight;
+            set => SetProperty(ref _currentHeight, value);
+        }
+
+        private bool _isEntryPasswordFocused;
+
+        public bool IsEntryPasswordFocused
+        {
+            get => _isEntryPasswordFocused;
+            set => SetProperty(ref _isEntryPasswordFocused, value);
+        }
+
+        private bool _isEntryConfirmPasswordFocused;
+
+        public bool IsEntryConfirmPasswordFocused
+        {
+            get => _isEntryConfirmPasswordFocused;
+            set => SetProperty(ref _isEntryConfirmPasswordFocused, value);
+        }
+
         private ICommand _CreateCommand;
 
         public ICommand CreateCommand => _CreateCommand ??= SingleExecutionCommand.FromFunc(OnCreateCommandAsync);
 
-        private ICommand _StartCommand;
+        private ICommand _TwitterCommand;
 
-        public ICommand StartCommand => _StartCommand ??= SingleExecutionCommand.FromFunc(OnStartCommandAsync);
+        public ICommand TwitterCommand => _TwitterCommand ??= SingleExecutionCommand.FromFunc(OnTwitterCommandAsync);
 
         #endregion
 
         #region -- Overrides --
 
-        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        protected override async void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
+
+            if (args.PropertyName == nameof(IsFocusedPassword))
+            {
+                if (!string.IsNullOrEmpty(Password))
+                {
+                    ButtonText = Strings.Confirm;
+                }
+                else
+                {
+                    ButtonText = Strings.Next;
+                }
+            }
+
+            if (args.PropertyName == nameof(CurrentHeight))
+            {
+                if (_maxHeight < CurrentHeight)
+                {
+                    _maxHeight = CurrentHeight;
+                }
+
+                if (_maxHeight > CurrentHeight && (IsFocusedPassword || IsFocusedConfirmPassword))
+                {
+                    await Task.Delay(300);
+                    IsVisibleButton = true;
+                }
+                else
+                {
+                    IsVisibleButton = false;
+                }
+            }
+
+            if (args.PropertyName == nameof(IsFocusedPassword))
+            {
+                if (IsFocusedPassword)
+                {
+                    _isSaveFocusedPassword = true;
+                    _isSaveFocusedConfirmPassword = false;
+                    _maxHeight = CurrentHeight;
+                }
+            }
+
+            if (args.PropertyName == nameof(IsFocusedConfirmPassword))
+            {
+                if (IsFocusedConfirmPassword)
+                {
+                    _isSaveFocusedPassword = false;
+                    _isSaveFocusedConfirmPassword = true;
+                    _maxHeight = CurrentHeight;
+                }
+            }
 
             if (args.PropertyName == nameof(Password))
             {
@@ -135,31 +240,32 @@ namespace InterTwitter.ViewModels
         {
             _keyboardHelper.HideKeyboard();
 
-            await NavigationService.GoBackAsync();
+            var parametrs = new NavigationParameters { { Constants.Navigation.USER, _user } };
+            await NavigationService.GoBackAsync(parametrs);
         }
 
-        private async Task OnStartCommandAsync()
+        private async Task OnTwitterCommandAsync()
         {
             var validator = ValidatorsExtension.PasswordPageValidator.Validate(this);
             if (validator.IsValid)
             {
                 _user.Password = Password;
-                Password = string.Empty;
-                ConfirmPassword = string.Empty;
                 _user.AvatarPath = "pic_profile_big";
                 _user.BackgroundUserImagePath = "pic_profile_big";
+
+                _keyboardHelper.HideKeyboard();
+
                 var result = await _registrationService.AddAsync(_user);
                 if (result.IsSuccess)
                 {
-                    _keyboardHelper.HideKeyboard();
-
+                    _authorizationService.UserId = _user.Id;
                     var parametrs = new NavigationParameters { { Constants.Navigation.USER, _user } };
-                    await NavigationService.NavigateAsync($"/{nameof(StartPage)}", parametrs);
+                    await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", parametrs);
                 }
                 else
                 {
                     var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertDatabase } };
-                    await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
+                    await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
                 }
             }
             else
@@ -177,8 +283,15 @@ namespace InterTwitter.ViewModels
                     }
                 }
 
-                var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, validator.Errors[0].ErrorMessage } };
-                await _dialogs.ShowDialogAsync(nameof(AlertView), parametrs);
+                if (_isSaveFocusedPassword)
+                {
+                    IsEntryPasswordFocused = true;
+                }
+
+                if (_isSaveFocusedConfirmPassword)
+                {
+                    IsEntryConfirmPasswordFocused = true;
+                }
             }
         }
 

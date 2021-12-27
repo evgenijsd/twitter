@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddToBlacklist" xml:space="preserve">
+    <value>Add to Blacklist</value>
+  </data>
+  <data name="AddToMute" xml:space="preserve">
+    <value>Add to Mute</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="Alert" xml:space="preserve">
     <value>Alert</value>
   </data>
@@ -168,11 +177,26 @@
   <data name="AlertPasswordNotEqual" xml:space="preserve">
     <value>Password and confirm password do not coincide</value>
   </data>
+  <data name="Bookmarks" xml:space="preserve">
+    <value>Bookmarks</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="AlreadyBlocked" xml:space="preserve">
+    <value>This user is already blocked</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Confirm Password</value>
   </data>
   <data name="CreateYourAccount" xml:space="preserve">
     <value>Create your account</value>
+  </data>
+  <data name="DeleteAllbookmarks" xml:space="preserve">
+    <value>Delete all bookmarks</value>
   </data>
   <data name="DoNotMatch" xml:space="preserve">
     <value>Do not match</value>
@@ -183,11 +207,23 @@
   <data name="FailureUsersNotFound" xml:space="preserve">
     <value>No tweets found</value>
   </data>
+  <data name="EmailIsNotValid" xml:space="preserve">
+    <value>Email is not valid or empty</value>
+  </data>
+  <data name="FromTheBlacklist" xml:space="preserve">
+    <value>from the Blacklist</value>
+  </data>
+  <data name="FromTheMute" xml:space="preserve">
+    <value>from the mute</value>
+  </data>
   <data name="GetYourAccount" xml:space="preserve">
     <value>Get your account</value>
   </data>
   <data name="InaccurateRequest" xml:space="preserve">
     <value>For a more accurate search, enter 2 or more characters</value>
+  </data>
+  <data name="Likes" xml:space="preserve">
+    <value>Likes</value>
   </data>
   <data name="LogIn" xml:space="preserve">
     <value>Log In</value>
@@ -195,14 +231,44 @@
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="NameIsNotValid" xml:space="preserve">
+    <value>Name is not valid or empty</value>
+  </data>
+  <data name="NewPasswordIsNotValid" xml:space="preserve">
+    <value>New password is not valid or empty</value>
+  </data>
   <data name="Next" xml:space="preserve">
-    <value>Next</value>
+    <value>     Next     </value>
+  </data>
+  <data name="NotFoundBookmark" xml:space="preserve">
+    <value>not found any bookmark</value>
+  </data>
+  <data name="NotFoundBookmark" xml:space="preserve">
+    <value>not found any bookmark</value>
+  </data>
+  <data name="NotFoundLike" xml:space="preserve">
+    <value>not found any like</value>
+  </data>
+  <data name="NotFoundNotification" xml:space="preserve">
+    <value>Not found notification</value>
+  </data>
+  <data name="Notification" xml:space="preserve">
+    <value>Notification</value>
+  </data>
+  <data name="NoTweets" xml:space="preserve">
+    <value>No tweets found</value>
   </data>
   <data name="NoResultsFor" xml:space="preserve">
     <value>No results for</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
+  </data>
+  <data name="OldPassEmpty" xml:space="preserve">
+    <value>Old password is empty</value>
+  </data>
+  <data name="OldPassWrong" xml:space="preserve">
+    <value>Old password is wrong</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
@@ -216,19 +282,73 @@
   <data name="PopularTheme" xml:space="preserve">
     <value>Popular theme</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
   <data name="Posts" xml:space="preserve">
     <value>Posts</value>
   </data>
-  <data name="Search" xml:space="preserve">
-    <value>Search</value>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="SaveChanges" xml:space="preserve">
+    <value>Save changes</value>
   </data>
   <data name="SignUp" xml:space="preserve">
     <value>Sign Up</value>
   </data>
+  <data name="SomeIssues" xml:space="preserve">
+    <value>Some issues</value>
+  </data>
+  <data name="UserBlocked" xml:space="preserve">
+    <value>This user is already blocked</value>
+  </data>
+  <data name="UserMuted" xml:space="preserve">
+    <value>This user is already muted</value>
+  </data>
+  <data name="UserNotSeeYouPost" xml:space="preserve">
+    <value>This user will not see your posts.</value>
+  </data>
+  <data name="UserCanSeeInfo" xml:space="preserve">
+    <value>User can see information about you</value>
+  </data>
   <data name="WrongEmail" xml:space="preserve">
     <value>Wrong Email</value>
   </data>
+  <data name="WrongResult" xml:space="preserve">
+    <value>Wrong result</value>
+  </data>
+  <data name="YouHaveNoBookmarks" xml:space="preserve">
+    <value>You have no bookmarks yet</value>
+  </data>
   <data name="YouNeedPassword" xml:space="preserve">
     <value>You'll need a password</value>
+  </data>
+  <data name="ToMute" xml:space="preserve">
+    <value>to mute</value>
+  </data>
+  <data name="ToBlacklist" xml:space="preserve">
+    <value>to Blacklist</value>
+  </data>
+  <data name="Blacklist" xml:space="preserve">
+    <value>Blacklist</value>
+  </data>
+  <data name="Mute" xml:space="preserve">
+    <value>Mute</value>
+  </data>
+  <data name="ChangeProfile" xml:space="preserve">
+    <value>Change profile</value>
+  </data>
+  <data name="Muted" xml:space="preserve">
+    <value>Muted</value>
+  </data>
+  <data name="MutedProfiles" xml:space="preserve">
+    <value>Muted profiles</value>
+  </data>
+  <data name="ProfileInBlacklist" xml:space="preserve">
+    <value>Profile in Blacklist</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>Share</value>
   </data>
 </root>

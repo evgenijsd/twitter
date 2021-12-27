@@ -3,5 +3,6 @@
     public interface IKeyboardHelper
     {
         void HideKeyboard();
+        void ShowKeyboard();
     }
 }
