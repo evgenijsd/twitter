@@ -19,22 +19,8 @@ namespace InterTwitter.Views
         public NoInternetView(DialogParameters param, Action<IDialogParameters> requestClose)
         {
             InitializeComponent();
-            frame.WidthRequest = Prism.PrismApplicationBase.Current.MainPage.Width - 40;
-            //cancelButton.Clicked += OnCancelButtonClicked;
-            //okButton.Clicked += OnOkButtonClicked;
+            frame.WidthRequest = Prism.PrismApplicationBase.Current.MainPage.Width - 30;
             BindingContext = new AlertViewModel(param, requestClose);
-            Animation = new MoveAnimation(MoveAnimationOptions.Center, MoveAnimationOptions.Center);
-            // Animation = new ScaleAnimation();
         }
-
-        //private void OnOkButtonClicked(object sender, EventArgs e)
-        //{
-        //    okButton.IsEnabled = false;
-        //}
-
-        //private void OnCancelButtonClicked(object sender, EventArgs e)
-        //{
-        //    cancelButton.IsEnabled = false;
-        //}
     }
 }
