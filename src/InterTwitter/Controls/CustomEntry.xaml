@@ -2,12 +2,13 @@
 <Grid xmlns="http://xamarin.com/schemas/2014/forms"
       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
       xmlns:control="clr-namespace:InterTwitter.Controls"
-      x:Class="InterTwitter.Controls.CustomEntry"
+      x:DataType="control:CustomEntry"
       xmlns:Behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
       ColumnSpacing="0"
       RowSpacing="0"
       VerticalOptions="Start"
-      x:Name="customEntry">
+      x:Name="customEntry"
+      x:Class="InterTwitter.Controls.CustomEntry">
     
     <Grid.RowDefinitions>
         <RowDefinition Height="40" />

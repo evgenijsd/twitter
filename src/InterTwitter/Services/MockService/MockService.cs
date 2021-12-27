@@ -353,7 +353,7 @@ namespace InterTwitter.Services
                 },
                 new TweetModel
                 {
-                    Id = 2,
+                    Id = 8,
                     UserId = 2,
                     Text = "#amas masd",
                     Media = Enums.EAttachedMediaType.Gif,
@@ -361,11 +361,11 @@ namespace InterTwitter.Services
                     {
                         "https://thumbs.gfycat.com/PaltryWickedCrayfish-max-1mb.gif",
                     },
-                    CreationTime = DateTime.Now,
+                    CreationTime = DateTime.Parse("01.02.2021 13:12:12", culture),
                 },
                 new TweetModel
                 {
-                    Id = 3,
+                    Id = 9,
                     UserId = 3,
                     //Text = "#AMAs masd # masda as ama",
                     Media = Enums.EAttachedMediaType.Gif,

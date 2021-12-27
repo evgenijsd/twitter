@@ -165,14 +165,12 @@ namespace InterTwitter.ViewModels
 
             if (args.PropertyName == nameof(IsFocusedPassword))
             {
-                if (!string.IsNullOrEmpty(Password))
-                {
-                    ButtonText = Strings.Confirm;
-                }
-                else
-                {
-                    ButtonText = Strings.Next;
-                }
+                ButtonText = Strings.Next;
+            }
+
+            if (args.PropertyName == nameof(IsFocusedConfirmPassword))
+            {
+                ButtonText = Strings.Confirm;
             }
 
             if (args.PropertyName == nameof(CurrentHeight))
@@ -277,20 +275,21 @@ namespace InterTwitter.ViewModels
                         IsWrongPassword = true;
                     }
 
-                    if (error.PropertyName == nameof(ConfirmPassword))
+                    if (error.PropertyName == nameof(ConfirmPassword) && ButtonText != Strings.Next)
                     {
                         IsWrongConfirmPassword = true;
                     }
                 }
 
-                if (_isSaveFocusedPassword)
+                if (!IsWrongPassword)
                 {
-                    IsEntryPasswordFocused = true;
-                }
-
-                if (_isSaveFocusedConfirmPassword)
-                {
+                    ButtonText = Strings.Confirm;
                     IsEntryConfirmPasswordFocused = true;
+                }
+                else
+                {
+                    ButtonText = Strings.Next;
+                    IsEntryPasswordFocused = true;
                 }
             }
         }
