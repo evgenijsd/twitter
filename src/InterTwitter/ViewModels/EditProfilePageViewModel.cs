@@ -1,8 +1,6 @@
 ﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
-using InterTwitter.Services.PermissionsService;
-using InterTwitter.Services.Settings;
-using InterTwitter.Services.UserService;
+using InterTwitter.Services;
 using InterTwitter.Views;
 using Prism.Navigation;
 using Prism.Services.Dialogs;

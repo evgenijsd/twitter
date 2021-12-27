@@ -150,7 +150,7 @@ namespace InterTwitter.Services
             }
             catch (Exception ex)
             {
-                result.SetError($"Exception: {nameof(AddBookmarkAsync)}", Strings.WrongResult, ex);
+                result.SetError($"{nameof(AddBookmarkAsync)}: exception", Strings.WrongResult, ex);
             }
 
             return result;

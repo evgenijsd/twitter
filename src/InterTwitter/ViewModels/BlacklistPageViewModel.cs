@@ -1,6 +1,6 @@
 ﻿using InterTwitter.Helpers;
 using InterTwitter.Extensions;
-using InterTwitter.Services.UserService;
+using InterTwitter.Services;
 using Prism.Navigation;
 using Prism.Services.Dialogs;
 using System.Collections.ObjectModel;

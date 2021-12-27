@@ -2,7 +2,6 @@
 using InterTwitter.Models;
 using InterTwitter.Resources.Strings;
 using InterTwitter.Services;
-using InterTwitter.Services.Settings;
 using InterTwitter.ViewModels.Validators;
 using InterTwitter.Views;
 using Prism.Navigation;
@@ -249,7 +248,7 @@ namespace InterTwitter.ViewModels
                     if (result.Result.Password == Password)
                     {
                         _user = result.Result;
-                        _authorizationService.UserId = _user.Id;
+                        _settingsManager.UserId = _user.Id;
                         var parametrs = new NavigationParameters { { Constants.Navigation.USER, _user } };
                         await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", parametrs);
                     }

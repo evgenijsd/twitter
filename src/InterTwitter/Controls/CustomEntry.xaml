@@ -38,10 +38,10 @@
                 
                 <Behaviors:EventToCommandBehavior Command="{Binding FocusedCommand, Source={x:Reference customEntry}}"
                                                   EventName="Focused" />
-                
+
                 <Behaviors:EventToCommandBehavior Command="{Binding UnFocusedCommand, Source={x:Reference customEntry}}"
                                                   EventName="Unfocused" />
-                
+
             </control:CustomNoBorderEntry.Behaviors>
 
         </control:CustomNoBorderEntry>

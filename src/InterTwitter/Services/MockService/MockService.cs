@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace InterTwitter.Services
@@ -16,6 +15,9 @@ namespace InterTwitter.Services
         private IList<TweetModel> _tweets;
         private IList<Bookmark> _bookmarks;
         private IList<LikeModel> _likes;
+        private IList<HashtagModel> _hashtags;
+        private IList<BlockModel> _blackList;
+        private IList<MuteModel> _muteList;
 
         private Dictionary<Type, object> _base;
 
@@ -118,20 +120,84 @@ namespace InterTwitter.Services
 
         private async Task InitMocksAsync()
         {
+            _base = new Dictionary<Type, object>();
+
             await Task.WhenAll(
                 InitUsersAsync(),
                 InitTweetsAsync(),
                 InitBookmarks(),
-                InitLikes());
-
-            _base = new Dictionary<Type, object>();
-            _base.Add(typeof(UserModel), _users);
-            _base.Add(typeof(TweetModel), _tweets);
-            _base.Add(typeof(Bookmark), _bookmarks);
-            _base.Add(typeof(LikeModel), _likes);
+                InitLikes(),
+                InitHashtags(),
+                InitBlackList(),
+                InitMuteList());
 
             _initCompletionSource.TrySetResult(true);
         }
+
+        private Task InitBlackList() => Task.Run(() =>
+        {
+            _blackList = new List<BlockModel>();
+
+            _base.Add(typeof(BlockModel), _blackList);
+        });
+
+        private Task InitMuteList() => Task.Run(() =>
+        {
+            _muteList = new List<MuteModel>();
+
+            _base.Add(typeof(MuteModel), _muteList);
+        });
+
+        private Task InitHashtags() => Task.Run(() =>
+        {
+            _hashtags = new List<HashtagModel>
+            {
+                new HashtagModel()
+                {
+                    Id = 1,
+                    Text = "#blockchain",
+                    TweetsCount = 2,
+                },
+                new HashtagModel()
+                {
+                    Id = 2,
+                    Text = "#AMAs",
+                    TweetsCount = 4,
+                },
+                new HashtagModel()
+                {
+                    Id = 3,
+                    Text = "#NoNuanceNovember",
+                    TweetsCount = 3,
+                },
+                new HashtagModel()
+                {
+                    Id = 4,
+                    Text = "#coffeeTime",
+                    TweetsCount = 2,
+                },
+                new HashtagModel()
+                {
+                    Id = 5,
+                    Text = "#teaTime",
+                    TweetsCount = 1,
+                },
+                new HashtagModel()
+                {
+                    Id = 6,
+                    Text = "#workout",
+                    TweetsCount = 1,
+                },
+                new HashtagModel()
+                {
+                    Id = 7,
+                    Text = "#cats",
+                    TweetsCount = 1,
+                },
+            };
+
+            _base.Add(typeof(HashtagModel), _hashtags);
+        });
 
         private Task InitUsersAsync() => Task.Run(() =>
         {
@@ -192,6 +258,8 @@ namespace InterTwitter.Services
                     BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
                 },
             };
+
+            _base.Add(typeof(UserModel), _users);
         });
 
         private Task InitTweetsAsync() => Task.Run(() =>
@@ -308,6 +376,8 @@ namespace InterTwitter.Services
                     CreationTime = DateTime.Parse("01.02.2021 12:12:12", culture),
                 },
             };
+
+            _base.Add(typeof(TweetModel), _tweets);
         });
 
         private Task InitLikes() => Task.Run(() =>
@@ -453,6 +523,8 @@ namespace InterTwitter.Services
                     CreationTime = DateTime.Parse("07.03.2021 12:12:12", culture),
                 },
             };
+
+            _base.Add(typeof(LikeModel), _likes);
         });
 
         private Task InitBookmarks() => Task.Run(() =>
@@ -582,56 +654,9 @@ namespace InterTwitter.Services
                     CreationTime = DateTime.Parse("03.03.2021 12:12:12", culture),
                 },
             };
-        });
 
-        private void InitHashtags()
-        {
-            Hashtags = new List<HashtagModel>
-            {
-                new HashtagModel()
-                {
-                    Id = 1,
-                    Text = "#blockchain",
-                    TweetsCount = 2,
-                },
-                new HashtagModel()
-                {
-                    Id = 2,
-                    Text = "#AMAs",
-                    TweetsCount = 4,
-                },
-                new HashtagModel()
-                {
-                    Id = 3,
-                    Text = "#NoNuanceNovember",
-                    TweetsCount = 3,
-                },
-                new HashtagModel()
-                {
-                    Id = 4,
-                    Text = "#coffeeTime",
-                    TweetsCount = 2,
-                },
-                new HashtagModel()
-                {
-                    Id = 5,
-                    Text = "#teaTime",
-                    TweetsCount = 1,
-                },
-                new HashtagModel()
-                {
-                    Id = 6,
-                    Text = "#workout",
-                    TweetsCount = 1,
-                },
-                new HashtagModel()
-                {
-                    Id = 7,
-                    Text = "#cats",
-                    TweetsCount = 1,
-                },
-            };
-        }
+            _base.Add(typeof(Bookmark), _bookmarks);
+        });
 
         #endregion
     }
