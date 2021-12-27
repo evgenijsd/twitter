@@ -24,6 +24,7 @@ namespace InterTwitter.ViewModels
         private readonly IUserService _userService;
         private readonly ITweetService _tweetService;
         private readonly ILikeService _likeService;
+        private readonly IBookmarkService _bookmarkService;
 
         private UserModel _user;
         private bool _isCurrentUser;
@@ -35,6 +36,7 @@ namespace InterTwitter.ViewModels
             ISettingsManager settingsManager,
             IUserService userService,
             ILikeService likeService,
+            IBookmarkService bookmarkService,
             ITweetService tweetService)
             : base(navigationService)
         {
@@ -42,6 +44,7 @@ namespace InterTwitter.ViewModels
             _userService = userService;
             _tweetService = tweetService;
             _likeService = likeService;
+            _bookmarkService = bookmarkService;
         }
 
         #region --- Public Properties ---
@@ -225,42 +228,91 @@ namespace InterTwitter.ViewModels
         private async Task InitAsync()
         {
             var getTweetResult = await _tweetService.GetAllTweetsAsync();
-            var likes = _likeService.GetLikesAsync(_user.Id).Result.Result;
+            var getLikesResult = _likeService.GetLikesAsync(_user.Id);
 
             if (getTweetResult.IsSuccess)
             {
-                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.
-                    Select(x => x.Media == EAttachedMediaType.Photos ||
-                    x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()).Where(u => u.UserId == _user.Id));
+                var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result
+                    .Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel())
+                    .Where(u => u.UserId == _user.Id));
                 foreach (var tweet in tweetViewModels)
                 {
                     var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
+                    var user = await _userService.GetUserAsync(tweet.UserId);
 
                     if (tweetAuthor.IsSuccess)
                     {
                         tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
                         tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
                         tweet.UserName = tweetAuthor.Result.Name;
+                        tweet.IsBookmarked = (await _bookmarkService.AnyAsync(tweet.TweetId, _user.Id)).IsSuccess;
+                        tweet.IsTweetLiked = (await _likeService.AnyAsync(tweet.TweetId, _user.Id)).IsSuccess;
+                    }
+
+                    var resultLike = await _likeService.CountAsync(tweet.TweetId);
+                    if (resultLike.IsSuccess)
+                    {
+                        tweet.LikesNumber = resultLike.Result;
+                    }
+
+                    if (tweetAuthor.Result.Id == _user.Id)
+                    {
+                        tweet.MoveToProfileCommand = new Command(() =>
+                        NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
+                        { { Constants.Navigation.CURRENT_USER, user.Result } }));
+                    }
+                    else
+                    {
+                        tweet.MoveToProfileCommand = new Command(() =>
+                        NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
+                        { { Constants.Navigation.USER, user.Result } }));
                     }
                 }
 
                 UserTweets = new ObservableCollection<BindableBase>(tweetViewModels);
 
-                var likedViewModel = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == EAttachedMediaType.Photos ||
-                    x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()).Where(t => likes.Any(l => l.TweetId == t.TweetId)));
-                foreach (var tweet in likedViewModel)
+                if (getLikesResult.IsCompleted)
                 {
-                    var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
-
-                    if (tweetAuthor.IsSuccess)
+                    var likes = getLikesResult.Result;
+                    var likedViewModel = new List<BaseTweetViewModel>(getTweetResult.Result
+                        .Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel())
+                        .Where(t => likes.Result.Any(l => l.TweetId == t.TweetId)));
+                    foreach (var tweet in likedViewModel)
                     {
-                        tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
-                        tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
-                        tweet.UserName = tweetAuthor.Result.Name;
-                    }
-                }
+                        var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
+                        var user = await _userService.GetUserAsync(tweet.UserId);
 
-                LikedTweets = new ObservableCollection<BindableBase>(likedViewModel);
+                        if (tweetAuthor.IsSuccess)
+                        {
+                            tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
+                            tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
+                            tweet.UserName = tweetAuthor.Result.Name;
+                            tweet.IsBookmarked = (await _bookmarkService.AnyAsync(tweet.TweetId, _user.Id)).IsSuccess;
+                            tweet.IsTweetLiked = (await _likeService.AnyAsync(tweet.TweetId, _user.Id)).IsSuccess;
+                        }
+
+                        var resultLike = await _likeService.CountAsync(tweet.TweetId);
+                        if (resultLike.IsSuccess)
+                        {
+                            tweet.LikesNumber = resultLike.Result;
+                        }
+
+                        if (tweetAuthor.Result.Id == _user.Id)
+                        {
+                            tweet.MoveToProfileCommand = new Command(() =>
+                            NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
+                            { { Constants.Navigation.CURRENT_USER, user.Result } }));
+                        }
+                        else
+                        {
+                            tweet.MoveToProfileCommand = new Command(() =>
+                            NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
+                            { { Constants.Navigation.USER, user.Result } }));
+                        }
+                    }
+
+                    LikedTweets = new ObservableCollection<BindableBase>(likedViewModel);
+                }
             }
 
             MenuItems = new List<MenuItemViewModel>(new[]

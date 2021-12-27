@@ -33,8 +33,13 @@ namespace InterTwitter.Services
         {
             await _initCompletionSource.Task;
 
-            int id = GetBase<T>().Max(x => x.Id) + 1;
-            entity.Id = id;
+            int id = 1;
+            if (GetBase<T>().Count > 0)
+            {
+               id = GetBase<T>().Max(x => x.Id) + 1;
+               entity.Id = id;
+            }
+
             GetBase<T>().Add(entity);
 
             return id;
