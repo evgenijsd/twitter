@@ -17,11 +17,14 @@ using System;
 using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Forms;
 using System.Linq;
+using Prism.Navigation;
 
 namespace InterTwitter
 {
     public partial class App : PrismApplication
     {
+        public static T Resolve<T>() => Current.Container.Resolve<T>();
+
         public App(IPlatformInitializer initializer = null)
             : base(initializer)
         {
@@ -31,7 +34,7 @@ namespace InterTwitter
 
         protected override void OnAppLinkRequestReceived(Uri uri)
         {
-            if (uri.Host.EndsWith(Constants.Values.HOST, StringComparison.OrdinalIgnoreCase))
+             if (uri.Host.EndsWith(Constants.Values.HOST, StringComparison.OrdinalIgnoreCase))
             {
                 if (uri.Segments != null && uri.Segments.Length == 3)
                 {
@@ -57,9 +60,6 @@ namespace InterTwitter
                                 }
                             }
 
-                            break;
-                        default:
-                            Xamarin.Forms.Device.OpenUri(uri);
                             break;
                     }
                 }
@@ -119,7 +119,25 @@ namespace InterTwitter
             Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             LocalizationResourceManager.Current.Init(Strings.ResourceManager);
 
-            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(LogInPage)}");
+            var settingsManager = Resolve<ISettingsManager>();
+            var registrationService = Resolve<IRegistrationService>();
+
+            var getByIdResult = await registrationService.GetByIdAsync(settingsManager.UserId);
+
+            if (getByIdResult.IsSuccess)
+            {
+                var user = getByIdResult.Result;
+
+                var parameters = new NavigationParameters();
+
+                parameters.Add(Constants.Navigation.USER, user);
+
+                await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(FlyOutPage)}", parameters);
+            }
+            else
+            {
+                await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(LogInPage)}");
+            }
         }
 
         protected override void OnStart()

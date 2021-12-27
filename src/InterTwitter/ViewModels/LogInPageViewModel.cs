@@ -214,27 +214,20 @@ namespace InterTwitter.ViewModels
             }
         }
 
-        public override async void OnNavigatedTo(INavigationParameters parameters)
+        public override void OnNavigatedTo(INavigationParameters parameters)
         {
             _maxHeight = CurrentHeight;
-            var result = await _registrationService?.GetByIdAsync(_settingsManager.UserId);
-            if (result.IsSuccess)
-            {
-                var user = result.Result;
-                var parametrs = new NavigationParameters { { Constants.Navigation.USER, user } };
-                await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", parametrs);
-            }
         }
 
         #endregion
 
         #region -- Private helpers --
 
-        private async Task OnCreateCommandAsync()
+        private Task OnCreateCommandAsync()
         {
             _keyboardHelper.HideKeyboard();
 
-            await NavigationService.NavigateAsync($"/{nameof(CreatePage)}");
+            return NavigationService.NavigateAsync($"/{nameof(CreatePage)}");
         }
 
         private async Task OnTwitterCommandAsync()

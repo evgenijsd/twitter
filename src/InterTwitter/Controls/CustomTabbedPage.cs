@@ -10,6 +10,7 @@ namespace InterTwitter.Controls
         public CustomTabbedPage()
         {
             Subscribe();
+            Xamarin.Forms.NavigationPage.SetHasNavigationBar(this, false);
         }
 
         #region -- Public properties --

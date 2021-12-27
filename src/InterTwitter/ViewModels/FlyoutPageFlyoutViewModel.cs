@@ -201,11 +201,11 @@ namespace InterTwitter.ViewModels
             }
         }
 
-        private async Task OnLogoutCommandAsync()
+        private Task OnLogoutCommandAsync()
         {
             _settingsManager.UserId = 0;
 
-            await NavigationService.NavigateAsync($"/{nameof(LogInPage)}");
+            return NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(LogInPage)}");
         }
 
         private async Task OnNavigateProfileCommandAsync()
