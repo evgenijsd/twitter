@@ -21,9 +21,6 @@ namespace InterTwitter.ViewModels
     public class HomePageViewModel : BaseTabViewModel
     {
         private readonly ITweetService _tweetService;
-
-        private bool _isFirstStart = true;
-
         public HomePageViewModel(
             ITweetService tweetService,
             INavigationService navigationService)
@@ -70,12 +67,7 @@ namespace InterTwitter.ViewModels
         {
             CheckConnectionAsync();
 
-            if (_isFirstStart)
-            {
-                await InitAsync();
-            }
-
-            _isFirstStart = false;
+            await InitAsync();
 
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_home_blue"] as ImageSource;
         }

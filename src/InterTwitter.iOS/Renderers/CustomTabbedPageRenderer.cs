@@ -1,5 +1,6 @@
 ﻿using InterTwitter.Controls;
 using InterTwitter.iOS.Renderers;
+using InterTwitter.ViewModels;
 using System;
 using UIKit;
 using Xamarin.Forms;
@@ -10,6 +11,7 @@ namespace InterTwitter.iOS.Renderers
 {
     class CustomTabbedPageRenderer : TabbedRenderer
     {
+        private byte clickedNumber;
         private TabbedPage _tabbedPage;
         protected override void OnElementChanged(VisualElementChangedEventArgs e)
         {
@@ -38,11 +40,22 @@ namespace InterTwitter.iOS.Renderers
             }
         }
 
-        private async void OnTabbarControllerItemSelected(object sender, UITabBarSelectionEventArgs eventArgs)
+        private void OnTabbarControllerItemSelected(object sender, UITabBarSelectionEventArgs eventArgs)
         {
             if (_tabbedPage?.CurrentPage?.Navigation != null && _tabbedPage.CurrentPage.Navigation.NavigationStack.Count > 0)
             {
-                await _tabbedPage.CurrentPage.Navigation.PopToRootAsync();
+                if (Element is CustomTabbedPage element && element.CurrentPage?.BindingContext is HomePageViewModel vm)
+                {
+                    if (clickedNumber >= 1)
+                    {
+                        vm.OnAppearing();
+                        clickedNumber = 0;
+                    }
+                    else
+                    {
+                        clickedNumber += 1;
+                    }
+                }
             }
 
         }

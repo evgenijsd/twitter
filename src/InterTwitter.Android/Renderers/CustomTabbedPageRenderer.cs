@@ -22,10 +22,30 @@ namespace InterTwitter.Droid
         private TabbedPage _tabbedPage;
         private BottomNavigationView _bottomNavigationView;
         private bool _isShiftModeSet;
+        private byte clickedNumber;
 
         public CustomTabbedPageRenderer(Context context) : base(context)
         {
         }
+
+        public void OnNavigationItemReselected(IMenuItem item)
+        {
+            if (Element is CustomTabbedPage element && element.CurrentPage?.BindingContext is HomePageViewModel vm)
+            {
+                if (clickedNumber >= 1)
+                {
+                    vm.OnAppearing();
+                    clickedNumber = 0;
+                }
+                else
+                {
+                    clickedNumber += 1;
+                }
+            }
+        }
+
+        #region -- Overrides --
+
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
@@ -34,7 +54,7 @@ namespace InterTwitter.Droid
         {
             base.OnElementChanged(e);
 
-            if(e.NewElement != null)
+            if (e.NewElement != null)
             {
                 _tabbedPage = e.NewElement as CustomTabbedPage;
                 _bottomNavigationView = (GetChildAt(0) as Android.Widget.RelativeLayout).GetChildAt(1) as BottomNavigationView;
@@ -43,14 +63,9 @@ namespace InterTwitter.Droid
 
         }
 
-        public void OnNavigationItemReselected(IMenuItem item)
-        {
-            if (Element is CustomTabbedPage)
-            {
-                var mainTabPage = Element as CustomTabbedPage;
-                _tabbedPage.CurrentPage.Navigation.PopToRootAsync();
-            }
-        }
+        #endregion
+
+        #region -- Private helpers --
 
         protected override void OnLayout(bool changed, int l, int t, int r, int b)
         {
@@ -64,7 +79,7 @@ namespace InterTwitter.Droid
                     if (children.SingleOrDefault(x => x is BottomNavigationView) is BottomNavigationView bottomNav)
                     {
                         bottomNav.SetOnNavigationItemReselectedListener(this);
-                        //bottomNav.SetShiftMode(false, false);
+                        bottomNav.SetShiftMode(false, false);
                         _isShiftModeSet = true;
                     }
                 }
@@ -96,5 +111,7 @@ namespace InterTwitter.Droid
 
             return result.Distinct().ToList();
         }
+
+        #endregion
     }
 }
