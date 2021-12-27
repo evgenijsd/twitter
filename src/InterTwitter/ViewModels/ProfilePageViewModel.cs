@@ -28,30 +28,30 @@ namespace InterTwitter.ViewModels
             _shareService = shareService;
 
             MenuItems = new ObservableCollection<MenuItemViewModel>(new[]
+            {
+                new MenuItemViewModel
                 {
-                    new MenuItemViewModel
-                    {
-                        Id = 0, Title = "Posts",
-                        TargetType = typeof(HomePage),
-                        ImageSource = "ic_home_gray",
-                        TextColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
-                    },
+                    Id = 0, Title = "Posts",
+                    TargetType = typeof(HomePage),
+                    ImageSource = "ic_home_gray",
+                    TextColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
+                },
 
-                    new MenuItemViewModel
-                    {
-                        Id = 1,
-                        Title = "Likes",
-                        TargetType = typeof(SearchPage),
-                        ImageSource = "ic_search_gray",
-                        TextColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
-                    },
-                });
+                new MenuItemViewModel
+                {
+                    Id = 1,
+                    Title = "Likes",
+                    TargetType = typeof(SearchPage),
+                    ImageSource = "ic_search_gray",
+                    TextColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
+                },
+            });
         }
 
         #region -- Public Properties --
 
         private string _avatarIcon;
-        public string AvatarIcon
+        public string ProfileIcon
         {
             get => _avatarIcon;
             set => SetProperty(ref _avatarIcon, value);
@@ -95,7 +95,7 @@ namespace InterTwitter.ViewModels
             {
                 ProfileName = user.Name;
                 ProfileEmail = user.Email;
-                AvatarIcon = user.AvatarPath;
+                ProfileIcon = user.AvatarPath;
             }
         }
 

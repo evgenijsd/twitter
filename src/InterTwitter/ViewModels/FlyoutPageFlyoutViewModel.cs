@@ -27,40 +27,40 @@ namespace InterTwitter.ViewModels.Flyout
             _registrationService = registrationService;
 
             MenuItems = new ObservableCollection<MenuItemViewModel>(new[]
+            {
+                new MenuItemViewModel
                 {
-                    new MenuItemViewModel
-                    {
-                        Id = 0, Title = "Home",
-                        TargetType = typeof(HomePage),
-                        ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource,
-                        TapCommand = new Command(OnItemTapCommand),
-                    },
+                    Id = 0, Title = "Home",
+                    TargetType = typeof(HomePage),
+                    ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource,
+                    TapCommand = new Command(OnItemTapCommand),
+                },
 
-                    new MenuItemViewModel
-                    {
-                        Id = 1,
-                        Title = "Search",
-                        TargetType = typeof(SearchPage),
-                        ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource,
-                        TapCommand = new Command(OnItemTapCommand),
-                    },
-                    new MenuItemViewModel
-                    {
-                        Id = 2,
-                        Title = "Notification",
-                        TargetType = typeof(NotificationsPage),
-                        ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_notifications_gray"] as ImageSource,
-                        TapCommand = new Command(OnItemTapCommand),
-                    },
-                    new MenuItemViewModel
-                    {
-                        Id = 3,
-                        Title = "Bookmarks",
-                        TargetType = typeof(BookmarksPage),
-                        ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_bookmarks_gray"] as ImageSource,
-                        TapCommand = new Command(OnItemTapCommand),
-                    },
-                });
+                new MenuItemViewModel
+                {
+                    Id = 1,
+                    Title = "Search",
+                    TargetType = typeof(SearchPage),
+                    ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource,
+                    TapCommand = new Command(OnItemTapCommand),
+                },
+                new MenuItemViewModel
+                {
+                    Id = 2,
+                    Title = "Notification",
+                    TargetType = typeof(NotificationsPage),
+                    ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_notifications_gray"] as ImageSource,
+                    TapCommand = new Command(OnItemTapCommand),
+                },
+                new MenuItemViewModel
+                {
+                    Id = 3,
+                    Title = "Bookmarks",
+                    TargetType = typeof(BookmarksPage),
+                    ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_bookmarks_gray"] as ImageSource,
+                    TapCommand = new Command(OnItemTapCommand),
+                },
+            });
 
             Subscribe();
         }
@@ -72,6 +72,13 @@ namespace InterTwitter.ViewModels.Flyout
         {
             get => _menuItems;
             set => SetProperty(ref _menuItems, value);
+        }
+
+        private string _profileIcon = "https://avatars.mds.yandex.net/i?id=9124e8d6c175c189503fa5d7883c515d-5859422-images-thumbs&n=13";
+        public string ProfileIcon
+        {
+            get => _profileIcon;
+            set => SetProperty(ref _profileIcon, value);
         }
 
         private string _profileName = "Gianna Press";
@@ -172,16 +179,16 @@ namespace InterTwitter.ViewModels.Flyout
             await NavigationService.NavigateAsync($"{nameof(ProfilePage)}");
         }
 
-        private async void OnOpenProfileCommandAsync(App arg1, int userId)
+        private async void OnOpenProfileCommandAsync(App sender, int userId)
         {
             if (userId > 0)
             {
-                var getByIdAsyncAOResult = await _registrationService.GetByIdAsync(userId);
+                var aOResult = await _registrationService.GetByIdAsync(userId);
 
-                if (getByIdAsyncAOResult.IsSuccess)
+                if (aOResult.IsSuccess)
                 {
                     NavigationParameters keyValuePairs = new NavigationParameters();
-                    keyValuePairs.Add(Constants.Navigation.USER, getByIdAsyncAOResult.Result);
+                    keyValuePairs.Add(Constants.Navigation.USER, aOResult.Result);
 
                     await NavigationService.NavigateAsync($"{nameof(ProfilePage)}", keyValuePairs);
                 }

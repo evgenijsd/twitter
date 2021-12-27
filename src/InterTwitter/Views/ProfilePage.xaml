@@ -146,7 +146,7 @@
                                        Size="65"
                                        VerticalOptions="Center">
                 <ffimage:CachedImage Aspect="AspectFill" 
-                                     Source="{Binding AvatarIcon}">
+                                     Source="{Binding ProfileIcon}">
                     <ffimage:CachedImage.Transformations>
                         <fftranform:CircleTransformation />
                     </ffimage:CachedImage.Transformations>
