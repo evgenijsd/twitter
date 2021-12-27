@@ -11,6 +11,8 @@ namespace InterTwitter.Services.Hashtag
     {
         private readonly IMockService _mockService;
 
+        private int HahtagCounter { get; set; } = 7;
+
         public HashtagService(IMockService mockService)
         {
             _mockService = mockService;
@@ -25,6 +27,7 @@ namespace InterTwitter.Services.Hashtag
             try
             {
                 var allHashtags = new List<HashtagModel>(_mockService.Hashtags);
+                bool isSuccess = false;
 
                 if (allHashtags != null)
                 {
@@ -33,21 +36,30 @@ namespace InterTwitter.Services.Hashtag
                     if (indexOfHashtag > 0)
                     {
                         allHashtags[indexOfHashtag].TweetsCount++;
-                        result.SetSuccess();
                     }
                     else
                     {
                         HashtagModel hashtagModel = new HashtagModel()
                         {
+                            Id = ++HahtagCounter,
                             Text = hashtag,
                             TweetsCount = 1,
                         };
 
                         allHashtags.Add(hashtagModel);
-                        result.SetSuccess();
                     }
 
+                    isSuccess = true;
+                }
+
+                if (isSuccess)
+                {
                     _mockService.Hashtags = allHashtags;
+                    result.SetSuccess();
+                }
+                else
+                {
+                    result.SetFailure();
                 }
             }
             catch (Exception ex)
@@ -65,6 +77,7 @@ namespace InterTwitter.Services.Hashtag
             try
             {
                 var allHashtags = new List<HashtagModel>(_mockService.Hashtags);
+                bool isSuccess = false;
 
                 if (allHashtags != null)
                 {
@@ -75,16 +88,24 @@ namespace InterTwitter.Services.Hashtag
                         if (allHashtags[indexOfHashtag].TweetsCount > 0)
                         {
                             allHashtags[indexOfHashtag].TweetsCount--;
-                            result.SetSuccess();
                         }
                         else
                         {
                             allHashtags.RemoveAt(indexOfHashtag);
-                            result.SetSuccess();
                         }
-                    }
 
+                        isSuccess = true;
+                    }
+                }
+
+                if (isSuccess)
+                {
                     _mockService.Hashtags = allHashtags;
+                    result.SetSuccess();
+                }
+                else
+                {
+                    result.SetFailure();
                 }
             }
             catch (Exception ex)

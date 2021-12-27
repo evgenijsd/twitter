@@ -19,15 +19,21 @@ namespace InterTwitter.ViewModels
 {
     public class SearchPageViewModel : BaseTabViewModel
     {
+        private readonly IAuthorizationService _authorizationService;
+        private readonly IRegistrationService _registrationService;
         private readonly ITweetService _tweetService;
         private readonly IHashtagService _hashtagService;
 
         public SearchPageViewModel(
             INavigationService navigationService,
+            IAuthorizationService authorizationService,
+            IRegistrationService registrationService,
             ITweetService tweetService,
             IHashtagService hashtagManager)
             : base(navigationService)
         {
+            _authorizationService = authorizationService;
+            _registrationService = registrationService;
             _tweetService = tweetService;
             _hashtagService = hashtagManager;
 
@@ -35,7 +41,6 @@ namespace InterTwitter.ViewModels
             Hashtags = new ObservableCollection<HashtagModel>();
 
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource;
-            AvatarIcon = "pic_profile_small";
         }
 
         #region -- Public properties --
@@ -131,6 +136,18 @@ namespace InterTwitter.ViewModels
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
+            int currentUserId = _authorizationService.UserId;
+
+            if (currentUserId > 0)
+            {
+                var getUserByIdResult = await _registrationService.GetByIdAsync(currentUserId);
+
+                if (getUserByIdResult.IsSuccess)
+                {
+                    AvatarIcon = getUserByIdResult.Result.AvatarPath;
+                }
+            }
+
             await LoadHashtagsAsync();
 
             base.OnNavigatedTo(parameters);
@@ -247,7 +264,7 @@ namespace InterTwitter.ViewModels
 
             if (!string.IsNullOrWhiteSpace(queryString))
             {
-                SearchWords = Constants.Methods.GetUniqueWords(queryString)
+                SearchWords = queryString.Split(' ').Where(x => !string.IsNullOrWhiteSpace(x)).Distinct()
                     .Where(x => x.Length > 1);
             }
 

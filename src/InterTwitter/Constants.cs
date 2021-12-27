@@ -23,14 +23,6 @@ namespace InterTwitter
             public const string APP_USER_LINK_ID = "userId";
         }
 
-        public static class Methods
-        {
-            public static IEnumerable<string> GetUniqueWords(string text)
-            {
-                return text.Split(' ').Where(x => !string.IsNullOrWhiteSpace(x)).Distinct();
-            }
-        }
-
         public static class RegexPatterns
         {
             public const string HASHTAG_PATTERN = @"^\#[0-9a-zA-Zа-яА-Я_]{1,30}$";
