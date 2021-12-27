@@ -277,7 +277,7 @@ namespace InterTwitter.Controls
           propertyName: nameof(IsButtonClearEnable),
           returnType: typeof(bool),
           declaringType: typeof(CustomEntry),
-          defaultValue: false,
+          defaultValue: true,
           defaultBindingMode: BindingMode.TwoWay);
 
         public bool IsButtonClearEnable
