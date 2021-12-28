@@ -50,7 +50,7 @@ namespace InterTwitter.Services
                     Email = "aaa@aaa.aaa",
                     Password = "1234567A",
                     AvatarPath = "https://avatars.mds.yandex.net/i?id=9124e8d6c175c189503fa5d7883c515d-5859422-images-thumbs&n=13",
-                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
+                    BackgroundUserImagePath = "https://avatars.mds.yandex.net/i?id=9124e8d6c175c189503fa5d7883c515d-5859422-images-thumbs&n=13",
                 },
                 new UserModel
                 {
@@ -59,7 +59,7 @@ namespace InterTwitter.Services
                     Email = "bbb@bbb.bbb",
                     Password = "1234567A",
                     AvatarPath = "https://s1.1zoom.ru/b4344/471/Owls_Birds_Glance_537043_2560x1440.jpg",
-                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
+                    BackgroundUserImagePath = "https://s1.1zoom.ru/b4344/471/Owls_Birds_Glance_537043_2560x1440.jpg",
                 },
                 new UserModel
                 {
@@ -68,7 +68,7 @@ namespace InterTwitter.Services
                     Email = "ccc@ccc.ccc",
                     Password = "1234567A",
                     AvatarPath = "https://i.ebayimg.com/images/g/6EIAAOSwJHlfnm3a/s-l300.jpg",
-                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
+                    BackgroundUserImagePath = "https://i.ebayimg.com/images/g/6EIAAOSwJHlfnm3a/s-l300.jpg",
                 },
                 new UserModel
                 {
@@ -77,7 +77,7 @@ namespace InterTwitter.Services
                     Email = "ddd@ddd.ddd",
                     Password = "1234567A",
                     AvatarPath = "https://www.acumarketing.com/wp-content/uploads/2011/08/steve-jobs.jpg",
-                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
+                    BackgroundUserImagePath = "https://www.acumarketing.com/wp-content/uploads/2011/08/steve-jobs.jpg",
                 },
                 new UserModel
                 {
@@ -86,7 +86,7 @@ namespace InterTwitter.Services
                     Email = "eee@eee.eee",
                     Password = "1234567A",
                     AvatarPath = "https://file.liga.net/images/general/2021/09/20/thumbnail-20210920123323-9397.jpg?v=1632132620",
-                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
+                    BackgroundUserImagePath = "https://file.liga.net/images/general/2021/09/20/thumbnail-20210920123323-9397.jpg?v=1632132620",
                 },
                 new UserModel
                 {
@@ -95,7 +95,7 @@ namespace InterTwitter.Services
                     Email = "fff@fff.fff",
                     Password = "1234567A",
                     AvatarPath = "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTE5NTU2MzE2MzU1NzI0ODEx/keanu-reeves-9454211-1-402.jpg",
-                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
+                    BackgroundUserImagePath = "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTE5NTU2MzE2MzU1NzI0ODEx/keanu-reeves-9454211-1-402.jpg",
                 },
             };
         }

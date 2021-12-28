@@ -243,9 +243,6 @@
   <data name="NotFoundBookmark" xml:space="preserve">
     <value>not found any bookmark</value>
   </data>
-  <data name="NotFoundBookmark" xml:space="preserve">
-    <value>not found any bookmark</value>
-  </data>
   <data name="NotFoundLike" xml:space="preserve">
     <value>not found any like</value>
   </data>
@@ -350,5 +347,8 @@
   </data>
   <data name="Share" xml:space="preserve">
     <value>Share</value>
+  </data>
+  <data name="InvalidLinkToUserProfile" xml:space="preserve">
+    <value>Invalid link to user profile</value>
   </data>
 </root>

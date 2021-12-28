@@ -35,7 +35,7 @@ namespace InterTwitter
         protected override void OnAppLinkRequestReceived(Uri uri)
         {
              if (uri.Host.EndsWith(Constants.Values.HOST, StringComparison.OrdinalIgnoreCase))
-            {
+             {
                 if (uri.Segments != null && uri.Segments.Length == 3)
                 {
                     var action = uri.Segments[1].Replace("/", string.Empty);
@@ -44,21 +44,28 @@ namespace InterTwitter
                     switch (action)
                     {
                         case Constants.Values.APP_USER_LINK_ID:
+
+                            int userId = 0;
+
                             if (!string.IsNullOrEmpty(msg))
                             {
-                                if (int.TryParse(msg, out int userId))
+                                if (int.TryParse(msg, out userId))
                                 {
                                     var navigation = MainPage.Navigation;
                                     var lastPage = navigation.NavigationStack.LastOrDefault();
 
-                                    if (lastPage is ProfilePage page)
+                                    if (lastPage is ProfilePage profilePage)
                                     {
-                                        navigation.RemovePage(page);
+                                        navigation.RemovePage(profilePage);
                                     }
-
-                                    MessagingCenter.Send(this, Constants.Messages.OPEN_PROFILE_PAGE, userId);
+                                    else if (navigation.ModalStack.LastOrDefault() is ProfilePage modalProfilePage)
+                                    {
+                                        navigation.PopModalAsync();
+                                    }
                                 }
                             }
+
+                            MessagingCenter.Send(this, Constants.Messages.OPEN_PROFILE_PAGE, userId);
 
                             break;
                     }

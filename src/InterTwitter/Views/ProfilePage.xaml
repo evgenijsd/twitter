@@ -140,7 +140,7 @@
                     Text="{xct:Translate Share}"
                     TextColor="{DynamicResource appcolor_i3}">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ShareCommandAsync}" Tapped="OnAnywhereTappedHandler" />
+                        <TapGestureRecognizer Command="{Binding ShareUserProfileTapCommand}" Tapped="OnAnywhereTappedHandler" />
                     </Label.GestureRecognizers>
                 </Label>
                 <Label

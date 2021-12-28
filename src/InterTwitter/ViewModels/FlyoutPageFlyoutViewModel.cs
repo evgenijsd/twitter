@@ -5,10 +5,12 @@ using InterTwitter.Services.Settings;
 using InterTwitter.Services.UserService;
 using InterTwitter.Views;
 using Prism.Navigation;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
@@ -224,18 +226,36 @@ namespace InterTwitter.ViewModels
 
         private async void OnOpenProfileCommandAsync(App sender, int userId)
         {
-            if (userId > 0)
+            var getByIdResult = await _registrationService.GetByIdAsync(userId);
+
+            if (getByIdResult.IsSuccess && getByIdResult.Result is UserModel user)
             {
-                var aOResult = await _registrationService.GetByIdAsync(userId);
+                NavigationParameters navigationParameters = new NavigationParameters();
 
-                if (aOResult.IsSuccess)
+                if (user.Id == _authorizationService.UserId)
                 {
-                    NavigationParameters keyValuePairs = new NavigationParameters();
-                    keyValuePairs.Add(Constants.Navigation.USER, aOResult.Result);
-
-                    await NavigationService.NavigateAsync($"{nameof(ProfilePage)}", keyValuePairs, useModalNavigation: false);
+                    navigationParameters.Add(Constants.Navigation.CURRENT_USER, getByIdResult.Result);
                 }
+                else
+                {
+                    navigationParameters.Add(Constants.Navigation.USER, getByIdResult.Result);
+                }
+
+                await NavigationService.NavigateAsync($"{nameof(ProfilePage)}", navigationParameters, useModalNavigation: false);
             }
+            else
+            {
+                var param = new DialogParameters();
+                param.Add(Constants.DialogParameterKeys.TITLE, LocalizationResourceManager.Current["InvalidLinkToUserProfile"]);
+                param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Strings.Strings.Ok);
+
+                await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(param, CloseDialogCallback));
+            }
+        }
+
+        private async void CloseDialogCallback(IDialogParameters obj)
+        {
+            await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
         }
 
         #endregion

@@ -7,13 +7,6 @@ namespace InterTwitter.Extensions
     {
         #region -- Public methods --
 
-        public static VcfUser ToVcfUser(this UserModel userModel) => new VcfUser
-        {
-            Name = userModel.Name,
-            Email = userModel.Email,
-            Avatar = userModel.AvatarPath,
-        };
-
         public static UserViewModel ToUserViewModel(this UserModel userModel)
         {
             return new UserViewModel

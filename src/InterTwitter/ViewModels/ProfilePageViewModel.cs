@@ -25,10 +25,9 @@ namespace InterTwitter.ViewModels
         private readonly ISettingsManager _settingsManager;
         private readonly IUserService _userService;
         private readonly ITweetService _tweetService;
-        private readonly IRegistrationService _registrationService;
-        private readonly IAuthorizationService _authorizationService;
         private readonly IShareService _shareService;
 
+        private EDialogs dialogs;
         private UserModel _user;
         private bool _isCurrentUser;
         private bool _isUserBlocked;
@@ -47,8 +46,6 @@ namespace InterTwitter.ViewModels
             _settingsManager = settingsManager;
             _userService = userService;
             _tweetService = tweetService;
-            _registrationService = registrationService;
-            _authorizationService = authorizationService;
             _shareService = shareService;
         }
 
@@ -173,6 +170,9 @@ namespace InterTwitter.ViewModels
         public ICommand NavigationToMutelistCommandAsync => _navigationToMutelistCommandAsync ??= SingleExecutionCommand.FromFunc(
             () => NavigationService.NavigateAsync(nameof(BlacklistPage), new NavigationParameters { { Constants.Navigation.MUTELIST, _user } }));
 
+        public ICommand _shareUserProfileTapCommand;
+        public ICommand ShareUserProfileTapCommand => _shareUserProfileTapCommand ??= SingleExecutionCommand.FromFunc(OnShareUserProfileTapCommandAsync);
+
         #endregion
 
         #region -- Overrides --
@@ -210,7 +210,7 @@ namespace InterTwitter.ViewModels
 
         #endregion
 
-        #region -- Private Helpers --
+        #region -- Private helpers --
 
         private void Subscribe()
         {
@@ -257,25 +257,25 @@ namespace InterTwitter.ViewModels
             }
 
             MenuItems = new List<MenuItemViewModel>(new[]
+            {
+                new MenuItemViewModel
                 {
-                    new MenuItemViewModel
-                    {
-                        Id = 0,
-                        Title = Resources.Strings.Strings.Posts,
-                        ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource,
-                        TextColor = (Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
-                        ContentCollection = UserTweets,
-                    },
+                    Id = 0,
+                    Title = Resources.Strings.Strings.Posts,
+                    ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource,
+                    TextColor = (Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
+                    ContentCollection = UserTweets,
+                },
 
-                    new MenuItemViewModel
-                    {
-                        Id = 1,
-                        Title = Resources.Strings.Strings.Likes,
-                        ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource,
-                        TextColor = (Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
-                        ContentCollection = LikedTweets,
-                    },
-                });
+                new MenuItemViewModel
+                {
+                    Id = 1,
+                    Title = Resources.Strings.Strings.Likes,
+                    ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource,
+                    TextColor = (Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
+                    ContentCollection = LikedTweets,
+                },
+            });
         }
 
         private Task OnHamburgerMenuCommand()
@@ -433,49 +433,13 @@ namespace InterTwitter.ViewModels
             }
         }
 
-        public enum EDialogs
-        {
-            RemoveFromMute,
-            RemoveFromBlock,
-            AddToMute,
-            AddToBlock,
-        }
-
-        private EDialogs dialogs;
-
-        public ICommand _shareUserProfileTapCommand;
-        public ICommand ShareUserProfileTapCommand => _shareUserProfileTapCommand ??= SingleExecutionCommand.FromFunc(OnShareUserProfileTapCommandAsync);
-
-        #endregion
-
-        #region -- Overrides --
-
-        public override void OnNavigatedTo(INavigationParameters parameters)
-        {
-            base.OnNavigatedTo(parameters);
-
-            if (parameters.TryGetValue(Constants.Navigation.USER, out UserModel user))
-            {
-                UserName = user.Name;
-                UserMail = user.Email;
-                UserImagePath = user.AvatarPath;
-            }
-        }
-
-        #endregion
-
-        #region -- Private helpers --
-
         private async Task OnShareUserProfileTapCommandAsync()
         {
-            var aOResult = await _registrationService.GetByIdAsync(_authorizationService.UserId);
-
-            if (aOResult.IsSuccess)
+            if (_user != null)
             {
-                var user = aOResult.Result;
-                string uri = $"{Constants.Values.APP_USER_LINK}{Constants.Values.APP_USER_LINK_ID}/{user.Id}";
+                string uri = $"{Constants.Values.APP_USER_LINK}{Constants.Values.APP_USER_LINK_ID}/{_user.Id}";
 
-                await _shareService.ShareTextRequest(user.Name, uri);
+                await _shareService.ShareTextRequest(_user.Name, uri);
             }
         }
 
