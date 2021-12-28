@@ -56,15 +56,15 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _menuItems, value);
         }
 
-        private ObservableCollection<BindableBase> _userTweets;
-        public ObservableCollection<BindableBase> UserTweets
+        private ObservableCollection<BaseTweetViewModel> _userTweets;
+        public ObservableCollection<BaseTweetViewModel> UserTweets
         {
             get => _userTweets;
             set => SetProperty(ref _userTweets, value);
         }
 
-        private ObservableCollection<BindableBase> _likedtweets;
-        public ObservableCollection<BindableBase> LikedTweets
+        private ObservableCollection<BaseTweetViewModel> _likedtweets;
+        public ObservableCollection<BaseTweetViewModel> LikedTweets
         {
             get => _likedtweets;
             set => SetProperty(ref _likedtweets, value);
@@ -269,7 +269,7 @@ namespace InterTwitter.ViewModels
                     }
                 }
 
-                UserTweets = new ObservableCollection<BindableBase>(tweetViewModels);
+                UserTweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
 
                 if (getLikesResult.IsCompleted)
                 {
@@ -311,7 +311,7 @@ namespace InterTwitter.ViewModels
                         }
                     }
 
-                    LikedTweets = new ObservableCollection<BindableBase>(likedViewModel);
+                    LikedTweets = new ObservableCollection<BaseTweetViewModel>(likedViewModel);
                 }
             }
 

@@ -48,7 +48,6 @@ namespace InterTwitter.ViewModels
         }
 
         #region -- Public properties --
-
         private ObservableCollection<BaseTweetViewModel> _tweets;
         public ObservableCollection<BaseTweetViewModel> Tweets
         {
@@ -63,18 +62,15 @@ namespace InterTwitter.ViewModels
         public ICommand AddTweetCommandAsync => _addTweetCommandAsync ?? (_addTweetCommandAsync = SingleExecutionCommand.FromFunc(OnOpenAddTweetPageAsync));
 
         #endregion
-
         #region -- Overrides --
-
-        public override Task InitializeAsync(INavigationParameters parameters)
-        {
-            return InitAsync();
-        }
-
-        public override void OnAppearing()
+        //public override Task InitializeAsync(INavigationParameters parameters)
+        //{
+        //   // return InitAsync();
+        //}
+        public async override void OnAppearing()
         {
             IconPath = App.Current.Resources["ic_home_blue"] as ImageSource;
-            InitAsync();
+            await InitAsync();
         }
 
         public override void OnDisappearing()
@@ -88,9 +84,7 @@ namespace InterTwitter.ViewModels
         }
 
         #endregion
-
         #region -- Private helpers --
-
         private async Task InitAsync()
         {
             _userId = _settingsManager.UserId;
@@ -100,10 +94,22 @@ namespace InterTwitter.ViewModels
             {
                 _currentUser = result.Result;
                 var getTweetResult = await _tweetService.GetAllTweetsAsync();
+                var blocked = _userService.GetAllBlockedUsersAsync().Result;
 
                 if (getTweetResult.IsSuccess)
                 {
-                    var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
+                    List<BaseTweetViewModel> tweetViewModels;
+                    if (blocked.Result != null)
+                    {
+                         tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result
+                        .Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel())
+                        .Where(t => blocked.Result.All(u => u.Id != t.UserId)));
+                    }
+                    else
+                    {
+                        tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result
+                       .Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
+                    }
 
                     foreach (var tweet in tweetViewModels)
                     {
