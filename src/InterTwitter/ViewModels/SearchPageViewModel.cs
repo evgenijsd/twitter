@@ -212,30 +212,7 @@ namespace InterTwitter.ViewModels
             }
         }
 
-        //private async Task InitTweetsForDisplayingAsync(IEnumerable<TweetModel> tweets)
-        //{
-        //    var tweetViewModels = new List<BaseTweetViewModel>(
-        //        tweets.Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif
-        //            ? x.ToImagesTweetViewModel()
-        //            : x.ToBaseTweetViewModel()));
-
-        //    foreach (var tweet in tweetViewModels)
-        //    {
-        //        var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
-
-        //        if (tweetAuthor.IsSuccess)
-        //        {
-        //            tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
-        //            tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
-        //            tweet.UserName = tweetAuthor.Result.Name;
-        //            tweet.KeysToHighlight = SearchWords;
-        //        }
-        //    }
-
-        //    SearchWords = null;
-        //    FoundTweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
-        //}
-        private async Task InitTweetsForDisplayingAsync(IEnumerable<TweetModel> tweets)
+        private async Task InitTweetsForDisplayingAsync(IEnumerable<TweetModel> tweetModels)
         {
             int userId = _settingsManager.UserId;
             var result = await _registrationService.GetByIdAsync(userId);
@@ -243,48 +220,42 @@ namespace InterTwitter.ViewModels
             if (result.IsSuccess)
             {
                 var currentUser = result.Result;
-                var getTweetResult = await _tweetService.GetAllTweetsAsync();
 
-                if (getTweetResult.IsSuccess)
+                var tweetViewModels = new List<BaseTweetViewModel>(tweetModels.Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
+
+                foreach (var tweet in tweetViewModels)
                 {
-                    var tweetViewModels = new List<BaseTweetViewModel>(getTweetResult.Result.Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
+                    var user = await _userService.GetUserAsync(tweet.UserId);
+                    var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
 
-                    foreach (var tweet in tweetViewModels)
+                    if (tweetAuthor.IsSuccess)
                     {
-                        var user = await _userService.GetUserAsync(tweet.UserId);
-                        var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
+                        tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
+                        tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
+                        tweet.UserName = tweetAuthor.Result.Name;
+                        tweet.KeysToHighlight = SearchWords;
 
-                        if (tweetAuthor.IsSuccess)
+                        tweet.IsBookmarked = (await _bookmarkService.AnyAsync(tweet.TweetId, userId)).IsSuccess;
+                        tweet.IsTweetLiked = (await _likeService.AnyAsync(tweet.TweetId, userId)).IsSuccess;
+
+                        var resultLike = await _likeService.CountAsync(tweet.TweetId);
+                        if (resultLike.IsSuccess)
                         {
-                            tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
-                            tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
-                            tweet.UserName = tweetAuthor.Result.Name;
-
-                            tweet.IsBookmarked = (await _bookmarkService.AnyAsync(tweet.TweetId, userId)).IsSuccess;
-                            tweet.IsTweetLiked = (await _likeService.AnyAsync(tweet.TweetId, userId)).IsSuccess;
-
-                            var resultLike = await _likeService.CountAsync(tweet.TweetId);
-                            if (resultLike.IsSuccess)
-                            {
-                                tweet.LikesNumber = resultLike.Result;
-                            }
-
-                            if (tweetAuthor.Result.Id == currentUser.Id)
-                            {
-                                tweet.MoveToProfileCommand = new Command(() =>
-                                NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
-                                { { Constants.Navigation.CURRENT_USER, user.Result } }));
-                            }
-                            else
-                            {
-                                tweet.MoveToProfileCommand = new Command(() =>
-                                NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
-                                { { Constants.Navigation.USER, user.Result } }));
-                            }
+                            tweet.LikesNumber = resultLike.Result;
                         }
 
-                        FoundTweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
-                        SearchWords = null;
+                        if (tweetAuthor.Result.Id == currentUser.Id)
+                        {
+                            tweet.MoveToProfileCommand = new Command(() =>
+                            NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
+                            { { Constants.Navigation.CURRENT_USER, user.Result } }));
+                        }
+                        else
+                        {
+                            tweet.MoveToProfileCommand = new Command(() =>
+                            NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
+                            { { Constants.Navigation.USER, user.Result } }));
+                        }
 
                         MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.AddBookmark, (me) => AddBookmarkAsync(me));
                         MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.DeleteBookmark, (me) => DeleteBookmarkAsync(me));
@@ -292,6 +263,9 @@ namespace InterTwitter.ViewModels
                         MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.DeleteLike, (me) => DeleteLikeAsync(me));
                     }
                 }
+
+                FoundTweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
+                SearchWords = null;
             }
         }
 
