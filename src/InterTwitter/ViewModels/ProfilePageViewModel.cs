@@ -203,6 +203,15 @@ namespace InterTwitter.ViewModels
             await InitAsync();
         }
 
+        public override void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            base.OnNavigatedFrom(parameters);
+            MessagingCenter.Unsubscribe<MessageEvent>(this, MessageEvent.AddBookmark);
+            MessagingCenter.Unsubscribe<MessageEvent>(this, MessageEvent.DeleteBookmark);
+            MessagingCenter.Unsubscribe<MessageEvent>(this, MessageEvent.AddLike);
+            MessagingCenter.Unsubscribe<MessageEvent>(this, MessageEvent.DeleteLike);
+        }
+
         #endregion
 
         #region -- Private Helpers --
@@ -267,6 +276,11 @@ namespace InterTwitter.ViewModels
                         NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
                         { { Constants.Navigation.USER, user.Result } }));
                     }
+
+                    MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.AddBookmark, (me) => AddBookmarkAsync(me));
+                    MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.DeleteBookmark, (me) => DeleteBookmarkAsync(me));
+                    MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.AddLike, (me) => AddLikeAsync(me));
+                    MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.DeleteLike, (me) => DeleteLikeAsync(me));
                 }
 
                 UserTweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
@@ -274,10 +288,10 @@ namespace InterTwitter.ViewModels
                 if (getLikesResult.IsCompleted)
                 {
                     var likes = getLikesResult.Result;
-                    var likedViewModel = new List<BaseTweetViewModel>(getTweetResult.Result
+                    var likedViewModels = new List<BaseTweetViewModel>(getTweetResult.Result
                         .Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel())
                         .Where(t => likes.Result.Any(l => l.TweetId == t.TweetId)));
-                    foreach (var tweet in likedViewModel)
+                    foreach (var tweet in likedViewModels)
                     {
                         var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
                         var user = await _userService.GetUserAsync(tweet.UserId);
@@ -309,9 +323,14 @@ namespace InterTwitter.ViewModels
                             NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
                             { { Constants.Navigation.USER, user.Result } }));
                         }
+
+                        MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.AddBookmark, (me) => AddBookmarkAsync(me));
+                        MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.DeleteBookmark, (me) => DeleteBookmarkAsync(me));
+                        MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.AddLike, (me) => AddLikeAsync(me));
+                        MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.DeleteLike, (me) => DeleteLikeAsync(me));
                     }
 
-                    LikedTweets = new ObservableCollection<BaseTweetViewModel>(likedViewModel);
+                    LikedTweets = new ObservableCollection<BaseTweetViewModel>(likedViewModels);
                 }
             }
 
@@ -501,6 +520,64 @@ namespace InterTwitter.ViewModels
         }
 
         private EDialogs dialogs;
+
+        private async void AddBookmarkAsync(MessageEvent me)
+        {
+            var result = await _bookmarkService.AddBookmarkAsync(me.UnTweetId, _settingsManager.UserId);
+        }
+
+        private async void DeleteBookmarkAsync(MessageEvent me)
+        {
+            var result = await _bookmarkService.DeleteBoormarkAsync(me.UnTweetId, _settingsManager.UserId);
+        }
+
+        private async void AddLikeAsync(MessageEvent me)
+        {
+            var resultAdd = await _likeService.AddLikeAsync(me.UnTweetId, _settingsManager.UserId);
+            var result = await _likeService.CountAsync(me.UnTweetId);
+            if (result.IsSuccess)
+            {
+                var tweet = LikedTweets.FirstOrDefault(x => x.TweetId == me.UnTweetId);
+                if (tweet != null)
+                {
+                    tweet.LikesNumber = result.Result;
+                }
+
+                tweet = UserTweets.FirstOrDefault(x => x.TweetId == me.UnTweetId);
+                if (tweet != null)
+                {
+                    tweet.LikesNumber = result.Result;
+                    if (_isCurrentUser)
+                    {
+                        LikedTweets.Add(tweet);
+                    }
+                }
+            }
+        }
+
+        private async void DeleteLikeAsync(MessageEvent me)
+        {
+            var resultAdd = await _likeService.DeleteLikeAsync(me.UnTweetId, _settingsManager.UserId);
+            var result = await _likeService.CountAsync(me.UnTweetId);
+            if (result.IsSuccess)
+            {
+                var tweet = LikedTweets.FirstOrDefault(x => x.TweetId == me.UnTweetId);
+                if (tweet != null)
+                {
+                    tweet.LikesNumber = result.Result;
+                    if (_isCurrentUser)
+                    {
+                        LikedTweets.Remove(tweet);
+                    }
+                }
+
+                tweet = UserTweets.FirstOrDefault(x => x.TweetId == me.UnTweetId);
+                if (tweet != null)
+                {
+                    tweet.LikesNumber = result.Result;
+                }
+            }
+        }
 
         #endregion
 
