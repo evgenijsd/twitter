@@ -295,7 +295,7 @@
             <cards:CarouselView.ItemTemplate>
                 <DataTemplate>
                     <ContentView>
-                            <controls:CustomCollectionView x:Name="customCollectView"   
+                        <controls:CustomCollectionView x:Name="customCollectView"   
                                                            HorizontalScrollBarVisibility="Never"
                                                            ItemTemplate="{DynamicResource templateSelector}"
                                                            ItemsSource="{Binding ContentCollection}"
