@@ -4,8 +4,6 @@ using InterTwitter.Helpers;
 using InterTwitter.Models;
 using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services;
-using InterTwitter.Services.Settings;
-using InterTwitter.Services.UserService;
 using InterTwitter.Views;
 using Prism.Navigation;
 using System.Collections.Generic;
@@ -19,7 +17,7 @@ namespace InterTwitter.ViewModels
 {
     public class HomePageViewModel : BaseTabViewModel
     {
-        private readonly IAuthorizationService _authorizationService;
+        private readonly ISettingsManager _settingsManager;
         private readonly ITweetService _tweetService;
         private readonly IBookmarkService _bookmarkService;
         private readonly ILikeService _likeService;
@@ -31,7 +29,7 @@ namespace InterTwitter.ViewModels
 
         public HomePageViewModel(
             INavigationService navigationService,
-            IAuthorizationService authorizationService,
+            ISettingsManager settingsManager,
             IBookmarkService bookmarkService,
             ILikeService likeService,
             ITweetService tweetService,
@@ -39,7 +37,7 @@ namespace InterTwitter.ViewModels
             IRegistrationService registrationService)
             : base(navigationService)
         {
-            _authorizationService = authorizationService;
+            _settingsManager = settingsManager;
             _bookmarkService = bookmarkService;
             _likeService = likeService;
             _tweetService = tweetService;
@@ -73,9 +71,10 @@ namespace InterTwitter.ViewModels
             return InitAsync();
         }
 
-        public override void OnAppearing()
+        public override async void OnAppearing()
         {
             IconPath = App.Current.Resources["ic_home_blue"] as ImageSource;
+            await InitAsync();
         }
 
         public override void OnDisappearing()
@@ -94,7 +93,7 @@ namespace InterTwitter.ViewModels
 
         private async Task InitAsync()
         {
-            _userId = _authorizationService.UserId;
+            _userId = _settingsManager.UserId;
             var result = await _registrationService.GetByIdAsync(_userId);
 
             if (result.IsSuccess)

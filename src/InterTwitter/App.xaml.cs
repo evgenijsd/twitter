@@ -1,11 +1,6 @@
 using DLToolkit.Forms.Controls;
 using InterTwitter.Resources.Strings;
-using InterTwitter.Services.Hashtag;
-using InterTwitter.Services.Settings;
-using InterTwitter.Droid.Services.PermissionsService;
 using InterTwitter.Services;
-using InterTwitter.Services.PermissionsService;
-using InterTwitter.Services.UserService;
 using InterTwitter.ViewModels;
 using InterTwitter.Views;
 using Prism;
@@ -33,12 +28,12 @@ namespace InterTwitter
             containerRegistry.RegisterDialog<AlertView, AlertViewModel>();
 
             //Services
-            containerRegistry.RegisterSingleton<ISettingsManager, SettingsManager>();
             containerRegistry.RegisterSingleton<IMockService, MockService>();
+            containerRegistry.RegisterSingleton<ISettingsManager, SettingsManager>();
+            containerRegistry.RegisterSingleton<IAuthorizationService, AuthorizationService>();
             containerRegistry.RegisterSingleton<ITweetService, TweetService>();
             containerRegistry.RegisterSingleton<IHashtagService, HashtagService>();
             containerRegistry.RegisterSingleton<IRegistrationService, RegistrationService>();
-            containerRegistry.RegisterSingleton<IAuthorizationService, AuthorizationService>();
             containerRegistry.RegisterSingleton<IUserService, UserService>();
             containerRegistry.RegisterSingleton<IPermissionService, PermissionService>();
             containerRegistry.RegisterSingleton<IBookmarkService, BookmarkService>();
