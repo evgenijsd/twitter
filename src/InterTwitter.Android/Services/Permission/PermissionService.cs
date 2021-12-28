@@ -1,4 +1,4 @@
-﻿using InterTwitter.Services;
+using InterTwitter.Services;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 

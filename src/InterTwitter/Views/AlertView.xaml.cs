@@ -19,7 +19,7 @@ namespace InterTwitter.Views
             okButton.Clicked += OnOkButtonClicked;
             BindingContext = new AlertViewModel(param, requestClose);
             Animation = new MoveAnimation(MoveAnimationOptions.Center, MoveAnimationOptions.Center);
-            // Animation = new ScaleAnimation();
+           // Animation = new ScaleAnimation();
         }
 
         private void OnOkButtonClicked(object sender, EventArgs e)

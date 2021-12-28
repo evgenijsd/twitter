@@ -1,4 +1,4 @@
-﻿using InterTwitter.Enums;
+using InterTwitter.Enums;
 using InterTwitter.Extensions;
 using InterTwitter.Helpers;
 using InterTwitter.Models;

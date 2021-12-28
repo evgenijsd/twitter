@@ -21,6 +21,9 @@ namespace InterTwitter.ViewModels
         private readonly IKeyboardHelper _keyboardHelper;
 
         private UserModel _user;
+        private double _maxHeight;
+        private bool _isSaveFocusedName;
+        private bool _isSaveFocusedEmail;
 
         private double _maxHeight;
 

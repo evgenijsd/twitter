@@ -17,6 +17,7 @@ namespace InterTwitter.iOS
         {
             global::Rg.Plugins.Popup.Popup.Init();
             global::Xamarin.Forms.Forms.Init();
+            Sharpnado.Shades.iOS.iOSShadowsRenderer.Initialize();
             CachedImageRenderer.Init();
             CachedImageRenderer.InitImageSourceHandler();
             Sharpnado.Shades.iOS.iOSShadowsRenderer.Initialize();

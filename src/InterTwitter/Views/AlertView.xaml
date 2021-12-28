@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<rg:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
-              xmlns:rg="http://rotorgames.com"
+<rg:PopupPage xmlns="http://xamarin.com/schemas/2014/forms" 
               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               xmlns:local="clr-namespace:InterTwitter.ViewModels"
               x:DataType="local:AlertViewModel"
+              xmlns:rg="http://rotorgames.com"
               x:Class="InterTwitter.Views.AlertView">
 
     <Frame x:Name="frame" 
@@ -50,9 +50,9 @@
                         Margin="0,10,-5,-10" />
 
             </StackLayout>
-
+            
         </StackLayout>
-
+        
     </Frame>
-
+    
 </rg:PopupPage>

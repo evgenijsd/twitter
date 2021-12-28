@@ -20,6 +20,8 @@ namespace InterTwitter.ViewModels
         #region -- Public properties --
         public bool IsMessageVisible => !string.IsNullOrEmpty(Message);
 
+        public bool IsMessageVisible => !string.IsNullOrEmpty(Message);
+
         private string _message;
         public string Message
         {
@@ -57,6 +59,7 @@ namespace InterTwitter.ViewModels
         public DelegateCommand DeclineCommand { get; }
 
         #endregion
+
         public Action<IDialogParameters> RequestClose;
 
         private void SetupParameters(IDialogParameters parameters)
