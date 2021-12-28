@@ -23,12 +23,15 @@ namespace InterTwitter.ViewModels
 
         private readonly IRegistrationService _registrationService;
 
+        private readonly IUserService _userService;
+
         private UserModel _currentUser;
         private int _userId;
 
         public NotificationPageViewModel(
             INotificationService notificationService,
             INavigationService navigationService,
+            IUserService userService,
             ISettingsManager settingsManager,
             IRegistrationService registrationService)
             : base(navigationService)
@@ -37,6 +40,7 @@ namespace InterTwitter.ViewModels
             _notificationService = notificationService;
             _settingsManager = settingsManager;
             _registrationService = registrationService;
+            _userService = userService;
         }
 
         #region -- Public Properties --
@@ -101,14 +105,21 @@ namespace InterTwitter.ViewModels
         {
             _userId = _settingsManager.UserId;
             var result = await _registrationService.GetByIdAsync(_userId);
+            var mutedUsers = await _userService.GetAllMutedUsersAsync();
 
             if (result.IsSuccess)
             {
                 _currentUser = result.Result;
 
                 var resultNotification = await _notificationService.GetNotificationsAsync(_userId);
-
-                if (resultNotification.IsSuccess)
+                if (mutedUsers.IsSuccess && mutedUsers.Result != null)
+                {
+                    Tweets = new ObservableCollection<BaseNotificationViewModel>(resultNotification.Result
+                            .Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesNotificationViewModel() : x.ToBaseNotificationViewModel())
+                            .Where(t => mutedUsers.Result.All(u => u.Id != t.UserId))
+                                                .OrderByDescending(x => x.CreationTime));
+                }
+                else if (resultNotification.IsSuccess)
                 {
                     Tweets = new ObservableCollection<BaseNotificationViewModel>(resultNotification.Result
                             .Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesNotificationViewModel() : x.ToBaseNotificationViewModel())
