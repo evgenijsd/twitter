@@ -187,7 +187,7 @@ namespace InterTwitter.ViewModels
 
         private Task OnOpenAddTweetPageAsync()
         {
-            return Task.CompletedTask;
+            return NavigationService.NavigateAsync(nameof(CreateTweetPage), useModalNavigation: true);
         }
 
         private Task OnOpenFlyoutCommandAsync()

@@ -101,6 +101,18 @@ namespace InterTwitter.Resources.Strings {
             }
         }
         
+        internal static string AlertErrorTrimmingVideo {
+            get {
+                return ResourceManager.GetString("AlertErrorTrimmingVideo", resourceCulture);
+            }
+        }
+        
+        internal static string AlertFileNotExist {
+            get {
+                return ResourceManager.GetString("AlertFileNotExist", resourceCulture);
+            }
+        }
+        
         internal static string AlertInvalidLogin {
             get {
                 return ResourceManager.GetString("AlertInvalidLogin", resourceCulture);
@@ -110,6 +122,24 @@ namespace InterTwitter.Resources.Strings {
         internal static string AlertInvalidPassword {
             get {
                 return ResourceManager.GetString("AlertInvalidPassword", resourceCulture);
+            }
+        }
+        
+        internal static string AlertLimitSizeGif {
+            get {
+                return ResourceManager.GetString("AlertLimitSizeGif", resourceCulture);
+            }
+        }
+
+        internal static string AlertLimitSizePhoto {
+            get {
+                return ResourceManager.GetString("AlertLimitSizePhoto", resourceCulture);
+            }
+        }
+        
+        internal static string AlertLimitSizeVideo {
+            get {
+                return ResourceManager.GetString("AlertLimitSizeVideo", resourceCulture);
             }
         }
         
@@ -143,6 +173,24 @@ namespace InterTwitter.Resources.Strings {
             }
         }
         
+        internal static string AlertNeedAccessPhotosGallery {
+            get {
+                return ResourceManager.GetString("AlertNeedAccessPhotosGallery", resourceCulture);
+            }
+        }
+
+        internal static string AlertOnlyGif {
+            get {
+                return ResourceManager.GetString("AlertOnlyGif", resourceCulture);
+            }
+        }
+        
+        internal static string AlertOnlyPicture {
+            get {
+                return ResourceManager.GetString("AlertOnlyPicture", resourceCulture);
+            }
+        }
+        
         internal static string AlertPasswordEmpty {
             get {
                 return ResourceManager.GetString("AlertPasswordEmpty", resourceCulture);
@@ -173,21 +221,27 @@ namespace InterTwitter.Resources.Strings {
             }
         }
         
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
         internal static string Confirm {
             get {
                 return ResourceManager.GetString("Confirm", resourceCulture);
             }
         }
         
-        internal static string AlreadyBlocked {
+        internal static string ConfirmComeBack {
             get {
-                return ResourceManager.GetString("AlreadyBlocked", resourceCulture);
+                return ResourceManager.GetString("ConfirmComeBack", resourceCulture);
             }
         }
         
-        internal static string Cancel {
+        internal static string AlreadyBlocked {
             get {
-                return ResourceManager.GetString("Cancel", resourceCulture);
+                return ResourceManager.GetString("AlreadyBlocked", resourceCulture);
             }
         }
         
@@ -269,6 +323,12 @@ namespace InterTwitter.Resources.Strings {
             }
         }
         
+        internal static string Mute {
+            get {
+                return ResourceManager.GetString("Mute", resourceCulture);
+            }
+        }
+        
         internal static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
@@ -290,6 +350,12 @@ namespace InterTwitter.Resources.Strings {
         internal static string Next {
             get {
                 return ResourceManager.GetString("Next", resourceCulture);
+            }
+        }
+        
+        internal static string NoResultsFor {
+            get {
+                return ResourceManager.GetString("NoResultsFor", resourceCulture);
             }
         }
         
@@ -320,12 +386,6 @@ namespace InterTwitter.Resources.Strings {
         internal static string NoTweets {
             get {
                 return ResourceManager.GetString("NoTweets", resourceCulture);
-            }
-        }
-        
-        internal static string NoResultsFor {
-            get {
-                return ResourceManager.GetString("NoResultsFor", resourceCulture);
             }
         }
         
@@ -371,6 +431,12 @@ namespace InterTwitter.Resources.Strings {
             }
         }
         
+        internal static string Post {
+            get {
+                return ResourceManager.GetString("Post", resourceCulture);
+            }
+        }
+        
         internal static string Search {
             get {
                 return ResourceManager.GetString("Search", resourceCulture);
@@ -382,7 +448,7 @@ namespace InterTwitter.Resources.Strings {
                 return ResourceManager.GetString("Posts", resourceCulture);
             }
         }
-        
+
         internal static string Remove {
             get {
                 return ResourceManager.GetString("Remove", resourceCulture);
@@ -395,9 +461,27 @@ namespace InterTwitter.Resources.Strings {
             }
         }
         
+        internal static string Share {
+            get {
+                return ResourceManager.GetString("Share", resourceCulture);
+            }
+        }
+
         internal static string SignUp {
             get {
                 return ResourceManager.GetString("SignUp", resourceCulture);
+            }
+        }
+        
+        internal static string Video {
+            get {
+                return ResourceManager.GetString("Video", resourceCulture);
+            }
+        }
+
+        internal static string YouNeedPassword {
+            get {
+                return ResourceManager.GetString("YouNeedPassword", resourceCulture);
             }
         }
         
@@ -449,12 +533,6 @@ namespace InterTwitter.Resources.Strings {
             }
         }
         
-        internal static string YouNeedPassword {
-            get {
-                return ResourceManager.GetString("YouNeedPassword", resourceCulture);
-            }
-        }
-        
         internal static string ToMute {
             get {
                 return ResourceManager.GetString("ToMute", resourceCulture);
@@ -470,12 +548,6 @@ namespace InterTwitter.Resources.Strings {
         internal static string Blacklist {
             get {
                 return ResourceManager.GetString("Blacklist", resourceCulture);
-            }
-        }
-        
-        internal static string Mute {
-            get {
-                return ResourceManager.GetString("Mute", resourceCulture);
             }
         }
         
@@ -500,12 +572,6 @@ namespace InterTwitter.Resources.Strings {
         internal static string ProfileInBlacklist {
             get {
                 return ResourceManager.GetString("ProfileInBlacklist", resourceCulture);
-            }
-        }
-        
-        internal static string Share {
-            get {
-                return ResourceManager.GetString("Share", resourceCulture);
             }
         }
     }

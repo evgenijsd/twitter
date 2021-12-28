@@ -3,6 +3,7 @@ using InterTwitter.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace InterTwitter.Services
@@ -11,10 +12,14 @@ namespace InterTwitter.Services
     {
         private readonly IMockService _mockService;
 
+        private readonly IHashtagService _hashtagService;
+
         public TweetService(
-            IMockService mockService)
+            IMockService mockService,
+            IHashtagService hashtagService)
         {
             _mockService = mockService;
+            _hashtagService = hashtagService;
         }
 
         #region -- ITweetService implementation --
@@ -115,6 +120,34 @@ namespace InterTwitter.Services
             catch (Exception ex)
             {
                 result.SetError($"{nameof(GetAuthorAsync)}: exception", "Some issues", ex);
+            }
+
+            return result;
+        }
+
+        public async Task<AOResult> AddTweetAsync(TweetModel tweet)
+        {
+            var result = new AOResult();
+
+            try
+            {
+                await _mockService.AddAsync(tweet);
+
+                var allHashtags = Constants.Methods.GetUniqueWords(tweet.Text).Where(x => Regex.IsMatch(x, Constants.RegexPatterns.HASHTAG_PATTERN));
+
+                foreach (var tag in allHashtags)
+                {
+                    await _hashtagService.IncreaseHashtagPopularityByOne(new HashtagModel()
+                    {
+                        Text = tag,
+                    });
+                }
+
+                result.SetSuccess();
+            }
+            catch (Exception ex)
+            {
+                result.SetError($"{nameof(GetAllTweetsAsync)}: exception", "Some issues", ex);
             }
 
             return result;

@@ -1,6 +1,7 @@
 using DLToolkit.Forms.Controls;
 using InterTwitter.Resources.Strings;
 using InterTwitter.Services;
+using InterTwitter.Services.Video;
 using InterTwitter.ViewModels;
 using InterTwitter.Views;
 using Prism;
@@ -35,10 +36,10 @@ namespace InterTwitter
             containerRegistry.RegisterSingleton<IHashtagService, HashtagService>();
             containerRegistry.RegisterSingleton<IRegistrationService, RegistrationService>();
             containerRegistry.RegisterSingleton<IUserService, UserService>();
-            containerRegistry.RegisterSingleton<IPermissionService, PermissionService>();
             containerRegistry.RegisterSingleton<IBookmarkService, BookmarkService>();
             containerRegistry.RegisterSingleton<ILikeService, LikeService>();
             containerRegistry.RegisterSingleton<INotificationService, NotificationService>();
+            containerRegistry.RegisterSingleton<IVideoService, VideoService>();
 
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
@@ -55,6 +56,7 @@ namespace InterTwitter
             containerRegistry.RegisterForNavigation<PasswordPage, PasswordPageViewModel>();
             containerRegistry.RegisterForNavigation<EditProfilePage, EditProfilePageViewModel>();
             containerRegistry.RegisterForNavigation<BlacklistPage, BlacklistPageViewModel>();
+            containerRegistry.RegisterForNavigation<CreateTweetPage, CreateTweetPageViewModel>();
         }
 
         protected override async void OnInitialized()
