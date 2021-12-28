@@ -202,7 +202,6 @@ namespace InterTwitter.ViewModels
             Subscribe();
 
             await InitAsync();
-            _isInit = true;
         }
 
         public async override void OnNavigatedTo(INavigationParameters parameters)
@@ -210,8 +209,10 @@ namespace InterTwitter.ViewModels
             base.OnNavigatedTo(parameters);
             if (_isInit)
             {
-               //await InitAsync();
+               await InitAsync();
             }
+
+            _isInit = true;
         }
 
         public override void OnNavigatedFrom(INavigationParameters parameters)
