@@ -295,13 +295,11 @@
             <cards:CarouselView.ItemTemplate>
                 <DataTemplate>
                     <ContentView>
-                        <RefreshView>
-                            <controls:CustomCollectionView x:Name="customCollectView"
+                            <controls:CustomCollectionView x:Name="customCollectView"   
                                                            HorizontalScrollBarVisibility="Never"
                                                            ItemTemplate="{DynamicResource templateSelector}"
                                                            ItemsSource="{Binding ContentCollection}"
                                                            ItemsUpdatingScrollMode="KeepItemsInView" />
-                        </RefreshView>
                     </ContentView>
                 </DataTemplate>
             </cards:CarouselView.ItemTemplate>
