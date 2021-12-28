@@ -445,7 +445,7 @@ namespace InterTwitter.Services
                     Media = Enums.EAttachedMediaType.Photos,
                     MediaPaths = new List<string>
                     {
-                        "https://cdn.pixabay.com/photo/2021/09/25/19/22/animal-6655641__340.jpg",
+                        "https://thumbs.dreamstime.com/z/footbridge-over-pond-18353918.jpg",
                     },
                     CreationTime = DateTime.Parse("12.11.2021 18:05:43", culture),
                 },
@@ -457,7 +457,7 @@ namespace InterTwitter.Services
                     Media = Enums.EAttachedMediaType.Photos,
                     MediaPaths = new List<string>
                     {
-                        "https://cdn.pixabay.com/photo/2021/10/25/07/03/eagle-6740066__340.jpg",
+                        "https://thumbs.dreamstime.com/z/fruit-tart-food-10443119.jpg",
                     },
                     CreationTime = DateTime.Parse("22.07.2021 05:46:23", culture),
                 },
