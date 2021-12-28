@@ -18,7 +18,6 @@ namespace InterTwitter.ViewModels
         }
 
         #region -- Public properties --
-        public bool IsMessageVisible => !string.IsNullOrEmpty(Message);
 
         public bool IsMessageVisible => !string.IsNullOrEmpty(Message);
 

@@ -25,11 +25,6 @@ namespace InterTwitter.ViewModels
         private bool _isSaveFocusedName;
         private bool _isSaveFocusedEmail;
 
-        private double _maxHeight;
-
-        private bool _isSaveFocusedName;
-        private bool _isSaveFocusedEmail;
-
         public CreatePageViewModel(
             INavigationService navigationService,
             IDialogService dialogService,
