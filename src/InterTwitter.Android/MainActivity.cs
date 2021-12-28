@@ -62,15 +62,5 @@ namespace InterTwitter.Droid
         }
 
         #endregion
-
-        public class AndroidInitializer : IPlatformInitializer
-        {
-            public void RegisterTypes(IContainerRegistry containerRegisty)
-            {
-                containerRegisty.RegisterSingleton<IKeyboardHelper, KeyboardHelper>();
-            }
-        }
-
-
     }
 }

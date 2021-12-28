@@ -3,6 +3,7 @@ using InterTwitter.Resources.Strings;
 using InterTwitter.Services;
 using InterTwitter.Services.Hashtag;
 using InterTwitter.Services.Share;
+using InterTwitter.Services.Video;
 using InterTwitter.ViewModels;
 using InterTwitter.Views;
 using Prism;
@@ -72,18 +73,10 @@ namespace InterTwitter
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // Services
-            containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
-            containerRegistry.RegisterInstance<IMockService>(Container.Resolve<MockService>());
-            containerRegistry.RegisterInstance<ITweetService>(Container.Resolve<TweetService>());
-            containerRegistry.RegisterInstance<IHashtagService>(Container.Resolve<HashtagService>());
-            containerRegistry.RegisterInstance<IRegistrationService>(Container.Resolve<RegistrationService>());
-            containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
             containerRegistry.RegisterInstance<IShareService>(Container.Resolve<ShareService>());
             containerRegistry.RegisterPopupNavigationService();
             containerRegistry.RegisterPopupDialogService();
             containerRegistry.RegisterDialog<AlertView, AlertViewModel>();
-
-            //Services
             containerRegistry.RegisterSingleton<IMockService, MockService>();
             containerRegistry.RegisterSingleton<ISettingsManager, SettingsManager>();
             containerRegistry.RegisterSingleton<IAuthorizationService, AuthorizationService>();
@@ -91,10 +84,10 @@ namespace InterTwitter
             containerRegistry.RegisterSingleton<IHashtagService, HashtagService>();
             containerRegistry.RegisterSingleton<IRegistrationService, RegistrationService>();
             containerRegistry.RegisterSingleton<IUserService, UserService>();
-            containerRegistry.RegisterSingleton<IPermissionService, PermissionService>();
             containerRegistry.RegisterSingleton<IBookmarkService, BookmarkService>();
             containerRegistry.RegisterSingleton<ILikeService, LikeService>();
             containerRegistry.RegisterSingleton<INotificationService, NotificationService>();
+            containerRegistry.RegisterSingleton<IVideoService, VideoService>();
 
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
@@ -111,6 +104,7 @@ namespace InterTwitter
             containerRegistry.RegisterForNavigation<PasswordPage, PasswordPageViewModel>();
             containerRegistry.RegisterForNavigation<EditProfilePage, EditProfilePageViewModel>();
             containerRegistry.RegisterForNavigation<BlacklistPage, BlacklistPageViewModel>();
+            containerRegistry.RegisterForNavigation<CreateTweetPage, CreateTweetPageViewModel>();
         }
 
         protected override async void OnInitialized()

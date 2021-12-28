@@ -49,5 +49,15 @@ namespace InterTwitter
             public const string CANCEL_BUTTON_TEXT = nameof(CANCEL_BUTTON_TEXT);
             public const string ACCEPT = nameof(ACCEPT);
         }
+
+        public static class Limits
+        {
+            public const int MAX_COUNT_ATTACHED_GIF = 1;
+            public const int MAX_COUNT_ATTACHED_PHOTOS = 6;
+            public const int MAX_SIZE_ATTACHED_PHOTO = 5 * 1024 * 1024;
+            public const int MAX_SIZE_ATTACHED_VIDEO = 15 * 1024 * 1024;
+            public const int MAX_LENGTH_VIDEO = 180;
+            public const int MAX_LENGTH_TEXT = 250;
+        }
     }
 }
