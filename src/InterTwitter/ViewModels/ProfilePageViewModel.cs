@@ -30,6 +30,7 @@ namespace InterTwitter.ViewModels
         private bool _isCurrentUser;
         private bool _isUserBlocked;
         private bool _isUserMuted;
+        private bool _isInit = false;
 
         public ProfilePageViewModel(
             INavigationService navigationService,
@@ -201,6 +202,16 @@ namespace InterTwitter.ViewModels
             Subscribe();
 
             await InitAsync();
+            _isInit = true;
+        }
+
+        public async override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            if (_isInit)
+            {
+               //await InitAsync();
+            }
         }
 
         public override void OnNavigatedFrom(INavigationParameters parameters)
@@ -256,31 +267,26 @@ namespace InterTwitter.ViewModels
                         tweet.UserName = tweetAuthor.Result.Name;
                         tweet.IsBookmarked = (await _bookmarkService.AnyAsync(tweet.TweetId, _user.Id)).IsSuccess;
                         tweet.IsTweetLiked = (await _likeService.AnyAsync(tweet.TweetId, _user.Id)).IsSuccess;
-                    }
 
-                    var resultLike = await _likeService.CountAsync(tweet.TweetId);
-                    if (resultLike.IsSuccess)
-                    {
-                        tweet.LikesNumber = resultLike.Result;
-                    }
+                        var resultLike = await _likeService.CountAsync(tweet.TweetId);
+                        if (resultLike.IsSuccess)
+                        {
+                            tweet.LikesNumber = resultLike.Result;
+                        }
 
-                    if (tweetAuthor.Result.Id == _user.Id)
-                    {
-                        tweet.MoveToProfileCommand = new Command(() =>
-                        NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
-                        { { Constants.Navigation.CURRENT_USER, user.Result } }));
+                        if (tweetAuthor.Result.Id == _user.Id)
+                        {
+                            tweet.MoveToProfileCommand = new Command(() =>
+                            NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
+                            { { Constants.Navigation.CURRENT_USER, user.Result } }));
+                        }
+                        else
+                        {
+                            tweet.MoveToProfileCommand = new Command(() =>
+                            NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
+                            { { Constants.Navigation.USER, user.Result } }));
+                        }
                     }
-                    else
-                    {
-                        tweet.MoveToProfileCommand = new Command(() =>
-                        NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
-                        { { Constants.Navigation.USER, user.Result } }));
-                    }
-
-                    MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.AddBookmark, (me) => AddBookmarkAsync(me));
-                    MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.DeleteBookmark, (me) => DeleteBookmarkAsync(me));
-                    MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.AddLike, (me) => AddLikeAsync(me));
-                    MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.DeleteLike, (me) => DeleteLikeAsync(me));
                 }
 
                 UserTweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
@@ -303,35 +309,35 @@ namespace InterTwitter.ViewModels
                             tweet.UserName = tweetAuthor.Result.Name;
                             tweet.IsBookmarked = (await _bookmarkService.AnyAsync(tweet.TweetId, _user.Id)).IsSuccess;
                             tweet.IsTweetLiked = (await _likeService.AnyAsync(tweet.TweetId, _user.Id)).IsSuccess;
-                        }
 
-                        var resultLike = await _likeService.CountAsync(tweet.TweetId);
-                        if (resultLike.IsSuccess)
-                        {
-                            tweet.LikesNumber = resultLike.Result;
-                        }
+                            var resultLike = await _likeService.CountAsync(tweet.TweetId);
+                            if (resultLike.IsSuccess)
+                            {
+                                tweet.LikesNumber = resultLike.Result;
+                            }
 
-                        if (tweetAuthor.Result.Id == _user.Id)
-                        {
-                            tweet.MoveToProfileCommand = new Command(() =>
-                            NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
-                            { { Constants.Navigation.CURRENT_USER, user.Result } }));
+                            if (tweetAuthor.Result.Id == _user.Id)
+                            {
+                                tweet.MoveToProfileCommand = new Command(() =>
+                                NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
+                                { { Constants.Navigation.CURRENT_USER, user.Result } }));
+                            }
+                            else
+                            {
+                                tweet.MoveToProfileCommand = new Command(() =>
+                                NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
+                                { { Constants.Navigation.USER, user.Result } }));
+                            }
                         }
-                        else
-                        {
-                            tweet.MoveToProfileCommand = new Command(() =>
-                            NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
-                            { { Constants.Navigation.USER, user.Result } }));
-                        }
-
-                        MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.AddBookmark, (me) => AddBookmarkAsync(me));
-                        MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.DeleteBookmark, (me) => DeleteBookmarkAsync(me));
-                        MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.AddLike, (me) => AddLikeAsync(me));
-                        MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.DeleteLike, (me) => DeleteLikeAsync(me));
                     }
 
                     LikedTweets = new ObservableCollection<BaseTweetViewModel>(likedViewModels);
                 }
+
+                MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.AddBookmark, (me) => AddBookmarkAsync(me));
+                MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.DeleteBookmark, (me) => DeleteBookmarkAsync(me));
+                MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.AddLike, (me) => AddLikeAsync(me));
+                MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.DeleteLike, (me) => DeleteLikeAsync(me));
             }
 
             MenuItems = new List<MenuItemViewModel>(new[]
