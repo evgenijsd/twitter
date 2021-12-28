@@ -113,13 +113,14 @@
     <AppExtensionDebugBundleId />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="iOSInitializer.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\CustomEditorRenderer.cs" />
     <Compile Include="Renderers\CustomGridRenderer.cs" />
     <Compile Include="Renderers\CustomScrollViewRenderer.cs" />
-    <Compile Include="Services\PermissionsService\PermissionsService.cs" />
-    <Compile Include="Services\VideoService\VideoService.cs" />
+    <Compile Include="Services\Permission\PermissionService.cs" />
+    <Compile Include="Services\VideoProcessing\VideoProcessingService.cs" />
     <Compile Include="Renderers\NoBounceRenderer.cs" />
     <Compile Include="Renderers\KeyboardHelper.cs" />
     <None Include="Entitlements.plist" />

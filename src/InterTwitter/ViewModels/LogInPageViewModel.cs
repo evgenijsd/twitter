@@ -147,7 +147,7 @@ namespace InterTwitter.ViewModels
 
         private async Task OnStartCommandAsync()
         {
-            await _navigationService.GoBackAsync();
+            await NavigationService.GoBackAsync();
         }
 
         private async Task OnTwitterCommandAsync()
@@ -165,7 +165,7 @@ namespace InterTwitter.ViewModels
                         _user = result.Result;
                         _autorizationService.UserId = _user.Id;
                         var parametrs = new NavigationParameters { { Constants.Navigation.USER, _user } };
-                        await _navigationService.NavigateAsync($"/{nameof(FlyOutPage)}", parametrs);
+                        await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", parametrs);
                     }
                     else
                     {

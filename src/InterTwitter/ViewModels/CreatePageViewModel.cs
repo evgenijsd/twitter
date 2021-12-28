@@ -137,7 +137,7 @@ namespace InterTwitter.ViewModels
         {
             _keyboardHelper.HideKeyboard();
 
-            await _navigationService.GoBackAsync();
+            await NavigationService.GoBackAsync();
         }
 
         private async Task OnPasswordCommandAsync()
@@ -158,7 +158,7 @@ namespace InterTwitter.ViewModels
                     _user.Email = Email;
                     _user.Name = Name;
                     var parametrs = new NavigationParameters { { Constants.Navigation.USER, _user } };
-                    await _navigationService.NavigateAsync($"{nameof(PasswordPage)}", parametrs);
+                    await NavigationService.NavigateAsync($"{nameof(PasswordPage)}", parametrs);
                 }
                 else
                 {

@@ -113,7 +113,7 @@ namespace InterTwitter.ViewModels
             {
                 _user = result.Result;
                 var parametrs = new NavigationParameters { { Constants.Navigation.USER, _user } };
-                await _navigationService.NavigateAsync($"/{nameof(FlyOutPage)}", parametrs);
+                await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", parametrs);
             }
 
             if (parameters.TryGetValue(Constants.Navigation.USER, out UserModel user))
@@ -137,7 +137,7 @@ namespace InterTwitter.ViewModels
             user.Name = Name;
             IsAutoLogin = false;
             var parametrs = new NavigationParameters { { Constants.Navigation.USER, user } };
-            await _navigationService.NavigateAsync($"{nameof(LogInPage)}", parametrs);
+            await NavigationService.NavigateAsync($"{nameof(LogInPage)}", parametrs);
         }
 
         private async Task OnCreateCommandAsync()
@@ -149,7 +149,7 @@ namespace InterTwitter.ViewModels
             user.Name = Name;
             IsAutoLogin = false;
             var parametrs = new NavigationParameters { { Constants.Navigation.USER, user } };
-            await _navigationService.NavigateAsync($"{nameof(CreatePage)}", parametrs);
+            await NavigationService.NavigateAsync($"{nameof(CreatePage)}", parametrs);
         }
 
         #endregion

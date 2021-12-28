@@ -6,7 +6,8 @@
                       xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
                       xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
                       xmlns:controls="clr-namespace:InterTwitter.Controls"
-                      xmlns:statecontainer="clr-namespace:InterTwitter.Controls.StateContainer"
+                      xmlns:sc="clr-namespace:InterTwitter.Controls.StateContainer"
+                      xmlns:models="clr-namespace:InterTwitter.Models"
                       xmlns:viewModels="clr-namespace:InterTwitter.ViewModels"
                       xmlns:view="clr-namespace:InterTwitter.Views"
                       x:Class="InterTwitter.Views.CreateTweetPage"
@@ -33,27 +34,27 @@
                              Command="{Binding GoBackCommand}"
                              Style="{DynamicResource imageButton_i1}"/>
 
-                <statecontainer:StateContainer State="{Binding CanUseButtonPost}"
+                <sc:StateContainer State="{Binding IsButtonPostEnabled}"
                                                HorizontalOptions="EndAndExpand">
 
-                    <statecontainer:StateCondition State="True">
+                    <sc:StateCondition State="True">
 
                         <Button Style="{DynamicResource button_i1}"
                                 BackgroundColor="{DynamicResource appcolor_i1}"
                                 Text="{xct:Translate Post}"
                                 Command="{Binding PostTweetCommand}"/>
 
-                    </statecontainer:StateCondition>
+                    </sc:StateCondition>
 
-                    <statecontainer:StateCondition State="False">
+                    <sc:StateCondition State="False">
 
                         <Button Style="{DynamicResource button_i1}"
                                 BackgroundColor="{DynamicResource appcolor_i4}"
                                 Text="{xct:Translate Post}"/>
 
-                    </statecontainer:StateCondition>
+                    </sc:StateCondition>
 
-                </statecontainer:StateContainer>
+                </sc:StateContainer>
 
             </StackLayout>
             
@@ -97,17 +98,17 @@
                                                MaxLength="300"
                                                Style="{DynamicResource customEditor_i1}"/>
 
-                        <statecontainer:StateContainer State="{Binding TypeAttachedMedia}"
+                        <sc:StateContainer State="{Binding AttachedMediaType}"
                                                        Style="{DynamicResource stateContainer_i1}">
 
-                            <statecontainer:StateCondition State="Photos">
+                            <sc:StateCondition State="Photos">
 
                                 <FlexLayout Style="{DynamicResource flexLayout_i1}"
-                                            BindableLayout.ItemsSource="{Binding ListAttachedMedia}">
+                                            BindableLayout.ItemsSource="{Binding AttachedMediaFiles}">
 
                                     <BindableLayout.ItemTemplate>
 
-                                        <DataTemplate x:DataType="viewModels:MiniCardViewModel">
+                                        <DataTemplate x:DataType="models:MiniCardModel">
 
                                             <Grid Style="{DynamicResource grid_i2}">
 
@@ -126,7 +127,7 @@
                                                 <Frame Grid.Row="0"
                                                        Style="{DynamicResource frame_i2}">
                                                     
-                                                    <ffimageloading:CachedImage Source="{Binding PathFile}"
+                                                    <ffimageloading:CachedImage Source="{Binding FilePath}"
                                                                                 Aspect="AspectFill"/>
                                                     
                                                 </Frame>
@@ -134,7 +135,7 @@
                                                 <Frame Grid.Row="1"
                                                        Style="{DynamicResource frame_i3}">
 
-                                                    <ImageButton Source="{Binding PathActionImage}"
+                                                    <ImageButton Source="{DynamicResource ic_clear_filled_blue}"
                                                                  Command="{Binding ActionCommand}"
                                                                  CommandParameter="{Binding .}"
                                                                  BackgroundColor="Transparent"/>
@@ -149,16 +150,16 @@
 
                                 </FlexLayout>
 
-                            </statecontainer:StateCondition>
+                            </sc:StateCondition>
 
-                            <statecontainer:StateCondition State="Gif">
+                            <sc:StateCondition State="Gif">
 
                                 <FlexLayout Style="{DynamicResource flexLayout_i1}"
-                                            BindableLayout.ItemsSource="{Binding ListAttachedMedia}">
+                                            BindableLayout.ItemsSource="{Binding AttachedMediaFiles}">
 
                                     <BindableLayout.ItemTemplate>
 
-                                        <DataTemplate x:DataType="viewModels:MiniCardViewModel">
+                                        <DataTemplate x:DataType="models:MiniCardModel">
 
                                             <Grid Style="{DynamicResource grid_i2}">
 
@@ -179,7 +180,7 @@
                                                 <Frame Grid.Row="0"
                                                        Style="{DynamicResource frame_i2}">
                                                     
-                                                    <ffimageloading:CachedImage Source="{Binding PathFile}"
+                                                    <ffimageloading:CachedImage Source="{Binding FilePath}"
                                                                                 Aspect="AspectFill"/>
 
                                                 </Frame>
@@ -187,7 +188,7 @@
                                                 <Frame Grid.Row="1"
                                                        Style="{DynamicResource frame_i3}">
 
-                                                    <ImageButton Source="{Binding PathActionImage}"
+                                                    <ImageButton Source="{DynamicResource ic_clear_filled_blue}"
                                                                  Command="{Binding ActionCommand}"
                                                                  CommandParameter="{Binding .}"
                                                                  BackgroundColor="Transparent"/>
@@ -202,9 +203,9 @@
 
                                 </FlexLayout>
                                 
-                            </statecontainer:StateCondition>
+                            </sc:StateCondition>
 
-                            <statecontainer:StateCondition State="Video">
+                            <sc:StateCondition State="Video">
 
                                 <StackLayout Orientation="Horizontal">
 
@@ -217,16 +218,17 @@
                                     <ImageButton Source="{DynamicResource ic_clear_filled_blue}"
                                                  Command="{Binding DeleteAttachedVideoCommand}"
                                                  CommandParameter="{Binding .}"
-                                                 Style="{DynamicResource imageButton_i2}"/>
+                                                 HeightRequest="21"
+                                                 WidthRequest="21"/>
 
                                 </StackLayout>
                                 
-                            </statecontainer:StateCondition>
+                            </sc:StateCondition>
 
-                        </statecontainer:StateContainer>
+                        </sc:StateContainer>
 
-                        <ActivityIndicator IsRunning="{Binding IsRunnigActivityIndicator}"
-                                           IsVisible="{Binding IsRunnigActivityIndicator}"
+                        <ActivityIndicator IsRunning="{Binding IsActivityIndicatorRunning}"
+                                           IsVisible="{Binding IsActivityIndicatorRunning}"
                                            Margin="-42, 60, 0, 0"/>
                         
                     </StackLayout>
@@ -245,62 +247,62 @@
 
                     <StackLayout Style="{DynamicResource stackLayout_i1}">
 
-                        <statecontainer:StateContainer State="{Binding CanUseButtonUploadPhotos}">
+                        <sc:StateContainer State="{Binding IsButtonUploadPhotosEnabled}">
                             
-                            <statecontainer:StateCondition State="True">
+                            <sc:StateCondition State="True">
 
                                 <ImageButton Source="{DynamicResource ic_media_blue}"
                                              Command="{Binding AddPhotoCommand}"
                                              Style="{DynamicResource imageButton_i3}"/>
 
-                            </statecontainer:StateCondition>
+                            </sc:StateCondition>
                             
-                            <statecontainer:StateCondition State="False">
+                            <sc:StateCondition State="False">
 
                                 <ImageButton Source="{DynamicResource ic_media_gray}"
                                              Style="{DynamicResource imageButton_i3}"/>
 
-                            </statecontainer:StateCondition>
+                            </sc:StateCondition>
                             
-                        </statecontainer:StateContainer>
+                        </sc:StateContainer>
 
-                        <statecontainer:StateContainer State="{Binding CanUseButtonUploadGif}">
+                        <sc:StateContainer State="{Binding IsButtonUploadGifEnabled}">
                             
-                            <statecontainer:StateCondition State="True">
+                            <sc:StateCondition State="True">
 
                                 <ImageButton Source="{DynamicResource ic_gif_blue}"
                                              Command="{Binding AddGifCommand}"
                                              Style="{DynamicResource imageButton_i3}"/>
 
-                            </statecontainer:StateCondition>
+                            </sc:StateCondition>
                             
-                            <statecontainer:StateCondition State="False">
+                            <sc:StateCondition State="False">
 
                                 <ImageButton Source="{DynamicResource ic_gif_gray}"
                                              Style="{DynamicResource imageButton_i3}"/>
 
-                            </statecontainer:StateCondition>
+                            </sc:StateCondition>
                             
-                        </statecontainer:StateContainer>
+                        </sc:StateContainer>
 
-                        <statecontainer:StateContainer State="{Binding CanUseButtonUploadVideo}">
+                        <sc:StateContainer State="{Binding IsButtonUploadVideoEnabled}">
 
-                            <statecontainer:StateCondition State="True">
+                            <sc:StateCondition State="True">
 
                                 <ImageButton Source="{DynamicResource ic_video_square_blue}"
                                              Command="{Binding AddVideoCommand}"
                                              Style="{DynamicResource imageButton_i3}"/>
 
-                            </statecontainer:StateCondition>
+                            </sc:StateCondition>
 
-                            <statecontainer:StateCondition State="False">
+                            <sc:StateCondition State="False">
 
                                 <ImageButton Source="{DynamicResource ic_video_square_gray}"
                                              Style="{DynamicResource imageButton_i3}"/>
 
-                            </statecontainer:StateCondition>
+                            </sc:StateCondition>
 
-                        </statecontainer:StateContainer>
+                        </sc:StateContainer>
 
                         <controls:CircleProgressBar Text="{Binding CircleProgressBarText}"
                                                     TextColor="{Binding CircleProgressBarTextColor}"
@@ -308,8 +310,12 @@
                                                     ProgressLineColor="{Binding CircleProgressBarProgressLineColor}"
                                                     FontAttributes="{Binding CircleProgressBarFontAttributes}"
                                                     Value="{Binding CircleProgressBarValue}"
-                                                    Style="{DynamicResource circleProgressBar_i1}"/>
-                        
+                                                    Style="{DynamicResource circleProgressBar_i1}"
+                                                    HeightRequest="24"
+                                                    WidthRequest="24"
+                                                    Minimum="0"
+                                                    Maximum="250"/>
+
                     </StackLayout>
 
                 </StackLayout>

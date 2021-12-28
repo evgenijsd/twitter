@@ -115,6 +115,15 @@ namespace InterTwitter.Resources.Strings {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Error trimming video.
+        /// </summary>
+        internal static string AlertErrorTrimmingVideo {
+            get {
+                return ResourceManager.GetString("AlertErrorTrimmingVideo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на File does not exist.
         /// </summary>
         internal static string AlertFileNotExist {

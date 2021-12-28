@@ -17,7 +17,8 @@ namespace InterTwitter.ViewModels
 
         #region -- Public Properties --
 
-        public ICommand OpenFlyoutCommandAsync => SingleExecutionCommand.FromFunc(OnOpenFlyoutCommandAsync);
+        private ICommand _openFlyoutCommandAsync;
+        public ICommand OpenFlyoutCommandAsync => _openFlyoutCommandAsync = SingleExecutionCommand.FromFunc(OnOpenFlyoutCommandAsync);
 
         #endregion
 

@@ -1,13 +1,5 @@
 using FFImageLoading.Forms.Platform;
 using Foundation;
-using InterTwitter.iOS.Services.PermissionsService;
-using InterTwitter.iOS.Services.VideoService;
-using InterTwitter.Services.PermissionsService;
-using InterTwitter.Services.VideoService;
-using Prism;
-using Prism.Ioc;
-using InterTwitter.Helpers;
-using InterTwitter.iOS.Renderers;
 using UIKit;
 
 namespace InterTwitter.iOS
@@ -28,19 +20,9 @@ namespace InterTwitter.iOS
             CachedImageRenderer.InitImageSourceHandler();
             Sharpnado.Shades.iOS.iOSShadowsRenderer.Initialize();
 
-            LoadApplication(new App(new IOSInitializer()));
+            LoadApplication(new App(new iOSInitializer()));
 
             return base.FinishedLaunching(app, options);
-        }
-
-        public class IOSInitializer : IPlatformInitializer
-        {
-            public void RegisterTypes(IContainerRegistry containerRegistry)
-            {
-                containerRegistry.RegisterSingleton<IPermissionsService, PermissionsService>();
-                containerRegistry.RegisterSingleton<IVideoService, VideoService>();
-                containerRegistry.RegisterSingleton<IKeyboardHelper, KeyboardHelper>();
-            }
         }
 
         public override bool ContinueUserActivity(UIApplication application, NSUserActivity userActivity, UIApplicationRestorationHandler completionHandler)

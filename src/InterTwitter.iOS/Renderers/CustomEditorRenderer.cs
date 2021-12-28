@@ -17,25 +17,31 @@ namespace InterTwitter.iOS.Renderers
         {
             base.OnElementChanged(e);
 
-            TextView.InputAccessoryView = null;
-            Control.ScrollEnabled = !((CustomEditor)Element).IsExpandable;
+            if (Control != null && Element is CustomEditor editor)
+            {
+                TextView.InputAccessoryView = null;
+                Control.ScrollEnabled = editor.IsExpandable;
 
-            Check();
+                HighlightIfOverflowExists();
+            }
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
 
-            switch (e.PropertyName)
+            if (Control != null && Element is CustomEditor editor)
             {
-                case "Text":
-                    Check();
-                    break;
+                switch (e.PropertyName)
+                {
+                    case nameof(editor.Text):
+                        HighlightIfOverflowExists();
+                        break;
 
-                case "Renderer":
-                    Control.ScrollEnabled = !((CustomEditor)Element).IsExpandable;
-                    break;
+                    case "Renderer":
+                        Control.ScrollEnabled = !editor.IsExpandable;
+                        break;
+                }
             }
         }
 
@@ -43,17 +49,17 @@ namespace InterTwitter.iOS.Renderers
 
         #region -- Private methods --
 
-        private void Check()
+        private void HighlightIfOverflowExists()
         {
             var cursorPosition = Control.SelectedTextRange;
             var text = TextView.Text;
 
-            if (!string.IsNullOrEmpty(text))
+            if (!string.IsNullOrEmpty(text) && Element is CustomEditor editor)
             {
-                TextView.TextColor = Element.TextColor.ToUIColor();
+                TextView.TextColor = editor.TextColor.ToUIColor();
 
                 var length = text.Length;
-                var correctLength = ((CustomEditor)Element).CorrectLength;
+                var correctLength = editor.CorrectLength;
 
                 var attributedString = new NSMutableAttributedString(TextView.Text);
 
@@ -71,7 +77,7 @@ namespace InterTwitter.iOS.Renderers
 
                 if (length > correctLength)
                 {
-                    var value = ((CustomEditor)Element).OverflowLengthColor.ToUIColor();
+                    var value = editor.OverflowLengthColor.ToUIColor();
                     var range = new NSRange(correctLength, length - correctLength);
 
                     attributedString.AddAttribute(UIStringAttributeKey.ForegroundColor, value, range);

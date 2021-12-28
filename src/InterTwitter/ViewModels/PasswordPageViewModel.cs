@@ -135,7 +135,7 @@ namespace InterTwitter.ViewModels
         {
             _keyboardHelper.HideKeyboard();
 
-            await _navigationService.GoBackAsync();
+            await NavigationService.GoBackAsync();
         }
 
         private async Task OnStartCommandAsync()
@@ -154,7 +154,7 @@ namespace InterTwitter.ViewModels
                     _keyboardHelper.HideKeyboard();
 
                     var parametrs = new NavigationParameters { { Constants.Navigation.USER, _user } };
-                    await _navigationService.NavigateAsync($"/{nameof(StartPage)}", parametrs);
+                    await NavigationService.NavigateAsync($"/{nameof(StartPage)}", parametrs);
                 }
                 else
                 {

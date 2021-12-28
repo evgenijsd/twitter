@@ -14,7 +14,7 @@ namespace InterTwitter.Models
 
         public EAttachedMediaType Media { get; set; }
 
-        public List<string> MediaPaths { get; set; }
+        public IList<string> MediaPaths { get; set; }
 
         public DateTime CreationTime { get; set; }
     }

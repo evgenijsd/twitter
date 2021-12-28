@@ -21,11 +21,11 @@ namespace InterTwitter.Droid.Renderers
         {
             base.OnElementChanged(e);
 
-            if (e.NewElement as CustomScrollView != null)
+            if (e.NewElement is CustomScrollView customScrollView)
             {
-                OverScrollMode = ((CustomScrollView)e.NewElement).IsBounces ?
-                Android.Views.OverScrollMode.IfContentScrolls :
-                Android.Views.OverScrollMode.Never;
+                OverScrollMode = customScrollView.Bounces
+                    ? Android.Views.OverScrollMode.IfContentScrolls 
+                    : Android.Views.OverScrollMode.Never;
             }
         }
 

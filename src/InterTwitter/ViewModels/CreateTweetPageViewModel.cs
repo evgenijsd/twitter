@@ -3,9 +3,8 @@ using InterTwitter.Helpers;
 using InterTwitter.Models;
 using InterTwitter.Resources.Strings;
 using InterTwitter.Services;
-using InterTwitter.Services.Hashtag;
-using InterTwitter.Services.PermissionsService;
-using InterTwitter.Services.VideoService;
+using InterTwitter.Services.Permission;
+using InterTwitter.Services.Video;
 using InterTwitter.Views;
 using Prism.Navigation;
 using Prism.Services;
@@ -18,7 +17,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using VideoTrimmer.Services;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -28,7 +26,7 @@ namespace InterTwitter.ViewModels
     {
         private IPageDialogService _pageDialogService;
 
-        private IPermissionsService _permissionsService;
+        private IPermissionService _permissionService;
 
         private IVideoService _videoService;
 
@@ -44,7 +42,7 @@ namespace InterTwitter.ViewModels
 
         public CreateTweetPageViewModel(
             INavigationService navigationService,
-            IPermissionsService permissionsService,
+            IPermissionService permissionService,
             IPageDialogService pageDialogService,
             IVideoService videoService,
             ITweetService tweetService,
@@ -53,7 +51,7 @@ namespace InterTwitter.ViewModels
             IDialogService dialogService)
             : base(navigationService)
         {
-            _permissionsService = permissionsService;
+            _permissionService = permissionService;
             _pageDialogService = pageDialogService;
             _videoService = videoService;
             _tweetService = tweetService;
@@ -61,7 +59,7 @@ namespace InterTwitter.ViewModels
             _registrationService = registrationService;
             _dialogService = dialogService;
 
-            _listAttachedMedia = new ObservableCollection<MiniCardViewModel>();
+            _attachedMediaFiles = new ObservableCollection<MiniCardModel>();
         }
 
         #region -- Public properties --
@@ -115,53 +113,53 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _circleProgressBarProgressLineColor, value);
         }
 
-        private bool _canUseButtonUploadPhotos = true;
-        public bool CanUseButtonUploadPhotos
+        private bool _isButtonUploadPhotosEnabled = true;
+        public bool IsButtonUploadPhotosEnabled
         {
-            get => _canUseButtonUploadPhotos;
-            set => SetProperty(ref _canUseButtonUploadPhotos, value);
+            get => _isButtonUploadPhotosEnabled;
+            set => SetProperty(ref _isButtonUploadPhotosEnabled, value);
         }
 
-        private bool _canUseButtonUploadGif = true;
-        public bool CanUseButtonUploadGif
+        private bool _isButtonUploadGifEnabled = true;
+        public bool IsButtonUploadGifEnabled
         {
-            get => _canUseButtonUploadGif;
-            set => SetProperty(ref _canUseButtonUploadGif, value);
+            get => _isButtonUploadGifEnabled;
+            set => SetProperty(ref _isButtonUploadGifEnabled, value);
         }
 
-        private bool _canUseButtonUploadVideo = true;
-        public bool CanUseButtonUploadVideo
+        private bool _isButtonUploadVideoEnabled = true;
+        public bool IsButtonUploadVideoEnabled
         {
-            get => _canUseButtonUploadVideo;
-            set => SetProperty(ref _canUseButtonUploadVideo, value);
+            get => _isButtonUploadVideoEnabled;
+            set => SetProperty(ref _isButtonUploadVideoEnabled, value);
         }
 
-        private bool _canUseButtonPost;
-        public bool CanUseButtonPost
+        private bool _isButtonPostEnabled;
+        public bool IsButtonPostEnabled
         {
-            get => _canUseButtonPost;
-            set => SetProperty(ref _canUseButtonPost, value);
+            get => _isButtonPostEnabled;
+            set => SetProperty(ref _isButtonPostEnabled, value);
         }
 
-        private bool _isRunnigActivityIndicator;
-        public bool IsRunnigActivityIndicator
+        private bool _isActivityIndicatorRunning;
+        public bool IsActivityIndicatorRunning
         {
-            get => _isRunnigActivityIndicator;
-            set => SetProperty(ref _isRunnigActivityIndicator, value);
+            get => _isActivityIndicatorRunning;
+            set => SetProperty(ref _isActivityIndicatorRunning, value);
         }
 
-        private EAttachedMediaType _typeAttachedMedia = EAttachedMediaType.None;
-        public EAttachedMediaType TypeAttachedMedia
+        private EAttachedMediaType _attachedMediaType = EAttachedMediaType.None;
+        public EAttachedMediaType AttachedMediaType
         {
-            get => _typeAttachedMedia;
-            set => SetProperty(ref _typeAttachedMedia, value);
+            get => _attachedMediaType;
+            set => SetProperty(ref _attachedMediaType, value);
         }
 
-        private ObservableCollection<MiniCardViewModel> _listAttachedMedia;
-        public ObservableCollection<MiniCardViewModel> ListAttachedMedia
+        private ObservableCollection<MiniCardModel> _attachedMediaFiles;
+        public ObservableCollection<MiniCardModel> AttachedMediaFiles
         {
-            get => _listAttachedMedia;
-            set => SetProperty(ref _listAttachedMedia, value);
+            get => _attachedMediaFiles;
+            set => SetProperty(ref _attachedMediaFiles, value);
         }
 
         private string _avatarPath = "pic_profile_small.png";
@@ -178,22 +176,22 @@ namespace InterTwitter.ViewModels
         public ICommand PostTweetCommand => _postTweetCommand = SingleExecutionCommand.FromFunc(OnPostTweetCommandAsync);
 
         private ICommand _deleteAttachedPhotoCommand;
-        public ICommand DeleteAttachedPhotoCommand => _deleteAttachedPhotoCommand = SingleExecutionCommand.FromFunc(OnDeleteAttachedPhotoCommandAsync);
+        public ICommand DeleteAttachedPhotoCommand => _deleteAttachedPhotoCommand = SingleExecutionCommand.FromFunc<MiniCardModel>(OnDeleteAttachedPhotoCommandAsync);
 
         private ICommand _deleteAttachedGifCommand;
-        public ICommand DeleteAttachedGifCommand => _deleteAttachedGifCommand = SingleExecutionCommand.FromFunc(OnDeleteAttachedGifAsync);
+        public ICommand DeleteAttachedGifCommand => _deleteAttachedGifCommand = SingleExecutionCommand.FromFunc(OnDeleteAttachedGifCommandAsync);
 
         private ICommand _deleteAttachedVideoCommand;
-        public ICommand DeleteAttachedVideoCommand => _deleteAttachedVideoCommand = SingleExecutionCommand.FromFunc(OnDeleteAttachedVideoAsync);
+        public ICommand DeleteAttachedVideoCommand => _deleteAttachedVideoCommand = SingleExecutionCommand.FromFunc(OnDeleteAttachedVideoCommandAsync);
 
         private ICommand _addPhotoCommand;
-        public ICommand AddPhotoCommand => _addPhotoCommand = SingleExecutionCommand.FromFunc(OnAddPhotoAsync);
+        public ICommand AddPhotoCommand => _addPhotoCommand = SingleExecutionCommand.FromFunc(OnAddPhotoCommandAsync);
 
         private ICommand _addGifCommand;
-        public ICommand AddGifCommand => _addGifCommand = SingleExecutionCommand.FromFunc(OnAddGifAsync);
+        public ICommand AddGifCommand => _addGifCommand = SingleExecutionCommand.FromFunc(OnAddGifCommandAsync);
 
         private ICommand _addVideoCommand;
-        public ICommand AddVideoCommand => _addVideoCommand = SingleExecutionCommand.FromFunc(OnAddVideoAsync);
+        public ICommand AddVideoCommand => _addVideoCommand = SingleExecutionCommand.FromFunc(OnAddVideoCommandAsync);
 
         #endregion
 
@@ -221,7 +219,7 @@ namespace InterTwitter.ViewModels
             switch (args.PropertyName)
             {
                 case nameof(Text):
-                    CanUseButtonPost = canPostTweet();
+                    IsButtonPostEnabled = CheckPossibilityPostTweet();
                     Counter();
                     break;
             }
@@ -233,18 +231,18 @@ namespace InterTwitter.ViewModels
 
         private async Task OnGoBackCommandAsync()
         {
-            if ((!string.IsNullOrEmpty(Text) && Text.Length > 0) || ListAttachedMedia.Count > 0)
+            if ((!string.IsNullOrEmpty(Text) && Text.Length > 0) || AttachedMediaFiles.Count > 0)
             {
                 var confirm = await _pageDialogService.DisplayAlertAsync(Strings.Confirm, Strings.ConfirmComeBack, Strings.Ok, Strings.Cancel);
 
                 if (confirm)
                 {
-                    await _navigationService.GoBackAsync();
+                    await NavigationService.GoBackAsync();
                 }
             }
             else
             {
-                await _navigationService.GoBackAsync();
+                await NavigationService.GoBackAsync();
             }
         }
 
@@ -252,294 +250,246 @@ namespace InterTwitter.ViewModels
         {
             var list = new List<string>();
 
-            foreach (var card in _listAttachedMedia)
+            foreach (var card in _attachedMediaFiles)
             {
-                list.Add(card.PathFile);
+                list.Add(card.FilePath);
             }
 
             var newTweet = new TweetModel()
             {
                 UserId = _userId,
                 Text = Text,
-                Media = _typeAttachedMedia,
+                Media = _attachedMediaType,
                 MediaPaths = list,
                 CreationTime = DateTime.Now,
             };
 
             await _tweetService.AddTweetAsync(newTweet);
-            await _navigationService.GoBackAsync();
+            await NavigationService.GoBackAsync();
         }
 
-        private async Task OnDeleteAttachedPhotoCommandAsync(object obj)
+        private async Task OnDeleteAttachedPhotoCommandAsync(MiniCardModel item)
         {
-            var item = obj as MiniCardViewModel;
+            AttachedMediaFiles.Remove(item);
 
-            ListAttachedMedia.Remove(item);
+            IsButtonUploadPhotosEnabled = AttachedMediaFiles.Count < Constants.Limits.MAX_COUNT_ATTACHED_PHOTOS;
 
-            CanUseButtonUploadPhotos = ListAttachedMedia.Count < Constants.Limits.MAX_COUNT_ATTACHED_PHOTOS;
-
-            if (ListAttachedMedia.Count == 0)
+            if (AttachedMediaFiles.Count == 0)
             {
-                clearAttachedMedia();
+                ClearAttachedMedia();
             }
             else
             {
-                CanUseButtonPost = canPostTweet();
+                IsButtonPostEnabled = CheckPossibilityPostTweet();
             }
         }
 
-        private async Task OnDeleteAttachedGifAsync(object obj)
+        private async Task OnDeleteAttachedGifCommandAsync()
         {
-            clearAttachedMedia();
+            ClearAttachedMedia();
         }
 
-        private async Task OnDeleteAttachedVideoAsync(object obj)
+        private async Task OnDeleteAttachedVideoCommandAsync()
         {
-            clearAttachedMedia();
+            ClearAttachedMedia();
         }
 
-        private async Task OnAddPhotoAsync()
+        private async Task OnAddVideoCommandAsync()
         {
-            try
+            var canUseStorage = await _permissionService.RequestAsync<Permissions.StorageRead>() == Xamarin.Essentials.PermissionStatus.Granted
+                            && await _permissionService.RequestAsync<Permissions.StorageWrite>() == Xamarin.Essentials.PermissionStatus.Granted;
+
+            if (canUseStorage)
             {
-                var canUseStorage = await _permissionsService.RequestAsync<Permissions.StorageRead>() == Xamarin.Essentials.PermissionStatus.Granted;
-
-                if (canUseStorage)
+                if (await TryPickVideoAsync() is FileResult openFile)
                 {
-                    var openFile = await MediaPicker.PickPhotoAsync();
+                    IsActivityIndicatorRunning = true;
 
-                    if (openFile.ContentType != "image/gif")
+                    var result = await _videoService.ProcessingVideoForPostAsync(openFile.FullPath);
+
+                    if (result.IsSuccess)
                     {
-                        FileInfo fileInf = new FileInfo(openFile.FullPath);
-
-                        if (fileInf.Exists)
+                        AttachedMediaFiles.Add(new MiniCardModel()
                         {
-                            if (fileInf.Length <= Constants.Limits.MAX_SIZE_ATTACHED_PHOTO)
-                            {
-                                ListAttachedMedia.Add(new MiniCardViewModel()
-                                {
-                                    PathFile = openFile.FullPath,
-                                    PathActionImage = "ic_clear_filled_blue.png",
-                                    ActionCommand = DeleteAttachedPhotoCommand,
-                                });
+                            FilePath = result.Result.FrameFilePath,
+                        });
 
-                                CanUseButtonUploadPhotos = ListAttachedMedia.Count < Constants.Limits.MAX_COUNT_ATTACHED_PHOTOS;
-                                CanUseButtonUploadGif = false;
-                                CanUseButtonUploadVideo = false;
-
-                                TypeAttachedMedia = EAttachedMediaType.Photos;
-
-                                CanUseButtonPost = canPostTweet();
-                            }
-                            else
-                            {
-                                var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertLimitSizePhoto } };
-                                await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
-                            }
-                        }
-                        else
+                        AttachedMediaFiles.Add(new MiniCardModel()
                         {
-                            var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertFileNotExist } };
-                            await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
-                        }
+                            FilePath = result.Result.VideoFilePath,
+                        });
+
+                        IsButtonUploadPhotosEnabled = false;
+                        IsButtonUploadGifEnabled = false;
+                        IsButtonUploadVideoEnabled = false;
+
+                        AttachedMediaType = EAttachedMediaType.Video;
+
+                        IsActivityIndicatorRunning = false;
+
+                        IsButtonPostEnabled = CheckPossibilityPostTweet();
                     }
                     else
                     {
-                        var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertOnlyPicture } };
+                        string textMessage = string.Empty;
+
+                        switch (result.Result.Message)
+                        {
+                            case EVideoProcessingResult.Error:
+                                textMessage = Strings.AlertErrorTrimmingVideo;
+                                break;
+                            case EVideoProcessingResult.LimitSizeVideo:
+                                textMessage = Strings.AlertLimitSizeVideo;
+                                break;
+                            case EVideoProcessingResult.FileNotExist:
+                                textMessage = Strings.AlertFileNotExist;
+                                break;
+                        }
+
+                        IsActivityIndicatorRunning = false;
+
+                        var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, textMessage } };
                         await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
                     }
                 }
-                else
-                {
-                    var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertNeedAccessPhotosGallery } };
-                    await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
-                }
-            }
-            catch (Exception e)
-            {
-            }
-        }
-
-        private async Task OnAddGifAsync()
-        {
-            try
-            {
-                var canUseStorage = await _permissionsService.RequestAsync<Permissions.StorageRead>() == Xamarin.Essentials.PermissionStatus.Granted;
-
-                if (canUseStorage)
-                {
-                    var openFile = await MediaPicker.PickPhotoAsync();
-
-                    if (openFile.ContentType == "image/gif")
-                    {
-                        FileInfo fileInf = new FileInfo(openFile.FullPath);
-
-                        if (fileInf.Exists)
-                        {
-                            if (fileInf.Length <= Constants.Limits.MAX_SIZE_ATTACHED_PHOTO)
-                            {
-                                ListAttachedMedia.Add(new MiniCardViewModel()
-                                {
-                                    PathFile = openFile.FullPath,
-                                    PathActionImage = "ic_clear_filled_blue.png",
-                                    ActionCommand = DeleteAttachedGifCommand,
-                                });
-
-                                CanUseButtonUploadPhotos = false;
-                                CanUseButtonUploadGif = false;
-                                CanUseButtonUploadVideo = false;
-
-                                TypeAttachedMedia = EAttachedMediaType.Gif;
-
-                                CanUseButtonPost = canPostTweet();
-                            }
-                            else
-                            {
-                                var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertLimitSizeGif } };
-                                await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
-                            }
-                        }
-                        else
-                        {
-                            var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertFileNotExist } };
-                            await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
-                        }
-                    }
-                    else
-                    {
-                        var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertOnlyGif } };
-                        await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
-                    }
-                }
-                else
-                {
-                    var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertNeedAccessPhotosGallery } };
-                    await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
-                }
-            }
-            catch (Exception e)
-            {
-            }
-        }
-
-        private async Task OnAddVideoAsync()
-        {
-            try
-            {
-                var canUseStorage = await _permissionsService.RequestAsync<Permissions.StorageRead>() == Xamarin.Essentials.PermissionStatus.Granted
-                                && await _permissionsService.RequestAsync<Permissions.StorageWrite>() == Xamarin.Essentials.PermissionStatus.Granted;
-
-                if (canUseStorage)
-                {
-                    var openFile = await MediaPicker.PickVideoAsync();
-                    var pathFile = openFile.FullPath;
-
-                    FileInfo fileInf = new FileInfo(pathFile);
-
-                    if (fileInf.Exists)
-                    {
-                        if (fileInf.Length <= Constants.Limits.MAX_SIZE_ATTACHED_VIDEO)
-                        {
-                            var videoLenght = _videoService.TryVideoLength(pathFile);
-
-                            if (videoLenght > Constants.Limits.MAX_LENGTH_VIDEO)
-                            {
-                                IsRunnigActivityIndicator = true;
-
-                                string fileName = DateTime.Now.ToString("yyyyMMddhhmmss") + (Device.RuntimePlatform == Device.iOS ? ".MOV" : ".mp4");
-                                string outputPath = Path.Combine(FileSystem.AppDataDirectory, fileName);
-
-                                if (await VideoTrimmerService.Instance.TrimAsync(0, Constants.Limits.MAX_LENGTH_VIDEO * 1000, pathFile, outputPath))
-                                {
-                                    pathFile = outputPath;
-                                    IsRunnigActivityIndicator = false;
-                                }
-                                else
-                                {
-                                    var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertVideoTrimmingFailed } };
-                                    await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
-                                    IsRunnigActivityIndicator = false;
-                                }
-                            }
-
-                            string fileNameThumb = DateTime.Now.ToString("yyyyMMddhhmmss") + ".png";
-                            var pathThumb = Path.Combine(FileSystem.AppDataDirectory, fileNameThumb);
-
-                            using (var source = new System.IO.FileStream(pathThumb, System.IO.FileMode.OpenOrCreate))
-                            {
-                                Stream image = _videoService.TryGenerateThumbImage(pathFile, (long)(videoLenght / 2));
-                                image.CopyTo(source);
-                            }
-
-                            ListAttachedMedia.Add(new MiniCardViewModel()
-                            {
-                                PathFile = pathThumb,
-                            });
-
-                            ListAttachedMedia.Add(new MiniCardViewModel()
-                            {
-                                PathFile = pathFile,
-                            });
-
-                            CanUseButtonUploadPhotos = false;
-                            CanUseButtonUploadGif = false;
-                            CanUseButtonUploadVideo = false;
-
-                            TypeAttachedMedia = EAttachedMediaType.Video;
-
-                            CanUseButtonPost = canPostTweet();
-                        }
-                        else
-                        {
-                            var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertLimitSizeVideo } };
-                            await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
-                        }
-                    }
-                    else
-                    {
-                        var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertFileNotExist } };
-                        await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
-                    }
-                }
-                else
-                {
-                    var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertNeedAccessPhotosGallery } };
-                    await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
-                }
-            }
-            catch (Exception e)
-            {
-            }
-        }
-
-        private void clearAttachedMedia()
-        {
-            ListAttachedMedia.Clear();
-
-            CanUseButtonUploadPhotos = true;
-            CanUseButtonUploadGif = true;
-            CanUseButtonUploadVideo = true;
-
-            TypeAttachedMedia = EAttachedMediaType.None;
-
-            CanUseButtonPost = canPostTweet();
-        }
-
-        private bool canPostTweet()
-        {
-            bool result;
-
-            if (!string.IsNullOrEmpty(Text))
-            {
-                result = (ListAttachedMedia.Count > 0 || Text.Length > 0) && Text.Length <= Constants.Limits.MAX_LENGTH_TEXT;
             }
             else
             {
-                result = ListAttachedMedia.Count > 0;
+                var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertNeedAccessPhotosGallery } };
+                await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
+            }
+        }
+
+        private async Task OnAddPhotoCommandAsync()
+        {
+            await OnAddPhotoOrGifAsync(EAttachedMediaType.Photos);
+        }
+
+        private async Task OnAddGifCommandAsync()
+        {
+            await OnAddPhotoOrGifAsync(EAttachedMediaType.Gif);
+        }
+
+        private async Task<FileResult> TryPickPhotoAsync()
+        {
+            FileResult result;
+
+            try
+            {
+                result = await MediaPicker.PickPhotoAsync();
+            }
+            catch (Exception ex)
+            {
+                result = null;
             }
 
             return result;
         }
+
+        private async Task<FileResult> TryPickVideoAsync()
+        {
+            FileResult result;
+
+            try
+            {
+                result = await MediaPicker.PickVideoAsync();
+            }
+            catch (Exception ex)
+            {
+                result = null;
+            }
+
+            return result;
+        }
+
+        private async Task OnAddPhotoOrGifAsync(EAttachedMediaType attachedMediaType)
+        {
+            var canUseStorage = await _permissionService.RequestAsync<Permissions.StorageRead>() == Xamarin.Essentials.PermissionStatus.Granted;
+
+            if (canUseStorage)
+            {
+                if (await MediaPicker.PickPhotoAsync() is FileResult openFile)
+                {
+                    var conditionFileType = attachedMediaType == EAttachedMediaType.Photos
+                        ? openFile.ContentType != "image/gif"
+                        : openFile.ContentType == "image/gif";
+
+                    var alertFileType = attachedMediaType == EAttachedMediaType.Photos
+                        ? Strings.AlertOnlyPicture
+                        : Strings.AlertOnlyGif;
+
+                    var alertFileSize = attachedMediaType == EAttachedMediaType.Photos
+                        ? Strings.AlertLimitSizePhoto
+                        : Strings.AlertLimitSizeGif;
+
+                    var maxSize = attachedMediaType == EAttachedMediaType.Photos
+                        ? Constants.Limits.MAX_COUNT_ATTACHED_PHOTOS
+                        : Constants.Limits.MAX_COUNT_ATTACHED_GIF;
+
+                    if (conditionFileType)
+                    {
+                        FileInfo fileInf = new FileInfo(openFile.FullPath);
+
+                        if (fileInf.Exists)
+                        {
+                            if (fileInf.Length <= Constants.Limits.MAX_SIZE_ATTACHED_PHOTO)
+                            {
+                                AttachedMediaFiles.Add(new MiniCardModel()
+                                {
+                                    FilePath = openFile.FullPath,
+                                    ActionCommand = DeleteAttachedPhotoCommand,
+                                });
+
+                                IsButtonUploadPhotosEnabled = AttachedMediaFiles.Count < maxSize;
+                                IsButtonUploadGifEnabled = false;
+                                IsButtonUploadVideoEnabled = false;
+
+                                AttachedMediaType = attachedMediaType;
+
+                                IsButtonPostEnabled = CheckPossibilityPostTweet();
+                            }
+                            else
+                            {
+                                var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, alertFileSize } };
+                                await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
+                            }
+                        }
+                        else
+                        {
+                            var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertFileNotExist } };
+                            await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
+                        }
+                    }
+                    else
+                    {
+                        var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, alertFileType } };
+                        await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
+                    }
+                }
+            }
+            else
+            {
+                var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertNeedAccessPhotosGallery } };
+                await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
+            }
+        }
+
+        private void ClearAttachedMedia()
+        {
+            AttachedMediaFiles.Clear();
+
+            IsButtonUploadPhotosEnabled = true;
+            IsButtonUploadGifEnabled = true;
+            IsButtonUploadVideoEnabled = true;
+
+            AttachedMediaType = EAttachedMediaType.None;
+
+            IsButtonPostEnabled = CheckPossibilityPostTweet();
+        }
+
+        private bool CheckPossibilityPostTweet() => !string.IsNullOrEmpty(Text)
+            ? (AttachedMediaFiles.Count > 0 || Text.Length > 0) && Text.Length <= Constants.Limits.MAX_LENGTH_TEXT
+            : AttachedMediaFiles.Count > 0;
 
         private void Counter()
         {

@@ -3,7 +3,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     xmlns:sh="http://sharpnado.com"
                     xmlns:controls="clr-namespace:InterTwitter.Controls"
-                    xmlns:statecontainer="clr-namespace:InterTwitter.Controls.StateContainer"
+                    xmlns:sc="clr-namespace:InterTwitter.Controls.StateContainer"
                     xmlns:converters="clr-namespace:InterTwitter.Converters"
                     xmlns:dataTemplatesSelector="clr-namespace:InterTwitter.Helpers"
                     xmlns:dataTemplates="clr-namespace:InterTwitter.Views.DataTemplates"
@@ -169,7 +169,7 @@
         <Setter Property="IsExpandable" Value="True"/>
         <Setter Property="Margin" Value="{OnPlatform Android='7, 21, 5, 0', iOS='4, 11, 0, 0'}"/>
     </Style>
-    <Style x:Key="stateContainer_i1" TargetType="statecontainer:StateContainer">
+    <Style x:Key="stateContainer_i1" TargetType="sc:StateContainer">
         <Setter Property="Margin" Value="{OnPlatform Android='7, 7, 5, 0', iOS='4, 7, 0, 0'}"/>
         <Setter Property="VerticalOptions" Value="Start"/>
     </Style>
@@ -189,6 +189,7 @@
         <Setter Property="IsClippedToBounds" Value="True"/>
         <Setter Property="HasShadow" Value="False"/>
         <Setter Property="Padding" Value="0"/>
+        <Setter Property="CornerRadius" Value="0"/>
     </Style>
     <Style x:Key="frame_i3" TargetType="Frame">
         <Setter Property="HasShadow" Value="False"/>
@@ -204,10 +205,6 @@
         <Setter Property="TextColor" Value="{DynamicResource appcolor_i1}"/>
         <Setter Property="FontSize" Value="{DynamicResource tsize_i4}"/>
         <Setter Property="FontFamily" Value="Ubuntu-Medium"/>
-    </Style>
-    <Style x:Key="imageButton_i2" TargetType="ImageButton">
-        <Setter Property="HeightRequest" Value="21"/>
-        <Setter Property="WidthRequest" Value="21"/>
     </Style>
     <Style x:Key="shadows_i1" TargetType="sh:Shadows">
         <Setter Property="HeightRequest" Value="56"/>
@@ -236,16 +233,12 @@
     </Style>
     <Style x:Key="circleProgressBar_i1" TargetType="controls:CircleProgressBar">
         <Setter Property="FontFamily" Value="Ubuntu-Regular"/>
-        <Setter Property="Minimum" Value="0"/>
-        <Setter Property="Maximum" Value="250"/>
         <Setter Property="LineWidth" Value="15"/>
         <Setter Property="BackgroundLineColor" Value="{DynamicResource appcolor_i5}"/>
         <Setter Property="BackgroundProgressColor" Value="{DynamicResource appcolor_i2}"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
         <Setter Property="Padding" Value="16"/>
         <Setter Property="HorizontalOptions" Value="EndAndExpand"/>
-        <Setter Property="HeightRequest" Value="24"/>
-        <Setter Property="WidthRequest" Value="24"/>
     </Style>
 
 </ResourceDictionary>

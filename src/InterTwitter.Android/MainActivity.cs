@@ -3,14 +3,7 @@ using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
 using FFImageLoading.Forms.Platform;
-using InterTwitter.Droid.Services.PermissionsService;
-using InterTwitter.Droid.Services.VideoService;
-using InterTwitter.Services.PermissionsService;
-using InterTwitter.Services.VideoService;
 using InterTwitter.Droid.Renderers;
-using InterTwitter.Helpers;
-using Prism;
-using Prism.Ioc;
 
 namespace InterTwitter.Droid
 {
@@ -38,16 +31,6 @@ namespace InterTwitter.Droid
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-
-        public class AndroidInitializer : IPlatformInitializer
-        {
-            public void RegisterTypes(IContainerRegistry containerRegistry)
-            {
-                containerRegistry.RegisterSingleton<IPermissionsService, PermissionsService>();
-                containerRegistry.RegisterSingleton<IVideoService, VideoService>();
-                containerRegistry.RegisterSingleton<IKeyboardHelper, KeyboardHelper>();
-            }
         }
 
         #endregion

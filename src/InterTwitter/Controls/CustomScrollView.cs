@@ -6,16 +6,16 @@ namespace InterTwitter.Controls
     {
         #region -- Public properties --
 
-        public static readonly BindableProperty IsBouncesProperty = BindableProperty.Create(
-            propertyName: nameof(IsBounces),
+        public static readonly BindableProperty BouncesProperty = BindableProperty.Create(
+            propertyName: nameof(Bounces),
             returnType: typeof(bool),
             declaringType: typeof(CustomScrollView),
             defaultBindingMode: BindingMode.TwoWay);
 
-        public bool IsBounces
+        public bool Bounces
         {
-            get => (bool)GetValue(IsBouncesProperty);
-            set => SetValue(IsBouncesProperty, value);
+            get => (bool)GetValue(BouncesProperty);
+            set => SetValue(BouncesProperty, value);
         }
 
         #endregion

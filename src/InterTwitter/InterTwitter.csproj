@@ -132,7 +132,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Helpers\ProcessHelpers\" />
-    <Folder Include="Enums\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -110,9 +110,9 @@ namespace InterTwitter.ViewModels
             }
         }
 
-        private async Task OnOpenAddTweetPageAsync()
+        private Task OnOpenAddTweetPageAsync()
         {
-            await _navigationService.NavigateAsync(nameof(CreateTweetPage), useModalNavigation: true);
+            return NavigationService.NavigateAsync(nameof(CreateTweetPage), useModalNavigation: true);
         }
 
         private Task OnOpenFlyoutCommandAsync()

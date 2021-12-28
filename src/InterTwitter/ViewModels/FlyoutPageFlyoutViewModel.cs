@@ -4,7 +4,6 @@ using InterTwitter.Views;
 using Prism.Navigation;
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -26,7 +25,8 @@ namespace InterTwitter.ViewModels.Flyout
             {
                 new MenuItemViewModel
                 {
-                    Id = 0, Title = "Home",
+                    Id = 0,
+                    Title = "Home",
                     TargetType = typeof(HomePage),
                     ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource,
                     TapCommand = new Command(OnItemTapCommand),
@@ -84,18 +84,14 @@ namespace InterTwitter.ViewModels.Flyout
             set => SetProperty(ref _profileEmail, value);
         }
 
-        public ICommand LogoutCommandAsync => SingleExecutionCommand.FromFunc(OnLogoutCommandAsync);
-        public ICommand ChangeProfileCommandAsync => SingleExecutionCommand.FromFunc(OnChangeProfileCommandAsync);
-        public ICommand OpenProfileCommandAsync => SingleExecutionCommand.FromFunc(OnOpenProfileCommandAsync);
+        private ICommand _logoutCommandAsync;
+        public ICommand LogoutCommandAsync => _logoutCommandAsync = SingleExecutionCommand.FromFunc(OnLogoutCommandAsync);
 
-        #endregion
+        private ICommand _changeProfileCommandAsync;
+        public ICommand ChangeProfileCommandAsync => _changeProfileCommandAsync = SingleExecutionCommand.FromFunc(OnChangeProfileCommandAsync);
 
-        #region -- Overrides --
-
-        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
-        {
-            base.OnPropertyChanged(args);
-        }
+        private ICommand _openProfileCommandAsync;
+        public ICommand OpenProfileCommandAsync => _openProfileCommandAsync = SingleExecutionCommand.FromFunc(OnOpenProfileCommandAsync);
 
         #endregion
 
@@ -146,14 +142,14 @@ namespace InterTwitter.ViewModels.Flyout
             var menuItem = param as MenuItemViewModel;
             MessagingCenter.Send(this, Constants.Messages.OPEN_SIDEBAR, false);
             MessagingCenter.Send(this, Constants.Messages.TAB_SELECTED, menuItem.Id);
-            _navigationService.NavigateAsync(nameof(menuItem.TargetType));
+            NavigationService.NavigateAsync(nameof(menuItem.TargetType));
         }
 
         private async Task OnLogoutCommandAsync()
         {
             _authorizationService.UserId = 0;
 
-            await _navigationService.NavigateAsync($"/{nameof(StartPage)}");
+            await NavigationService.NavigateAsync($"/{nameof(StartPage)}");
         }
 
         private Task OnChangeProfileCommandAsync()
@@ -163,7 +159,7 @@ namespace InterTwitter.ViewModels.Flyout
 
         private async Task OnOpenProfileCommandAsync()
         {
-            await _navigationService.NavigateAsync($"{nameof(ProfilePage)}");
+            await NavigationService.NavigateAsync($"{nameof(ProfilePage)}");
         }
 
         #endregion

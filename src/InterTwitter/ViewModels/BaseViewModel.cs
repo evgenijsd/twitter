@@ -6,11 +6,11 @@ namespace InterTwitter.ViewModels
 {
     public class BaseViewModel : BindableBase, IInitialize, IInitializeAsync, INavigationAware, IDestructible
     {
-        protected readonly INavigationService _navigationService;
+        protected readonly INavigationService NavigationService;
 
         public BaseViewModel(INavigationService navigationService)
         {
-            _navigationService = navigationService;
+            NavigationService = navigationService;
         }
 
         #region -- IInitialize implementation --

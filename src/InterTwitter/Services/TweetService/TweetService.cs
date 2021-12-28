@@ -75,9 +75,9 @@ namespace InterTwitter.Services
             return Task.FromResult(result);
         }
 
-        public Task<AOResult<bool>> AddTweetAsync(TweetModel tweet)
+        public Task<AOResult> AddTweetAsync(TweetModel tweet)
         {
-            var result = new AOResult<bool>();
+            var result = new AOResult();
 
             try
             {
@@ -93,7 +93,7 @@ namespace InterTwitter.Services
                     });
                 }
 
-                result.SetSuccess(true);
+                result.SetSuccess();
             }
             catch (Exception ex)
             {

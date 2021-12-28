@@ -27,7 +27,7 @@
             <Image Scale="0.8" 
                    Source="ic_left_white" />
             <cardsControls:CircleFrame.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding NavgationCommandAsync}" />
+                <TapGestureRecognizer Command="{Binding NavigationCommandAsync}" />
             </cardsControls:CircleFrame.GestureRecognizers>
         </cardsControls:CircleFrame>
 

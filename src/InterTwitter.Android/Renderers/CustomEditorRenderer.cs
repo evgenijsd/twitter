@@ -13,7 +13,7 @@ namespace InterTwitter.Droid.Renderers
 {
     public class CustomEditorRenderer : EditorRenderer
     {
-        private bool _clear;
+        private bool _isClear;
 
         public CustomEditorRenderer(Context context) 
             : base(context)
@@ -26,15 +26,18 @@ namespace InterTwitter.Droid.Renderers
         {
             base.OnElementPropertyChanged(sender, e);
 
-            switch (e.PropertyName)
+            if (Control != null && Element is CustomEditor editor)
             {
-                case "Text":
-                    Check();
-                    break;
+                switch (e.PropertyName)
+                {
+                    case nameof(editor.Text):
+                        HighlightIfOverflowExists();
+                        break;
 
-                case "IsExpandable":
-                    Control.VerticalScrollBarEnabled = !((CustomEditor)Element).IsExpandable;
-                    break;
+                    case nameof(editor.IsExpandable):
+                        Control.VerticalScrollBarEnabled = !editor.IsExpandable;
+                        break;
+                }
             }
         }
 
@@ -42,13 +45,13 @@ namespace InterTwitter.Droid.Renderers
         {
             base.OnElementChanged(e);
 
-            Control.SetPadding(0, 0, 0, 0);
-            Control.SetBackgroundColor(e.NewElement.BackgroundColor.ToAndroid());
-            Control.VerticalScrollBarEnabled = !((CustomEditor)Element).IsExpandable;
-
-            if (e.NewElement != null)
+            if (Control != null && e.NewElement != null && Element is CustomEditor editor)
             {
-                Check();
+                Control.SetPadding(0, 0, 0, 0);
+                Control.SetBackgroundColor(e.NewElement.BackgroundColor.ToAndroid());
+                Control.VerticalScrollBarEnabled = !editor.IsExpandable;
+
+                HighlightIfOverflowExists();
             }
         }
 
@@ -56,28 +59,28 @@ namespace InterTwitter.Droid.Renderers
 
         #region -- Private methods --
 
-        private void Check()
+        private void HighlightIfOverflowExists()
         {
             var text = EditText.Text;
 
-            if (!string.IsNullOrEmpty(text))
+            if (!string.IsNullOrEmpty(text) && Control != null && Element is CustomEditor editor)
             {
-                EditText.SetTextColor(Element.TextColor.ToAndroid());
+                EditText.SetTextColor(editor.TextColor.ToAndroid());
                 EditText.SetLineSpacing(18, 1);
 
                 var length = text.Length;
-                var correctLength = ((CustomEditor)Element).CorrectLength;
+                var correctLength = editor.CorrectLength;
 
                 var pos = Control.SelectionEnd;
 
                 if (length > correctLength)
                 {
-                    _clear = true;
+                    _isClear = true;
 
                     SpannableString spannable = new SpannableString(text);
 
                     spannable.SetSpan(new ForegroundColorSpan(
-                        ((CustomEditor)Element).OverflowLengthColor.ToAndroid()),
+                        editor.OverflowLengthColor.ToAndroid()),
                         correctLength,
                         length,
                         SpanTypes.ExclusiveExclusive);
@@ -88,12 +91,12 @@ namespace InterTwitter.Droid.Renderers
                 }
                 else
                 {
-                    if (_clear)
+                    if (_isClear)
                     {
                         EditText.Text = text;
                         Control.SetSelection(pos);
 
-                        _clear = false;
+                        _isClear = false;
                     }
                 }
             }

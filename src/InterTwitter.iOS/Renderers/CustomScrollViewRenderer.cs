@@ -13,7 +13,11 @@ namespace InterTwitter.iOS.Renderers
         protected override void OnElementChanged(VisualElementChangedEventArgs e)
         {
             base.OnElementChanged(e);
-            Bounces = ((CustomScrollView)e.NewElement).IsBounces;
+
+            if (e.NewElement is CustomScrollView customScrollView)
+            {
+                Bounces = customScrollView.Bounces;
+            }
         }
 
         #endregion

@@ -2,6 +2,7 @@
 using InterTwitter.Views;
 using Prism.Navigation;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace InterTwitter.ViewModels
@@ -11,11 +12,12 @@ namespace InterTwitter.ViewModels
         public ProfilePageViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            MenuItems = new ObservableCollection<MenuItemViewModel>(new[]
+            MenuItems = new ObservableCollection<MenuItemViewModel>
             {
                 new MenuItemViewModel
                 {
-                    Id = 0, Title = "Posts",
+                    Id = 0,
+                    Title = "Posts",
                     TargetType = typeof(HomePage),
                     ImageSource = "ic_home_gray",
                     TextColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
@@ -29,7 +31,7 @@ namespace InterTwitter.ViewModels
                     ImageSource = "ic_search_gray",
                     TextColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
                 },
-            });
+            };
         }
 
         #region -- Public Properties --
@@ -41,9 +43,18 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _menuItems, value);
         }
 
-        public ICommand NavgationCommandAsync => SingleExecutionCommand.FromFunc(_navigationService.GoBackAsync);
+        private ICommand _navigationCommandAsync;
+        public ICommand NavigationCommandAsync => _navigationCommandAsync = SingleExecutionCommand.FromFunc(OnGoBackAsync);
 
         #endregion
 
+        #region -- Private Helpers --
+
+        private Task OnGoBackAsync()
+        {
+            return NavigationService.GoBackAsync();
+        }
+
+        #endregion
     }
 }

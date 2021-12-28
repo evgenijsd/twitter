@@ -135,6 +135,9 @@
   <data name="AlertEmailNoA" xml:space="preserve">
     <value>In Email there is no symbol @</value>
   </data>
+  <data name="AlertErrorTrimmingVideo" xml:space="preserve">
+    <value>Error trimming video</value>
+  </data>
   <data name="AlertFileNotExist" xml:space="preserve">
     <value>File does not exist</value>
   </data>
