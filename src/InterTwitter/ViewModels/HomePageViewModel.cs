@@ -62,12 +62,10 @@ namespace InterTwitter.ViewModels
         public ICommand AddTweetCommandAsync => _addTweetCommandAsync ?? (_addTweetCommandAsync = SingleExecutionCommand.FromFunc(OnOpenAddTweetPageAsync));
 
         #endregion
+
         #region -- Overrides --
-        //public override Task InitializeAsync(INavigationParameters parameters)
-        //{
-        //   // return InitAsync();
-        //}
-        public async override void OnAppearing()
+
+        public override async void OnAppearing()
         {
             IconPath = App.Current.Resources["ic_home_blue"] as ImageSource;
             await InitAsync();
