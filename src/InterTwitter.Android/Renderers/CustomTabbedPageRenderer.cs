@@ -1,4 +1,6 @@
 ﻿using Android.Content;
+using Android.Views;
+using Android.Widget;
 using Google.Android.Material.BottomNavigation;
 using InterTwitter.Controls;
 using InterTwitter.Droid;
@@ -12,15 +14,10 @@ namespace InterTwitter.Droid
     public class CustomTabbedPageRenderer : TabbedPageRenderer
     {
         private TabbedPage _tabbedPage;
-
         private BottomNavigationView _bottomNavigationView;
-        
         public CustomTabbedPageRenderer(Context context) : base(context)
         {
         }
-
-        #region -- Overrides --
-
         protected override void OnElementChanged(ElementChangedEventArgs<TabbedPage> e)
         {
             base.OnElementChanged(e);
@@ -31,9 +28,6 @@ namespace InterTwitter.Droid
                 _bottomNavigationView = (GetChildAt(0) as Android.Widget.RelativeLayout).GetChildAt(1) as BottomNavigationView;
                 _bottomNavigationView.LabelVisibilityMode = LabelVisibilityMode.LabelVisibilityUnlabeled;
             }
-
         }
-
-        #endregion
     }
 }

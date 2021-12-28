@@ -6,7 +6,9 @@
                     xmlns:sc="clr-namespace:InterTwitter.Controls.StateContainer"
                     xmlns:converters="clr-namespace:InterTwitter.Converters"
                     xmlns:dataTemplatesSelector="clr-namespace:InterTwitter.Helpers"
+                    xmlns:views="clr-namespace:InterTwitter.Views"
                     xmlns:dataTemplates="clr-namespace:InterTwitter.Views.DataTemplates"
+                    xmlns:dataNotificationTemplates="clr-namespace:InterTwitter.Views.DataTemplates.Notification"
                     x:Class="InterTwitter.Resources.Styles.DefaultResources">
 
     <!-- TEXT SIZE -->
@@ -105,10 +107,7 @@
     <Style x:Key="tstyle_i15" TargetType="Label" BasedOn="{StaticResource Content_i8}"><!-- Caption 2/ 10px/ Dark Gray-->
         <Setter Property="TextColor" Value="{DynamicResource appcolor_i4}"/>
     </Style>
-    
-    <!-- CONVERTERS -->
-    <converters:ListToFirstConverter x:Key="listToFirstConverter"/>
-    
+
     <!-- TweetData Templates-->
 
     <dataTemplates:ImageTweetDataTemplate x:Key="imageTweetTemplate"/>
@@ -119,6 +118,37 @@
                                                      ImageTweetDataTemplate="{StaticResource imageTweetTemplate}"
                                                      VideoTweetDataTemplate="{StaticResource videoTweetTemplate}"
                                                      TextTweetDataTemplate="{StaticResource textTweetTemplate}"/>
+
+    <!-- TweetData Templates-->
+    <dataNotificationTemplates:ImageNotificationDataTemplate x:Key="imageNotificationTemplate" />
+    <dataNotificationTemplates:VideoNotificationDataTemplate x:Key="videoNotificationTemplate" />
+    <dataNotificationTemplates:TextNotificationDataTemplate x:Key="textNotificationTemplate" />
+
+    <dataTemplatesSelector:NotificationDataTemplateSelector x:Key="notificationTemplateSelector"
+                                                                        ImageNotificationDataTemplate="{StaticResource imageNotificationTemplate}"
+                                                                        VideoNotificationDataTemplate="{StaticResource videoNotificationTemplate}"
+                                                                        TextNotificationDataTemplate="{StaticResource textNotificationTemplate}" />
+
+    <!-- BOXVIEW SEPARATORS STYLES -->
+    <Style x:Key="SeparatorStyle" TargetType="BoxView" > <!-- Light Gray --> 
+        <Setter Property="HeightRequest"     Value="1"/>
+        <Setter Property="Color" Value="{DynamicResource appcolor_i6}"></Setter>
+    </Style>
+
+    <!-- PAGE STYLES -->
+    <Style x:Key="pstyle_i1" TargetType="views:BaseContentPage">
+        <Setter Property="BackgroundColor" Value="{DynamicResource appcolor_i2}" />
+    </Style>
+
+    <!-- HACK STYLE FOR IOS -->
+    <Style x:Key="tstyle_i16" TargetType="Label">
+        <!-- Body 2/ 14px/ System/Black -->
+        <Setter Property="TextColor" Value="{DynamicResource appcolor_i3}"/>
+        <Setter Property="FontSize" Value="{DynamicResource tsize_i4}"/>
+    </Style>
+
+    <!-- CONVERTERS -->
+    <converters:ListToFirstConverter x:Key="listToFirstConverter"/>
 
     <!-- CreateTweetPage -->
 

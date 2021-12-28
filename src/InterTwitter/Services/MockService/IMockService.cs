@@ -1,14 +1,30 @@
 ﻿using InterTwitter.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace InterTwitter.Services
 {
     public interface IMockService
     {
-        List<UserModel> Users { get; set; }
-
-        IEnumerable<TweetModel> Tweets { get; set; }
-
-        IEnumerable<HashtagModel> Hashtags { get; set; }
+        Task<int> AddAsync<T>(T entity)
+            where T : IEntityBase, new();
+        Task<IEnumerable<T>> GetAllAsync<T>()
+            where T : IEntityBase, new();
+        Task<T> GetByIdAsync<T>(int id)
+            where T : IEntityBase, new();
+        Task<bool> RemoveAsync<T>(T entity)
+            where T : IEntityBase, new();
+        Task<int> RemoveAllAsync<T>(Predicate<T> predicate)
+            where T : IEntityBase, new();
+        Task<T> UpdateAsync<T>(T entity)
+            where T : IEntityBase, new();
+        Task<T> FindAsync<T>(Func<T, bool> expression)
+            where T : IEntityBase, new();
+        Task<bool> AnyAsync<T>(Func<T, bool> expression)
+            where T : IEntityBase, new();
+        Task<IEnumerable<T>> GetAsync<T>(Func<T, bool> expression)
+            where T : IEntityBase, new();
     }
 }

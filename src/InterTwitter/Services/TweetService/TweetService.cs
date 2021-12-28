@@ -1,6 +1,5 @@
 ﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
-using InterTwitter.Services.Hashtag;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,16 +26,14 @@ namespace InterTwitter.Services
 
         public async Task<AOResult<IEnumerable<TweetModel>>> GetAllTweetsAsync()
         {
-            await Task.Delay(50);
-
             var result = new AOResult<IEnumerable<TweetModel>>();
             try
             {
-                var tweets = _mockService.Tweets;
+                var tweets = await _mockService.GetAllAsync<TweetModel>();
 
                 if (tweets != null)
                 {
-                    result.SetSuccess(tweets.OrderByDescending(x => x.CreationTime));
+                    result.SetSuccess(tweets.OrderByDescending(x => x.CreationTime).ToList());
                 }
                 else
                 {
@@ -51,13 +48,66 @@ namespace InterTwitter.Services
             return result;
         }
 
-        public Task<AOResult<UserModel>> GetAuthorAsync(int authorId)
+        public async Task<AOResult<List<TweetModel>>> GetByUserTweetsAsync(int userid)
+        {
+            var result = new AOResult<List<TweetModel>>();
+
+            try
+            {
+                var tweets = await _mockService.GetAsync<TweetModel>(x => x.UserId == userid);
+
+                if (tweets != null)
+                {
+                    result.SetSuccess(tweets.OrderByDescending(x => x.CreationTime).ToList());
+                }
+                else
+                {
+                    result.SetFailure("No tweets found");
+                }
+            }
+            catch (Exception ex)
+            {
+                result.SetError($"{nameof(GetByUserTweetsAsync)}: exception", "Some issues", ex);
+            }
+
+            return result;
+        }
+
+        public async Task<AOResult<IEnumerable<TweetModel>>> FindTweetsByKeywordsAsync(IEnumerable<string> keys)
+        {
+            var result = new AOResult<IEnumerable<TweetModel>>();
+
+            try
+            {
+                var allTweets = await _mockService.GetAllAsync<TweetModel>();
+
+                if (allTweets != null)
+                {
+                    var foundTweets = allTweets.Where(tweet => keys
+                        .Any(key => tweet.Text?
+                        .IndexOf(key, StringComparison.OrdinalIgnoreCase) > -1));
+
+                    if (foundTweets?.FirstOrDefault() != null)
+                    {
+                        result.SetSuccess(foundTweets.OrderByDescending(x => x.CreationTime));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.SetError($"{nameof(FindTweetsByKeywordsAsync)}: exception", "Some issues", ex);
+            }
+
+            return result;
+        }
+
+        public async Task<AOResult<UserModel>> GetAuthorAsync(int authorId)
         {
             var result = new AOResult<UserModel>();
 
             try
             {
-                var author = _mockService.Users?.Where(x => x.Id == authorId)?.FirstOrDefault();
+                var author = await _mockService.FindAsync<UserModel>(x => x.Id == authorId);
                 if (author != null)
                 {
                     result.SetSuccess(author);
@@ -72,22 +122,22 @@ namespace InterTwitter.Services
                 result.SetError($"{nameof(GetAuthorAsync)}: exception", "Some issues", ex);
             }
 
-            return Task.FromResult(result);
+            return result;
         }
 
-        public Task<AOResult> AddTweetAsync(TweetModel tweet)
+        public async Task<AOResult> AddTweetAsync(TweetModel tweet)
         {
             var result = new AOResult();
 
             try
             {
-                ((List<TweetModel>)_mockService.Tweets).Add(tweet);
+                await _mockService.AddAsync(tweet);
 
                 var allHashtags = Constants.Methods.GetUniqueWords(tweet.Text).Where(x => Regex.IsMatch(x, Constants.RegexPatterns.HASHTAG_PATTERN));
 
                 foreach (var tag in allHashtags)
                 {
-                    _hashtagService.IncreaseHashtagPopularityByOne(new HashtagModel()
+                    await _hashtagService.IncreaseHashtagPopularityByOne(new HashtagModel()
                     {
                         Text = tag,
                     });
@@ -100,7 +150,7 @@ namespace InterTwitter.Services
                 result.SetError($"{nameof(GetAllTweetsAsync)}: exception", "Some issues", ex);
             }
 
-            return Task.FromResult(result);
+            return result;
         }
 
         #endregion

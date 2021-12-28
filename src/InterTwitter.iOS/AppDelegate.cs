@@ -1,5 +1,9 @@
-using FFImageLoading.Forms.Platform;
+﻿using FFImageLoading.Forms.Platform;
 using Foundation;
+using InterTwitter.Helpers;
+using InterTwitter.iOS.Renderers;
+using Prism;
+using Prism.Ioc;
 using UIKit;
 
 namespace InterTwitter.iOS
@@ -11,26 +15,14 @@ namespace InterTwitter.iOS
 
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            global::Rg.Plugins.Popup.Popup.Init();
             global::Xamarin.Forms.Forms.Init();
-
-            FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
-            Sharpnado.Shades.iOS.iOSShadowsRenderer.Initialize();
-            
             CachedImageRenderer.Init();
             CachedImageRenderer.InitImageSourceHandler();
             Sharpnado.Shades.iOS.iOSShadowsRenderer.Initialize();
-
             LoadApplication(new App(new iOSInitializer()));
 
             return base.FinishedLaunching(app, options);
-        }
-
-        public override bool ContinueUserActivity(UIApplication application, NSUserActivity userActivity, UIApplicationRestorationHandler completionHandler)
-        {
-            if (Xamarin.Essentials.Platform.ContinueUserActivity(application, userActivity, completionHandler))
-                return true;
-
-            return base.ContinueUserActivity(application, userActivity, completionHandler);
         }
 
         #endregion

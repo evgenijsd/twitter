@@ -4,14 +4,22 @@ using System.Threading.Tasks;
 
 namespace InterTwitter.ViewModels
 {
-    public class BaseViewModel : BindableBase, IInitialize, IInitializeAsync, INavigationAware, IDestructible
+    public class BaseViewModel : BindableBase, IInitialize, INavigationAware, IInitializeAsync, IDestructible
     {
-        protected readonly INavigationService NavigationService;
-
         public BaseViewModel(INavigationService navigationService)
         {
             NavigationService = navigationService;
         }
+
+        protected virtual INavigationService NavigationService { get; }
+
+        #region -- IDestructible implementation --
+
+        public virtual void Destroy()
+        {
+        }
+
+        #endregion
 
         #region -- IInitialize implementation --
 
@@ -23,8 +31,9 @@ namespace InterTwitter.ViewModels
 
         #region -- IInitializeAsync implementation --
 
-        public async virtual Task InitializeAsync(INavigationParameters parameters)
+        public virtual Task InitializeAsync(INavigationParameters parameters)
         {
+            return Task.CompletedTask;
         }
 
         #endregion
@@ -36,14 +45,6 @@ namespace InterTwitter.ViewModels
         }
 
         public virtual void OnNavigatedTo(INavigationParameters parameters)
-        {
-        }
-
-        #endregion
-
-        #region -- IDestructible implementation --
-
-        public virtual void Destroy()
         {
         }
 

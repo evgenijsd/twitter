@@ -35,7 +35,7 @@
                              Style="{DynamicResource imageButton_i1}"/>
 
                 <sc:StateContainer State="{Binding IsButtonPostEnabled}"
-                                               HorizontalOptions="EndAndExpand">
+                                   HorizontalOptions="EndAndExpand">
 
                     <sc:StateCondition State="True">
 
@@ -310,11 +310,11 @@
                                                     ProgressLineColor="{Binding CircleProgressBarProgressLineColor}"
                                                     FontAttributes="{Binding CircleProgressBarFontAttributes}"
                                                     Value="{Binding CircleProgressBarValue}"
-                                                    Style="{DynamicResource circleProgressBar_i1}"
                                                     HeightRequest="24"
                                                     WidthRequest="24"
                                                     Minimum="0"
-                                                    Maximum="250"/>
+                                                    Maximum="250"
+                                                    Style="{DynamicResource circleProgressBar_i1}"/>
 
                     </StackLayout>
 

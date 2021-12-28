@@ -1,8 +1,8 @@
-﻿using InterTwitter.Services.Permission;
+﻿using InterTwitter.Services;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 
-namespace InterTwitter.Droid.Services.Permission
+namespace InterTwitter.Droid.Services.PermissionsService
 {
     public class PermissionService : IPermissionService
     {
@@ -17,7 +17,7 @@ namespace InterTwitter.Droid.Services.Permission
 
             if (status != PermissionStatus.Granted)
             {
-                return await Permissions.RequestAsync<T>();
+                status = await Permissions.RequestAsync<T>();
             }
 
             return status;

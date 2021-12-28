@@ -1,4 +1,6 @@
-﻿namespace InterTwitter.Views
+﻿using Xamarin.Forms.Xaml;
+
+namespace InterTwitter.Views
 {
     public partial class LogInPage : BaseContentPage
     {

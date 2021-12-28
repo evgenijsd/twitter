@@ -1,4 +1,6 @@
-﻿namespace InterTwitter.Models
+﻿using System;
+
+namespace InterTwitter.Models
 {
     public class Bookmark : IEntityBase
     {
@@ -7,5 +9,9 @@
         public int UserId { get; set; }
 
         public int TweetId { get; set; }
+
+        public bool Notification { get; set; }
+
+        public DateTime CreationTime { get; set; }
     }
 }

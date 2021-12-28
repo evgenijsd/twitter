@@ -92,6 +92,19 @@ namespace InterTwitter.Controls
             set => SetValue(PlaceholderColorProperty, value);
         }
 
+        public static readonly BindableProperty IsEntryFocusedProperty = BindableProperty.Create(
+            propertyName: nameof(IsEntryFocused),
+            returnType: typeof(bool),
+            declaringType: typeof(CustomEntry),
+            defaultValue: false,
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public bool IsEntryFocused
+        {
+            get => (bool)GetValue(IsEntryFocusedProperty);
+            set => SetValue(IsEntryFocusedProperty, value);
+        }
+
         public static readonly BindableProperty IsPasswordProperty = BindableProperty.Create(
             propertyName: nameof(IsPassword),
             returnType: typeof(bool),
@@ -222,6 +235,57 @@ namespace InterTwitter.Controls
             set => SetValue(ImageSourceProperty, value);
         }
 
+        public static readonly BindableProperty IsSwapButtonsProperty = BindableProperty.Create(
+           propertyName: nameof(IsSwapButtons),
+           returnType: typeof(bool),
+           declaringType: typeof(CustomEntry),
+           defaultBindingMode: BindingMode.TwoWay);
+
+        public bool IsSwapButtons
+        {
+            get => (bool)GetValue(IsSwapButtonsProperty);
+            set => SetValue(IsSwapButtonsProperty, value);
+        }
+
+        public static readonly BindableProperty Eye_grid_columnProperty = BindableProperty.Create(
+           propertyName: nameof(Eye_grid_column),
+           returnType: typeof(int),
+           declaringType: typeof(CustomEntry),
+           defaultValue: 1,
+           defaultBindingMode: BindingMode.TwoWay);
+
+        public int Eye_grid_column
+        {
+            get => (int)GetValue(Eye_grid_columnProperty);
+            set => SetValue(Eye_grid_columnProperty, value);
+        }
+
+        public static readonly BindableProperty Cross_grid_columnProperty = BindableProperty.Create(
+           propertyName: nameof(Cross_grid_column),
+           returnType: typeof(int),
+           declaringType: typeof(CustomEntry),
+           defaultValue: 2,
+           defaultBindingMode: BindingMode.TwoWay);
+
+        public int Cross_grid_column
+        {
+            get => (int)GetValue(Cross_grid_columnProperty);
+            set => SetValue(Cross_grid_columnProperty, value);
+        }
+
+        public static readonly BindableProperty IsButtonClearEnableProperty = BindableProperty.Create(
+          propertyName: nameof(IsButtonClearEnable),
+          returnType: typeof(bool),
+          declaringType: typeof(CustomEntry),
+          defaultValue: false,
+          defaultBindingMode: BindingMode.TwoWay);
+
+        public bool IsButtonClearEnable
+        {
+            get => (bool)GetValue(IsButtonClearEnableProperty);
+            set => SetValue(IsButtonClearEnableProperty, value);
+        }
+
         private ICommand _buttonEyeCommand;
         public ICommand ButtonEyeCommand => _buttonEyeCommand ??= SingleExecutionCommand.FromFunc(OnButtonEyeCommandAsync);
 
@@ -238,7 +302,7 @@ namespace InterTwitter.Controls
 
         #region -- Overrides --
 
-        protected override void OnPropertyChanged(string propertyName)
+        protected override async void OnPropertyChanged(string propertyName)
         {
             base.OnPropertyChanged(propertyName);
 
@@ -246,6 +310,21 @@ namespace InterTwitter.Controls
             {
                 case nameof(IsPassword):
                     IsPasswordHidden = IsPassword;
+                    break;
+                case nameof(IsSwapButtons):
+                    {
+                        if (IsSwapButtons)
+                        {
+                            Eye_grid_column = 2;
+                            Cross_grid_column = 1;
+                        }
+                        else
+                        {
+                            Eye_grid_column = 1;
+                            Cross_grid_column = 2;
+                        }
+                    }
+
                     break;
                 case nameof(Text):
                 case nameof(ClearImageSource):
@@ -284,6 +363,16 @@ namespace InterTwitter.Controls
 
                     break;
             }
+
+            if (propertyName == nameof(IsEntryFocused))
+            {
+                if (IsEntryFocused)
+                {
+                    await Task.Delay(200);
+                    CustomEntryLocal.Focus();
+                    IsEntryFocused = false;
+                }
+            }
         }
 
         #endregion
@@ -309,18 +398,18 @@ namespace InterTwitter.Controls
             return Task.CompletedTask;
         }
 
-        private Task OnFocusedCommandAsync()
+        private async Task OnFocusedCommandAsync()
         {
             if (!IsPassword)
             {
                 IsButtonEyeVisible = true;
             }
 
-            IsFocusedVisible = true;
             IsFocusedButton = true;
             CustomEntryLocal.Placeholder = string.Empty;
 
-            return Task.CompletedTask;
+            await Task.Delay(300);
+            IsFocusedVisible = true;
         }
 
         private Task OnUnfocusedCommandAsync()

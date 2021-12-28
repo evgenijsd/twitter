@@ -11,7 +11,6 @@ namespace InterTwitter.Controls
         }
 
         #region -- Public properties --
-
         public static readonly BindableProperty RightButtonImageSourceProperty = BindableProperty.Create(
             propertyName: nameof(RightButtonImageSource),
             returnType: typeof(string),
@@ -24,16 +23,16 @@ namespace InterTwitter.Controls
             set => SetValue(RightButtonImageSourceProperty, value);
         }
 
-        public static readonly BindableProperty RightButtonCommandProperty = BindableProperty.Create(
-            propertyName: nameof(RightButtonCommand),
+        public static readonly BindableProperty RightUserButtonCommandProperty = BindableProperty.Create(
+            propertyName: nameof(RightUserButtonCommand),
             returnType: typeof(ICommand),
             declaringType: typeof(CustomNavigationbar),
             defaultBindingMode: BindingMode.TwoWay);
 
-        public ICommand RightButtonCommand
+        public ICommand RightUserButtonCommand
         {
-            get => (ICommand)GetValue(RightButtonCommandProperty);
-            set => SetValue(RightButtonCommandProperty, value);
+            get => (ICommand)GetValue(RightUserButtonCommandProperty);
+            set => SetValue(RightUserButtonCommandProperty, value);
         }
 
         public static readonly BindableProperty LeftButtonImageSourceProperty = BindableProperty.Create(
@@ -48,16 +47,16 @@ namespace InterTwitter.Controls
             set => SetValue(LeftButtonImageSourceProperty, value);
         }
 
-        public static readonly BindableProperty LeftButtonCommandProperty = BindableProperty.Create(
-            propertyName: nameof(LeftButtonCommand),
+        public static readonly BindableProperty LeftAddButtonCommandProperty = BindableProperty.Create(
+            propertyName: nameof(LeftAddButtonCommand),
             returnType: typeof(ICommand),
             declaringType: typeof(CustomNavigationbar),
             defaultBindingMode: BindingMode.TwoWay);
 
-        public ICommand LeftButtonCommand
+        public ICommand LeftAddButtonCommand
         {
-            get => (ICommand)GetValue(LeftButtonCommandProperty);
-            set => SetValue(LeftButtonCommandProperty, value);
+            get => (ICommand)GetValue(LeftAddButtonCommandProperty);
+            set => SetValue(LeftAddButtonCommandProperty, value);
         }
 
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(
@@ -85,6 +84,5 @@ namespace InterTwitter.Controls
         }
 
         #endregion
-
     }
 }

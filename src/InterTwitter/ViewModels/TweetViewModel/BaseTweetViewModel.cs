@@ -5,12 +5,25 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace InterTwitter.Models.TweetViewModel
 {
     public class BaseTweetViewModel : BindableBase
     {
+        public BaseTweetViewModel()
+        {
+            Mode = EStateMode.Truncated;
+        }
+
         #region -- Public properties --
+
+        private EStateMode _mode;
+        public EStateMode Mode
+        {
+            get => _mode;
+            set => SetProperty(ref _mode, value);
+        }
 
         private int _tweetId;
         public int TweetId
@@ -58,6 +71,13 @@ namespace InterTwitter.Models.TweetViewModel
             }
         }
 
+        private IEnumerable<string> _keysToHighlight;
+        public IEnumerable<string> KeysToHighlight
+        {
+            get => _keysToHighlight;
+            set => SetProperty(ref _keysToHighlight, value);
+        }
+
         public bool IsTextVisible => !string.IsNullOrEmpty(Text);
 
         private IEnumerable<string> _mediaPaths;
@@ -82,7 +102,7 @@ namespace InterTwitter.Models.TweetViewModel
         }
 
         private bool _IsTweetLiked;
-        public bool IsTweekLiked
+        public bool IsTweetLiked
         {
             get => _IsTweetLiked;
             set => SetProperty(ref _IsTweetLiked, value);
@@ -104,24 +124,35 @@ namespace InterTwitter.Models.TweetViewModel
         private ICommand _markTweetCommand;
         public ICommand MarkTweetCommand => _markTweetCommand ?? (_markTweetCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnMarkAsync));
 
+        //private ICommand _moveToProfileCommand;
+        //public ICommand MoveToProfileCommand => _moveToProfileCommand ?? (_moveToProfileCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnGoToProfileAsync));
         private ICommand _moveToProfileCommand;
-        public ICommand MoveToProfileCommand => _moveToProfileCommand ?? (_moveToProfileCommand = SingleExecutionCommand.FromFunc<BaseTweetViewModel>(OnGoToProfileAsync));
+        public ICommand MoveToProfileCommand
+        {
+            get => _moveToProfileCommand;
+            set => SetProperty(ref _moveToProfileCommand, value);
+        }
 
         private DateTime _CreationTime;
-
         public DateTime CreationTime
         {
             get => _CreationTime;
             set => SetProperty(ref _CreationTime, value);
         }
-
         #endregion
-
         #region -- Private helpers --
-
         private Task OnLikeAsync(BaseTweetViewModel tweet)
         {
-            IsTweekLiked = !IsTweekLiked;
+            IsTweetLiked = !IsTweetLiked;
+            if (IsTweetLiked)
+            {
+                MessagingCenter.Send<MessageEvent>(new MessageEvent(TweetId), MessageEvent.AddLike);
+            }
+            else
+            {
+                MessagingCenter.Send<MessageEvent>(new MessageEvent(TweetId), MessageEvent.DeleteLike);
+            }
+
             return Task.CompletedTask;
         }
 
@@ -130,9 +161,18 @@ namespace InterTwitter.Models.TweetViewModel
             return Task.CompletedTask;
         }
 
-        private Task OnMarkAsync(BaseTweetViewModel tweet)
+        private Task OnMarkAsync(BaseTweetViewModel arg)
         {
             IsBookmarked = !IsBookmarked;
+            if (IsBookmarked)
+            {
+                MessagingCenter.Send<MessageEvent>(new MessageEvent(TweetId), MessageEvent.AddBookmark);
+            }
+            else
+            {
+                MessagingCenter.Send<MessageEvent>(new MessageEvent(TweetId), MessageEvent.DeleteBookmark);
+            }
+
             return Task.CompletedTask;
         }
 
@@ -142,5 +182,6 @@ namespace InterTwitter.Models.TweetViewModel
         }
 
         #endregion
+
     }
 }

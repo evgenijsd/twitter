@@ -1,10 +1,10 @@
 ﻿using Foundation;
-using InterTwitter.Services.Permission;
+using InterTwitter.Services;
 using System.Threading.Tasks;
 using UIKit;
 using Xamarin.Essentials;
 
-namespace InterTwitter.iOS.Services.Permission
+namespace InterTwitter.iOS.Services.PermissionsService
 {
     public class PermissionService : IPermissionService
     {

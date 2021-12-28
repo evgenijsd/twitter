@@ -9,5 +9,10 @@ namespace InterTwitter.iOS.Renderers
         {
             UIApplication.SharedApplication.KeyWindow.EndEditing(true);
         }
+
+        public void ShowKeyboard()
+        {
+            UIApplication.SharedApplication.KeyWindow.EndEditing(false);
+        }
     }
 }

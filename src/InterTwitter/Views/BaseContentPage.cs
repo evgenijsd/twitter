@@ -1,5 +1,5 @@
-using Xamarin.Forms;
 using InterTwitter.Helpers;
+using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
@@ -31,6 +31,11 @@ namespace InterTwitter.Views
             {
                 actionsHandler.OnDisappearing();
             }
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            return base.OnBackButtonPressed();
         }
 
         #endregion

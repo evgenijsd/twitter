@@ -1,15 +1,13 @@
-﻿using DLToolkit.Forms.Controls;
+using DLToolkit.Forms.Controls;
 using InterTwitter.Resources.Strings;
 using InterTwitter.Services;
-using InterTwitter.Services.Hashtag;
 using InterTwitter.Services.Video;
 using InterTwitter.ViewModels;
-using InterTwitter.ViewModels.Flyout;
 using InterTwitter.Views;
 using Prism;
 using Prism.Ioc;
+using Prism.Plugin.Popups;
 using Prism.Unity;
-using System.Globalization;
 using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Forms;
 
@@ -26,14 +24,21 @@ namespace InterTwitter
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterPopupNavigationService();
+            containerRegistry.RegisterPopupDialogService();
             containerRegistry.RegisterDialog<AlertView, AlertViewModel>();
 
             //Services
             containerRegistry.RegisterSingleton<IMockService, MockService>();
+            containerRegistry.RegisterSingleton<ISettingsManager, SettingsManager>();
+            containerRegistry.RegisterSingleton<IAuthorizationService, AuthorizationService>();
             containerRegistry.RegisterSingleton<ITweetService, TweetService>();
             containerRegistry.RegisterSingleton<IHashtagService, HashtagService>();
             containerRegistry.RegisterSingleton<IRegistrationService, RegistrationService>();
-            containerRegistry.RegisterSingleton<IAuthorizationService, AuthorizationService>();
+            containerRegistry.RegisterSingleton<IUserService, UserService>();
+            containerRegistry.RegisterSingleton<IBookmarkService, BookmarkService>();
+            containerRegistry.RegisterSingleton<ILikeService, LikeService>();
+            containerRegistry.RegisterSingleton<INotificationService, NotificationService>();
             containerRegistry.RegisterSingleton<IVideoService, VideoService>();
 
             // Navigation
@@ -46,24 +51,24 @@ namespace InterTwitter
             containerRegistry.RegisterForNavigation<BookmarksPage, BookmarksPageViewModel>();
             containerRegistry.RegisterForNavigation<NotificationsPage, NotificationPageViewModel>();
             containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
-            containerRegistry.RegisterForNavigation<StartPage, StartPageViewModel>();
             containerRegistry.RegisterForNavigation<CreatePage, CreatePageViewModel>();
             containerRegistry.RegisterForNavigation<LogInPage, LogInPageViewModel>();
             containerRegistry.RegisterForNavigation<PasswordPage, PasswordPageViewModel>();
+            containerRegistry.RegisterForNavigation<EditProfilePage, EditProfilePageViewModel>();
+            containerRegistry.RegisterForNavigation<BlacklistPage, BlacklistPageViewModel>();
             containerRegistry.RegisterForNavigation<CreateTweetPage, CreateTweetPageViewModel>();
         }
 
         protected override async void OnInitialized()
         {
-            LocalizationResourceManager.Current.PropertyChanged += (sender, e) => Strings.Culture = LocalizationResourceManager.Current.CurrentCulture;
-            LocalizationResourceManager.Current.Init(Strings.ResourceManager);
-            LocalizationResourceManager.Current.CurrentCulture = new CultureInfo("en");
-
             InitializeComponent();
+            App.Current.UserAppTheme = OSAppTheme.Light;
 
-            Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             FlowListView.Init();
-            await NavigationService.NavigateAsync($"/{nameof(StartPage)}");
+            Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
+            LocalizationResourceManager.Current.Init(Strings.ResourceManager);
+
+            await NavigationService.NavigateAsync($"/{nameof(LogInPage)}");
         }
 
         protected override void OnStart()
@@ -72,10 +77,12 @@ namespace InterTwitter
 
         protected override void OnSleep()
         {
+            this.PopupPluginOnSleep();
         }
 
         protected override void OnResume()
         {
+            this.PopupPluginOnResume();
         }
 
         #endregion

@@ -13,9 +13,6 @@ namespace InterTwitter.iOS.Renderers
     {
         NSObject _keyboardShowObserver;
         NSObject _keyboardHideObserver;
-
-        #region -- Overrides --
-
         protected override void OnElementChanged(ElementChangedEventArgs<View> e)
         {
             base.OnElementChanged(e);
@@ -31,43 +28,37 @@ namespace InterTwitter.iOS.Renderers
             }
         }
 
-        #endregion
-
-        #region -- Private Helpers --
-
-        private void RegisterForKeyboardNotifications()
+        void RegisterForKeyboardNotifications()
         {
             if (_keyboardShowObserver == null)
-            {
                 _keyboardShowObserver = UIKeyboard.Notifications.ObserveWillShow(OnKeyboardShow);
-            }
-                
             if (_keyboardHideObserver == null)
-            {
                 _keyboardHideObserver = UIKeyboard.Notifications.ObserveWillHide(OnKeyboardHide);
-            }
         }
 
-        private void OnKeyboardShow(object sender, UIKeyboardEventArgs args)
+        void OnKeyboardShow(object sender, UIKeyboardEventArgs args)
         {
+
             NSValue result = (NSValue)args.Notification.UserInfo.ObjectForKey(new NSString(UIKeyboard.FrameEndUserInfoKey));
             CGSize keyboardSize = result.RectangleFValue.Size;
-
             if (Element != null)
             {
                 Element.Margin = new Thickness(0, 0, 0, keyboardSize.Height);
+
             }
         }
 
-        private void OnKeyboardHide(object sender, UIKeyboardEventArgs args)
+        void OnKeyboardHide(object sender, UIKeyboardEventArgs args)
         {
             if (Element != null)
             {
                 Element.Margin = new Thickness(0);
             }
+
         }
 
-        private void UnregisterForKeyboardNotifications()
+
+        void UnregisterForKeyboardNotifications()
         {
             if (_keyboardShowObserver != null)
             {
@@ -81,7 +72,5 @@ namespace InterTwitter.iOS.Renderers
                 _keyboardHideObserver = null;
             }
         }
-
-        #endregion
     }
 }

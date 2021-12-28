@@ -19,9 +19,7 @@ namespace InterTwitter.iOS.Renderers
             base.OnElementChanged(e);
 
             if (e.NewElement != null)
-            {
                 Controller.CollectionView.Bounces = false;
-            }
         }
 
         #endregion

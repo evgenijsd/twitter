@@ -33,7 +33,6 @@ namespace InterTwitter.Controls
             var maxRowNumber = 5;
             var fontSize = (sender as Label).FontSize;
             var maxLabelHeight = fontSize * 1.166666666666669 * maxRowNumber;
-
             if ((sender as Label).Height > maxLabelHeight)
             {
                 IsSpanVisible = true;

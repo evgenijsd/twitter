@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <prism:PrismApplication xmlns="http://xamarin.com/schemas/2014/forms"
                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                        xmlns:styles="clr-namespace:InterTwitter.Resources.Styles"
                         xmlns:prism="clr-namespace:Prism.Unity;assembly=Prism.Unity.Forms"
                         xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+                        xmlns:styles="clr-namespace:InterTwitter.Resources.Styles"
                         android:Application.WindowSoftInputModeAdjust="Resize"
                         x:Class="InterTwitter.App">
 

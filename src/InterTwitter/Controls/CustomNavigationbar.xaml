@@ -3,13 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="InterTwitter.Controls.CustomNavigationbar"
              x:Name="customNavigationbar">
-    
     <ContentView.Content>
         
         <StackLayout Spacing="0">
             
-            <StackLayout Orientation="Horizontal"
-                         Spacing="0"
+            <StackLayout Orientation="Horizontal" Spacing="0"
                          HeightRequest="48">
 
                 <ImageButton Source="{Binding LeftButtonImageSource, Source={x:Reference customNavigationbar}}" 
@@ -18,7 +16,7 @@
                              HeightRequest="24"
                              Margin="14, 0, 0, 0"
                              BackgroundColor="Transparent"
-                             Command="{Binding LeftButtonCommand, Source={x:Reference customNavigationbar}}"/>
+                             Command="{Binding LeftAddButtonCommand, Source={x:Reference customNavigationbar}}"/>
 
                 <Label Text="{Binding Title, Source={x:Reference customNavigationbar}}"
                        Style="{StaticResource tstyle_i4}"
@@ -26,13 +24,12 @@
                        Margin="0, 10, 0, -10"/>
 
                 <ImageButton Source="{Binding RightButtonImageSource, Source={x:Reference customNavigationbar}}"
-                             HorizontalOptions="EndAndExpand"
-                             WidthRequest="24"
-                             HeightRequest="24"
-                             Margin="0, 0, 14, 0"
-                             BackgroundColor="Transparent"
-                             Command="{Binding RightButtonCommand, Source={x:Reference customNavigationbar}}"/> 
-                
+                         HorizontalOptions="EndAndExpand"
+                         WidthRequest="24"
+                         HeightRequest="24"
+                         Margin="0, 0, 14, 0"
+                         BackgroundColor="Transparent"
+                         Command="{Binding RightUserButtonCommand, Source={x:Reference customNavigationbar}}"/> 
             </StackLayout>
             
             <BoxView HeightRequest="1" 

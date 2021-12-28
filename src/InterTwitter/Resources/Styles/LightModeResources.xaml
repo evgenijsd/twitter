@@ -17,11 +17,12 @@
     <Color x:Key="appcolor_i6">#DEDFE1</Color><!-- Light Gray -->
     
     <Color x:Key="appcolor_i7">#F44336</Color><!-- Error -->
+
+    <Color x:Key="appcolor_i8">#C7D6F7</Color><!-- Keyword highlighting -->
     
 
     <!-- IMAGES -->
     <ImageSource x:Key="ic_add_blue">ic_add_blue</ImageSource>
-    <ImageSource x:Key="ic_add_white">ic_add_white</ImageSource>
     <ImageSource x:Key="ic_add_photo_white">ic_add_photo_white</ImageSource>
     <ImageSource x:Key="ic_bookmarks_blue">ic_bookmarks_blue</ImageSource>
     <ImageSource x:Key="ic_bookmarks_gray">ic_bookmarks_gray</ImageSource>
@@ -80,5 +81,5 @@
     <ImageSource x:Key="pic_profile_big">pic_profile_big</ImageSource>
     <ImageSource x:Key="pic_profile_small">pic_profile_small</ImageSource>
     <ImageSource x:Key="pic_empty_state_2">pic_empty_state_2</ImageSource>
-    
+
 </ResourceDictionary>

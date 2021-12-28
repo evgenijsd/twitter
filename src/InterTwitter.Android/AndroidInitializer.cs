@@ -1,8 +1,8 @@
 ﻿using InterTwitter.Droid.Renderers;
-using InterTwitter.Droid.Services.Permission;
+using InterTwitter.Droid.Services.PermissionsService;
 using InterTwitter.Droid.Services.VideoProcessing;
 using InterTwitter.Helpers;
-using InterTwitter.Services.Permission;
+using InterTwitter.Services;
 using InterTwitter.Services.VideoProcessing;
 using Prism;
 using Prism.Ioc;

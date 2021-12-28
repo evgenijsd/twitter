@@ -3,7 +3,6 @@ using InterTwitter.Helpers;
 using InterTwitter.Models;
 using InterTwitter.Resources.Strings;
 using InterTwitter.Services;
-using InterTwitter.Services.Permission;
 using InterTwitter.Services.Video;
 using InterTwitter.Views;
 using Prism.Navigation;
@@ -17,6 +16,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -32,11 +32,9 @@ namespace InterTwitter.ViewModels
 
         private ITweetService _tweetService;
 
-        private IAuthorizationService _authorizationService;
+        private ISettingsManager _settingsManager;
 
         private IRegistrationService _registrationService;
-
-        private IDialogService _dialogService;
 
         private int _userId;
 
@@ -46,18 +44,16 @@ namespace InterTwitter.ViewModels
             IPageDialogService pageDialogService,
             IVideoService videoService,
             ITweetService tweetService,
-            IAuthorizationService authorizationService,
-            IRegistrationService registrationService,
-            IDialogService dialogService)
+            ISettingsManager settingsManager,
+            IRegistrationService registrationService)
             : base(navigationService)
         {
             _permissionService = permissionService;
             _pageDialogService = pageDialogService;
             _videoService = videoService;
             _tweetService = tweetService;
-            _authorizationService = authorizationService;
+            _settingsManager = settingsManager;
             _registrationService = registrationService;
-            _dialogService = dialogService;
 
             _attachedMediaFiles = new ObservableCollection<MiniCardModel>();
         }
@@ -199,7 +195,7 @@ namespace InterTwitter.ViewModels
 
         public async override Task InitializeAsync(INavigationParameters parameters)
         {
-            _userId = _authorizationService.UserId;
+            _userId = _settingsManager.UserId;
             var userModel = await _registrationService.GetByIdAsync(_userId);
 
             if (userModel.IsSuccess)
@@ -349,14 +345,14 @@ namespace InterTwitter.ViewModels
                         IsActivityIndicatorRunning = false;
 
                         var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, textMessage } };
-                        await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
+                        await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(parametrs, CloseDialogCallback));
                     }
                 }
             }
             else
             {
                 var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertNeedAccessPhotosGallery } };
-                await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
+                await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(parametrs, CloseDialogCallback));
             }
         }
 
@@ -451,26 +447,26 @@ namespace InterTwitter.ViewModels
                             else
                             {
                                 var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, alertFileSize } };
-                                await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
+                                await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(parametrs, CloseDialogCallback));
                             }
                         }
                         else
                         {
                             var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertFileNotExist } };
-                            await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
+                            await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(parametrs, CloseDialogCallback));
                         }
                     }
                     else
                     {
                         var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, alertFileType } };
-                        await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
+                        await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(parametrs, CloseDialogCallback));
                     }
                 }
             }
             else
             {
                 var parametrs = new DialogParameters { { Constants.Navigation.MESSAGE, Strings.AlertNeedAccessPhotosGallery } };
-                await _dialogService.ShowDialogAsync(nameof(AlertView), parametrs);
+                await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(parametrs, CloseDialogCallback));
             }
         }
 
@@ -517,6 +513,11 @@ namespace InterTwitter.ViewModels
             }
 
             CircleProgressBarValue = value;
+        }
+
+        private async void CloseDialogCallback(IDialogParameters dialogResult)
+        {
+            await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
         }
 
         #endregion

@@ -1,4 +1,7 @@
-﻿namespace InterTwitter.Views
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+
+namespace InterTwitter.Views
 {
     public partial class BookmarksPage : BaseContentPage
     {
