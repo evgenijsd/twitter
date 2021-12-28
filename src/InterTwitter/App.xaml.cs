@@ -2,6 +2,7 @@
 using InterTwitter.Resources.Strings;
 using InterTwitter.Services;
 using InterTwitter.Services.Hashtag;
+using InterTwitter.Services.Video;
 using InterTwitter.ViewModels;
 using InterTwitter.ViewModels.Flyout;
 using InterTwitter.Views;
@@ -33,6 +34,7 @@ namespace InterTwitter
             containerRegistry.RegisterSingleton<IHashtagService, HashtagService>();
             containerRegistry.RegisterSingleton<IRegistrationService, RegistrationService>();
             containerRegistry.RegisterSingleton<IAuthorizationService, AuthorizationService>();
+            containerRegistry.RegisterSingleton<IVideoService, VideoService>();
 
             // Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
