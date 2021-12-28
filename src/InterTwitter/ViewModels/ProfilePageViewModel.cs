@@ -3,14 +3,13 @@ using InterTwitter.Extensions;
 using InterTwitter.Helpers;
 using InterTwitter.Models;
 using InterTwitter.Models.TweetViewModel;
+using InterTwitter.Resources.Strings;
 using InterTwitter.Services;
-using InterTwitter.Services.Settings;
 using InterTwitter.Services.Share;
-using InterTwitter.Services.UserService;
 using InterTwitter.Views;
 using Prism.Mvvm;
-using Prism.Services.Dialogs;
 using Prism.Navigation;
+using Prism.Services.Dialogs;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -300,18 +299,18 @@ namespace InterTwitter.ViewModels
             {
                 if (isUserBlockedResponse.Result)
                 {
-                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Strings.Strings.Ok);
-                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Strings.Strings.UserBlocked);
+                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Strings.Ok);
+                    param.Add(Constants.DialogParameterKeys.MESSAGE, Strings.UserBlocked);
 
                     dialogs = EDialogs.AddToBlock;
                     await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(param, CloseDialogCallback));
                 }
                 else
                 {
-                    param.Add(Constants.DialogParameterKeys.TITLE, $"{Resources.Strings.Strings.Add} {_user.Name} {Resources.Strings.Strings.ToBlacklist}?");
-                    param.Add(Constants.DialogParameterKeys.MESSAGE, Resources.Strings.Strings.UserNotSeeYouPost);
-                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Strings.Strings.AddToBlacklist);
-                    param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Resources.Strings.Strings.Cancel);
+                    param.Add(Constants.DialogParameterKeys.TITLE, $"{Strings.Add} {_user.Name} {Strings.ToBlacklist}?");
+                    param.Add(Constants.DialogParameterKeys.MESSAGE, Strings.UserNotSeeYouPost);
+                    param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Strings.AddToBlacklist);
+                    param.Add(Constants.DialogParameterKeys.CANCEL_BUTTON_TEXT, Strings.Cancel);
 
                     dialogs = EDialogs.AddToBlock;
                     await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(param, CloseDialogCallback));

@@ -1,23 +1,19 @@
 using DLToolkit.Forms.Controls;
 using InterTwitter.Resources.Strings;
+using InterTwitter.Services;
 using InterTwitter.Services.Hashtag;
 using InterTwitter.Services.Share;
-using InterTwitter.Services.Settings;
-using InterTwitter.Droid.Services.PermissionsService;
-using InterTwitter.Services;
-using InterTwitter.Services.PermissionsService;
-using InterTwitter.Services.UserService;
 using InterTwitter.ViewModels;
 using InterTwitter.Views;
 using Prism;
 using Prism.Ioc;
+using Prism.Navigation;
 using Prism.Plugin.Popups;
 using Prism.Unity;
 using System;
+using System.Linq;
 using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Forms;
-using System.Linq;
-using Prism.Navigation;
 
 namespace InterTwitter
 {
@@ -88,12 +84,12 @@ namespace InterTwitter
             containerRegistry.RegisterDialog<AlertView, AlertViewModel>();
 
             //Services
-            containerRegistry.RegisterSingleton<ISettingsManager, SettingsManager>();
             containerRegistry.RegisterSingleton<IMockService, MockService>();
+            containerRegistry.RegisterSingleton<ISettingsManager, SettingsManager>();
+            containerRegistry.RegisterSingleton<IAuthorizationService, AuthorizationService>();
             containerRegistry.RegisterSingleton<ITweetService, TweetService>();
             containerRegistry.RegisterSingleton<IHashtagService, HashtagService>();
             containerRegistry.RegisterSingleton<IRegistrationService, RegistrationService>();
-            containerRegistry.RegisterSingleton<IAuthorizationService, AuthorizationService>();
             containerRegistry.RegisterSingleton<IUserService, UserService>();
             containerRegistry.RegisterSingleton<IPermissionService, PermissionService>();
             containerRegistry.RegisterSingleton<IBookmarkService, BookmarkService>();

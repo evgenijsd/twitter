@@ -4,7 +4,7 @@ using InterTwitter.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace InterTwitter.Services.Hashtag
+namespace InterTwitter.Services
 {
     public interface IHashtagService
     {

@@ -4,7 +4,6 @@ using InterTwitter.Helpers;
 using InterTwitter.Models;
 using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services;
-using InterTwitter.Services.Hashtag;
 using Prism.Navigation;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,20 +18,20 @@ namespace InterTwitter.ViewModels
 {
     public class SearchPageViewModel : BaseTabViewModel
     {
-        private readonly IAuthorizationService _authorizationService;
+        private readonly ISettingsManager _settingsManager;
         private readonly IRegistrationService _registrationService;
         private readonly ITweetService _tweetService;
         private readonly IHashtagService _hashtagService;
 
         public SearchPageViewModel(
             INavigationService navigationService,
-            IAuthorizationService authorizationService,
+            ISettingsManager settingsManager,
             IRegistrationService registrationService,
             ITweetService tweetService,
             IHashtagService hashtagManager)
             : base(navigationService)
         {
-            _authorizationService = authorizationService;
+            _settingsManager = settingsManager;
             _registrationService = registrationService;
             _tweetService = tweetService;
             _hashtagService = hashtagManager;
@@ -136,7 +135,7 @@ namespace InterTwitter.ViewModels
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
-            int currentUserId = _authorizationService.UserId;
+            int currentUserId = _settingsManager.UserId;
 
             if (currentUserId > 0)
             {

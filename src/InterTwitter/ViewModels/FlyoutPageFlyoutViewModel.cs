@@ -1,8 +1,6 @@
 ﻿using InterTwitter.Helpers;
 using InterTwitter.Models;
 using InterTwitter.Services;
-using InterTwitter.Services.Settings;
-using InterTwitter.Services.UserService;
 using InterTwitter.Views;
 using Prism.Navigation;
 using Prism.Services.Dialogs;
@@ -19,7 +17,6 @@ namespace InterTwitter.ViewModels
     {
         private readonly ISettingsManager _settingsManager;
         private readonly IUserService _userService;
-        private readonly IAuthorizationService _authorizationService;
         private readonly IRegistrationService _registrationService;
 
         private UserModel _user;
@@ -28,13 +25,11 @@ namespace InterTwitter.ViewModels
             INavigationService navigationService,
             ISettingsManager settingsManager,
             IRegistrationService registrationService,
-            IAuthorizationService authorizationService,
             IUserService userService)
             : base(navigationService)
         {
             _settingsManager = settingsManager;
             _userService = userService;
-            _authorizationService = authorizationService;
             _registrationService = registrationService;
 
             MenuItems = new ObservableCollection<MenuItemViewModel>(new[]
@@ -232,7 +227,7 @@ namespace InterTwitter.ViewModels
             {
                 NavigationParameters navigationParameters = new NavigationParameters();
 
-                if (user.Id == _authorizationService.UserId)
+                if (user.Id == _settingsManager.UserId)
                 {
                     navigationParameters.Add(Constants.Navigation.CURRENT_USER, getByIdResult.Result);
                 }

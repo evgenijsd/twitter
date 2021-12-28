@@ -1,8 +1,7 @@
-﻿using InterTwitter.Services.PermissionsService;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Xamarin.Essentials;
 
-namespace InterTwitter.Droid.Services.PermissionsService
+namespace InterTwitter.Services
 {
     public class PermissionService : IPermissionService
     {

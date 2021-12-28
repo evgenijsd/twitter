@@ -11,50 +11,51 @@ namespace InterTwitter.Services.Hashtag
     {
         private readonly IMockService _mockService;
 
-        private int HahtagCounter { get; set; } = 7;
-
         public HashtagService(IMockService mockService)
         {
             _mockService = mockService;
         }
 
         #region -- IHashtagManager implementation --
-
         public async Task<AOResult> IncrementHashtagPopularity(string hashtag)
         {
             var result = new AOResult();
 
             try
             {
-                var allHashtags = new List<HashtagModel>(_mockService.Hashtags);
                 bool isSuccess = false;
+
+                var allHashtags = await _mockService.GetAllAsync<HashtagModel>();
 
                 if (allHashtags != null)
                 {
-                    int indexOfHashtag = allHashtags.FindIndex(x => x.Text.Equals(hashtag, StringComparison.OrdinalIgnoreCase));
+                    var hashtagModel = allHashtags.FirstOrDefault(x => x.Text.Equals(hashtag, StringComparison.OrdinalIgnoreCase));
 
-                    if (indexOfHashtag > 0)
+                    if (hashtagModel != null)
                     {
-                        allHashtags[indexOfHashtag].TweetsCount++;
+                        hashtagModel.TweetsCount++;
+
+                        await _mockService.UpdateAsync(hashtagModel);
+
+                        isSuccess = true;
                     }
                     else
                     {
-                        HashtagModel hashtagModel = new HashtagModel()
+                        hashtagModel = new HashtagModel()
                         {
-                            Id = ++HahtagCounter,
                             Text = hashtag,
+
                             TweetsCount = 1,
                         };
 
-                        allHashtags.Add(hashtagModel);
-                    }
+                        await _mockService.AddAsync(hashtagModel);
 
-                    isSuccess = true;
+                        isSuccess = true;
+                    }
                 }
 
                 if (isSuccess)
                 {
-                    _mockService.Hashtags = allHashtags;
                     result.SetSuccess();
                 }
                 else
@@ -76,31 +77,35 @@ namespace InterTwitter.Services.Hashtag
 
             try
             {
-                var allHashtags = new List<HashtagModel>(_mockService.Hashtags);
+                var allHashtags = await _mockService.GetAllAsync<HashtagModel>();
+
                 bool isSuccess = false;
 
                 if (allHashtags != null)
                 {
-                    int indexOfHashtag = allHashtags.FindIndex(x => x.Text.Equals(hashtag, StringComparison.OrdinalIgnoreCase));
+                    var hashtagModel = allHashtags.FirstOrDefault(x => x.Text.Equals(hashtag, StringComparison.OrdinalIgnoreCase));
 
-                    if (indexOfHashtag > 0)
+                    if (hashtagModel != null)
                     {
-                        if (allHashtags[indexOfHashtag].TweetsCount > 0)
+                        if (hashtagModel.TweetsCount > 0)
                         {
-                            allHashtags[indexOfHashtag].TweetsCount--;
+                            hashtagModel.TweetsCount--;
+
+                            await _mockService.UpdateAsync(hashtagModel);
+
+                            isSuccess = true;
                         }
                         else
                         {
-                            allHashtags.RemoveAt(indexOfHashtag);
-                        }
+                            await _mockService.RemoveAsync(hashtagModel);
 
-                        isSuccess = true;
+                            isSuccess = true;
+                        }
                     }
                 }
 
                 if (isSuccess)
                 {
-                    _mockService.Hashtags = allHashtags;
                     result.SetSuccess();
                 }
                 else
@@ -122,7 +127,7 @@ namespace InterTwitter.Services.Hashtag
 
             try
             {
-                var allHashtags = _mockService.Hashtags;
+                var allHashtags = await _mockService.GetAllAsync<HashtagModel>();
 
                 var popularHashtags = allHashtags
                     ?.OrderByDescending(x => x.TweetsCount)
