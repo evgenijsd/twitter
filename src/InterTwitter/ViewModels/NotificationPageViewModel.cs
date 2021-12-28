@@ -106,18 +106,34 @@ namespace InterTwitter.ViewModels
             _userId = _settingsManager.UserId;
             var result = await _registrationService.GetByIdAsync(_userId);
             var mutedUsers = await _userService.GetAllMutedUsersAsync();
+            var blockedUsers = await _userService.GetAllBlockedUsersAsync();
 
             if (result.IsSuccess)
             {
                 _currentUser = result.Result;
 
                 var resultNotification = await _notificationService.GetNotificationsAsync(_userId);
-                if (mutedUsers.IsSuccess && mutedUsers.Result != null)
+                if (mutedUsers.IsSuccess && mutedUsers.Result != null && blockedUsers.IsSuccess && blockedUsers.Result != null)
                 {
                     Tweets = new ObservableCollection<BaseNotificationViewModel>(resultNotification.Result
                             .Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesNotificationViewModel() : x.ToBaseNotificationViewModel())
                             .Where(t => mutedUsers.Result.All(u => u.Id != t.UserId))
-                                                .OrderByDescending(x => x.CreationTime));
+                            .Where(t => blockedUsers.Result.All(u => u.Id != t.UserId))
+                            .OrderByDescending(x => x.CreationTime));
+                }
+                else if (mutedUsers.IsSuccess && mutedUsers.Result != null)
+                {
+                    Tweets = new ObservableCollection<BaseNotificationViewModel>(resultNotification.Result
+                           .Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesNotificationViewModel() : x.ToBaseNotificationViewModel())
+                           .Where(t => mutedUsers.Result.All(u => u.Id != t.UserId))
+                           .OrderByDescending(x => x.CreationTime));
+                }
+                else if (blockedUsers.IsSuccess && blockedUsers.Result != null)
+                {
+                    Tweets = new ObservableCollection<BaseNotificationViewModel>(resultNotification.Result
+                           .Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesNotificationViewModel() : x.ToBaseNotificationViewModel())
+                           .Where(t => blockedUsers.Result.All(u => u.Id != t.UserId))
+                           .OrderByDescending(x => x.CreationTime));
                 }
                 else if (resultNotification.IsSuccess)
                 {
