@@ -1,13 +1,18 @@
 using DLToolkit.Forms.Controls;
 using InterTwitter.Resources.Strings;
 using InterTwitter.Services;
+using InterTwitter.Services.Hashtag;
+using InterTwitter.Services.Share;
 using InterTwitter.Services.Video;
 using InterTwitter.ViewModels;
 using InterTwitter.Views;
 using Prism;
 using Prism.Ioc;
+using Prism.Navigation;
 using Prism.Plugin.Popups;
 using Prism.Unity;
+using System;
+using System.Linq;
 using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Forms;
 
@@ -15,6 +20,8 @@ namespace InterTwitter
 {
     public partial class App : PrismApplication
     {
+        public static T Resolve<T>() => Current.Container.Resolve<T>();
+
         public App(IPlatformInitializer initializer = null)
             : base(initializer)
         {
@@ -22,13 +29,54 @@ namespace InterTwitter
 
         #region -- Overrides --
 
+        protected override void OnAppLinkRequestReceived(Uri uri)
+        {
+             if (uri.Host.EndsWith(Constants.Values.HOST, StringComparison.OrdinalIgnoreCase))
+             {
+                if (uri.Segments != null && uri.Segments.Length == 3)
+                {
+                    var action = uri.Segments[1].Replace("/", string.Empty);
+                    var msg = uri.Segments[2];
+
+                    switch (action)
+                    {
+                        case Constants.Values.APP_USER_LINK_ID:
+
+                            int userId = 0;
+
+                            if (!string.IsNullOrEmpty(msg))
+                            {
+                                if (int.TryParse(msg, out userId))
+                                {
+                                    var navigation = MainPage.Navigation;
+                                    var lastPage = navigation.NavigationStack.LastOrDefault();
+
+                                    if (lastPage is ProfilePage profilePage)
+                                    {
+                                        navigation.RemovePage(profilePage);
+                                    }
+                                    else if (navigation.ModalStack.LastOrDefault() is ProfilePage modalProfilePage)
+                                    {
+                                        navigation.PopModalAsync();
+                                    }
+                                }
+                            }
+
+                            MessagingCenter.Send(this, Constants.Messages.OPEN_PROFILE_PAGE, userId);
+
+                            break;
+                    }
+                }
+            }
+        }
+
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            // Services
+            containerRegistry.RegisterInstance<IShareService>(Container.Resolve<ShareService>());
             containerRegistry.RegisterPopupNavigationService();
             containerRegistry.RegisterPopupDialogService();
             containerRegistry.RegisterDialog<AlertView, AlertViewModel>();
-
-            //Services
             containerRegistry.RegisterSingleton<IMockService, MockService>();
             containerRegistry.RegisterSingleton<ISettingsManager, SettingsManager>();
             containerRegistry.RegisterSingleton<IAuthorizationService, AuthorizationService>();
@@ -68,7 +116,25 @@ namespace InterTwitter
             Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             LocalizationResourceManager.Current.Init(Strings.ResourceManager);
 
-            await NavigationService.NavigateAsync($"/{nameof(LogInPage)}");
+            var settingsManager = Resolve<ISettingsManager>();
+            var registrationService = Resolve<IRegistrationService>();
+
+            var getByIdResult = await registrationService.GetByIdAsync(settingsManager.UserId);
+
+            if (getByIdResult.IsSuccess)
+            {
+                var user = getByIdResult.Result;
+
+                var parameters = new NavigationParameters();
+
+                parameters.Add(Constants.Navigation.USER, user);
+
+                await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(FlyOutPage)}", parameters);
+            }
+            else
+            {
+                await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(LogInPage)}");
+            }
         }
 
         protected override void OnStart()

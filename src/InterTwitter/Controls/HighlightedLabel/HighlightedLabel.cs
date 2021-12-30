@@ -86,7 +86,7 @@ namespace InterTwitter.Controls.HighlightedLabel
 
         #endregion
 
-        #region -- Private helpers --
+         #region -- Private helpers --
 
         private void SetText(string originalText)
         {

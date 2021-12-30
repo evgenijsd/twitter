@@ -69,7 +69,8 @@
                        Text="{xct:Translate Share}"
                        TextColor="{DynamicResource appcolor_i3}">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ShareCommandAsync}" 
+
+                        <TapGestureRecognizer Command="{Binding ShareUserProfileTapCommand}" 
                                               Tapped="OnAnywhereTappedHandler" />
                     </Label.GestureRecognizers>
                 </Label>
@@ -115,8 +116,7 @@
                        Text="{xct:Translate Share}"
                        TextColor="{DynamicResource appcolor_i3}">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ShareCommandAsync}"
-                                              Tapped="OnAnywhereTappedHandler" />
+                        <TapGestureRecognizer Command="{Binding ShareUserProfileTapCommand}" Tapped="OnAnywhereTappedHandler" />
                     </Label.GestureRecognizers>
                 </Label>
                 <Label Style="{DynamicResource tstyle_i9}"

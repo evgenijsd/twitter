@@ -246,7 +246,7 @@ namespace InterTwitter.Services
                     Email = "ddd@ddd.ddd",
                     Password = "1234567A",
                     AvatarPath = "https://www.acumarketing.com/wp-content/uploads/2011/08/steve-jobs.jpg",
-                    BackgroundUserImagePath = "https://yapx.ru/viral/PMYaG",
+                    BackgroundUserImagePath = "https://www.acumarketing.com/wp-content/uploads/2011/08/steve-jobs.jpg",
                 },
                 new UserModel
                 {

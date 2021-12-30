@@ -4,6 +4,7 @@ using InterTwitter.Helpers;
 using InterTwitter.Models;
 using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Services;
+using InterTwitter.Views;
 using Prism.Navigation;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,23 +19,38 @@ namespace InterTwitter.ViewModels
 {
     public class SearchPageViewModel : BaseTabViewModel
     {
+        private readonly ISettingsManager _settingsManager;
+        private readonly IUserService _userService;
+        private readonly IRegistrationService _registrationService;
         private readonly ITweetService _tweetService;
+        private readonly IBookmarkService _bookmarkService;
+        private readonly ILikeService _likeService;
+
         private readonly IHashtagService _hashtagService;
 
         public SearchPageViewModel(
             INavigationService navigationService,
+            ISettingsManager settingsManager,
+            IUserService userService,
+            IRegistrationService registrationService,
             ITweetService tweetService,
+            IBookmarkService bookmarkService,
+            ILikeService likeService,
             IHashtagService hashtagManager)
             : base(navigationService)
         {
+            _settingsManager = settingsManager;
+            _registrationService = registrationService;
             _tweetService = tweetService;
+            _userService = userService;
+            _bookmarkService = bookmarkService;
+            _likeService = likeService;
             _hashtagService = hashtagManager;
 
             FoundTweets = new ObservableCollection<BaseTweetViewModel>();
             Hashtags = new ObservableCollection<HashtagModel>();
 
             IconPath = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource;
-            AvatarIcon = "pic_profile_small";
         }
 
         #region -- Public properties --
@@ -130,6 +146,18 @@ namespace InterTwitter.ViewModels
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
+            int currentUserId = _settingsManager.UserId;
+
+            if (currentUserId > 0)
+            {
+                var getUserByIdResult = await _registrationService.GetByIdAsync(currentUserId);
+
+                if (getUserByIdResult.IsSuccess)
+                {
+                    AvatarIcon = getUserByIdResult.Result.AvatarPath;
+                }
+            }
+
             await LoadHashtagsAsync();
 
             base.OnNavigatedTo(parameters);
@@ -184,28 +212,100 @@ namespace InterTwitter.ViewModels
             }
         }
 
-        private async Task InitTweetsForDisplayingAsync(IEnumerable<TweetModel> tweets)
+        private async Task InitTweetsForDisplayingAsync(IEnumerable<TweetModel> tweetModels)
         {
-            var tweetViewModels = new List<BaseTweetViewModel>(
-                tweets.Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif
-                    ? x.ToImagesTweetViewModel()
-                    : x.ToBaseTweetViewModel()));
+            int userId = _settingsManager.UserId;
+            var result = await _registrationService.GetByIdAsync(userId);
 
-            foreach (var tweet in tweetViewModels)
+            if (result.IsSuccess)
             {
-                var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
+                var currentUser = result.Result;
 
-                if (tweetAuthor.IsSuccess)
+                var tweetViewModels = new List<BaseTweetViewModel>(tweetModels.Select(x => x.Media == EAttachedMediaType.Photos || x.Media == EAttachedMediaType.Gif ? x.ToImagesTweetViewModel() : x.ToBaseTweetViewModel()));
+
+                foreach (var tweet in tweetViewModels)
                 {
-                    tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
-                    tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
-                    tweet.UserName = tweetAuthor.Result.Name;
-                    tweet.KeysToHighlight = SearchWords;
+                    var user = await _userService.GetUserAsync(tweet.UserId);
+                    var tweetAuthor = await _tweetService.GetAuthorAsync(tweet.UserId);
+
+                    if (tweetAuthor.IsSuccess)
+                    {
+                        tweet.UserAvatar = tweetAuthor.Result.AvatarPath;
+                        tweet.UserBackgroundImage = tweetAuthor.Result.BackgroundUserImagePath;
+                        tweet.UserName = tweetAuthor.Result.Name;
+                        tweet.KeysToHighlight = SearchWords;
+
+                        tweet.IsBookmarked = (await _bookmarkService.AnyAsync(tweet.TweetId, userId)).IsSuccess;
+                        tweet.IsTweetLiked = (await _likeService.AnyAsync(tweet.TweetId, userId)).IsSuccess;
+
+                        var resultLike = await _likeService.CountAsync(tweet.TweetId);
+                        if (resultLike.IsSuccess)
+                        {
+                            tweet.LikesNumber = resultLike.Result;
+                        }
+
+                        if (tweetAuthor.Result.Id == currentUser.Id)
+                        {
+                            tweet.MoveToProfileCommand = new Command(() =>
+                            NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
+                            { { Constants.Navigation.CURRENT_USER, user.Result } }));
+                        }
+                        else
+                        {
+                            tweet.MoveToProfileCommand = new Command(() =>
+                            NavigationService.NavigateAsync(nameof(ProfilePage), new NavigationParameters
+                            { { Constants.Navigation.USER, user.Result } }));
+                        }
+
+                        MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.AddBookmark, (me) => AddBookmarkAsync(me));
+                        MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.DeleteBookmark, (me) => DeleteBookmarkAsync(me));
+                        MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.AddLike, (me) => AddLikeAsync(me));
+                        MessagingCenter.Subscribe<MessageEvent>(this, MessageEvent.DeleteLike, (me) => DeleteLikeAsync(me));
+                    }
+                }
+
+                FoundTweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
+                SearchWords = null;
+            }
+        }
+
+        private async void AddBookmarkAsync(MessageEvent me)
+        {
+            int userId = _settingsManager.UserId;
+            var result = await _bookmarkService.AddBookmarkAsync(me.UnTweetId, userId);
+        }
+
+        private async void DeleteBookmarkAsync(MessageEvent me)
+        {
+            int userId = _settingsManager.UserId;
+            var result = await _bookmarkService.DeleteBoormarkAsync(me.UnTweetId, userId);
+        }
+
+        private async void AddLikeAsync(MessageEvent me)
+        {
+            int userId = _settingsManager.UserId;
+            var resultAdd = await _likeService.AddLikeAsync(me.UnTweetId, userId);
+            var result = await _likeService.CountAsync(me.UnTweetId);
+            if (result.IsSuccess)
+            {
+                var tweet = FoundTweets.FirstOrDefault(x => x.TweetId == me.UnTweetId);
+                if (tweet != null)
+                {
+                    tweet.LikesNumber = result.Result;
                 }
             }
+        }
 
-            SearchWords = null;
-            FoundTweets = new ObservableCollection<BaseTweetViewModel>(tweetViewModels);
+        private async void DeleteLikeAsync(MessageEvent me)
+        {
+            int userId = _settingsManager.UserId;
+            var resultAdd = await _likeService.DeleteLikeAsync(me.UnTweetId, userId);
+            var result = await _likeService.CountAsync(me.UnTweetId);
+            if (result.IsSuccess)
+            {
+                var tweet = FoundTweets.FirstOrDefault(x => x.TweetId == me.UnTweetId);
+                tweet.LikesNumber = result.Result;
+            }
         }
 
         private Task OnOpenFlyoutCommandAsync()
@@ -246,7 +346,7 @@ namespace InterTwitter.ViewModels
 
             if (!string.IsNullOrWhiteSpace(queryString))
             {
-                SearchWords = Constants.Methods.GetUniqueWords(queryString)
+                SearchWords = queryString.Split(' ').Where(x => !string.IsNullOrWhiteSpace(x)).Distinct()
                     .Where(x => x.Length > 1);
             }
 

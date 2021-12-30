@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
 
-	<style name="MainTheme" parent="MainTheme.Base">
-		<item name="android:textAllCaps">false</item>
-	</style>
+  <style name="MainTheme" parent="MainTheme.Base">
+    <item name="android:textAllCaps">false</item>
+    <item name="colorAccent">#2356C5</item>
 
-	<style name="LaunchTheme" parent="MainTheme">
-		<item name="android:windowBackground">@drawable/splash_screen</item>
-		<item name="android:windowNoTitle">true</item>
-		<item name="android:windowFullscreen">true</item>
-		<item name="android:windowContentOverlay">@null</item>
-		<item name="android:windowActionBar">true</item>
-		<item name="android:forceDarkAllowed">false</item>
-	</style>
-  
+  </style>
+
+  <style name="LaunchTheme" parent="MainTheme">
+    <item name="android:windowBackground">@drawable/splash_screen</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowFullscreen">true</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <item name="android:windowActionBar">true</item>
+    <item name="android:forceDarkAllowed">false</item>
+  </style>
+
 </resources>

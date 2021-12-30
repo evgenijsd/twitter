@@ -47,9 +47,9 @@
             <StackLayout Grid.Column="1" Margin="-12,0,0,0"
                          VerticalOptions="Center">
                 <Label Style="{DynamicResource tstyle_i14}" 
-                       Text="{Binding ProfileName}" />
+                       Text="{Binding UserName}" />
                 <Label Style="{DynamicResource Content_i7}" 
-                       Text="{Binding ProfileEmail}" />
+                       Text="{Binding UserMail}" />
             </StackLayout>
         </Grid>
 

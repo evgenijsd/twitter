@@ -2,6 +2,8 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              xmlns:controls="clr-namespace:InterTwitter.Controls"
              xmlns:stateContainer="clr-namespace:InterTwitter.Controls.StateContainer"
              x:DataType="controls:SearchBar"
@@ -28,18 +30,50 @@
                     <!-- SEARCH IS NOT ACTIVE - DISPLAY AVATAR ICON -->
                     <stateContainer:StateCondition State="NotActive">
 
-                        <ImageButton BackgroundColor="Transparent"
-                                     Source="{Binding AvatarIconSource, Source={x:Reference searchBar}}"
-                                     Command="{Binding AvatarIconTapCommand, Source={x:Reference searchBar}}"/>
+                        <ffimageloading:CachedImage Margin="0" 
+                                                    WidthRequest="32" 
+                                                    HeightRequest="32"
+                                                    Aspect="AspectFit"
+                                                    Source="{Binding AvatarIconSource, Source={x:Reference searchBar}}">
+                            
+                            <ffimageloading:CachedImage.GestureRecognizers>
+
+                                <TapGestureRecognizer Command="{Binding AvatarIconTapCommand, Source={x:Reference searchBar}}" />
+                                
+                            </ffimageloading:CachedImage.GestureRecognizers>
+                            
+                            <ffimageloading:CachedImage.Transformations>
+                                
+                                <fftransformations:CircleTransformation />
+                                
+                            </ffimageloading:CachedImage.Transformations>
+                            
+                        </ffimageloading:CachedImage>
 
                     </stateContainer:StateCondition>
 
                     <!-- SEARCH IS ACTIVE - DISPLAY BACK ICON -->
                     <stateContainer:StateCondition State="Active">
 
-                        <ImageButton BackgroundColor="Transparent"
-                                     Source="{DynamicResource ic_left_gray}"
-                                     Command="{Binding BackIconTapCommand, Source={x:Reference searchBar}}"/>
+                        <ffimageloading:CachedImage Margin="0" 
+                                                    WidthRequest="32" 
+                                                    HeightRequest="32"
+                                                    Aspect="AspectFit"
+                                                    Source="{DynamicResource ic_left_gray}">
+
+                            <ffimageloading:CachedImage.GestureRecognizers>
+
+                                <TapGestureRecognizer Command="{Binding BackIconTapCommand, Source={x:Reference searchBar}}" />
+
+                            </ffimageloading:CachedImage.GestureRecognizers>
+
+                            <ffimageloading:CachedImage.Transformations>
+
+                                <fftransformations:CircleTransformation />
+
+                            </ffimageloading:CachedImage.Transformations>
+
+                        </ffimageloading:CachedImage>
 
                     </stateContainer:StateCondition>
 

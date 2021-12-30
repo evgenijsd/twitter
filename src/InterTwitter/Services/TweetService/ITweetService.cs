@@ -1,4 +1,4 @@
-﻿using InterTwitter.Helpers;
+﻿using InterTwitter.Helpers.ProcessHelpers;
 using InterTwitter.Models;
 using InterTwitter.Models.TweetViewModel;
 using System.Collections.Generic;

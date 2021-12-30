@@ -5,6 +5,8 @@ namespace InterTwitter.Extensions
 {
     public static class UserExtension
     {
+        #region -- Public methods --
+
         public static UserViewModel ToUserViewModel(this UserModel userModel)
         {
             return new UserViewModel
@@ -30,5 +32,7 @@ namespace InterTwitter.Extensions
                 BackgroundUserImagePath = userViewModel.BackgroundUserImagePath,
             };
         }
+
+        #endregion
     }
 }

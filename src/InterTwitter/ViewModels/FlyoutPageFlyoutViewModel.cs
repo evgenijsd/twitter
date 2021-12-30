@@ -3,10 +3,12 @@ using InterTwitter.Models;
 using InterTwitter.Services;
 using InterTwitter.Views;
 using Prism.Navigation;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.CommunityToolkit.Helpers;
 using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
@@ -15,56 +17,56 @@ namespace InterTwitter.ViewModels
     {
         private readonly ISettingsManager _settingsManager;
         private readonly IUserService _userService;
-        private readonly IAuthorizationService _authorizationService;
+        private readonly IRegistrationService _registrationService;
 
         private UserModel _user;
 
         public FlyoutPageFlyoutViewModel(
             INavigationService navigationService,
             ISettingsManager settingsManager,
-            IAuthorizationService authorizationService,
+            IRegistrationService registrationService,
             IUserService userService)
             : base(navigationService)
         {
             _settingsManager = settingsManager;
             _userService = userService;
-            _authorizationService = authorizationService;
+            _registrationService = registrationService;
 
             MenuItems = new ObservableCollection<MenuItemViewModel>(new[]
+            {
+                new MenuItemViewModel
                 {
-                    new MenuItemViewModel
-                    {
-                        Id = 0, Title = "Home",
-                        TargetType = typeof(HomePage),
-                        ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource,
-                        TapCommand = new Command(OnItemTapCommand),
-                    },
+                    Id = 0, Title = "Home",
+                    TargetType = typeof(HomePage),
+                    ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource,
+                    TapCommand = new Command(OnItemTapCommand),
+                },
 
-                    new MenuItemViewModel
-                    {
-                        Id = 1,
-                        Title = "Search",
-                        TargetType = typeof(SearchPage),
-                        ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource,
-                        TapCommand = new Command(OnItemTapCommand),
-                    },
-                    new MenuItemViewModel
-                    {
-                        Id = 2,
-                        Title = "Notification",
-                        TargetType = typeof(NotificationsPage),
-                        ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_notifications_gray"] as ImageSource,
-                        TapCommand = new Command(OnItemTapCommand),
-                    },
-                    new MenuItemViewModel
-                    {
-                        Id = 3,
-                        Title = "Bookmarks",
-                        TargetType = typeof(BookmarksPage),
-                        ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_bookmarks_gray"] as ImageSource,
-                        TapCommand = new Command(OnItemTapCommand),
-                    },
-                });
+                new MenuItemViewModel
+                {
+                    Id = 1,
+                    Title = "Search",
+                    TargetType = typeof(SearchPage),
+                    ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource,
+                    TapCommand = new Command(OnItemTapCommand),
+                },
+                new MenuItemViewModel
+                {
+                    Id = 2,
+                    Title = "Notification",
+                    TargetType = typeof(NotificationsPage),
+                    ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_notifications_gray"] as ImageSource,
+                    TapCommand = new Command(OnItemTapCommand),
+                },
+                new MenuItemViewModel
+                {
+                    Id = 3,
+                    Title = "Bookmarks",
+                    TargetType = typeof(BookmarksPage),
+                    ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_bookmarks_gray"] as ImageSource,
+                    TapCommand = new Command(OnItemTapCommand),
+                },
+            });
 
             Subscribe();
         }
@@ -78,18 +80,18 @@ namespace InterTwitter.ViewModels
             set => SetProperty(ref _menuItems, value);
         }
 
-        private string _profileName;
-        public string ProfileName
+        private string _userMail;
+        public string UserMail
         {
-            get => _profileName;
-            set => SetProperty(ref _profileName, value);
+            get => _userMail;
+            set => SetProperty(ref _userMail, value);
         }
 
-        private string _profileEmail;
-        public string ProfileEmail
+        private string _userName;
+        public string UserName
         {
-            get => _profileEmail;
-            set => SetProperty(ref _profileEmail, value);
+            get => _userName;
+            set => SetProperty(ref _userName, value);
         }
 
         private string _userImagePath;
@@ -97,6 +99,13 @@ namespace InterTwitter.ViewModels
         {
             get => _userImagePath;
             set => SetProperty(ref _userImagePath, value);
+        }
+
+        private string _userBackgroundImage;
+        public string UserBackgroundImage
+        {
+            get => _userBackgroundImage;
+            set => SetProperty(ref _userBackgroundImage, value);
         }
 
         private ICommand _logoutCommandAsync;
@@ -115,9 +124,11 @@ namespace InterTwitter.ViewModels
         public override Task InitializeAsync(INavigationParameters parameters)
         {
             _user = _userService.GetUserAsync(_settingsManager.UserId).Result.Result;
-            ProfileName = _user.Name;
-            ProfileEmail = _user.Email;
+            UserName = _user.Name;
+            UserMail = _user.Email;
             UserImagePath = _user.AvatarPath;
+            UserBackgroundImage = _user.BackgroundUserImagePath;
+
             return base.InitializeAsync(parameters);
         }
 
@@ -131,6 +142,7 @@ namespace InterTwitter.ViewModels
             MessagingCenter.Subscribe<BookmarksPageViewModel, Type>(this, Constants.Messages.TAB_CHANGE, ChangeVisualState);
             MessagingCenter.Subscribe<NotificationPageViewModel, Type>(this, Constants.Messages.TAB_CHANGE, ChangeVisualState);
             MessagingCenter.Subscribe<FlyoutPageDetailViewModel, Type>(this, Constants.Messages.TAB_CHANGE, ChangeVisualState);
+            MessagingCenter.Subscribe<App, int>(this, Constants.Messages.OPEN_PROFILE_PAGE, OnOpenProfileCommandAsync);
             MessagingCenter.Subscribe<EditProfilePageViewModel>(this, Constants.Messages.USER_PROFILE_CHANGED, UpdateAsync);
         }
 
@@ -180,17 +192,17 @@ namespace InterTwitter.ViewModels
             if (userResponse.IsSuccess)
             {
                 var user = userResponse.Result;
-                ProfileName = user.Name;
-                ProfileEmail = user.Email;
+                UserName = user.Name;
+                UserMail = user.Email;
                 UserImagePath = user.AvatarPath;
             }
         }
 
-        private async Task OnLogoutCommandAsync()
+        private Task OnLogoutCommandAsync()
         {
             _settingsManager.UserId = 0;
 
-            await NavigationService.NavigateAsync($"/{nameof(LogInPage)}");
+            return NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(LogInPage)}");
         }
 
         private async Task OnNavigateProfileCommandAsync()
@@ -207,7 +219,40 @@ namespace InterTwitter.ViewModels
             MessagingCenter.Send(this, Constants.Messages.OPEN_SIDEBAR, false);
         }
 
-        #endregion
+        private async void OnOpenProfileCommandAsync(App sender, int userId)
+        {
+            var getByIdResult = await _registrationService.GetByIdAsync(userId);
 
+            if (getByIdResult.IsSuccess && getByIdResult.Result is UserModel user)
+            {
+                NavigationParameters navigationParameters = new NavigationParameters();
+
+                if (user.Id == _settingsManager.UserId)
+                {
+                    navigationParameters.Add(Constants.Navigation.CURRENT_USER, getByIdResult.Result);
+                }
+                else
+                {
+                    navigationParameters.Add(Constants.Navigation.USER, getByIdResult.Result);
+                }
+
+                await NavigationService.NavigateAsync($"{nameof(ProfilePage)}", navigationParameters, useModalNavigation: false);
+            }
+            else
+            {
+                var param = new DialogParameters();
+                param.Add(Constants.DialogParameterKeys.TITLE, LocalizationResourceManager.Current["InvalidLinkToUserProfile"]);
+                param.Add(Constants.DialogParameterKeys.OK_BUTTON_TEXT, Resources.Strings.Strings.Ok);
+
+                await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new AlertView(param, CloseDialogCallback));
+            }
+        }
+
+        private async void CloseDialogCallback(IDialogParameters obj)
+        {
+            await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+        }
+
+        #endregion
     }
 }

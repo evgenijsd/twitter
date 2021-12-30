@@ -2,6 +2,7 @@
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V7.App;
 using FFImageLoading.Forms.Platform;
 using InterTwitter.Droid.Renderers;
 using InterTwitter.Helpers;
@@ -14,10 +15,24 @@ namespace InterTwitter.Droid
     [Activity(
         Label = "@string/ApplicationName", 
         Icon = "@mipmap/icon_owl",
-        LaunchMode = LaunchMode.SingleTask, 
+        LaunchMode = LaunchMode.SingleTop, 
         Theme = "@style/MainTheme",
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize, 
         ScreenOrientation = ScreenOrientation.Portrait)]
+
+    [IntentFilter(new[] { Android.Content.Intent.ActionView },
+                  DataScheme = "https",
+                  DataHost = "intertwitter.com",
+                  DataPathPrefix = "/userId",
+                  AutoVerify = true,
+                  Categories = new[] { Android.Content.Intent.CategoryDefault, Android.Content.Intent.CategoryBrowsable })]
+   
+    [IntentFilter(new[] { Android.Content.Intent.ActionView },
+                  DataScheme = "http",
+                  DataHost = "intertwitter.com",
+                  AutoVerify = true,
+                  DataPathPrefix = "/userId",
+                  Categories = new[] { Android.Content.Intent.CategoryDefault, Android.Content.Intent.CategoryBrowsable })]
 
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
@@ -26,6 +41,8 @@ namespace InterTwitter.Droid
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+            AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightNo;
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);

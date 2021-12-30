@@ -9,6 +9,7 @@ namespace InterTwitter.Views
         public FlyoutPageFlyout()
         {
             InitializeComponent();
+            Xamarin.Forms.NavigationPage.SetHasNavigationBar(this, false);
         }
 
         private async void SettingsTappedHandler(object sender, EventArgs e)

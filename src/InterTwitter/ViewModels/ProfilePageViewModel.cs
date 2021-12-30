@@ -5,6 +5,7 @@ using InterTwitter.Models;
 using InterTwitter.Models.TweetViewModel;
 using InterTwitter.Resources.Strings;
 using InterTwitter.Services;
+using InterTwitter.Services.Share;
 using InterTwitter.Views;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -25,7 +26,9 @@ namespace InterTwitter.ViewModels
         private readonly ITweetService _tweetService;
         private readonly ILikeService _likeService;
         private readonly IBookmarkService _bookmarkService;
+        private readonly IShareService _shareService;
 
+        private EDialogs dialogs;
         private UserModel _user;
         private bool _isCurrentUser;
         private bool _isUserBlocked;
@@ -38,7 +41,10 @@ namespace InterTwitter.ViewModels
             IUserService userService,
             ILikeService likeService,
             IBookmarkService bookmarkService,
-            ITweetService tweetService)
+            ITweetService tweetService,
+            IRegistrationService registrationService,
+            IAuthorizationService authorizationService,
+            IShareService shareService)
             : base(navigationService)
         {
             _settingsManager = settingsManager;
@@ -46,6 +52,7 @@ namespace InterTwitter.ViewModels
             _tweetService = tweetService;
             _likeService = likeService;
             _bookmarkService = bookmarkService;
+            _shareService = shareService;
         }
 
         #region --- Public Properties ---
@@ -169,6 +176,9 @@ namespace InterTwitter.ViewModels
         public ICommand NavigationToMutelistCommandAsync => _navigationToMutelistCommandAsync ??= SingleExecutionCommand.FromFunc(
             () => NavigationService.NavigateAsync(nameof(BlacklistPage), new NavigationParameters { { Constants.Navigation.MUTELIST, _user } }));
 
+        public ICommand _shareUserProfileTapCommand;
+        public ICommand ShareUserProfileTapCommand => _shareUserProfileTapCommand ??= SingleExecutionCommand.FromFunc(OnShareUserProfileTapCommandAsync);
+
         #endregion
 
         #region -- Overrides --
@@ -229,7 +239,7 @@ namespace InterTwitter.ViewModels
 
         #endregion
 
-        #region -- Private Helpers --
+        #region -- Private helpers --
 
         private void Subscribe()
         {
@@ -345,25 +355,25 @@ namespace InterTwitter.ViewModels
             }
 
             MenuItems = new List<MenuItemViewModel>(new[]
+            {
+                new MenuItemViewModel
                 {
-                    new MenuItemViewModel
-                    {
-                        Id = 0,
-                        Title = Strings.Posts,
-                        ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource,
-                        TextColor = (Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
-                        ContentCollection = UserTweets,
-                    },
+                    Id = 0,
+                    Title = Resources.Strings.Strings.Posts,
+                    ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_home_gray"] as ImageSource,
+                    TextColor = (Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
+                    ContentCollection = UserTweets,
+                },
 
-                    new MenuItemViewModel
-                    {
-                        Id = 1,
-                        Title = Strings.Likes,
-                        ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource,
-                        TextColor = (Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
-                        ContentCollection = LikedTweets,
-                    },
-                });
+                new MenuItemViewModel
+                {
+                    Id = 1,
+                    Title = Resources.Strings.Strings.Likes,
+                    ImageSource = Prism.PrismApplicationBase.Current.Resources["ic_search_gray"] as ImageSource,
+                    TextColor = (Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"],
+                    ContentCollection = LikedTweets,
+                },
+            });
         }
 
         private Task OnHamburgerMenuCommand()
@@ -521,15 +531,15 @@ namespace InterTwitter.ViewModels
             }
         }
 
-        public enum EDialogs
+        private async Task OnShareUserProfileTapCommandAsync()
         {
-            RemoveFromMute,
-            RemoveFromBlock,
-            AddToMute,
-            AddToBlock,
-        }
+            if (_user != null)
+            {
+                string uri = $"{Constants.Values.APP_USER_LINK}{Constants.Values.APP_USER_LINK_ID}/{_user.Id}";
 
-        private EDialogs dialogs;
+                await _shareService.ShareTextRequest(_user.Name, uri);
+            }
+        }
 
         private async void AddBookmarkAsync(MessageEvent me)
         {
@@ -590,6 +600,5 @@ namespace InterTwitter.ViewModels
         }
 
         #endregion
-
     }
 }

@@ -14,17 +14,21 @@ namespace InterTwitter.Views
 
         private void OnItemApearingHandler(object sender, EventArgs e)
         {
-            var list = lists.ItemsSource;
-            var id = (lists.SelectedItem as MenuItemViewModel).Id;
-            foreach (MenuItemViewModel mi in list)
+            if (lists.ItemsSource is not null)
             {
-                if (mi.Id == id)
+                var list = lists.ItemsSource;
+
+                var id = (lists.SelectedItem as MenuItemViewModel).Id;
+                foreach (MenuItemViewModel mi in list)
                 {
-                    mi.TextColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i1"];
-                }
-                else
-                {
-                    mi.TextColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"];
+                    if (mi.Id == id)
+                    {
+                        mi.TextColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i1"];
+                    }
+                    else
+                    {
+                        mi.TextColor = (Xamarin.Forms.Color)Prism.PrismApplicationBase.Current.Resources["appcolor_i4"];
+                    }
                 }
             }
         }

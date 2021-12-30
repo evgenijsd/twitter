@@ -9,6 +9,7 @@ using Prism.Services.Dialogs;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace InterTwitter.ViewModels
 {
@@ -212,27 +213,20 @@ namespace InterTwitter.ViewModels
             }
         }
 
-        public override async void OnNavigatedTo(INavigationParameters parameters)
+        public override void OnNavigatedTo(INavigationParameters parameters)
         {
             _maxHeight = CurrentHeight;
-            var result = await _registrationService?.GetByIdAsync(_settingsManager.UserId);
-            if (result.IsSuccess)
-            {
-                var user = result.Result;
-                var parametrs = new NavigationParameters { { Constants.Navigation.USER, user } };
-                await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", parametrs);
-            }
         }
 
         #endregion
 
         #region -- Private helpers --
 
-        private async Task OnCreateCommandAsync()
+        private Task OnCreateCommandAsync()
         {
             _keyboardHelper.HideKeyboard();
 
-            await NavigationService.NavigateAsync($"/{nameof(CreatePage)}");
+            return NavigationService.NavigateAsync($"/{nameof(CreatePage)}");
         }
 
         private async Task OnTwitterCommandAsync()
@@ -250,7 +244,7 @@ namespace InterTwitter.ViewModels
                         _user = result.Result;
                         _settingsManager.UserId = _user.Id;
                         var parametrs = new NavigationParameters { { Constants.Navigation.USER, _user } };
-                        await NavigationService.NavigateAsync($"/{nameof(FlyOutPage)}", parametrs);
+                        await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(FlyOutPage)}", parametrs);
                     }
                     else
                     {

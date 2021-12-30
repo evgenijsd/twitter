@@ -348,6 +348,9 @@
   <data name="Share" xml:space="preserve">
     <value>Share</value>
   </data>
+  <data name="InvalidLinkToUserProfile" xml:space="preserve">
+    <value>Invalid link to user profile</value>
+  </data>
   <data name="AlertErrorTrimmingVideo" xml:space="preserve">
     <value>Error trimming video</value>
   </data>

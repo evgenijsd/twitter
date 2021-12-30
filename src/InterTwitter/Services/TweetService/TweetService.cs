@@ -1,4 +1,4 @@
-﻿using InterTwitter.Helpers;
+﻿using InterTwitter.Helpers.ProcessHelpers;
 using InterTwitter.Models;
 using System;
 using System.Collections.Generic;
@@ -133,14 +133,12 @@ namespace InterTwitter.Services
             {
                 await _mockService.AddAsync(tweet);
 
-                var allHashtags = Constants.Methods.GetUniqueWords(tweet.Text).Where(x => Regex.IsMatch(x, Constants.RegexPatterns.HASHTAG_PATTERN));
+                var allHashtags = tweet.Text.Split(' ').Where(x => !string.IsNullOrWhiteSpace(x)).Distinct()
+                    .Where(x => x.Length > 1).Where(x => Regex.IsMatch(x, Constants.RegexPatterns.HASHTAG_PATTERN));
 
                 foreach (var tag in allHashtags)
                 {
-                    await _hashtagService.IncreaseHashtagPopularityByOne(new HashtagModel()
-                    {
-                        Text = tag,
-                    });
+                    await _hashtagService.IncrementHashtagPopularity(tag);
                 }
 
                 result.SetSuccess();
