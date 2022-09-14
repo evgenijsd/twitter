@@ -1,0 +1,387 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddToBlacklist" xml:space="preserve">
+    <value>Add to Blacklist</value>
+  </data>
+  <data name="AddToMute" xml:space="preserve">
+    <value>Add to Mute</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Alert" xml:space="preserve">
+    <value>Alert</value>
+  </data>
+  <data name="AlertDatabase" xml:space="preserve">
+    <value>Database failure</value>
+  </data>
+  <data name="AlertDataIncorrect" xml:space="preserve">
+    <value>The data is incorrectly filled</value>
+  </data>
+  <data name="AlertEmailEmpty" xml:space="preserve">
+    <value>Email is empty</value>
+  </data>
+  <data name="AlertEmailInvalid" xml:space="preserve">
+    <value>Email does not match the format</value>
+  </data>
+  <data name="AlertEmailNoA" xml:space="preserve">
+    <value>In Email there is no symbol @</value>
+  </data>
+  <data name="AlertInvalidLogin" xml:space="preserve">
+    <value>Invalid login!</value>
+  </data>
+  <data name="AlertInvalidPassword" xml:space="preserve">
+    <value>Invalid password!</value>
+  </data>
+  <data name="AlertLoginNotExist" xml:space="preserve">
+    <value>This login does not exist</value>
+  </data>
+  <data name="AlertLoginTaken" xml:space="preserve">
+    <value>This login is already taken</value>
+  </data>
+  <data name="AlertNameEmpty" xml:space="preserve">
+    <value>Name is empty</value>
+  </data>
+  <data name="AlertNameLength" xml:space="preserve">
+    <value>The name cannot be shorter 2 character</value>
+  </data>
+  <data name="AlertNameLetter" xml:space="preserve">
+    <value>Name includes only letters</value>
+  </data>
+  <data name="AlertPasswordEmpty" xml:space="preserve">
+    <value>Password is empty</value>
+  </data>
+  <data name="AlertPasswordLength" xml:space="preserve">
+    <value>Password less than 6 characters</value>
+  </data>
+  <data name="AlertPasswordLetterDigit" xml:space="preserve">
+    <value>The password must contain a big letter and digit</value>
+  </data>
+  <data name="AlertPasswordNotEqual" xml:space="preserve">
+    <value>Password and confirm password do not coincide</value>
+  </data>
+  <data name="Bookmarks" xml:space="preserve">
+    <value>Bookmarks</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="AlreadyBlocked" xml:space="preserve">
+    <value>This user is already blocked</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirm Password</value>
+  </data>
+  <data name="CreateYourAccount" xml:space="preserve">
+    <value>Create your account</value>
+  </data>
+  <data name="DeleteAllbookmarks" xml:space="preserve">
+    <value>Delete all bookmarks</value>
+  </data>
+  <data name="DoNotMatch" xml:space="preserve">
+    <value>Do not match</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="FailureUsersNotFound" xml:space="preserve">
+    <value>No tweets found</value>
+  </data>
+  <data name="EmailIsNotValid" xml:space="preserve">
+    <value>Email is not valid or empty</value>
+  </data>
+  <data name="FromTheBlacklist" xml:space="preserve">
+    <value>from the Blacklist</value>
+  </data>
+  <data name="FromTheMute" xml:space="preserve">
+    <value>from the mute</value>
+  </data>
+  <data name="GetYourAccount" xml:space="preserve">
+    <value>Get your account</value>
+  </data>
+  <data name="InaccurateRequest" xml:space="preserve">
+    <value>For a more accurate search, enter 2 or more characters</value>
+  </data>
+  <data name="Likes" xml:space="preserve">
+    <value>Likes</value>
+  </data>
+  <data name="LogIn" xml:space="preserve">
+    <value>Log In</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="NameIsNotValid" xml:space="preserve">
+    <value>Name is not valid or empty</value>
+  </data>
+  <data name="NewPasswordIsNotValid" xml:space="preserve">
+    <value>New password is not valid or empty</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>     Next     </value>
+  </data>
+  <data name="NotFoundBookmark" xml:space="preserve">
+    <value>not found any bookmark</value>
+  </data>
+  <data name="NotFoundLike" xml:space="preserve">
+    <value>not found any like</value>
+  </data>
+  <data name="NotFoundNotification" xml:space="preserve">
+    <value>Not found notification</value>
+  </data>
+  <data name="Notification" xml:space="preserve">
+    <value>Notification</value>
+  </data>
+  <data name="NoTweets" xml:space="preserve">
+    <value>No tweets found</value>
+  </data>
+  <data name="NoResultsFor" xml:space="preserve">
+    <value>No results for</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="OldPassEmpty" xml:space="preserve">
+    <value>Old password is empty</value>
+  </data>
+  <data name="OldPassWrong" xml:space="preserve">
+    <value>Old password is wrong</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PasswordIncorrect" xml:space="preserve">
+    <value>The password is incorrect</value>
+  </data>
+  <data name="PleaseName" xml:space="preserve">
+    <value>Please, type your name</value>
+  </data>
+  <data name="PopularTheme" xml:space="preserve">
+    <value>Popular theme</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Posts" xml:space="preserve">
+    <value>Posts</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="SaveChanges" xml:space="preserve">
+    <value>Save changes</value>
+  </data>
+  <data name="SignUp" xml:space="preserve">
+    <value>Sign Up</value>
+  </data>
+  <data name="SomeIssues" xml:space="preserve">
+    <value>Some issues</value>
+  </data>
+  <data name="UserBlocked" xml:space="preserve">
+    <value>This user is already blocked</value>
+  </data>
+  <data name="UserMuted" xml:space="preserve">
+    <value>This user is already muted</value>
+  </data>
+  <data name="UserNotSeeYouPost" xml:space="preserve">
+    <value>This user will not see your posts.</value>
+  </data>
+  <data name="UserCanSeeInfo" xml:space="preserve">
+    <value>User can see information about you</value>
+  </data>
+  <data name="WrongEmail" xml:space="preserve">
+    <value>Wrong Email</value>
+  </data>
+  <data name="WrongResult" xml:space="preserve">
+    <value>Wrong result</value>
+  </data>
+  <data name="YouHaveNoBookmarks" xml:space="preserve">
+    <value>You have no bookmarks yet</value>
+  </data>
+  <data name="YouNeedPassword" xml:space="preserve">
+    <value>You'll need a password</value>
+  </data>
+  <data name="ToMute" xml:space="preserve">
+    <value>to mute</value>
+  </data>
+  <data name="ToBlacklist" xml:space="preserve">
+    <value>to Blacklist</value>
+  </data>
+  <data name="Blacklist" xml:space="preserve">
+    <value>Blacklist</value>
+  </data>
+  <data name="Mute" xml:space="preserve">
+    <value>Mute</value>
+  </data>
+  <data name="ChangeProfile" xml:space="preserve">
+    <value>Change profile</value>
+  </data>
+  <data name="Muted" xml:space="preserve">
+    <value>Muted</value>
+  </data>
+  <data name="MutedProfiles" xml:space="preserve">
+    <value>Muted profiles</value>
+  </data>
+  <data name="ProfileInBlacklist" xml:space="preserve">
+    <value>Profile in Blacklist</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="AlertErrorTrimmingVideo" xml:space="preserve">
+    <value>Error trimming video</value>
+  </data>
+  <data name="AlertFileNotExist" xml:space="preserve">
+    <value>File does not exist</value>
+  </data>
+  <data name="AlertLimitSizeGif" xml:space="preserve">
+    <value>The size of the gif should not exceed 5 MB</value>
+  </data>
+  <data name="AlertLimitSizePhoto" xml:space="preserve">
+    <value>The size of the photo should not exceed 5 MB</value>
+  </data>
+  <data name="AlertLimitSizeVideo" xml:space="preserve">
+    <value>The size of the video should not exceed 15 MB</value>
+  </data>
+  <data name="AlertNeedAccessPhotosGallery" xml:space="preserve">
+    <value>This app needs access to photos gallery for picking photos and videos.</value>
+  </data>
+  <data name="AlertOnlyGif" xml:space="preserve">
+    <value>Only gif</value>
+  </data>
+  <data name="AlertOnlyPicture" xml:space="preserve">
+    <value>Only picture</value>
+  </data>
+  <data name="ConfirmComeBack" xml:space="preserve">
+    <value>Do you want to come back?</value>
+  </data>
+  <data name="PlaceholderEditor" xml:space="preserve">
+    <value>Start writing</value>
+  </data>
+  <data name="Post" xml:space="preserve">
+    <value>Post</value>
+  </data>
+  <data name="Video" xml:space="preserve">
+    <value>Video</value>
+  </data>
+</root>

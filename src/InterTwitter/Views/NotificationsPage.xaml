@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+                       xmlns:localmodel="clr-namespace:InterTwitter.ViewModels"
+                       x:DataType="localmodel:NotificationPageViewModel"
+                       xmlns:controls="clr-namespace:InterTwitter.Controls"
+                       xmlns:local="clr-namespace:InterTwitter.Views"
+                       xmlns:prism="http://prismlibrary.com"
+                       xmlns:behaviors="clr-namespace:InterTwitter.Behaviors"
+                       prism:ViewModelLocator.AutowireViewModel="True"
+                       IconImageSource="{Binding IconPath}"
+                       x:Class="InterTwitter.Views.NotificationsPage">
+
+    <ContentPage.Behaviors>
+        <behaviors:TabPageBehavior/>
+    </ContentPage.Behaviors>
+
+    <local:BaseContentPage.Content>
+
+        <Grid HorizontalOptions="Fill"
+              VerticalOptions="Fill"
+              RowDefinitions="auto"
+              RowSpacing="0">
+
+
+            <controls:CustomNavigationbar Grid.Row="0"
+                                          Title="{xct:Translate Notification}" />
+
+            <controls:CustomCollectionNotificationView x:Name="customCollectView"
+                                                       Grid.Row="1"
+                                                       ItemsSource="{Binding Tweets}"
+                                                       ItemTemplate="{DynamicResource notificationTemplateSelector}" />
+
+            <StackLayout Grid.Row="1"
+                         HorizontalOptions="CenterAndExpand"
+                         VerticalOptions="CenterAndExpand"
+                         HeightRequest="200"
+                         IsVisible="{Binding IsNotFound}"
+                         BackgroundColor="Transparent">
+
+                <Image Source="{DynamicResource pic_owl_blue_big}"
+                       Aspect="AspectFit"
+                       HeightRequest="90" />
+
+                <Label Text="{xct:Translate NotFoundNotification}"
+                       Margin="0,20,0,0"
+                       Style="{DynamicResource tstyle_i5}" />
+
+            </StackLayout>
+
+        </Grid>
+
+    </local:BaseContentPage.Content>
+
+</local:BaseContentPage>
